@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Choose Interests</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav"><a class="logo" href="index.html">Kmeet</a><div class="navlinks"><a href="discover.html">Discover</a><a href="login.html">Log In</a></div></nav>
+  <main class="container">
+    <section class="card form">
+      <h2>What are you interested in?</h2>
+      <p class="small">Choose at least one. We'll save these with your new profile.</p>
+      <form id="interestForm">
+        <div class="interests">
+          <label class="interest"><input type="checkbox" name="interest" value="Music">Music</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Sports">Sports</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Gaming">Gaming</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Cooking">Cooking</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Travel">Travel</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Art & Design">Art & Design</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Tech & Coding">Tech & Coding</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Fitness">Fitness</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Movies">Movies</label>
+          <label class="interest"><input type="checkbox" name="interest" value="Reading">Reading</label>
+        </div>
+        <div id="msg"></div>
+        <button class="btn" type="submit">Continue to Sign Up</button>
+      </form>
+    </section>
+  </main>
+  <script>
+    document.getElementById("interestForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const selected = [...document.querySelectorAll('input[name="interest"]:checked')].map(x => x.value);
+      const msg = document.getElementById("msg");
+      if (!selected.length) {
+        msg.innerHTML = '<div class="message error">Please choose at least one interest.</div>';
+        return;
+      }
+      sessionStorage.setItem("pendingInterests", JSON.stringify(selected));
+      window.location.href = "signup.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Payment</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav"><a class="logo" href="index.html">Kmeet</a><div class="navlinks"><a href="discover.html">Discover</a><a href="profile.html">Profile</a></div></nav>
+  <main class="container">
+    <section class="card form center">
+      <h2>Unlock Chat</h2>
+      <p>Chat is available after payment. This page is currently using a temporary demo payment switch while the M-Pesa Daraja account is being set up.</p>
+      <div class="message">
+        <strong>Temporary test mode</strong>
+        <p class="small">Do not use this as real payment verification. Replace this button with Daraja + a secure server/webhook before launch.</p>
+      </div>
+      <button id="demoPay" class="btn">Simulate Successful Payment</button>
+      <p id="msg"></p>
+    </section>
+  </main>
+
+  <script>
+    const targetId = new URLSearchParams(location.search).get("userId");
+    document.getElementById("demoPay").addEventListener("click", () => {
+      localStorage.setItem("kmeet_demo_paid", "true");
+      document.getElementById("msg").innerHTML = '<span class="message success">Test payment recorded. Opening chat...</span>';
+      setTimeout(() => {
+        if (targetId) {
+          location.href = `chat.html?userId=${encodeURIComponent(targetId)}`;
+        } else {
+          location.href = "discover.html";
+        }
+      }, 600);
+    });
+  </script>
+</body>
+</html>

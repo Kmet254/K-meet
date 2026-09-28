@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Profile</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a class="logo" href="index.html">Kmeet</a>
+    <div class="navlinks">
+      <a href="discover.html">Discover</a>
+      <a id="navProfile" href="profile.html">Profile</a>
+      <a href="index.html">Home</a>
+    </div>
+  </nav>
+  <main class="container">
+    <section id="profileBox" class="card profile center">
+      <p>Loading profile...</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { auth, db, onAuthStateChanged, doc, getDoc, setDoc } from "./firebase-config.js";
+
+    const params = new URLSearchParams(location.search);
+    let profileId = params.get("id");
+
+    onAuthStateChanged(auth, async user => {
+      if (!profileId && user && !user.isAnonymous) profileId = user.uid;
+
+      if (user && !user.isAnonymous) {
+        document.getElementById("navProfile").href = "profile.html";
+      }
+
+      if (!profileId) {
+        window.location.href = "discover.html";
+        return;
+      }
+
+      try {
+        const ref = doc(db, "users", profileId);
+        const snap = await getDoc(ref);
+
+        if (!snap.exists()) {
+          if (user && !user.isAnonymous && user.uid === profileId) {
+            const data = {
+              uid: user.uid,
+              name: user.displayName || "Kmeet User",
+              email: user.email || "",
+              interests: [],
+              bio: "Welcome to Kmeet!",
+              location: "Kenya",
+              age: null,
+              avatar: user.photoURL || ""
+            };
+            await setDoc(ref, data, { merge: true });
+            render(data, profileId, user);
+          } else {
+            document.getElementById("profileBox").innerHTML = "<h2>Profile not found</h2><a class='btn' href='discover.html'>Back to Discover</a>";
+          }
+          return;
+        }
+
+        render(snap.data(), profileId, user);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("profileBox").innerHTML = `<div class="message error">Could not load profile: ${err.message}</div>`;
+      }
+    });
+
+    function render(p, id, currentUser) {
+      const own = currentUser && !currentUser.isAnonymous && currentUser.uid === id;
+      const avatar = p.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&q=80";
+      const interests = Array.isArray(p.interests) ? p.interests : [];
+
+      document.getElementById("profileBox").innerHTML = `
+        <img class="avatar" src="${avatar}" alt="">
+        <h1>${escapeHtml(p.name || "Kmeet Member")}${p.age ? `, ${p.age}` : ""}</h1>
+        <p class="small">${escapeHtml(p.location || "Kenya")}</p>
+        <p>${escapeHtml(p.bio || "No bio yet.")}</p>
+        <div class="tags" style="justify-content:center">${interests.map(i => `<span class="tag">${escapeHtml(i)}</span>`).join("")}</div>
+        <div class="actions">
+          ${own ? '<a class="btn" href="discover.html">Discover People</a><button class="btn light" id="logoutBtn">Log Out</button>' :
+            `<button class="btn" id="chatBtn">Chat With ${escapeHtml(p.name || "this person")}</button>`}
+        </div>
+        ${!own ? '<p class="small">Chat access is available after payment. Guests can also chat after payment.</p>' : ""}
+      `;
+
+      if (own) {
+        document.getElementById("logoutBtn").onclick = async () => {
+          const { signOut } = await import("./firebase-config.js");
+          await signOut(auth);
+          window.location.href = "index.html";
+        };
+      } else {
+        document.getElementById("chatBtn").onclick = () => {
+          window.location.href = `chat.html?userId=${encodeURIComponent(id)}`;
+        };
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+  </script>
+</body>
+</html>

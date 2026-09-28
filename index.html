@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Meet New People</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="hero">
+    <section class="hero-box">
+      <div class="logo">Kmeet</div>
+      <h1>Meet people. Start conversations.</h1>
+      <p class="subtitle">Create your profile, discover interesting people, and connect when you're ready.</p>
+      <div class="card" style="margin-top:25px">
+        <label for="welcomeEmail">Email (optional)</label>
+        <input id="welcomeEmail" type="email" placeholder="you@example.com">
+        <div class="actions">
+          <button class="btn" id="createBtn">Create Account</button>
+          <a class="btn secondary" href="discover.html">Explore Profiles First</a>
+          <a class="btn light" href="login.html">Log In</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.getElementById("createBtn").addEventListener("click", () => {
+      const email = document.getElementById("welcomeEmail").value.trim();
+      if (email) sessionStorage.setItem("pendingEmail", email);
+      window.location.href = "interests.html";
+    });
+  </script>
+</body>
+</html>

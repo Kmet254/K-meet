@@ -1,0 +1,47 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;color:#222}
+a{text-decoration:none;color:inherit}
+.nav{height:64px;background:#fff;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:10}
+.logo{font-size:25px;font-weight:800;color:#ff4f81}
+.navlinks{display:flex;gap:18px;align-items:center}
+.navlinks a{font-size:14px;color:#555}
+.container{width:min(1050px,92%);margin:32px auto}
+.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;background:linear-gradient(135deg,#fff,#fff2f6)}
+.hero-box{max-width:650px}
+h1{font-size:48px;margin:0 0 12px}
+h2{margin-top:0}
+.subtitle{font-size:18px;color:#666;line-height:1.6}
+.btn{display:inline-block;border:0;border-radius:12px;padding:13px 20px;font-weight:700;cursor:pointer;background:#ff4f81;color:#fff}
+.btn.secondary{background:#222}
+.btn.light{background:#f0f0f0;color:#222}
+.actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.form{max-width:520px;margin:35px auto}
+label{display:block;font-weight:700;margin:15px 0 7px}
+input,textarea{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font:inherit}
+textarea{min-height:110px;resize:vertical}
+.message{margin:15px 0;padding:12px;border-radius:10px;background:#f5f5f5}
+.error{background:#ffe9ed;color:#9b1738}
+.success{background:#e9fff2;color:#126b3a}
+.interests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+.interest{border:1px solid #ddd;border-radius:12px;padding:14px;cursor:pointer;background:#fff}
+.interest input{width:auto;margin-right:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.profile-card{overflow:hidden;padding:0}
+.profile-card img{width:100%;height:250px;object-fit:cover}
+.profile-card .inside{padding:18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{background:#ffe8ef;color:#b62c59;border-radius:999px;padding:7px 10px;font-size:12px}
+.profile{max-width:720px;margin:auto}
+.avatar{width:170px;height:170px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 18px}
+.center{text-align:center}
+.chatbox{max-width:800px;margin:auto}
+.messages{height:450px;overflow-y:auto;background:#f4f4f7;border-radius:14px;padding:16px}
+.bubble{max-width:75%;padding:10px 13px;border-radius:14px;margin:8px 0;line-height:1.4}
+.me{margin-left:auto;background:#ff4f81;color:white}
+.them{background:white}
+.chat-form{display:flex;gap:10px;margin-top:12px}
+.chat-form input{flex:1}
+.small{font-size:13px;color:#777}
+footer{text-align:center;color:#888;padding:35px}
+@media(max-width:600px){h1{font-size:36px}.nav{padding:0 4%}.navlinks{gap:10px}.navlinks a{font-size:12px}}

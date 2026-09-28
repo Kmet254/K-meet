@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Discover</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a class="logo" href="index.html">Kmeet</a>
+    <div class="navlinks">
+      <a href="discover.html">Discover</a>
+      <a id="profileLink" href="login.html">Profile</a>
+      <a href="index.html">Home</a>
+    </div>
+  </nav>
+  <main class="container">
+    <h2>Discover People</h2>
+    <p class="small">You can browse profiles without an account.</p>
+    <div id="msg"></div>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <script type="module">
+    import { auth, db, onAuthStateChanged, collection, onSnapshot } from "./firebase-config.js";
+
+    onAuthStateChanged(auth, user => {
+      if (user && !user.isAnonymous) document.getElementById("profileLink").href = "profile.html";
+    });
+
+    const grid = document.getElementById("grid");
+    const unsub = onSnapshot(collection(db, "users"), snapshot => {
+      grid.innerHTML = "";
+      if (snapshot.empty) {
+        grid.innerHTML = '<div class="card">No profiles yet. Create the first account.</div>';
+        return;
+      }
+
+      snapshot.forEach(snap => {
+        const p = snap.data();
+        const name = p.name || p.username || "Kmeet Member";
+        const age = p.age ? `, ${p.age}` : "";
+        const avatar = p.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&q=80";
+        const interests = Array.isArray(p.interests) ? p.interests.slice(0,4) : [];
+        grid.insertAdjacentHTML("beforeend", `
+          <article class="card profile-card">
+            <img src="${avatar}" alt="">
+            <div class="inside">
+              <h3>${escapeHtml(name)}${age}</h3>
+              <p class="small">${escapeHtml(p.location || "Kenya")}</p>
+              <div class="tags">${interests.map(i => `<span class="tag">${escapeHtml(i)}</span>`).join("")}</div>
+              <div style="margin-top:15px"><a class="btn" href="profile.html?id=${encodeURIComponent(snap.id)}">View Profile</a></div>
+            </div>
+          </article>
+        `);
+      });
+    }, err => {
+      console.error(err);
+      document.getElementById("msg").innerHTML = `<div class="message error">Could not load profiles: ${err.message}</div>`;
+    });
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+  </script>
+</body>
+</html>

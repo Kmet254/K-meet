@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a class="logo" href="index.html">Kmeet</a>
+    <div class="navlinks"><a href="discover.html">Discover</a><a href="profile.html">Profile</a></div>
+  </nav>
+  <main class="container">
+    <section class="card chatbox">
+      <div id="status" class="message">Checking chat access...</div>
+      <div id="chatUI" style="display:none">
+        <h2 id="chatTitle">Chat</h2>
+        <div id="messages" class="messages"></div>
+        <form id="chatForm" class="chat-form">
+          <input id="messageInput" maxlength="1000" autocomplete="off" placeholder="Write a message..." required>
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import {
+      auth, db, onAuthStateChanged, signInAnonymously, doc, getDoc,
+      collection, addDoc, query, orderBy, onSnapshot, serverTimestamp
+    } from "./firebase-config.js";
+
+    const targetId = new URLSearchParams(location.search).get("userId");
+    let currentUser = null;
+    let unsubscribeMessages = null;
+
+    if (!targetId) {
+      document.getElementById("status").innerHTML = '<div class="message error">No chat profile was selected.</div>';
+    } else {
+      onAuthStateChanged(auth, async user => {
+        try {
+          // Registered users use their Firebase account.
+          // Guests get an anonymous Firebase identity so Firestore can secure the chat.
+          if (!user) {
+            const cred = await signInAnonymously(auth);
+            currentUser = cred.user;
+          } else {
+            currentUser = user;
+          }
+
+          if (!currentUser || currentUser.uid === targetId) {
+            showStatus("You cannot chat with your own profile.", true);
+            return;
+          }
+
+          // TEMPORARY payment gate until Daraja is connected.
+          // This is deliberately a demo flag, not secure payment verification.
+          const paid = localStorage.getItem("kmeet_demo_paid") === "true";
+
+          if (!paid) {
+            showStatus(`
+              <h3>Payment required</h3>
+              <p>Chat is available to both guests and registered users after payment.</p>
+              <a class="btn" href="payment.html?userId=${encodeURIComponent(targetId)}">Continue to Payment</a>
+            `, false);
+            return;
+          }
+
+          await openChat();
+        } catch (err) {
+          console.error(err);
+          showStatus(`Could not start chat: ${err.message}`, true);
+        }
+      });
+    }
+
+    async function openChat() {
+      const targetSnap = await getDoc(doc(db, "users", targetId));
+      const target = targetSnap.exists() ? targetSnap.data() : { name: "Kmeet Member" };
+      document.getElementById("chatTitle").textContent = `Chat with ${target.name || "Kmeet Member"}`;
+      document.getElementById("status").style.display = "none";
+      document.getElementById("chatUI").style.display = "block";
+
+      const conversationId = [currentUser.uid, targetId].sort().join("_");
+      const messagesRef = collection(db, "conversations", conversationId, "messages");
+      const q = query(messagesRef, orderBy("createdAt", "asc"));
+
+      unsubscribeMessages = onSnapshot(q, snapshot => {
+        const box = document.getElementById("messages");
+        box.innerHTML = "";
+        snapshot.forEach(s => {
+          const m = s.data();
+          const mine = m.senderId === currentUser.uid;
+          const div = document.createElement("div");
+          div.className = `bubble ${mine ? "me" : "them"}`;
+          div.textContent = m.text || "";
+          box.appendChild(div);
+        });
+        box.scrollTop = box.scrollHeight;
+      }, err => {
+        console.error(err);
+        showStatus(`Could not load messages: ${err.message}`, true);
+      });
+
+      document.getElementById("chatForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        const input = document.getElementById("messageInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        try {
+          await addDoc(messagesRef, {
+            senderId: currentUser.uid,
+            targetId,
+            text,
+            createdAt: serverTimestamp()
+          });
+          input.value = "";
+        } catch (err) {
+          console.error(err);
+          alert("Message could not be sent: " + err.message);
+        }
+      });
+    }
+
+    function showStatus(html, error) {
+      const el = document.getElementById("status");
+      el.className = error ? "message error" : "message";
+      el.innerHTML = html;
+    }
+  </script>
+</body>
+</html>

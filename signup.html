@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kmeet - Create Account</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav"><a class="logo" href="index.html">Kmeet</a><div class="navlinks"><a href="discover.html">Discover</a><a href="login.html">Log In</a></div></nav>
+  <main class="container">
+    <section class="card form">
+      <h2>Create your Kmeet account</h2>
+      <p class="small">Your selected interests will be saved to your profile.</p>
+      <form id="signupForm">
+        <label for="displayName">Display name</label>
+        <input id="displayName" required maxlength="40" placeholder="Your name">
+        <label for="email">Email</label>
+        <input id="email" type="email" required placeholder="you@example.com">
+        <label for="password">Password</label>
+        <input id="password" type="password" required minlength="6" placeholder="At least 6 characters">
+        <div id="msg"></div>
+        <button class="btn" type="submit">Create Account</button>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import {
+      auth, db, createUserWithEmailAndPassword, updateProfile, setDoc, doc, signOut
+    } from "./firebase-config.js";
+
+    const savedEmail = sessionStorage.getItem("pendingEmail");
+    if (savedEmail) document.getElementById("email").value = savedEmail;
+
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("msg");
+      msg.innerHTML = "";
+
+      const name = document.getElementById("displayName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const interests = JSON.parse(sessionStorage.getItem("pendingInterests") || "[]");
+
+      if (!interests.length) {
+        msg.innerHTML = '<div class="message error">Please select your interests first.</div>';
+        return;
+      }
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(cred.user, { displayName: name });
+
+        await setDoc(doc(db, "users", cred.user.uid), {
+          uid: cred.user.uid,
+          name,
+          email,
+          interests,
+          bio: "New Kmeet member.",
+          location: "Kenya",
+          age: null,
+          avatar: "",
+          createdAt: new Date().toISOString(),
+          onboardingCompleted: true
+        }, { merge: true });
+
+        // Firebase automatically signs the new user in.
+        // We explicitly sign out so the next step is the requested login page.
+        await signOut(auth);
+
+        sessionStorage.removeItem("pendingInterests");
+        sessionStorage.removeItem("pendingEmail");
+
+        window.location.href = "login.html?created=1";
+      } catch (err) {
+        console.error(err);
+        let text = err.message || "Could not create account.";
+        if (err.code === "auth/email-already-in-use") text = "That email is already registered. Please log in.";
+        if (err.code === "auth/weak-password") text = "Password must be at least 6 characters.";
+        msg.innerHTML = `<div class="message error">${text}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>
