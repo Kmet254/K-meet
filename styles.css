@@ -38,21 +38,6 @@ body {
     background-repeat: no-repeat;
     overflow: hidden;
 }
-.header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0, 0, 0, 0.68) 0%,
-            rgba(35, 10, 18, 0.55) 45%,
-            rgba(0, 0, 0, 0.70) 100%
-        );
-
-    z-index: 0;
-}
 
 /* Dark but transparent overlay */
 .header::before {
