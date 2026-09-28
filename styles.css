@@ -1,47 +1,800 @@
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;color:#222}
-a{text-decoration:none;color:inherit}
-.nav{height:64px;background:#fff;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:10}
-.logo{font-size:25px;font-weight:800;color:#ff4f81}
-.navlinks{display:flex;gap:18px;align-items:center}
-.navlinks a{font-size:14px;color:#555}
-.container{width:min(1050px,92%);margin:32px auto}
-.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.06)}
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;background:linear-gradient(135deg,#fff,#fff2f6)}
-.hero-box{max-width:650px}
-h1{font-size:48px;margin:0 0 12px}
-h2{margin-top:0}
-.subtitle{font-size:18px;color:#666;line-height:1.6}
-.btn{display:inline-block;border:0;border-radius:12px;padding:13px 20px;font-weight:700;cursor:pointer;background:#ff4f81;color:#fff}
-.btn.secondary{background:#222}
-.btn.light{background:#f0f0f0;color:#222}
-.actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:24px}
-.form{max-width:520px;margin:35px auto}
-label{display:block;font-weight:700;margin:15px 0 7px}
-input,textarea{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font:inherit}
-textarea{min-height:110px;resize:vertical}
-.message{margin:15px 0;padding:12px;border-radius:10px;background:#f5f5f5}
-.error{background:#ffe9ed;color:#9b1738}
-.success{background:#e9fff2;color:#126b3a}
-.interests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
-.interest{border:1px solid #ddd;border-radius:12px;padding:14px;cursor:pointer;background:#fff}
-.interest input{width:auto;margin-right:8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.profile-card{overflow:hidden;padding:0}
-.profile-card img{width:100%;height:250px;object-fit:cover}
-.profile-card .inside{padding:18px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.tag{background:#ffe8ef;color:#b62c59;border-radius:999px;padding:7px 10px;font-size:12px}
-.profile{max-width:720px;margin:auto}
-.avatar{width:170px;height:170px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 18px}
-.center{text-align:center}
-.chatbox{max-width:800px;margin:auto}
-.messages{height:450px;overflow-y:auto;background:#f4f4f7;border-radius:14px;padding:16px}
-.bubble{max-width:75%;padding:10px 13px;border-radius:14px;margin:8px 0;line-height:1.4}
-.me{margin-left:auto;background:#ff4f81;color:white}
-.them{background:white}
-.chat-form{display:flex;gap:10px;margin-top:12px}
-.chat-form input{flex:1}
-.small{font-size:13px;color:#777}
-footer{text-align:center;color:#888;padding:35px}
-@media(max-width:600px){h1{font-size:36px}.nav{padding:0 4%}.navlinks{gap:10px}.navlinks a{font-size:12px}}
+/* =========================================
+   KMEET — MAIN HOMEPAGE STYLES
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0d0b0e;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   FULL SCREEN BACKGROUND
+========================================= */
+
+.header {
+    position: relative;
+
+    min-height: 100vh;
+    width: 100%;
+
+    background:
+        linear-gradient(
+            rgba(13, 11, 14, 0.48),
+            rgba(4, 9, 30, 0.70)
+        ),
+        url('../assets/kmeet-background.jpg');
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 20px 55px 40px;
+
+    overflow: hidden;
+}
+
+
+/* Extra subtle overlay */
+
+.header::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(10, 8, 10, 0.12),
+            rgba(10, 8, 10, 0.02) 50%,
+            rgba(10, 8, 10, 0.22)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.main-nav {
+    position: relative;
+
+    z-index: 5;
+
+    width: 100%;
+    max-width: 1100px;
+
+    min-height: 40px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: center;
+}
+
+
+/* =========================================
+   KMEET BRAND
+========================================= */
+
+.brand {
+    justify-self: start;
+}
+
+
+.brand-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #ded9d6;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 400;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.brand-link:hover {
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+.brand-heart {
+    color: #e07a5f;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   INTERESTED BUTTON
+========================================= */
+
+.interested-btn {
+    justify-self: center;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    min-width: 120px;
+
+    padding: 8px 17px;
+
+    border-radius: 22px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    background:
+        rgba(255, 255, 255, 0.12);
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.18);
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.interested-btn:hover {
+    background:
+        rgba(224, 122, 95, 0.30);
+
+    border-color:
+        rgba(255, 255, 255, 0.38);
+
+    transform:
+        translateY(-1px);
+}
+
+
+.interested-btn i {
+    font-size: 11px;
+}
+
+
+/* =========================================
+   RIGHT NAVIGATION
+========================================= */
+
+.nav-links {
+    justify-self: end;
+}
+
+
+.nav-links ul {
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+    list-style: none;
+}
+
+
+.nav-links a {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    letter-spacing: 0.8px;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.nav-links a:hover {
+    color: #f0a18e;
+}
+
+
+/* =========================================
+   HERO GLASS CARD
+========================================= */
+
+.hero-content {
+    position: relative;
+
+    z-index: 3;
+
+    text-align: center;
+
+    color: #ffffff;
+
+    width: 100%;
+
+    max-width: 440px;
+
+    margin: auto;
+
+    padding: 37px 28px 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40, 34, 40, 0.72),
+            rgba(18, 17, 23, 0.78)
+        );
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.16);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.38);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        visibility 0.4s ease;
+}
+
+
+/* Glass shine */
+
+.hero-content::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.07),
+            transparent 42%
+        );
+
+    pointer-events: none;
+}
+
+
+.hero-content > * {
+    position: relative;
+
+    z-index: 1;
+}
+
+
+/* =========================================
+   HERO TITLE
+========================================= */
+
+.hero-content h1 {
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 22px;
+
+    line-height: 1.5;
+
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 13px;
+
+    color: #fceee9;
+}
+
+
+/* =========================================
+   HERO TEXT
+========================================= */
+
+.hero-content p {
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    font-weight: 400;
+
+    color: #d1cdca;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.auth-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin: 0 auto;
+}
+
+
+.input-group {
+    width: 100%;
+}
+
+
+/* =========================================
+   EMAIL INPUT
+========================================= */
+
+.auth-form input[type="email"] {
+    display: block;
+
+    width: 100%;
+
+    height: 50px;
+
+    padding: 14px 17px;
+
+    border-radius: 26px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.20);
+
+    background:
+        rgba(9, 8, 12, 0.48);
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-family: 'Poppins', sans-serif;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.auth-form input[type="email"]:focus {
+    border-color: #e07a5f;
+
+    background:
+        rgba(9, 8, 12, 0.62);
+
+    box-shadow:
+        0 0 0 3px rgba(224, 122, 95, 0.10);
+}
+
+
+.auth-form input[type="email"]::placeholder {
+    color: #9a9499;
+}
+
+
+/* =========================================
+   CREATE ACCOUNT BUTTON
+========================================= */
+
+.btn-primary {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 13px 16px;
+
+    border: none;
+
+    border-radius: 26px;
+
+    background: #e07a5f;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    font-family: 'Poppins', sans-serif;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.15s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.btn-primary:hover {
+    background: #d66d53;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 20px rgba(224, 122, 95, 0.22);
+}
+
+
+/* =========================================
+   LOGIN TEXT
+========================================= */
+
+.login-option {
+    margin-top: 18px;
+
+    font-size: 13px;
+
+    color: #b5ada7;
+
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.btn-link {
+    color: #ffffff;
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+
+    margin-left: 5px;
+
+    font-weight: 500;
+
+    transition: color 0.2s ease;
+}
+
+
+.btn-link:hover {
+    color: #f0a18e;
+}
+
+
+/* =========================================
+   LOGGED-IN PROFILE
+========================================= */
+
+.home-profile-preview {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.home-avatar {
+    width: 82px;
+
+    height: 82px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        3px solid rgba(255, 255, 255, 0.45);
+
+    margin-bottom: 14px;
+}
+
+
+.home-profile-preview h2 {
+    margin-bottom: 5px;
+}
+
+
+.home-email {
+    color: #c9c1bd !important;
+
+    margin-bottom: 12px !important;
+}
+
+
+.home-interests-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-bottom: 18px;
+}
+
+
+.home-tag {
+    padding: 5px 11px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+
+    font-size: 11px;
+}
+
+
+.home-profile-actions {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.btn-link-logout {
+    background: transparent;
+
+    border: none;
+
+    color: #d1cdca;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    margin-top: 3px;
+
+    text-decoration: underline;
+}
+
+
+.btn-link-logout:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   PAGE TRANSITION
+========================================= */
+
+body.fade-out {
+    opacity: 0;
+
+    transform: translateY(-8px);
+
+    transition:
+        opacity 0.4s ease-in-out,
+        transform 0.4s ease-in-out;
+}
+
+
+/* =========================================
+   MOBILE — TABLET
+========================================= */
+
+@media (max-width: 760px) {
+
+    .header {
+        padding:
+            17px 20px 28px;
+    }
+
+
+    .main-nav {
+        grid-template-columns:
+            1fr auto;
+
+        grid-template-areas:
+            "brand interested"
+            "links links";
+
+        row-gap: 13px;
+    }
+
+
+    .brand {
+        grid-area: brand;
+    }
+
+
+    .interested-btn {
+        grid-area: interested;
+    }
+
+
+    .nav-links {
+        grid-area: links;
+
+        justify-self: center;
+    }
+
+
+    .nav-links ul {
+        gap: 19px;
+    }
+
+
+    .brand-link {
+        font-size: 13px;
+    }
+
+
+    .interested-btn {
+        min-width: 108px;
+
+        padding: 7px 13px;
+    }
+
+
+    .hero-content {
+        max-width: 420px;
+
+        padding:
+            31px 22px 30px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 19px;
+
+        line-height: 1.45;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE — PHONE
+========================================= */
+
+@media (max-width: 430px) {
+
+    .header {
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+
+    .brand-link {
+        font-size: 12px;
+    }
+
+
+    .brand-heart {
+        font-size: 13px;
+    }
+
+
+    .interested-btn {
+        min-width: 100px;
+
+        font-size: 11px;
+    }
+
+
+    .nav-links ul {
+        gap: 15px;
+    }
+
+
+    .nav-links a {
+        font-size: 11px;
+
+        letter-spacing: 0.5px;
+    }
+
+
+    .hero-content {
+        width: 100%;
+
+        padding:
+            29px 18px 27px;
+
+        border-radius: 14px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 18px;
+
+        letter-spacing: 1px;
+    }
+
+
+    .hero-content p {
+        font-size: 12px;
+    }
+
+
+    .auth-form input[type="email"] {
+        height: 47px;
+    }
+
+
+    .btn-primary {
+        min-height: 47px;
+    }
+
+}
