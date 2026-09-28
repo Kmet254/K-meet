@@ -174,13 +174,16 @@ body {
     position: relative;
     z-index: 2;
 
+    width: 100%;
     min-height: calc(100vh - 80px);
 
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    padding: 50px 20px;
+    padding: 40px 20px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 
@@ -188,29 +191,24 @@ body {
 
 .hero-content {
     position: relative;
-    z-index: 3;
 
-    width: 100%;
-    max-width: 460px;
+    width: min(680px, calc(100vw - 40px));
+    max-width: 680px;
 
-    padding: 42px 35px;
+    margin: 0 auto !important;
+    padding: 55px 40px;
+
+    box-sizing: border-box;
+
+    background: rgba(35, 25, 25, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0 22px 22px 0;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     text-align: center;
-
-    background: rgba(20, 15, 15, 0.48);
-
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 18px;
-
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.35);
-
-    animation: cardAppear 0.9s ease;
 }
-
 
 /* =========================================================
    HERO TEXT
