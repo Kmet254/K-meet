@@ -35,7 +35,7 @@ body {
             rgba(13, 11, 14, 0.48),
             rgba(4, 9, 30, 0.70)
         ),
-        url('../assets/kmeet-background.jpg');
+        url('kmeet-background.jpg.jpg');
 
     background-position: center center;
     background-repeat: no-repeat;
