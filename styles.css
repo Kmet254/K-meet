@@ -39,12 +39,21 @@ body {
     overflow: hidden;
 }
 
-/* Dark but transparent overlay */
+
+/* Dark + subtle burgundy blend */
 .header::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.30);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.68) 0%,
+            rgba(45, 12, 22, 0.52) 45%,
+            rgba(0, 0, 0, 0.70) 100%
+        );
+
     z-index: 0;
 }
 
@@ -100,7 +109,7 @@ body {
 }
 
 
-/* If the older HTML uses this instead of .brand */
+/* Older HTML compatibility */
 
 .main-nav h2 {
     font-family: "Playfair Display", serif;
@@ -184,7 +193,7 @@ body {
 }
 
 
-/* Original HTML may use .hero-content directly */
+/* ---------- HERO CARD ---------- */
 
 .hero-content {
     position: relative;
