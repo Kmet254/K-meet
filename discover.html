@@ -3,69 +3,530 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Kmeet - Discover</title>
+
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/svg+xml" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg">
+  <link rel="icon" type="image/png" href="kmeet-heart.png">
+
+  <style>
+    /* ================================
+       KMEET DISCOVER PAGE
+       ================================ */
+
+    body.discover-page {
+      margin: 0 !important;
+      min-height: 100vh;
+      background:
+        linear-gradient(
+          135deg,
+          #120c10 0%,
+          #24151b 50%,
+          #0d0a0c 100%
+        ) !important;
+      color: #fff !important;
+      font-family: "Poppins", Arial, sans-serif;
+    }
+
+    .discover-page *,
+    .discover-page *::before,
+    .discover-page *::after {
+      box-sizing: border-box;
+    }
+
+    /* NAVIGATION */
+    .discover-page .discover-nav {
+      width: 100%;
+      min-height: 78px;
+      padding: 0 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(20, 12, 16, 0.92),
+          rgba(35, 19, 25, 0.82)
+        );
+
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+
+      position: relative;
+      z-index: 10;
+    }
+
+    .discover-page .discover-logo {
+      color: #fff !important;
+      text-decoration: none !important;
+
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 30px;
+      font-weight: 700;
+
+      letter-spacing: 1px;
+
+      transition: opacity 0.2s ease;
+    }
+
+    .discover-page .discover-logo:hover {
+      opacity: 0.8;
+    }
+
+    .discover-page .discover-navlinks {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .discover-page .discover-navlinks a {
+      color: rgba(255,255,255,0.88) !important;
+      text-decoration: none !important;
+
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+
+      transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .discover-page .discover-navlinks a:hover {
+      color: #f09a63 !important;
+      transform: translateY(-1px);
+    }
+
+    /* MAIN */
+    .discover-page .discover-container {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 55px 0 70px;
+    }
+
+    .discover-page .discover-heading {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .discover-page .discover-heading h1 {
+      margin: 0 0 12px;
+
+      color: #fff;
+      font-family: "Playfair Display", Georgia, serif;
+
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .discover-page .discover-heading p {
+      margin: 0;
+
+      color: rgba(255,255,255,0.68);
+      font-size: 16px;
+    }
+
+    /* MESSAGE */
+    .discover-page #msg {
+      margin-bottom: 25px;
+    }
+
+    .discover-page .message {
+      padding: 15px 20px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .discover-page .message.error {
+      color: #ffb4b4;
+      border-color: rgba(255,100,100,0.3);
+    }
+
+    /* PROFILE GRID */
+    .discover-page .discover-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(270px, 1fr));
+
+      gap: 28px;
+
+      width: 100%;
+    }
+
+    /* PROFILE CARD */
+    .discover-page .profile-card {
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(65,43,42,0.72),
+          rgba(25,17,21,0.88)
+        ) !important;
+
+      border: 1px solid rgba(255,255,255,0.14) !important;
+      border-radius: 22px !important;
+
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.06) !important;
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .discover-page .profile-card:hover {
+      transform: translateY(-6px);
+
+      box-shadow:
+        0 25px 55px rgba(0,0,0,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.08) !important;
+    }
+
+    /* PROFILE IMAGE */
+    .discover-page .profile-card > img {
+      display: block;
+
+      width: 100%;
+      height: 320px;
+
+      object-fit: cover;
+
+      border: 0;
+    }
+
+    /* CARD CONTENT */
+    .discover-page .profile-inside {
+      padding: 22px;
+    }
+
+    .discover-page .profile-inside h3 {
+      margin: 0 0 6px;
+
+      color: #fff;
+
+      font-family: "Playfair Display", Georgia, serif;
+
+      font-size: 23px;
+      font-weight: 600;
+    }
+
+    .discover-page .profile-location {
+      margin: 0 0 16px;
+
+      color: rgba(255,255,255,0.60);
+      font-size: 14px;
+    }
+
+    /* INTEREST TAGS */
+    .discover-page .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .discover-page .tag {
+      display: inline-block;
+
+      padding: 6px 11px;
+
+      color: rgba(255,255,255,0.85);
+
+      background: rgba(240,154,99,0.10);
+
+      border: 1px solid rgba(240,154,99,0.22);
+
+      border-radius: 30px;
+
+      font-size: 12px;
+    }
+
+    /* VIEW PROFILE BUTTON */
+    .discover-page .profile-action {
+      margin-top: 20px;
+    }
+
+    .discover-page .profile-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      min-height: 46px;
+
+      color: #fff !important;
+      text-decoration: none !important;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e98750,
+          #d96d3c
+        );
+
+      border-radius: 12px;
+
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+
+      box-shadow: 0 8px 20px rgba(0,0,0,0.20);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .discover-page .profile-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.30);
+    }
+
+    /* EMPTY STATE */
+    .discover-page .empty-card {
+      grid-column: 1 / -1;
+
+      padding: 50px 25px;
+
+      text-align: center;
+
+      color: rgba(255,255,255,0.72);
+
+      background: rgba(255,255,255,0.05);
+
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 20px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+
+      .discover-page .discover-nav {
+        padding: 0 20px;
+      }
+
+      .discover-page .discover-logo {
+        font-size: 25px;
+      }
+
+      .discover-page .discover-navlinks {
+        gap: 15px;
+      }
+
+      .discover-page .discover-navlinks a {
+        font-size: 12px;
+      }
+
+      .discover-page .discover-container {
+        width: min(100% - 28px, 600px);
+        padding-top: 35px;
+      }
+
+      .discover-page .profile-card > img {
+        height: 300px;
+      }
+    }
+  </style>
 </head>
-<body>
-  <nav class="nav">
-    <a class="logo" href="index.html">Kmeet</a>
-    <div class="navlinks">
+
+<body class="discover-page">
+
+  <!-- NAVIGATION -->
+  <nav class="discover-nav">
+
+    <a class="discover-logo" href="index.html">
+      Kmeet
+    </a>
+
+    <div class="discover-navlinks">
       <a href="discover.html">Discover</a>
       <a id="profileLink" href="login.html">Profile</a>
       <a href="index.html">Home</a>
     </div>
+
   </nav>
-  <main class="container">
-    <h2>Discover People</h2>
-    <p class="small">You can browse profiles without an account.</p>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="discover-container">
+
+    <div class="discover-heading">
+      <h1>Discover People</h1>
+      <p>You can browse profiles without an account.</p>
+    </div>
+
     <div id="msg"></div>
-    <div id="grid" class="grid"></div>
+
+    <div id="grid" class="discover-grid"></div>
+
   </main>
 
+
   <script type="module">
-    import { auth, db, onAuthStateChanged, collection, onSnapshot } from "./firebase-config.js";
+
+    import {
+      auth,
+      db,
+      onAuthStateChanged,
+      collection,
+      onSnapshot
+    } from "./firebase-config.js";
+
+
+    /* PROFILE LINK */
 
     onAuthStateChanged(auth, user => {
-      if (user && !user.isAnonymous) document.getElementById("profileLink").href = "profile.html";
-    });
 
-    const grid = document.getElementById("grid");
-    const unsub = onSnapshot(collection(db, "users"), snapshot => {
-      grid.innerHTML = "";
-      if (snapshot.empty) {
-        grid.innerHTML = '<div class="card">No profiles yet. Create the first account.</div>';
-        return;
+      if (user && !user.isAnonymous) {
+        document.getElementById("profileLink").href = "profile.html";
       }
 
-      snapshot.forEach(snap => {
-        const p = snap.data();
-        const name = p.name || p.username || "Kmeet Member";
-        const age = p.age ? `, ${p.age}` : "";
-        const avatar = p.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&q=80";
-        const interests = Array.isArray(p.interests) ? p.interests.slice(0,4) : [];
-        grid.insertAdjacentHTML("beforeend", `
-          <article class="card profile-card">
-            <img src="${avatar}" alt="">
-            <div class="inside">
-              <h3>${escapeHtml(name)}${age}</h3>
-              <p class="small">${escapeHtml(p.location || "Kenya")}</p>
-              <div class="tags">${interests.map(i => `<span class="tag">${escapeHtml(i)}</span>`).join("")}</div>
-              <div style="margin-top:15px"><a class="btn" href="profile.html?id=${encodeURIComponent(snap.id)}">View Profile</a></div>
-            </div>
-          </article>
-        `);
-      });
-    }, err => {
-      console.error(err);
-      document.getElementById("msg").innerHTML = `<div class="message error">Could not load profiles: ${err.message}</div>`;
     });
 
+
+    /* PROFILE GRID */
+
+    const grid = document.getElementById("grid");
+
+    const unsub = onSnapshot(
+      collection(db, "users"),
+
+      snapshot => {
+
+        grid.innerHTML = "";
+
+        if (snapshot.empty) {
+
+          grid.innerHTML = `
+            <div class="empty-card">
+              No profiles yet. Create the first account.
+            </div>
+          `;
+
+          return;
+        }
+
+
+        snapshot.forEach(snap => {
+
+          const p = snap.data();
+
+          const name =
+            p.name ||
+            p.username ||
+            "Kmeet Member";
+
+          const age =
+            p.age
+              ? `, ${p.age}`
+              : "";
+
+          const avatar =
+            p.avatar ||
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&q=80";
+
+          const interests =
+            Array.isArray(p.interests)
+              ? p.interests.slice(0, 4)
+              : [];
+
+
+          grid.insertAdjacentHTML(
+            "beforeend",
+
+            `
+              <article class="profile-card">
+
+                <img
+                  src="${escapeHtml(avatar)}"
+                  alt="${escapeHtml(name)}"
+                  loading="lazy"
+                >
+
+                <div class="profile-inside">
+
+                  <h3>
+                    ${escapeHtml(name)}${age}
+                  </h3>
+
+                  <p class="profile-location">
+                    ${escapeHtml(p.location || "Kenya")}
+                  </p>
+
+                  <div class="tags">
+
+                    ${interests.map(i => `
+                      <span class="tag">
+                        ${escapeHtml(i)}
+                      </span>
+                    `).join("")}
+
+                  </div>
+
+                  <div class="profile-action">
+
+                    <a
+                      class="profile-button"
+                      href="profile.html?id=${encodeURIComponent(snap.id)}"
+                    >
+                      View Profile
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </article>
+            `
+          );
+
+        });
+
+      },
+
+      err => {
+
+        console.error(err);
+
+        document.getElementById("msg").innerHTML = `
+          <div class="message error">
+            Could not load profiles: ${escapeHtml(err.message)}
+          </div>
+        `;
+
+      }
+    );
+
+
+    /* SECURITY */
+
     function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, c => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[c]));
+
+      return String(value).replace(
+        /[&<>"']/g,
+
+        c => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[c])
+      );
+
     }
+
   </script>
+
 </body>
 </html>
