@@ -1,34 +1,625 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Kmeet - Meet New People</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kmeet — Where Meaningful Connections Begin</title>
+
+    <meta name="description"
+          content="Kmeet — a place for meaningful connections, genuine conversations and lasting relationships.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            overflow: hidden;
+            background: #120b0c;
+        }
+
+        /* =========================================
+           FULL SCREEN BACKGROUND
+        ========================================= */
+
+        .welcome-page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            height: 100vh;
+
+            background-image:
+                url("assets/kmeet-background.jpg");
+
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        /* Soft cinematic overlay */
+
+        .welcome-page::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(18, 8, 10, 0.72) 0%,
+                    rgba(35, 12, 18, 0.42) 45%,
+                    rgba(10, 7, 8, 0.28) 100%
+                );
+
+            z-index: 1;
+        }
+
+        /* Gentle bottom fade */
+
+        .welcome-page::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    0deg,
+                    rgba(10, 5, 7, 0.65),
+                    transparent 45%
+                );
+
+            z-index: 1;
+            pointer-events: none;
+        }
+
+
+        /* =========================================
+           MAIN CONTENT
+        ========================================= */
+
+        .content {
+            position: relative;
+            z-index: 3;
+
+            width: min(92%, 560px);
+
+            padding: 42px 42px 38px;
+
+            text-align: center;
+
+            border-radius: 30px;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.38);
+
+            animation: welcomeIn 1.2s ease forwards;
+
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+
+        .logo {
+            width: 175px;
+            height: 175px;
+
+            object-fit: cover;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.28);
+
+            animation: logoAppear 1.4s ease forwards;
+
+            opacity: 0;
+            transform: scale(0.88);
+        }
+
+
+        /* =========================================
+           TEXT
+        ========================================= */
+
+        .welcome-title {
+            color: white;
+
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: clamp(2rem, 5vw, 3.1rem);
+
+            font-weight: 500;
+
+            line-height: 1.15;
+
+            margin-bottom: 14px;
+
+            text-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.45);
+        }
+
+        .welcome-title span {
+            color: #f3c8c9;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.92);
+
+            font-size: 1.05rem;
+
+            line-height: 1.7;
+
+            max-width: 440px;
+
+            margin: 0 auto 28px;
+
+            text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* =========================================
+           BUTTONS
+        ========================================= */
+
+        .buttons {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 13px;
+
+            width: 100%;
+
+            max-width: 360px;
+
+            margin: 0 auto;
+        }
+
+        .btn {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
+            min-height: 54px;
+
+            padding: 14px 25px;
+
+            border-radius: 999px;
+
+            text-decoration: none;
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            letter-spacing: 0.2px;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+
+            overflow: hidden;
+        }
+
+        /* Create account */
+
+        .btn-primary {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8e304a,
+                    #b65368
+                );
+
+            box-shadow:
+                0 10px 25px rgba(104, 25, 47, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 32px rgba(104, 25, 47, 0.5);
+        }
+
+        /* Login */
+
+        .btn-secondary {
+            color: white;
+
+            background:
+                rgba(255, 255, 255, 0.14);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.45);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+
+            background:
+                rgba(255, 255, 255, 0.24);
+
+            box-shadow:
+                0 12px 28px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Explore */
+
+        .explore {
+            display: inline-block;
+
+            margin-top: 22px;
+
+            color: rgba(255, 255, 255, 0.88);
+
+            font-size: 0.9rem;
+
+            text-decoration: none;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.45);
+
+            padding-bottom: 3px;
+
+            transition:
+                color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .explore:hover {
+            color: white;
+
+            border-color: white;
+        }
+
+
+        /* =========================================
+           SMALL DECORATIVE HEART
+        ========================================= */
+
+        .heart {
+            position: absolute;
+
+            color: rgba(255, 255, 255, 0.35);
+
+            font-size: 18px;
+
+            animation: floatHeart 4s ease-in-out infinite;
+        }
+
+        .heart.one {
+            top: 18%;
+            left: 12%;
+        }
+
+        .heart.two {
+            top: 28%;
+            right: 12%;
+
+            animation-delay: 1s;
+        }
+
+        .heart.three {
+            bottom: 15%;
+            left: 18%;
+
+            animation-delay: 2s;
+        }
+
+        .heart.four {
+            bottom: 23%;
+            right: 17%;
+
+            animation-delay: 0.5s;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .footer {
+            position: absolute;
+
+            z-index: 4;
+
+            bottom: 15px;
+
+            left: 0;
+            right: 0;
+
+            text-align: center;
+
+            color:
+                rgba(255, 255, 255, 0.68);
+
+            font-size: 0.75rem;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        /* =========================================
+           ANIMATIONS
+        ========================================= */
+
+        @keyframes welcomeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes logoAppear {
+
+            from {
+                opacity: 0;
+                transform: scale(0.88);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+        }
+
+        @keyframes floatHeart {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.25;
+            }
+
+            50% {
+                transform: translateY(-12px);
+                opacity: 0.55;
+            }
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .welcome-page {
+                background-position: 58% center;
+            }
+
+            .welcome-page::before {
+                background:
+                    linear-gradient(
+                        180deg,
+                        rgba(20, 8, 11, 0.48),
+                        rgba(20, 8, 11, 0.72)
+                    );
+            }
+
+            .content {
+                width: calc(100% - 30px);
+
+                padding:
+                    30px
+                    22px
+                    28px;
+
+                border-radius: 25px;
+            }
+
+            .logo {
+                width: 135px;
+                height: 135px;
+
+                border-radius: 20px;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+
+                line-height: 1.6;
+
+                margin-bottom: 23px;
+            }
+
+            .btn {
+                min-height: 51px;
+            }
+
+            .heart {
+                display: none;
+            }
+
+            .footer {
+                bottom: 9px;
+
+                font-size: 0.68rem;
+            }
+        }
+
+
+        /* =========================================
+           VERY SMALL PHONES
+        ========================================= */
+
+        @media (max-height: 700px) {
+
+            .content {
+                padding-top: 22px;
+                padding-bottom: 22px;
+            }
+
+            .logo {
+                width: 105px;
+                height: 105px;
+
+                margin-bottom: 13px;
+            }
+
+            .welcome-title {
+                font-size: 1.7rem;
+
+                margin-bottom: 8px;
+            }
+
+            .subtitle {
+                margin-bottom: 15px;
+
+                font-size: 0.87rem;
+            }
+
+            .btn {
+                min-height: 46px;
+            }
+
+            .explore {
+                margin-top: 13px;
+            }
+        }
+
+    </style>
 </head>
+
+
 <body>
-  <main class="hero">
-    <section class="hero-box">
-      <div class="logo">Kmeet</div>
-      <h1>Meet people. Start conversations.</h1>
-      <p class="subtitle">Create your profile, discover interesting people, and connect when you're ready.</p>
-      <div class="card" style="margin-top:25px">
-        <label for="welcomeEmail">Email (optional)</label>
-        <input id="welcomeEmail" type="email" placeholder="you@example.com">
-        <div class="actions">
-          <button class="btn" id="createBtn">Create Account</button>
-          <a class="btn secondary" href="discover.html">Explore Profiles First</a>
-          <a class="btn light" href="login.html">Log In</a>
+
+    <main class="welcome-page">
+
+        <!-- Decorative hearts -->
+
+        <div class="heart one">♡</div>
+        <div class="heart two">♡</div>
+        <div class="heart three">♡</div>
+        <div class="heart four">♡</div>
+
+
+        <!-- Main welcome card -->
+
+        <section class="content">
+
+            <div class="logo-wrapper">
+
+                <img
+                    src="assets/kmeet-logo.jpg"
+                    alt="Kmeet"
+                    class="logo"
+                >
+
+            </div>
+
+
+            <h1 class="welcome-title">
+                Where <span>meaningful</span><br>
+                connections begin
+            </h1>
+
+
+            <p class="subtitle">
+                Meet people, discover genuine connections,
+                and take the first step toward something meaningful.
+            </p>
+
+
+            <div class="buttons">
+
+                <!-- CREATE ACCOUNT -->
+
+                <a
+                    href="interests.html"
+                    class="btn btn-primary"
+                >
+                    Create Account
+                </a>
+
+
+                <!-- LOGIN -->
+
+                <a
+                    href="login.html"
+                    class="btn btn-secondary"
+                >
+                    Log In
+                </a>
+
+            </div>
+
+
+            <!-- Explore without account -->
+
+            <a
+                href="discover.html"
+                class="explore"
+            >
+                Explore Profiles First →
+            </a>
+
+        </section>
+
+
+        <div class="footer">
+            © 2026 Kmeet · Meaningful connections, made with intention
         </div>
-      </div>
-    </section>
-  </main>
-  <script>
-    document.getElementById("createBtn").addEventListener("click", () => {
-      const email = document.getElementById("welcomeEmail").value.trim();
-      if (email) sessionStorage.setItem("pendingEmail", email);
-      window.location.href = "interests.html";
-    });
-  </script>
+
+    </main>
+
 </body>
 </html>
