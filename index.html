@@ -1,19 +1,20 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kmeet — Where Meaningful Connections Begin</title>
+    <title>Kmeet — Meaningful Connections</title>
 
     <meta name="description"
-          content="Kmeet — a place for meaningful connections, genuine conversations and lasting relationships.">
+          content="Kmeet — meet people, start conversations and build meaningful connections.">
 
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         html,
@@ -25,81 +26,120 @@
         body {
             font-family: "Segoe UI", Arial, sans-serif;
             overflow: hidden;
-            background: #120b0c;
+            background: #160b0d;
         }
 
-        /* =========================================
-           FULL SCREEN BACKGROUND
-        ========================================= */
+        /* =====================================
+           WELCOME SCREEN
+        ===================================== */
 
-        .welcome-page {
+        .welcome {
             position: relative;
+
             width: 100%;
-            min-height: 100vh;
             height: 100vh;
-
-            background-image:
-                url("assets/kmeet-background.jpg");
-
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+            min-height: 620px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
+            background-image: url("assets/kmeet-background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
             overflow: hidden;
         }
 
-        /* Soft cinematic overlay */
+        /* Cinematic overlay */
 
-        .welcome-page::before {
+        .welcome::before {
             content: "";
+
             position: absolute;
             inset: 0;
 
             background:
                 linear-gradient(
                     90deg,
-                    rgba(18, 8, 10, 0.72) 0%,
-                    rgba(35, 12, 18, 0.42) 45%,
-                    rgba(10, 7, 8, 0.28) 100%
+                    rgba(24, 8, 12, 0.78) 0%,
+                    rgba(36, 12, 18, 0.48) 48%,
+                    rgba(15, 7, 9, 0.28) 100%
                 );
 
             z-index: 1;
         }
 
-        /* Gentle bottom fade */
-
-        .welcome-page::after {
+        .welcome::after {
             content: "";
+
             position: absolute;
             inset: 0;
 
             background:
                 linear-gradient(
-                    0deg,
-                    rgba(10, 5, 7, 0.65),
+                    to top,
+                    rgba(8, 3, 5, 0.72),
                     transparent 45%
                 );
 
             z-index: 1;
-            pointer-events: none;
         }
 
 
-        /* =========================================
-           MAIN CONTENT
-        ========================================= */
+        /* =====================================
+           TOP LOGO / HOME BUTTON
+        ===================================== */
+
+        .top-logo {
+            position: absolute;
+
+            top: 28px;
+            left: 35px;
+
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+
+            text-decoration: none;
+
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+        }
+
+        .top-logo:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .top-logo img {
+            width: 105px;
+            height: 105px;
+
+            object-fit: cover;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =====================================
+           MAIN CARD
+        ===================================== */
 
         .content {
             position: relative;
-            z-index: 3;
+
+            z-index: 5;
 
             width: min(92%, 560px);
 
-            padding: 42px 42px 38px;
+            padding: 45px 42px 38px;
 
             text-align: center;
 
@@ -111,139 +151,138 @@
             border:
                 1px solid rgba(255, 255, 255, 0.25);
 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(13px);
+            -webkit-backdrop-filter: blur(13px);
 
             box-shadow:
-                0 25px 70px rgba(0, 0, 0, 0.38);
-
-            animation: welcomeIn 1.2s ease forwards;
+                0 25px 80px rgba(0, 0, 0, 0.42);
 
             opacity: 0;
+
             transform: translateY(30px);
+
+            animation:
+                contentIn 1s ease forwards;
         }
 
 
-        /* =========================================
-           LOGO
-        ========================================= */
+        /* =====================================
+           LOGO INSIDE CARD
+        ===================================== */
 
-        .logo-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 22px;
-        }
-
-        .logo {
-            width: 175px;
-            height: 175px;
+        .hero-logo {
+            width: 135px;
+            height: 135px;
 
             object-fit: cover;
 
-            border-radius: 24px;
+            border-radius: 22px;
+
+            margin-bottom: 22px;
 
             box-shadow:
-                0 12px 35px rgba(0, 0, 0, 0.28);
-
-            animation: logoAppear 1.4s ease forwards;
+                0 12px 35px rgba(0, 0, 0, 0.3);
 
             opacity: 0;
+
             transform: scale(0.88);
+
+            animation:
+                logoIn 1s ease 0.25s forwards;
         }
 
 
-        /* =========================================
-           TEXT
-        ========================================= */
+        /* =====================================
+           HEADLINE
+        ===================================== */
 
-        .welcome-title {
+        h1 {
             color: white;
 
-            font-family: Georgia, "Times New Roman", serif;
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
-            font-size: clamp(2rem, 5vw, 3.1rem);
+            font-size:
+                clamp(2rem, 5vw, 3.1rem);
 
             font-weight: 500;
 
             line-height: 1.15;
 
-            margin-bottom: 14px;
+            margin-bottom: 16px;
 
             text-shadow:
-                0 3px 15px rgba(0, 0, 0, 0.45);
+                0 4px 18px rgba(0, 0, 0, 0.45);
         }
 
-        .welcome-title span {
-            color: #f3c8c9;
+        h1 span {
+            color: #f2c1c7;
         }
 
-        .subtitle {
-            color: rgba(255, 255, 255, 0.92);
 
-            font-size: 1.05rem;
+        /* =====================================
+           DESCRIPTION
+        ===================================== */
 
-            line-height: 1.7;
-
-            max-width: 440px;
+        .description {
+            max-width: 430px;
 
             margin: 0 auto 28px;
 
+            color:
+                rgba(255, 255, 255, 0.92);
+
+            font-size: 1rem;
+
+            line-height: 1.7;
+
             text-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.5);
+                0 2px 8px rgba(0, 0, 0, 0.45);
         }
 
 
-        /* =========================================
+        /* =====================================
            BUTTONS
-        ========================================= */
+        ===================================== */
 
         .buttons {
-            display: flex;
+            width: 100%;
+            max-width: 370px;
 
+            margin: 0 auto;
+
+            display: flex;
             flex-direction: column;
 
             gap: 13px;
-
-            width: 100%;
-
-            max-width: 360px;
-
-            margin: 0 auto;
         }
 
         .btn {
-            position: relative;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
             width: 100%;
 
-            min-height: 54px;
+            min-height: 55px;
 
-            padding: 14px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             border-radius: 999px;
 
             text-decoration: none;
 
             font-size: 1rem;
-
             font-weight: 600;
-
-            letter-spacing: 0.2px;
 
             transition:
                 transform 0.25s ease,
                 box-shadow 0.25s ease,
                 background 0.25s ease;
-
-            overflow: hidden;
         }
 
-        /* Create account */
+
+        /* Create Account */
 
         .btn-primary {
             color: white;
@@ -251,20 +290,21 @@
             background:
                 linear-gradient(
                     135deg,
-                    #8e304a,
-                    #b65368
+                    #8d304b,
+                    #b75569
                 );
 
             box-shadow:
-                0 10px 25px rgba(104, 25, 47, 0.35);
+                0 12px 30px rgba(94, 20, 42, 0.42);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
 
             box-shadow:
-                0 15px 32px rgba(104, 25, 47, 0.5);
+                0 17px 36px rgba(94, 20, 42, 0.55);
         }
+
 
         /* Login */
 
@@ -272,7 +312,7 @@
             color: white;
 
             background:
-                rgba(255, 255, 255, 0.14);
+                rgba(255, 255, 255, 0.13);
 
             border:
                 1px solid rgba(255, 255, 255, 0.45);
@@ -282,29 +322,33 @@
             transform: translateY(-3px);
 
             background:
-                rgba(255, 255, 255, 0.24);
+                rgba(255, 255, 255, 0.23);
 
             box-shadow:
-                0 12px 28px rgba(0, 0, 0, 0.2);
+                0 12px 28px rgba(0, 0, 0, 0.25);
         }
 
-        /* Explore */
+
+        /* =====================================
+           EXPLORE LINK
+        ===================================== */
 
         .explore {
             display: inline-block;
 
             margin-top: 22px;
 
-            color: rgba(255, 255, 255, 0.88);
+            color:
+                rgba(255, 255, 255, 0.88);
 
             font-size: 0.9rem;
 
             text-decoration: none;
 
+            padding-bottom: 4px;
+
             border-bottom:
                 1px solid rgba(255, 255, 255, 0.45);
-
-            padding-bottom: 3px;
 
             transition:
                 color 0.2s ease,
@@ -318,18 +362,22 @@
         }
 
 
-        /* =========================================
-           SMALL DECORATIVE HEART
-        ========================================= */
+        /* =====================================
+           DECORATIVE HEARTS
+        ===================================== */
 
         .heart {
             position: absolute;
 
-            color: rgba(255, 255, 255, 0.35);
+            z-index: 3;
 
-            font-size: 18px;
+            color:
+                rgba(255, 255, 255, 0.38);
 
-            animation: floatHeart 4s ease-in-out infinite;
+            font-size: 22px;
+
+            animation:
+                float 4s ease-in-out infinite;
         }
 
         .heart.one {
@@ -338,37 +386,37 @@
         }
 
         .heart.two {
-            top: 28%;
+            top: 27%;
             right: 12%;
 
             animation-delay: 1s;
         }
 
         .heart.three {
-            bottom: 15%;
-            left: 18%;
+            bottom: 18%;
+            left: 17%;
 
             animation-delay: 2s;
         }
 
         .heart.four {
-            bottom: 23%;
+            bottom: 25%;
             right: 17%;
 
             animation-delay: 0.5s;
         }
 
 
-        /* =========================================
+        /* =====================================
            FOOTER
-        ========================================= */
+        ===================================== */
 
         .footer {
             position: absolute;
 
-            z-index: 4;
+            z-index: 5;
 
-            bottom: 15px;
+            bottom: 13px;
 
             left: 0;
             right: 0;
@@ -376,19 +424,17 @@
             text-align: center;
 
             color:
-                rgba(255, 255, 255, 0.68);
+                rgba(255, 255, 255, 0.65);
 
-            font-size: 0.75rem;
-
-            letter-spacing: 0.3px;
+            font-size: 0.72rem;
         }
 
 
-        /* =========================================
+        /* =====================================
            ANIMATIONS
-        ========================================= */
+        ===================================== */
 
-        @keyframes welcomeIn {
+        @keyframes contentIn {
 
             from {
                 opacity: 0;
@@ -402,7 +448,7 @@
 
         }
 
-        @keyframes logoAppear {
+        @keyframes logoIn {
 
             from {
                 opacity: 0;
@@ -416,7 +462,7 @@
 
         }
 
-        @keyframes floatHeart {
+        @keyframes float {
 
             0%,
             100% {
@@ -432,53 +478,70 @@
         }
 
 
-        /* =========================================
+        /* =====================================
            MOBILE
-        ========================================= */
+        ===================================== */
 
         @media (max-width: 600px) {
 
-            .welcome-page {
+            .welcome {
+                min-height: 600px;
+
                 background-position: 58% center;
             }
 
-            .welcome-page::before {
+            .welcome::before {
                 background:
                     linear-gradient(
                         180deg,
                         rgba(20, 8, 11, 0.48),
-                        rgba(20, 8, 11, 0.72)
+                        rgba(20, 8, 11, 0.74)
                     );
             }
 
+            .top-logo {
+                top: 17px;
+                left: 18px;
+            }
+
+            .top-logo img {
+                width: 72px;
+                height: 72px;
+
+                border-radius: 15px;
+            }
+
             .content {
-                width: calc(100% - 30px);
+                width:
+                    calc(100% - 28px);
 
                 padding:
-                    30px
-                    22px
-                    28px;
+                    30px 22px 27px;
 
                 border-radius: 25px;
             }
 
-            .logo {
-                width: 135px;
-                height: 135px;
+            .hero-logo {
+                width: 105px;
+                height: 105px;
 
-                border-radius: 20px;
+                border-radius: 18px;
+
+                margin-bottom: 17px;
             }
 
-            .welcome-title {
+            h1 {
                 font-size: 2rem;
+
+                margin-bottom: 11px;
             }
 
-            .subtitle {
-                font-size: 0.95rem;
+            .description {
+                font-size: 0.93rem;
 
                 line-height: 1.6;
 
-                margin-bottom: 23px;
+                margin-bottom: 21px;
             }
 
             .btn {
@@ -490,41 +553,33 @@
             }
 
             .footer {
-                bottom: 9px;
-
-                font-size: 0.68rem;
+                font-size: 0.65rem;
             }
         }
 
 
-        /* =========================================
-           VERY SMALL PHONES
-        ========================================= */
+        /* Small-height phones */
 
         @media (max-height: 700px) {
 
             .content {
-                padding-top: 22px;
-                padding-bottom: 22px;
+                padding-top: 20px;
+                padding-bottom: 20px;
             }
 
-            .logo {
-                width: 105px;
-                height: 105px;
+            .hero-logo {
+                width: 88px;
+                height: 88px;
 
-                margin-bottom: 13px;
+                margin-bottom: 11px;
             }
 
-            .welcome-title {
+            h1 {
                 font-size: 1.7rem;
-
-                margin-bottom: 8px;
             }
 
-            .subtitle {
-                margin-bottom: 15px;
-
-                font-size: 0.87rem;
+            .description {
+                margin-bottom: 14px;
             }
 
             .btn {
@@ -542,7 +597,24 @@
 
 <body>
 
-    <main class="welcome-page">
+    <main class="welcome">
+
+
+        <!-- =================================
+             KMEET LOGO = HOME BUTTON
+        ================================== -->
+
+        <a
+            href="index.html"
+            class="top-logo"
+            aria-label="Go to Kmeet home"
+        >
+            <img
+                src="assets/kmeet-logo.jpg"
+                alt="Kmeet Home"
+            >
+        </a>
+
 
         <!-- Decorative hearts -->
 
@@ -552,36 +624,33 @@
         <div class="heart four">♡</div>
 
 
-        <!-- Main welcome card -->
+        <!-- Main welcome content -->
 
         <section class="content">
 
-            <div class="logo-wrapper">
-
-                <img
-                    src="assets/kmeet-logo.jpg"
-                    alt="Kmeet"
-                    class="logo"
-                >
-
-            </div>
+            <img
+                src="assets/kmeet-logo.jpg"
+                alt="Kmeet"
+                class="hero-logo"
+            >
 
 
-            <h1 class="welcome-title">
+            <h1>
                 Where <span>meaningful</span><br>
                 connections begin
             </h1>
 
 
-            <p class="subtitle">
-                Meet people, discover genuine connections,
-                and take the first step toward something meaningful.
+            <p class="description">
+                Meet people, start conversations,
+                and discover genuine connections
+                that can grow into something meaningful.
             </p>
 
 
             <div class="buttons">
 
-                <!-- CREATE ACCOUNT -->
+                <!-- Keep your existing registration flow -->
 
                 <a
                     href="interests.html"
@@ -591,7 +660,7 @@
                 </a>
 
 
-                <!-- LOGIN -->
+                <!-- Keep your existing login page -->
 
                 <a
                     href="login.html"
@@ -603,8 +672,6 @@
             </div>
 
 
-            <!-- Explore without account -->
-
             <a
                 href="discover.html"
                 class="explore"
@@ -615,11 +682,12 @@
         </section>
 
 
-        <div class="footer">
-            © 2026 Kmeet · Meaningful connections, made with intention
-        </div>
+        <footer class="footer">
+            © 2026 Kmeet · Meaningful connections
+        </footer>
 
     </main>
 
 </body>
 </html>
+```
