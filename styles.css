@@ -38,6 +38,21 @@ body {
     background-repeat: no-repeat;
     overflow: hidden;
 }
+.header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.66) 0%,
+            rgba(45, 18, 28, 0.48) 42%,
+            rgba(18, 12, 18, 0.68) 100%
+        );
+
+    z-index: 0;
+}
 
 /* Dark but transparent overlay */
 .header::before {
@@ -52,7 +67,6 @@ body {
 /* =========================================================
    NAVIGATION
    ========================================================= */
-
 .main-nav {
     position: relative;
     z-index: 10;
@@ -65,14 +79,20 @@ body {
     align-items: center;
 
     padding: 18px 45px;
+    box-sizing: border-box;
 
-    background: rgba(0, 0, 0, 0.18);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(20, 14, 17, 0.58),
+            rgba(35, 21, 25, 0.38)
+        );
 
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
-
 
 /* ---------- KMEET BRAND ---------- */
 
@@ -186,7 +206,6 @@ body {
     box-sizing: border-box;
 }
 
-
 /* Original HTML may use .hero-content directly */
 
 .hero-content {
@@ -195,17 +214,29 @@ body {
     width: min(680px, calc(100vw - 40px));
     max-width: 680px;
 
-    margin: 0 auto !important;
+    margin: 0 auto;
     padding: 55px 40px;
 
     box-sizing: border-box;
 
-    background: rgba(35, 25, 25, 0.68);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 0 22px 22px 0;
+    /* Smooth dark burgundy glass */
+    background:
+        linear-gradient(
+            145deg,
+            rgba(65, 43, 42, 0.72) 0%,
+            rgba(42, 29, 31, 0.70) 45%,
+            rgba(18, 15, 20, 0.78) 100%
+        );
 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 28px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
     text-align: center;
 }
