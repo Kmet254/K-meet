@@ -1,81 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Kmeet — Profile</title>
+  <title>Kmeet - Profile</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg"
+  >
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --pink: #ff4f9a;
+      --pink-dark: #e83d87;
+      --purple: #8b5cf6;
+      --bg: #080810;
+      --card: rgba(22, 22, 34, 0.82);
+      --card-border: rgba(255,255,255,0.09);
+      --text: #ffffff;
+      --muted: #a8a8b8;
+      --danger: #ff5c70;
     }
 
-    :root {
-      --pink: #ff6f9f;
-      --pink-light: #ffb4cb;
-      --rose: #e84d82;
-      --dark: #0b070a;
-      --dark-2: #160b12;
-      --glass: rgba(255, 255, 255, 0.075);
-      --glass-border: rgba(255, 255, 255, 0.14);
-      --text: #fff;
-      --muted: rgba(255, 255, 255, 0.68);
+    * {
+      box-sizing: border-box;
     }
 
     body {
+      margin: 0;
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-
       background:
-        radial-gradient(
-          circle at 15% 10%,
-          rgba(255, 95, 150, 0.18),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 85% 85%,
-          rgba(177, 48, 105, 0.16),
-          transparent 35%
-        ),
-        linear-gradient(
-          135deg,
-          #090609 0%,
-          #140910 45%,
-          #090609 100%
-        );
-
-      background-attachment: fixed;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: rgba(255, 74, 135, 0.08);
-      filter: blur(90px);
-      top: 10%;
-      left: -180px;
-      pointer-events: none;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: rgba(255, 125, 171, 0.07);
-      filter: blur(100px);
-      bottom: -180px;
-      right: -140px;
-      pointer-events: none;
+        radial-gradient(circle at top left, rgba(255,79,154,.13), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,.12), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
     }
 
     a {
@@ -83,89 +48,50 @@
       text-decoration: none;
     }
 
-    button {
-      font-family: inherit;
-    }
-
     /* =========================
        NAVIGATION
     ========================= */
 
-    .navbar {
-      position: relative;
-      z-index: 10;
-
-      width: 100%;
-      padding: 22px 5vw;
-
+    .nav {
+      height: 72px;
+      padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      background: rgba(8, 5, 8, 0.58);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background: rgba(8,8,16,.75);
       backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-
-      font-size: 27px;
-      font-weight: 800;
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
       letter-spacing: -1px;
+      background: linear-gradient(135deg, #ff4f9a, #ff78b3, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .brand-heart {
-      color: var(--pink);
-      font-size: 22px;
-      text-shadow: 0 0 18px rgba(255, 89, 145, 0.55);
-    }
-
-    .nav-links {
+    .navlinks {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .nav-link {
-      padding: 10px 16px;
-      border-radius: 999px;
-
-      color: rgba(255,255,255,0.72);
+    .navlinks a {
+      color: #ddddea;
+      padding: 9px 13px;
+      border-radius: 10px;
+      transition: .2s ease;
       font-size: 14px;
-      font-weight: 600;
-
-      transition: 0.25s ease;
     }
 
-    .nav-link:hover {
-      color: white;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .nav-link.active {
-      color: white;
-      background: rgba(255, 105, 157, 0.13);
-      border: 1px solid rgba(255, 105, 157, 0.20);
-    }
-
-    .logout-btn {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.75);
-
-      padding: 10px 16px;
-      border-radius: 999px;
-
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .logout-btn:hover {
-      background: rgba(255,255,255,0.11);
+    .navlinks a:hover {
+      background: rgba(255,255,255,.07);
       color: white;
     }
 
@@ -174,465 +100,319 @@
     ========================= */
 
     .page {
-      position: relative;
-      z-index: 2;
-
-      width: min(1080px, 92%);
-      margin: 0 auto;
-      padding: 55px 0 80px;
+      width: min(920px, calc(100% - 30px));
+      margin: 38px auto 70px;
     }
-
-    .page-heading {
-      margin-bottom: 26px;
-    }
-
-    .eyebrow {
-      color: var(--pink-light);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 9px;
-    }
-
-    .page-heading h1 {
-      font-size: clamp(30px, 5vw, 46px);
-      line-height: 1.05;
-      letter-spacing: -1.5px;
-    }
-
-    .page-heading p {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    /* =========================
-       PROFILE CARD
-    ========================= */
 
     .profile-card {
-      display: grid;
-      grid-template-columns: minmax(280px, 360px) 1fr;
-      gap: 38px;
-
-      padding: 28px;
-
-      border: 1px solid var(--glass-border);
-      border-radius: 30px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,0.095),
-          rgba(255,255,255,0.035)
-        );
-
-      box-shadow:
-        0 25px 80px rgba(0,0,0,0.42),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    /* =========================
-       PHOTO
-    ========================= */
-
-    .photo-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .photo-frame {
-      width: 100%;
-      max-width: 340px;
-      aspect-ratio: 4 / 5;
-
       position: relative;
       overflow: hidden;
-
-      border-radius: 25px;
-      border: 1px solid rgba(255,255,255,0.16);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 105, 157, 0.15),
-          rgba(255,255,255,0.03)
-        );
-
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
       box-shadow:
-        0 20px 45px rgba(0,0,0,0.38),
-        0 0 35px rgba(255, 80, 140, 0.07);
+        0 30px 80px rgba(0,0,0,.45),
+        0 0 60px rgba(255,79,154,.05);
+      backdrop-filter: blur(20px);
     }
 
-    .profile-photo {
-      width: 100%;
-      height: 100%;
-      display: none;
-
-      object-fit: cover;
-      object-position: center;
-
-      transition: transform 0.5s ease;
+    .profile-cover {
+      height: 170px;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,79,154,.4), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(139,92,246,.35), transparent 30%),
+        linear-gradient(135deg, #171323, #10101a);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
 
-    .photo-frame:hover .profile-photo {
-      transform: scale(1.025);
-    }
-
-    .photo-shine {
+    .profile-cover::after {
+      content: "";
       position: absolute;
       inset: 0;
-
       background:
         linear-gradient(
-          145deg,
-          rgba(255,255,255,0.10),
+          135deg,
           transparent 30%,
-          transparent 70%,
-          rgba(255,70,135,0.08)
+          rgba(255,255,255,.025) 50%,
+          transparent 70%
         );
-
       pointer-events: none;
     }
 
-    .initial-avatar {
-      width: 100%;
-      height: 100%;
+    .profile-body {
+      padding: 0 34px 36px;
+    }
 
+    /* =========================
+       AVATAR
+    ========================= */
+
+    .avatar-wrap {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin-top: -75px;
+      margin-bottom: 20px;
+      z-index: 3;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #ff4f9a, #8b5cf6);
+      border: 6px solid #11111b;
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.45),
+        0 0 0 1px rgba(255,255,255,.08);
+    }
+
+    .avatar-placeholder {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 6px solid #11111b;
+      background:
+        linear-gradient(135deg, #ff4f9a, #8b5cf6);
       display: flex;
       align-items: center;
       justify-content: center;
-
-      font-size: 100px;
-      font-weight: 800;
-
-      color: rgba(255,255,255,0.9);
-
-      background:
-        radial-gradient(
-          circle at 35% 25%,
-          rgba(255,190,215,0.25),
-          transparent 35%
-        ),
-        linear-gradient(
-          145deg,
-          #4c182e,
-          #170b12
-        );
+      font-size: 48px;
+      font-weight: 900;
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.45),
+        0 0 0 1px rgba(255,255,255,.08);
     }
 
-    .photo-caption {
-      margin-top: 14px;
-
-      color: rgba(255,255,255,0.48);
-      font-size: 12px;
-      text-align: center;
+    .online-dot {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 19px;
+      height: 19px;
+      background: #35e58c;
+      border: 4px solid #11111b;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(53,229,140,.6);
     }
 
     /* =========================
        PHOTO UPLOAD
     ========================= */
 
-    .photo-tools {
-      width: 100%;
-      max-width: 340px;
-
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-
-      margin-top: 16px;
-    }
-
-    .file-input {
-      display: none;
-    }
-
-    .photo-upload-btn {
-      width: 100%;
-      min-height: 46px;
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-
-      padding: 0 18px;
-
-      border-radius: 999px;
-
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-
-      color: rgba(255,255,255,0.86);
-
-      font-size: 13px;
-      font-weight: 700;
-
-      cursor: pointer;
-
-      transition: 0.25s ease;
-    }
-
-    .photo-upload-btn:hover {
-      background: rgba(255,255,255,0.11);
-      transform: translateY(-1px);
-    }
-
-    .save-photo-btn {
-      width: 100%;
-      min-height: 46px;
-
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-
-      padding: 0 18px;
-
-      border: 0;
-      border-radius: 999px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #f05c91,
-          #c83c70
-        );
-
-      color: white;
-
-      font-size: 13px;
-      font-weight: 700;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 10px 25px rgba(221,52,112,0.22);
-
-      transition: 0.25s ease;
-    }
-
-    .save-photo-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .save-photo-btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .upload-status {
-      min-height: 18px;
-
-      color: rgba(255,255,255,0.55);
-
-      font-size: 11px;
-      line-height: 1.5;
-
-      text-align: center;
-    }
-
-    /* =========================
-       DETAILS
-    ========================= */
-
-    .profile-details {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      padding: 5px 10px 5px 0;
-    }
-
-    .profile-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-
-      width: fit-content;
-
-      padding: 7px 12px;
-      margin-bottom: 15px;
-
-      border-radius: 999px;
-
-      background: rgba(255, 105, 157, 0.10);
-      border: 1px solid rgba(255, 105, 157, 0.18);
-
-      color: var(--pink-light);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #ff7eaa;
-      box-shadow: 0 0 10px rgba(255,126,170,0.75);
-    }
-
-    .profile-name {
-      font-size: clamp(34px, 5vw, 50px);
-      line-height: 1;
-      letter-spacing: -1.8px;
-      margin-bottom: 10px;
-    }
-
-    .profile-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 25px;
-    }
-
-    .meta-item {
-      color: rgba(255,255,255,0.62);
-      font-size: 14px;
-    }
-
-    .meta-separator {
-      color: rgba(255,255,255,0.25);
-    }
-
-    .section-label {
-      color: rgba(255,255,255,0.46);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-
-      margin-bottom: 10px;
-    }
-
-    .bio {
-      color: rgba(255,255,255,0.78);
-      line-height: 1.75;
-      font-size: 15px;
-
-      max-width: 650px;
+    .photo-controls {
+      margin-top: -4px;
       margin-bottom: 26px;
     }
 
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.055);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .upload-btn:hover {
+      background: rgba(255,79,154,.13);
+      border-color: rgba(255,79,154,.3);
+      transform: translateY(-1px);
+    }
+
+    .upload-btn input {
+      display: none;
+    }
+
+    .upload-status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      min-height: 20px;
+    }
+
+    .upload-status.success {
+      color: #53e6a0;
+    }
+
+    .upload-status.error {
+      color: #ff7182;
+    }
+
     /* =========================
-       INTERESTS
+       PROFILE INFORMATION
     ========================= */
+
+    .profile-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .profile-heading h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .verified {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      margin-left: 7px;
+      border-radius: 50%;
+      background: #4d9cff;
+      color: white;
+      font-size: 12px;
+      vertical-align: 4px;
+    }
+
+    .profile-subtitle {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 16px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.07);
+      color: #d8d8e5;
+      font-size: 13px;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .section {
+      margin-top: 34px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    .section h2 {
+      margin: 0 0 13px;
+      font-size: 17px;
+    }
+
+    .bio {
+      color: #c6c6d2;
+      line-height: 1.7;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
 
     .interests {
       display: flex;
       flex-wrap: wrap;
       gap: 9px;
-      margin-bottom: 30px;
     }
 
     .interest {
-      padding: 9px 14px;
-
+      padding: 9px 13px;
       border-radius: 999px;
-
-      background: rgba(255,255,255,0.055);
-      border: 1px solid rgba(255,255,255,0.10);
-
-      color: rgba(255,255,255,0.78);
+      background: rgba(255,79,154,.09);
+      border: 1px solid rgba(255,79,154,.18);
+      color: #ffd0e5;
       font-size: 13px;
     }
 
+    .empty {
+      color: #777789;
+      font-size: 14px;
+    }
+
     /* =========================
-       ACTIONS
+       BUTTONS
     ========================= */
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 11px;
+      gap: 12px;
+      margin-top: 34px;
     }
 
-    .primary-btn,
-    .secondary-btn {
+    .btn {
+      border: 0;
+      border-radius: 13px;
+      padding: 12px 19px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+      transition: .2s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-
-      min-height: 48px;
-      padding: 0 21px;
-
-      border-radius: 999px;
-
-      font-size: 14px;
-      font-weight: 700;
-
-      cursor: pointer;
-      transition: 0.25s ease;
     }
 
-    .primary-btn {
-      color: white;
-      border: 1px solid rgba(255, 160, 190, 0.30);
-
-      background:
-        linear-gradient(
-          135deg,
-          #f05c91,
-          #c83c70
-        );
-
-      box-shadow:
-        0 10px 28px rgba(221, 52, 112, 0.22);
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      box-shadow:
-        0 14px 34px rgba(221, 52, 112, 0.32);
-    }
-
-    .secondary-btn {
-      color: rgba(255,255,255,0.78);
-
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.055);
-    }
-
-    .secondary-btn:hover {
-      color: white;
-      background: rgba(255,255,255,0.10);
+    .btn:hover {
       transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, #ff4f9a, #e83d87);
+      box-shadow: 0 10px 25px rgba(255,79,154,.2);
+    }
+
+    .btn-secondary {
+      color: white;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .btn-danger {
+      color: #ffb5bf;
+      background: rgba(255,92,112,.08);
+      border: 1px solid rgba(255,92,112,.16);
     }
 
     /* =========================
        LOADING / ERROR
     ========================= */
 
-    .center-message {
-      min-height: 400px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-
+    .state {
+      padding: 70px 20px;
       text-align: center;
+      color: var(--muted);
     }
 
-    .loader {
-      width: 40px;
-      height: 40px;
-
+    .spinner {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.12);
+      border: 3px solid rgba(255,255,255,.1);
       border-top-color: var(--pink);
-
-      animation: spin 0.8s linear infinite;
-
-      margin-bottom: 16px;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 16px;
     }
 
     @keyframes spin {
@@ -641,15 +421,13 @@
       }
     }
 
-    .message-title {
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
-
-    .message-text {
-      color: var(--muted);
+    .error-box {
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255,92,112,.08);
+      border: 1px solid rgba(255,92,112,.16);
+      color: #ffb4be;
       font-size: 14px;
-      max-width: 420px;
       line-height: 1.6;
     }
 
@@ -657,91 +435,59 @@
        MOBILE
     ========================= */
 
-    @media (max-width: 760px) {
-
-      .navbar {
-        padding: 18px 5%;
+    @media (max-width: 650px) {
+      .nav {
+        padding: 0 16px;
       }
 
-      .brand {
-        font-size: 23px;
-      }
-
-      .nav-links {
-        gap: 2px;
-      }
-
-      .nav-link {
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
-      .logout-btn {
-        display: none;
+      .navlinks a {
+        padding: 8px 8px;
+        font-size: 13px;
       }
 
       .page {
-        width: 92%;
-        padding-top: 35px;
+        width: min(100% - 18px, 920px);
+        margin-top: 20px;
       }
 
-      .profile-card {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding: 18px;
-        border-radius: 24px;
+      .profile-cover {
+        height: 125px;
       }
 
-      .photo-frame {
-        max-width: 310px;
+      .profile-body {
+        padding: 0 20px 28px;
       }
 
-      .photo-tools {
-        max-width: 310px;
+      .avatar-wrap {
+        width: 120px;
+        height: 120px;
+        margin-top: -60px;
       }
 
-      .profile-details {
-        padding: 0 4px 8px;
+      .avatar,
+      .avatar-placeholder {
+        width: 120px;
+        height: 120px;
       }
 
-      .profile-name {
+      .avatar-placeholder {
         font-size: 38px;
+      }
+
+      .profile-heading {
+        display: block;
+      }
+
+      .profile-heading h1 {
+        font-size: 30px;
       }
 
       .actions {
         flex-direction: column;
       }
 
-      .primary-btn,
-      .secondary-btn {
+      .actions .btn {
         width: 100%;
-      }
-    }
-
-    @media (max-width: 430px) {
-
-      .navbar {
-        padding: 16px 4%;
-      }
-
-      .nav-link:nth-child(2) {
-        display: none;
-      }
-
-      .page-heading h1 {
-        font-size: 32px;
-      }
-
-      .profile-card {
-        padding: 14px;
-      }
-
-      .photo-frame {
-        max-width: 100%;
-      }
-
-      .photo-tools {
-        max-width: 100%;
       }
     }
   </style>
@@ -751,260 +497,179 @@
 
   <!-- =========================
        NAVIGATION
-  ========================== -->
+  ========================= -->
 
-  <nav class="navbar">
+  <nav class="nav">
+    <a class="logo" href="index.html">Kmeet</a>
 
-    <a href="discover.html" class="brand">
-      <span class="brand-heart">♥</span>
-      <span>Kmeet</span>
-    </a>
-
-    <div class="nav-links">
-
-      <a href="discover.html" class="nav-link">
-        Discover
-      </a>
-
-      <a href="profile.html" class="nav-link active">
-        Profile
-      </a>
-
-      <button id="logoutBtn" class="logout-btn">
-        Log out
-      </button>
-
+    <div class="navlinks">
+      <a href="discover.html">Discover</a>
+      <a href="chat.html">Messages</a>
+      <a href="index.html">Home</a>
     </div>
-
   </nav>
 
 
   <!-- =========================
        MAIN
-  ========================== -->
+  ========================= -->
 
   <main class="page">
 
-    <div class="page-heading">
+    <section class="profile-card">
 
-      <div class="eyebrow">
-        Your Kmeet profile
-      </div>
+      <div class="profile-cover"></div>
 
-      <h1>
-        Your profile
-      </h1>
-
-      <p>
-        This is how people see you on Kmeet.
-      </p>
-
-    </div>
-
-
-    <!-- Loading -->
-
-    <div id="loadingState" class="center-message">
-
-      <div class="loader"></div>
-
-      <div class="message-title">
+      <div id="loadingState" class="state">
+        <div class="spinner"></div>
         Loading profile...
       </div>
 
-      <div class="message-text">
-        Just a moment while we bring the profile together.
+      <div id="errorState" class="state" style="display:none;">
+        <div class="error-box" id="errorMessage"></div>
       </div>
 
-    </div>
+      <div id="profileContent" style="display:none;">
 
+        <div class="profile-body">
 
-    <!-- Error -->
+          <!-- =========================
+               PROFILE PHOTO
+          ========================= -->
 
-    <div
-      id="errorState"
-      class="center-message"
-      style="display:none;"
-    >
+          <div class="avatar-wrap">
 
-      <div class="message-title">
-        Profile unavailable
-      </div>
+            <img
+              id="profilePhoto"
+              class="avatar"
+              alt="Profile photo"
+              style="display:none;"
+            >
 
-      <div id="errorText" class="message-text">
-        We couldn't load this profile.
-      </div>
+            <div
+              id="avatarPlaceholder"
+              class="avatar-placeholder"
+            >
+              ?
+            </div>
 
-      <a
-        href="discover.html"
-        class="primary-btn"
-        style="margin-top:20px;"
-      >
-        Back to Discover
-      </a>
+            <div class="online-dot"></div>
 
-    </div>
-
-
-    <!-- PROFILE -->
-
-    <section
-      id="profileCard"
-      class="profile-card"
-      style="display:none;"
-    >
-
-      <!-- =====================
-           PHOTO
-      ====================== -->
-
-      <div class="photo-section">
-
-        <div class="photo-frame">
-
-          <img
-            id="profilePhoto"
-            class="profile-photo"
-            alt="Profile photo"
-          />
-
-          <div
-            id="initialAvatar"
-            class="initial-avatar"
-          ></div>
-
-          <div class="photo-shine"></div>
-
-        </div>
-
-
-        <!-- PHOTO CONTROLS -->
-
-        <div
-          id="photoTools"
-          class="photo-tools"
-        >
-
-          <input
-            id="photoInput"
-            class="file-input"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-          />
-
-
-          <label
-            for="photoInput"
-            class="photo-upload-btn"
-          >
-            <span>📷</span>
-            Choose Profile Photo
-          </label>
-
-
-          <button
-            id="savePhotoBtn"
-            class="save-photo-btn"
-            type="button"
-          >
-            <span>♥</span>
-            Save Profile Photo
-          </button>
-
-
-          <div
-            id="uploadStatus"
-            class="upload-status"
-          ></div>
-
-        </div>
-
-
-        <div class="photo-caption">
-          JPG, PNG or WEBP · Maximum 5 MB
-        </div>
-
-      </div>
-
-
-      <!-- =====================
-           DETAILS
-      ====================== -->
-
-      <div class="profile-details">
-
-        <div class="profile-status">
-
-          <span class="status-dot"></span>
-
-          <span id="profileType">
-            Kmeet member
-          </span>
-
-        </div>
-
-
-        <h2
-          id="profileName"
-          class="profile-name"
-        >
-          Name
-        </h2>
-
-
-        <div
-          id="profileMeta"
-          class="profile-meta"
-        ></div>
-
-
-        <div>
-
-          <div class="section-label">
-            About
           </div>
 
-          <p
-            id="profileBio"
-            class="bio"
-          >
-            No bio has been added yet.
-          </p>
 
-        </div>
-
-
-        <div id="interestsSection">
-
-          <div class="section-label">
-            Interests
-          </div>
+          <!-- =========================
+               PHOTO UPLOAD
+          ========================= -->
 
           <div
-            id="profileInterests"
-            class="interests"
-          ></div>
-
-        </div>
-
-
-        <div class="actions">
-
-          <a
-            href="discover.html"
-            class="secondary-btn"
-          >
-            ← Discover people
-          </a>
-
-          <a
-            id="chatBtn"
-            href="#"
-            class="primary-btn"
+            id="photoControls"
+            class="photo-controls"
             style="display:none;"
           >
-            ♥ Chat with them
-          </a>
+
+            <label class="upload-btn">
+              📷 Change profile photo
+
+              <input
+                id="photoInput"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+              >
+            </label>
+
+            <div id="uploadStatus" class="upload-status"></div>
+
+          </div>
+
+
+          <!-- =========================
+               NAME / BASIC INFO
+          ========================= -->
+
+          <div class="profile-heading">
+
+            <div>
+              <h1 id="profileName">Kmeet Member</h1>
+
+              <div
+                id="profileSubtitle"
+                class="profile-subtitle"
+              >
+                Kmeet member
+              </div>
+
+              <div
+                id="profileMeta"
+                class="meta"
+              ></div>
+            </div>
+
+          </div>
+
+
+          <!-- =========================
+               BIO
+          ========================= -->
+
+          <section class="section">
+
+            <h2>About</h2>
+
+            <div
+              id="profileBio"
+              class="bio"
+            ></div>
+
+          </section>
+
+
+          <!-- =========================
+               INTERESTS
+          ========================= -->
+
+          <section class="section">
+
+            <h2>Interests</h2>
+
+            <div
+              id="profileInterests"
+              class="interests"
+            ></div>
+
+          </section>
+
+
+          <!-- =========================
+               ACTIONS
+          ========================= -->
+
+          <div class="actions">
+
+            <button
+              id="chatBtn"
+              class="btn btn-primary"
+              style="display:none;"
+            >
+              💬 Start Chat
+            </button>
+
+            <a
+              href="discover.html"
+              class="btn btn-secondary"
+            >
+              🔎 Discover People
+            </a>
+
+            <button
+              id="logoutBtn"
+              class="btn btn-danger"
+              style="display:none;"
+            >
+              Log Out
+            </button>
+
+          </div>
 
         </div>
 
@@ -1016,27 +681,28 @@
 
 
   <!-- =========================
-       FIREBASE
-  ========================== -->
+       FIREBASE / PROFILE LOGIC
+  ========================= -->
 
   <script type="module">
 
     import {
       auth,
       db,
-      storage,
       onAuthStateChanged,
       signOut,
       doc,
       getDoc,
-      updateDoc,
+      setDoc,
+      updateProfile,
+      storage,
       ref,
       uploadBytes,
       getDownloadURL
     } from "./firebase-config.js";
 
 
-    /* =========================================
+    /* ==========================================
        ELEMENTS
     ========================================== */
 
@@ -1046,20 +712,17 @@
     const errorState =
       document.getElementById("errorState");
 
-    const errorText =
-      document.getElementById("errorText");
+    const errorMessage =
+      document.getElementById("errorMessage");
 
-    const profileCard =
-      document.getElementById("profileCard");
-
-    const profilePhoto =
-      document.getElementById("profilePhoto");
-
-    const initialAvatar =
-      document.getElementById("initialAvatar");
+    const profileContent =
+      document.getElementById("profileContent");
 
     const profileName =
       document.getElementById("profileName");
+
+    const profileSubtitle =
+      document.getElementById("profileSubtitle");
 
     const profileMeta =
       document.getElementById("profileMeta");
@@ -1070,11 +733,20 @@
     const profileInterests =
       document.getElementById("profileInterests");
 
-    const interestsSection =
-      document.getElementById("interestsSection");
+    const profilePhoto =
+      document.getElementById("profilePhoto");
 
-    const profileType =
-      document.getElementById("profileType");
+    const avatarPlaceholder =
+      document.getElementById("avatarPlaceholder");
+
+    const photoControls =
+      document.getElementById("photoControls");
+
+    const photoInput =
+      document.getElementById("photoInput");
+
+    const uploadStatus =
+      document.getElementById("uploadStatus");
 
     const chatBtn =
       document.getElementById("chatBtn");
@@ -1082,166 +754,105 @@
     const logoutBtn =
       document.getElementById("logoutBtn");
 
-    const photoInput =
-      document.getElementById("photoInput");
 
-    const savePhotoBtn =
-      document.getElementById("savePhotoBtn");
+    /* ==========================================
+       PROFILE ID
+    ========================================== */
 
-    const uploadStatus =
-      document.getElementById("uploadStatus");
+    const params = new URLSearchParams(window.location.search);
+
+    const requestedProfileId =
+      params.get("userId") ||
+      params.get("user") ||
+      params.get("id") ||
+      null;
 
 
     let currentUser = null;
-    let selectedPhoto = null;
     let currentProfileId = null;
 
 
-    /* =========================================
-       URL
-    ========================================== */
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
-    const requestedId =
-      params.get("userId") ||
-      params.get("user") ||
-      params.get("id");
-
-
-    /* =========================================
-       INITIALS
-    ========================================== */
-
-    function getInitials(name) {
-
-      const clean =
-        String(name || "K").trim();
-
-      if (!clean) return "K";
-
-      const words =
-        clean.split(/\s+/);
-
-      if (words.length >= 2) {
-
-        return (
-          words[0][0] +
-          words[1][0]
-        ).toUpperCase();
-
-      }
-
-      return clean
-        .substring(0, 1)
-        .toUpperCase();
-
-    }
-
-
-    /* =========================================
-       INTERESTS
-    ========================================== */
-
-    function normalizeInterests(value) {
-
-      if (Array.isArray(value)) {
-
-        return value
-          .map(item => String(item).trim())
-          .filter(Boolean);
-
-      }
-
-      if (typeof value === "string") {
-
-        return value
-          .split(",")
-          .map(item => item.trim())
-          .filter(Boolean);
-
-      }
-
-      return [];
-
-    }
-
-
-    /* =========================================
-       ERROR
+    /* ==========================================
+       HELPER FUNCTIONS
     ========================================== */
 
     function showError(message) {
 
       loadingState.style.display = "none";
-      profileCard.style.display = "none";
+      profileContent.style.display = "none";
 
-      errorText.textContent = message;
-
-      errorState.style.display = "flex";
-
+      errorMessage.textContent = message;
+      errorState.style.display = "block";
     }
 
 
-    /* =========================================
-       SHOW PHOTO
-    ========================================== */
+    function getInitials(name) {
 
-    function showPhoto(url, name) {
+      if (!name) return "K";
 
-      if (url) {
+      const parts = name
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
 
-        profilePhoto.src = url;
-        profilePhoto.alt =
-          name + "'s profile photo";
+      if (!parts.length) return "K";
 
-        profilePhoto.style.display =
-          "block";
+      if (parts.length === 1) {
+        return parts[0].charAt(0).toUpperCase();
+      }
 
-        initialAvatar.style.display =
-          "none";
+      return (
+        parts[0].charAt(0) +
+        parts[parts.length - 1].charAt(0)
+      ).toUpperCase();
+    }
+
+
+    function escapeHTML(value) {
+
+      const div = document.createElement("div");
+      div.textContent = value ?? "";
+      return div.innerHTML;
+    }
+
+
+    function renderPhoto(photoURL, name) {
+
+      if (photoURL) {
+
+        profilePhoto.src = photoURL;
+        profilePhoto.alt = `${name}'s profile photo`;
+
+        profilePhoto.style.display = "block";
+        avatarPlaceholder.style.display = "none";
+
+        profilePhoto.onerror = () => {
+
+          profilePhoto.style.display = "none";
+          avatarPlaceholder.style.display = "flex";
+
+          avatarPlaceholder.textContent =
+            getInitials(name);
+        };
 
       } else {
 
-        profilePhoto.style.display =
-          "none";
+        profilePhoto.removeAttribute("src");
+        profilePhoto.style.display = "none";
 
-        initialAvatar.textContent =
+        avatarPlaceholder.style.display = "flex";
+
+        avatarPlaceholder.textContent =
           getInitials(name);
-
-        initialAvatar.style.display =
-          "flex";
-
       }
-
     }
 
 
-    /* =========================================
+    /* ==========================================
        RENDER PROFILE
     ========================================== */
 
-    function renderProfile(
-      data,
-      uid,
-      isOwnProfile
-    ) {
-
-      loadingState.style.display =
-        "none";
-
-      errorState.style.display =
-        "none";
-
-      profileCard.style.display =
-        "grid";
-
-
-      currentProfileId = uid;
-
+    function renderProfile(data, uid, isOwnProfile) {
 
       const name =
         data.name ||
@@ -1249,283 +860,261 @@
         "Kmeet Member";
 
 
-      profileName.textContent =
-        name;
-
-
-      profileType.textContent =
-        isOwnProfile
-          ? "Your profile"
-          : "Kmeet member";
-
-
-      /* =====================================
-         PHOTO
-      ====================================== */
+      /*
+       * IMPORTANT:
+       *
+       * We support all the old photo field names
+       * so existing Firebase profiles don't break.
+       */
 
       const photoURL =
-        data.avatar ||
         data.photoURL ||
+        data.avatar ||
         data.photo ||
         data.profilePhoto ||
         "";
 
 
-      showPhoto(
-        photoURL,
-        name
-      );
+      const age =
+        data.age !== undefined &&
+        data.age !== null &&
+        data.age !== ""
+          ? data.age
+          : null;
 
 
-      /* =====================================
-         PHOTO TOOLS
-      ====================================== */
-
-      if (isOwnProfile) {
-
-        document.getElementById(
-          "photoTools"
-        ).style.display = "flex";
-
-      } else {
-
-        document.getElementById(
-          "photoTools"
-        ).style.display = "none";
-
-      }
-
-
-      /* =====================================
-         META
-      ====================================== */
-
-      profileMeta.innerHTML = "";
-
-      const metaItems = [];
-
-
-      if (data.age) {
-
-        metaItems.push(
-          data.age + " years"
-        );
-
-      }
-
-
-      if (data.gender) {
-
-        metaItems.push(
-          data.gender
-        );
-
-      }
-
-
-      if (data.location) {
-
-        metaItems.push(
-          data.location
-        );
-
-      }
-
-
-      metaItems.forEach(
-        (item, index) => {
-
-          if (index > 0) {
-
-            const separator =
-              document.createElement(
-                "span"
-              );
-
-            separator.className =
-              "meta-separator";
-
-            separator.textContent =
-              "•";
-
-            profileMeta.appendChild(
-              separator
-            );
-
-          }
-
-
-          const span =
-            document.createElement(
-              "span"
-            );
-
-          span.className =
-            "meta-item";
-
-          span.textContent =
-            item;
-
-          profileMeta.appendChild(
-            span
-          );
-
-        }
-      );
-
-
-      /* =====================================
-         BIO
-      ====================================== */
-
-      profileBio.textContent =
-        data.bio ||
-        (
-          isOwnProfile
-            ? "Add a little about yourself so people can get to know you."
-            : "This person hasn't added a bio yet."
-        );
-
-
-      /* =====================================
-         INTERESTS
-      ====================================== */
-
-      const interests =
-        normalizeInterests(
-          data.interests ||
-          data.hobbies
-        );
-
-
-      profileInterests.innerHTML =
+      const gender =
+        data.gender ||
         "";
 
 
-      if (interests.length) {
-
-        interests.forEach(
-          interest => {
-
-            const pill =
-              document.createElement(
-                "span"
-              );
-
-            pill.className =
-              "interest";
-
-            pill.textContent =
-              interest;
-
-            profileInterests.appendChild(
-              pill
-            );
-
-          }
-        );
-
-        interestsSection.style.display =
-          "block";
-
-      } else {
-
-        interestsSection.style.display =
-          "none";
-
-      }
+      const location =
+        data.location ||
+        "";
 
 
-      /* =====================================
-         CHAT
-      ====================================== */
+      const bio =
+        data.bio ||
+        data.about ||
+        "This Kmeet member hasn't added a bio yet.";
 
-      if (!isOwnProfile) {
 
-        chatBtn.href =
-          "chat.html?userId=" +
-          encodeURIComponent(uid);
+      const interests =
+        Array.isArray(data.interests)
+          ? data.interests
+          : Array.isArray(data.hobbies)
+            ? data.hobbies
+            : [];
 
-        chatBtn.style.display =
-          "inline-flex";
+
+      /* NAME */
+
+      profileName.textContent = name;
+
+
+      /* SUBTITLE */
+
+      if (isOwnProfile) {
+
+        profileSubtitle.textContent =
+          "Your Kmeet profile";
 
       } else {
 
-        chatBtn.style.display =
-          "none";
-
+        profileSubtitle.textContent =
+          "Kmeet member";
       }
 
+
+      /* PHOTO */
+
+      renderPhoto(photoURL, name);
+
+
+      /* META */
+
+      profileMeta.innerHTML = "";
+
+
+      if (age !== null) {
+
+        const agePill =
+          document.createElement("div");
+
+        agePill.className = "meta-pill";
+        agePill.innerHTML =
+          `🎂 ${escapeHTML(String(age))}`;
+
+        profileMeta.appendChild(agePill);
+      }
+
+
+      if (gender) {
+
+        const genderPill =
+          document.createElement("div");
+
+        genderPill.className = "meta-pill";
+        genderPill.innerHTML =
+          `👤 ${escapeHTML(gender)}`;
+
+        profileMeta.appendChild(genderPill);
+      }
+
+
+      if (location) {
+
+        const locationPill =
+          document.createElement("div");
+
+        locationPill.className = "meta-pill";
+        locationPill.innerHTML =
+          `📍 ${escapeHTML(location)}`;
+
+        profileMeta.appendChild(locationPill);
+      }
+
+
+      if (!profileMeta.children.length) {
+
+        const memberPill =
+          document.createElement("div");
+
+        memberPill.className = "meta-pill";
+        memberPill.textContent =
+          "💗 Kmeet Member";
+
+        profileMeta.appendChild(memberPill);
+      }
+
+
+      /* BIO */
+
+      profileBio.textContent = bio;
+
+
+      /* INTERESTS */
+
+      profileInterests.innerHTML = "";
+
+
+      if (!interests.length) {
+
+        const empty =
+          document.createElement("div");
+
+        empty.className = "empty";
+
+        empty.textContent =
+          "No interests added yet.";
+
+        profileInterests.appendChild(empty);
+
+      } else {
+
+        interests.forEach((interest) => {
+
+          const item =
+            document.createElement("span");
+
+          item.className = "interest";
+
+          item.textContent = interest;
+
+          profileInterests.appendChild(item);
+
+        });
+      }
+
+
+      /* OWN PROFILE */
+
+      if (isOwnProfile) {
+
+        photoControls.style.display = "block";
+        logoutBtn.style.display = "inline-flex";
+        chatBtn.style.display = "none";
+
+      } else {
+
+        photoControls.style.display = "none";
+        logoutBtn.style.display = "none";
+        chatBtn.style.display = "inline-flex";
+
+        chatBtn.onclick = () => {
+
+          window.location.href =
+            `chat.html?userId=${encodeURIComponent(uid)}`;
+
+        };
+      }
+
+
+      loadingState.style.display = "none";
+      errorState.style.display = "none";
+      profileContent.style.display = "block";
     }
 
 
-    /* =========================================
+    /* ==========================================
        LOAD PROFILE
     ========================================== */
 
     async function loadProfile(user) {
 
-      let profileId =
-        requestedId;
+      try {
+
+        /*
+         * If a userId is provided in the URL,
+         * show that person's profile.
+         *
+         * Otherwise show the logged-in user's profile.
+         */
+
+        currentProfileId =
+          requestedProfileId || user?.uid || null;
 
 
-      if (!profileId) {
-
-        if (!user) {
+        if (!currentProfileId) {
 
           showError(
-            "Please log in to view your profile."
+            "Please log in to view your Kmeet profile."
           );
 
           return;
-
         }
 
-        profileId =
-          user.uid;
 
-      }
-
-
-      try {
-
-        const userRef =
-          doc(
-            db,
-            "users",
-            profileId
-          );
+        const profileRef =
+          doc(db, "users", currentProfileId);
 
 
-        const snapshot =
-          await getDoc(
-            userRef
-          );
+        const profileSnap =
+          await getDoc(profileRef);
 
 
-        if (!snapshot.exists()) {
+        if (!profileSnap.exists()) {
 
           showError(
             "This Kmeet profile could not be found."
           );
 
           return;
-
         }
 
 
         const data =
-          snapshot.data();
+          profileSnap.data();
 
 
         const isOwnProfile =
           !!user &&
-          user.uid === profileId;
+          user.uid === currentProfileId;
 
 
         renderProfile(
           data,
-          profileId,
+          currentProfileId,
           isOwnProfile
         );
 
@@ -1538,254 +1127,219 @@
         );
 
         showError(
-          "We couldn't load this profile right now. Please try again."
+          "We couldn't load this profile. Please refresh the page and try again."
         );
-
       }
-
     }
 
 
-    /* =========================================
-       CHOOSE PHOTO
+    /* ==========================================
+       PHOTO UPLOAD
     ========================================== */
 
     photoInput.addEventListener(
       "change",
-      function () {
+      async (event) => {
 
         const file =
-          this.files[0];
+          event.target.files?.[0];
 
 
-        if (!file) {
-
-          selectedPhoto =
-            null;
-
-          savePhotoBtn.style.display =
-            "none";
-
-          return;
-
-        }
-
-
-        /* Check type */
-
-        const allowedTypes = [
-          "image/jpeg",
-          "image/png",
-          "image/webp"
-        ];
-
-
-        if (
-          !allowedTypes.includes(
-            file.type
-          )
-        ) {
-
-          uploadStatus.textContent =
-            "Please choose a JPG, PNG or WEBP image.";
-
-          this.value = "";
-
-          return;
-
-        }
-
-
-        /* Check size */
-
-        if (
-          file.size >
-          5 * 1024 * 1024
-        ) {
-
-          uploadStatus.textContent =
-            "That image is larger than 5 MB. Please choose a smaller photo.";
-
-          this.value = "";
-
-          return;
-
-        }
-
-
-        selectedPhoto =
-          file;
-
-
-        /*
-          Show preview immediately.
-        */
-
-        const previewURL =
-          URL.createObjectURL(
-            file
-          );
-
-
-        profilePhoto.src =
-          previewURL;
-
-        profilePhoto.style.display =
-          "block";
-
-        initialAvatar.style.display =
-          "none";
-
-
-        savePhotoBtn.style.display =
-          "flex";
-
-
-        uploadStatus.textContent =
-          file.name +
-          " selected. Click Save Profile Photo.";
-
-      }
-    );
-
-
-    /* =========================================
-       UPLOAD PHOTO
-    ========================================== */
-
-    savePhotoBtn.addEventListener(
-      "click",
-      async function () {
-
-        if (!selectedPhoto) {
-
-          uploadStatus.textContent =
-            "Please choose a photo first.";
-
-          return;
-
-        }
+        if (!file) return;
 
 
         if (!currentUser) {
 
           uploadStatus.textContent =
-            "Please log in first.";
+            "Please log in before uploading a photo.";
+
+          uploadStatus.className =
+            "upload-status error";
 
           return;
-
         }
 
 
-        savePhotoBtn.disabled =
-          true;
+        /*
+         * Limit image size to 5 MB.
+         */
 
-        savePhotoBtn.innerHTML =
-          "<span>⏳</span> Uploading...";
+        const maxSize =
+          5 * 1024 * 1024;
+
+
+        if (file.size > maxSize) {
+
+          uploadStatus.textContent =
+            "Please choose an image smaller than 5 MB.";
+
+          uploadStatus.className =
+            "upload-status error";
+
+          photoInput.value = "";
+
+          return;
+        }
+
+
+        /*
+         * Make sure the selected file is actually
+         * an image.
+         */
+
+        if (!file.type.startsWith("image/")) {
+
+          uploadStatus.textContent =
+            "Please choose an image file.";
+
+          uploadStatus.className =
+            "upload-status error";
+
+          photoInput.value = "";
+
+          return;
+        }
 
 
         try {
 
-          /*
-            Store each user's photo
-            inside their own UID folder.
-          */
+          uploadStatus.textContent =
+            "Uploading your photo...";
 
-          const photoRef =
+          uploadStatus.className =
+            "upload-status";
+
+
+          /*
+           * Disable the input while uploading.
+           */
+
+          photoInput.disabled = true;
+
+
+          /*
+           * Create a unique file name.
+           */
+
+          const extension =
+            file.name.includes(".")
+              ? file.name
+                  .split(".")
+                  .pop()
+                  .toLowerCase()
+              : "jpg";
+
+
+          const fileName =
+            `profile-${Date.now()}.${extension}`;
+
+
+          /*
+           * IMPORTANT:
+           *
+           * Each user's photos are stored inside
+           * their own UID folder.
+           *
+           * profilePhotos/
+           *   USER_UID/
+           *      profile-123.jpg
+           */
+
+          const storageRef =
             ref(
               storage,
-              "profilePhotos/" +
-              currentUser.uid +
-              "/profile.jpg"
+              `profilePhotos/${currentUser.uid}/${fileName}`
             );
 
 
           /*
-            Upload image.
-          */
+           * Upload image.
+           */
 
           await uploadBytes(
-            photoRef,
-            selectedPhoto,
+            storageRef,
+            file,
             {
-              contentType:
-                selectedPhoto.type
+              contentType: file.type,
+              cacheControl: "public,max-age=31536000"
             }
           );
 
 
           /*
-            Get public download URL.
-          */
+           * Get public download URL.
+           */
 
           const downloadURL =
-            await getDownloadURL(
-              photoRef
-            );
+            await getDownloadURL(storageRef);
 
 
           /*
-            Save URL to Firestore.
-          */
+           * Save photo URL in Firestore.
+           *
+           * photoURL is now the main field.
+           *
+           * avatar is also updated for compatibility
+           * with older Kmeet pages.
+           */
 
-          await updateDoc(
-            doc(
-              db,
-              "users",
-              currentUser.uid
-            ),
+          await setDoc(
+            doc(db, "users", currentUser.uid),
             {
-              avatar:
-                downloadURL
+              photoURL: downloadURL,
+              avatar: downloadURL,
+              photo: downloadURL,
+              profilePhoto: downloadURL
+            },
+            {
+              merge: true
             }
           );
 
 
           /*
-            Update screen immediately.
-          */
+           * Also update Firebase Authentication
+           * profile photo.
+           */
 
-          profilePhoto.src =
-            downloadURL +
-            "&v=" +
-            Date.now();
+          try {
 
+            await updateProfile(
+              currentUser,
+              {
+                photoURL: downloadURL
+              }
+            );
 
-          profilePhoto.style.display =
-            "block";
+          } catch (authPhotoError) {
 
-          initialAvatar.style.display =
-            "none";
+            /*
+             * Don't fail the whole upload if
+             * Auth photo update fails.
+             */
+
+            console.warn(
+              "Auth photo update failed:",
+              authPhotoError
+            );
+          }
 
 
           /*
-            IMPORTANT:
-            Remove any old browser avatar.
-          */
+           * Immediately display the new image.
+           */
 
-          localStorage.removeItem(
-            "userAvatar"
+          renderPhoto(
+            downloadURL,
+            profileName.textContent
           );
 
 
           uploadStatus.textContent =
-            "✓ Your profile photo has been saved.";
+            "Profile photo updated successfully.";
 
-
-          selectedPhoto =
-            null;
-
-          photoInput.value = "";
-
-
-          savePhotoBtn.style.display =
-            "none";
-
-          savePhotoBtn.disabled =
-            false;
-
-          savePhotoBtn.innerHTML =
-            "<span>♥</span> Save Profile Photo";
+          uploadStatus.className =
+            "upload-status success";
 
 
         } catch (error) {
@@ -1797,7 +1351,7 @@
 
 
           let message =
-            "Unable to upload your photo.";
+            "Photo upload failed. Please try again.";
 
 
           if (
@@ -1806,12 +1360,9 @@
           ) {
 
             message =
-              "Firebase Storage permission denied. Check your Storage rules.";
+              "Upload was blocked by Firebase Storage rules.";
 
-          }
-
-
-          if (
+          } else if (
             error.code ===
             "storage/unauthenticated"
           ) {
@@ -1819,27 +1370,49 @@
             message =
               "Your login session expired. Please log in again.";
 
+          } else if (
+            error.code ===
+            "storage/quota-exceeded"
+          ) {
+
+            message =
+              "Firebase Storage quota has been exceeded.";
+
+          } else if (
+            error.code ===
+            "storage/canceled"
+          ) {
+
+            message =
+              "Photo upload was cancelled.";
+
+          } else if (error.message) {
+
+            console.error(
+              error.message
+            );
           }
 
 
           uploadStatus.textContent =
             message;
 
+          uploadStatus.className =
+            "upload-status error";
 
-          savePhotoBtn.disabled =
-            false;
 
-          savePhotoBtn.innerHTML =
-            "<span>♥</span> Save Profile Photo";
+        } finally {
 
+          photoInput.disabled = false;
+          photoInput.value = "";
         }
 
       }
     );
 
 
-    /* =========================================
-       LOGOUT
+    /* ==========================================
+       LOG OUT
     ========================================== */
 
     logoutBtn.addEventListener(
@@ -1848,32 +1421,23 @@
 
         try {
 
+          await signOut(auth);
+
           /*
-            Remove old browser-stored
-            profile information.
-          */
+           * Clear old local Kmeet information so
+           * an old profile image cannot remain
+           * visible after logout.
+           */
 
-          localStorage.removeItem(
-            "userAvatar"
-          );
+          localStorage.removeItem("userEmail");
+          localStorage.removeItem("userAvatar");
+          localStorage.removeItem("userInterests");
 
-          localStorage.removeItem(
-            "userInterests"
-          );
-
-          localStorage.removeItem(
-            "userEmail"
-          );
-
-
-          await signOut(
-            auth
-          );
-
+          sessionStorage.removeItem("pendingEmail");
+          sessionStorage.removeItem("pendingInterests");
 
           window.location.href =
             "index.html";
-
 
         } catch (error) {
 
@@ -1883,16 +1447,14 @@
           );
 
           alert(
-            "Unable to log out right now."
+            "Could not log out. Please try again."
           );
-
         }
-
       }
     );
 
 
-    /* =========================================
+    /* ==========================================
        AUTH STATE
     ========================================== */
 
@@ -1900,13 +1462,31 @@
       auth,
       async (user) => {
 
-        currentUser =
-          user || null;
+        currentUser = user || null;
 
-        await loadProfile(
-          user
-        );
 
+        /*
+         * If viewing another person's profile,
+         * Firebase login isn't strictly required.
+         *
+         * But if no userId is supplied, the current
+         * logged-in user is required.
+         */
+
+        if (
+          !requestedProfileId &&
+          !user
+        ) {
+
+          showError(
+            "Please log in to view your profile."
+          );
+
+          return;
+        }
+
+
+        await loadProfile(user);
       }
     );
 
