@@ -167,6 +167,16 @@
       color: #ffb7c7;
     }
 
+    .message a {
+      color: #f19ab7;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .message a:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 600px) {
       .nav {
         padding: 0 20px;
@@ -265,7 +275,6 @@ import {
   auth,
   db,
   onAuthStateChanged,
-  signInAnonymously,
   doc,
   getDoc,
   setDoc,
@@ -303,7 +312,6 @@ const targetId =
   new URLSearchParams(location.search).get("userId");
 
 let currentUser = null;
-let unsubscribeMessages = null;
 
 let conversationId = null;
 let messagesRef = null;
@@ -312,7 +320,7 @@ let conversationData = null;
 
 
 /* =====================================================
-   START
+   START CHAT
 ===================================================== */
 
 if (!targetId) {
@@ -328,28 +336,25 @@ if (!targetId) {
 
     try {
 
+      /*
+       * Kmeet chat requires a registered
+       * logged-in Firebase account.
+       */
+
       if (!user) {
 
-        const cred =
-          await signInAnonymously(auth);
-
-        currentUser = cred.user;
-
-      } else {
-
-        currentUser = user;
-
-      }
-
-      if (!currentUser) {
-
         showStatus(
-          "Could not identify your account.",
+          `Please log in to use Kmeet chat.
+          <br><br>
+          <a href="login.html">Log In</a>`,
           true
         );
 
         return;
       }
+
+      currentUser = user;
+
 
       if (currentUser.uid === targetId) {
 
@@ -360,6 +365,7 @@ if (!targetId) {
 
         return;
       }
+
 
       await openChat();
 
@@ -390,18 +396,22 @@ async function openChat() {
       doc(db, "users", targetId)
     );
 
+
   const target =
     targetSnap.exists()
       ? targetSnap.data()
       : { name: "Kmeet Member" };
 
+
   document.getElementById("chatTitle").textContent =
     `Chat with ${target.name || "Kmeet Member"}`;
+
 
   conversationId =
     [currentUser.uid, targetId]
       .sort()
       .join("_");
+
 
   const conversationRef =
     doc(
@@ -410,8 +420,15 @@ async function openChat() {
       conversationId
     );
 
+
   const conversationSnap =
     await getDoc(conversationRef);
+
+
+  /*
+   * The first person who opens the conversation
+   * becomes the initiator.
+   */
 
   if (!conversationSnap.exists()) {
 
@@ -431,6 +448,7 @@ async function openChat() {
 
     };
 
+
     await setDoc(
       conversationRef,
       conversationData
@@ -443,6 +461,7 @@ async function openChat() {
 
   }
 
+
   messagesRef =
     collection(
       db,
@@ -451,11 +470,13 @@ async function openChat() {
       "messages"
     );
 
+
   document.getElementById("status").style.display =
     "none";
 
   document.getElementById("chatUI").style.display =
     "block";
+
 
   updateChatNotice();
 
@@ -476,68 +497,81 @@ function listenForMessages() {
       orderBy("createdAt", "asc")
     );
 
-  unsubscribeMessages =
-    onSnapshot(
-      q,
-      snapshot => {
 
-        const box =
-          document.getElementById("messages");
+  onSnapshot(
+    q,
 
-        box.innerHTML = "";
+    snapshot => {
 
-        let receiverReplies = 0;
+      const box =
+        document.getElementById("messages");
 
-        snapshot.forEach(s => {
 
-          const m = s.data();
+      box.innerHTML = "";
 
-          const mine =
-            m.senderId === currentUser.uid;
 
-          if (
-            m.senderId === conversationData.receiverId
-          ) {
+      let receiverReplies = 0;
 
-            receiverReplies++;
 
-          }
+      snapshot.forEach(s => {
 
-          const div =
-            document.createElement("div");
+        const m = s.data();
 
-          div.className =
-            `bubble ${mine ? "me" : "them"}`;
 
-          div.textContent =
-            m.text || "";
+        const mine =
+          m.senderId === currentUser.uid;
 
-          box.appendChild(div);
 
-        });
+        if (
+          m.senderId === conversationData.receiverId
+        ) {
 
-        conversationData.receiverFreeReplies =
-          receiverReplies;
+          receiverReplies++;
 
-        updateChatNotice();
+        }
 
-        box.scrollTop =
-          box.scrollHeight;
 
-      },
+        const div =
+          document.createElement("div");
 
-      err => {
 
-        console.error(err);
+        div.className =
+          `bubble ${mine ? "me" : "them"}`;
 
-        showStatus(
-          "Could not load messages: " +
-          err.message,
-          true
-        );
 
-      }
-    );
+        div.textContent =
+          m.text || "";
+
+
+        box.appendChild(div);
+
+      });
+
+
+      conversationData.receiverFreeReplies =
+        receiverReplies;
+
+
+      updateChatNotice();
+
+
+      box.scrollTop =
+        box.scrollHeight;
+
+    },
+
+    err => {
+
+      console.error(err);
+
+      showStatus(
+        "Could not load messages: " +
+        err.message,
+        true
+      );
+
+    }
+  );
 
 }
 
@@ -552,13 +586,17 @@ document
 
     e.preventDefault();
 
+
     const input =
       document.getElementById("messageInput");
+
 
     const text =
       input.value.trim();
 
+
     if (!text) return;
+
 
     try {
 
@@ -588,17 +626,21 @@ async function sendMessage(text) {
     currentUser.uid ===
     conversationData.initiatorId;
 
+
   const isReceiver =
     currentUser.uid ===
     conversationData.receiverId;
 
 
-  /* RECEIVER RULES */
+  /* ===================================================
+     RECEIVER RULES
+  =================================================== */
 
   if (isReceiver) {
 
     const contactAttempt =
       containsContactInformation(text);
+
 
     if (
       contactAttempt &&
@@ -616,10 +658,12 @@ async function sendMessage(text) {
 
     }
 
+
     const replyCount =
       Number(
         conversationData.receiverFreeReplies || 0
       );
+
 
     if (
       replyCount >= FREE_RECEIVER_REPLIES &&
@@ -640,12 +684,15 @@ async function sendMessage(text) {
   }
 
 
-  /* SENDER RULES */
+  /* ===================================================
+     SENDER RULES
+  =================================================== */
 
   if (isInitiator) {
 
     const firstMessage =
       await isFirstMessage();
+
 
     if (firstMessage) {
 
@@ -671,6 +718,7 @@ async function sendMessage(text) {
           conversationData.senderCredits || 0
         );
 
+
       if (credits <= 0) {
 
         alert(
@@ -691,7 +739,9 @@ async function sendMessage(text) {
   }
 
 
-  /* SAVE MESSAGE */
+  /* ===================================================
+     SAVE MESSAGE
+  =================================================== */
 
   await addDoc(
     messagesRef,
@@ -726,52 +776,39 @@ async function sendMessage(text) {
 
 async function isFirstMessage() {
 
-  const firstCheck =
-    await new Promise(resolve => {
+  return await new Promise(resolve => {
 
-      let finished = false;
+    const unsubscribe =
+      onSnapshot(
 
-      const unsubscribe =
-        onSnapshot(
-          query(
-            messagesRef,
-            orderBy("createdAt", "asc")
-          ),
+        query(
+          messagesRef,
+          orderBy("createdAt", "asc")
+        ),
 
-          snapshot => {
+        snapshot => {
 
-            if (!finished) {
+          unsubscribe();
 
-              finished = true;
+          resolve(
+            snapshot.empty
+          );
 
-              unsubscribe();
+        },
 
-              resolve(
-                snapshot.empty
-              );
+        error => {
 
-            }
+          console.error(error);
 
-          },
+          unsubscribe();
 
-          () => {
+          resolve(true);
 
-            if (!finished) {
+        }
 
-              finished = true;
+      );
 
-              unsubscribe();
-
-              resolve(true);
-
-            }
-
-          }
-        );
-
-    });
-
-  return firstCheck;
+  });
 
 }
 
@@ -787,20 +824,26 @@ function containsContactInformation(text) {
       .toLowerCase()
       .trim();
 
+
   const phonePattern =
     /(?:\+?254|0)?[\s.-]?(?:7\d{2}|1\d{2})[\s.-]?\d{3}[\s.-]?\d{3}/;
+
 
   const emailPattern =
     /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
 
+
   const contactWords =
     /\b(?:whatsapp|telegram|instagram|facebook|snapchat|tiktok|signal|imo|skype)\b/i;
+
 
   const contactPhrases =
     /\b(?:call me|text me|message me|contact me|reach me|my number|my phone|phone me|email me|dm me)\b/i;
 
+
   const linkPattern =
     /(?:https?:\/\/|www\.|t\.me\/|wa\.me\/|instagram\.com\/|facebook\.com\/)/i;
+
 
   return (
     phonePattern.test(value) ||
@@ -822,11 +865,14 @@ function updateChatNotice() {
   const notice =
     document.getElementById("chatNotice");
 
+
   if (!notice || !conversationData) return;
+
 
   const isInitiator =
     currentUser.uid ===
     conversationData.initiatorId;
+
 
   const isReceiver =
     currentUser.uid ===
@@ -840,12 +886,14 @@ function updateChatNotice() {
         conversationData.senderCredits || 0
       );
 
+
     notice.innerHTML =
       `Your first <strong>Hi</strong> or <strong>Hey</strong> is free.
        After that, you need chat credits.
        Current credits: <strong>${credits}</strong>.`;
 
   }
+
 
   else if (isReceiver) {
 
@@ -854,11 +902,13 @@ function updateChatNotice() {
         conversationData.receiverFreeReplies || 0
       );
 
+
     const remaining =
       Math.max(
         0,
         FREE_RECEIVER_REPLIES - replies
       );
+
 
     if (
       conversationData.receiverPaid === true
@@ -892,10 +942,12 @@ function showStatus(html, error) {
   const el =
     document.getElementById("status");
 
+
   el.className =
     error
       ? "message error"
       : "message";
+
 
   el.innerHTML =
     html;
