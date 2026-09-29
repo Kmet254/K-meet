@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,10 +30,6 @@
 
     <style>
 
-        /* =========================================
-           RESET
-        ========================================= */
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -48,8 +43,11 @@
 
         body {
             min-height: 100vh;
+
             font-family: "Poppins", sans-serif;
+
             color: #fff;
+
             background:
                 radial-gradient(
                     circle at 20% 20%,
@@ -71,10 +69,17 @@
             overflow-x: hidden;
         }
 
+
+        /* =========================================
+           BACKGROUND GRID
+        ========================================= */
+
         body::before {
             content: "";
+
             position: fixed;
             inset: 0;
+
             pointer-events: none;
 
             background:
@@ -89,11 +94,13 @@
                 );
 
             background-size: 42px 42px;
-            mask-image: linear-gradient(
-                to bottom,
-                black,
-                transparent
-            );
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent
+                );
         }
 
 
@@ -111,9 +118,11 @@
 
             padding: 0 6%;
 
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
 
-            background: rgba(12, 5, 8, 0.72);
+            background:
+                rgba(12, 5, 8, 0.72);
 
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
@@ -122,19 +131,25 @@
             z-index: 10;
         }
 
+
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
 
             color: #fff;
+
             text-decoration: none;
 
-            font-family: "Playfair Display", serif;
+            font-family:
+                "Playfair Display",
+                serif;
+
             font-size: 25px;
+
             font-weight: 600;
-            letter-spacing: 0.2px;
         }
+
 
         .logo-heart {
             width: 34px;
@@ -145,27 +160,38 @@
 
             border-radius: 50%;
 
-            background: rgba(154, 35, 68, 0.20);
-            border: 1px solid rgba(230, 92, 126, 0.25);
+            background:
+                rgba(154, 35, 68, 0.20);
+
+            border:
+                1px solid rgba(230, 92, 126, 0.25);
 
             color: #e95c83;
+
             font-size: 15px;
         }
+
 
         .navlinks {
             display: flex;
             align-items: center;
+
             gap: 30px;
         }
 
+
         .navlinks a {
-            color: rgba(255,255,255,0.72);
+            color:
+                rgba(255,255,255,0.72);
+
             text-decoration: none;
 
             font-size: 12px;
+
             font-weight: 500;
 
             text-transform: uppercase;
+
             letter-spacing: 1.5px;
 
             transition:
@@ -173,9 +199,12 @@
                 transform 0.2s ease;
         }
 
+
         .navlinks a:hover {
             color: #fff;
-            transform: translateY(-1px);
+
+            transform:
+                translateY(-1px);
         }
 
 
@@ -184,20 +213,23 @@
         ========================================= */
 
         .page {
-            min-height: calc(100vh - 76px);
+            min-height:
+                calc(100vh - 76px);
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
-            padding: 55px 20px 70px;
+            padding:
+                55px 20px 70px;
 
             position: relative;
         }
 
 
         /* =========================================
-           DECORATIVE HEART
+           DECORATIVE LIGHTS
         ========================================= */
 
         .decor-heart {
@@ -220,10 +252,12 @@
             pointer-events: none;
         }
 
+
         .decor-heart.one {
             top: 5%;
             left: -120px;
         }
+
 
         .decor-heart.two {
             bottom: -100px;
@@ -236,9 +270,11 @@
         ========================================= */
 
         .card {
-            width: min(100%, 510px);
+            width:
+                min(100%, 510px);
 
-            padding: 42px 42px 40px;
+            padding:
+                42px 42px 40px;
 
             border-radius: 26px;
 
@@ -249,7 +285,8 @@
                     rgba(255,255,255,0.025)
                 );
 
-            border: 1px solid rgba(255,255,255,0.11);
+            border:
+                1px solid rgba(255,255,255,0.11);
 
             box-shadow:
                 0 30px 80px rgba(0,0,0,0.48),
@@ -261,31 +298,37 @@
             position: relative;
             z-index: 2;
 
-            animation: cardIn 0.55s ease both;
+            animation:
+                cardIn 0.55s ease both;
         }
+
 
         @keyframes cardIn {
 
             from {
                 opacity: 0;
-                transform: translateY(18px);
+                transform:
+                    translateY(18px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform:
+                    translateY(0);
             }
 
         }
 
 
         /* =========================================
-           HEADING
+           HEADER
         ========================================= */
 
         .eyebrow {
             display: inline-flex;
+
             align-items: center;
+
             gap: 8px;
 
             margin-bottom: 14px;
@@ -293,20 +336,27 @@
             color: #df6688;
 
             font-size: 11px;
+
             font-weight: 600;
 
             text-transform: uppercase;
+
             letter-spacing: 2px;
         }
+
 
         .eyebrow i {
             font-size: 10px;
         }
 
-        h1 {
-            font-family: "Playfair Display", serif;
 
-            font-size: clamp(32px, 6vw, 43px);
+        h1 {
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(32px, 6vw, 43px);
 
             line-height: 1.1;
 
@@ -315,10 +365,13 @@
             margin-bottom: 14px;
         }
 
+
         .intro {
-            color: rgba(255,255,255,0.62);
+            color:
+                rgba(255,255,255,0.62);
 
             font-size: 14px;
+
             line-height: 1.7;
 
             margin-bottom: 31px;
@@ -331,38 +384,50 @@
 
         form {
             display: flex;
+
             flex-direction: column;
+
             gap: 7px;
         }
+
 
         label {
             margin-top: 10px;
 
-            color: rgba(255,255,255,0.82);
+            color:
+                rgba(255,255,255,0.82);
 
             font-size: 12px;
+
             font-weight: 500;
 
             letter-spacing: 0.3px;
         }
 
+
         input {
             width: 100%;
             height: 52px;
 
-            padding: 0 16px;
+            padding:
+                0 16px;
 
             border-radius: 13px;
 
-            border: 1px solid rgba(255,255,255,0.12);
+            border:
+                1px solid rgba(255,255,255,0.12);
 
             outline: none;
 
-            background: rgba(0,0,0,0.25);
+            background:
+                rgba(0,0,0,0.25);
 
             color: #fff;
 
-            font-family: "Poppins", sans-serif;
+            font-family:
+                "Poppins",
+                sans-serif;
+
             font-size: 14px;
 
             transition:
@@ -371,17 +436,23 @@
                 box-shadow 0.2s ease;
         }
 
+
         input::placeholder {
-            color: rgba(255,255,255,0.32);
+            color:
+                rgba(255,255,255,0.32);
         }
 
-        input:focus {
-            border-color: rgba(218,82,119,0.70);
 
-            background: rgba(0,0,0,0.34);
+        input:focus {
+            border-color:
+                rgba(218,82,119,0.70);
+
+            background:
+                rgba(0,0,0,0.34);
 
             box-shadow:
-                0 0 0 4px rgba(218,82,119,0.09);
+                0 0 0 4px
+                rgba(218,82,119,0.09);
         }
 
 
@@ -396,6 +467,7 @@
             margin-top: 20px;
 
             border: none;
+
             border-radius: 14px;
 
             background:
@@ -407,9 +479,12 @@
 
             color: #fff;
 
-            font-family: "Poppins", sans-serif;
+            font-family:
+                "Poppins",
+                sans-serif;
 
             font-size: 13px;
+
             font-weight: 600;
 
             letter-spacing: 0.4px;
@@ -417,7 +492,8 @@
             cursor: pointer;
 
             box-shadow:
-                0 12px 28px rgba(143, 26, 59, 0.28);
+                0 12px 28px
+                rgba(143, 26, 59, 0.28);
 
             transition:
                 transform 0.2s ease,
@@ -425,21 +501,31 @@
                 opacity 0.2s ease;
         }
 
+
         .btn:hover {
-            transform: translateY(-2px);
+            transform:
+                translateY(-2px);
 
             box-shadow:
-                0 16px 34px rgba(143, 26, 59, 0.36);
+                0 16px 34px
+                rgba(143, 26, 59, 0.36);
         }
 
+
         .btn:active {
-            transform: translateY(0);
+            transform:
+                translateY(0);
         }
+
 
         .btn:disabled {
             opacity: 0.55;
-            cursor: not-allowed;
-            transform: none;
+
+            cursor:
+                not-allowed;
+
+            transform:
+                none;
         }
 
 
@@ -451,34 +537,45 @@
             margin-top: 14px;
         }
 
+
         .message {
-            padding: 12px 14px;
+            padding:
+                12px 14px;
 
             border-radius: 11px;
 
             font-size: 12px;
+
             line-height: 1.5;
         }
+
 
         .message.error {
             color: #ffb9c9;
 
-            background: rgba(180, 40, 75, 0.13);
+            background:
+                rgba(180,40,75,0.13);
 
-            border: 1px solid rgba(220, 72, 110, 0.25);
+            border:
+                1px solid
+                rgba(220,72,110,0.25);
         }
+
 
         .message.success {
             color: #b8f0d0;
 
-            background: rgba(45, 150, 95, 0.12);
+            background:
+                rgba(45,150,95,0.12);
 
-            border: 1px solid rgba(80, 190, 125, 0.24);
+            border:
+                1px solid
+                rgba(80,190,125,0.24);
         }
 
 
         /* =========================================
-           FOOTER TEXT
+           BOTTOM TEXT
         ========================================= */
 
         .bottom-text {
@@ -486,11 +583,14 @@
 
             text-align: center;
 
-            color: rgba(255,255,255,0.46);
+            color:
+                rgba(255,255,255,0.46);
 
             font-size: 12px;
+
             line-height: 1.7;
         }
+
 
         .bottom-text a {
             color: #e46a8c;
@@ -499,6 +599,7 @@
 
             font-weight: 500;
         }
+
 
         .bottom-text a:hover {
             color: #fff;
@@ -513,37 +614,45 @@
 
             .nav {
                 height: 68px;
-                padding: 0 20px;
+
+                padding:
+                    0 20px;
             }
+
 
             .logo {
                 font-size: 21px;
             }
 
+
             .navlinks {
                 gap: 15px;
             }
 
+
             .navlinks a {
                 font-size: 10px;
+
                 letter-spacing: 1px;
             }
 
+
             .page {
-                min-height: calc(100vh - 68px);
+                min-height:
+                    calc(100vh - 68px);
 
                 padding:
-                    35px 16px
-                    50px;
+                    35px 16px 50px;
             }
+
 
             .card {
                 padding:
-                    32px 23px
-                    30px;
+                    32px 23px 30px;
 
                 border-radius: 21px;
             }
+
 
             h1 {
                 font-size: 34px;
@@ -557,9 +666,10 @@
 
 <body>
 
-    <!-- Decorative background -->
+    <!-- Background decoration -->
 
     <div class="decor-heart one"></div>
+
     <div class="decor-heart two"></div>
 
 
@@ -608,8 +718,11 @@
         <section class="card">
 
             <div class="eyebrow">
+
                 <i class="fa-solid fa-heart"></i>
+
                 Welcome to Kmeet
+
             </div>
 
 
@@ -619,8 +732,8 @@
 
 
             <p class="intro">
-                Create your Kmeet profile and take the first
-                step toward an intentional connection.
+                Create your Kmeet profile and take the
+                first step toward an intentional connection.
             </p>
 
 
@@ -633,6 +746,7 @@
                 <label for="displayName">
                     Display name
                 </label>
+
 
                 <input
                     id="displayName"
@@ -648,6 +762,7 @@
                     Email address
                 </label>
 
+
                 <input
                     id="email"
                     type="email"
@@ -660,6 +775,7 @@
                 <label for="password">
                     Password
                 </label>
+
 
                 <input
                     id="password"
@@ -686,10 +802,13 @@
 
 
             <p class="bottom-text">
+
                 Already have an account?
+
                 <a href="login.html">
                     Log in
                 </a>
+
             </p>
 
         </section>
@@ -715,17 +834,20 @@
 
 
         /* =========================================
-           RESTORE EMAIL FROM HOMEPAGE
+           RESTORE EMAIL
         ========================================== */
 
         const savedEmail =
-            localStorage.getItem("userEmail");
+            localStorage.getItem(
+                "userEmail"
+            );
 
 
         if (savedEmail) {
 
-            document.getElementById("email").value =
-                savedEmail;
+            document.getElementById(
+                "email"
+            ).value = savedEmail;
 
         }
 
@@ -744,7 +866,10 @@
 
 
                     const msg =
-                        document.getElementById("msg");
+                        document.getElementById(
+                            "msg"
+                        );
+
 
                     const button =
                         document.getElementById(
@@ -766,25 +891,24 @@
 
                     const email =
                         document
-                            .getElementById("email")
+                            .getElementById(
+                                "email"
+                            )
                             .value
                             .trim();
 
 
                     const password =
                         document
-                            .getElementById("password")
+                            .getElementById(
+                                "password"
+                            )
                             .value;
 
 
-                    /*
-                     * Interests may already have been
-                     * selected in another part of Kmeet.
-                     *
-                     * If none exist, we keep the account
-                     * creation flow working rather than
-                     * blocking registration.
-                     */
+                    /* =================================
+                       INTERESTS
+                    ================================= */
 
                     let interests = [];
 
@@ -805,9 +929,9 @@
                     }
 
 
-                    /* =====================================
-                       BASIC VALIDATION
-                    ====================================== */
+                    /* =================================
+                       VALIDATION
+                    ================================= */
 
                     if (!name) {
 
@@ -839,9 +963,9 @@
                     }
 
 
-                    /* =====================================
-                       DISABLE BUTTON
-                    ====================================== */
+                    /* =================================
+                       BUTTON STATE
+                    ================================= */
 
                     button.disabled = true;
 
@@ -850,6 +974,19 @@
 
 
                     try {
+
+                        /* =================================
+                           CLEAR PREVIOUS ACCOUNT DATA
+                        ================================= */
+
+                        localStorage.removeItem(
+                            "userAvatar"
+                        );
+
+                        localStorage.removeItem(
+                            "userInterests"
+                        );
+
 
                         /* =================================
                            CREATE FIREBASE ACCOUNT
@@ -864,19 +1001,20 @@
 
 
                         /* =================================
-                           SAVE DISPLAY NAME
+                           SAVE NAME TO FIREBASE AUTH
                         ================================= */
 
                         await updateProfile(
                             cred.user,
                             {
-                                displayName: name
+                                displayName:
+                                    name
                             }
                         );
 
 
                         /* =================================
-                           SAVE USER PROFILE
+                           CREATE FIRESTORE PROFILE
                         ================================= */
 
                         await setDoc(
@@ -886,6 +1024,7 @@
                                 cred.user.uid
                             ),
                             {
+
                                 uid:
                                     cred.user.uid,
 
@@ -911,7 +1050,8 @@
                                     "",
 
                                 createdAt:
-                                    new Date().toISOString(),
+                                    new Date()
+                                        .toISOString(),
 
                                 onboardingCompleted:
                                     true
@@ -927,7 +1067,9 @@
                            SIGN OUT
                         ================================= */
 
-                        await signOut(auth);
+                        await signOut(
+                            auth
+                        );
 
 
                         /* =================================
@@ -943,14 +1085,29 @@
                         );
 
 
-                        /*
-                         * Keep the email in localStorage
-                         * so Kmeet can remember the account.
-                         */
+                        /* =================================
+                           SAVE ONLY NEW EMAIL
+                        ================================= */
 
                         localStorage.setItem(
                             "userEmail",
                             email
+                        );
+
+
+                        /*
+                         * Make absolutely sure that
+                         * an old profile picture is not
+                         * carried into this account.
+                         */
+
+                        localStorage.removeItem(
+                            "userAvatar"
+                        );
+
+
+                        localStorage.removeItem(
+                            "userInterests"
                         );
 
 
@@ -1027,7 +1184,9 @@
                             `<div class="message error">${text}</div>`;
 
 
-                        button.disabled = false;
+                        button.disabled =
+                            false;
+
 
                         button.textContent =
                             "Create Account";
@@ -1041,4 +1200,3 @@
 
 </body>
 </html>
-```
