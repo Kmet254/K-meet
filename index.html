@@ -589,6 +589,17 @@ document.addEventListener(
 );
 
 </script>
+    <script type="module">
+import { enableKmeetNotifications } from "./firebase-config.js";
+
+window.addEventListener("load", async () => {
+    const token = await enableKmeetNotifications();
+
+    if (token) {
+        console.log("❤️ Kmeet notifications are enabled.");
+    }
+});
+</script>
 
 </body>
 </html>
