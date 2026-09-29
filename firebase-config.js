@@ -23,9 +23,16 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
+  apiKey: "AIzaSyDgRae8K8CnCpHyxaIE7MaspmRinswwsrNo",
   authDomain: "kmeet-database.firebaseapp.com",
   projectId: "kmeet-database",
   storageBucket: "kmeet-database.firebasestorage.app",
@@ -40,11 +47,14 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
+const storage = getStorage(app);
+
 
 export {
   app,
   auth,
   db,
+  storage,
 
   onAuthStateChanged,
 
@@ -63,5 +73,9 @@ export {
   query,
   orderBy,
   onSnapshot,
-  serverTimestamp
+  serverTimestamp,
+
+  ref,
+  uploadBytes,
+  getDownloadURL
 };
