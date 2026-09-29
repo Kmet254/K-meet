@@ -52,7 +52,6 @@
       overflow-x: hidden;
     }
 
-    /* Soft atmosphere */
     body::before {
       content: "";
       position: fixed;
@@ -122,12 +121,7 @@
     .brand-heart {
       color: var(--pink);
       font-size: 22px;
-      transform: translateY(-1px);
       text-shadow: 0 0 18px rgba(255, 89, 145, 0.55);
-    }
-
-    .brand span:last-child {
-      color: #fff;
     }
 
     .nav-links {
@@ -278,7 +272,7 @@
     .profile-photo {
       width: 100%;
       height: 100%;
-      display: block;
+      display: none;
 
       object-fit: cover;
       object-position: center;
@@ -310,7 +304,7 @@
       width: 100%;
       height: 100%;
 
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
 
@@ -337,6 +331,111 @@
 
       color: rgba(255,255,255,0.48);
       font-size: 12px;
+      text-align: center;
+    }
+
+    /* =========================
+       PHOTO UPLOAD
+    ========================= */
+
+    .photo-tools {
+      width: 100%;
+      max-width: 340px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      margin-top: 16px;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .photo-upload-btn {
+      width: 100%;
+      min-height: 46px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      padding: 0 18px;
+
+      border-radius: 999px;
+
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+
+      color: rgba(255,255,255,0.86);
+
+      font-size: 13px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: 0.25s ease;
+    }
+
+    .photo-upload-btn:hover {
+      background: rgba(255,255,255,0.11);
+      transform: translateY(-1px);
+    }
+
+    .save-photo-btn {
+      width: 100%;
+      min-height: 46px;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+
+      padding: 0 18px;
+
+      border: 0;
+      border-radius: 999px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f05c91,
+          #c83c70
+        );
+
+      color: white;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 25px rgba(221,52,112,0.22);
+
+      transition: 0.25s ease;
+    }
+
+    .save-photo-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .save-photo-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .upload-status {
+      min-height: 18px;
+
+      color: rgba(255,255,255,0.55);
+
+      font-size: 11px;
+      line-height: 1.5;
+
       text-align: center;
     }
 
@@ -597,6 +696,10 @@
         max-width: 310px;
       }
 
+      .photo-tools {
+        max-width: 310px;
+      }
+
       .profile-details {
         padding: 0 4px 8px;
       }
@@ -636,6 +739,10 @@
       .photo-frame {
         max-width: 100%;
       }
+
+      .photo-tools {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -673,29 +780,29 @@
 
 
   <!-- =========================
-       MAIN CONTENT
+       MAIN
   ========================== -->
 
   <main class="page">
 
     <div class="page-heading">
 
-      <div class="eyebrow" id="eyebrow">
+      <div class="eyebrow">
         Your Kmeet profile
       </div>
 
-      <h1 id="pageTitle">
+      <h1>
         Your profile
       </h1>
 
-      <p id="pageSubtitle">
+      <p>
         This is how people see you on Kmeet.
       </p>
 
     </div>
 
 
-    <!-- Loading state -->
+    <!-- Loading -->
 
     <div id="loadingState" class="center-message">
 
@@ -712,9 +819,13 @@
     </div>
 
 
-    <!-- Error state -->
+    <!-- Error -->
 
-    <div id="errorState" class="center-message" style="display:none;">
+    <div
+      id="errorState"
+      class="center-message"
+      style="display:none;"
+    >
 
       <div class="message-title">
         Profile unavailable
@@ -735,7 +846,7 @@
     </div>
 
 
-    <!-- Profile -->
+    <!-- PROFILE -->
 
     <section
       id="profileCard"
@@ -743,7 +854,9 @@
       style="display:none;"
     >
 
-      <!-- PHOTO -->
+      <!-- =====================
+           PHOTO
+      ====================== -->
 
       <div class="photo-section">
 
@@ -764,14 +877,59 @@
 
         </div>
 
+
+        <!-- PHOTO CONTROLS -->
+
+        <div
+          id="photoTools"
+          class="photo-tools"
+        >
+
+          <input
+            id="photoInput"
+            class="file-input"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+          />
+
+
+          <label
+            for="photoInput"
+            class="photo-upload-btn"
+          >
+            <span>📷</span>
+            Choose Profile Photo
+          </label>
+
+
+          <button
+            id="savePhotoBtn"
+            class="save-photo-btn"
+            type="button"
+          >
+            <span>♥</span>
+            Save Profile Photo
+          </button>
+
+
+          <div
+            id="uploadStatus"
+            class="upload-status"
+          ></div>
+
+        </div>
+
+
         <div class="photo-caption">
-          Kmeet · Connecting hearts naturally
+          JPG, PNG or WEBP · Maximum 5 MB
         </div>
 
       </div>
 
 
-      <!-- DETAILS -->
+      <!-- =====================
+           DETAILS
+      ====================== -->
 
       <div class="profile-details">
 
@@ -800,7 +958,7 @@
         ></div>
 
 
-        <div id="bioSection">
+        <div>
 
           <div class="section-label">
             About
@@ -833,7 +991,6 @@
         <div class="actions">
 
           <a
-            id="discoverBtn"
             href="discover.html"
             class="secondary-btn"
           >
@@ -867,12 +1024,21 @@
     import {
       auth,
       db,
+      storage,
       onAuthStateChanged,
       signOut,
       doc,
-      getDoc
+      getDoc,
+      updateDoc,
+      ref,
+      uploadBytes,
+      getDownloadURL
     } from "./firebase-config.js";
 
+
+    /* =========================================
+       ELEMENTS
+    ========================================== */
 
     const loadingState =
       document.getElementById("loadingState");
@@ -910,36 +1076,35 @@
     const profileType =
       document.getElementById("profileType");
 
-    const pageTitle =
-      document.getElementById("pageTitle");
-
-    const pageSubtitle =
-      document.getElementById("pageSubtitle");
-
-    const eyebrow =
-      document.getElementById("eyebrow");
-
     const chatBtn =
       document.getElementById("chatBtn");
 
     const logoutBtn =
       document.getElementById("logoutBtn");
 
+    const photoInput =
+      document.getElementById("photoInput");
 
-    /*
-      ----------------------------------------------------
-      Get profile ID from the URL.
-      
-      Supports:
-        profile.html?id=UID
-        profile.html?userId=UID
-        profile.html?user=UID
-      ----------------------------------------------------
-    */
+    const savePhotoBtn =
+      document.getElementById("savePhotoBtn");
 
-    const params = new URLSearchParams(
-      window.location.search
-    );
+    const uploadStatus =
+      document.getElementById("uploadStatus");
+
+
+    let currentUser = null;
+    let selectedPhoto = null;
+    let currentProfileId = null;
+
+
+    /* =========================================
+       URL
+    ========================================== */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
     const requestedId =
       params.get("userId") ||
@@ -947,39 +1112,16 @@
       params.get("id");
 
 
-    /*
-      ----------------------------------------------------
-      Escape text before putting it into HTML.
-      ----------------------------------------------------
-    */
-
-    function escapeHtml(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    /*
-      ----------------------------------------------------
-      Get initials for fallback avatar.
-      ----------------------------------------------------
-    */
+    /* =========================================
+       INITIALS
+    ========================================== */
 
     function getInitials(name) {
 
       const clean =
-        String(name || "K")
-          .trim();
+        String(name || "K").trim();
 
-      if (!clean) {
-        return "K";
-      }
+      if (!clean) return "K";
 
       const words =
         clean.split(/\s+/);
@@ -1000,14 +1142,9 @@
     }
 
 
-    /*
-      ----------------------------------------------------
-      Convert interests into an array.
-      Supports:
-        ["Music", "Travel"]
-        "Music, Travel"
-      ----------------------------------------------------
-    */
+    /* =========================================
+       INTERESTS
+    ========================================== */
 
     function normalizeInterests(value) {
 
@@ -1033,11 +1170,9 @@
     }
 
 
-    /*
-      ----------------------------------------------------
-      Display error.
-      ----------------------------------------------------
-    */
+    /* =========================================
+       ERROR
+    ========================================== */
 
     function showError(message) {
 
@@ -1045,22 +1180,67 @@
       profileCard.style.display = "none";
 
       errorText.textContent = message;
+
       errorState.style.display = "flex";
 
     }
 
 
-    /*
-      ----------------------------------------------------
-      Display profile.
-      ----------------------------------------------------
-    */
+    /* =========================================
+       SHOW PHOTO
+    ========================================== */
 
-    function renderProfile(data, uid, isOwnProfile) {
+    function showPhoto(url, name) {
 
-      loadingState.style.display = "none";
-      errorState.style.display = "none";
-      profileCard.style.display = "grid";
+      if (url) {
+
+        profilePhoto.src = url;
+        profilePhoto.alt =
+          name + "'s profile photo";
+
+        profilePhoto.style.display =
+          "block";
+
+        initialAvatar.style.display =
+          "none";
+
+      } else {
+
+        profilePhoto.style.display =
+          "none";
+
+        initialAvatar.textContent =
+          getInitials(name);
+
+        initialAvatar.style.display =
+          "flex";
+
+      }
+
+    }
+
+
+    /* =========================================
+       RENDER PROFILE
+    ========================================== */
+
+    function renderProfile(
+      data,
+      uid,
+      isOwnProfile
+    ) {
+
+      loadingState.style.display =
+        "none";
+
+      errorState.style.display =
+        "none";
+
+      profileCard.style.display =
+        "grid";
+
+
+      currentProfileId = uid;
 
 
       const name =
@@ -1069,92 +1249,56 @@
         "Kmeet Member";
 
 
-      /*
-        Page heading
-      */
-
-      if (isOwnProfile) {
-
-        eyebrow.textContent =
-          "Your Kmeet profile";
-
-        pageTitle.textContent =
-          "Your profile";
-
-        pageSubtitle.textContent =
-          "This is how people see you on Kmeet.";
-
-        profileType.textContent =
-          "Your profile";
-
-      } else {
-
-        eyebrow.textContent =
-          "Kmeet profile";
-
-        pageTitle.textContent =
-          "Meet " + name;
-
-        pageSubtitle.textContent =
-          "Get to know them a little better.";
-
-        profileType.textContent =
-          "Kmeet member";
-
-      }
+      profileName.textContent =
+        name;
 
 
-      /*
-        Name
-      */
+      profileType.textContent =
+        isOwnProfile
+          ? "Your profile"
+          : "Kmeet member";
 
-      profileName.textContent = name;
 
-
-      /*
-        Photo
-      */
+      /* =====================================
+         PHOTO
+      ====================================== */
 
       const photoURL =
+        data.avatar ||
         data.photoURL ||
         data.photo ||
         data.profilePhoto ||
         "";
 
 
-      if (photoURL) {
+      showPhoto(
+        photoURL,
+        name
+      );
 
-        profilePhoto.src = photoURL;
-        profilePhoto.alt = name + "'s profile photo";
 
-        profilePhoto.style.display = "block";
-        initialAvatar.style.display = "none";
+      /* =====================================
+         PHOTO TOOLS
+      ====================================== */
 
-        profilePhoto.onerror = function () {
+      if (isOwnProfile) {
 
-          profilePhoto.style.display = "none";
-          initialAvatar.textContent =
-            getInitials(name);
-
-          initialAvatar.style.display = "flex";
-
-        };
+        document.getElementById(
+          "photoTools"
+        ).style.display = "flex";
 
       } else {
 
-        profilePhoto.style.display = "none";
-
-        initialAvatar.textContent =
-          getInitials(name);
-
-        initialAvatar.style.display = "flex";
+        document.getElementById(
+          "photoTools"
+        ).style.display = "none";
 
       }
 
 
-      /*
-        Meta information
-      */
+      /* =====================================
+         META
+      ====================================== */
 
       profileMeta.innerHTML = "";
 
@@ -1164,7 +1308,7 @@
       if (data.age) {
 
         metaItems.push(
-          escapeHtml(data.age) + " years"
+          data.age + " years"
         );
 
       }
@@ -1173,7 +1317,7 @@
       if (data.gender) {
 
         metaItems.push(
-          escapeHtml(data.gender)
+          data.gender
         );
 
       }
@@ -1182,58 +1326,70 @@
       if (data.location) {
 
         metaItems.push(
-          escapeHtml(data.location)
+          data.location
         );
 
       }
 
 
-      if (metaItems.length > 0) {
+      metaItems.forEach(
+        (item, index) => {
 
-        profileMeta.innerHTML =
-          metaItems
-            .map(
-              (item, index) => `
-                ${index > 0
-                  ? '<span class="meta-separator">•</span>'
-                  : ''
-                }
-                <span class="meta-item">
-                  ${item}
-                </span>
-              `
-            )
-            .join("");
+          if (index > 0) {
 
-      }
+            const separator =
+              document.createElement(
+                "span"
+              );
+
+            separator.className =
+              "meta-separator";
+
+            separator.textContent =
+              "•";
+
+            profileMeta.appendChild(
+              separator
+            );
+
+          }
 
 
-      /*
-        Bio
-      */
+          const span =
+            document.createElement(
+              "span"
+            );
 
-      const bio =
+          span.className =
+            "meta-item";
+
+          span.textContent =
+            item;
+
+          profileMeta.appendChild(
+            span
+          );
+
+        }
+      );
+
+
+      /* =====================================
+         BIO
+      ====================================== */
+
+      profileBio.textContent =
         data.bio ||
-        data.about ||
-        "";
-
-      if (bio) {
-
-        profileBio.textContent = bio;
-
-      } else {
-
-        profileBio.textContent =
+        (
           isOwnProfile
             ? "Add a little about yourself so people can get to know you."
-            : "This person hasn't added a bio yet.";
+            : "This person hasn't added a bio yet."
+        );
 
-      }
 
-
-      /*
-        Interests
-      */
+      /* =====================================
+         INTERESTS
+      ====================================== */
 
       const interests =
         normalizeInterests(
@@ -1242,36 +1398,47 @@
         );
 
 
-      profileInterests.innerHTML = "";
+      profileInterests.innerHTML =
+        "";
 
 
-      if (interests.length > 0) {
+      if (interests.length) {
 
-        interests.forEach(interest => {
+        interests.forEach(
+          interest => {
 
-          const pill =
-            document.createElement("span");
+            const pill =
+              document.createElement(
+                "span"
+              );
 
-          pill.className = "interest";
-          pill.textContent = interest;
+            pill.className =
+              "interest";
 
-          profileInterests.appendChild(pill);
+            pill.textContent =
+              interest;
 
-        });
+            profileInterests.appendChild(
+              pill
+            );
 
-        interestsSection.style.display = "block";
+          }
+        );
+
+        interestsSection.style.display =
+          "block";
 
       } else {
 
-        interestsSection.style.display = "none";
+        interestsSection.style.display =
+          "none";
 
       }
 
 
-      /*
-        Chat button only appears
-        when viewing another user.
-      */
+      /* =====================================
+         CHAT
+      ====================================== */
 
       if (!isOwnProfile) {
 
@@ -1292,25 +1459,19 @@
     }
 
 
-    /*
-      ----------------------------------------------------
-      Load profile.
-      ----------------------------------------------------
-    */
+    /* =========================================
+       LOAD PROFILE
+    ========================================== */
 
-    async function loadProfile(currentUser) {
+    async function loadProfile(user) {
 
-      let profileId = requestedId;
+      let profileId =
+        requestedId;
 
-
-      /*
-        No ID in URL means:
-        show the currently logged-in user's profile.
-      */
 
       if (!profileId) {
 
-        if (!currentUser) {
+        if (!user) {
 
           showError(
             "Please log in to view your profile."
@@ -1320,22 +1481,26 @@
 
         }
 
-        profileId = currentUser.uid;
+        profileId =
+          user.uid;
 
       }
 
 
-      /*
-        Load Firestore user document.
-      */
-
       try {
 
         const userRef =
-          doc(db, "users", profileId);
+          doc(
+            db,
+            "users",
+            profileId
+          );
+
 
         const snapshot =
-          await getDoc(userRef);
+          await getDoc(
+            userRef
+          );
 
 
         if (!snapshot.exists()) {
@@ -1354,8 +1519,8 @@
 
 
         const isOwnProfile =
-          !!currentUser &&
-          currentUser.uid === profileId;
+          !!user &&
+          user.uid === profileId;
 
 
         renderProfile(
@@ -1381,11 +1546,301 @@
     }
 
 
-    /*
-      ----------------------------------------------------
-      Logout
-      ----------------------------------------------------
-    */
+    /* =========================================
+       CHOOSE PHOTO
+    ========================================== */
+
+    photoInput.addEventListener(
+      "change",
+      function () {
+
+        const file =
+          this.files[0];
+
+
+        if (!file) {
+
+          selectedPhoto =
+            null;
+
+          savePhotoBtn.style.display =
+            "none";
+
+          return;
+
+        }
+
+
+        /* Check type */
+
+        const allowedTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ];
+
+
+        if (
+          !allowedTypes.includes(
+            file.type
+          )
+        ) {
+
+          uploadStatus.textContent =
+            "Please choose a JPG, PNG or WEBP image.";
+
+          this.value = "";
+
+          return;
+
+        }
+
+
+        /* Check size */
+
+        if (
+          file.size >
+          5 * 1024 * 1024
+        ) {
+
+          uploadStatus.textContent =
+            "That image is larger than 5 MB. Please choose a smaller photo.";
+
+          this.value = "";
+
+          return;
+
+        }
+
+
+        selectedPhoto =
+          file;
+
+
+        /*
+          Show preview immediately.
+        */
+
+        const previewURL =
+          URL.createObjectURL(
+            file
+          );
+
+
+        profilePhoto.src =
+          previewURL;
+
+        profilePhoto.style.display =
+          "block";
+
+        initialAvatar.style.display =
+          "none";
+
+
+        savePhotoBtn.style.display =
+          "flex";
+
+
+        uploadStatus.textContent =
+          file.name +
+          " selected. Click Save Profile Photo.";
+
+      }
+    );
+
+
+    /* =========================================
+       UPLOAD PHOTO
+    ========================================== */
+
+    savePhotoBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (!selectedPhoto) {
+
+          uploadStatus.textContent =
+            "Please choose a photo first.";
+
+          return;
+
+        }
+
+
+        if (!currentUser) {
+
+          uploadStatus.textContent =
+            "Please log in first.";
+
+          return;
+
+        }
+
+
+        savePhotoBtn.disabled =
+          true;
+
+        savePhotoBtn.innerHTML =
+          "<span>⏳</span> Uploading...";
+
+
+        try {
+
+          /*
+            Store each user's photo
+            inside their own UID folder.
+          */
+
+          const photoRef =
+            ref(
+              storage,
+              "profilePhotos/" +
+              currentUser.uid +
+              "/profile.jpg"
+            );
+
+
+          /*
+            Upload image.
+          */
+
+          await uploadBytes(
+            photoRef,
+            selectedPhoto,
+            {
+              contentType:
+                selectedPhoto.type
+            }
+          );
+
+
+          /*
+            Get public download URL.
+          */
+
+          const downloadURL =
+            await getDownloadURL(
+              photoRef
+            );
+
+
+          /*
+            Save URL to Firestore.
+          */
+
+          await updateDoc(
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            ),
+            {
+              avatar:
+                downloadURL
+            }
+          );
+
+
+          /*
+            Update screen immediately.
+          */
+
+          profilePhoto.src =
+            downloadURL +
+            "&v=" +
+            Date.now();
+
+
+          profilePhoto.style.display =
+            "block";
+
+          initialAvatar.style.display =
+            "none";
+
+
+          /*
+            IMPORTANT:
+            Remove any old browser avatar.
+          */
+
+          localStorage.removeItem(
+            "userAvatar"
+          );
+
+
+          uploadStatus.textContent =
+            "✓ Your profile photo has been saved.";
+
+
+          selectedPhoto =
+            null;
+
+          photoInput.value = "";
+
+
+          savePhotoBtn.style.display =
+            "none";
+
+          savePhotoBtn.disabled =
+            false;
+
+          savePhotoBtn.innerHTML =
+            "<span>♥</span> Save Profile Photo";
+
+
+        } catch (error) {
+
+          console.error(
+            "Photo upload error:",
+            error
+          );
+
+
+          let message =
+            "Unable to upload your photo.";
+
+
+          if (
+            error.code ===
+            "storage/unauthorized"
+          ) {
+
+            message =
+              "Firebase Storage permission denied. Check your Storage rules.";
+
+          }
+
+
+          if (
+            error.code ===
+            "storage/unauthenticated"
+          ) {
+
+            message =
+              "Your login session expired. Please log in again.";
+
+          }
+
+
+          uploadStatus.textContent =
+            message;
+
+
+          savePhotoBtn.disabled =
+            false;
+
+          savePhotoBtn.innerHTML =
+            "<span>♥</span> Save Profile Photo";
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       LOGOUT
+    ========================================== */
 
     logoutBtn.addEventListener(
       "click",
@@ -1393,10 +1848,32 @@
 
         try {
 
-          await signOut(auth);
+          /*
+            Remove old browser-stored
+            profile information.
+          */
+
+          localStorage.removeItem(
+            "userAvatar"
+          );
+
+          localStorage.removeItem(
+            "userInterests"
+          );
+
+          localStorage.removeItem(
+            "userEmail"
+          );
+
+
+          await signOut(
+            auth
+          );
+
 
           window.location.href =
             "index.html";
+
 
         } catch (error) {
 
@@ -1415,17 +1892,20 @@
     );
 
 
-    /*
-      ----------------------------------------------------
-      Firebase authentication state.
-      ----------------------------------------------------
-    */
+    /* =========================================
+       AUTH STATE
+    ========================================== */
 
     onAuthStateChanged(
       auth,
       async (user) => {
 
-        await loadProfile(user);
+        currentUser =
+          user || null;
+
+        await loadProfile(
+          user
+        );
 
       }
     );
