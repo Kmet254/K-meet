@@ -7,6 +7,7 @@ import {
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signInAnonymously,
     signOut,
     GoogleAuthProvider,
     signInWithPopup
@@ -62,6 +63,7 @@ export {
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signInAnonymously,
     signOut,
     GoogleAuthProvider,
     signInWithPopup
