@@ -1,4 +1,12 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+// ============================================================
+// KMEET FIREBASE CONFIGURATION
+// Firebase SDK 12.19.0
+// GitHub Pages / Browser
+// ============================================================
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
   getAuth,
@@ -7,8 +15,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  signInAnonymously
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  signInAnonymously,
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -21,18 +30,22 @@ import {
   orderBy,
   onSnapshot,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
   getStorage,
   ref,
   uploadBytes,
   getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 
+
+// ============================================================
+// YOUR FIREBASE PROJECT
+// ============================================================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDgRae8K8CnCpHyxaIE7MaspmRinswwsrNo",
+  apiKey: "AIzaSyDgRae8KCnCpHyxaIE7MaspmRinswwsrNo",
   authDomain: "kmeet-database.firebaseapp.com",
   projectId: "kmeet-database",
   storageBucket: "kmeet-database.firebasestorage.app",
@@ -40,6 +53,10 @@ const firebaseConfig = {
   appId: "1:123313610325:web:255c467996eff14d72bedc"
 };
 
+
+// ============================================================
+// INITIALIZE
+// ============================================================
 
 const app = initializeApp(firebaseConfig);
 
@@ -50,24 +67,31 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 
+// ============================================================
+// EXPORTS
+// ============================================================
+
 export {
   app,
+
+  // Firebase services
   auth,
   db,
   storage,
 
+  // Authentication
   onAuthStateChanged,
-
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
   signInAnonymously,
+  sendPasswordResetEmail,
 
+  // Firestore
   doc,
   getDoc,
   setDoc,
-
   collection,
   addDoc,
   query,
@@ -75,6 +99,7 @@ export {
   onSnapshot,
   serverTimestamp,
 
+  // Storage
   ref,
   uploadBytes,
   getDownloadURL
