@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,13 @@
     <title>Kmeet - Find Your Connection</title>
 
     <base target="_self">
-    <link rel="icon" type="image/svg+xml" href="kmeet-logo.jfif.jfif">
-    
-    <link rel="icon" type="image/svg+xml" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg">
+
+    <!-- Kmeet Logo -->
+    <link
+        rel="icon"
+        type="image/jpeg"
+        href="assets/kmeet-logo.jfif.jfif"
+    >
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,13 +29,6 @@
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    >
-
-    <!-- Kmeet Logo -->
-    <link
-        rel="icon"
-        type="image/jpeg"
-        href="assets/kmeet-logo.jfif.jfif"
     >
 
     <!-- Main CSS -->
@@ -48,6 +46,7 @@
     <nav class="main-nav">
 
         <!-- KMEET BRAND / HOME -->
+
         <div class="brand">
 
             <a
@@ -203,7 +202,6 @@
 
             <div class="home-profile-preview">
 
-
                 <!-- USER PHOTO -->
 
                 <img
@@ -289,7 +287,6 @@ document.addEventListener(
     'DOMContentLoaded',
     function () {
 
-
         /* =====================================
            DOM ELEMENTS
         ====================================== */
@@ -350,14 +347,11 @@ document.addEventListener(
 
         if (savedEmail) {
 
-
             guestState.style.display =
                 'none';
 
-
             userState.style.display =
                 'block';
-
 
             navProfileLink.innerHTML =
                 '<a href="profile.html">MY PROFILE</a>';
@@ -530,7 +524,7 @@ document.addEventListener(
 
                     localStorage.setItem(
                         'userEmail',
-                        emailInput.value
+                        emailInput.value.trim()
                     );
 
 
@@ -541,13 +535,18 @@ document.addEventListener(
                     );
 
 
-                    /* GO TO ONBOARDING */
+                    /* =================================
+                       GO TO SIGNUP PAGE
+
+                       FIXED:
+                       signup.html exists in GitHub.
+                    ================================= */
 
                     setTimeout(
                         function () {
 
                             window.location.href =
-                                'onboarding.html';
+                                'signup.html';
 
                         },
                         400
@@ -589,17 +588,52 @@ document.addEventListener(
 );
 
 </script>
-    <script type="module">
-import { enableKmeetNotifications } from "./firebase-config.js";
 
-window.addEventListener("load", async () => {
-    const token = await enableKmeetNotifications();
 
-    if (token) {
-        console.log("❤️ Kmeet notifications are enabled.");
+<!-- =========================================
+     KMEET NOTIFICATIONS
+========================================== -->
+
+<script type="module">
+
+import {
+    enableKmeetNotifications
+} from "./firebase-config.js";
+
+
+window.addEventListener(
+    "load",
+    async () => {
+
+        try {
+
+            const token =
+                await enableKmeetNotifications();
+
+
+            if (token) {
+
+                console.log(
+                    "❤️ Kmeet notifications are enabled."
+                );
+
+            }
+
+        } catch (error) {
+
+            console.log(
+                "Kmeet notifications:",
+                error
+            );
+
+        }
+
     }
-});
+);
+
 </script>
+
 
 </body>
 </html>
+```
