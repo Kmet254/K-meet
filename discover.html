@@ -7,12 +7,13 @@
   <title>Kmeet - Discover</title>
 
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="kmeet-heart.png">
+  <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
 
   <style>
-    /* ================================
-       KMEET DISCOVER PAGE
-       ================================ */
+    /* =========================================
+       KMEET DISCOVER
+       PHOTO-FIRST MEMBER GALLERY
+       ========================================= */
 
     body.discover-page {
       margin: 0 !important;
@@ -35,305 +36,369 @@
     }
 
     /* NAVIGATION */
-    .discover-page .discover-nav {
+
+    .discover-nav {
       width: 100%;
-      min-height: 78px;
-      padding: 0 50px;
+      min-height: 74px;
+      padding: 0 5%;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      background:
-        linear-gradient(
-          180deg,
-          rgba(20, 12, 16, 0.92),
-          rgba(35, 19, 25, 0.82)
-        );
-
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      background: rgba(20, 8, 14, 0.94);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
 
       position: relative;
       z-index: 10;
     }
 
-    .discover-page .discover-logo {
+    .discover-logo {
       color: #fff !important;
       text-decoration: none !important;
-
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: 30px;
+      font-family: Georgia, serif;
+      font-size: 29px;
       font-weight: 700;
-
       letter-spacing: 1px;
-
-      transition: opacity 0.2s ease;
     }
 
-    .discover-page .discover-logo:hover {
-      opacity: 0.8;
-    }
-
-    .discover-page .discover-navlinks {
+    .discover-navlinks {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 28px;
     }
 
-    .discover-page .discover-navlinks a {
-      color: rgba(255,255,255,0.88) !important;
+    .discover-navlinks a {
+      color: rgba(255,255,255,0.85) !important;
       text-decoration: none !important;
-
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 1px;
-
-      transition:
-        color 0.2s ease,
-        transform 0.2s ease;
+      letter-spacing: .8px;
     }
 
-    .discover-page .discover-navlinks a:hover {
-      color: #f09a63 !important;
-      transform: translateY(-1px);
+    .discover-navlinks a:hover {
+      color: #f0a06b !important;
     }
 
     /* MAIN */
-    .discover-page .discover-container {
-      width: min(1200px, calc(100% - 40px));
-      margin: 0 auto;
-      padding: 55px 0 70px;
+
+    .discover-container {
+      width: min(1400px, calc(100% - 36px));
+      margin: auto;
+      padding: 42px 0 70px;
     }
 
-    .discover-page .discover-heading {
+    .discover-heading {
       text-align: center;
-      margin-bottom: 45px;
+      margin-bottom: 32px;
     }
 
-    .discover-page .discover-heading h1 {
-      margin: 0 0 12px;
-
-      color: #fff;
-      font-family: "Playfair Display", Georgia, serif;
-
-      font-size: clamp(36px, 5vw, 56px);
+    .discover-heading h1 {
+      margin: 0 0 8px;
+      font-family: Georgia, serif;
+      font-size: clamp(34px, 5vw, 52px);
       font-weight: 600;
-      line-height: 1.1;
     }
 
-    .discover-page .discover-heading p {
+    .discover-heading p {
       margin: 0;
-
-      color: rgba(255,255,255,0.68);
-      font-size: 16px;
+      color: rgba(255,255,255,0.62);
+      font-size: 15px;
     }
 
-    /* MESSAGE */
-    .discover-page #msg {
-      margin-bottom: 25px;
-    }
+    /* GRID */
 
-    .discover-page .message {
-      padding: 15px 20px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .discover-page .message.error {
-      color: #ffb4b4;
-      border-color: rgba(255,100,100,0.3);
-    }
-
-    /* PROFILE GRID */
-    .discover-page .discover-grid {
+    .discover-grid {
       display: grid;
 
+      /*
+        More people visible at once.
+        Cards become smaller as the screen gets wider.
+      */
       grid-template-columns:
-        repeat(auto-fit, minmax(270px, 1fr));
+        repeat(auto-fill, minmax(210px, 1fr));
 
-      gap: 28px;
-
+      gap: 18px;
       width: 100%;
     }
 
     /* PROFILE CARD */
-    .discover-page .profile-card {
+
+    .profile-card {
       overflow: hidden;
 
       background:
         linear-gradient(
           145deg,
           rgba(65,43,42,0.72),
-          rgba(25,17,21,0.88)
+          rgba(25,17,21,0.94)
         ) !important;
 
-      border: 1px solid rgba(255,255,255,0.14) !important;
-      border-radius: 22px !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+      border-radius: 18px !important;
 
       box-shadow:
-        0 18px 45px rgba(0,0,0,0.30),
-        inset 0 1px 0 rgba(255,255,255,0.06) !important;
-
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+        0 14px 35px rgba(0,0,0,0.28);
 
       transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+        transform .22s ease,
+        box-shadow .22s ease;
     }
 
-    .discover-page .profile-card:hover {
-      transform: translateY(-6px);
+    .profile-card:hover {
+      transform: translateY(-5px);
 
       box-shadow:
-        0 25px 55px rgba(0,0,0,0.42),
-        inset 0 1px 0 rgba(255,255,255,0.08) !important;
+        0 20px 45px rgba(0,0,0,0.42);
     }
 
-    /* PROFILE IMAGE */
-    .discover-page .profile-card > img {
+    /* PHOTO FIRST */
+
+    .profile-photo {
       display: block;
 
       width: 100%;
-      height: 320px;
+      height: 255px;
 
       object-fit: cover;
 
-      border: 0;
+      background:
+        linear-gradient(135deg,#39232b,#1b1015);
+
+      transition: transform .3s ease;
     }
 
-    /* CARD CONTENT */
-    .discover-page .profile-inside {
-      padding: 22px;
+    .profile-card:hover .profile-photo {
+      transform: scale(1.025);
     }
 
-    .discover-page .profile-inside h3 {
-      margin: 0 0 6px;
+    /* CARD DETAILS */
+
+    .profile-inside {
+      padding: 15px;
+    }
+
+    .profile-name {
+      margin: 0 0 4px;
 
       color: #fff;
 
-      font-family: "Playfair Display", Georgia, serif;
-
-      font-size: 23px;
+      font-family: Georgia, serif;
+      font-size: 20px;
       font-weight: 600;
     }
 
-    .discover-page .profile-location {
-      margin: 0 0 16px;
+    .profile-location {
+      margin: 0 0 10px;
 
-      color: rgba(255,255,255,0.60);
-      font-size: 14px;
-    }
-
-    /* INTEREST TAGS */
-    .discover-page .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
-
-    .discover-page .tag {
-      display: inline-block;
-
-      padding: 6px 11px;
-
-      color: rgba(255,255,255,0.85);
-
-      background: rgba(240,154,99,0.10);
-
-      border: 1px solid rgba(240,154,99,0.22);
-
-      border-radius: 30px;
-
+      color: rgba(255,255,255,0.58);
       font-size: 12px;
     }
 
-    /* VIEW PROFILE BUTTON */
-    .discover-page .profile-action {
-      margin-top: 20px;
+    /* INTERESTS */
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-height: 24px;
     }
 
-    .discover-page .profile-button {
-      display: inline-flex;
+    .tag {
+      display: inline-block;
+
+      padding: 4px 8px;
+
+      color: rgba(255,255,255,0.82);
+
+      background: rgba(240,154,99,0.08);
+
+      border: 1px solid rgba(240,154,99,0.18);
+
+      border-radius: 20px;
+
+      font-size: 10px;
+    }
+
+    /* BUTTONS */
+
+    .profile-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+
+      margin-top: 13px;
+    }
+
+    .profile-button,
+    .chat-button {
+      display: flex;
       align-items: center;
       justify-content: center;
 
-      width: 100%;
-      min-height: 46px;
+      min-height: 38px;
 
-      color: #fff !important;
+      border-radius: 9px;
+
       text-decoration: none !important;
+
+      font-size: 11px;
+      font-weight: 600;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+    /* VIEW PROFILE */
+
+    .profile-button {
+      color: white !important;
+
+      background: rgba(255,255,255,0.08);
+
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* CHAT */
+
+    .chat-button {
+      color: #35101d !important;
 
       background:
         linear-gradient(
           135deg,
-          #e98750,
-          #d96d3c
+          #f5d58a,
+          #d99663
         );
 
-      border-radius: 12px;
+      border: none;
 
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-
-      box-shadow: 0 8px 20px rgba(0,0,0,0.20);
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+      box-shadow:
+        0 5px 15px rgba(0,0,0,0.20);
     }
 
-    .discover-page .profile-button:hover {
+    .profile-button:hover,
+    .chat-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.30);
     }
 
-    /* EMPTY STATE */
-    .discover-page .empty-card {
+    .chat-button:hover {
+      box-shadow:
+        0 8px 20px rgba(245,213,138,0.22);
+    }
+
+    /* EMPTY */
+
+    .empty-card {
       grid-column: 1 / -1;
 
-      padding: 50px 25px;
+      padding: 60px 20px;
 
       text-align: center;
 
-      color: rgba(255,255,255,0.72);
+      color: rgba(255,255,255,0.70);
 
       background: rgba(255,255,255,0.05);
 
       border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 20px;
+      border-radius: 18px;
+    }
+
+    /* ERROR */
+
+    .message {
+      margin-bottom: 20px;
+      padding: 14px 18px;
+
+      border-radius: 10px;
+
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .message.error {
+      color: #ffb5b5;
+    }
+
+    /* TABLET */
+
+    @media (max-width: 900px) {
+      .discover-grid {
+        grid-template-columns:
+          repeat(auto-fill, minmax(185px, 1fr));
+
+        gap: 14px;
+      }
+
+      .profile-photo {
+        height: 225px;
+      }
     }
 
     /* MOBILE */
-    @media (max-width: 700px) {
 
-      .discover-page .discover-nav {
-        padding: 0 20px;
+    @media (max-width: 560px) {
+
+      .discover-nav {
+        padding: 0 16px;
       }
 
-      .discover-page .discover-logo {
+      .discover-logo {
         font-size: 25px;
       }
 
-      .discover-page .discover-navlinks {
-        gap: 15px;
+      .discover-navlinks {
+        gap: 12px;
       }
 
-      .discover-page .discover-navlinks a {
-        font-size: 12px;
+      .discover-navlinks a {
+        font-size: 11px;
       }
 
-      .discover-page .discover-container {
-        width: min(100% - 28px, 600px);
-        padding-top: 35px;
+      .discover-container {
+        width: calc(100% - 20px);
+        padding-top: 30px;
       }
 
-      .discover-page .profile-card > img {
-        height: 300px;
+      .discover-heading {
+        margin-bottom: 24px;
+      }
+
+      .discover-heading h1 {
+        font-size: 34px;
+      }
+
+      .discover-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .profile-card {
+        border-radius: 14px !important;
+      }
+
+      .profile-photo {
+        height: 220px;
+      }
+
+      .profile-inside {
+        padding: 10px;
+      }
+
+      .profile-name {
+        font-size: 17px;
+      }
+
+      .profile-actions {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .profile-button,
+      .chat-button {
+        min-height: 35px;
+        font-size: 10px;
       }
     }
   </style>
@@ -342,6 +407,7 @@
 <body class="discover-page">
 
   <!-- NAVIGATION -->
+
   <nav class="discover-nav">
 
     <a class="discover-logo" href="index.html">
@@ -357,12 +423,18 @@
   </nav>
 
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
+
   <main class="discover-container">
 
     <div class="discover-heading">
+
       <h1>Discover People</h1>
-      <p>You can browse profiles without an account.</p>
+
+      <p>
+        Meet interesting people joining Kmeet ❤️
+      </p>
+
     </div>
 
     <div id="msg"></div>
@@ -383,33 +455,42 @@
     } from "./firebase-config.js";
 
 
-    /* PROFILE LINK */
+    /* ============================
+       PROFILE LINK
+       ============================ */
 
     onAuthStateChanged(auth, user => {
 
       if (user && !user.isAnonymous) {
-        document.getElementById("profileLink").href = "profile.html";
+
+        document.getElementById("profileLink").href =
+          "profile.html";
+
       }
 
     });
 
 
-    /* PROFILE GRID */
+    /* ============================
+       LOAD MEMBERS
+       ============================ */
 
     const grid = document.getElementById("grid");
 
-    const unsub = onSnapshot(
+    onSnapshot(
       collection(db, "users"),
 
       snapshot => {
 
         grid.innerHTML = "";
 
+
         if (snapshot.empty) {
 
           grid.innerHTML = `
             <div class="empty-card">
-              No profiles yet. Create the first account.
+              No profiles yet.
+              Create the first Kmeet account ❤️
             </div>
           `;
 
@@ -421,23 +502,32 @@
 
           const p = snap.data();
 
+
           const name =
             p.name ||
             p.username ||
             "Kmeet Member";
+
 
           const age =
             p.age
               ? `, ${p.age}`
               : "";
 
+
+          /*
+             Use the member's uploaded avatar
+             when available.
+          */
+
           const avatar =
             p.avatar ||
             "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&q=80";
 
+
           const interests =
             Array.isArray(p.interests)
-              ? p.interests.slice(0, 4)
+              ? p.interests.slice(0, 3)
               : [];
 
 
@@ -445,35 +535,49 @@
             "beforeend",
 
             `
+
               <article class="profile-card">
 
+                <!-- PHOTO FIRST -->
+
                 <img
+                  class="profile-photo"
                   src="${escapeHtml(avatar)}"
                   alt="${escapeHtml(name)}"
                   loading="lazy"
                 >
 
+
                 <div class="profile-inside">
 
-                  <h3>
+                  <h3 class="profile-name">
                     ${escapeHtml(name)}${age}
                   </h3>
 
+
                   <p class="profile-location">
-                    ${escapeHtml(p.location || "Kenya")}
+                    ${escapeHtml(
+                      p.location || "Kenya"
+                    )}
                   </p>
+
 
                   <div class="tags">
 
                     ${interests.map(i => `
+
                       <span class="tag">
                         ${escapeHtml(i)}
                       </span>
+
                     `).join("")}
 
                   </div>
 
-                  <div class="profile-action">
+
+                  <!-- ACTIONS -->
+
+                  <div class="profile-actions">
 
                     <a
                       class="profile-button"
@@ -482,11 +586,25 @@
                       View Profile
                     </a>
 
+
+                    <!--
+                      CHAT DOES NOT OPEN FREE CHAT.
+                      IT TAKES THE MEMBER TO SUBSCRIPTION.
+                    -->
+
+                    <a
+                      class="chat-button"
+                      href="subscription.html"
+                    >
+                      💬 Chat
+                    </a>
+
                   </div>
 
                 </div>
 
               </article>
+
             `
           );
 
@@ -494,21 +612,34 @@
 
       },
 
+
+      /* ============================
+         FIREBASE ERROR
+         ============================ */
+
       err => {
 
         console.error(err);
 
         document.getElementById("msg").innerHTML = `
+
           <div class="message error">
-            Could not load profiles: ${escapeHtml(err.message)}
+
+            Could not load profiles:
+            ${escapeHtml(err.message)}
+
           </div>
+
         `;
 
       }
+
     );
 
 
-    /* SECURITY */
+    /* ============================
+       SECURITY
+       ============================ */
 
     function escapeHtml(value) {
 
@@ -516,12 +647,15 @@
         /[&<>"']/g,
 
         c => ({
+
           "&": "&amp;",
           "<": "&lt;",
           ">": "&gt;",
           '"': "&quot;",
           "'": "&#039;"
+
         }[c])
+
       );
 
     }
