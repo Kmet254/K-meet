@@ -1,159 +1,222 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kmeet - Subscribe to Connect</title>
+    <title>Kmeet - Chat Credits</title>
 
     <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
 
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #fff;
             background:
-                linear-gradient(rgba(35, 5, 18, 0.78), rgba(35, 5, 18, 0.92)),
+                linear-gradient(rgba(35, 5, 18, 0.82), rgba(20, 3, 12, 0.94)),
                 url("kmeet-background.jpg.jpg") center/cover fixed;
-            color: white;
         }
 
-        .topbar {
-            height: 72px;
+        header {
+            height: 78px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 6%;
-            background: rgba(20, 5, 15, 0.78);
+            padding: 0 7%;
+            background: rgba(25, 4, 15, 0.88);
             border-bottom: 1px solid rgba(255,255,255,0.12);
         }
 
-        .brand {
-            color: #f5d58a;
-            font-size: 28px;
-            font-weight: bold;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-decoration: none;
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
         }
 
-        .home-link {
-            color: white;
+        .logo img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .back {
+            color: #fff;
             text-decoration: none;
             font-size: 15px;
+            opacity: 0.9;
         }
 
-        .home-link:hover {
-            color: #f5d58a;
+        .back:hover {
+            opacity: 1;
         }
 
-        .content {
-            width: min(1100px, 92%);
-            margin: 55px auto;
+        main {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 65px 20px 80px;
             text-align: center;
         }
 
-        .content h1 {
-            margin-bottom: 10px;
-            font-size: clamp(32px, 5vw, 52px);
-        }
-
-        .content h1 span {
-            color: #f5d58a;
-        }
-
         .intro {
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto 45px;
-            color: rgba(255,255,255,0.78);
-            font-size: 17px;
+        }
+
+        .intro h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .intro h1 span {
+            color: #f5b5c8;
+        }
+
+        .intro p {
+            color: #ddd;
             line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .free-box {
+            max-width: 760px;
+            margin: 0 auto 40px;
+            padding: 24px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.14);
+            backdrop-filter: blur(10px);
+        }
+
+        .free-box h2 {
+            margin-bottom: 10px;
+            color: #ffd9e4;
+        }
+
+        .free-box p {
+            color: #ddd;
+            line-height: 1.6;
         }
 
         .plans {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 1000px;
-            margin: auto;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 820px;
+            margin: 0 auto;
         }
 
         .plan {
-            background: rgba(255,255,255,0.09);
-            border: 1px solid rgba(255,255,255,0.16);
+            padding: 35px 25px;
             border-radius: 22px;
-            padding: 32px 24px;
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.14);
             backdrop-filter: blur(12px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            transition: transform 0.25s ease, border-color 0.25s ease;
         }
 
-        .plan.featured {
-            border: 1px solid #f5d58a;
-            transform: translateY(-8px);
+        .plan:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,181,200,0.6);
         }
 
         .plan h2 {
-            margin-top: 0;
-            color: #f5d58a;
+            font-size: 25px;
+            margin-bottom: 12px;
         }
 
         .price {
             font-size: 38px;
             font-weight: bold;
-            margin: 20px 0;
+            color: #f5b5c8;
+            margin: 15px 0;
         }
 
         .price small {
-            font-size: 14px;
-            font-weight: normal;
-            color: rgba(255,255,255,0.65);
-        }
-
-        .features {
-            list-style: none;
-            padding: 0;
-            margin: 25px 0;
-            line-height: 2;
-            color: rgba(255,255,255,0.85);
-        }
-
-        .subscribe-btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            border-radius: 30px;
-            border: none;
-            background: linear-gradient(135deg, #f5d58a, #d89a63);
-            color: #35101d;
-            font-weight: bold;
             font-size: 16px;
+            color: #ddd;
+            font-weight: normal;
+        }
+
+        .plan p {
+            color: #ccc;
+            line-height: 1.6;
+            min-height: 55px;
+        }
+
+        .buy-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 30px;
+            border-radius: 30px;
+            background: #a52f55;
+            color: #fff;
             text-decoration: none;
+            font-weight: bold;
+            border: none;
             cursor: pointer;
+            transition: background 0.2s ease;
         }
 
-        .subscribe-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245,213,138,0.25);
+        .buy-button:hover {
+            background: #c0446c;
         }
 
-        .note {
-            margin-top: 40px;
-            color: rgba(255,255,255,0.6);
-            font-size: 13px;
+        .rules {
+            max-width: 820px;
+            margin: 45px auto 0;
+            padding: 28px;
+            text-align: left;
+            border-radius: 18px;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        @media (max-width: 800px) {
-            .plans {
-                grid-template-columns: 1fr;
-                max-width: 450px;
+        .rules h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .rules ul {
+            padding-left: 22px;
+        }
+
+        .rules li {
+            margin: 12px 0;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .rules strong {
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 0 5%;
             }
 
-            .plan.featured {
-                transform: none;
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .plans {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding-top: 45px;
             }
         }
     </style>
@@ -161,91 +224,115 @@
 
 <body>
 
-    <header class="topbar">
-        <a href="index.html" class="brand">Kmeet</a>
-        <a href="discover.html" class="home-link">← Back to Discover</a>
-    </header>
+<header>
+    <a href="index.html" class="logo">
+        <img src="kmeet-logo.jfif.jfif" alt="Kmeet">
+        Kmeet
+    </a>
 
-    <main class="content">
+    <a href="discover.html" class="back">
+        ← Back to Discover
+    </a>
+</header>
 
-        <h1>Connect on <span>Kmeet</span> ❤️</h1>
+<main>
 
-        <p class="intro">
-            You've found someone you'd like to talk to.
-            Choose a Kmeet membership to unlock private conversations
-            and start connecting.
+    <section class="intro">
+        <h1>Keep the conversation <span>going ❤️</span></h1>
+
+        <p>
+            Use Kmeet chat credits to continue meaningful conversations
+            with people you're interested in.
         </p>
+    </section>
 
-        <section class="plans">
+    <section class="free-box">
+        <h2>Your first message is free</h2>
 
-            <div class="plan">
-                <h2>1 Month</h2>
-
-                <div class="price">
-                    KSh 499
-                    <small>/ month</small>
-                </div>
-
-                <ul class="features">
-                    <li>✓ Private chat</li>
-                    <li>✓ Connect with members</li>
-                    <li>✓ Send messages</li>
-                </ul>
-
-                <a href="#" class="subscribe-btn">
-                    Subscribe
-                </a>
-            </div>
-
-
-            <div class="plan featured">
-                <h2>3 Months</h2>
-
-                <div class="price">
-                    KSh 999
-                    <small>/ 3 months</small>
-                </div>
-
-                <ul class="features">
-                    <li>✓ Private chat</li>
-                    <li>✓ Connect with members</li>
-                    <li>✓ Send messages</li>
-                    <li>✓ More time to connect</li>
-                </ul>
-
-                <a href="#" class="subscribe-btn">
-                    Subscribe
-                </a>
-            </div>
-
-
-            <div class="plan">
-                <h2>6 Months</h2>
-
-                <div class="price">
-                    KSh 1,499
-                    <small>/ 6 months</small>
-                </div>
-
-                <ul class="features">
-                    <li>✓ Private chat</li>
-                    <li>✓ Connect with members</li>
-                    <li>✓ Send messages</li>
-                    <li>✓ Extended membership</li>
-                </ul>
-
-                <a href="#" class="subscribe-btn">
-                    Subscribe
-                </a>
-            </div>
-
-        </section>
-
-        <p class="note">
-            Secure membership access • Kmeet
+        <p>
+            Every sender gets one free opening message, such as
+            <strong>“Hi”</strong> or <strong>“Hey”</strong>.
+            After that, additional messages use chat credits.
         </p>
+    </section>
 
-    </main>
+    <section class="plans">
+
+        <div class="plan">
+            <h2>3 Chats</h2>
+
+            <div class="price">
+                KSh 49
+            </div>
+
+            <p>
+                Get 3 paid chat messages to continue your conversations.
+            </p>
+
+            <a href="#" class="buy-button">
+                Get 3 Chats
+            </a>
+        </div>
+
+        <div class="plan">
+            <h2>8 Chats</h2>
+
+            <div class="price">
+                KSh 100
+            </div>
+
+            <p>
+                Get 8 paid chat messages for longer conversations.
+            </p>
+
+            <a href="#" class="buy-button">
+                Get 8 Chats
+            </a>
+        </div>
+
+    </section>
+
+    <section class="rules">
+
+        <h2>How Kmeet Chat Works</h2>
+
+        <ul>
+            <li>
+                <strong>Sender:</strong>
+                One opening “Hi” or “Hey” message is free.
+            </li>
+
+            <li>
+                <strong>Sender:</strong>
+                After the free opening message, paid chat credits are required.
+            </li>
+
+            <li>
+                <strong>Receiver:</strong>
+                The first 3 responses can be sent free.
+            </li>
+
+            <li>
+                <strong>Contact information:</strong>
+                A receiver cannot reveal contact information without paying the
+                KSh 11 continuation fee.
+            </li>
+
+            <li>
+                <strong>If a contact-revealing message is attempted:</strong>
+                The message is declined/blocked and the receiver must pay
+                KSh 11 to continue.
+            </li>
+
+            <li>
+                <strong>KSh 11:</strong>
+                This is a continuation fee for the receiver, not a reward.
+            </li>
+        </ul>
+
+    </section>
+
+</main>
 
 </body>
 </html>
