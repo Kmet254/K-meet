@@ -6,83 +6,755 @@
 
   <title>Kmeet - Create Account</title>
 
-  <link rel="stylesheet" href="styles.css">
-
-  <link
-    rel="icon"
+  <link rel="icon"
     type="image/svg+xml"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg"
-  >
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg">
+
+  <style>
+    /* =========================================
+       KMEET SIGNUP PAGE
+    ========================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: #fff;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(255, 70, 150, 0.18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 90% 85%,
+          rgba(139, 92, 246, 0.16),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #080810 0%,
+          #0d0b16 50%,
+          #080810 100%
+        );
+
+      min-height: 100vh;
+    }
+
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
+    .nav {
+      height: 72px;
+      padding: 0 28px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: rgba(8, 8, 16, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      font-size: 29px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff3f91,
+          #ff68aa,
+          #a78bfa
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      text-decoration: none;
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .navlinks a {
+      color: #d5d5df;
+      text-decoration: none;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      padding: 10px 14px;
+      border-radius: 10px;
+
+      transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+    }
+
+    .navlinks a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-1px);
+    }
+
+
+    /* =========================================
+       PAGE
+    ========================================= */
+
+    .page {
+      width: 100%;
+      min-height: calc(100vh - 72px);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 45px 20px 70px;
+    }
+
+
+    /* =========================================
+       SIGNUP CARD
+    ========================================= */
+
+    .signup-card {
+      width: min(480px, 100%);
+
+      padding: 38px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(29, 25, 43, 0.92),
+          rgba(15, 15, 25, 0.94)
+        );
+
+      border: 1px solid rgba(255,255,255,0.09);
+
+      border-radius: 26px;
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.48),
+        0 0 60px rgba(255,65,145,0.05);
+
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signup-card::before {
+      content: "";
+
+      position: absolute;
+
+      width: 220px;
+      height: 220px;
+
+      top: -130px;
+      right: -100px;
+
+      background: rgba(255, 63, 145, 0.12);
+
+      filter: blur(50px);
+
+      border-radius: 50%;
+
+      pointer-events: none;
+    }
+
+    .signup-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+      height: 180px;
+
+      bottom: -110px;
+      left: -80px;
+
+      background: rgba(139, 92, 246, 0.10);
+
+      filter: blur(50px);
+
+      border-radius: 50%;
+
+      pointer-events: none;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    .heart-icon {
+      width: 58px;
+      height: 58px;
+
+      margin: 0 auto 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,63,145,0.20),
+          rgba(139,92,246,0.16)
+        );
+
+      border: 1px solid rgba(255,255,255,0.08);
+
+      font-size: 28px;
+
+      box-shadow:
+        0 12px 30px rgba(255,63,145,0.10);
+    }
+
+    .heading {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .heading h1 {
+      margin: 0;
+
+      font-size: 30px;
+      line-height: 1.15;
+
+      letter-spacing: -0.8px;
+      font-weight: 850;
+    }
+
+    .heading p {
+      margin: 10px auto 0;
+
+      max-width: 360px;
+
+      color: #a8a8b8;
+
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    form {
+      margin-top: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .field {
+      margin-bottom: 19px;
+    }
+
+    label {
+      display: block;
+
+      margin-bottom: 8px;
+
+      color: #e8e8ef;
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+
+      left: 15px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      color: #777789;
+
+      font-size: 16px;
+
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+
+      height: 51px;
+
+      padding: 0 15px 0 43px;
+
+      border-radius: 13px;
+
+      border: 1px solid rgba(255,255,255,0.09);
+
+      outline: none;
+
+      background:
+        rgba(255,255,255,0.045);
+
+      color: #fff;
+
+      font-size: 14px;
+
+      transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+    }
+
+    input::placeholder {
+      color: #666675;
+    }
+
+    input:hover {
+      background:
+        rgba(255,255,255,0.06);
+    }
+
+    input:focus {
+      border-color:
+        rgba(255,79,154,0.65);
+
+      background:
+        rgba(255,255,255,0.065);
+
+      box-shadow:
+        0 0 0 4px rgba(255,79,154,0.08);
+    }
+
+    .password-note {
+      margin-top: 7px;
+
+      color: #747485;
+
+      font-size: 12px;
+    }
+
+
+    /* =========================================
+       MESSAGE
+    ========================================= */
+
+    #msg {
+      min-height: 0;
+      margin: 4px 0 14px;
+    }
+
+    .message {
+      padding: 12px 14px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      color: #ffb2be;
+
+      background:
+        rgba(255,80,105,0.09);
+
+      border:
+        1px solid rgba(255,80,105,0.18);
+    }
+
+    .message.success {
+      color: #82e9b2;
+
+      background:
+        rgba(55,220,140,0.08);
+
+      border:
+        1px solid rgba(55,220,140,0.17);
+    }
+
+
+    /* =========================================
+       BUTTON
+    ========================================= */
+
+    .signup-button {
+      width: 100%;
+      height: 52px;
+
+      border: 0;
+      border-radius: 14px;
+
+      color: #fff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff3f91,
+          #e83c88
+        );
+
+      font-size: 15px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 30px rgba(255,63,145,0.22);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+    }
+
+    .signup-button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 16px 35px rgba(255,63,145,0.30);
+    }
+
+    .signup-button:active {
+      transform: translateY(0);
+    }
+
+    .signup-button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+
+    /* =========================================
+       BOTTOM
+    ========================================= */
+
+    .login-text {
+      position: relative;
+      z-index: 2;
+
+      margin: 24px 0 0;
+
+      text-align: center;
+
+      color: #8f8f9f;
+
+      font-size: 13px;
+    }
+
+    .login-text a {
+      color: #ff69aa;
+
+      font-weight: 750;
+
+      text-decoration: none;
+    }
+
+    .login-text a:hover {
+      text-decoration: underline;
+    }
+
+    .privacy-note {
+      position: relative;
+      z-index: 2;
+
+      margin: 20px auto 0;
+
+      max-width: 360px;
+
+      text-align: center;
+
+      color: #646473;
+
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 600px) {
+
+      .nav {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      .navlinks {
+        gap: 0;
+      }
+
+      .navlinks a {
+        padding: 8px 9px;
+        font-size: 12px;
+      }
+
+      .page {
+        min-height: calc(100vh - 64px);
+
+        padding:
+          25px 13px
+          45px;
+      }
+
+      .signup-card {
+        padding: 28px 20px;
+
+        border-radius: 22px;
+      }
+
+      .heading h1 {
+        font-size: 27px;
+      }
+
+      .heart-icon {
+        width: 53px;
+        height: 53px;
+        font-size: 25px;
+      }
+
+      input {
+        height: 50px;
+      }
+
+      .signup-button {
+        height: 51px;
+      }
+    }
+
+
+    /* =========================================
+       VERY SMALL SCREENS
+    ========================================= */
+
+    @media (max-width: 360px) {
+
+      .navlinks a:first-child {
+        display: none;
+      }
+
+      .signup-card {
+        padding:
+          25px 17px;
+      }
+
+      .heading h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
 </head>
+
 
 <body>
 
+  <!-- =========================================
+       NAV
+  ========================================= -->
+
   <nav class="nav">
-    <a class="logo" href="index.html">Kmeet</a>
+
+    <a
+      class="logo"
+      href="index.html"
+    >
+      Kmeet
+    </a>
 
     <div class="navlinks">
-      <a href="discover.html">Discover</a>
-      <a href="login.html">Log In</a>
+
+      <a href="discover.html">
+        Discover
+      </a>
+
+      <a href="login.html">
+        Log In
+      </a>
+
     </div>
+
   </nav>
 
 
-  <main class="container">
+  <!-- =========================================
+       PAGE
+  ========================================= -->
 
-    <section class="card form">
+  <main class="page">
 
-      <h2>Create your Kmeet account</h2>
+    <section class="signup-card">
 
-      <p class="small">
-        Your selected interests will be saved to your profile.
-      </p>
+      <div class="heart-icon">
+        💗
+      </div>
+
+
+      <div class="heading">
+
+        <h1>
+          Create your Kmeet account
+        </h1>
+
+        <p>
+          Join Kmeet, discover people who share
+          your interests, and start connecting.
+        </p>
+
+      </div>
+
+
+      <!-- =======================================
+           FORM
+      ======================================= -->
 
       <form id="signupForm">
 
-        <label for="displayName">
-          Display name
-        </label>
+        <!-- NAME -->
 
-        <input
-          id="displayName"
-          type="text"
-          required
-          maxlength="40"
-          placeholder="Your name"
-        >
+        <div class="field">
+
+          <label for="displayName">
+            Display name
+          </label>
+
+          <div class="input-wrap">
+
+            <span class="input-icon">
+              👤
+            </span>
+
+            <input
+              id="displayName"
+              type="text"
+              required
+              maxlength="40"
+              autocomplete="name"
+              placeholder="Enter your name"
+            >
+
+          </div>
+
+        </div>
 
 
-        <label for="email">
-          Email
-        </label>
+        <!-- EMAIL -->
 
-        <input
-          id="email"
-          type="email"
-          required
-          placeholder="you@example.com"
-        >
+        <div class="field">
+
+          <label for="email">
+            Email address
+          </label>
+
+          <div class="input-wrap">
+
+            <span class="input-icon">
+              ✉
+            </span>
+
+            <input
+              id="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="you@example.com"
+            >
+
+          </div>
+
+        </div>
 
 
-        <label for="password">
-          Password
-        </label>
+        <!-- PASSWORD -->
 
-        <input
-          id="password"
-          type="password"
-          required
-          minlength="6"
-          placeholder="At least 6 characters"
-        >
+        <div class="field">
 
+          <label for="password">
+            Password
+          </label>
+
+          <div class="input-wrap">
+
+            <span class="input-icon">
+              🔒
+            </span>
+
+            <input
+              id="password"
+              type="password"
+              required
+              minlength="6"
+              autocomplete="new-password"
+              placeholder="Create a password"
+            >
+
+          </div>
+
+          <div class="password-note">
+            Use at least 6 characters.
+          </div>
+
+        </div>
+
+
+        <!-- FIREBASE MESSAGE -->
 
         <div id="msg"></div>
 
 
+        <!-- BUTTON -->
+
         <button
           id="signupButton"
-          class="btn"
+          class="signup-button"
           type="submit"
         >
           Create Account
@@ -90,10 +762,35 @@
 
       </form>
 
+
+      <!-- =======================================
+           LOGIN
+      ======================================= -->
+
+      <p class="login-text">
+
+        Already have an account?
+
+        <a href="login.html">
+          Log in
+        </a>
+
+      </p>
+
+
+      <p class="privacy-note">
+        By creating an account, you agree to use Kmeet
+        respectfully and provide accurate information.
+      </p>
+
     </section>
 
   </main>
 
+
+  <!-- =========================================
+       FIREBASE
+  ========================================= -->
 
   <script type="module">
 
@@ -108,65 +805,86 @@
     } from "./firebase-config.js";
 
 
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const signupForm =
+      document.getElementById("signupForm");
+
+    const nameInput =
+      document.getElementById("displayName");
+
+    const emailInput =
+      document.getElementById("email");
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const signupButton =
+      document.getElementById("signupButton");
+
+    const msg =
+      document.getElementById("msg");
+
+
+    /* =========================================
+       RESTORE EMAIL
+    ========================================= */
+
     const savedEmail =
       sessionStorage.getItem("pendingEmail");
 
     if (savedEmail) {
-      document.getElementById("email").value = savedEmail;
+
+      emailInput.value =
+        savedEmail;
+
     }
 
 
-    document
-      .getElementById("signupForm")
-      .addEventListener("submit", async (e) => {
+    /* =========================================
+       SIGNUP
+    ========================================= */
 
-        e.preventDefault();
+    signupForm.addEventListener(
+      "submit",
+      async (event) => {
 
-
-        const msg =
-          document.getElementById("msg");
-
-        const button =
-          document.getElementById("signupButton");
-
+        event.preventDefault();
 
         msg.innerHTML = "";
 
 
         const name =
-          document
-            .getElementById("displayName")
-            .value
-            .trim();
-
+          nameInput.value.trim();
 
         const email =
-          document
-            .getElementById("email")
-            .value
-            .trim();
-
+          emailInput.value.trim();
 
         const password =
-          document
-            .getElementById("password")
-            .value;
+          passwordInput.value;
 
+
+        /* =====================================
+           GET INTERESTS
+        ===================================== */
 
         let interests = [];
 
         try {
 
-          interests = JSON.parse(
-            sessionStorage.getItem(
-              "pendingInterests"
-            ) || "[]"
-          );
+          interests =
+            JSON.parse(
+              sessionStorage.getItem(
+                "pendingInterests"
+              ) || "[]"
+            );
 
         } catch (error) {
 
           console.error(
-            "Interests error:",
+            "Could not read interests:",
             error
           );
 
@@ -175,14 +893,44 @@
         }
 
 
-        /* =========================
+        /* =====================================
            VALIDATION
-        ========================= */
+        ===================================== */
 
         if (!name) {
 
           msg.innerHTML =
-            '<div class="message error">Please enter your name.</div>';
+            `
+            <div class="message error">
+              Please enter your name.
+            </div>
+            `;
+
+          return;
+        }
+
+
+        if (!email) {
+
+          msg.innerHTML =
+            `
+            <div class="message error">
+              Please enter your email address.
+            </div>
+            `;
+
+          return;
+        }
+
+
+        if (password.length < 6) {
+
+          msg.innerHTML =
+            `
+            <div class="message error">
+              Password must be at least 6 characters.
+            </div>
+            `;
 
           return;
         }
@@ -191,21 +939,31 @@
         if (!interests.length) {
 
           msg.innerHTML =
-            '<div class="message error">Please select your interests first.</div>';
+            `
+            <div class="message error">
+              Please select your interests first.
+            </div>
+            `;
 
           return;
         }
 
 
-        button.disabled = true;
-        button.textContent = "Creating Account...";
+        /* =====================================
+           LOADING
+        ===================================== */
+
+        signupButton.disabled = true;
+
+        signupButton.textContent =
+          "Creating Account...";
 
 
         try {
 
-          /* =========================
-             CREATE FIREBASE ACCOUNT
-          ========================= */
+          /* ===================================
+             CREATE AUTH ACCOUNT
+          =================================== */
 
           const cred =
             await createUserWithEmailAndPassword(
@@ -215,9 +973,9 @@
             );
 
 
-          /* =========================
-             SAVE NAME
-          ========================= */
+          /* ===================================
+             SAVE DISPLAY NAME
+          =================================== */
 
           await updateProfile(
             cred.user,
@@ -227,46 +985,69 @@
           );
 
 
-          /* =========================
-             CREATE KMEET PROFILE
-          ========================= */
+          /* ===================================
+             SAVE KMEET PROFILE
+          =================================== */
 
           await setDoc(
-            doc(db, "users", cred.user.uid),
+            doc(
+              db,
+              "users",
+              cred.user.uid
+            ),
             {
 
-              uid: cred.user.uid,
+              uid:
+                cred.user.uid,
 
-              name: name,
+              name:
+                name,
 
-              email: email,
+              email:
+                email,
 
-              interests: interests,
+              interests:
+                interests,
 
-              bio: "New Kmeet member.",
+              bio:
+                "New Kmeet member.",
 
-              location: "Kenya",
+              location:
+                "Kenya",
 
-              age: null,
+              age:
+                null,
 
-              avatar: "",
+              gender:
+                "",
 
-              /*
-               * NEW PHOTO FIELD
-               */
-              photoURL: "",
 
-              /*
-               * Compatibility with older code
-               */
-              photo: "",
+              /* ===============================
+                 PHOTO FIELDS
+              =============================== */
 
-              profilePhoto: "",
+              photoURL:
+                "",
+
+              avatar:
+                "",
+
+              photo:
+                "",
+
+              profilePhoto:
+                "",
+
+
+              /* ===============================
+                 ACCOUNT
+              =============================== */
 
               createdAt:
                 new Date().toISOString(),
 
-              onboardingCompleted: true
+              onboardingCompleted:
+                true
 
             },
             {
@@ -275,16 +1056,16 @@
           );
 
 
-          /* =========================
+          /* ===================================
              SIGN OUT
-          ========================= */
+          =================================== */
 
           await signOut(auth);
 
 
-          /* =========================
+          /* ===================================
              CLEAR TEMP DATA
-          ========================= */
+          =================================== */
 
           sessionStorage.removeItem(
             "pendingInterests"
@@ -295,90 +1076,113 @@
           );
 
 
-          /* =========================
-             GO TO LOGIN
-          ========================= */
+          /* ===================================
+             LOGIN
+          =================================== */
 
           window.location.href =
             "login.html?created=1";
 
 
-        } catch (err) {
+        } catch (error) {
 
           console.error(
-            "FULL FIREBASE ERROR:",
-            err
+            "Kmeet signup error:",
+            error
           );
 
 
-          let text =
-            err.message ||
-            "Could not create account.";
+          let message =
+            error.message ||
+            "Could not create your account.";
 
+
+          /* ===================================
+             FRIENDLY FIREBASE ERRORS
+          =================================== */
 
           if (
-            err.code ===
+            error.code ===
             "auth/email-already-in-use"
           ) {
 
-            text =
+            message =
               "That email is already registered. Please log in.";
 
           }
 
           else if (
-            err.code ===
+            error.code ===
             "auth/weak-password"
           ) {
 
-            text =
+            message =
               "Password must be at least 6 characters.";
 
           }
 
           else if (
-            err.code ===
+            error.code ===
             "auth/invalid-email"
           ) {
 
-            text =
+            message =
               "Please enter a valid email address.";
 
           }
 
           else if (
-            err.code ===
+            error.code ===
+            "auth/operation-not-allowed"
+          ) {
+
+            message =
+              "Email/password sign-in is not enabled in Firebase.";
+
+          }
+
+          else if (
+            error.code ===
             "auth/network-request-failed"
           ) {
 
-            text =
+            message =
               "Network error. Please check your internet connection.";
 
           }
 
           else if (
-            err.code ===
-            "permission-denied" ||
-            err.code ===
-            "firestore/permission-denied"
+            error.code ===
+            "permission-denied"
           ) {
 
-            text =
-              "Firebase denied access to create your profile. Check your Firestore rules.";
+            message =
+              "Firebase denied access to create the profile. Check your Firestore rules.";
 
           }
 
 
+          /* ===================================
+             SHOW ERROR
+          =================================== */
+
           msg.innerHTML =
-            `<div class="message error">${text}</div>`;
+            `
+            <div class="message error">
+              ${message}
+            </div>
+            `;
 
 
-          button.disabled = false;
-          button.textContent = "Create Account";
+          signupButton.disabled = false;
+
+          signupButton.textContent =
+            "Create Account";
 
         }
 
-      });
+      }
+    );
 
   </script>
 
