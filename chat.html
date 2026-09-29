@@ -2,9 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kmeet - Chat</title>
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .chat-page {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .chat-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .chat-header h2 {
+      margin: 0;
+    }
+
+    .messages {
+      height: 450px;
+      overflow-y: auto;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .bubble {
+      max-width: 75%;
+      padding: 10px 14px;
+      margin: 8px 0;
+      border-radius: 16px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .bubble.me {
+      margin-left: auto;
+      background: #e91e63;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble.them {
+      margin-right: auto;
+      background: white;
+      color: #222;
+      border: 1px solid #ddd;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-form input {
+      flex: 1;
+      padding: 13px 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    .status {
+      text-align: center;
+      padding: 30px 15px;
+      color: #555;
+    }
+
+    .status.error {
+      color: #b00020;
+    }
+
+    .payment-box {
+      text-align: center;
+    }
+
+    .payment-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .payment-box p {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,31 +113,74 @@
     </div>
   </nav>
 
-  <main class="container">
 
-    <section class="card chatbox">
+  <main class="chat-page">
 
-      <div id="status" class="message">
+    <section class="chat-card">
+
+      <!-- ACCESS / LOADING STATUS -->
+      <div id="status" class="status">
         Checking chat access...
       </div>
 
-      <div id="chatUI" style="display:none">
 
-        <h2 id="chatTitle">Chat</h2>
+      <!-- PAYMENT MESSAGE -->
+      <div id="paymentBox"
+           class="payment-box"
+           style="display:none;">
 
-        <div id="messages" class="messages"></div>
+        <h2>Chat access</h2>
 
-        <form id="chatForm" class="chat-form">
+        <p>
+          Chat is available after completing the
+          Kmeet continuation payment.
+        </p>
+
+        <a id="paymentButton"
+           class="btn"
+           href="#">
+          Continue to Payment
+        </a>
+
+      </div>
+
+
+      <!-- CHAT -->
+      <div id="chatUI" style="display:none;">
+
+        <div class="chat-header">
+
+          <h2 id="chatTitle">
+            Chat
+          </h2>
+
+          <a href="discover.html">
+            Back
+          </a>
+
+        </div>
+
+
+        <div id="messages"
+             class="messages">
+        </div>
+
+
+        <form id="chatForm"
+              class="chat-form">
 
           <input
             id="messageInput"
+            type="text"
             maxlength="1000"
             autocomplete="off"
             placeholder="Write a message..."
             required
           >
 
-          <button class="btn" type="submit">
+          <button
+            class="btn"
+            type="submit">
             Send
           </button>
 
@@ -57,10 +195,23 @@
 
   <script type="module">
 
+    /*
+     * Firebase imports are loaded directly here.
+     * This avoids depending on missing exports in
+     * firebase-config.js.
+     */
+
     import {
       auth,
       db,
-      signInAnonymously,
+      signInAnonymously
+    } from "./firebase-config.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    import {
       doc,
       getDoc,
       collection,
@@ -69,120 +220,140 @@
       orderBy,
       onSnapshot,
       serverTimestamp
-    } from "./firebase-config.js";
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+
+    /*
+     * Accept BOTH:
+     *
+     * chat.html?user=ABC
+     *
+     * and
+     *
+     * chat.html?userId=ABC
+     */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
     const targetId =
-      new URLSearchParams(location.search).get("userId");
+      params.get("userId") ||
+      params.get("user");
+
 
     let currentUser = null;
-    let unsubscribeMessages = null;
+    let conversationId = null;
+    let messagesUnsubscribe = null;
 
-    const statusEl =
+
+    const status =
       document.getElementById("status");
 
+    const paymentBox =
+      document.getElementById("paymentBox");
 
-    /* --------------------------------
-       CHECK TARGET PROFILE
-    -------------------------------- */
+    const paymentButton =
+      document.getElementById("paymentButton");
+
+    const chatUI =
+      document.getElementById("chatUI");
+
+    const chatTitle =
+      document.getElementById("chatTitle");
+
+    const messages =
+      document.getElementById("messages");
+
+    const chatForm =
+      document.getElementById("chatForm");
+
+    const messageInput =
+      document.getElementById("messageInput");
+
+
+    /*
+     * No target profile.
+     */
 
     if (!targetId) {
 
-      showStatus(
-        "No chat profile was selected.",
-        true
+      showError(
+        "No profile was selected for this chat."
       );
 
     } else {
 
-      startChatAccessCheck();
+      checkChatAccess();
 
     }
 
 
-    /* --------------------------------
-       START CHAT ACCESS CHECK
-    -------------------------------- */
+    /*
+     * CHECK CHAT ACCESS
+     */
 
-    async function startChatAccessCheck() {
-
-      showStatus("Checking chat access...");
+    async function checkChatAccess() {
 
       try {
 
-        /*
-          First check whether the user is
-          already signed in.
-        */
-
-        currentUser = auth.currentUser;
+        showStatus(
+          "Checking chat access..."
+        );
 
 
         /*
-          Firebase may still be restoring
-          the existing login session.
-        */
+         * Wait briefly for Firebase to restore
+         * an existing signed-in user.
+         */
+
+        currentUser =
+          await waitForExistingUser(4000);
+
+
+        /*
+         * If nobody is signed in,
+         * create an anonymous guest account.
+         */
 
         if (!currentUser) {
 
           showStatus(
-            "Checking your account..."
+            "Starting guest chat..."
           );
 
-          currentUser =
-            await waitForAuthUser(4000);
-
-        }
-
-
-        /*
-          If there is still no account,
-          create a Firebase anonymous account
-          for the guest.
-        */
-
-        if (!currentUser) {
-
-          showStatus(
-            "Starting secure guest chat..."
-          );
-
-          const credential =
+          const result =
             await withTimeout(
               signInAnonymously(auth),
-              10000,
-              "Guest chat could not start. Please refresh the page."
+              10000
             );
 
           currentUser =
-            credential.user;
+            result.user;
 
         }
 
-
-        /*
-          Make sure Firebase actually gave us
-          a user.
-        */
 
         if (!currentUser) {
 
           throw new Error(
-            "Firebase could not create a chat session."
+            "Could not create a chat session."
           );
 
         }
 
 
         /*
-          Prevent chatting with yourself.
-        */
+         * Prevent chatting with yourself.
+         */
 
-        if (currentUser.uid === targetId) {
+        if (
+          currentUser.uid === targetId
+        ) {
 
-          showStatus(
-            "You cannot chat with your own profile.",
-            true
+          showError(
+            "You cannot chat with your own profile."
           );
 
           return;
@@ -190,17 +361,12 @@
         }
 
 
-        /* --------------------------------
-           TEMPORARY PAYMENT CHECK
-        -------------------------------- */
-
         /*
-          This is ONLY the temporary demo
-          payment system.
-
-          It will later be replaced with
-          secure M-Pesa Daraja verification.
-        */
+         * TEMPORARY DEMO PAYMENT CHECK.
+         *
+         * This is NOT production payment
+         * verification.
+         */
 
         const paid =
           localStorage.getItem(
@@ -210,22 +376,7 @@
 
         if (!paid) {
 
-          showStatus(`
-            
-            <h3>Chat access</h3>
-
-            <p>
-              Chat is available after payment.
-            </p>
-
-            <a
-              class="btn"
-              href="payment.html?userId=${encodeURIComponent(targetId)}"
-            >
-              Continue to Payment
-            </a>
-
-          `);
+          showPayment();
 
           return;
 
@@ -233,9 +384,9 @@
 
 
         /*
-          Payment is marked as completed,
-          so open the chat.
-        */
+         * Payment flag exists,
+         * so open the chat.
+         */
 
         await openChat();
 
@@ -247,12 +398,12 @@
           error
         );
 
-        showStatus(
-          `Could not start chat: ${
+        showError(
+          "Could not start chat: " +
+          (
             error.message ||
             "Unknown error"
-          }`,
-          true
+          )
         );
 
       }
@@ -260,70 +411,76 @@
     }
 
 
-    /* --------------------------------
-       WAIT FOR FIREBASE AUTH
-    -------------------------------- */
+    /*
+     * WAIT FOR AN EXISTING USER
+     */
 
-    function waitForAuthUser(timeoutMs) {
+    function waitForExistingUser(
+      timeout
+    ) {
 
       return new Promise(resolve => {
 
         if (auth.currentUser) {
 
-          resolve(auth.currentUser);
+          resolve(
+            auth.currentUser
+          );
 
           return;
 
         }
 
 
-        let finished = false;
+        let done = false;
 
 
         const unsubscribe =
-          auth.onAuthStateChanged(user => {
+          onAuthStateChanged(
+            auth,
+            user => {
 
-            if (finished) return;
+              if (done) return;
 
 
-            if (user) {
+              if (user) {
 
-              finished = true;
+                done = true;
 
-              unsubscribe();
+                unsubscribe();
 
-              resolve(user);
+                resolve(user);
+
+              }
 
             }
-
-          });
+          );
 
 
         setTimeout(() => {
 
-          if (finished) return;
+          if (done) return;
 
-          finished = true;
+          done = true;
 
           unsubscribe();
 
           resolve(null);
 
-        }, timeoutMs);
+        }, timeout);
 
       });
 
     }
 
 
-    /* --------------------------------
-       TIMEOUT HELPER
-    -------------------------------- */
+    /*
+     * TIMEOUT
+     */
 
     function withTimeout(
       promise,
-      milliseconds,
-      errorMessage
+      timeout = 10000
     ) {
 
       return Promise.race([
@@ -333,13 +490,18 @@
         new Promise(
           (_, reject) => {
 
-            setTimeout(() => {
+            setTimeout(
+              () => {
 
-              reject(
-                new Error(errorMessage)
-              );
+                reject(
+                  new Error(
+                    "Firebase took too long to respond."
+                  )
+                );
 
-            }, milliseconds);
+              },
+              timeout
+            );
 
           }
         )
@@ -349,63 +511,122 @@
     }
 
 
-    /* --------------------------------
-       OPEN CHAT
-    -------------------------------- */
+    /*
+     * SHOW STATUS
+     */
+
+    function showStatus(
+      message
+    ) {
+
+      status.style.display =
+        "block";
+
+      status.className =
+        "status";
+
+      status.innerHTML =
+        message;
+
+    }
+
+
+    /*
+     * SHOW ERROR
+     */
+
+    function showError(
+      message
+    ) {
+
+      status.style.display =
+        "block";
+
+      status.className =
+        "status error";
+
+      status.innerHTML =
+        "<strong>Error:</strong><br>" +
+        message;
+
+    }
+
+
+    /*
+     * SHOW PAYMENT
+     */
+
+    function showPayment() {
+
+      status.style.display =
+        "none";
+
+      paymentBox.style.display =
+        "block";
+
+      paymentButton.href =
+        "payment.html?userId=" +
+        encodeURIComponent(
+          targetId
+        );
+
+    }
+
+
+    /*
+     * OPEN CHAT
+     */
 
     async function openChat() {
 
       /*
-        Load the person being contacted.
-      */
+       * Get target user's profile.
+       */
 
-      const targetSnapshot =
-        await getDoc(
-          doc(db, "users", targetId)
+      const targetRef =
+        doc(
+          db,
+          "users",
+          targetId
         );
 
 
-      const target =
+      const targetSnapshot =
+        await getDoc(
+          targetRef
+        );
+
+
+      let targetName =
+        "Kmeet Member";
+
+
+      if (
         targetSnapshot.exists()
-          ? targetSnapshot.data()
-          : {
-              name: "Kmeet Member"
-            };
+      ) {
+
+        const target =
+          targetSnapshot.data();
 
 
-      document.getElementById(
-        "chatTitle"
-      ).textContent =
-        `Chat with ${
+        targetName =
           target.name ||
-          "Kmeet Member"
-        }`;
+          target.displayName ||
+          "Kmeet Member";
+
+      }
+
+
+      chatTitle.textContent =
+        "Chat with " +
+        targetName;
 
 
       /*
-        Hide the access message.
-      */
+       * Create consistent conversation ID.
+       */
 
-      statusEl.style.display =
-        "none";
-
-
-      /*
-        Show the actual chat.
-      */
-
-      document.getElementById(
-        "chatUI"
-      ).style.display =
-        "block";
-
-
-      /*
-        Create one unique conversation ID
-        for these two users.
-      */
-
-      const conversationId =
+      conversationId =
         [
           currentUser.uid,
           targetId
@@ -413,6 +634,29 @@
         .sort()
         .join("_");
 
+
+      /*
+       * Hide loading/payment.
+       */
+
+      status.style.display =
+        "none";
+
+      paymentBox.style.display =
+        "none";
+
+
+      /*
+       * Show chat.
+       */
+
+      chatUI.style.display =
+        "block";
+
+
+      /*
+       * Messages collection.
+       */
 
       const messagesRef =
         collection(
@@ -433,34 +677,24 @@
         );
 
 
-      /* --------------------------------
-         LISTEN FOR MESSAGES
-      -------------------------------- */
+      /*
+       * Listen for messages.
+       */
 
-      unsubscribeMessages =
+      messagesUnsubscribe =
         onSnapshot(
           messagesQuery,
           snapshot => {
 
-            const box =
-              document.getElementById(
-                "messages"
-              );
-
-
-            box.innerHTML = "";
+            messages.innerHTML =
+              "";
 
 
             snapshot.forEach(
-              messageSnapshot => {
+              messageDoc => {
 
-                const message =
-                  messageSnapshot.data();
-
-
-                const mine =
-                  message.senderId ===
-                  currentUser.uid;
+                const data =
+                  messageDoc.data();
 
 
                 const bubble =
@@ -469,19 +703,22 @@
                   );
 
 
+                const mine =
+                  data.senderId ===
+                  currentUser.uid;
+
+
                 bubble.className =
-                  `bubble ${
-                    mine
-                      ? "me"
-                      : "them"
-                  }`;
+                  mine
+                    ? "bubble me"
+                    : "bubble them";
 
 
                 bubble.textContent =
-                  message.text || "";
+                  data.text || "";
 
 
-                box.appendChild(
+                messages.appendChild(
                   bubble
                 );
 
@@ -489,12 +726,10 @@
             );
 
 
-            box.scrollTop =
-              box.scrollHeight;
+            messages.scrollTop =
+              messages.scrollHeight;
 
           },
-
-
           error => {
 
             console.error(
@@ -503,112 +738,101 @@
             );
 
 
-            showStatus(
-              `Could not load messages: ${
-                error.message
-              }`,
-              true
+            showError(
+              "Could not load messages: " +
+              error.message
+            );
+
+          }
+        );
+
+
+      /*
+       * SEND MESSAGE
+       */
+
+      chatForm.addEventListener(
+        "submit",
+        async event => {
+
+          event.preventDefault();
+
+
+          const text =
+            messageInput.value.trim();
+
+
+          if (!text) return;
+
+
+          try {
+
+            await addDoc(
+              messagesRef,
+              {
+
+                senderId:
+                  currentUser.uid,
+
+                targetId:
+                  targetId,
+
+                text:
+                  text,
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            messageInput.value =
+              "";
+
+
+            messageInput.focus();
+
+
+          } catch (error) {
+
+            console.error(
+              "Send message error:",
+              error
+            );
+
+
+            alert(
+              "Message could not be sent: " +
+              error.message
             );
 
           }
 
-        );
-
-
-      /* --------------------------------
-         SEND MESSAGE
-      -------------------------------- */
-
-      document
-        .getElementById("chatForm")
-        .addEventListener(
-          "submit",
-          async event => {
-
-            event.preventDefault();
-
-
-            const input =
-              document.getElementById(
-                "messageInput"
-              );
-
-
-            const text =
-              input.value.trim();
-
-
-            if (!text) return;
-
-
-            try {
-
-              await addDoc(
-                messagesRef,
-                {
-
-                  senderId:
-                    currentUser.uid,
-
-                  targetId:
-                    targetId,
-
-                  text:
-                    text,
-
-                  createdAt:
-                    serverTimestamp()
-
-                }
-              );
-
-
-              input.value = "";
-
-
-            } catch (error) {
-
-              console.error(
-                error
-              );
-
-
-              alert(
-                "Message could not be sent: " +
-                error.message
-              );
-
-            }
-
-          }
-        );
+        }
+      );
 
     }
 
 
-    /* --------------------------------
-       STATUS MESSAGE
-    -------------------------------- */
+    /*
+     * CLEAN UP FIRESTORE LISTENER
+     */
 
-    function showStatus(
-      message,
-      error = false
-    ) {
+    window.addEventListener(
+      "beforeunload",
+      () => {
 
-      statusEl.className =
-        error
-          ? "message error"
-          : "message";
+        if (
+          messagesUnsubscribe
+        ) {
 
+          messagesUnsubscribe();
 
-      statusEl.innerHTML =
-        message;
+        }
 
-
-      statusEl.style.display =
-        "block";
-
-    }
+      }
+    );
 
   </script>
 
