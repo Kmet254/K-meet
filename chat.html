@@ -1,17 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kmeet - Chat</title>
-
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kmeet — Chat</title>
 
   <style>
-    /* =========================================
-       KMEET CHAT PAGE
-    ========================================= */
-
     * {
       box-sizing: border-box;
     }
@@ -25,569 +19,362 @@
     body {
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
+      color: #fff;
 
-      background:
+      /* Kmeet rose background */
+      background-image:
         linear-gradient(
-          rgba(18, 8, 16, 0.68),
-          rgba(18, 8, 16, 0.78)
+          rgba(10, 5, 10, 0.45),
+          rgba(10, 5, 10, 0.68)
         ),
-        url("welcome-bg.jpg") center center / cover fixed no-repeat;
+        url("chat.jpg");
 
-      color: white;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+
+      position: relative;
+      overflow-x: hidden;
     }
 
-
-    /* =========================================
-       NAVIGATION
-    ========================================= */
-
-    .kmeet-nav {
+    /* Soft romantic glow over the background */
+    body::before {
+      content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      inset: 0;
 
-      height: 72px;
+      background:
+        radial-gradient(
+          circle at 18% 18%,
+          rgba(255, 190, 210, 0.10),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 82% 78%,
+          rgba(255, 90, 150, 0.10),
+          transparent 36%
+        );
+
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* =========================
+       TOP BAR
+    ========================= */
+
+    .topbar {
+      width: 100%;
+      padding: 18px 22px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      padding: 0 32px;
-
-      background: rgba(15, 8, 14, 0.35);
+      background: rgba(15, 8, 15, 0.38);
+      border-bottom: 1px solid rgba(255,255,255,0.14);
 
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-
-      z-index: 100;
     }
 
-
-    .kmeet-logo {
-      color: white;
-      text-decoration: none;
-
-      font-size: 27px;
+    .brand {
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: -0.5px;
+      letter-spacing: 0.5px;
     }
 
-
-    .kmeet-logo span {
-      opacity: 0.75;
+    .brand span {
+      color: #ff9ab9;
     }
 
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-
-    .nav-actions a {
-      color: white;
+    .back-btn {
+      color: #fff;
       text-decoration: none;
 
-      font-size: 14px;
-      font-weight: 600;
+      padding: 9px 15px;
 
-      opacity: 0.9;
+      border-radius: 999px;
+
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+
+      transition: 0.2s ease;
     }
 
-
-    .nav-actions a:hover {
-      opacity: 1;
+    .back-btn:hover {
+      background: rgba(255,255,255,0.20);
     }
 
+    /* =========================
+       CHAT CONTAINER
+    ========================= */
 
-    /* =========================================
-       MAIN CHAT AREA
-    ========================================= */
+    .chat-shell {
+      width: min(900px, calc(100% - 28px));
 
-    .chat-page {
-      width: 100%;
-      max-width: 900px;
+      height: calc(100vh - 105px);
+      min-height: 560px;
 
-      margin: 0 auto;
-
-      padding:
-        105px 18px 35px;
-    }
-
-
-    .chat-card {
-      width: 100%;
-
-      min-height: 680px;
+      margin: 18px auto;
 
       display: flex;
       flex-direction: column;
 
       overflow: hidden;
 
+      background: rgba(25, 12, 23, 0.46);
+
+      border: 1px solid rgba(255,255,255,0.20);
       border-radius: 26px;
 
-      background:
-        rgba(20, 12, 20, 0.60);
-
-      border:
-        1px solid rgba(255,255,255,0.18);
-
       box-shadow:
-        0 25px 70px rgba(0,0,0,0.45);
-
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-
-    /* =========================================
-       CHAT HEADER
-    ========================================= */
-
-    .chat-header {
-      min-height: 82px;
-
-      display: flex;
-      align-items: center;
-
-      gap: 15px;
-
-      padding: 14px 20px;
-
-      background:
-        rgba(255,255,255,0.07);
-
-      border-bottom:
-        1px solid rgba(255,255,255,0.12);
-    }
-
-
-    .back-button {
-      width: 42px;
-      height: 42px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      color: white;
-      text-decoration: none;
-
-      background:
-        rgba(255,255,255,0.10);
-
-      font-size: 22px;
-
-      transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-    }
-
-
-    .back-button:hover {
-      background:
-        rgba(255,255,255,0.18);
-
-      transform: translateX(-2px);
-    }
-
-
-    .person-avatar {
-      width: 48px;
-      height: 48px;
-
-      flex-shrink: 0;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      overflow: hidden;
-
-      border-radius: 50%;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ff6b9d,
-          #8e44ad
-        );
-
-      border:
-        2px solid rgba(255,255,255,0.7);
-
-      box-shadow:
-        0 5px 20px rgba(0,0,0,0.25);
-    }
-
-
-    .person-avatar img {
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-    }
-
-
-    .person-avatar-text {
-      font-size: 19px;
-      font-weight: 700;
-    }
-
-
-    .person-details {
-      min-width: 0;
-      flex: 1;
-    }
-
-
-    .person-details h2 {
-      margin: 0;
-
-      font-size: 19px;
-      font-weight: 700;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-
-    .online-status {
-      margin-top: 4px;
-
-      font-size: 12px;
-
-      color: rgba(255,255,255,0.65);
-    }
-
-
-    /* =========================================
-       LOADING / STATUS
-    ========================================= */
-
-    .status {
-      min-height: 250px;
-
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-
-      padding: 30px;
-
-      color: rgba(255,255,255,0.88);
-    }
-
-
-    .status.error {
-      color: #ffd4df;
-    }
-
-
-    .loading-heart {
-      font-size: 34px;
-
-      margin-bottom: 12px;
-
-      animation:
-        heartbeat 1.2s infinite;
-    }
-
-
-    @keyframes heartbeat {
-
-      0%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.18);
-      }
-
-    }
-
-
-    /* =========================================
-       PAYMENT BOX
-    ========================================= */
-
-    .payment-box {
-      min-height: 500px;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      padding: 30px;
-    }
-
-
-    .payment-inner {
-      max-width: 430px;
-
-      padding: 38px 30px;
-
-      text-align: center;
-
-      border-radius: 24px;
-
-      background:
-        rgba(255,255,255,0.10);
-
-      border:
-        1px solid rgba(255,255,255,0.18);
+        0 25px 70px rgba(0,0,0,0.42);
 
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
     }
 
+    /* =========================
+       CHAT HEADER
+    ========================= */
 
-    .payment-heart {
-      font-size: 48px;
+    .chat-header {
+      padding: 16px 20px;
 
-      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+
+      gap: 13px;
+
+      background: rgba(10, 5, 10, 0.28);
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.13);
     }
 
+    .avatar {
+      width: 48px;
+      height: 48px;
 
-    .payment-inner h2 {
-      margin:
-        0 0 10px;
+      border-radius: 50%;
 
-      font-size: 25px;
+      object-fit: cover;
+
+      background: rgba(255,255,255,0.14);
+
+      border:
+        2px solid rgba(255,255,255,0.30);
+
+      flex: 0 0 auto;
     }
 
+    .avatar-fallback {
+      width: 48px;
+      height: 48px;
 
-    .payment-inner p {
-      margin:
-        0 0 25px;
+      border-radius: 50%;
 
-      line-height: 1.6;
-
-      color:
-        rgba(255,255,255,0.75);
-    }
-
-
-    .payment-button {
-      display: inline-block;
-
-      padding:
-        13px 26px;
-
-      border-radius: 999px;
-
-      color: white;
-      text-decoration: none;
-
-      font-weight: 700;
+      display: grid;
+      place-items: center;
 
       background:
         linear-gradient(
           135deg,
-          #ff4f87,
-          #c83d75
+          #ff9ab9,
+          #b85d82
         );
 
-      box-shadow:
-        0 8px 25px rgba(220,60,120,0.35);
+      color: white;
 
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+      font-weight: 700;
+      font-size: 19px;
+
+      border:
+        2px solid rgba(255,255,255,0.30);
+
+      flex: 0 0 auto;
     }
 
-
-    .payment-button:hover {
-      transform: translateY(-2px);
-
-      box-shadow:
-        0 12px 30px rgba(220,60,120,0.45);
+    .person-name {
+      font-size: 18px;
+      font-weight: 700;
     }
 
+    .status {
+      margin-top: 3px;
 
-    /* =========================================
+      font-size: 13px;
+
+      color:
+        rgba(255,255,255,0.72);
+    }
+
+    /* =========================
        MESSAGES
-    ========================================= */
+    ========================= */
 
     .messages {
       flex: 1;
 
-      height: 480px;
-
       overflow-y: auto;
 
-      padding: 25px 20px;
+      padding: 22px;
 
-      background:
-        rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+
+      gap: 10px;
 
       scroll-behavior: smooth;
     }
-
 
     .messages::-webkit-scrollbar {
       width: 7px;
     }
 
-
-    .messages::-webkit-scrollbar-track {
-      background:
-        rgba(255,255,255,0.03);
-    }
-
-
     .messages::-webkit-scrollbar-thumb {
-      border-radius: 20px;
-
       background:
         rgba(255,255,255,0.20);
+
+      border-radius: 20px;
     }
 
+    .message {
+      max-width: min(72%, 600px);
 
-    .bubble {
-      max-width: 72%;
+      padding: 11px 14px;
 
-      padding:
-        11px 15px;
-
-      margin:
-        6px 0;
-
-      border-radius: 19px;
+      border-radius: 18px;
 
       line-height: 1.45;
-
-      font-size: 15px;
 
       word-wrap: break-word;
       white-space: pre-wrap;
 
       box-shadow:
-        0 4px 15px rgba(0,0,0,0.12);
+        0 5px 18px rgba(0,0,0,0.12);
     }
 
+    /* My messages */
 
-    .bubble.me {
-      margin-left: auto;
-
-      color: white;
+    .message.mine {
+      align-self: flex-end;
 
       background:
         linear-gradient(
           135deg,
-          #f14b88,
-          #c43b73
+          rgba(225, 94, 137, 0.94),
+          rgba(164, 64, 105, 0.94)
         );
 
-      border-bottom-right-radius:
-        5px;
+      border-bottom-right-radius: 5px;
     }
 
+    /* Other person's messages */
 
-    .bubble.them {
-      margin-right: auto;
-
-      color: white;
+    .message.theirs {
+      align-self: flex-start;
 
       background:
-        rgba(255,255,255,0.13);
+        rgba(255,255,255,0.15);
 
       border:
-        1px solid rgba(255,255,255,0.10);
+        1px solid rgba(255,255,255,0.13);
 
-      border-bottom-left-radius:
-        5px;
-
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      border-bottom-left-radius: 5px;
     }
 
+    .empty {
+      margin: auto;
 
-    /* =========================================
-       MESSAGE INPUT
-    ========================================= */
+      text-align: center;
 
-    .chat-form {
+      color:
+        rgba(255,255,255,0.72);
+
+      max-width: 360px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       MESSAGE COMPOSER
+    ========================= */
+
+    .composer {
+      padding: 14px;
+
       display: flex;
 
       gap: 10px;
 
-      padding:
-        15px 17px;
-
       background:
-        rgba(15,8,14,0.50);
+        rgba(8, 4, 8, 0.35);
 
       border-top:
-        1px solid rgba(255,255,255,0.12);
+        1px solid rgba(255,255,255,0.13);
     }
 
-
-    .chat-form input {
+    .composer textarea {
       flex: 1;
 
-      min-width: 0;
+      resize: none;
 
-      padding:
-        13px 17px;
+      min-height: 48px;
+      max-height: 130px;
+
+      padding: 13px 15px;
 
       border:
-        1px solid rgba(255,255,255,0.16);
+        1px solid rgba(255,255,255,0.18);
 
-      border-radius:
-        999px;
+      border-radius: 17px;
 
       outline: none;
 
       color: white;
 
       background:
-        rgba(255,255,255,0.09);
+        rgba(255,255,255,0.10);
 
-      font-size: 15px;
+      font: inherit;
     }
 
-
-    .chat-form input::placeholder {
+    .composer textarea::placeholder {
       color:
-        rgba(255,255,255,0.55);
+        rgba(255,255,255,0.62);
     }
 
-
-    .chat-form input:focus {
+    .composer textarea:focus {
       border-color:
-        rgba(255,105,155,0.65);
+        rgba(255,154,185,0.72);
 
       background:
-        rgba(255,255,255,0.12);
+        rgba(255,255,255,0.13);
     }
 
+    .send-btn {
+      border: 0;
 
-    .send-button {
-      border: none;
+      border-radius: 17px;
 
-      padding:
-        0 22px;
+      padding: 0 21px;
 
-      border-radius:
-        999px;
+      min-width: 78px;
 
       color: white;
 
-      font-size: 14px;
       font-weight: 700;
 
       cursor: pointer;
@@ -595,286 +382,255 @@
       background:
         linear-gradient(
           135deg,
-          #ff4f87,
-          #c83d75
+          #e66a94,
+          #a9426d
         );
 
       box-shadow:
-        0 5px 18px rgba(220,60,120,0.30);
-
-      transition:
-        transform 0.2s ease;
+        0 8px 22px
+        rgba(150, 47, 88, 0.30);
     }
 
-
-    .send-button:hover {
-      transform:
-        translateY(-1px);
+    .send-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
 
+    /* =========================
+       PAYMENT GATE
+    ========================= */
 
-    /* =========================================
+    .gate {
+      flex: 1;
+
+      display: grid;
+      place-items: center;
+
+      padding: 35px;
+
+      text-align: center;
+    }
+
+    .gate-card {
+      width: min(520px, 100%);
+
+      padding: 34px 28px;
+
+      border-radius: 24px;
+
+      background:
+        rgba(15, 7, 14, 0.52);
+
+      border:
+        1px solid rgba(255,255,255,0.17);
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.30);
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .gate-icon {
+      font-size: 42px;
+
+      margin-bottom: 10px;
+    }
+
+    .gate-card h2 {
+      margin:
+        0 0 10px;
+
+      font-size: 27px;
+    }
+
+    .gate-card p {
+      margin:
+        0 auto 22px;
+
+      max-width: 430px;
+
+      color:
+        rgba(255,255,255,0.78);
+
+      line-height: 1.6;
+    }
+
+    .pay-btn {
+      display: inline-block;
+
+      padding: 13px 24px;
+
+      border-radius: 999px;
+
+      color: white;
+
+      text-decoration: none;
+
+      font-weight: 700;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e66a94,
+          #a9426d
+        );
+
+      box-shadow:
+        0 10px 28px
+        rgba(150, 47, 88, 0.30);
+    }
+
+    /* =========================
+       ERROR MESSAGE
+    ========================= */
+
+    .error {
+      color:
+        #ffd0d8;
+
+      background:
+        rgba(150, 30, 55, 0.30);
+
+      border:
+        1px solid rgba(255,150,170,0.22);
+
+      padding: 12px 14px;
+
+      border-radius: 12px;
+
+      margin: 14px;
+
+      display: none;
+    }
+
+    /* =========================
        MOBILE
-    ========================================= */
+    ========================= */
 
     @media (max-width: 650px) {
 
-      .kmeet-nav {
-        height: 62px;
-
-        padding:
-          0 17px;
+      .topbar {
+        padding: 14px 15px;
       }
 
-
-      .kmeet-logo {
-        font-size: 23px;
+      .brand {
+        font-size: 21px;
       }
 
+      .chat-shell {
+        width:
+          calc(100% - 12px);
 
-      .nav-actions {
-        gap: 12px;
+        height:
+          calc(100vh - 83px);
+
+        min-height: 0;
+
+        margin: 6px auto;
+
+        border-radius: 20px;
       }
-
-
-      .nav-actions a {
-        font-size: 12px;
-      }
-
-
-      .chat-page {
-        padding:
-          78px 8px 12px;
-      }
-
-
-      .chat-card {
-        min-height:
-          calc(100vh - 95px);
-
-        border-radius:
-          20px;
-      }
-
-
-      .chat-header {
-        min-height:
-          72px;
-
-        padding:
-          10px 13px;
-      }
-
-
-      .person-avatar {
-        width: 42px;
-        height: 42px;
-      }
-
-
-      .person-details h2 {
-        font-size: 16px;
-      }
-
 
       .messages {
-        height:
-          calc(100vh - 245px);
+        padding: 15px;
+      }
+
+      .message {
+        max-width: 84%;
+      }
+
+      .composer {
+        padding: 10px;
+      }
+
+      .send-btn {
+        min-width: 64px;
 
         padding:
-          18px 12px;
+          0 14px;
       }
-
-
-      .bubble {
-        max-width:
-          82%;
-
-        font-size:
-          14px;
-      }
-
-
-      .chat-form {
-        padding:
-          11px;
-      }
-
-
-      .chat-form input {
-        padding:
-          11px 14px;
-      }
-
-
-      .send-button {
-        padding:
-          0 17px;
-      }
-
     }
-
   </style>
 </head>
 
-
 <body>
 
+  <div class="page">
 
-  <!-- =========================================
-       NAVIGATION
-  ========================================== -->
+    <!-- TOP BAR -->
 
-  <nav class="kmeet-nav">
+    <header class="topbar">
 
-    <a
-      class="kmeet-logo"
-      href="index.html"
-    >
-      K<span>meet</span>
-    </a>
-
-
-    <div class="nav-actions">
-
-      <a href="discover.html">
-        Discover
-      </a>
-
-      <a href="profile.html">
-        Profile
-      </a>
-
-    </div>
-
-  </nav>
-
-
-
-  <!-- =========================================
-       MAIN
-  ========================================== -->
-
-  <main class="chat-page">
-
-    <section class="chat-card">
-
-
-      <!-- =====================================
-           STATUS
-      ====================================== -->
-
-      <div
-        id="status"
-        class="status"
-      >
-
-        <div class="loading-heart">
-          ❤️
-        </div>
-
-        <div>
-          Checking chat access...
-        </div>
-
+      <div class="brand">
+        K<span>meet</span>
       </div>
 
+      <a
+        class="back-btn"
+        href="discover.html"
+      >
+        ← Back
+      </a>
+
+    </header>
 
 
-      <!-- =====================================
-           PAYMENT
-      ====================================== -->
+    <!-- CHAT -->
+
+    <main class="chat-shell">
 
       <div
-        id="paymentBox"
-        class="payment-box"
-        style="display:none;"
+        id="errorBox"
+        class="error"
+      ></div>
+
+
+      <!-- CHAT AREA -->
+
+      <section
+        id="chatArea"
+        style="
+          display:none;
+          height:100%;
+          flex-direction:column;
+        "
       >
 
-        <div class="payment-inner">
-
-          <div class="payment-heart">
-            💕
-          </div>
-
-          <h2>
-            Continue your conversation
-          </h2>
-
-          <p>
-            Chat access is available after
-            completing the Kmeet continuation
-            payment.
-          </p>
-
-          <a
-            id="paymentButton"
-            class="payment-button"
-            href="#"
-          >
-            Continue to Payment
-          </a>
-
-        </div>
-
-      </div>
-
-
-
-      <!-- =====================================
-           CHAT
-      ====================================== -->
-
-      <div
-        id="chatUI"
-        style="display:none;"
-      >
-
-
-        <!-- HEADER -->
+        <!-- PERSON HEADER -->
 
         <div class="chat-header">
 
-
-          <a
-            class="back-button"
-            href="discover.html"
-            aria-label="Back"
-          >
-            ‹
-          </a>
-
-
           <div
-            id="personAvatar"
-            class="person-avatar"
+            id="avatarFallback"
+            class="avatar-fallback"
           >
-
-            <span
-              id="personAvatarText"
-              class="person-avatar-text"
-            >
-              ❤️
-            </span>
-
+            K
           </div>
 
+          <img
+            id="avatar"
+            class="avatar"
+            alt=""
+            style="display:none;"
+          >
 
-          <div class="person-details">
+          <div>
 
-            <h2 id="chatTitle">
-              Kmeet Member
-            </h2>
+            <div
+              id="personName"
+              class="person-name"
+            >
+              Loading…
+            </div>
 
-            <div class="online-status">
-              Kmeet conversation
+            <div class="status">
+              Your Kmeet conversation
             </div>
 
           </div>
 
-
         </div>
-
 
 
         <!-- MESSAGES -->
@@ -883,29 +639,34 @@
           id="messages"
           class="messages"
         >
+
+          <div
+            id="emptyState"
+            class="empty"
+          >
+            Start the conversation and let the connection grow. ❤️
+          </div>
+
         </div>
 
 
-
-        <!-- MESSAGE FORM -->
+        <!-- MESSAGE INPUT -->
 
         <form
-          id="chatForm"
-          class="chat-form"
+          id="composer"
+          class="composer"
         >
 
-          <input
+          <textarea
             id="messageInput"
-            type="text"
-            maxlength="1000"
-            autocomplete="off"
-            placeholder="Write a message..."
+            placeholder="Write a message…"
+            maxlength="2000"
             required
-          >
-
+          ></textarea>
 
           <button
-            class="send-button"
+            id="sendBtn"
+            class="send-btn"
             type="submit"
           >
             Send
@@ -913,19 +674,80 @@
 
         </form>
 
-
-      </div>
-
-
-    </section>
-
-  </main>
+      </section>
 
 
+      <!-- PAYMENT GATE -->
 
-  <!-- =========================================
-       FIREBASE / CHAT LOGIC
-  ========================================== -->
+      <section
+        id="gate"
+        class="gate"
+        style="display:none;"
+      >
+
+        <div class="gate-card">
+
+          <div class="gate-icon">
+            💗
+          </div>
+
+          <h2>
+            Unlock this conversation
+          </h2>
+
+          <p>
+            Chat access requires the Kmeet
+            continuation payment. Once payment
+            is completed, return here to start
+            chatting.
+          </p>
+
+          <a
+            class="pay-btn"
+            href="payment.html"
+          >
+            Continue for KSh 11
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- LOADING -->
+
+      <section
+        id="loading"
+        class="gate"
+      >
+
+        <div class="gate-card">
+
+          <div class="gate-icon">
+            🌹
+          </div>
+
+          <h2>
+            Opening Kmeet chat…
+          </h2>
+
+          <p>
+            Please wait while we securely
+            prepare your conversation.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- =========================
+       FIREBASE / CHAT JAVASCRIPT
+  ========================== -->
 
   <script type="module">
 
@@ -955,428 +777,144 @@
       "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 
-
-    /* ========================================
-       GET USER ID
-    ======================================== */
+    /* =========================
+       GET TARGET PROFILE
+    ========================== */
 
     const params =
       new URLSearchParams(
         window.location.search
       );
 
-
     const targetId =
       params.get("userId") ||
       params.get("user");
 
 
-    let currentUser = null;
+    /* =========================
+       PAGE ELEMENTS
+    ========================== */
 
-    let conversationId = null;
+    const loading =
+      document.getElementById("loading");
 
-    let messagesUnsubscribe = null;
+    const gate =
+      document.getElementById("gate");
 
+    const chatArea =
+      document.getElementById("chatArea");
 
+    const errorBox =
+      document.getElementById("errorBox");
 
-    /* ========================================
-       ELEMENTS
-    ======================================== */
+    const personName =
+      document.getElementById("personName");
 
-    const status =
+    const avatar =
+      document.getElementById("avatar");
+
+    const avatarFallback =
       document.getElementById(
-        "status"
+        "avatarFallback"
       );
-
-
-    const paymentBox =
-      document.getElementById(
-        "paymentBox"
-      );
-
-
-    const paymentButton =
-      document.getElementById(
-        "paymentButton"
-      );
-
-
-    const chatUI =
-      document.getElementById(
-        "chatUI"
-      );
-
-
-    const chatTitle =
-      document.getElementById(
-        "chatTitle"
-      );
-
 
     const messages =
-      document.getElementById(
-        "messages"
-      );
+      document.getElementById("messages");
 
+    const emptyState =
+      document.getElementById("emptyState");
 
-    const chatForm =
-      document.getElementById(
-        "chatForm"
-      );
-
+    const composer =
+      document.getElementById("composer");
 
     const messageInput =
       document.getElementById(
         "messageInput"
       );
 
-
-    const personAvatarText =
-      document.getElementById(
-        "personAvatarText"
-      );
+    const sendBtn =
+      document.getElementById("sendBtn");
 
 
+    /* =========================
+       VARIABLES
+    ========================== */
 
-    /* ========================================
-       START
-    ======================================== */
+    let currentUser = null;
 
-    if (!targetId) {
+    let conversationId = null;
 
-      showError(
-        "No profile was selected for this chat."
-      );
+    let unsubscribeMessages = null;
 
-    } else {
 
-      checkChatAccess();
+    /* =========================
+       ERROR
+    ========================== */
+
+    function showError(message) {
+
+      errorBox.textContent = message;
+
+      errorBox.style.display = "block";
 
     }
 
 
+    /* =========================
+       HIDE LOADING
+    ========================== */
 
-    /* ========================================
-       CHECK CHAT ACCESS
-    ======================================== */
+    function hideLoading() {
 
-    async function checkChatAccess() {
+      loading.style.display = "none";
 
-      try {
-
-        showStatus(
-          "Checking chat access..."
-        );
+    }
 
 
-        currentUser =
-          await waitForExistingUser(
-            4000
-          );
+    /* =========================
+       SHOW PAYMENT
+    ========================== */
+
+    function showPayment() {
+
+      hideLoading();
+
+      chatArea.style.display = "none";
+
+      gate.style.display = "grid";
+
+    }
 
 
-        /*
-         * Guest user
-         */
+    /* =========================
+       OPEN CHAT
+    ========================== */
 
-        if (!currentUser) {
+    function openChat() {
 
-          showStatus(
-            "Starting guest chat..."
-          );
+      hideLoading();
 
+      gate.style.display = "none";
 
-          const result =
-            await withTimeout(
-              signInAnonymously(auth),
-              10000
-            );
+      chatArea.style.display = "flex";
+
+    }
 
 
-          currentUser =
-            result.user;
+    /* =========================
+       LOAD TARGET PROFILE
+    ========================== */
 
-        }
+    async function loadTargetProfile() {
 
+      if (!targetId) {
 
-        if (!currentUser) {
-
-          throw new Error(
-            "Could not create a chat session."
-          );
-
-        }
-
-
-        /*
-         * Don't chat with yourself.
-         */
-
-        if (
-          currentUser.uid ===
-          targetId
-        ) {
-
-          showError(
-            "You cannot chat with your own profile."
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * Temporary demo payment.
-         */
-
-        const paid =
-          localStorage.getItem(
-            "kmeet_demo_paid"
-          ) === "true";
-
-
-        if (!paid) {
-
-          showPayment();
-
-          return;
-
-        }
-
-
-        await openChat();
-
-
-      } catch (error) {
-
-        console.error(
-          "Chat access error:",
-          error
-        );
-
-
-        showError(
-          "Could not start chat: " +
-          (
-            error.message ||
-            "Unknown error"
-          )
+        throw new Error(
+          "No profile was selected for this chat."
         );
 
       }
 
-    }
-
-
-
-    /* ========================================
-       WAIT FOR AUTH
-    ======================================== */
-
-    function waitForExistingUser(
-      timeout
-    ) {
-
-      return new Promise(
-        resolve => {
-
-          if (auth.currentUser) {
-
-            resolve(
-              auth.currentUser
-            );
-
-            return;
-
-          }
-
-
-          let done = false;
-
-
-          const unsubscribe =
-            onAuthStateChanged(
-              auth,
-              user => {
-
-                if (done) return;
-
-
-                if (user) {
-
-                  done = true;
-
-                  unsubscribe();
-
-                  resolve(user);
-
-                }
-
-              }
-            );
-
-
-          setTimeout(
-            () => {
-
-              if (done) return;
-
-              done = true;
-
-              unsubscribe();
-
-              resolve(null);
-
-            },
-            timeout
-          );
-
-        }
-      );
-
-    }
-
-
-
-    /* ========================================
-       TIMEOUT
-    ======================================== */
-
-    function withTimeout(
-      promise,
-      timeout = 10000
-    ) {
-
-      return Promise.race([
-
-        promise,
-
-        new Promise(
-          (_, reject) => {
-
-            setTimeout(
-              () => {
-
-                reject(
-                  new Error(
-                    "Firebase took too long to respond."
-                  )
-                );
-
-              },
-              timeout
-            );
-
-          }
-        )
-
-      ]);
-
-    }
-
-
-
-    /* ========================================
-       STATUS
-    ======================================== */
-
-    function showStatus(
-      message
-    ) {
-
-      status.style.display =
-        "flex";
-
-      status.className =
-        "status";
-
-
-      status.innerHTML = `
-
-        <div class="loading-heart">
-          ❤️
-        </div>
-
-        <div>
-          ${message}
-        </div>
-
-      `;
-
-    }
-
-
-
-    /* ========================================
-       ERROR
-    ======================================== */
-
-    function showError(
-      message
-    ) {
-
-      status.style.display =
-        "flex";
-
-      status.className =
-        "status error";
-
-
-      status.innerHTML = `
-
-        <div style="font-size:32px;margin-bottom:12px;">
-          💔
-        </div>
-
-        <div>
-          <strong>Something went wrong</strong>
-        </div>
-
-        <div style="margin-top:8px;">
-          ${message}
-        </div>
-
-      `;
-
-    }
-
-
-
-    /* ========================================
-       PAYMENT
-    ======================================== */
-
-    function showPayment() {
-
-      status.style.display =
-        "none";
-
-
-      paymentBox.style.display =
-        "flex";
-
-
-      paymentButton.href =
-        "payment.html?userId=" +
-        encodeURIComponent(
-          targetId
-        );
-
-    }
-
-
-
-    /* ========================================
-       OPEN CHAT
-    ======================================== */
-
-    async function openChat() {
-
-
-      /*
-       * Load profile.
-       */
 
       const targetRef =
         doc(
@@ -1386,89 +924,95 @@
         );
 
 
-      const targetSnapshot =
-        await getDoc(
-          targetRef
+      const targetSnap =
+        await getDoc(targetRef);
+
+
+      if (!targetSnap.exists()) {
+
+        throw new Error(
+          "The selected profile could not be found."
+        );
+
+      }
+
+
+      const data =
+        targetSnap.data();
+
+
+      const name =
+        data.name ||
+        "Kmeet member";
+
+
+      personName.textContent =
+        name;
+
+
+      avatarFallback.textContent =
+        name
+          .charAt(0)
+          .toUpperCase();
+
+
+      /* Profile photo */
+
+      if (data.photoURL) {
+
+        avatar.src =
+          data.photoURL;
+
+        avatar.style.display =
+          "block";
+
+        avatarFallback.style.display =
+          "none";
+
+      }
+
+    }
+
+
+    /* =========================
+       CREATE MESSAGE ELEMENT
+    ========================== */
+
+    function renderMessage(data) {
+
+      const div =
+        document.createElement("div");
+
+
+      div.className =
+        "message " +
+        (
+          data.senderId ===
+          currentUser.uid
+            ? "mine"
+            : "theirs"
         );
 
 
-      let targetName =
-        "Kmeet Member";
+      div.textContent =
+        data.text || "";
 
 
-      let avatar =
-        "";
+      return div;
+
+    }
 
 
-      if (
-        targetSnapshot.exists()
-      ) {
+    /* =========================
+       LOAD MESSAGES
+    ========================== */
 
-        const target =
-          targetSnapshot.data();
-
-
-        targetName =
-          target.name ||
-          target.displayName ||
-          "Kmeet Member";
-
-
-        avatar =
-          target.avatar ||
-          "";
-
-      }
-
-
-      chatTitle.textContent =
-        targetName;
-
+    function startMessages() {
 
       /*
-       * Avatar.
-       */
-
-      if (avatar) {
-
-        const image =
-          document.createElement(
-            "img"
-          );
-
-
-        image.src =
-          avatar;
-
-
-        image.alt =
-          targetName;
-
-
-        personAvatarText.style.display =
-          "none";
-
-
-        document
-          .getElementById(
-            "personAvatar"
-          )
-          .appendChild(image);
-
-      } else {
-
-        personAvatarText.textContent =
-          targetName
-            .charAt(0)
-            .toUpperCase();
-
-      }
-
-
-
-      /*
-       * Conversation ID.
-       */
+        Conversation ID is shared
+        between the two users.
+      */
 
       conversationId =
         [
@@ -1479,28 +1023,6 @@
         .join("_");
 
 
-
-      /*
-       * Display chat.
-       */
-
-      status.style.display =
-        "none";
-
-
-      paymentBox.style.display =
-        "none";
-
-
-      chatUI.style.display =
-        "block";
-
-
-
-      /*
-       * Messages.
-       */
-
       const messagesRef =
         collection(
           db,
@@ -1510,7 +1032,7 @@
         );
 
 
-      const messagesQuery =
+      const q =
         query(
           messagesRef,
           orderBy(
@@ -1520,165 +1042,313 @@
         );
 
 
-
-      /*
-       * Listen.
-       */
-
-      messagesUnsubscribe =
+      unsubscribeMessages =
         onSnapshot(
-          messagesQuery,
-          snapshot => {
+          q,
 
-            messages.innerHTML =
-              "";
+          (snapshot) => {
+
+            messages.innerHTML = "";
+
+
+            if (snapshot.empty) {
+
+              messages.appendChild(
+                emptyState
+              );
+
+              return;
+
+            }
 
 
             snapshot.forEach(
-              messageDoc => {
-
-                const data =
-                  messageDoc.data();
-
-
-                const bubble =
-                  document.createElement(
-                    "div"
-                  );
-
-
-                const mine =
-                  data.senderId ===
-                  currentUser.uid;
-
-
-                bubble.className =
-                  mine
-                    ? "bubble me"
-                    : "bubble them";
-
-
-                bubble.textContent =
-                  data.text ||
-                  "";
-
+              (docSnap) => {
 
                 messages.appendChild(
-                  bubble
+                  renderMessage(
+                    docSnap.data()
+                  )
                 );
 
               }
             );
 
 
+            /* Scroll to newest */
+
             messages.scrollTop =
               messages.scrollHeight;
 
           },
 
+          (error) => {
 
-          error => {
-
-            console.error(
-              "Message listener error:",
-              error
-            );
-
+            console.error(error);
 
             showError(
-              "Could not load messages: " +
-              error.message
+              "Unable to load messages. Please refresh the page."
             );
 
           }
-
         );
-
-
-
-      /*
-       * SEND MESSAGE
-       */
-
-      chatForm.addEventListener(
-        "submit",
-        async event => {
-
-          event.preventDefault();
-
-
-          const text =
-            messageInput.value.trim();
-
-
-          if (!text) return;
-
-
-          try {
-
-            await addDoc(
-              messagesRef,
-              {
-
-                senderId:
-                  currentUser.uid,
-
-                targetId:
-                  targetId,
-
-                text:
-                  text,
-
-                createdAt:
-                  serverTimestamp()
-
-              }
-            );
-
-
-            messageInput.value =
-              "";
-
-
-            messageInput.focus();
-
-
-          } catch (error) {
-
-            console.error(
-              "Send message error:",
-              error
-            );
-
-
-            alert(
-              "Message could not be sent: " +
-              error.message
-            );
-
-          }
-
-        }
-      );
-
 
     }
 
 
+    /* =========================
+       SEND MESSAGE
+    ========================== */
 
-    /* ========================================
-       CLEANUP
-    ======================================== */
+    composer.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const text =
+          messageInput.value.trim();
+
+
+        if (
+          !text ||
+          !currentUser ||
+          !conversationId
+        ) {
+
+          return;
+
+        }
+
+
+        sendBtn.disabled =
+          true;
+
+
+        try {
+
+          const messagesRef =
+            collection(
+              db,
+              "conversations",
+              conversationId,
+              "messages"
+            );
+
+
+          await addDoc(
+            messagesRef,
+            {
+
+              senderId:
+                currentUser.uid,
+
+              targetId:
+                targetId,
+
+              text:
+                text,
+
+              createdAt:
+                serverTimestamp()
+
+            }
+          );
+
+
+          /* Clear input */
+
+          messageInput.value = "";
+
+
+          messageInput.focus();
+
+        }
+
+        catch (error) {
+
+          console.error(error);
+
+          showError(
+            "Your message could not be sent. Please try again."
+          );
+
+        }
+
+        finally {
+
+          sendBtn.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       ENTER TO SEND
+    ========================== */
+
+    messageInput.addEventListener(
+      "keydown",
+      (event) => {
+
+        /*
+          Enter sends.
+          Shift + Enter creates
+          a new line.
+        */
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          composer.requestSubmit();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       INITIALIZE CHAT
+    ========================== */
+
+    async function initializeChat(
+      user
+    ) {
+
+      currentUser =
+        user;
+
+
+      /*
+        TEMPORARY DEMO PAYMENT
+
+        This checks the current
+        localStorage demo flag.
+
+        Your real M-Pesa/Daraja
+        verification will replace
+        this later.
+      */
+
+      const paid =
+        localStorage.getItem(
+          "kmeet_demo_paid"
+        ) === "true";
+
+
+      if (!paid) {
+
+        showPayment();
+
+        return;
+
+      }
+
+
+      try {
+
+        await loadTargetProfile();
+
+
+        openChat();
+
+
+        startMessages();
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        hideLoading();
+
+        showError(
+          error.message ||
+          "Unable to open this conversation."
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       FIREBASE AUTH
+    ========================== */
+
+    onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        try {
+
+          /*
+            Existing user:
+            continue normally.
+          */
+
+          if (user) {
+
+            await initializeChat(
+              user
+            );
+
+            return;
+
+          }
+
+
+          /*
+            Guest:
+            use Firebase Anonymous
+            Authentication.
+          */
+
+          await signInAnonymously(
+            auth
+          );
+
+        }
+
+        catch (error) {
+
+          console.error(error);
+
+          hideLoading();
+
+          showError(
+            "Kmeet could not authenticate this session. Check that Anonymous Authentication is enabled in Firebase."
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       CLEAN UP LISTENER
+    ========================== */
 
     window.addEventListener(
       "beforeunload",
       () => {
 
         if (
-          messagesUnsubscribe
+          unsubscribeMessages
         ) {
 
-          messagesUnsubscribe();
+          unsubscribeMessages();
 
         }
 
