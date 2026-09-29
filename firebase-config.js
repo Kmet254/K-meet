@@ -45,7 +45,7 @@ import {
 // ============================================================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDgRae8KCnCpHyxaIE7MaspmRinswwsrNo",
+  apiKey: "apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",",
   authDomain: "kmeet-database.firebaseapp.com",
   projectId: "kmeet-database",
   storageBucket: "kmeet-database.firebasestorage.app",
