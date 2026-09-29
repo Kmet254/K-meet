@@ -8,6 +8,195 @@
 
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(35, 0, 15, 0.95), rgba(0, 0, 0, 0.97)),
+        url("kmeet-background.jpg.jpg") center/cover fixed;
+      color: white;
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 25px;
+    }
+
+    .navlinks a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .navlinks a:hover {
+      color: #f19ab7;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 45px 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: rgba(20, 0, 12, 0.84);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    .chatbox {
+      padding: 30px;
+    }
+
+    #chatTitle {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    #chatNotice {
+      background: rgba(255,255,255,0.08) !important;
+      color: #f4dce5 !important;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .messages {
+      height: 430px;
+      overflow-y: auto;
+      padding: 18px;
+      margin: 20px 0;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .bubble {
+      max-width: 70%;
+      padding: 11px 15px;
+      margin: 8px 0;
+      border-radius: 16px;
+      line-height: 1.45;
+      word-wrap: break-word;
+    }
+
+    .bubble.me {
+      margin-left: auto;
+      background: #9d315d;
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    .bubble.them {
+      margin-right: auto;
+      background: #3a2530;
+      color: #f5e9ee;
+      border-bottom-left-radius: 5px;
+    }
+
+    .chat-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-form input {
+      flex: 1;
+      padding: 14px 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .chat-form input:focus {
+      border-color: #d96b91;
+      box-shadow: 0 0 0 3px rgba(217,107,145,0.15);
+    }
+
+    .chat-form input::placeholder {
+      color: #bbaeb4;
+    }
+
+    .chat-form .btn {
+      padding: 0 24px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #9d315d, #d96b91);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chat-form .btn:hover {
+      opacity: 0.9;
+    }
+
+    .message {
+      padding: 13px;
+      border-radius: 10px;
+    }
+
+    .message.error {
+      background: rgba(190,40,70,0.18);
+      border: 1px solid rgba(220,80,110,0.4);
+      color: #ffb7c7;
+    }
+
+    @media (max-width: 600px) {
+      .nav {
+        padding: 0 20px;
+      }
+
+      .nav .logo {
+        font-size: 23px;
+      }
+
+      .navlinks {
+        gap: 12px;
+      }
+
+      .chatbox {
+        padding: 20px 15px;
+      }
+
+      .messages {
+        height: 380px;
+      }
+
+      .chat-form {
+        flex-direction: column;
+      }
+
+      .chat-form .btn {
+        height: 48px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -21,7 +210,6 @@
     </div>
   </nav>
 
-
   <main class="container">
 
     <section class="card chatbox">
@@ -29,7 +217,6 @@
       <div id="status" class="message">
         Checking chat access...
       </div>
-
 
       <div id="chatUI" style="display:none">
 
@@ -48,9 +235,7 @@
           ">
         </div>
 
-
         <div id="messages" class="messages"></div>
-
 
         <form id="chatForm" class="chat-form">
 
@@ -73,7 +258,6 @@
     </section>
 
   </main>
-
 
 <script type="module">
 
@@ -144,11 +328,6 @@ if (!targetId) {
 
     try {
 
-      /*
-       * Registered users use their Firebase account.
-       * Guests receive an anonymous Firebase identity.
-       */
-
       if (!user) {
 
         const cred =
@@ -162,7 +341,6 @@ if (!targetId) {
 
       }
 
-
       if (!currentUser) {
 
         showStatus(
@@ -173,7 +351,6 @@ if (!targetId) {
         return;
       }
 
-
       if (currentUser.uid === targetId) {
 
         showStatus(
@@ -183,7 +360,6 @@ if (!targetId) {
 
         return;
       }
-
 
       await openChat();
 
@@ -214,22 +390,18 @@ async function openChat() {
       doc(db, "users", targetId)
     );
 
-
   const target =
     targetSnap.exists()
       ? targetSnap.data()
       : { name: "Kmeet Member" };
 
-
   document.getElementById("chatTitle").textContent =
     `Chat with ${target.name || "Kmeet Member"}`;
-
 
   conversationId =
     [currentUser.uid, targetId]
       .sort()
       .join("_");
-
 
   const conversationRef =
     doc(
@@ -238,18 +410,8 @@ async function openChat() {
       conversationId
     );
 
-
   const conversationSnap =
     await getDoc(conversationRef);
-
-
-  /*
-   * The first person who opens the conversation
-   * becomes the conversation initiator.
-   *
-   * This is the person entitled to the free
-   * opening "Hi" or "Hey".
-   */
 
   if (!conversationSnap.exists()) {
 
@@ -269,7 +431,6 @@ async function openChat() {
 
     };
 
-
     await setDoc(
       conversationRef,
       conversationData
@@ -282,7 +443,6 @@ async function openChat() {
 
   }
 
-
   messagesRef =
     collection(
       db,
@@ -291,16 +451,13 @@ async function openChat() {
       "messages"
     );
 
-
   document.getElementById("status").style.display =
     "none";
 
   document.getElementById("chatUI").style.display =
     "block";
 
-
   updateChatNotice();
-
 
   listenForMessages();
 
@@ -319,7 +476,6 @@ function listenForMessages() {
       orderBy("createdAt", "asc")
     );
 
-
   unsubscribeMessages =
     onSnapshot(
       q,
@@ -328,28 +484,16 @@ function listenForMessages() {
         const box =
           document.getElementById("messages");
 
-
         box.innerHTML = "";
 
-
         let receiverReplies = 0;
-
 
         snapshot.forEach(s => {
 
           const m = s.data();
 
-
           const mine =
             m.senderId === currentUser.uid;
-
-
-          /*
-           * Count receiver replies.
-           *
-           * The receiver is the person who was
-           * originally approached.
-           */
 
           if (
             m.senderId === conversationData.receiverId
@@ -359,35 +503,23 @@ function listenForMessages() {
 
           }
 
-
           const div =
             document.createElement("div");
-
 
           div.className =
             `bubble ${mine ? "me" : "them"}`;
 
-
           div.textContent =
             m.text || "";
-
 
           box.appendChild(div);
 
         });
 
-
-        /*
-         * Keep the local count synchronized
-         * with the conversation.
-         */
-
         conversationData.receiverFreeReplies =
           receiverReplies;
 
-
         updateChatNotice();
-
 
         box.scrollTop =
           box.scrollHeight;
@@ -420,17 +552,13 @@ document
 
     e.preventDefault();
 
-
     const input =
       document.getElementById("messageInput");
-
 
     const text =
       input.value.trim();
 
-
     if (!text) return;
-
 
     try {
 
@@ -460,28 +588,17 @@ async function sendMessage(text) {
     currentUser.uid ===
     conversationData.initiatorId;
 
-
   const isReceiver =
     currentUser.uid ===
     conversationData.receiverId;
 
 
-  /*
-   * ===================================================
-   * RECEIVER RULES
-   * ===================================================
-   */
+  /* RECEIVER RULES */
 
   if (isReceiver) {
 
     const contactAttempt =
       containsContactInformation(text);
-
-
-    /*
-     * Contact information cannot be revealed
-     * before the KSh 11 continuation payment.
-     */
 
     if (
       contactAttempt &&
@@ -499,16 +616,10 @@ async function sendMessage(text) {
 
     }
 
-
-    /*
-     * First 3 receiver replies are free.
-     */
-
     const replyCount =
       Number(
         conversationData.receiverFreeReplies || 0
       );
-
 
     if (
       replyCount >= FREE_RECEIVER_REPLIES &&
@@ -529,28 +640,14 @@ async function sendMessage(text) {
   }
 
 
-  /*
-   * ===================================================
-   * SENDER RULES
-   * ===================================================
-   */
+  /* SENDER RULES */
 
   if (isInitiator) {
-
-    /*
-     * Check whether this is the very first message.
-     */
 
     const firstMessage =
       await isFirstMessage();
 
-
     if (firstMessage) {
-
-      /*
-       * The first opening message is free only
-       * when it is Hi or Hey.
-       */
 
       if (
         !FREE_OPENING_MESSAGES.includes(
@@ -569,19 +666,10 @@ async function sendMessage(text) {
 
     } else {
 
-      /*
-       * Sender needs purchased chat credits
-       * after the free opening message.
-       *
-       * Payment integration will supply the
-       * actual senderCredits value.
-       */
-
       const credits =
         Number(
           conversationData.senderCredits || 0
         );
-
 
       if (credits <= 0) {
 
@@ -603,11 +691,7 @@ async function sendMessage(text) {
   }
 
 
-  /*
-   * ===================================================
-   * SAVE MESSAGE
-   * ===================================================
-   */
+  /* SAVE MESSAGE */
 
   await addDoc(
     messagesRef,
@@ -629,15 +713,7 @@ async function sendMessage(text) {
   );
 
 
-  /*
-   * For now we don't reduce credits here.
-   *
-   * Credits will be reduced only after the actual
-   * payment system is connected.
-   */
-
   input.value = "";
-
 
   updateChatNotice();
 
@@ -650,18 +726,10 @@ async function sendMessage(text) {
 
 async function isFirstMessage() {
 
-  /*
-   * We use the conversation snapshot already
-   * loaded through Firestore.
-   *
-   * A separate query will be avoided here.
-   */
-
   const firstCheck =
     await new Promise(resolve => {
 
       let finished = false;
-
 
       const unsubscribe =
         onSnapshot(
@@ -703,7 +771,6 @@ async function isFirstMessage() {
 
     });
 
-
   return firstCheck;
 
 }
@@ -720,46 +787,20 @@ function containsContactInformation(text) {
       .toLowerCase()
       .trim();
 
-
-  /*
-   * Phone numbers
-   */
-
   const phonePattern =
     /(?:\+?254|0)?[\s.-]?(?:7\d{2}|1\d{2})[\s.-]?\d{3}[\s.-]?\d{3}/;
-
-
-  /*
-   * Email addresses
-   */
 
   const emailPattern =
     /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
 
-
-  /*
-   * Common contact-sharing services.
-   */
-
   const contactWords =
     /\b(?:whatsapp|telegram|instagram|facebook|snapchat|tiktok|signal|imo|skype)\b/i;
-
-
-  /*
-   * Direct contact-sharing phrases.
-   */
 
   const contactPhrases =
     /\b(?:call me|text me|message me|contact me|reach me|my number|my phone|phone me|email me|dm me)\b/i;
 
-
-  /*
-   * Social/contact usernames and links.
-   */
-
   const linkPattern =
     /(?:https?:\/\/|www\.|t\.me\/|wa\.me\/|instagram\.com\/|facebook\.com\/)/i;
-
 
   return (
     phonePattern.test(value) ||
@@ -781,14 +822,11 @@ function updateChatNotice() {
   const notice =
     document.getElementById("chatNotice");
 
-
   if (!notice || !conversationData) return;
-
 
   const isInitiator =
     currentUser.uid ===
     conversationData.initiatorId;
-
 
   const isReceiver =
     currentUser.uid ===
@@ -802,15 +840,12 @@ function updateChatNotice() {
         conversationData.senderCredits || 0
       );
 
-
     notice.innerHTML =
-
       `Your first <strong>Hi</strong> or <strong>Hey</strong> is free.
        After that, you need chat credits.
        Current credits: <strong>${credits}</strong>.`;
 
   }
-
 
   else if (isReceiver) {
 
@@ -819,13 +854,11 @@ function updateChatNotice() {
         conversationData.receiverFreeReplies || 0
       );
 
-
     const remaining =
       Math.max(
         0,
         FREE_RECEIVER_REPLIES - replies
       );
-
 
     if (
       conversationData.receiverPaid === true
@@ -837,7 +870,6 @@ function updateChatNotice() {
     } else {
 
       notice.innerHTML =
-
         `You have <strong>${remaining}</strong>
          free response${remaining === 1 ? "" : "s"} remaining.
          Contact information requires the
@@ -860,12 +892,10 @@ function showStatus(html, error) {
   const el =
     document.getElementById("status");
 
-
   el.className =
     error
       ? "message error"
       : "message";
-
 
   el.innerHTML =
     html;
