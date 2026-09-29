@@ -1,87 +1,1044 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Kmeet - Create Account</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/svg+xml" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kmeet - Create Account</title>
+
+    <!-- Kmeet favicon -->
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/svgs/solid/heart.svg"
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(130, 25, 55, 0.35),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 80% 75%,
+                    rgba(95, 15, 40, 0.30),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #12070b 0%,
+                    #241016 48%,
+                    #100609 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 42px 42px;
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent
+            );
+        }
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        .nav {
+            width: 100%;
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            background: rgba(12, 5, 8, 0.72);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #fff;
+            text-decoration: none;
+
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        .logo-heart {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: rgba(154, 35, 68, 0.20);
+            border: 1px solid rgba(230, 92, 126, 0.25);
+
+            color: #e95c83;
+            font-size: 15px;
+        }
+
+        .navlinks {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .navlinks a {
+            color: rgba(255,255,255,0.72);
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 500;
+
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .navlinks a:hover {
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           PAGE
+        ========================================= */
+
+        .page {
+            min-height: calc(100vh - 76px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 55px 20px 70px;
+
+            position: relative;
+        }
+
+
+        /* =========================================
+           DECORATIVE HEART
+        ========================================= */
+
+        .decor-heart {
+            position: absolute;
+
+            width: 340px;
+            height: 340px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(143, 26, 59, 0.20),
+                    transparent 68%
+                );
+
+            filter: blur(3px);
+
+            pointer-events: none;
+        }
+
+        .decor-heart.one {
+            top: 5%;
+            left: -120px;
+        }
+
+        .decor-heart.two {
+            bottom: -100px;
+            right: -110px;
+        }
+
+
+        /* =========================================
+           CARD
+        ========================================= */
+
+        .card {
+            width: min(100%, 510px);
+
+            padding: 42px 42px 40px;
+
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.075),
+                    rgba(255,255,255,0.025)
+                );
+
+            border: 1px solid rgba(255,255,255,0.11);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.48),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            position: relative;
+            z-index: 2;
+
+            animation: cardIn 0.55s ease both;
+        }
+
+        @keyframes cardIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* =========================================
+           HEADING
+        ========================================= */
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 14px;
+
+            color: #df6688;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .eyebrow i {
+            font-size: 10px;
+        }
+
+        h1 {
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(32px, 6vw, 43px);
+
+            line-height: 1.1;
+
+            font-weight: 600;
+
+            margin-bottom: 14px;
+        }
+
+        .intro {
+            color: rgba(255,255,255,0.62);
+
+            font-size: 14px;
+            line-height: 1.7;
+
+            margin-bottom: 31px;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        label {
+            margin-top: 10px;
+
+            color: rgba(255,255,255,0.82);
+
+            font-size: 12px;
+            font-weight: 500;
+
+            letter-spacing: 0.3px;
+        }
+
+        input {
+            width: 100%;
+            height: 52px;
+
+            padding: 0 16px;
+
+            border-radius: 13px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            outline: none;
+
+            background: rgba(0,0,0,0.25);
+
+            color: #fff;
+
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.32);
+        }
+
+        input:focus {
+            border-color: rgba(218,82,119,0.70);
+
+            background: rgba(0,0,0,0.34);
+
+            box-shadow:
+                0 0 0 4px rgba(218,82,119,0.09);
+        }
+
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+
+        .btn {
+            width: 100%;
+            height: 54px;
+
+            margin-top: 20px;
+
+            border: none;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #9b274f,
+                    #c2466d
+                );
+
+            color: #fff;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.4px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 28px rgba(143, 26, 59, 0.28);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 34px rgba(143, 26, 59, 0.36);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        #msg {
+            margin-top: 14px;
+        }
+
+        .message {
+            padding: 12px 14px;
+
+            border-radius: 11px;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .message.error {
+            color: #ffb9c9;
+
+            background: rgba(180, 40, 75, 0.13);
+
+            border: 1px solid rgba(220, 72, 110, 0.25);
+        }
+
+        .message.success {
+            color: #b8f0d0;
+
+            background: rgba(45, 150, 95, 0.12);
+
+            border: 1px solid rgba(80, 190, 125, 0.24);
+        }
+
+
+        /* =========================================
+           FOOTER TEXT
+        ========================================= */
+
+        .bottom-text {
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: rgba(255,255,255,0.46);
+
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .bottom-text a {
+            color: #e46a8c;
+
+            text-decoration: none;
+
+            font-weight: 500;
+        }
+
+        .bottom-text a:hover {
+            color: #fff;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .nav {
+                height: 68px;
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .navlinks {
+                gap: 15px;
+            }
+
+            .navlinks a {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .page {
+                min-height: calc(100vh - 68px);
+
+                padding:
+                    35px 16px
+                    50px;
+            }
+
+            .card {
+                padding:
+                    32px 23px
+                    30px;
+
+                border-radius: 21px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+        }
+
+    </style>
 </head>
+
+
 <body>
-  <nav class="nav"><a class="logo" href="index.html">Kmeet</a><div class="navlinks"><a href="discover.html">Discover</a><a href="login.html">Log In</a></div></nav>
-  <main class="container">
-    <section class="card form">
-      <h2>Create your Kmeet account</h2>
-      <p class="small">Your selected interests will be saved to your profile.</p>
-      <form id="signupForm">
-        <label for="displayName">Display name</label>
-        <input id="displayName" required maxlength="40" placeholder="Your name">
-        <label for="email">Email</label>
-        <input id="email" type="email" required placeholder="you@example.com">
-        <label for="password">Password</label>
-        <input id="password" type="password" required minlength="6" placeholder="At least 6 characters">
-        <div id="msg"></div>
-        <button class="btn" type="submit">Create Account</button>
-      </form>
-    </section>
-  </main>
 
-  <script type="module">
-    import {
-      auth, db, createUserWithEmailAndPassword, updateProfile, setDoc, doc, signOut
-    } from "./firebase-config.js";
+    <!-- Decorative background -->
 
-    const savedEmail = sessionStorage.getItem("pendingEmail");
-    if (savedEmail) document.getElementById("email").value = savedEmail;
+    <div class="decor-heart one"></div>
+    <div class="decor-heart two"></div>
 
-    document.getElementById("signupForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const msg = document.getElementById("msg");
-      msg.innerHTML = "";
 
-      const name = document.getElementById("displayName").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const interests = JSON.parse(sessionStorage.getItem("pendingInterests") || "[]");
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
 
-      if (!interests.length) {
-        msg.innerHTML = '<div class="message error">Please select your interests first.</div>';
-        return;
-      }
+    <nav class="nav">
 
-      try {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(cred.user, { displayName: name });
+        <a
+            class="logo"
+            href="index.html"
+            aria-label="Kmeet Home"
+        >
 
-        await setDoc(doc(db, "users", cred.user.uid), {
-          uid: cred.user.uid,
-          name,
-          email,
-          interests,
-          bio: "New Kmeet member.",
-          location: "Kenya",
-          age: null,
-          avatar: "",
-          createdAt: new Date().toISOString(),
-          onboardingCompleted: true
-        }, { merge: true });
+            <span class="logo-heart">
+                <i class="fa-solid fa-heart"></i>
+            </span>
 
-        // Firebase automatically signs the new user in.
-        // We explicitly sign out so the next step is the requested login page.
-        await signOut(auth);
+            Kmeet
 
-        sessionStorage.removeItem("pendingInterests");
-        sessionStorage.removeItem("pendingEmail");
+        </a>
 
-        window.location.href = "login.html?created=1";
-      } catch (err) {
-        console.error(err);
-        let text = err.message || "Could not create account.";
-        if (err.code === "auth/email-already-in-use") text = "That email is already registered. Please log in.";
-        if (err.code === "auth/weak-password") text = "Password must be at least 6 characters.";
-        msg.innerHTML = `<div class="message error">${text}</div>`;
-      }
-    });
-  </script>
+
+        <div class="navlinks">
+
+            <a href="discover.html">
+                Discover
+            </a>
+
+            <a href="login.html">
+                Log In
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="page">
+
+        <section class="card">
+
+            <div class="eyebrow">
+                <i class="fa-solid fa-heart"></i>
+                Welcome to Kmeet
+            </div>
+
+
+            <h1>
+                Create your account
+            </h1>
+
+
+            <p class="intro">
+                Create your Kmeet profile and take the first
+                step toward an intentional connection.
+            </p>
+
+
+            <!-- =====================================
+                 SIGNUP FORM
+            ====================================== -->
+
+            <form id="signupForm">
+
+                <label for="displayName">
+                    Display name
+                </label>
+
+                <input
+                    id="displayName"
+                    type="text"
+                    required
+                    maxlength="40"
+                    autocomplete="name"
+                    placeholder="Your name"
+                >
+
+
+                <label for="email">
+                    Email address
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                >
+
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    required
+                    minlength="6"
+                    autocomplete="new-password"
+                    placeholder="At least 6 characters"
+                >
+
+
+                <div id="msg"></div>
+
+
+                <button
+                    class="btn"
+                    type="submit"
+                    id="createAccountBtn"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p class="bottom-text">
+                Already have an account?
+                <a href="login.html">
+                    Log in
+                </a>
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FIREBASE SIGNUP
+    ========================================== -->
+
+    <script type="module">
+
+        import {
+            auth,
+            db,
+            createUserWithEmailAndPassword,
+            updateProfile,
+            setDoc,
+            doc,
+            signOut
+        } from "./firebase-config.js";
+
+
+        /* =========================================
+           RESTORE EMAIL FROM HOMEPAGE
+        ========================================== */
+
+        const savedEmail =
+            localStorage.getItem("userEmail");
+
+
+        if (savedEmail) {
+
+            document.getElementById("email").value =
+                savedEmail;
+
+        }
+
+
+        /* =========================================
+           SIGNUP FORM
+        ========================================== */
+
+        document
+            .getElementById("signupForm")
+            .addEventListener(
+                "submit",
+                async (e) => {
+
+                    e.preventDefault();
+
+
+                    const msg =
+                        document.getElementById("msg");
+
+                    const button =
+                        document.getElementById(
+                            "createAccountBtn"
+                        );
+
+
+                    msg.innerHTML = "";
+
+
+                    const name =
+                        document
+                            .getElementById(
+                                "displayName"
+                            )
+                            .value
+                            .trim();
+
+
+                    const email =
+                        document
+                            .getElementById("email")
+                            .value
+                            .trim();
+
+
+                    const password =
+                        document
+                            .getElementById("password")
+                            .value;
+
+
+                    /*
+                     * Interests may already have been
+                     * selected in another part of Kmeet.
+                     *
+                     * If none exist, we keep the account
+                     * creation flow working rather than
+                     * blocking registration.
+                     */
+
+                    let interests = [];
+
+
+                    try {
+
+                        interests =
+                            JSON.parse(
+                                sessionStorage.getItem(
+                                    "pendingInterests"
+                                ) || "[]"
+                            ) || [];
+
+                    } catch (error) {
+
+                        interests = [];
+
+                    }
+
+
+                    /* =====================================
+                       BASIC VALIDATION
+                    ====================================== */
+
+                    if (!name) {
+
+                        msg.innerHTML =
+                            '<div class="message error">Please enter your name.</div>';
+
+                        return;
+
+                    }
+
+
+                    if (!email) {
+
+                        msg.innerHTML =
+                            '<div class="message error">Please enter your email address.</div>';
+
+                        return;
+
+                    }
+
+
+                    if (password.length < 6) {
+
+                        msg.innerHTML =
+                            '<div class="message error">Password must be at least 6 characters.</div>';
+
+                        return;
+
+                    }
+
+
+                    /* =====================================
+                       DISABLE BUTTON
+                    ====================================== */
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "Creating Account...";
+
+
+                    try {
+
+                        /* =================================
+                           CREATE FIREBASE ACCOUNT
+                        ================================= */
+
+                        const cred =
+                            await createUserWithEmailAndPassword(
+                                auth,
+                                email,
+                                password
+                            );
+
+
+                        /* =================================
+                           SAVE DISPLAY NAME
+                        ================================= */
+
+                        await updateProfile(
+                            cred.user,
+                            {
+                                displayName: name
+                            }
+                        );
+
+
+                        /* =================================
+                           SAVE USER PROFILE
+                        ================================= */
+
+                        await setDoc(
+                            doc(
+                                db,
+                                "users",
+                                cred.user.uid
+                            ),
+                            {
+                                uid:
+                                    cred.user.uid,
+
+                                name:
+                                    name,
+
+                                email:
+                                    email,
+
+                                interests:
+                                    interests,
+
+                                bio:
+                                    "New Kmeet member.",
+
+                                location:
+                                    "Kenya",
+
+                                age:
+                                    null,
+
+                                avatar:
+                                    "",
+
+                                createdAt:
+                                    new Date().toISOString(),
+
+                                onboardingCompleted:
+                                    true
+
+                            },
+                            {
+                                merge: true
+                            }
+                        );
+
+
+                        /* =================================
+                           SIGN OUT
+                        ================================= */
+
+                        await signOut(auth);
+
+
+                        /* =================================
+                           CLEAN TEMP DATA
+                        ================================= */
+
+                        sessionStorage.removeItem(
+                            "pendingInterests"
+                        );
+
+                        sessionStorage.removeItem(
+                            "pendingEmail"
+                        );
+
+
+                        /*
+                         * Keep the email in localStorage
+                         * so Kmeet can remember the account.
+                         */
+
+                        localStorage.setItem(
+                            "userEmail",
+                            email
+                        );
+
+
+                        /* =================================
+                           SUCCESS
+                        ================================= */
+
+                        msg.innerHTML =
+                            '<div class="message success">Account created successfully. Taking you to login...</div>';
+
+
+                        button.textContent =
+                            "Account Created";
+
+
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "login.html?created=1";
+
+                            },
+                            900
+                        );
+
+
+                    } catch (err) {
+
+                        console.error(
+                            "Kmeet signup error:",
+                            err
+                        );
+
+
+                        let text =
+                            err.message ||
+                            "Could not create account.";
+
+
+                        if (
+                            err.code ===
+                            "auth/email-already-in-use"
+                        ) {
+
+                            text =
+                                "That email is already registered. Please log in.";
+
+                        }
+
+
+                        if (
+                            err.code ===
+                            "auth/weak-password"
+                        ) {
+
+                            text =
+                                "Password must be at least 6 characters.";
+
+                        }
+
+
+                        if (
+                            err.code ===
+                            "auth/invalid-email"
+                        ) {
+
+                            text =
+                                "Please enter a valid email address.";
+
+                        }
+
+
+                        msg.innerHTML =
+                            `<div class="message error">${text}</div>`;
+
+
+                        button.disabled = false;
+
+                        button.textContent =
+                            "Create Account";
+
+                    }
+
+                }
+            );
+
+    </script>
+
 </body>
 </html>
+```
