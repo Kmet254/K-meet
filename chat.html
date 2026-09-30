@@ -14,13 +14,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
     margin:0;
     width:100%;
     height:100%;
@@ -31,13 +29,13 @@ body{
 body{
     background:
         linear-gradient(
-            rgba(20,10,25,.60),
-            rgba(13,7,18,.82)
+            rgba(20,10,25,.58),
+            rgba(13,7,18,.84)
         ),
         url("chat.jpg") center/cover fixed no-repeat;
 }
 
-/* NAVIGATION */
+/* NAV */
 
 .nav{
     height:72px;
@@ -49,8 +47,6 @@ body{
     backdrop-filter:blur(18px);
     -webkit-backdrop-filter:blur(18px);
     border-bottom:1px solid rgba(255,255,255,.10);
-    position:relative;
-    z-index:10;
 }
 
 .logo{
@@ -59,7 +55,6 @@ body{
     font-family:"Playfair Display",serif;
     font-size:30px;
     font-weight:700;
-    letter-spacing:.5px;
 }
 
 .logo span{
@@ -68,15 +63,13 @@ body{
 
 .navlinks{
     display:flex;
-    align-items:center;
     gap:25px;
 }
 
 .navlinks a{
-    color:rgba(255,255,255,.85);
+    color:rgba(255,255,255,.86);
     text-decoration:none;
     font-size:14px;
-    transition:.2s;
 }
 
 .navlinks a:hover{
@@ -105,6 +98,7 @@ body{
     overflow:hidden;
 
     background:rgba(20,12,25,.70);
+
     border:1px solid rgba(255,255,255,.14);
     border-radius:28px;
 
@@ -118,7 +112,7 @@ body{
     position:relative;
 }
 
-/* CHAT HEADER */
+/* HEADER */
 
 .chat-header{
     min-height:82px;
@@ -136,6 +130,7 @@ body{
 .back{
     width:42px;
     height:42px;
+
     border-radius:50%;
 
     display:flex;
@@ -156,15 +151,9 @@ body{
     height:50px;
 
     border-radius:50%;
-
     object-fit:cover;
 
-    background:
-        linear-gradient(
-            135deg,
-            #f06b9d,
-            #6e426f
-        );
+    background:linear-gradient(135deg,#f06b9d,#6e426f);
 
     border:2px solid rgba(255,255,255,.25);
 }
@@ -176,6 +165,7 @@ body{
 
 .person-name{
     margin:0;
+
     font-size:17px;
     font-weight:600;
 
@@ -186,23 +176,28 @@ body{
 
 .person-status{
     margin-top:2px;
+
     font-size:12px;
+
     color:rgba(255,255,255,.58);
 }
 
 .online-dot{
     display:inline-block;
+
     width:7px;
     height:7px;
+
     margin-right:5px;
 
     border-radius:50%;
+
     background:#6ee7a5;
 
     box-shadow:0 0 10px rgba(110,231,165,.65);
 }
 
-/* CHAT AREA */
+/* CHAT */
 
 .chat-area{
     flex:1;
@@ -223,16 +218,10 @@ body{
     display:flex;
     flex-direction:column;
     gap:10px;
-
-    scroll-behavior:smooth;
 }
 
 .messages::-webkit-scrollbar{
     width:6px;
-}
-
-.messages::-webkit-scrollbar-track{
-    background:transparent;
 }
 
 .messages::-webkit-scrollbar-thumb{
@@ -242,11 +231,13 @@ body{
 
 .empty{
     margin:auto;
+
     max-width:430px;
 
     text-align:center;
 
     color:rgba(255,255,255,.58);
+
     font-size:14px;
     line-height:1.7;
 }
@@ -282,8 +273,6 @@ body{
 .message.mine{
     align-self:flex-end;
 
-    color:#fff;
-
     background:
         linear-gradient(
             135deg,
@@ -292,9 +281,6 @@ body{
         );
 
     border-bottom-right-radius:5px;
-
-    box-shadow:
-        0 8px 25px rgba(170,59,119,.20);
 }
 
 .message.theirs{
@@ -322,7 +308,6 @@ body{
 
 .input-wrap{
     flex:1;
-    position:relative;
 }
 
 .message-input{
@@ -340,12 +325,11 @@ body{
     padding:14px 15px;
 
     color:#fff;
+
     background:rgba(255,255,255,.07);
 
     font-family:"Poppins",sans-serif;
     font-size:14px;
-
-    transition:.2s;
 }
 
 .message-input::placeholder{
@@ -354,8 +338,6 @@ body{
 
 .message-input:focus{
     border-color:rgba(255,117,168,.55);
-
-    background:rgba(255,255,255,.09);
 
     box-shadow:
         0 0 0 3px rgba(255,117,168,.08);
@@ -383,9 +365,6 @@ body{
             #b94c86
         );
 
-    box-shadow:
-        0 8px 25px rgba(201,76,132,.28);
-
     transition:.2s;
 }
 
@@ -409,7 +388,7 @@ body{
     color:rgba(255,255,255,.40);
 }
 
-/* LOADING / GATES */
+/* GATE */
 
 .gate{
     position:absolute;
@@ -447,8 +426,7 @@ body{
 
     border:1px solid rgba(255,255,255,.14);
 
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.35);
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
 }
 
 .gate-icon{
@@ -474,6 +452,7 @@ body{
     margin:0 0 9px;
 
     font-family:"Playfair Display",serif;
+
     font-size:27px;
 }
 
@@ -486,66 +465,13 @@ body{
     line-height:1.65;
 }
 
-.gate-actions{
-    margin-top:22px;
-
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.pay-btn{
-    display:block;
-
-    padding:13px 18px;
-
-    border-radius:14px;
-
-    color:#fff;
-    text-decoration:none;
-
-    font-size:14px;
-    font-weight:600;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e8649c,
-            #b84780
-        );
-
-    border:1px solid rgba(255,255,255,.10);
-
-    transition:.2s;
-}
-
-.pay-btn:hover{
-    transform:translateY(-1px);
-}
-
-.secondary-btn{
-    display:block;
-
-    padding:11px 18px;
-
-    border-radius:14px;
-
-    color:rgba(255,255,255,.78);
-    text-decoration:none;
-
-    font-size:13px;
-
-    background:rgba(255,255,255,.055);
-
-    border:1px solid rgba(255,255,255,.09);
-}
-
 .package-row{
     display:grid;
     grid-template-columns:1fr 1fr;
+
     gap:10px;
 
-    margin-top:18px;
+    margin-top:20px;
 }
 
 .package{
@@ -579,14 +505,59 @@ body{
 .package span{
     display:block;
     margin-top:3px;
+
     font-size:11px;
+
     color:rgba(255,255,255,.52);
+}
+
+.pay-btn{
+    display:block;
+
+    margin-top:18px;
+
+    padding:13px 18px;
+
+    border-radius:14px;
+
+    color:#fff;
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:600;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8649c,
+            #b84780
+        );
+}
+
+.secondary-btn{
+    display:block;
+
+    margin-top:10px;
+
+    padding:11px 18px;
+
+    border-radius:14px;
+
+    color:rgba(255,255,255,.78);
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    background:rgba(255,255,255,.055);
+
+    border:1px solid rgba(255,255,255,.09);
 }
 
 /* ERROR */
 
 .error-box{
-    margin:15px 20px;
+    margin:10px 20px;
 
     padding:12px 14px;
 
@@ -601,6 +572,7 @@ body{
     border:1px solid rgba(255,100,150,.18);
 
     font-size:12px;
+
     line-height:1.5;
 }
 
@@ -628,33 +600,31 @@ body{
     .chat-shell{
         width:100%;
         height:calc(100vh - 72px);
+
         min-height:0;
+
         border-radius:0;
+
         border-left:0;
         border-right:0;
-    }
-
-    .message{
-        max-width:82%;
     }
 
     .messages{
         padding:17px;
     }
 
-    .composer{
-        padding:11px;
+    .message{
+        max-width:82%;
     }
 
-    .gate{
-        inset:82px 0 0;
+    .composer{
+        padding:11px;
     }
 
     .package-row{
         grid-template-columns:1fr;
     }
 }
-
 </style>
 </head>
 
@@ -676,240 +646,236 @@ body{
 
 <div class="page">
 
-    <main class="chat-shell">
+<main class="chat-shell">
 
-        <!-- CHAT HEADER -->
+    <!-- HEADER -->
 
-        <header class="chat-header">
+    <header class="chat-header">
 
-            <a class="back" href="discover.html" aria-label="Back">
-                ←
-            </a>
+        <a
+            class="back"
+            href="discover.html"
+            aria-label="Back"
+        >
+            ←
+        </a>
 
-            <img
-                id="personPhoto"
-                class="person-photo"
-                src="kmeet-logo.jfif.jfif"
-                alt="Kmeet member"
-            >
-
-            <div class="person-info">
-
-                <h1 id="personName" class="person-name">
-                    Kmeet member
-                </h1>
-
-                <div class="person-status">
-                    <span class="online-dot"></span>
-                    <span id="statusText">Ready to chat</span>
-                </div>
-
-            </div>
-
-        </header>
-
-
-        <!-- CHAT AREA -->
-
-        <section
-            id="chatArea"
-            class="chat-area"
-            style="display:none;"
+        <img
+            id="personPhoto"
+            class="person-photo"
+            src="kmeet-logo.jfif.jfif"
+            alt="Kmeet member"
         >
 
-            <div
-                id="messages"
-                class="messages"
-            >
+        <div class="person-info">
 
-                <div class="empty">
-                    Say hello and start the connection. ❤️
-                </div>
+            <h1
+                id="personName"
+                class="person-name"
+            >
+                Kmeet member
+            </h1>
+
+            <div class="person-status">
+
+                <span class="online-dot"></span>
+
+                <span id="statusText">
+                    Ready to chat
+                </span>
 
             </div>
 
+        </div>
 
-            <div
-                id="errorBox"
-                class="error-box"
-            ></div>
+    </header>
 
 
-            <div class="rule-note">
-                Start with <strong>hi</strong> or <strong>hey</strong>.
-                Contact information cannot be shared for free.
+    <!-- CHAT -->
+
+    <section
+        id="chatArea"
+        class="chat-area"
+    >
+
+        <div
+            id="messages"
+            class="messages"
+        >
+
+            <div class="empty">
+                Say hello and start the connection. ❤️
             </div>
 
+        </div>
 
-            <form
-                id="composer"
-                class="composer"
+
+        <div
+            id="errorBox"
+            class="error-box"
+        ></div>
+
+
+        <div class="rule-note">
+            Start with <strong>hi</strong> or <strong>hey</strong>.
+            Contact information cannot be shared for free.
+        </div>
+
+
+        <form
+            id="composer"
+            class="composer"
+        >
+
+            <div class="input-wrap">
+
+                <textarea
+                    id="messageInput"
+                    class="message-input"
+                    rows="1"
+                    maxlength="1000"
+                    placeholder="Write a message..."
+                    autocomplete="off"
+                ></textarea>
+
+            </div>
+
+            <button
+                id="sendBtn"
+                class="send-btn"
+                type="submit"
+                aria-label="Send"
             >
+                ➤
+            </button>
 
-                <div class="input-wrap">
+        </form>
 
-                    <textarea
-                        id="messageInput"
-                        class="message-input"
-                        rows="1"
-                        maxlength="1000"
-                        placeholder="Write a message..."
-                        autocomplete="off"
-                    ></textarea>
+    </section>
 
-                </div>
+
+    <!-- PAYMENT GATE -->
+
+    <section
+        id="gate"
+        class="gate"
+        style="display:none;"
+    >
+
+        <div class="gate-card">
+
+            <div
+                id="gateIcon"
+                class="gate-icon"
+            >
+                🔒
+            </div>
+
+            <h2 id="gateTitle">
+                Continue chatting
+            </h2>
+
+            <p id="gateText">
+                Choose a chat package to continue.
+            </p>
+
+
+            <div
+                id="packageRow"
+                class="package-row"
+            >
 
                 <button
-                    id="sendBtn"
-                    class="send-btn"
-                    type="submit"
-                    aria-label="Send"
+                    class="package"
+                    type="button"
+                    data-package="3"
+                    data-amount="49"
                 >
-                    ➤
+                    <strong>3 chats</strong>
+                    <span>KSh 49</span>
                 </button>
 
-            </form>
 
-        </section>
-
-
-        <!-- RECEIVER / SENDER PAYMENT GATE -->
-
-        <section
-            id="gate"
-            class="gate"
-            style="display:none;"
-        >
-
-            <div class="gate-card">
-
-                <div
-                    id="gateIcon"
-                    class="gate-icon"
+                <button
+                    class="package"
+                    type="button"
+                    data-package="8"
+                    data-amount="100"
                 >
-                    🔒
-                </div>
-
-                <h2 id="gateTitle">
-                    Continue chatting
-                </h2>
-
-                <p id="gateText">
-                    Unlock more Kmeet chats to continue this conversation.
-                </p>
-
-                <div
-                    id="packageRow"
-                    class="package-row"
-                >
-
-                    <button
-                        class="package"
-                        type="button"
-                        data-package="3"
-                        data-amount="49"
-                    >
-                        <strong>3 chats</strong>
-                        <span>KSh 49</span>
-                    </button>
-
-                    <button
-                        class="package"
-                        type="button"
-                        data-package="8"
-                        data-amount="100"
-                    >
-                        <strong>8 chats</strong>
-                        <span>KSh 100</span>
-                    </button>
-
-                </div>
-
-                <div
-                    id="receiverPayment"
-                    class="gate-actions"
-                    style="display:none;"
-                >
-
-                    <a
-                        id="receiverPayBtn"
-                        class="pay-btn"
-                        href="#"
-                    >
-                        Continue for KSh 11
-                    </a>
-
-                </div>
-
-                <div class="gate-actions">
-
-                    <a
-                        class="secondary-btn"
-                        href="discover.html"
-                    >
-                        Back to Discover
-                    </a>
-
-                </div>
+                    <strong>8 chats</strong>
+                    <span>KSh 100</span>
+                </button>
 
             </div>
 
-        </section>
 
+            <div
+                id="receiverPayment"
+                style="display:none;"
+            >
 
-        <!-- INITIAL LOADING -->
-
-        <section
-            id="loading"
-            class="gate"
-        >
-
-            <div class="gate-card">
-
-                <div class="gate-icon">
-                    🌹
-                </div>
-
-                <h2>
-                    Opening Kmeet chat…
-                </h2>
-
-                <p>
-                    Preparing your conversation.
-                </p>
+                <a
+                    id="receiverPayBtn"
+                    class="pay-btn"
+                    href="#"
+                >
+                    Continue for KSh 11
+                </a>
 
             </div>
 
-        </section>
 
-    </main>
+            <a
+                class="secondary-btn"
+                href="discover.html"
+            >
+                Back to Discover
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
 
 </div>
 
 
 <script type="module">
 
+/*
+===========================================================
+KMEET CHAT
+
+IMPORTANT:
+We only import auth/db from firebase-config.js.
+
+We DO NOT import signInAnonymously from it.
+===========================================================
+*/
+
 import {
     auth,
-    db,
-    signInAnonymously
+    db
 } from "./firebase-config.js";
+
 
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
 
 import {
     doc,
     getDoc,
     collection,
     addDoc,
+    setDoc,
+    updateDoc,
     query,
     orderBy,
     onSnapshot,
-    serverTimestamp,
-    setDoc,
-    updateDoc
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 
@@ -917,36 +883,61 @@ import {
    ELEMENTS
 ========================================================= */
 
-const loading = document.getElementById("loading");
-const chatArea = document.getElementById("chatArea");
-const gate = document.getElementById("gate");
+const personName =
+    document.getElementById("personName");
 
-const personName = document.getElementById("personName");
-const personPhoto = document.getElementById("personPhoto");
-const statusText = document.getElementById("statusText");
+const personPhoto =
+    document.getElementById("personPhoto");
 
-const messages = document.getElementById("messages");
+const statusText =
+    document.getElementById("statusText");
 
-const composer = document.getElementById("composer");
-const messageInput = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
+const messages =
+    document.getElementById("messages");
 
-const errorBox = document.getElementById("errorBox");
+const composer =
+    document.getElementById("composer");
 
-const gateTitle = document.getElementById("gateTitle");
-const gateText = document.getElementById("gateText");
-const gateIcon = document.getElementById("gateIcon");
+const messageInput =
+    document.getElementById("messageInput");
 
-const packageRow = document.getElementById("packageRow");
-const receiverPayment = document.getElementById("receiverPayment");
-const receiverPayBtn = document.getElementById("receiverPayBtn");
+const sendBtn =
+    document.getElementById("sendBtn");
+
+const errorBox =
+    document.getElementById("errorBox");
+
+const gate =
+    document.getElementById("gate");
+
+const gateTitle =
+    document.getElementById("gateTitle");
+
+const gateText =
+    document.getElementById("gateText");
+
+const gateIcon =
+    document.getElementById("gateIcon");
+
+const packageRow =
+    document.getElementById("packageRow");
+
+const receiverPayment =
+    document.getElementById("receiverPayment");
+
+const receiverPayBtn =
+    document.getElementById("receiverPayBtn");
 
 
 /* =========================================================
-   URL
+   TARGET
 ========================================================= */
 
-const params = new URLSearchParams(window.location.search);
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
 
 const targetId =
     params.get("userId") ||
@@ -961,44 +952,18 @@ let currentUser = null;
 
 let conversationId = null;
 
+let conversation = null;
+
 let unsubscribeMessages = null;
 
-let targetProfile = null;
-
-let conversationData = null;
-
-let messagesLoaded = false;
-
 
 /* =========================================================
-   IMMEDIATE CHAT OPEN
+   SHOW ERROR
 ========================================================= */
 
-/*
-   IMPORTANT:
+function showError(text){
 
-   The old version waited for the Firestore listener before
-   displaying the chat.
-
-   This version opens the chat interface immediately.
-*/
-
-function openChatImmediately(){
-
-    loading.style.display = "none";
-
-    chatArea.style.display = "flex";
-
-}
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-function showError(message){
-
-    errorBox.textContent = message;
+    errorBox.textContent = text;
 
     errorBox.style.display = "block";
 
@@ -1017,68 +982,73 @@ function hideError(){
 
 
 /* =========================================================
-   TARGET PROFILE
+   PROFILE
 ========================================================= */
 
 async function loadTargetProfile(){
 
     if(!targetId){
-        personName.textContent = "Kmeet member";
-        statusText.textContent = "Invalid chat link";
         return;
     }
 
     try{
 
-        const snap = await getDoc(
-            doc(db,"users",targetId)
-        );
+        const snapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    targetId
+                )
+            );
 
-        if(!snap.exists()){
 
-            personName.textContent = "Kmeet member";
-            statusText.textContent = "Profile unavailable";
+        if(!snapshot.exists()){
+
+            personName.textContent =
+                "Kmeet member";
+
+            statusText.textContent =
+                "Profile unavailable";
 
             return;
         }
 
-        targetProfile = snap.data();
 
-        const name =
-            targetProfile.name ||
-            targetProfile.displayName ||
+        const profile =
+            snapshot.data();
+
+
+        personName.textContent =
+            profile.name ||
+            profile.displayName ||
             "Kmeet member";
 
-        const photo =
-            targetProfile.photoURL ||
-            targetProfile.avatar ||
-            targetProfile.photo ||
+
+        personPhoto.src =
+            profile.photoURL ||
+            profile.avatar ||
+            profile.photo ||
             "kmeet-logo.jfif.jfif";
 
-        personName.textContent = name;
-
-        personPhoto.src = photo;
 
         personPhoto.onerror = () => {
-            personPhoto.src = "kmeet-logo.jfif.jfif";
+
+            personPhoto.src =
+                "kmeet-logo.jfif.jfif";
+
         };
 
-        statusText.textContent = "Ready to chat";
+
+        statusText.textContent =
+            "Ready to chat";
 
     }catch(error){
 
         console.error(
-            "Profile loading error:",
+            "Profile error:",
             error
         );
-
-        /*
-           Do not close the chat if profile loading fails.
-        */
-
-        personName.textContent = "Kmeet member";
-
-        statusText.textContent = "Ready to chat";
 
     }
 
@@ -1086,137 +1056,79 @@ async function loadTargetProfile(){
 
 
 /* =========================================================
-   AUTH
+   CONVERSATION ID
 ========================================================= */
 
-function startAuthentication(){
+function makeConversationId(){
 
-    onAuthStateChanged(
-        auth,
-        async user => {
-
-            if(user){
-
-                currentUser = user;
-
-                await initializeConversation();
-
-                return;
-            }
-
-            try{
-
-                await signInAnonymously(auth);
-
-            }catch(error){
-
-                console.error(
-                    "Anonymous authentication failed:",
-                    error
-                );
-
-                statusText.textContent =
-                    "Authentication unavailable";
-
-                messageInput.disabled = true;
-                sendBtn.disabled = true;
-
-                showError(
-                    "Chat authentication could not be started. Please refresh the page."
-                );
-
-            }
-
-        }
-    );
+    return [
+        currentUser.uid,
+        targetId
+    ]
+    .sort()
+    .join("_");
 
 }
 
 
 /* =========================================================
-   INITIALIZE CONVERSATION
+   LOAD CONVERSATION
 ========================================================= */
 
-async function initializeConversation(){
+async function loadConversation(){
 
     if(!currentUser || !targetId){
         return;
     }
 
+
     conversationId =
-        [
-            currentUser.uid,
-            targetId
-        ]
-        .sort()
-        .join("_");
+        makeConversationId();
+
+
+    const ref =
+        doc(
+            db,
+            "conversations",
+            conversationId
+        );
 
 
     try{
 
-        const conversationRef =
-            doc(
-                db,
-                "conversations",
-                conversationId
-            );
-
-        const conversationSnap =
-            await getDoc(conversationRef);
+        const snapshot =
+            await getDoc(ref);
 
 
-        if(conversationSnap.exists()){
+        if(snapshot.exists()){
 
-            conversationData =
-                conversationSnap.data();
+            conversation =
+                snapshot.data();
 
         }else{
 
-            conversationData = {
-
-                initiatorId:
-                    currentUser.uid,
-
-                targetId:
-                    targetId,
-
-                senderCredits: 0,
-
-                senderFreeUsed: false,
-
-                receiverFreeReplies: 0,
-
-                receiverPaid: false,
-
-                createdAt:
-                    serverTimestamp()
-
-            };
-
-            /*
-               We don't create the conversation document
-               until the user actually sends a message.
-            */
+            conversation = null;
 
         }
 
-        startMessages();
+
+        listenForMessages();
 
     }catch(error){
 
         console.error(
-            "Conversation initialization error:",
+            "Conversation error:",
             error
         );
 
+
         /*
-           The chat is already visible.
-           We only show the problem rather than leaving
-           the user stuck on the loading screen.
+           IMPORTANT:
+           Chat stays visible.
         */
 
         showError(
-            "Messages could not be loaded. You can still refresh and try again."
+            "Messages could not be loaded. Please refresh if necessary."
         );
 
     }
@@ -1225,20 +1137,22 @@ async function initializeConversation(){
 
 
 /* =========================================================
-   LOAD MESSAGES
+   REAL-TIME MESSAGES
 ========================================================= */
 
-function startMessages(){
+function listenForMessages(){
 
     if(!conversationId){
         return;
     }
 
+
     if(unsubscribeMessages){
         unsubscribeMessages();
     }
 
-    const ref =
+
+    const messagesRef =
         collection(
             db,
             "conversations",
@@ -1246,23 +1160,25 @@ function startMessages(){
             "messages"
         );
 
-    const q =
+
+    const messagesQuery =
         query(
-            ref,
-            orderBy("createdAt","asc")
+            messagesRef,
+            orderBy(
+                "createdAt",
+                "asc"
+            )
         );
 
 
     unsubscribeMessages =
         onSnapshot(
 
-            q,
+            messagesQuery,
 
             snapshot => {
 
                 messages.innerHTML = "";
-
-                messagesLoaded = true;
 
 
                 if(snapshot.empty){
@@ -1277,15 +1193,19 @@ function startMessages(){
                 }
 
 
-                snapshot.forEach(snapshotItem => {
+                snapshot.forEach(item => {
 
                     const data =
-                        snapshotItem.data();
+                        item.data();
 
-                    const div =
-                        document.createElement("div");
 
-                    div.className =
+                    const bubble =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    bubble.className =
                         "message " +
                         (
                             data.senderId === currentUser.uid
@@ -1293,10 +1213,14 @@ function startMessages(){
                                 : "theirs"
                         );
 
-                    div.textContent =
+
+                    bubble.textContent =
                         data.text || "";
 
-                    messages.appendChild(div);
+
+                    messages.appendChild(
+                        bubble
+                    );
 
                 });
 
@@ -1309,18 +1233,13 @@ function startMessages(){
             error => {
 
                 console.error(
-                    "Message listener error:",
+                    "Firestore listener error:",
                     error
                 );
 
-                /*
-                   IMPORTANT:
-                   Never return the page to the loading
-                   screen here.
-                */
 
                 showError(
-                    "Live messages could not be loaded. Please refresh if messages do not appear."
+                    "Live messages are temporarily unavailable. Please refresh."
                 );
 
             }
@@ -1331,7 +1250,7 @@ function startMessages(){
 
 
 /* =========================================================
-   CONTACT INFORMATION DETECTION
+   CONTACT DETECTOR
 ========================================================= */
 
 function containsContactInformation(text){
@@ -1342,55 +1261,40 @@ function containsContactInformation(text){
         .trim();
 
 
-    /*
-       EMAIL
-    */
+    /* EMAIL */
 
-    const emailPattern =
+    const email =
         /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
 
 
-    /*
-       KENYAN INTERNATIONAL PHONE
-       +254 712 345 678
-       +254712345678
-    */
+    /* +254 PHONE */
 
-    const kenyaInternational =
+    const internationalPhone =
         /(?:\+254|00254)[\s.-]*7\d{2}[\s.-]*\d{3}[\s.-]*\d{3}\b/;
 
 
-    /*
-       KENYAN LOCAL PHONE
-       0712345678
-       0722 123 456
-       0791-234-567
-    */
+    /* KENYAN LOCAL PHONE */
 
-    const kenyaLocal =
+    const localPhone =
         /\b0(?:7\d{2})[\s.-]*\d{3}[\s.-]*\d{3}\b/;
 
 
-    /*
-       More generic long digit sequence.
-    */
+    /* LONG NUMBER */
 
     const longNumber =
         /(?:\d[\s.-]*){9,}/;
 
 
-    /*
-       SOCIAL / CONTACT REQUESTS
-    */
+    /* CONTACT / SOCIAL REQUESTS */
 
     const contactWords =
-        /\b(?:whatsapp|whats\s*app|telegram|instagram|facebook|snapchat|tiktok|call\s+me|text\s+me|message\s+me|contact\s+me|send\s+your\s+number|give\s+me\s+your\s+number|my\s+number|my\s+phone|email\s+me|email\s+address)\b/i;
+        /\b(?:whatsapp|what\s*app|telegram|instagram|facebook|snapchat|tiktok|call\s+me|text\s+me|message\s+me|contact\s+me|send\s+your\s+number|give\s+me\s+your\s+number|my\s+number|my\s+phone|email\s+me|email\s+address)\b/i;
 
 
     return (
-        emailPattern.test(value) ||
-        kenyaInternational.test(value) ||
-        kenyaLocal.test(value) ||
+        email.test(value) ||
+        internationalPhone.test(value) ||
+        localPhone.test(value) ||
         longNumber.test(value) ||
         contactWords.test(value)
     );
@@ -1399,15 +1303,16 @@ function containsContactInformation(text){
 
 
 /* =========================================================
-   OPENING MESSAGE RULE
+   OPENING MESSAGE
 ========================================================= */
 
-function isOpeningMessage(text){
+function isHiOrHey(text){
 
     const clean =
         String(text || "")
         .trim()
         .toLowerCase();
+
 
     return (
         clean === "hi" ||
@@ -1418,139 +1323,73 @@ function isOpeningMessage(text){
 
 
 /* =========================================================
-   GET CURRENT MESSAGE STATE
-========================================================= */
-
-async function getConversationState(){
-
-    if(!conversationId){
-        return null;
-    }
-
-    try{
-
-        const snap =
-            await getDoc(
-                doc(
-                    db,
-                    "conversations",
-                    conversationId
-                )
-            );
-
-        if(snap.exists()){
-
-            conversationData =
-                snap.data();
-
-            return conversationData;
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "Conversation state error:",
-            error
-        );
-
-    }
-
-    return null;
-
-}
-
-
-/* =========================================================
-   COUNT MESSAGES
-========================================================= */
-
-async function getMessageStats(){
-
-    /*
-       We use the conversation document for the important
-       credit rules.
-
-       This keeps the first version simple and avoids making
-       the sender wait before the chat UI opens.
-    */
-
-    const state =
-        await getConversationState();
-
-    return state || {
-
-        initiatorId:
-            currentUser.uid,
-
-        targetId:
-            targetId,
-
-        senderCredits:0,
-
-        senderFreeUsed:false,
-
-        receiverFreeReplies:0,
-
-        receiverPaid:false
-
-    };
-
-}
-
-
-/* =========================================================
-   SHOW SENDER CREDIT GATE
+   SENDER GATE
 ========================================================= */
 
 function showSenderGate(){
 
-    gate.style.display = "flex";
+    gate.style.display =
+        "flex";
 
-    gateIcon.textContent = "🔒";
+
+    gateIcon.textContent =
+        "🔒";
+
 
     gateTitle.textContent =
         "Continue chatting";
 
+
     gateText.textContent =
         "Your free opening message has been used. Choose a chat package to continue.";
 
-    packageRow.style.display = "grid";
 
-    receiverPayment.style.display = "none";
+    packageRow.style.display =
+        "grid";
+
+
+    receiverPayment.style.display =
+        "none";
 
 }
 
 
 /* =========================================================
-   SHOW RECEIVER KSH 11 GATE
+   RECEIVER KSH 11 GATE
 ========================================================= */
 
 function showReceiverGate(){
 
-    gate.style.display = "flex";
+    gate.style.display =
+        "flex";
 
-    gateIcon.textContent = "💗";
+
+    gateIcon.textContent =
+        "💗";
+
 
     gateTitle.textContent =
         "Continue for KSh 11";
 
+
     gateText.textContent =
-        "Your free replies have been used, or your message attempted to share contact information. Pay KSh 11 to continue.";
-
-    packageRow.style.display = "none";
-
-    receiverPayment.style.display = "block";
+        "Your free replies have been used, or your message attempted to share contact information.";
 
 
-    const url =
+    packageRow.style.display =
+        "none";
+
+
+    receiverPayment.style.display =
+        "block";
+
+
+    receiverPayBtn.href =
         "payment.html" +
         "?userId=" +
         encodeURIComponent(targetId) +
         "&amount=11" +
         "&type=receiver";
-
-    receiverPayBtn.href = url;
 
 }
 
@@ -1561,13 +1400,14 @@ function showReceiverGate(){
 
 function hideGate(){
 
-    gate.style.display = "none";
+    gate.style.display =
+        "none";
 
 }
 
 
 /* =========================================================
-   SEND MESSAGE
+   SEND
 ========================================================= */
 
 async function sendMessage(text){
@@ -1575,7 +1415,7 @@ async function sendMessage(text){
     if(!currentUser){
 
         showError(
-            "Chat is still connecting. Please try again in a moment."
+            "Chat is still connecting. Please try again."
         );
 
         return;
@@ -1585,27 +1425,32 @@ async function sendMessage(text){
     if(!conversationId){
 
         showError(
-            "The conversation could not be prepared. Please refresh the page."
+            "The conversation is not ready. Please refresh the page."
         );
 
         return;
     }
 
 
-    const cleanText =
-        String(text || "").trim();
+    const clean =
+        String(text || "")
+        .trim();
 
 
-    if(!cleanText){
+    if(!clean){
         return;
     }
 
 
     /*
-       CONTACT INFORMATION ALWAYS GETS CHECKED FIRST.
+       CONTACT CHECK FIRST.
+
+       The message is NEVER written to Firestore.
     */
 
-    if(containsContactInformation(cleanText)){
+    if(
+        containsContactInformation(clean)
+    ){
 
         showReceiverGate();
 
@@ -1614,176 +1459,68 @@ async function sendMessage(text){
 
 
     /*
-       GET LATEST CONVERSATION STATE
+       LOAD LATEST CONVERSATION STATE.
     */
 
-    const state =
-        await getMessageStats();
-
-
-    /*
-       DETERMINE WHETHER CURRENT USER IS THE INITIATOR.
-    */
-
-    const initiatorId =
-        state?.initiatorId ||
-        currentUser.uid;
-
-
-    const isInitiator =
-        initiatorId === currentUser.uid;
-
-
-    /*
-       FIRST EVER MESSAGE:
-       MUST BE HI OR HEY.
-    */
-
-    if(!state || !state.senderFreeUsed){
-
-        if(!isInitiator){
-
-            /*
-               In a brand-new conversation the first actual
-               message determines the initiator.
-            */
-
-            if(!isOpeningMessage(cleanText)){
-
-                showError(
-                    'The first message must be exactly "hi" or "hey".'
-                );
-
-                return;
-            }
-
-        }else{
-
-            if(!isOpeningMessage(cleanText)){
-
-                showError(
-                    'Your first message must be exactly "hi" or "hey".'
-                );
-
-                return;
-            }
-
-        }
-
-    }
-
-
-    /*
-       RECEIVER RULE
-    */
-
-    if(
-        state &&
-        state.initiatorId &&
-        !isInitiator
-    ){
-
-        const freeReplies =
-            Number(
-                state.receiverFreeReplies || 0
-            );
-
-
-        if(
-            freeReplies >= 3 &&
-            !state.receiverPaid
-        ){
-
-            showReceiverGate();
-
-            return;
-        }
-
-    }
-
-
-    /*
-       SENDER RULE
-    */
-
-    if(
-        state &&
-        state.initiatorId === currentUser.uid
-    ){
-
-        const openingUsed =
-            Boolean(state.senderFreeUsed);
-
-
-        const credits =
-            Number(
-                state.senderCredits || 0
-            );
-
-
-        /*
-           First opening message is free.
-        */
-
-        if(!openingUsed){
-
-            if(!isOpeningMessage(cleanText)){
-
-                showError(
-                    'Your free opening message must be "hi" or "hey".'
-                );
-
-                return;
-            }
-
-        }else{
-
-            /*
-               Every sender message after the opening requires
-               a chat credit.
-            */
-
-            if(credits <= 0){
-
-                showSenderGate();
-
-                return;
-            }
-
-        }
-
-    }
-
-
-    /*
-       HIDE OLD ERROR
-    */
-
-    hideError();
-
-
-    sendBtn.disabled = true;
-    messageInput.disabled = true;
+    let state =
+        conversation;
 
 
     try{
 
-        const conversationRef =
-            doc(
-                db,
-                "conversations",
-                conversationId
+        const snapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "conversations",
+                    conversationId
+                )
             );
 
 
-        /*
-           CREATE CONVERSATION IF IT DOES NOT EXIST.
-        */
+        if(snapshot.exists()){
 
-        if(!state){
+            state =
+                snapshot.data();
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "State refresh error:",
+            error
+        );
+
+    }
+
+
+    /*
+       BRAND NEW CONVERSATION.
+
+       The first sender becomes initiator.
+    */
+
+    if(!state){
+
+        if(!isHiOrHey(clean)){
+
+            showError(
+                'Your first message must be exactly "hi" or "hey".'
+            );
+
+            return;
+        }
+
+
+        try{
 
             await setDoc(
-                conversationRef,
+                doc(
+                    db,
+                    "conversations",
+                    conversationId
+                ),
                 {
 
                     initiatorId:
@@ -1792,13 +1529,17 @@ async function sendMessage(text){
                     targetId:
                         targetId,
 
-                    senderCredits:0,
+                    senderCredits:
+                        0,
 
-                    senderFreeUsed:true,
+                    senderFreeUsed:
+                        true,
 
-                    receiverFreeReplies:0,
+                    receiverFreeReplies:
+                        0,
 
-                    receiverPaid:false,
+                    receiverPaid:
+                        false,
 
                     createdAt:
                         serverTimestamp()
@@ -1806,156 +1547,292 @@ async function sendMessage(text){
                 }
             );
 
-        }else{
 
-            /*
-               FIRST FREE OPENING MESSAGE
-            */
+            await addDoc(
+                collection(
+                    db,
+                    "conversations",
+                    conversationId,
+                    "messages"
+                ),
+                {
 
-            if(
-                state.initiatorId === currentUser.uid &&
-                !state.senderFreeUsed
-            ){
+                    senderId:
+                        currentUser.uid,
 
-                await updateDoc(
-                    conversationRef,
-                    {
-                        senderFreeUsed:true
-                    }
-                );
+                    targetId:
+                        targetId,
 
-            }
+                    text:
+                        clean,
 
-            /*
-               RECEIVER FREE REPLY
-            */
-
-            else if(
-                state.initiatorId !== currentUser.uid
-            ){
-
-                const freeReplies =
-                    Number(
-                        state.receiverFreeReplies || 0
-                    );
-
-
-                if(
-                    !state.receiverPaid &&
-                    freeReplies < 3
-                ){
-
-                    await updateDoc(
-                        conversationRef,
-                        {
-                            receiverFreeReplies:
-                                freeReplies + 1
-                        }
-                    );
+                    createdAt:
+                        serverTimestamp()
 
                 }
-
-            }
-
-            /*
-               SENDER PAID CREDIT
-            */
-
-            else if(
-                state.initiatorId === currentUser.uid
-            ){
-
-                const credits =
-                    Number(
-                        state.senderCredits || 0
-                    );
+            );
 
 
-                if(credits <= 0){
+            conversation = {
 
-                    showSenderGate();
-
-                    return;
-                }
-
-
-                await updateDoc(
-                    conversationRef,
-                    {
-                        senderCredits:
-                            credits - 1
-                    }
-                );
-
-            }
-
-        }
-
-
-        /*
-           SAVE MESSAGE ONLY AFTER ALL RULES PASS.
-        */
-
-        await addDoc(
-            collection(
-                db,
-                "conversations",
-                conversationId,
-                "messages"
-            ),
-            {
-
-                senderId:
+                initiatorId:
                     currentUser.uid,
 
                 targetId:
                     targetId,
 
-                text:
-                    cleanText,
+                senderCredits:
+                    0,
 
-                createdAt:
-                    serverTimestamp()
+                senderFreeUsed:
+                    true,
+
+                receiverFreeReplies:
+                    0,
+
+                receiverPaid:
+                    false
+
+            };
+
+
+            messageInput.value = "";
+
+            return;
+
+        }catch(error){
+
+            console.error(
+                "First message error:",
+                error
+            );
+
+
+            showError(
+                "The message could not be sent. Please try again."
+            );
+
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+       DETERMINE ROLE.
+    */
+
+    const isInitiator =
+        state.initiatorId ===
+        currentUser.uid;
+
+
+    /* =====================================================
+       RECEIVER
+    ===================================================== */
+
+    if(!isInitiator){
+
+        const replies =
+            Number(
+                state.receiverFreeReplies || 0
+            );
+
+
+        /*
+           Receiver gets 3 free replies.
+        */
+
+        if(
+            replies >= 3 &&
+            !state.receiverPaid
+        ){
+
+            showReceiverGate();
+
+            return;
+
+        }
+
+
+        try{
+
+            await addDoc(
+                collection(
+                    db,
+                    "conversations",
+                    conversationId,
+                    "messages"
+                ),
+                {
+
+                    senderId:
+                        currentUser.uid,
+
+                    targetId:
+                        targetId,
+
+                    text:
+                        clean,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            if(!state.receiverPaid){
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "conversations",
+                        conversationId
+                    ),
+                    {
+                        receiverFreeReplies:
+                            replies + 1
+                    }
+                );
 
             }
+
+
+            conversation =
+                {
+                    ...state,
+                    receiverFreeReplies:
+                        state.receiverPaid
+                            ? replies
+                            : replies + 1
+                };
+
+
+            messageInput.value = "";
+
+
+            return;
+
+        }catch(error){
+
+            console.error(
+                "Receiver message error:",
+                error
+            );
+
+
+            showError(
+                "Your reply could not be sent."
+            );
+
+
+            return;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       INITIATOR / SENDER
+    ===================================================== */
+
+    const freeOpeningUsed =
+        Boolean(
+            state.senderFreeUsed
         );
 
 
-        messageInput.value = "";
-
-        messageInput.style.height =
-            "48px";
-
-
-        statusText.textContent =
-            "Message sent";
-
-
-        setTimeout(() => {
-
-            statusText.textContent =
-                "Ready to chat";
-
-        },1500);
-
-
-    }catch(error){
-
-        console.error(
-            "Send message error:",
-            error
+    const credits =
+        Number(
+            state.senderCredits || 0
         );
 
-        showError(
-            "Your message could not be sent. Please try again."
-        );
 
-    }finally{
+    /*
+       The opening message was already used.
 
-        sendBtn.disabled = false;
-        messageInput.disabled = false;
+       Every additional sender message requires a credit.
+    */
 
-        messageInput.focus();
+    if(freeOpeningUsed){
+
+        if(credits <= 0){
+
+            showSenderGate();
+
+            return;
+
+        }
+
+
+        try{
+
+            await addDoc(
+                collection(
+                    db,
+                    "conversations",
+                    conversationId,
+                    "messages"
+                ),
+                {
+
+                    senderId:
+                        currentUser.uid,
+
+                    targetId:
+                        targetId,
+
+                    text:
+                        clean,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            await updateDoc(
+                doc(
+                    db,
+                    "conversations",
+                    conversationId
+                ),
+                {
+                    senderCredits:
+                        credits - 1
+                }
+            );
+
+
+            conversation =
+                {
+                    ...state,
+                    senderCredits:
+                        credits - 1
+                };
+
+
+            messageInput.value = "";
+
+
+        }catch(error){
+
+            console.error(
+                "Sender message error:",
+                error
+            );
+
+
+            showError(
+                "Your message could not be sent."
+            );
+
+        }
 
     }
 
@@ -1963,7 +1840,7 @@ async function sendMessage(text){
 
 
 /* =========================================================
-   FORM SUBMIT
+   FORM
 ========================================================= */
 
 composer.addEventListener(
@@ -1972,16 +1849,31 @@ composer.addEventListener(
 
         event.preventDefault();
 
-        await sendMessage(
-            messageInput.value
-        );
+        sendBtn.disabled =
+            true;
+
+
+        try{
+
+            await sendMessage(
+                messageInput.value
+            );
+
+        }finally{
+
+            sendBtn.disabled =
+                false;
+
+            messageInput.focus();
+
+        }
 
     }
 );
 
 
 /* =========================================================
-   TEXTAREA AUTO HEIGHT
+   TEXTAREA
 ========================================================= */
 
 messageInput.addEventListener(
@@ -1990,6 +1882,7 @@ messageInput.addEventListener(
 
         messageInput.style.height =
             "48px";
+
 
         messageInput.style.height =
             Math.min(
@@ -2016,15 +1909,12 @@ document
                 const packageSize =
                     button.dataset.package;
 
+
                 const amount =
                     button.dataset.amount;
 
 
-                /*
-                   Payment page receives the selected package.
-                */
-
-                const url =
+                window.location.href =
                     "payment.html" +
                     "?userId=" +
                     encodeURIComponent(targetId) +
@@ -2035,10 +1925,6 @@ document
                     "&type=sender" +
                     "&from=chat";
 
-
-                window.location.href =
-                    url;
-
             }
         );
 
@@ -2046,46 +1932,95 @@ document
 
 
 /* =========================================================
-   INVALID CHAT TARGET
+   STARTUP
 ========================================================= */
+
+/*
+   VERY IMPORTANT:
+
+   The chat is already visible in the HTML.
+
+   We do NOT wait for Firebase before displaying it.
+*/
 
 if(!targetId){
 
-    openChatImmediately();
-
-    showError(
-        "No Kmeet member was selected for this conversation."
-    );
-
-    messageInput.disabled = true;
-    sendBtn.disabled = true;
+    personName.textContent =
+        "No member selected";
 
     statusText.textContent =
-        "No conversation selected";
+        "Invalid chat link";
+
+    messageInput.disabled =
+        true;
+
+    sendBtn.disabled =
+        true;
+
+
+    showError(
+        "No Kmeet member was selected."
+    );
 
 }else{
 
     /*
-       THIS IS THE IMPORTANT FIX.
-
-       Chat opens immediately.
-    */
-
-    openChatImmediately();
-
-
-    /*
-       Load profile in background.
+       Load the selected person's profile in background.
     */
 
     loadTargetProfile();
 
 
     /*
-       Start authentication in background.
+       Wait for Firebase's existing auth state.
+
+       We do NOT call signInAnonymously.
+       We do NOT import it.
     */
 
-    startAuthentication();
+    onAuthStateChanged(
+        auth,
+        async user => {
+
+            if(!user){
+
+                statusText.textContent =
+                    "Please log in to chat";
+
+                messageInput.disabled =
+                    true;
+
+                sendBtn.disabled =
+                    true;
+
+                showError(
+                    "Please log in before starting a conversation."
+                );
+
+                return;
+
+            }
+
+
+            currentUser =
+                user;
+
+
+            messageInput.disabled =
+                false;
+
+            sendBtn.disabled =
+                false;
+
+
+            statusText.textContent =
+                "Ready to chat";
+
+
+            await loadConversation();
+
+        }
+    );
 
 }
 
