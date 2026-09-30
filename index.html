@@ -166,10 +166,6 @@
 
             padding: 125px 24px 85px;
 
-            /*
-             * IMPORTANT:
-             * Your background image is in the ROOT folder.
-             */
             background-image:
                 linear-gradient(
                     rgba(39,22,42,0.48),
@@ -813,7 +809,6 @@
 
         <a href="index.html" class="kmeet-brand">
 
-            <!-- LOGO IS IN THE ROOT FOLDER -->
             <img
                 src="kmeet-logo.jfif.jfif"
                 alt="Kmeet"
@@ -834,19 +829,45 @@
                 <span>Home</span>
             </a>
 
+
             <a href="discover.html">
                 <i class="fa-solid fa-compass"></i>
                 <span>Discover</span>
             </a>
 
-            <a href="profile.html">
+
+            <!--
+                This link is changed by Firebase below.
+
+                Logged out:
+                Profile
+
+                Logged in:
+                My Profile
+            -->
+            <a href="profile.html" id="profileNav">
                 <i class="fa-solid fa-user"></i>
                 <span>Profile</span>
             </a>
 
-            <a href="login.html" class="login-link">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                <span>Log In</span>
+
+            <!--
+                This link is changed by Firebase below.
+
+                Logged out:
+                Log In
+
+                Logged in:
+                Log Out
+            -->
+            <a href="login.html" class="login-link" id="accountNav">
+
+                <i class="fa-solid fa-right-to-bracket" id="accountNavIcon"></i>
+
+                <span id="accountNavText">
+                    Log In
+                </span>
+
             </a>
 
         </nav>
@@ -908,14 +929,23 @@
                     </a>
 
 
+                    <!--
+                        This button changes when Firebase detects
+                        an existing logged-in account.
+                    -->
+
                     <a
                         href="interests.html"
                         class="hero-button create-button"
+                        id="heroAccountButton"
                     >
 
-                        <i class="fa-solid fa-user-plus"></i>
+                        <i
+                            class="fa-solid fa-user-plus"
+                            id="heroAccountIcon"
+                        ></i>
 
-                        <span>
+                        <span id="heroAccountText">
                             Create Account
                         </span>
 
@@ -1079,6 +1109,131 @@
         </span>
 
     </footer>
+
+
+    <!-- =====================================================
+         FIREBASE ACCOUNT CHECK
+    ===================================================== -->
+
+    <script type="module">
+
+        import { auth } from "./firebase-config.js";
+
+        import {
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+
+        const accountNav =
+            document.getElementById("accountNav");
+
+        const accountNavText =
+            document.getElementById("accountNavText");
+
+        const accountNavIcon =
+            document.getElementById("accountNavIcon");
+
+
+        const heroAccountButton =
+            document.getElementById("heroAccountButton");
+
+        const heroAccountText =
+            document.getElementById("heroAccountText");
+
+        const heroAccountIcon =
+            document.getElementById("heroAccountIcon");
+
+
+        onAuthStateChanged(auth, (user) => {
+
+            /*
+             * ================================================
+             * USER IS LOGGED OUT
+             * ================================================
+             */
+
+            if (!user) {
+
+                accountNav.href = "login.html";
+
+                accountNavText.textContent = "Log In";
+
+                accountNavIcon.className =
+                    "fa-solid fa-right-to-bracket";
+
+
+                heroAccountButton.href =
+                    "interests.html";
+
+                heroAccountText.textContent =
+                    "Create Account";
+
+                heroAccountIcon.className =
+                    "fa-solid fa-user-plus";
+
+                return;
+            }
+
+
+            /*
+             * ================================================
+             * USER IS LOGGED IN
+             * ================================================
+             */
+
+            accountNav.href = "#";
+
+            accountNavText.textContent = "Log Out";
+
+            accountNavIcon.className =
+                "fa-solid fa-right-from-bracket";
+
+
+            heroAccountButton.href =
+                "profile.html";
+
+            heroAccountText.textContent =
+                "View My Profile";
+
+            heroAccountIcon.className =
+                "fa-solid fa-user";
+
+
+            /*
+             * Log the user out only when they
+             * deliberately click Log Out.
+             */
+
+            accountNav.onclick = async (event) => {
+
+                event.preventDefault();
+
+                try {
+
+                    await signOut(auth);
+
+                    window.location.href =
+                        "index.html";
+
+                } catch (error) {
+
+                    console.error(
+                        "Kmeet logout error:",
+                        error
+                    );
+
+                    alert(
+                        "We couldn't log you out right now. Please try again."
+                    );
+
+                }
+
+            };
+
+        });
+
+    </script>
 
 </body>
 </html>
