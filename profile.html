@@ -11,7 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link
     rel="stylesheet"
@@ -19,6 +22,11 @@
   >
 
   <style>
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -29,22 +37,41 @@
       --pink: #ff4f91;
       --pink-light: #ff7eb3;
       --purple: #9b5cff;
-      --dark: #0b0810;
-      --dark2: #120d18;
-      --card: rgba(25, 17, 31, 0.88);
-      --border: rgba(255,255,255,0.10);
-      --text: #fff;
+      --dark: #09070d;
+      --dark2: #130c18;
+      --card: rgba(25, 17, 31, 0.92);
+      --border: rgba(255,255,255,.10);
+      --text: #ffffff;
       --muted: #b9adbf;
+      --green: #43e68d;
     }
 
     body {
       min-height: 100vh;
       font-family: "Poppins", sans-serif;
       color: var(--text);
+
       background:
-        radial-gradient(circle at 15% 10%, rgba(255,79,145,.13), transparent 30%),
-        radial-gradient(circle at 85% 20%, rgba(155,92,255,.12), transparent 30%),
-        linear-gradient(135deg, #09070d, #140c18 55%, #09070d);
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(255,79,145,.14),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(155,92,255,.13),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #09070d,
+          #140c18 55%,
+          #09070d
+        );
+    }
+
+    body.modal-open {
+      overflow: hidden;
     }
 
     a {
@@ -53,23 +80,32 @@
     }
 
     button,
-    input {
+    input,
+    textarea,
+    select {
       font-family: inherit;
     }
 
-    /* ================= NAV ================= */
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
 
     .navbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      height: 72px;
+
+      min-height: 72px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding: 0 5%;
-      background: rgba(8, 6, 11, .88);
+
+      background: rgba(8,6,11,.90);
       backdrop-filter: blur(18px);
+
       border-bottom: 1px solid var(--border);
     }
 
@@ -77,10 +113,10 @@
       display: flex;
       align-items: center;
       gap: 10px;
+
       font-family: "Playfair Display", serif;
       font-size: 25px;
       font-weight: 700;
-      color: #fff;
     }
 
     .brand i {
@@ -91,67 +127,94 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
     .nav-links a {
-      padding: 10px 15px;
+      padding: 10px 14px;
       border-radius: 12px;
+
       color: #cfc5d4;
-      font-size: 14px;
+      font-size: 13px;
+
       transition: .2s;
     }
 
     .nav-links a:hover,
     .nav-links a.active {
-      color: #fff;
+      color: white;
       background: rgba(255,79,145,.12);
     }
 
     .logout-btn {
-      border: 1px solid rgba(255,79,145,.3);
-      background: rgba(255,79,145,.08);
-      color: #fff;
-      cursor: pointer;
+      border: 1px solid rgba(255,79,145,.25);
+      background: rgba(255,79,145,.07);
     }
 
-    /* ================= PAGE ================= */
+    /* =====================================================
+       PAGE
+    ===================================================== */
 
     .page {
       width: min(980px, 94%);
       margin: 35px auto 70px;
     }
 
-    /* ================= COVER ================= */
+    /* =====================================================
+       PROFILE CARD
+    ===================================================== */
 
     .profile-card {
       position: relative;
       overflow: hidden;
+
       border: 1px solid var(--border);
       border-radius: 28px;
+
       background: var(--card);
-      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.45);
     }
+
+    /* =====================================================
+       COVER
+    ===================================================== */
 
     .cover {
       height: 230px;
       position: relative;
       overflow: hidden;
+
       background:
-        radial-gradient(circle at 25% 30%, rgba(255,79,145,.35), transparent 25%),
-        radial-gradient(circle at 75% 40%, rgba(155,92,255,.35), transparent 28%),
-        linear-gradient(135deg, #24101e, #171020 50%, #0d0911);
+        radial-gradient(
+          circle at 25% 30%,
+          rgba(255,79,145,.36),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 75% 40%,
+          rgba(155,92,255,.36),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          #24101e,
+          #171020 50%,
+          #0d0911
+        );
     }
 
     .cover::after {
       content: "";
       position: absolute;
       inset: 0;
+
       background:
         linear-gradient(
           to bottom,
-          rgba(0,0,0,.05),
-          rgba(8,5,10,.72)
+          rgba(0,0,0,.03),
+          rgba(8,5,10,.74)
         );
     }
 
@@ -164,8 +227,8 @@
 
     .cover-hearts span {
       position: absolute;
+      color: white;
       font-size: 25px;
-      color: #fff;
     }
 
     .cover-hearts span:nth-child(1) {
@@ -191,7 +254,9 @@
       font-size: 18px;
     }
 
-    /* ================= PROFILE TOP ================= */
+    /* =====================================================
+       PROFILE MAIN
+    ===================================================== */
 
     .profile-main {
       position: relative;
@@ -199,13 +264,16 @@
     }
 
     .profile-top {
+      position: relative;
+      z-index: 3;
+
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
+
       gap: 25px;
+
       margin-top: -82px;
-      position: relative;
-      z-index: 3;
     }
 
     .avatar-section {
@@ -221,14 +289,21 @@
     .avatar {
       width: 158px;
       height: 158px;
-      border-radius: 50%;
-      object-fit: cover;
+
       display: block;
 
-      background:
-        linear-gradient(145deg, #2b192e, #140d18);
+      object-fit: cover;
 
+      border-radius: 50%;
       border: 6px solid #130c17;
+
+      background:
+        linear-gradient(
+          145deg,
+          #2b192e,
+          #140d18
+        );
+
       box-shadow:
         0 12px 35px rgba(0,0,0,.55),
         0 0 0 1px rgba(255,255,255,.08);
@@ -240,20 +315,29 @@
       justify-content: center;
 
       background:
-        linear-gradient(145deg, #ff4f91, #8c45dc);
+        linear-gradient(
+          145deg,
+          #ff4f91,
+          #8c45dc
+        );
 
-      color: #fff;
+      color: white;
+
       font-size: 47px;
       font-weight: 700;
     }
 
     .online-dot {
       position: absolute;
+
       width: 20px;
       height: 20px;
+
       right: 14px;
       bottom: 14px;
-      background: #39e58c;
+
+      background: var(--green);
+
       border: 4px solid #130c17;
       border-radius: 50%;
     }
@@ -266,6 +350,7 @@
       font-family: "Playfair Display", serif;
       font-size: 32px;
       line-height: 1.1;
+
       margin-bottom: 7px;
     }
 
@@ -274,7 +359,9 @@
       font-size: 14px;
     }
 
-    /* ================= UPLOAD ================= */
+    /* =====================================================
+       PHOTO UPLOAD
+    ===================================================== */
 
     .photo-actions {
       padding-bottom: 12px;
@@ -284,19 +371,27 @@
       display: inline-flex;
       align-items: center;
       gap: 9px;
+
       padding: 11px 16px;
+
       border-radius: 13px;
+
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
-      color: #fff;
+
+      color: white;
+
       font-size: 13px;
+
       cursor: pointer;
+
       transition: .2s;
     }
 
     .upload-btn:hover {
       background: rgba(255,79,145,.14);
       border-color: rgba(255,79,145,.4);
+
       transform: translateY(-1px);
     }
 
@@ -306,9 +401,14 @@
 
     .upload-status {
       min-height: 22px;
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
+
+      margin-top: 9px;
+
+      font-size: 12px;
+    }
+
+    .upload-status.loading {
+      color: #ffb1cb;
     }
 
     .upload-status.success {
@@ -319,17 +419,19 @@
       color: #ff7e9e;
     }
 
-    .upload-status.loading {
-      color: #ffb1cb;
-    }
-
-    /* ================= BODY ================= */
+    /* =====================================================
+       DIVIDER
+    ===================================================== */
 
     .divider {
       height: 1px;
       background: var(--border);
       margin: 25px 0;
     }
+
+    /* =====================================================
+       SECTIONS
+    ===================================================== */
 
     .section {
       margin-top: 25px;
@@ -339,7 +441,9 @@
       display: flex;
       align-items: center;
       gap: 10px;
+
       margin-bottom: 13px;
+
       font-size: 16px;
       font-weight: 600;
     }
@@ -351,45 +455,65 @@
 
     .bio {
       color: #c9becd;
+
       line-height: 1.8;
       font-size: 14px;
+
       background: rgba(255,255,255,.035);
+
       border: 1px solid rgba(255,255,255,.06);
       border-radius: 16px;
+
       padding: 17px;
     }
 
-    /* ================= INFO ================= */
+    /* =====================================================
+       INFO GRID
+    ===================================================== */
 
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 12px;
     }
 
     .info-box {
       padding: 16px;
+
       border-radius: 16px;
+
       background: rgba(255,255,255,.035);
+
       border: 1px solid rgba(255,255,255,.06);
     }
 
     .info-box small {
       display: block;
+
       color: #817587;
+
       font-size: 11px;
+
       margin-bottom: 5px;
+
       text-transform: uppercase;
+
       letter-spacing: .5px;
     }
 
     .info-box span {
       color: #eee6f0;
+
       font-size: 14px;
       font-weight: 500;
     }
 
-    /* ================= INTERESTS ================= */
+    /* =====================================================
+       DISPLAYED INTERESTS
+    ===================================================== */
 
     .interests {
       display: flex;
@@ -401,11 +525,19 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
+
       padding: 9px 13px;
+
       border-radius: 999px;
-      background: rgba(255,79,145,.08);
-      border: 1px solid rgba(255,79,145,.18);
+
+      background:
+        rgba(255,79,145,.09);
+
+      border:
+        1px solid rgba(255,79,145,.20);
+
       color: #f5dce7;
+
       font-size: 12px;
     }
 
@@ -414,51 +546,89 @@
       font-size: 11px;
     }
 
-    /* ================= ACTIONS ================= */
+    .no-interests {
+      color: #817587;
+      font-size: 13px;
+
+      padding: 15px;
+
+      border-radius: 15px;
+
+      border: 1px dashed rgba(255,255,255,.10);
+
+      background: rgba(255,255,255,.025);
+    }
+
+    /* =====================================================
+       ACTIONS
+    ===================================================== */
 
     .actions {
       display: flex;
       flex-wrap: wrap;
+
       gap: 11px;
+
       margin-top: 30px;
     }
 
     .btn {
       border: none;
       cursor: pointer;
+
       border-radius: 13px;
+
       padding: 13px 20px;
+
       font-size: 13px;
       font-weight: 600;
+
       display: inline-flex;
       align-items: center;
       justify-content: center;
+
       gap: 8px;
+
       transition: .2s;
     }
 
     .btn-primary {
       color: white;
-      background: linear-gradient(135deg, #ff4f91, #a553e8);
-      box-shadow: 0 8px 25px rgba(255,79,145,.2);
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff4f91,
+          #a553e8
+        );
+
+      box-shadow:
+        0 8px 25px rgba(255,79,145,.2);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(255,79,145,.3);
+
+      box-shadow:
+        0 12px 30px rgba(255,79,145,.3);
     }
 
     .btn-secondary {
       color: #eee;
+
       background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
+
+      border:
+        1px solid rgba(255,255,255,.1);
     }
 
     .btn-secondary:hover {
       background: rgba(255,255,255,.1);
     }
 
-    /* ================= LOADING ================= */
+    /* =====================================================
+       LOADING
+    ===================================================== */
 
     .loading {
       padding: 90px 20px;
@@ -469,10 +639,17 @@
     .spinner {
       width: 35px;
       height: 35px;
+
       border-radius: 50%;
-      border: 3px solid rgba(255,255,255,.1);
+
+      border:
+        3px solid rgba(255,255,255,.1);
+
       border-top-color: var(--pink);
-      animation: spin .8s linear infinite;
+
+      animation:
+        spin .8s linear infinite;
+
       margin: 0 auto 15px;
     }
 
@@ -486,24 +663,432 @@
       display: none !important;
     }
 
-    /* ================= FOOTER ================= */
+    /* =====================================================
+       MODAL BACKDROP
+    ===================================================== */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+
+      z-index: 500;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background:
+        rgba(0,0,0,.76);
+
+      backdrop-filter: blur(10px);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity .25s ease,
+        visibility .25s ease;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* =====================================================
+       EDIT MODAL
+    ===================================================== */
+
+    .edit-modal {
+      width: min(700px, 100%);
+      max-height: 90vh;
+
+      overflow-y: auto;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(28,18,35,.98),
+          rgba(14,10,18,.98)
+        );
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
+      border-radius: 24px;
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.65);
+
+      transform:
+        translateY(20px)
+        scale(.97);
+
+      transition:
+        transform .25s ease;
+    }
+
+    .modal-backdrop.show .edit-modal {
+      transform:
+        translateY(0)
+        scale(1);
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 20px 22px;
+
+      background:
+        rgba(18,11,24,.96);
+
+      border-bottom:
+        1px solid rgba(255,255,255,.08);
+    }
+
+    .modal-header h2 {
+      font-family:
+        "Playfair Display",
+        serif;
+
+      font-size: 24px;
+    }
+
+    .modal-header p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .close-modal {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid rgba(255,255,255,.1);
+
+      background:
+        rgba(255,255,255,.05);
+
+      color: white;
+
+      cursor: pointer;
+
+      font-size: 16px;
+
+      transition: .2s;
+    }
+
+    .close-modal:hover {
+      background:
+        rgba(255,79,145,.15);
+
+      border-color:
+        rgba(255,79,145,.35);
+    }
+
+    .modal-body {
+      padding: 22px;
+    }
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #e9e0eb;
+
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+
+      padding: 13px 14px;
+
+      border-radius: 13px;
+
+      border:
+        1px solid rgba(255,255,255,.10);
+
+      background:
+        rgba(255,255,255,.055);
+
+      color: white;
+
+      outline: none;
+
+      font-size: 13px;
+
+      transition: .2s;
+    }
+
+    .form-control::placeholder {
+      color: #716775;
+    }
+
+    .form-control:focus {
+      border-color:
+        rgba(255,79,145,.55);
+
+      background:
+        rgba(255,255,255,.07);
+
+      box-shadow:
+        0 0 0 3px rgba(255,79,145,.08);
+    }
+
+    select.form-control option {
+      background: #17101c;
+      color: white;
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .two-columns {
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 13px;
+    }
+
+    /* =====================================================
+       INTEREST EDITOR
+    ===================================================== */
+
+    .interest-description {
+      color: #8f8294;
+      font-size: 12px;
+
+      margin-bottom: 13px;
+    }
+
+    .interest-selector {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 9px;
+    }
+
+    .interest-option {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      min-height: 48px;
+
+      padding: 10px 11px;
+
+      border-radius: 13px;
+
+      border:
+        1px solid rgba(255,255,255,.09);
+
+      background:
+        rgba(255,255,255,.035);
+
+      color: #d7cdd9;
+
+      cursor: pointer;
+
+      user-select: none;
+
+      transition:
+        .2s ease;
+    }
+
+    .interest-option:hover {
+      border-color:
+        rgba(255,79,145,.35);
+
+      background:
+        rgba(255,79,145,.07);
+    }
+
+    .interest-option.selected {
+      color: white;
+
+      border-color:
+        rgba(255,79,145,.55);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,79,145,.18),
+          rgba(155,92,255,.13)
+        );
+
+      box-shadow:
+        0 5px 18px rgba(255,79,145,.08);
+    }
+
+    .interest-icon {
+      width: 30px;
+      height: 30px;
+
+      flex-shrink: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 9px;
+
+      background:
+        rgba(255,255,255,.06);
+
+      color: #a99eae;
+
+      font-size: 13px;
+    }
+
+    .interest-option.selected .interest-icon {
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff4f91,
+          #a553e8
+        );
+    }
+
+    .interest-option-name {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .interest-check {
+      position: absolute;
+
+      right: 8px;
+      top: 8px;
+
+      width: 17px;
+      height: 17px;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: var(--pink);
+
+      color: white;
+
+      font-size: 9px;
+    }
+
+    .interest-option.selected .interest-check {
+      display: flex;
+    }
+
+    /* =====================================================
+       INTEREST COUNT
+    ===================================================== */
+
+    .interest-count {
+      margin-top: 11px;
+
+      color: #a99eae;
+
+      font-size: 11px;
+    }
+
+    /* =====================================================
+       MODAL FOOTER
+    ===================================================== */
+
+    .modal-footer {
+      position: sticky;
+      bottom: 0;
+
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+
+      padding: 16px 22px;
+
+      background:
+        rgba(18,11,24,.97);
+
+      border-top:
+        1px solid rgba(255,255,255,.08);
+    }
+
+    .save-status {
+      flex: 1;
+
+      display: flex;
+      align-items: center;
+
+      color: #59e89a;
+
+      font-size: 12px;
+    }
+
+    .save-status.error {
+      color: #ff7e9e;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
 
     footer {
       text-align: center;
+
       color: #716775;
+
       font-size: 12px;
+
       margin-top: 35px;
     }
 
-    /* ================= MOBILE ================= */
+    /* =====================================================
+       MOBILE
+    ===================================================== */
 
     @media (max-width: 720px) {
 
       .navbar {
-        height: auto;
         min-height: 68px;
+
         padding: 12px 4%;
+
         gap: 10px;
+
         flex-wrap: wrap;
       }
 
@@ -513,13 +1098,15 @@
 
       .nav-links {
         width: 100%;
+
         justify-content: center;
+
         overflow-x: auto;
       }
 
       .nav-links a {
-        font-size: 12px;
-        padding: 8px 10px;
+        font-size: 11px;
+        padding: 8px 9px;
       }
 
       .page {
@@ -536,8 +1123,8 @@
       }
 
       .profile-top {
-        margin-top: -62px;
         display: block;
+        margin-top: -62px;
       }
 
       .avatar-section {
@@ -576,13 +1163,47 @@
       .btn {
         width: 100%;
       }
+
+      .two-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .interest-selector {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .modal-body {
+        padding: 17px;
+      }
+
+      .modal-header {
+        padding: 17px;
+      }
+
+      .modal-footer {
+        padding: 14px 17px;
+      }
+
     }
+
+    @media (max-width: 390px) {
+
+      .interest-selector {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- ================= NAVIGATION ================= -->
+  <!-- =====================================================
+       NAVIGATION
+  ===================================================== -->
 
   <nav class="navbar">
 
@@ -592,6 +1213,7 @@
     </a>
 
     <div class="nav-links">
+
       <a href="discover.html">
         <i class="fa-solid fa-compass"></i>
         Discover
@@ -616,12 +1238,15 @@
         <i class="fa-solid fa-right-from-bracket"></i>
         Logout
       </a>
+
     </div>
 
   </nav>
 
 
-  <!-- ================= PAGE ================= -->
+  <!-- =====================================================
+       PROFILE
+  ===================================================== -->
 
   <main class="page">
 
@@ -641,7 +1266,7 @@
       </div>
 
 
-      <!-- PROFILE -->
+      <!-- PROFILE MAIN -->
 
       <div class="profile-main">
 
@@ -668,6 +1293,7 @@
 
             </div>
 
+
             <div class="profile-heading">
 
               <h1 id="profileName">
@@ -683,9 +1309,9 @@
           </div>
 
 
-          <!-- PHOTO UPLOAD -->
+          <!-- PHOTO -->
 
-          <div class="photo-actions" id="photoActions">
+          <div class="photo-actions">
 
             <label class="upload-btn">
 
@@ -701,7 +1327,10 @@
 
             </label>
 
-            <div id="uploadStatus" class="upload-status"></div>
+            <div
+              id="uploadStatus"
+              class="upload-status"
+            ></div>
 
           </div>
 
@@ -720,14 +1349,17 @@
             About me
           </div>
 
-          <div id="profileBio" class="bio">
+          <div
+            id="profileBio"
+            class="bio"
+          >
             Tell people a little about yourself.
           </div>
 
         </section>
 
 
-        <!-- BASIC INFORMATION -->
+        <!-- INFORMATION -->
 
         <section class="section">
 
@@ -739,18 +1371,35 @@
           <div class="info-grid">
 
             <div class="info-box">
+
               <small>Age</small>
-              <span id="profileAge">Not provided</span>
+
+              <span id="profileAge">
+                Not provided
+              </span>
+
             </div>
 
+
             <div class="info-box">
+
               <small>Gender</small>
-              <span id="profileGender">Not provided</span>
+
+              <span id="profileGender">
+                Not provided
+              </span>
+
             </div>
 
+
             <div class="info-box">
+
               <small>Location</small>
-              <span id="profileLocation">Not provided</span>
+
+              <span id="profileLocation">
+                Not provided
+              </span>
+
             </div>
 
           </div>
@@ -764,14 +1413,18 @@
 
           <div class="section-title">
             <i class="fa-solid fa-star"></i>
-            Interests
+            My interests
           </div>
 
-          <div id="interests" class="interests">
-            <span class="interest">
-              <i class="fa-solid fa-heart"></i>
-              Discovering new connections
-            </span>
+          <div
+            id="interests"
+            class="interests"
+          >
+
+            <div class="no-interests">
+              No interests selected yet.
+            </div>
+
           </div>
 
         </section>
@@ -781,14 +1434,25 @@
 
         <div class="actions">
 
+          <button
+            type="button"
+            id="editProfileBtn"
+            class="btn btn-primary"
+          >
+            <i class="fa-solid fa-pen"></i>
+            Edit Profile
+          </button>
+
+
           <a
             id="chatBtn"
             href="#"
-            class="btn btn-primary"
+            class="btn btn-secondary"
           >
-            <i class="fa-solid fa-comment-heart"></i>
+            <i class="fa-solid fa-comment"></i>
             Start Chat
           </a>
+
 
           <a
             href="discover.html"
@@ -812,7 +1476,255 @@
   </main>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
+  <!-- =====================================================
+       EDIT PROFILE MODAL
+  ===================================================== -->
+
+  <div
+    id="editModal"
+    class="modal-backdrop"
+  >
+
+    <div class="edit-modal">
+
+      <!-- HEADER -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2>Edit your profile</h2>
+
+          <p>
+            Make your Kmeet profile feel more like you.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="closeModalBtn"
+          class="close-modal"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+
+      <!-- BODY -->
+
+      <div class="modal-body">
+
+        <form id="editProfileForm">
+
+          <!-- NAME -->
+
+          <div class="form-group">
+
+            <label
+              class="form-label"
+              for="editName"
+            >
+              Your name
+            </label>
+
+            <input
+              id="editName"
+              class="form-control"
+              type="text"
+              maxlength="40"
+              placeholder="Enter your name"
+              required
+            >
+
+          </div>
+
+
+          <!-- AGE + GENDER -->
+
+          <div class="two-columns">
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="editAge"
+              >
+                Age
+              </label>
+
+              <input
+                id="editAge"
+                class="form-control"
+                type="number"
+                min="18"
+                max="100"
+                placeholder="Your age"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="editGender"
+              >
+                Gender
+              </label>
+
+              <select
+                id="editGender"
+                class="form-control"
+              >
+
+                <option value="">
+                  Select gender
+                </option>
+
+                <option value="Male">
+                  Male
+                </option>
+
+                <option value="Female">
+                  Female
+                </option>
+
+                <option value="Other">
+                  Other
+                </option>
+
+                <option value="Prefer not to say">
+                  Prefer not to say
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+          <!-- LOCATION -->
+
+          <div class="form-group">
+
+            <label
+              class="form-label"
+              for="editLocation"
+            >
+              Location
+            </label>
+
+            <input
+              id="editLocation"
+              class="form-control"
+              type="text"
+              maxlength="80"
+              placeholder="For example: Mombasa, Kenya"
+            >
+
+          </div>
+
+
+          <!-- BIO -->
+
+          <div class="form-group">
+
+            <label
+              class="form-label"
+              for="editBio"
+            >
+              About you
+            </label>
+
+            <textarea
+              id="editBio"
+              class="form-control"
+              maxlength="500"
+              placeholder="Tell people something interesting about you..."
+            ></textarea>
+
+          </div>
+
+
+          <!-- INTERESTS -->
+
+          <div class="form-group">
+
+            <label class="form-label">
+              What do you enjoy?
+            </label>
+
+            <div class="interest-description">
+              Select the interests that describe you.
+              Your existing interests are automatically selected.
+            </div>
+
+
+            <div
+              id="interestSelector"
+              class="interest-selector"
+            >
+            </div>
+
+
+            <div
+              id="interestCount"
+              class="interest-count"
+            >
+              0 interests selected
+            </div>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- FOOTER -->
+
+      <div class="modal-footer">
+
+        <div
+          id="saveStatus"
+          class="save-status"
+        ></div>
+
+
+        <button
+          type="button"
+          id="cancelBtn"
+          class="btn btn-secondary"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          type="submit"
+          form="editProfileForm"
+          id="saveProfileBtn"
+          class="btn btn-primary"
+        >
+          <i class="fa-solid fa-check"></i>
+          Save Changes
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
 
   <script type="module">
 
@@ -824,28 +1736,129 @@
       doc,
       getDoc,
       setDoc,
-      updateProfile
+      updateProfile,
+      serverTimestamp
     } from "./firebase-config.js";
 
 
-    /*
-      =====================================================
-      KMEET CLOUDINARY SETTINGS
-      =====================================================
-    */
+    /* =====================================================
+       CLOUDINARY
+    ===================================================== */
 
-    const CLOUDINARY_CLOUD_NAME = "whnrdsfq";
-    const CLOUDINARY_UPLOAD_PRESET = "kmeet_profiles";
+    const CLOUDINARY_CLOUD_NAME =
+      "whnrdsfq";
+
+    const CLOUDINARY_UPLOAD_PRESET =
+      "kmeet_profiles";
 
     const CLOUDINARY_UPLOAD_URL =
       `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
 
-    /*
-      =====================================================
-      ELEMENTS
-      =====================================================
-    */
+    /* =====================================================
+       KMEET INTEREST CATALOGUE
+
+       These are the actual selectable interests.
+    ===================================================== */
+
+    const INTEREST_OPTIONS = [
+
+      {
+        name: "Dating",
+        icon: "fa-heart"
+      },
+
+      {
+        name: "Music",
+        icon: "fa-music"
+      },
+
+      {
+        name: "Travel",
+        icon: "fa-plane"
+      },
+
+      {
+        name: "Food",
+        icon: "fa-utensils"
+      },
+
+      {
+        name: "Sports",
+        icon: "fa-futbol"
+      },
+
+      {
+        name: "Movies",
+        icon: "fa-film"
+      },
+
+      {
+        name: "Books",
+        icon: "fa-book"
+      },
+
+      {
+        name: "Gaming",
+        icon: "fa-gamepad"
+      },
+
+      {
+        name: "Fitness",
+        icon: "fa-dumbbell"
+      },
+
+      {
+        name: "Photography",
+        icon: "fa-camera"
+      },
+
+      {
+        name: "Business",
+        icon: "fa-briefcase"
+      },
+
+      {
+        name: "Adventure",
+        icon: "fa-mountain-sun"
+      },
+
+      {
+        name: "Art",
+        icon: "fa-palette"
+      },
+
+      {
+        name: "Pets",
+        icon: "fa-paw"
+      },
+
+      {
+        name: "Fashion",
+        icon: "fa-shirt"
+      },
+
+      {
+        name: "Coffee",
+        icon: "fa-mug-hot"
+      },
+
+      {
+        name: "Beach",
+        icon: "fa-umbrella-beach"
+      },
+
+      {
+        name: "Dancing",
+        icon: "fa-music"
+      }
+
+    ];
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
 
     const profileImage =
       document.getElementById("profileImage");
@@ -871,7 +1884,7 @@
     const profileLocation =
       document.getElementById("profileLocation");
 
-    const interests =
+    const interestsContainer =
       document.getElementById("interests");
 
     const photoInput =
@@ -880,21 +1893,68 @@
     const uploadStatus =
       document.getElementById("uploadStatus");
 
+    const editProfileBtn =
+      document.getElementById("editProfileBtn");
+
+    const editModal =
+      document.getElementById("editModal");
+
+    const closeModalBtn =
+      document.getElementById("closeModalBtn");
+
+    const cancelBtn =
+      document.getElementById("cancelBtn");
+
+    const editProfileForm =
+      document.getElementById("editProfileForm");
+
+    const editName =
+      document.getElementById("editName");
+
+    const editAge =
+      document.getElementById("editAge");
+
+    const editGender =
+      document.getElementById("editGender");
+
+    const editLocation =
+      document.getElementById("editLocation");
+
+    const editBio =
+      document.getElementById("editBio");
+
+    const interestSelector =
+      document.getElementById("interestSelector");
+
+    const interestCount =
+      document.getElementById("interestCount");
+
+    const saveProfileBtn =
+      document.getElementById("saveProfileBtn");
+
+    const saveStatus =
+      document.getElementById("saveStatus");
+
     const chatBtn =
       document.getElementById("chatBtn");
 
     const logoutBtn =
       document.getElementById("logoutBtn");
 
-    const photoActions =
-      document.getElementById("photoActions");
+
+    /* =====================================================
+       CURRENT PROFILE
+    ===================================================== */
+
+    let currentUser = null;
+    let currentProfile = {};
+
+    let selectedInterests = [];
 
 
-    /*
-      =====================================================
-      HELPERS
-      =====================================================
-    */
+    /* =====================================================
+       HELPERS
+    ===================================================== */
 
     function escapeHtml(value) {
 
@@ -910,18 +1970,25 @@
 
     function getInitials(name) {
 
-      const cleanName =
-        String(name || "Kmeet").trim();
+      const clean =
+        String(name || "Kmeet")
+          .trim();
 
-      if (!cleanName) {
+      if (!clean) {
         return "K";
       }
 
       const parts =
-        cleanName.split(/\s+/).filter(Boolean);
+        clean
+          .split(/\s+/)
+          .filter(Boolean);
 
       if (parts.length === 1) {
-        return parts[0].substring(0, 2).toUpperCase();
+
+        return parts[0]
+          .substring(0, 2)
+          .toUpperCase();
+
       }
 
       return (
@@ -932,29 +1999,52 @@
     }
 
 
-    function setStatus(message, type = "") {
+    function setUploadStatus(
+      message,
+      type = ""
+    ) {
 
-      uploadStatus.textContent = message;
+      uploadStatus.textContent =
+        message;
 
       uploadStatus.className =
-        "upload-status " + type;
+        `upload-status ${type}`;
 
     }
 
 
-    function renderPhoto(photoURL, name) {
+    /* =====================================================
+       RENDER PHOTO
+    ===================================================== */
+
+    function renderPhoto(
+      photoURL,
+      name
+    ) {
 
       if (photoURL) {
 
-        profileImage.src = photoURL;
+        profileImage.src =
+          photoURL;
 
-        profileImage.classList.remove("hidden");
-        avatarInitials.classList.add("hidden");
+        profileImage.classList.remove(
+          "hidden"
+        );
+
+        avatarInitials.classList.add(
+          "hidden"
+        );
+
 
         profileImage.onerror = () => {
 
-          profileImage.classList.add("hidden");
-          avatarInitials.classList.remove("hidden");
+          profileImage.classList.add(
+            "hidden"
+          );
+
+          avatarInitials.classList.remove(
+            "hidden"
+          );
 
           avatarInitials.textContent =
             getInitials(name);
@@ -963,9 +2053,13 @@
 
       } else {
 
-        profileImage.classList.add("hidden");
+        profileImage.classList.add(
+          "hidden"
+        );
 
-        avatarInitials.classList.remove("hidden");
+        avatarInitials.classList.remove(
+          "hidden"
+        );
 
         avatarInitials.textContent =
           getInitials(name);
@@ -975,194 +2069,1023 @@
     }
 
 
-    function displayInterests(list) {
+    /* =====================================================
+       RENDER SAVED INTERESTS
+    ===================================================== */
 
-      interests.innerHTML = "";
+    function renderInterests(
+      interestList
+    ) {
 
-      if (!Array.isArray(list) || list.length === 0) {
+      interestsContainer.innerHTML =
+        "";
 
-        interests.innerHTML = `
-          <span class="interest">
-            <i class="fa-solid fa-heart"></i>
-            Open to discovering new things
-          </span>
+
+      if (
+        !Array.isArray(interestList) ||
+        interestList.length === 0
+      ) {
+
+        interestsContainer.innerHTML = `
+          <div class="no-interests">
+            <i class="fa-regular fa-heart"></i>
+            No interests selected yet.
+            Click <strong>Edit Profile</strong> to choose some.
+          </div>
         `;
 
+        return;
+
+      }
+
+
+      interestList.forEach(
+        interest => {
+
+          const clean =
+            String(interest || "")
+              .trim();
+
+          if (!clean) {
+            return;
+          }
+
+
+          const option =
+            INTEREST_OPTIONS.find(
+              item =>
+                item.name.toLowerCase() ===
+                clean.toLowerCase()
+            );
+
+
+          const icon =
+            option?.icon ||
+            "fa-heart";
+
+
+          const tag =
+            document.createElement("span");
+
+          tag.className =
+            "interest";
+
+          tag.innerHTML = `
+            <i class="fa-solid ${icon}"></i>
+            ${escapeHtml(clean)}
+          `;
+
+
+          interestsContainer.appendChild(
+            tag
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       BUILD ALL INTEREST OPTIONS
+    ===================================================== */
+
+    function buildInterestSelector() {
+
+      interestSelector.innerHTML =
+        "";
+
+
+      INTEREST_OPTIONS.forEach(
+        option => {
+
+          const selected =
+            selectedInterests.some(
+              item =>
+                item.toLowerCase() ===
+                option.name.toLowerCase()
+            );
+
+
+          const button =
+            document.createElement("div");
+
+
+          button.className =
+            "interest-option" +
+            (selected ? " selected" : "");
+
+
+          button.dataset.interest =
+            option.name;
+
+
+          button.innerHTML = `
+
+            <span class="interest-icon">
+
+              <i class="fa-solid ${option.icon}"></i>
+
+            </span>
+
+            <span class="interest-option-name">
+              ${escapeHtml(option.name)}
+            </span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
+
+          `;
+
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              toggleInterest(
+                option.name,
+                button
+              );
+
+            }
+          );
+
+
+          interestSelector.appendChild(
+            button
+          );
+
+        }
+      );
+
+
+      updateInterestCount();
+
+    }
+
+
+    /* =====================================================
+       TOGGLE INTEREST
+    ===================================================== */
+
+    function toggleInterest(
+      name,
+      button
+    ) {
+
+      const index =
+        selectedInterests.findIndex(
+          item =>
+            item.toLowerCase() ===
+            name.toLowerCase()
+        );
+
+
+      if (index >= 0) {
+
+        selectedInterests.splice(
+          index,
+          1
+        );
+
+        button.classList.remove(
+          "selected"
+        );
+
+      } else {
+
+        selectedInterests.push(
+          name
+        );
+
+        button.classList.add(
+          "selected"
+        );
+
+      }
+
+
+      updateInterestCount();
+
+    }
+
+
+    /* =====================================================
+       INTEREST COUNT
+    ===================================================== */
+
+    function updateInterestCount() {
+
+      const count =
+        selectedInterests.length;
+
+
+      interestCount.textContent =
+        count === 1
+          ? "1 interest selected"
+          : `${count} interests selected`;
+
+    }
+
+
+    /* =====================================================
+       OPEN EDIT MODAL
+    ===================================================== */
+
+    function openEditModal() {
+
+      if (!currentUser) {
         return;
       }
 
 
-      list.forEach(item => {
+      /*
+        Fill existing information.
+      */
 
-        const clean =
-          String(item || "").trim();
+      editName.value =
+        currentProfile.name ||
+        currentUser.displayName ||
+        "";
 
-        if (!clean) return;
 
-        const tag =
-          document.createElement("span");
+      editAge.value =
+        currentProfile.age ||
+        "";
 
-        tag.className = "interest";
 
-        tag.innerHTML = `
-          <i class="fa-solid fa-heart"></i>
-          ${escapeHtml(clean)}
-        `;
+      editGender.value =
+        currentProfile.gender ||
+        "";
 
-        interests.appendChild(tag);
 
-      });
+      editLocation.value =
+        currentProfile.location ||
+        "";
+
+
+      editBio.value =
+        currentProfile.bio ||
+        "";
+
+
+      /*
+        Copy existing interests.
+      */
+
+      selectedInterests =
+        Array.isArray(
+          currentProfile.interests
+        )
+          ? [
+              ...currentProfile.interests
+            ]
+          : [];
+
+
+      /*
+        Build all 18 selectable interests.
+      */
+
+      buildInterestSelector();
+
+
+      saveStatus.textContent =
+        "";
+
+      saveStatus.className =
+        "save-status";
+
+
+      editModal.classList.add(
+        "show"
+      );
+
+      document.body.classList.add(
+        "modal-open"
+      );
 
     }
 
 
-    /*
-      =====================================================
-      COMPRESS PHOTO BEFORE UPLOAD
-      =====================================================
+    /* =====================================================
+       CLOSE EDIT MODAL
+    ===================================================== */
 
-      This keeps profile images reasonably small and
-      makes the upload much faster.
-    */
+    function closeEditModal() {
 
-    async function compressImage(file) {
+      editModal.classList.remove(
+        "show"
+      );
 
-      return new Promise((resolve, reject) => {
+      document.body.classList.remove(
+        "modal-open"
+      );
 
-        const reader = new FileReader();
+    }
 
-        reader.onload = event => {
 
-          const img = new Image();
+    /* =====================================================
+       LOAD PROFILE
+    ===================================================== */
 
-          img.onload = () => {
+    async function loadProfile(
+      user
+    ) {
 
-            const MAX_SIZE = 1200;
+      try {
 
-            let width = img.width;
-            let height = img.height;
+        const profileRef =
+          doc(
+            db,
+            "users",
+            user.uid
+          );
 
-            if (width > MAX_SIZE || height > MAX_SIZE) {
 
-              if (width > height) {
+        const profileSnap =
+          await getDoc(
+            profileRef
+          );
 
-                height =
-                  Math.round(
-                    height * MAX_SIZE / width
-                  );
 
-                width = MAX_SIZE;
+        if (
+          profileSnap.exists()
+        ) {
 
-              } else {
+          currentProfile =
+            profileSnap.data();
 
-                width =
-                  Math.round(
-                    width * MAX_SIZE / height
-                  );
+        } else {
 
-                height = MAX_SIZE;
+          currentProfile = {};
 
-              }
+        }
 
+
+        const name =
+          currentProfile.name ||
+          user.displayName ||
+          "Kmeet Member";
+
+
+        const photoURL =
+          currentProfile.photoURL ||
+          currentProfile.avatar ||
+          currentProfile.photo ||
+          currentProfile.profilePhoto ||
+          user.photoURL ||
+          "";
+
+
+        /*
+          Display profile.
+        */
+
+        profileName.textContent =
+          name;
+
+
+        profileSubtitle.textContent =
+          currentProfile.location
+            ? `Connecting hearts in ${currentProfile.location}`
+            : "Connecting hearts naturally";
+
+
+        profileBio.textContent =
+          currentProfile.bio ||
+          "This member has not added a bio yet.";
+
+
+        profileAge.textContent =
+          currentProfile.age ||
+          "Not provided";
+
+
+        profileGender.textContent =
+          currentProfile.gender ||
+          "Not provided";
+
+
+        profileLocation.textContent =
+          currentProfile.location ||
+          "Not provided";
+
+
+        /*
+          IMPORTANT:
+          This now displays the interests
+          saved in Firestore.
+        */
+
+        renderInterests(
+          currentProfile.interests || []
+        );
+
+
+        renderPhoto(
+          photoURL,
+          name
+        );
+
+
+        /*
+          Chat link.
+        */
+
+        chatBtn.href =
+          `chat.html?userId=${encodeURIComponent(user.uid)}`;
+
+
+        console.log(
+          "KMEET PROFILE DATA:",
+          currentProfile
+        );
+
+
+        console.log(
+          "KMEET INTERESTS:",
+          currentProfile.interests
+        );
+
+      } catch (error) {
+
+        console.error(
+          "KMEET PROFILE LOAD ERROR:",
+          error
+        );
+
+
+        profileName.textContent =
+          "Unable to load profile";
+
+
+        profileBio.textContent =
+          "There was a problem loading your profile. Please refresh the page.";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SAVE PROFILE
+    ===================================================== */
+
+    editProfileForm.addEventListener(
+      "submit",
+      async event => {
+
+        event.preventDefault();
+
+
+        if (!currentUser) {
+
+          return;
+
+        }
+
+
+        const name =
+          editName.value.trim();
+
+
+        const ageValue =
+          editAge.value.trim();
+
+
+        const gender =
+          editGender.value.trim();
+
+
+        const location =
+          editLocation.value.trim();
+
+
+        const bio =
+          editBio.value.trim();
+
+
+        /*
+          Validate name.
+        */
+
+        if (!name) {
+
+          saveStatus.textContent =
+            "Please enter your name.";
+
+          saveStatus.className =
+            "save-status error";
+
+          return;
+
+        }
+
+
+        /*
+          Validate age.
+        */
+
+        let age = null;
+
+
+        if (ageValue) {
+
+          age =
+            Number(ageValue);
+
+
+          if (
+            !Number.isInteger(age) ||
+            age < 18 ||
+            age > 100
+          ) {
+
+            saveStatus.textContent =
+              "Age must be between 18 and 100.";
+
+            saveStatus.className =
+              "save-status error";
+
+            return;
+
+          }
+
+        }
+
+
+        try {
+
+          saveProfileBtn.disabled =
+            true;
+
+
+          saveProfileBtn.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Saving...
+          `;
+
+
+          saveStatus.textContent =
+            "Saving your profile...";
+
+          saveStatus.className =
+            "save-status";
+
+
+          /*
+            Remove duplicate interests.
+          */
+
+          const cleanInterests =
+            [
+              ...new Set(
+                selectedInterests
+                  .map(
+                    item =>
+                      String(item).trim()
+                  )
+                  .filter(Boolean)
+              )
+            ];
+
+
+          /*
+            Firestore data.
+          */
+
+          const profileData = {
+
+            name,
+
+            age,
+
+            gender,
+
+            location,
+
+            bio,
+
+            interests:
+              cleanInterests,
+
+            email:
+              currentProfile.email ||
+              currentUser.email ||
+              "",
+
+            uid:
+              currentUser.uid,
+
+            onboardingCompleted:
+              true,
+
+            updatedAt:
+              serverTimestamp()
+
+          };
+
+
+          /*
+            Save to users/{uid}.
+          */
+
+          await setDoc(
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            ),
+            profileData,
+            {
+              merge: true
             }
+          );
 
 
-            const canvas =
-              document.createElement("canvas");
+          /*
+            Update Firebase Auth display name.
+          */
 
-            canvas.width = width;
-            canvas.height = height;
+          try {
 
-            const ctx =
-              canvas.getContext("2d");
-
-            ctx.drawImage(
-              img,
-              0,
-              0,
-              width,
-              height
+            await updateProfile(
+              currentUser,
+              {
+                displayName: name
+              }
             );
 
+          } catch (authError) {
 
-            canvas.toBlob(
-              blob => {
+            console.warn(
+              "Auth name update failed:",
+              authError
+            );
 
-                if (!blob) {
+          }
+
+
+          /*
+            Update local profile.
+          */
+
+          currentProfile = {
+            ...currentProfile,
+            ...profileData,
+            interests:
+              cleanInterests
+          };
+
+
+          /*
+            Refresh displayed profile.
+          */
+
+          profileName.textContent =
+            name;
+
+
+          profileSubtitle.textContent =
+            location
+              ? `Connecting hearts in ${location}`
+              : "Connecting hearts naturally";
+
+
+          profileBio.textContent =
+            bio ||
+            "This member has not added a bio yet.";
+
+
+          profileAge.textContent =
+            age ||
+            "Not provided";
+
+
+          profileGender.textContent =
+            gender ||
+            "Not provided";
+
+
+          profileLocation.textContent =
+            location ||
+            "Not provided";
+
+
+          renderInterests(
+            cleanInterests
+          );
+
+
+          /*
+            Success.
+          */
+
+          saveStatus.textContent =
+            "✓ Profile saved successfully!";
+
+          saveStatus.className =
+            "save-status";
+
+
+          setTimeout(
+            () => {
+
+              closeEditModal();
+
+            },
+            800
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "KMEET SAVE PROFILE ERROR:",
+            error
+          );
+
+
+          saveStatus.textContent =
+            error.message ||
+            "Could not save your profile.";
+
+          saveStatus.className =
+            "save-status error";
+
+
+        } finally {
+
+          saveProfileBtn.disabled =
+            false;
+
+
+          saveProfileBtn.innerHTML = `
+            <i class="fa-solid fa-check"></i>
+            Save Changes
+          `;
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       OPEN / CLOSE EVENTS
+    ===================================================== */
+
+    editProfileBtn.addEventListener(
+      "click",
+      openEditModal
+    );
+
+
+    closeModalBtn.addEventListener(
+      "click",
+      closeEditModal
+    );
+
+
+    cancelBtn.addEventListener(
+      "click",
+      closeEditModal
+    );
+
+
+    /*
+      Close when clicking outside modal.
+    */
+
+    editModal.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target === editModal
+        ) {
+
+          closeEditModal();
+
+        }
+
+      }
+    );
+
+
+    /*
+      ESC closes modal.
+    */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape" &&
+          editModal.classList.contains("show")
+        ) {
+
+          closeEditModal();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       IMAGE COMPRESSION
+    ===================================================== */
+
+    async function compressImage(
+      file
+    ) {
+
+      return new Promise(
+        (resolve, reject) => {
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            event => {
+
+              const img =
+                new Image();
+
+
+              img.onload =
+                () => {
+
+                  const MAX_SIZE =
+                    1200;
+
+
+                  let width =
+                    img.width;
+
+                  let height =
+                    img.height;
+
+
+                  if (
+                    width > MAX_SIZE ||
+                    height > MAX_SIZE
+                  ) {
+
+                    if (
+                      width > height
+                    ) {
+
+                      height =
+                        Math.round(
+                          height *
+                          MAX_SIZE /
+                          width
+                        );
+
+                      width =
+                        MAX_SIZE;
+
+                    } else {
+
+                      width =
+                        Math.round(
+                          width *
+                          MAX_SIZE /
+                          height
+                        );
+
+                      height =
+                        MAX_SIZE;
+
+                    }
+
+                  }
+
+
+                  const canvas =
+                    document.createElement(
+                      "canvas"
+                    );
+
+
+                  canvas.width =
+                    width;
+
+                  canvas.height =
+                    height;
+
+
+                  const ctx =
+                    canvas.getContext(
+                      "2d"
+                    );
+
+
+                  ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                  );
+
+
+                  canvas.toBlob(
+                    blob => {
+
+                      if (!blob) {
+
+                        reject(
+                          new Error(
+                            "Could not prepare the image."
+                          )
+                        );
+
+                        return;
+
+                      }
+
+
+                      resolve(blob);
+
+                    },
+                    "image/jpeg",
+                    0.85
+                  );
+
+                };
+
+
+              img.onerror =
+                () => {
 
                   reject(
                     new Error(
-                      "Could not prepare the image."
+                      "The selected image could not be read."
                     )
                   );
 
-                  return;
-                }
-
-                resolve(blob);
-
-              },
-              "image/jpeg",
-              0.85
-            );
-
-          };
+                };
 
 
-          img.onerror = () => {
+              img.src =
+                event.target.result;
 
-            reject(
-              new Error(
-                "The selected image could not be read."
-              )
-            );
-
-          };
+            };
 
 
-          img.src = event.target.result;
+          reader.onerror =
+            () => {
 
-        };
+              reject(
+                new Error(
+                  "Could not read the selected image."
+                )
+              );
+
+            };
 
 
-        reader.onerror = () => {
-
-          reject(
-            new Error(
-              "Could not read the selected image."
-            )
+          reader.readAsDataURL(
+            file
           );
 
-        };
-
-
-        reader.readAsDataURL(file);
-
-      });
+        }
+      );
 
     }
 
 
-    /*
-      =====================================================
-      CLOUDINARY UPLOAD
-      =====================================================
-    */
+    /* =====================================================
+       CLOUDINARY UPLOAD
+    ===================================================== */
 
-    async function uploadToCloudinary(file) {
+    async function uploadToCloudinary(
+      file
+    ) {
 
       const compressedBlob =
-        await compressImage(file);
+        await compressImage(
+          file
+        );
 
 
       const formData =
         new FormData();
+
 
       formData.append(
         "file",
         compressedBlob,
         "kmeet-profile.jpg"
       );
+
 
       formData.append(
         "upload_preset",
@@ -1182,35 +3105,36 @@
 
       let data = null;
 
+
       try {
-        data = await response.json();
+
+        data =
+          await response.json();
+
       } catch (error) {
+
         data = null;
+
       }
 
 
       if (!response.ok) {
 
         console.error(
-          "Cloudinary error:",
+          "CLOUDINARY ERROR:",
           data
         );
 
-        const message =
-          data?.error?.message ||
-          "Cloudinary rejected the photo upload.";
 
-        throw new Error(message);
+        throw new Error(
+          data?.error?.message ||
+          "Cloudinary rejected the photo upload."
+        );
 
       }
 
 
       if (!data?.secure_url) {
-
-        console.error(
-          "Cloudinary response:",
-          data
-        );
 
         throw new Error(
           "Cloudinary did not return a photo URL."
@@ -1224,143 +3148,9 @@
     }
 
 
-    /*
-      =====================================================
-      LOAD PROFILE
-      =====================================================
-    */
-
-    async function loadProfile(user) {
-
-      try {
-
-        const profileRef =
-          doc(db, "users", user.uid);
-
-        const profileSnap =
-          await getDoc(profileRef);
-
-
-        let data = {};
-
-        if (profileSnap.exists()) {
-
-          data =
-            profileSnap.data();
-
-        }
-
-
-        const name =
-          data.name ||
-          user.displayName ||
-          "Kmeet Member";
-
-
-        const email =
-          data.email ||
-          user.email ||
-          "";
-
-
-        const photoURL =
-          data.photoURL ||
-          data.avatar ||
-          data.photo ||
-          data.profilePhoto ||
-          user.photoURL ||
-          "";
-
-
-        profileName.textContent =
-          name;
-
-
-        profileSubtitle.textContent =
-          data.location
-            ? `Connecting hearts in ${data.location}`
-            : "Connecting hearts naturally";
-
-
-        profileBio.textContent =
-          data.bio ||
-          "This member has not added a bio yet.";
-
-
-        profileAge.textContent =
-          data.age ||
-          "Not provided";
-
-
-        profileGender.textContent =
-          data.gender ||
-          "Not provided";
-
-
-        profileLocation.textContent =
-          data.location ||
-          "Not provided";
-
-
-        renderPhoto(
-          photoURL,
-          name
-        );
-
-
-        displayInterests(
-          data.interests || []
-        );
-
-
-        /*
-          Chat button points to this profile.
-        */
-
-        chatBtn.href =
-          `chat.html?userId=${encodeURIComponent(user.uid)}`;
-
-
-        /*
-          Show upload only on own profile.
-        */
-
-        photoActions.classList.remove("hidden");
-
-
-        console.log(
-          "KMEET PROFILE LOADED",
-          {
-            uid: user.uid,
-            name,
-            email,
-            photoURL
-          }
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Profile loading error:",
-          error
-        );
-
-        profileName.textContent =
-          "Unable to load profile";
-
-        profileBio.textContent =
-          "There was a problem loading your profile. Please refresh the page.";
-
-      }
-
-    }
-
-
-    /*
-      =====================================================
-      PHOTO UPLOAD HANDLER
-      =====================================================
-    */
+    /* =====================================================
+       PHOTO UPLOAD
+    ===================================================== */
 
     photoInput.addEventListener(
       "change",
@@ -1375,13 +3165,9 @@
         }
 
 
-        const user =
-          auth.currentUser;
+        if (!currentUser) {
 
-
-        if (!user) {
-
-          setStatus(
+          setUploadStatus(
             "Please log in before uploading a photo.",
             "error"
           );
@@ -1391,10 +3177,6 @@
         }
 
 
-        /*
-          Check image type.
-        */
-
         const allowedTypes = [
           "image/jpeg",
           "image/png",
@@ -1402,78 +3184,101 @@
         ];
 
 
-        if (!allowedTypes.includes(file.type)) {
+        if (
+          !allowedTypes.includes(
+            file.type
+          )
+        ) {
 
-          setStatus(
+          setUploadStatus(
             "Please choose a JPG, PNG or WEBP image.",
             "error"
           );
 
-          photoInput.value = "";
+          photoInput.value =
+            "";
 
           return;
 
         }
 
-
-        /*
-          Original file limit.
-        */
 
         const MAX_FILE_SIZE =
           5 * 1024 * 1024;
 
 
-        if (file.size > MAX_FILE_SIZE) {
+        if (
+          file.size >
+          MAX_FILE_SIZE
+        ) {
 
-          setStatus(
+          setUploadStatus(
             "Please choose an image smaller than 5 MB.",
             "error"
           );
 
-          photoInput.value = "";
+          photoInput.value =
+            "";
 
           return;
 
         }
 
 
+        let localPreview =
+          null;
+
+
         try {
 
-          photoInput.disabled = true;
+          photoInput.disabled =
+            true;
 
-          setStatus(
+
+          /*
+            Immediate preview.
+          */
+
+          localPreview =
+            URL.createObjectURL(
+              file
+            );
+
+
+          profileImage.src =
+            localPreview;
+
+
+          profileImage.classList.remove(
+            "hidden"
+          );
+
+
+          avatarInitials.classList.add(
+            "hidden"
+          );
+
+
+          setUploadStatus(
             "Preparing your photo...",
             "loading"
           );
 
 
-          /*
-            Show the selected image immediately.
-          */
-
-          const localPreview =
-            URL.createObjectURL(file);
-
-          profileImage.src =
-            localPreview;
-
-          profileImage.classList.remove("hidden");
-          avatarInitials.classList.add("hidden");
-
-
-          setStatus(
+          setUploadStatus(
             "Uploading your photo...",
             "loading"
           );
 
 
           /*
-            Upload to Cloudinary.
+            Cloudinary.
           */
 
           const downloadURL =
-            await uploadToCloudinary(file);
+            await uploadToCloudinary(
+              file
+            );
 
 
           console.log(
@@ -1482,27 +3287,39 @@
           );
 
 
-          setStatus(
+          setUploadStatus(
             "Saving your profile...",
             "loading"
           );
 
 
           /*
-            Save the Cloudinary URL in Firestore.
-
-            We save several field names for compatibility
-            with older Kmeet profile/discover code.
+            Save URL to Firestore.
           */
 
           await setDoc(
-            doc(db, "users", user.uid),
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            ),
             {
-              photoURL: downloadURL,
-              avatar: downloadURL,
-              photo: downloadURL,
-              profilePhoto: downloadURL,
-              updatedAt: new Date()
+
+              photoURL:
+                downloadURL,
+
+              avatar:
+                downloadURL,
+
+              photo:
+                downloadURL,
+
+              profilePhoto:
+                downloadURL,
+
+              updatedAt:
+                serverTimestamp()
+
             },
             {
               merge: true
@@ -1511,30 +3328,31 @@
 
 
           /*
-            Also update Firebase Auth profile.
+            Update Auth photo.
           */
 
           try {
 
             await updateProfile(
-              user,
+              currentUser,
               {
-                photoURL: downloadURL
+                photoURL:
+                  downloadURL
               }
             );
 
-          } catch (authPhotoError) {
+          } catch (authError) {
 
             console.warn(
-              "Auth photo update failed, but Firestore photo was saved:",
-              authPhotoError
+              "Auth photo update failed:",
+              authError
             );
 
           }
 
 
           /*
-            Display the final Cloudinary image.
+            Update page.
           */
 
           profileImage.src =
@@ -1545,24 +3363,42 @@
             "hidden"
           );
 
+
           avatarInitials.classList.add(
             "hidden"
           );
 
 
-          setStatus(
+          /*
+            Update local profile.
+          */
+
+          currentProfile.photoURL =
+            downloadURL;
+
+          currentProfile.avatar =
+            downloadURL;
+
+          currentProfile.photo =
+            downloadURL;
+
+          currentProfile.profilePhoto =
+            downloadURL;
+
+
+          setUploadStatus(
             "✓ Profile photo updated successfully!",
             "success"
           );
 
 
-          /*
-            Remove temporary object URL.
-          */
+          if (localPreview) {
 
-          URL.revokeObjectURL(
-            localPreview
-          );
+            URL.revokeObjectURL(
+              localPreview
+            );
+
+          }
 
 
         } catch (error) {
@@ -1573,49 +3409,9 @@
           );
 
 
-          let message =
-            "Photo upload failed.";
-
-
-          if (
-            error.message
-              ?.toLowerCase()
-              .includes("upload preset")
-          ) {
-
-            message =
-              "Cloudinary upload preset is not configured correctly.";
-
-          } else if (
-            error.message
-              ?.toLowerCase()
-              .includes("unsigned")
-          ) {
-
-            message =
-              "The Cloudinary preset must be set to Unsigned.";
-
-          } else if (
-            error.message
-              ?.toLowerCase()
-              .includes("file")
-          ) {
-
-            message =
-              error.message;
-
-          } else if (
-            error.message
-          ) {
-
-            message =
-              error.message;
-
-          }
-
-
-          setStatus(
-            message,
+          setUploadStatus(
+            error.message ||
+            "Photo upload failed.",
             "error"
           );
 
@@ -1625,7 +3421,8 @@
           photoInput.disabled =
             false;
 
-          photoInput.value = "";
+          photoInput.value =
+            "";
 
         }
 
@@ -1633,11 +3430,9 @@
     );
 
 
-    /*
-      =====================================================
-      LOGOUT
-      =====================================================
-    */
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
 
     logoutBtn.addEventListener(
       "click",
@@ -1645,19 +3440,25 @@
 
         event.preventDefault();
 
+
         try {
 
-          await signOut(auth);
+          await signOut(
+            auth
+          );
+
 
           window.location.href =
             "login.html";
 
+
         } catch (error) {
 
           console.error(
-            "Logout error:",
+            "LOGOUT ERROR:",
             error
           );
+
 
           alert(
             "Could not log out. Please try again."
@@ -1669,11 +3470,9 @@
     );
 
 
-    /*
-      =====================================================
-      AUTH STATE
-      =====================================================
-    */
+    /* =====================================================
+       AUTH STATE
+    ===================================================== */
 
     onAuthStateChanged(
       auth,
@@ -1689,13 +3488,19 @@
         }
 
 
+        currentUser =
+          user;
+
+
         console.log(
           "KMEET LOGGED-IN USER:",
           user.uid
         );
 
 
-        await loadProfile(user);
+        await loadProfile(
+          user
+        );
 
       }
     );
