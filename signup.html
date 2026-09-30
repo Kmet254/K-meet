@@ -84,7 +84,6 @@
       color: #d7d0df;
       font-size: 15px;
       font-weight: 700;
-
       transition: .2s ease;
     }
 
@@ -165,7 +164,6 @@
       line-height: 1.15;
       font-weight: 900;
       letter-spacing: -.8px;
-
       margin-bottom: 10px;
     }
 
@@ -185,7 +183,6 @@
 
     .field label {
       display: block;
-
       margin-bottom: 9px;
 
       font-size: 15px;
@@ -248,7 +245,6 @@
 
     .password-note {
       margin-top: 8px;
-
       color: #817888;
       font-size: 13px;
     }
@@ -461,7 +457,7 @@
            SIGNUP FORM
            =================================================== -->
 
-      <form id="signupForm">
+      <form id="signupForm" onsubmit="return false;">
 
         <!-- NAME -->
 
@@ -578,6 +574,12 @@
 
   <script type="module">
 
+    /*
+      IMPORTANT:
+      ?v=3 forces the browser/GitHub Pages to load the
+      latest firebase-config.js instead of an old cached copy.
+    */
+
     import {
       auth,
       db,
@@ -586,7 +588,26 @@
       setDoc,
       doc,
       signOut
-    } from "./firebase-config.js";
+    } from "./firebase-config.js?v=3";
+
+
+    /* ========================================================
+       FIREBASE DIAGNOSTICS
+       ======================================================== */
+
+    console.log(
+      "KMEET SIGNUP SCRIPT LOADED"
+    );
+
+    console.log(
+      "KMEET PROJECT:",
+      auth.app.options.projectId
+    );
+
+    console.log(
+      "KMEET API KEY:",
+      auth.app.options.apiKey
+    );
 
 
     /* ========================================================
@@ -654,6 +675,7 @@
 
 
       return interests;
+
     }
 
 
