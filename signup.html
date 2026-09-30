@@ -36,7 +36,9 @@
       overflow-x: hidden;
     }
 
-    /* NAVIGATION */
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
 
     .nav {
       width: 100%;
@@ -90,7 +92,9 @@
       color: #ff3c98;
     }
 
-    /* MAIN */
+    /* =========================================================
+       MAIN
+       ========================================================= */
 
     .page {
       min-height: calc(100vh - 76px);
@@ -171,7 +175,9 @@
       line-height: 1.6;
     }
 
-    /* FORM */
+    /* =========================================================
+       FORM
+       ========================================================= */
 
     .field {
       margin-bottom: 23px;
@@ -247,7 +253,9 @@
       font-size: 13px;
     }
 
-    /* MESSAGE */
+    /* =========================================================
+       MESSAGE
+       ========================================================= */
 
     #msg {
       margin: 8px 0 18px;
@@ -277,7 +285,17 @@
       border: 1px solid rgba(40, 210, 120, .30);
     }
 
-    /* BUTTON */
+    .message.info {
+      color: #d9d0ff;
+
+      background: rgba(120, 80, 220, .14);
+
+      border: 1px solid rgba(150, 110, 255, .28);
+    }
+
+    /* =========================================================
+       BUTTON
+       ========================================================= */
 
     .btn {
       width: 100%;
@@ -326,7 +344,9 @@
       transform: none;
     }
 
-    /* FOOTER */
+    /* =========================================================
+       FOOTER
+       ========================================================= */
 
     .bottom-text {
       text-align: center;
@@ -346,7 +366,9 @@
       text-decoration: underline;
     }
 
-    /* MOBILE */
+    /* =========================================================
+       MOBILE
+       ========================================================= */
 
     @media (max-width: 650px) {
 
@@ -389,9 +411,14 @@
 
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
+
+  <!-- =======================================================
+       NAVIGATION
+       ======================================================= -->
 
   <nav class="nav">
 
@@ -406,6 +433,10 @@
 
   </nav>
 
+
+  <!-- =======================================================
+       MAIN
+       ======================================================= -->
 
   <main class="page">
 
@@ -425,6 +456,10 @@
 
       </div>
 
+
+      <!-- ===================================================
+           SIGNUP FORM
+           =================================================== -->
 
       <form id="signupForm">
 
@@ -509,8 +544,12 @@
         </div>
 
 
+        <!-- MESSAGE -->
+
         <div id="msg"></div>
 
+
+        <!-- BUTTON -->
 
         <button
           class="btn"
@@ -533,6 +572,10 @@
   </main>
 
 
+  <!-- =======================================================
+       FIREBASE SIGNUP SCRIPT
+       ======================================================= -->
+
   <script type="module">
 
     import {
@@ -546,16 +589,9 @@
     } from "./firebase-config.js";
 
 
-    /*
-      ----------------------------------------------------
-      GET SAVED INTERESTS
-      ----------------------------------------------------
-      We try both storage locations.
-
-      IMPORTANT:
-      Missing interests will NOT prevent account creation.
-      ----------------------------------------------------
-    */
+    /* ========================================================
+       GET SAVED INTERESTS
+       ======================================================== */
 
     function getSelectedInterests() {
 
@@ -568,7 +604,8 @@
 
         if (pending) {
 
-          const parsed = JSON.parse(pending);
+          const parsed =
+            JSON.parse(pending);
 
           if (Array.isArray(parsed)) {
             interests = parsed;
@@ -595,7 +632,8 @@
 
           if (saved) {
 
-            const parsed = JSON.parse(saved);
+            const parsed =
+              JSON.parse(saved);
 
             if (Array.isArray(parsed)) {
               interests = parsed;
@@ -619,11 +657,9 @@
     }
 
 
-    /*
-      ----------------------------------------------------
-      PREFILL EMAIL
-      ----------------------------------------------------
-    */
+    /* ========================================================
+       PREFILL EMAIL
+       ======================================================== */
 
     const savedEmail =
       sessionStorage.getItem("pendingEmail");
@@ -636,331 +672,552 @@
     }
 
 
-    /*
-      ----------------------------------------------------
-      SIGNUP
-      ----------------------------------------------------
-    */
+    /* ========================================================
+       HELPER: SHOW MESSAGE
+       ======================================================== */
 
-    document
-      .getElementById("signupForm")
-      .addEventListener("submit", async function(e) {
+    function showMessage(
+      type,
+      message
+    ) {
 
-        e.preventDefault();
+      const msg =
+        document.getElementById("msg");
 
+      msg.innerHTML =
+        '<div class="message ' +
+        type +
+        '">' +
+        message +
+        '</div>';
 
-        const msg =
-          document.getElementById("msg");
+    }
 
-        const createBtn =
-          document.getElementById("createBtn");
 
+    /* ========================================================
+       HELPER: TIMEOUT
+       Prevent Firebase from hanging forever.
+       ======================================================== */
 
-        msg.innerHTML = "";
+    function withTimeout(
+      promise,
+      milliseconds,
+      operationName
+    ) {
 
+      return Promise.race([
 
-        const name =
-          document
-            .getElementById("displayName")
-            .value
-            .trim();
+        promise,
 
-
-        const email =
-          document
-            .getElementById("email")
-            .value
-            .trim();
-
-
-        const password =
-          document
-            .getElementById("password")
-            .value;
-
-
-        const interests =
-          getSelectedInterests();
-
-
-        if (!name) {
-
-          msg.innerHTML =
-            '<div class="message error">' +
-            'Please enter your name.' +
-            '</div>';
-
-          return;
-
-        }
-
-
-        if (!email) {
-
-          msg.innerHTML =
-            '<div class="message error">' +
-            'Please enter your email address.' +
-            '</div>';
-
-          return;
-
-        }
-
-
-        if (password.length < 6) {
-
-          msg.innerHTML =
-            '<div class="message error">' +
-            'Password must be at least 6 characters.' +
-            '</div>';
-
-          return;
-
-        }
-
-
-        /*
-          Disable button while Firebase works.
-        */
-
-        createBtn.disabled = true;
-        createBtn.textContent = "Creating Account...";
-
-
-        try {
-
-          /*
-            CREATE FIREBASE ACCOUNT
-          */
-
-          const cred =
-            await createUserWithEmailAndPassword(
-              auth,
-              email,
-              password
-            );
-
-
-          /*
-            SAVE DISPLAY NAME TO FIREBASE AUTH
-          */
-
-          await updateProfile(
-            cred.user,
-            {
-              displayName: name
-            }
-          );
-
-
-          /*
-            SAVE PROFILE TO FIRESTORE
-          */
-
-          await setDoc(
-            doc(
-              db,
-              "users",
-              cred.user.uid
-            ),
-            {
-
-              uid: cred.user.uid,
-
-              name: name,
-
-              email: email,
-
-              /*
-                If interests were found, save them.
-                If not, save an empty array instead
-                of blocking signup.
-              */
-
-              interests:
-                Array.isArray(interests)
-                  ? interests
-                  : [],
-
-              bio:
-                "New Kmeet member.",
-
-              location:
-                "Kenya",
-
-              age:
-                null,
-
-              gender:
-                "",
-
-              photoURL:
-                "",
-
-              avatar:
-                "",
-
-              photo:
-                "",
-
-              profilePhoto:
-                "",
-
-              createdAt:
-                new Date().toISOString(),
-
-              onboardingCompleted:
-                true
-
-            },
-            {
-              merge: true
-            }
-          );
-
-
-          /*
-            SIGN OUT AFTER ACCOUNT CREATION
-          */
-
-          await signOut(auth);
-
-
-          /*
-            CLEAN UP TEMPORARY DATA
-          */
-
-          sessionStorage.removeItem(
-            "pendingInterests"
-          );
-
-          sessionStorage.removeItem(
-            "pendingEmail"
-          );
-
-          localStorage.removeItem(
-            "userInterests"
-          );
-
-
-          /*
-            SUCCESS MESSAGE
-          */
-
-          msg.innerHTML =
-            '<div class="message success">' +
-            'Account created successfully. Redirecting to login...' +
-            '</div>';
-
-
-          /*
-            GO TO LOGIN
-          */
+        new Promise(function(resolve, reject) {
 
           setTimeout(function() {
 
-            window.location.href =
-              "login.html?created=1";
+            reject(
+              new Error(
+                "Kmeet timed out while " +
+                operationName +
+                ". Please check your Firebase configuration, Firestore rules, or internet connection."
+              )
+            );
 
-          }, 800);
+          }, milliseconds);
+
+        })
+
+      ]);
+
+    }
 
 
-        } catch (err) {
+    /* ========================================================
+       SIGNUP
+       ======================================================== */
 
-          console.error(
-            "Kmeet signup error:",
-            err
-          );
+    document
+      .getElementById("signupForm")
+      .addEventListener(
+        "submit",
+        async function(e) {
+
+          e.preventDefault();
 
 
-          let text =
-            "Could not create your account.";
+          const msg =
+            document.getElementById("msg");
+
+          const createBtn =
+            document.getElementById("createBtn");
 
 
-          if (
-            err.code ===
-            "auth/email-already-in-use"
-          ) {
+          msg.innerHTML = "";
 
-            text =
-              "That email is already registered. Please log in.";
 
-          }
+          const name =
+            document
+              .getElementById("displayName")
+              .value
+              .trim();
 
-          else if (
-            err.code ===
-            "auth/weak-password"
-          ) {
 
-            text =
-              "Your password is too weak. Use at least 6 characters.";
+          const email =
+            document
+              .getElementById("email")
+              .value
+              .trim();
 
-          }
 
-          else if (
-            err.code ===
-            "auth/invalid-email"
-          ) {
+          const password =
+            document
+              .getElementById("password")
+              .value;
 
-            text =
-              "Please enter a valid email address.";
 
-          }
+          const interests =
+            getSelectedInterests();
 
-          else if (
-            err.code ===
-            "auth/operation-not-allowed"
-          ) {
 
-            text =
-              "Email/password sign-in is not enabled in Firebase Authentication.";
+          /* ==================================================
+             BASIC VALIDATION
+             ================================================== */
 
-          }
+          if (!name) {
 
-          else if (
-            err.code ===
-            "auth/network-request-failed"
-          ) {
+            showMessage(
+              "error",
+              "Please enter your name."
+            );
 
-            text =
-              "Network error. Please check your internet connection and try again.";
-
-          }
-
-          else if (
-            err.code ===
-            "permission-denied" ||
-            err.code ===
-            "firestore/permission-denied"
-          ) {
-
-            text =
-              "Your account was created, but Kmeet could not save your profile. Please check Firestore permissions.";
-
-          }
-
-          else if (err.message) {
-
-            text =
-              err.message;
+            return;
 
           }
 
 
-          msg.innerHTML =
-            '<div class="message error">' +
-            text +
-            '</div>';
+          if (!email) {
+
+            showMessage(
+              "error",
+              "Please enter your email address."
+            );
+
+            return;
+
+          }
 
 
-          createBtn.disabled = false;
+          if (password.length < 6) {
+
+            showMessage(
+              "error",
+              "Password must be at least 6 characters."
+            );
+
+            return;
+
+          }
+
+
+          /* ==================================================
+             DISABLE BUTTON
+             ================================================== */
+
+          createBtn.disabled = true;
 
           createBtn.textContent =
-            "Create Account";
+            "Creating Account...";
+
+
+          try {
+
+            /* =================================================
+               STEP 1
+               CREATE FIREBASE AUTH ACCOUNT
+               ================================================= */
+
+            console.log(
+              "KMEET: Starting Firebase account creation..."
+            );
+
+            showMessage(
+              "info",
+              "Creating your account..."
+            );
+
+
+            const cred =
+              await withTimeout(
+                createUserWithEmailAndPassword(
+                  auth,
+                  email,
+                  password
+                ),
+                45000,
+                "creating your Firebase account"
+              );
+
+
+            console.log(
+              "KMEET: Firebase account created successfully.",
+              cred.user.uid
+            );
+
+
+            /* =================================================
+               STEP 2
+               UPDATE DISPLAY NAME
+               ================================================= */
+
+            createBtn.textContent =
+              "Setting Up Profile...";
+
+
+            showMessage(
+              "info",
+              "Setting up your profile..."
+            );
+
+
+            console.log(
+              "KMEET: Updating display name..."
+            );
+
+
+            await withTimeout(
+              updateProfile(
+                cred.user,
+                {
+                  displayName: name
+                }
+              ),
+              45000,
+              "setting your profile name"
+            );
+
+
+            console.log(
+              "KMEET: Display name saved."
+            );
+
+
+            /* =================================================
+               STEP 3
+               SAVE PROFILE TO FIRESTORE
+               ================================================= */
+
+            createBtn.textContent =
+              "Saving Profile...";
+
+
+            showMessage(
+              "info",
+              "Saving your Kmeet profile..."
+            );
+
+
+            console.log(
+              "KMEET: Saving profile to Firestore..."
+            );
+
+
+            await withTimeout(
+
+              setDoc(
+
+                doc(
+                  db,
+                  "users",
+                  cred.user.uid
+                ),
+
+                {
+
+                  uid:
+                    cred.user.uid,
+
+                  name:
+                    name,
+
+                  email:
+                    email,
+
+                  interests:
+                    Array.isArray(interests)
+                      ? interests
+                      : [],
+
+                  bio:
+                    "New Kmeet member.",
+
+                  location:
+                    "Kenya",
+
+                  age:
+                    null,
+
+                  gender:
+                    "",
+
+                  photoURL:
+                    "",
+
+                  avatar:
+                    "",
+
+                  photo:
+                    "",
+
+                  profilePhoto:
+                    "",
+
+                  createdAt:
+                    new Date().toISOString(),
+
+                  onboardingCompleted:
+                    true
+
+                },
+
+                {
+                  merge: true
+                }
+
+              ),
+
+              45000,
+
+              "saving your Kmeet profile to Firestore"
+
+            );
+
+
+            console.log(
+              "KMEET: Profile saved to Firestore."
+            );
+
+
+            /* =================================================
+               STEP 4
+               SIGN OUT
+               ================================================= */
+
+            createBtn.textContent =
+              "Finishing...";
+
+
+            showMessage(
+              "info",
+              "Finishing your account..."
+            );
+
+
+            console.log(
+              "KMEET: Signing out..."
+            );
+
+
+            await withTimeout(
+              signOut(auth),
+              30000,
+              "finishing your account"
+            );
+
+
+            console.log(
+              "KMEET: Signed out successfully."
+            );
+
+
+            /* =================================================
+               CLEAN TEMPORARY DATA
+               ================================================= */
+
+            sessionStorage.removeItem(
+              "pendingInterests"
+            );
+
+            sessionStorage.removeItem(
+              "pendingEmail"
+            );
+
+            localStorage.removeItem(
+              "userInterests"
+            );
+
+
+            /* =================================================
+               SUCCESS
+               ================================================= */
+
+            showMessage(
+              "success",
+              "Account created successfully. Redirecting to login..."
+            );
+
+
+            console.log(
+              "KMEET: ACCOUNT CREATION COMPLETE."
+            );
+
+
+            setTimeout(
+              function() {
+
+                window.location.href =
+                  "login.html?created=1";
+
+              },
+              1000
+            );
+
+
+          } catch (err) {
+
+            console.error(
+              "KMEET signup error:",
+              err
+            );
+
+
+            let text =
+              "Could not create your account.";
+
+
+            /* =================================================
+               FIREBASE AUTH ERRORS
+               ================================================= */
+
+            if (
+              err.code ===
+              "auth/email-already-in-use"
+            ) {
+
+              text =
+                "That email is already registered. Please log in.";
+
+            }
+
+            else if (
+              err.code ===
+              "auth/weak-password"
+            ) {
+
+              text =
+                "Your password is too weak. Use at least 6 characters.";
+
+            }
+
+            else if (
+              err.code ===
+              "auth/invalid-email"
+            ) {
+
+              text =
+                "Please enter a valid email address.";
+
+            }
+
+            else if (
+              err.code ===
+              "auth/operation-not-allowed"
+            ) {
+
+              text =
+                "Email/password sign-in is not enabled in Firebase Authentication.";
+
+            }
+
+            else if (
+              err.code ===
+              "auth/network-request-failed"
+            ) {
+
+              text =
+                "Network error. Please check your internet connection and try again.";
+
+            }
+
+            else if (
+              err.code ===
+              "auth/api-key-not-valid"
+            ) {
+
+              text =
+                "Firebase rejected the API key. Please check firebase-config.js.";
+
+            }
+
+            else if (
+              err.code ===
+              "auth/invalid-api-key"
+            ) {
+
+              text =
+                "Firebase rejected the API key. Please check firebase-config.js.";
+
+            }
+
+            else if (
+              err.code ===
+              "permission-denied"
+            ) {
+
+              text =
+                "Your account was created, but Kmeet could not save your profile because Firestore permissions denied the request.";
+
+            }
+
+            else if (
+              err.code ===
+              "firestore/permission-denied"
+            ) {
+
+              text =
+                "Your account was created, but Kmeet could not save your profile because Firestore permissions denied the request.";
+
+            }
+
+            else if (
+              err.message &&
+              err.message.toLowerCase().includes("timed out")
+            ) {
+
+              text =
+                err.message;
+
+            }
+
+            else if (err.message) {
+
+              text =
+                err.message;
+
+            }
+
+
+            /* =================================================
+               SHOW ERROR
+               ================================================= */
+
+            showMessage(
+              "error",
+              text
+            );
+
+
+            /* =================================================
+               RESTORE BUTTON
+               ================================================= */
+
+            createBtn.disabled =
+              false;
+
+            createBtn.textContent =
+              "Create Account";
+
+          }
 
         }
-
-      });
+      );
 
   </script>
 
