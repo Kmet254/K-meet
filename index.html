@@ -1,1093 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kmeet - Find Your Connection</title>
 
-  <title>Kmeet — Your Heart's True Echo</title>
+    <base target="_self">
 
-  <base target="_self">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+    <!-- Your new Kmeet logo -->
+    <link rel="icon" type="image/jpeg" href="assets/kmeet-logo.jfif">
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  >
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --pink: #ff4f9a;
-      --pink-soft: #ff79b2;
-      --purple: #a879ff;
-      --white: #ffffff;
-      --muted: rgba(255,255,255,.68);
-      --glass: rgba(20,10,24,.58);
-    }
-
-    html,
-    body {
-      min-height: 100%;
-    }
-
-    body {
-      font-family: "Poppins", sans-serif;
-      color: var(--white);
-      background:
-        linear-gradient(
-          135deg,
-          rgba(8,5,15,.82),
-          rgba(34,8,31,.76)
-        ),
-        url("kmeet-background.jpg.jpg") center/cover fixed no-repeat;
-      overflow-x: hidden;
-    }
-
-    /* =====================================================
-       NAVIGATION
-       ===================================================== */
-
-    .topbar {
-      width: 100%;
-      height: 78px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 5%;
-
-      border-bottom: 1px solid rgba(255,255,255,.08);
-
-      background: rgba(8,5,13,.36);
-
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-
-      position: relative;
-      z-index: 10;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      color: white;
-      text-decoration: none;
-
-      font-family: "Playfair Display", serif;
-      font-size: 25px;
-      font-weight: 600;
-    }
-
-    .brand-heart {
-      width: 35px;
-      height: 35px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 50%;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,79,154,.25),
-          rgba(168,121,255,.22)
-        );
-
-      border: 1px solid rgba(255,255,255,.13);
-
-      color: var(--pink-soft);
-
-      box-shadow:
-        0 8px 25px rgba(255,79,154,.15);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .nav-links a {
-      color: rgba(255,255,255,.78);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .3px;
-
-      transition: .2s ease;
-    }
-
-    .nav-links a:hover {
-      color: white;
-    }
-
-    .profile-nav {
-      padding: 9px 17px;
-      border-radius: 999px;
-
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-    }
-
-    /* =====================================================
-       MAIN
-       ===================================================== */
-
-    .page {
-      width: min(1100px, calc(100% - 32px));
-      margin: 0 auto;
-
-      min-height: calc(100vh - 78px);
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 55px 0;
-    }
-
-    /* =====================================================
-       GUEST
-       ===================================================== */
-
-    .guest-card {
-      width: min(560px, 100%);
-      padding: 48px 42px;
-
-      text-align: center;
-
-      background: rgba(16,8,21,.54);
-
-      border: 1px solid rgba(255,255,255,.12);
-
-      border-radius: 32px;
-
-      box-shadow:
-        0 30px 80px rgba(0,0,0,.38);
-
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .guest-heart {
-      width: 60px;
-      height: 60px;
-
-      margin: 0 auto 22px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 20px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,79,154,.20),
-          rgba(168,121,255,.18)
-        );
-
-      border: 1px solid rgba(255,255,255,.13);
-
-      color: var(--pink-soft);
-
-      font-size: 25px;
-    }
-
-    .guest-card h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(34px, 5vw, 50px);
-      line-height: 1.08;
-      margin-bottom: 17px;
-    }
-
-    .guest-card h1 span {
-      color: var(--pink-soft);
-    }
-
-    .guest-card p {
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-
-    .signup-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .signup-form input {
-      width: 100%;
-      height: 55px;
-
-      padding: 0 18px;
-
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.13);
-
-      background: rgba(255,255,255,.06);
-
-      color: white;
-
-      outline: none;
-
-      font-family: inherit;
-      font-size: 14px;
-    }
-
-    .signup-form input::placeholder {
-      color: rgba(255,255,255,.45);
-    }
-
-    .primary-btn {
-      width: 100%;
-      min-height: 53px;
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-
-      border: 0;
-      border-radius: 16px;
-
-      background:
-        linear-gradient(
-          100deg,
-          #ff438f,
-          #d957b5
-        );
-
-      color: white;
-
-      text-decoration: none;
-
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 700;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 13px 30px rgba(255,67,143,.20);
-
-      transition: .2s ease;
-    }
-
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      box-shadow:
-        0 17px 35px rgba(255,67,143,.28);
-    }
-
-    .login-line {
-      margin-top: 20px !important;
-      margin-bottom: 0 !important;
-      font-size: 13px;
-    }
-
-    .login-line a {
-      color: var(--pink-soft);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    /* =====================================================
-       LOGGED-IN MEMBER CARD
-       ===================================================== */
-
-    .member-card {
-      width: min(520px, 100%);
-
-      padding: 28px;
-
-      border-radius: 30px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(30,13,37,.72),
-          rgba(13,8,20,.68)
-        );
-
-      border: 1px solid rgba(255,255,255,.13);
-
-      box-shadow:
-        0 30px 90px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.06);
-
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-    }
-
-    .member-top {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .avatar-wrap {
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .member-avatar {
-      width: 105px;
-      height: 105px;
-
-      border-radius: 50%;
-
-      object-fit: cover;
-
-      border: 3px solid rgba(255,255,255,.16);
-
-      box-shadow:
-        0 12px 30px rgba(0,0,0,.35);
-
-      background: #211322;
-    }
-
-    .online-dot {
-      position: absolute;
-
-      right: 5px;
-      bottom: 6px;
-
-      width: 19px;
-      height: 19px;
-
-      border-radius: 50%;
-
-      background: #38e88a;
-
-      border: 3px solid #1c1020;
-
-      box-shadow:
-        0 0 0 4px rgba(56,232,138,.10);
-    }
-
-    .member-intro {
-      min-width: 0;
-    }
-
-    .welcome {
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
-      margin-bottom: 3px;
-    }
-
-    .member-name {
-      font-family: "Playfair Display", serif;
-      font-size: 28px;
-      line-height: 1.1;
-      margin-bottom: 7px;
-    }
-
-    .online-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-
-      color: #6ff1a7;
-
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .online-mini {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #48e995;
-    }
-
-    .member-details {
-      margin-top: 22px;
-
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .detail-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-
-      padding: 8px 12px;
-
-      border-radius: 999px;
-
-      background: rgba(255,255,255,.055);
-
-      border: 1px solid rgba(255,255,255,.09);
-
-      color: rgba(255,255,255,.72);
-
-      font-size: 11px;
-    }
-
-    .detail-pill i {
-      color: var(--pink-soft);
-    }
-
-    .interest-title {
-      margin-top: 23px;
-      margin-bottom: 9px;
-
-      color: rgba(255,255,255,.48);
-
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-
-    .interests {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
-
-    .interest {
-      padding: 7px 11px;
-
-      border-radius: 999px;
-
-      background: rgba(255,79,154,.09);
-
-      border: 1px solid rgba(255,79,154,.16);
-
-      color: rgba(255,255,255,.76);
-
-      font-size: 11px;
-    }
-
-    .member-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      gap: 10px;
-
-      margin-top: 25px;
-    }
-
-    .secondary-btn {
-      min-height: 49px;
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-
-      border-radius: 15px;
-
-      border: 1px solid rgba(255,255,255,.12);
-
-      background: rgba(255,255,255,.055);
-
-      color: rgba(255,255,255,.86);
-
-      text-decoration: none;
-
-      font-size: 12px;
-      font-weight: 600;
-
-      transition: .2s ease;
-    }
-
-    .secondary-btn:hover {
-      background: rgba(255,255,255,.09);
-      transform: translateY(-1px);
-    }
-
-    .logout-btn {
-      width: 100%;
-
-      margin-top: 13px;
-
-      border: 0;
-      background: transparent;
-
-      color: rgba(255,255,255,.40);
-
-      font-family: inherit;
-      font-size: 11px;
-
-      cursor: pointer;
-    }
-
-    .logout-btn:hover {
-      color: #ff7ea9;
-    }
-
-    .loading {
-      text-align: center;
-      color: rgba(255,255,255,.55);
-      font-size: 14px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* =====================================================
-       MOBILE
-       ===================================================== */
-
-    @media (max-width: 650px) {
-
-      .topbar {
-        height: 68px;
-        padding: 0 18px;
-      }
-
-      .brand {
-        font-size: 22px;
-      }
-
-      .brand-heart {
-        width: 31px;
-        height: 31px;
-        font-size: 13px;
-      }
-
-      .nav-links {
-        gap: 11px;
-      }
-
-      .nav-links a {
-        font-size: 11px;
-      }
-
-      .profile-nav {
-        padding: 7px 11px;
-      }
-
-      .page {
-        width: min(100% - 22px, 520px);
-        padding: 35px 0;
-      }
-
-      .guest-card {
-        padding: 36px 23px;
-        border-radius: 25px;
-      }
-
-      .member-card {
-        padding: 21px;
-        border-radius: 25px;
-      }
-
-      .member-top {
-        gap: 14px;
-      }
-
-      .member-avatar {
-        width: 82px;
-        height: 82px;
-      }
-
-      .online-dot {
-        width: 16px;
-        height: 16px;
-      }
-
-      .member-name {
-        font-size: 24px;
-      }
-
-      .member-actions {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <link rel="stylesheet" href="css/myweb.css">
 </head>
 
 <body>
 
-  <!-- =====================================================
-       NAV
-       ===================================================== -->
+<section class="header">
 
-  <header class="topbar">
+    <!-- TOP NAVIGATION -->
+    <nav class="main-nav">
 
-    <a href="index.html" class="brand">
-      <span class="brand-heart">
-        <i class="fa-solid fa-heart"></i>
-      </span>
+        <!-- Brand / Home -->
+        <div class="brand">
+            <a href="index.html" class="brand-link" aria-label="Kmeet Home">
+                <span class="brand-heart">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+                <span>Kmeet your heart's true echo.</span>
+            </a>
+        </div>
 
-      Kmeet
-    </a>
+        <!-- Center button -->
+        <a href="#signup" class="interested-btn">
+            <i class="fa-solid fa-heart"></i>
+            <span>Interested?</span>
+        </a>
 
-    <nav class="nav-links">
-      <a href="discover.html">Discover</a>
-      <a id="profileNav" class="profile-nav" href="login.html">
-        Log In
-      </a>
+        <!-- Right navigation -->
+        <div class="nav-links">
+            <ul>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="blog.html">BLOG</a></li>
+                <li id="navProfileLink"><a href="login.html">LOG IN</a></li>
+            </ul>
+        </div>
+
     </nav>
 
-  </header>
+
+    <!-- HERO CARD -->
+    <div class="hero-content" id="heroCard">
+
+        <!-- GUEST STATE -->
+        <div id="guestState">
+
+            <h1>KMEET YOUR HEARTS TRUE<br>ECHO</h1>
+
+            <p>
+                Find a connection built for intentional,<br>
+                romantic courtship
+            </p>
+
+            <p>
+                A sanctuary for intentional courtship
+            </p>
+
+            <form id="signupForm" class="auth-form">
+
+                <div class="input-group">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Create Account
+                </button>
+
+            </form>
+
+            <div class="login-option">
+                <span>Already have an account?</span>
+                <a href="login.html" class="btn-link">Log In</a>
+            </div>
+
+        </div>
 
 
-  <!-- =====================================================
-       MAIN
-       ===================================================== -->
+        <!-- LOGGED-IN STATE -->
+        <div id="userState" style="display:none;">
 
-  <main class="page">
+            <div class="home-profile-preview">
 
-    <!-- Loading -->
+                <img
+                    id="homeUserAvatar"
+                    src=""
+                    alt="Profile Photo"
+                    class="home-avatar"
+                >
 
-    <div id="loadingState" class="loading">
-      <i class="fa-solid fa-heart"></i>
-      &nbsp; Loading Kmeet...
+                <h2 id="homeUserName">Welcome Back</h2>
+
+                <p id="homeUserEmail" class="home-email"></p>
+
+                <div
+                    class="home-interests-tags"
+                    id="homeInterests">
+                </div>
+
+                <div class="home-profile-actions">
+
+                    <a href="discover.html"
+                       class="btn btn-primary">
+                        <i class="fa-solid fa-compass"></i>
+                        Discover People
+                    </a>
+
+                    <a href="profile.html"
+                       class="btn btn-primary">
+                        View Full Profile
+                    </a>
+
+                    <button
+                        id="homeLogoutBtn"
+                        class="btn-link-logout">
+                        Log Out
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
+</section>
 
-    <!-- Guest -->
 
-    <section id="guestState" class="guest-card hidden">
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
-      <div class="guest-heart">
-        <i class="fa-solid fa-heart"></i>
-      </div>
+    const guestState = document.getElementById('guestState');
+    const userState = document.getElementById('userState');
+    const navProfileLink = document.getElementById('navProfileLink');
 
-      <h1>
-        Kmeet your<br>
-        <span>heart's true echo.</span>
-      </h1>
+    const savedEmail = localStorage.getItem('userEmail');
+    const savedAvatar = localStorage.getItem('userAvatar');
 
-      <p>
-        Find meaningful connections built around
-        genuine interests and intentional courtship.
-      </p>
+    let savedInterests = [];
 
-      <form id="signupForm" class="signup-form">
-
-        <input
-          id="guestEmail"
-          type="email"
-          placeholder="Enter your email address"
-          autocomplete="email"
-          required
-        >
-
-        <button class="primary-btn" type="submit">
-          <i class="fa-solid fa-heart"></i>
-          Create Account
-        </button>
-
-      </form>
-
-      <p class="login-line">
-        Already have an account?
-        <a href="login.html">Log in</a>
-      </p>
-
-    </section>
-
-
-    <!-- Logged in -->
-
-    <section id="memberState" class="member-card hidden">
-
-      <div class="member-top">
-
-        <div class="avatar-wrap">
-
-          <img
-            id="homeAvatar"
-            class="member-avatar"
-            src=""
-            alt="Your profile photo"
-          >
-
-          <span class="online-dot"></span>
-
-        </div>
-
-
-        <div class="member-intro">
-
-          <p class="welcome">
-            Welcome back
-          </p>
-
-          <h1 id="homeName" class="member-name">
-            Kmeet Member
-          </h1>
-
-          <div class="online-label">
-            <span class="online-mini"></span>
-            Online now
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="member-details">
-
-        <span id="homeLocation" class="detail-pill">
-          <i class="fa-solid fa-location-dot"></i>
-          Kenya
-        </span>
-
-        <span id="homeGender" class="detail-pill hidden">
-          <i class="fa-solid fa-user"></i>
-          <span></span>
-        </span>
-
-        <span id="homeAge" class="detail-pill hidden">
-          <i class="fa-solid fa-cake-candles"></i>
-          <span></span>
-        </span>
-
-      </div>
-
-
-      <div class="interest-title">
-        Your interests
-      </div>
-
-      <div id="homeInterests" class="interests">
-      </div>
-
-
-      <div class="member-actions">
-
-        <a href="discover.html" class="primary-btn">
-          <i class="fa-solid fa-compass"></i>
-          Discover People
-        </a>
-
-        <a href="profile.html" class="secondary-btn">
-          <i class="fa-solid fa-user"></i>
-          My Profile
-        </a>
-
-      </div>
-
-
-      <button id="logoutBtn" class="logout-btn">
-        Log out
-      </button>
-
-    </section>
-
-  </main>
-
-
-  <!-- =====================================================
-       FIREBASE
-       ===================================================== -->
-
-  <script type="module">
-
-    import {
-      auth,
-      db,
-      onAuthStateChanged,
-      signOut,
-      doc,
-      getDoc
-    } from "./firebase-config.js";
-
-
-    const loadingState =
-      document.getElementById("loadingState");
-
-    const guestState =
-      document.getElementById("guestState");
-
-    const memberState =
-      document.getElementById("memberState");
-
-    const profileNav =
-      document.getElementById("profileNav");
-
-
-    const homeAvatar =
-      document.getElementById("homeAvatar");
-
-    const homeName =
-      document.getElementById("homeName");
-
-    const homeLocation =
-      document.getElementById("homeLocation");
-
-    const homeGender =
-      document.getElementById("homeGender");
-
-    const homeAge =
-      document.getElementById("homeAge");
-
-    const homeInterests =
-      document.getElementById("homeInterests");
-
-
-    function escapeHtml(value) {
-
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
+    try {
+        savedInterests =
+            JSON.parse(localStorage.getItem('userInterests')) || [];
+    } catch (error) {
+        savedInterests = [];
     }
 
 
-    function showGuest() {
+    /* -----------------------------------------
+       LOGGED-IN USER STATE
+    ----------------------------------------- */
 
-      loadingState.classList.add("hidden");
+    if (savedEmail) {
 
-      memberState.classList.add("hidden");
+        guestState.style.display = 'none';
+        userState.style.display = 'block';
 
-      guestState.classList.remove("hidden");
+        navProfileLink.innerHTML =
+            '<a href="profile.html">MY PROFILE</a>';
 
-      profileNav.textContent = "Log In";
+        document.getElementById('homeUserEmail')
+            .textContent = savedEmail;
 
-      profileNav.href = "login.html";
+        const username = savedEmail.split('@')[0];
 
-    }
-
-
-    function showMember(user, profile) {
-
-      loadingState.classList.add("hidden");
-
-      guestState.classList.add("hidden");
-
-      memberState.classList.remove("hidden");
-
-      profileNav.textContent = "My Profile";
-
-      profileNav.href = "profile.html";
+        document.getElementById('homeUserName')
+            .textContent =
+            username.charAt(0).toUpperCase() +
+            username.slice(1);
 
 
-      const name =
-        profile.name ||
-        user.displayName ||
-        "Kmeet Member";
+        if (savedAvatar) {
 
+            document.getElementById('homeUserAvatar').src =
+                savedAvatar;
 
-      homeName.textContent = name;
+        } else {
 
-
-      const photo =
-        profile.photoURL ||
-        profile.profilePhoto ||
-        profile.avatar ||
-        profile.photo ||
-        "";
-
-
-      if (photo) {
-
-        homeAvatar.src = photo;
-
-      } else {
-
-        homeAvatar.src =
-          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80";
-
-      }
-
-
-      homeAvatar.onerror = function () {
-
-        this.src =
-          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80";
-
-      };
-
-
-      homeLocation.innerHTML =
-        '<i class="fa-solid fa-location-dot"></i> ' +
-        escapeHtml(profile.location || "Kenya");
-
-
-      if (profile.gender) {
-
-        homeGender.classList.remove("hidden");
-
-        homeGender.querySelector("span").textContent =
-          profile.gender;
-
-      } else {
-
-        homeGender.classList.add("hidden");
-
-      }
-
-
-      if (profile.age) {
-
-        homeAge.classList.remove("hidden");
-
-        homeAge.querySelector("span").textContent =
-          profile.age;
-
-      } else {
-
-        homeAge.classList.add("hidden");
-
-      }
-
-
-      const interests =
-        Array.isArray(profile.interests)
-          ? profile.interests
-          : [];
-
-
-      if (interests.length) {
-
-        homeInterests.innerHTML =
-          interests
-            .slice(0, 5)
-            .map(item =>
-              `<span class="interest">${escapeHtml(item)}</span>`
-            )
-            .join("");
-
-      } else {
-
-        homeInterests.innerHTML =
-          '<span class="interest">Getting to know people</span>';
-
-      }
-
-    }
-
-
-    onAuthStateChanged(auth, async user => {
-
-      try {
-
-        if (!user || user.isAnonymous) {
-
-          showGuest();
-
-          return;
+            document.getElementById('homeUserAvatar').src =
+                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80';
 
         }
 
 
-        let profile = {};
+        const interestsContainer =
+            document.getElementById('homeInterests');
+
+        if (savedInterests.length > 0) {
+
+            interestsContainer.innerHTML =
+                savedInterests
+                .slice(0, 4)
+                .map(function (item) {
+                    return '<span class="home-tag">' +
+                           item +
+                           '</span>';
+                })
+                .join('');
+
+        }
+
+    }
 
 
-        try {
+    /* -----------------------------------------
+       INTERESTED BUTTON
+    ----------------------------------------- */
 
-          const snap =
-            await getDoc(
-              doc(db, "users", user.uid)
+    const interestedButton =
+        document.querySelector('.interested-btn');
+
+    if (interestedButton) {
+
+        interestedButton.addEventListener('click', function () {
+
+            const emailInput =
+                document.querySelector(
+                    '#signupForm input[type="email"]'
+                );
+
+            if (emailInput) {
+
+                setTimeout(function () {
+                    emailInput.focus();
+                }, 150);
+
+            }
+
+        });
+
+    }
+
+
+    /* -----------------------------------------
+       SIGNUP FORM
+    ----------------------------------------- */
+
+    const signupForm =
+        document.getElementById('signupForm');
+
+    if (signupForm) {
+
+        signupForm.addEventListener('submit', function (e) {
+
+            e.preventDefault();
+
+            const emailInput =
+                this.querySelector('input[type="email"]');
+
+            if (!emailInput || !emailInput.value) {
+                return;
+            }
+
+            localStorage.setItem(
+                'userEmail',
+                emailInput.value
             );
 
-          if (snap.exists()) {
+            document.body.classList.add('fade-out');
 
-            profile = snap.data();
+            setTimeout(function () {
 
-          }
+                window.location.href =
+                    'onboarding.html';
 
-        } catch (error) {
+            }, 400);
 
-          console.error(
-            "Could not load profile:",
-            error
-          );
+        });
 
-        }
+    }
 
 
-        showMember(user, profile);
+    /* -----------------------------------------
+       LOGOUT
+    ----------------------------------------- */
 
-      } catch (error) {
+    const homeLogoutBtn =
+        document.getElementById('homeLogoutBtn');
 
-        console.error(error);
+    if (homeLogoutBtn) {
 
-        showGuest();
+        homeLogoutBtn.addEventListener(
+            'click',
+            function () {
 
-      }
+                localStorage.clear();
+                window.location.reload();
 
-    });
-
-
-    /* =====================================================
-       SIGNUP
-       ===================================================== */
-
-    document
-      .getElementById("signupForm")
-      .addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-        const email =
-          document
-            .getElementById("guestEmail")
-            .value
-            .trim();
-
-        if (!email) return;
-
-        sessionStorage.setItem(
-          "pendingEmail",
-          email
+            }
         );
 
-        window.location.href =
-          "onboarding.html";
+    }
 
-      });
-
-
-    /* =====================================================
-       LOGOUT
-       ===================================================== */
-
-    document
-      .getElementById("logoutBtn")
-      .addEventListener("click", async function () {
-
-        try {
-
-          await signOut(auth);
-
-          window.location.href =
-            "index.html";
-
-        } catch (error) {
-
-          console.error(
-            "Logout failed:",
-            error
-          );
-
-        }
-
-      });
-
-  </script>
+});
+</script>
 
 </body>
 </html>
