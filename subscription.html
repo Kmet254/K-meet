@@ -19,8 +19,12 @@
             min-height: 100vh;
             font-family: Arial, Helvetica, sans-serif;
             color: #fff;
+
             background:
-                linear-gradient(rgba(35, 5, 18, 0.82), rgba(20, 3, 12, 0.94)),
+                linear-gradient(
+                    rgba(35, 5, 18, 0.82),
+                    rgba(20, 3, 12, 0.94)
+                ),
                 url("kmeet-background.jpg.jpg") center/cover fixed;
         }
 
@@ -30,6 +34,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 7%;
+
             background: rgba(25, 4, 15, 0.88);
             border-bottom: 1px solid rgba(255,255,255,0.12);
         }
@@ -38,8 +43,10 @@
             display: flex;
             align-items: center;
             gap: 12px;
+
             text-decoration: none;
             color: #fff;
+
             font-size: 28px;
             font-weight: 700;
         }
@@ -93,9 +100,12 @@
             max-width: 760px;
             margin: 0 auto 40px;
             padding: 24px;
+
             border-radius: 18px;
+
             background: rgba(255,255,255,0.09);
             border: 1px solid rgba(255,255,255,0.14);
+
             backdrop-filter: blur(10px);
         }
 
@@ -113,17 +123,24 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
+
             max-width: 820px;
             margin: 0 auto;
         }
 
         .plan {
             padding: 35px 25px;
+
             border-radius: 22px;
+
             background: rgba(255,255,255,0.09);
             border: 1px solid rgba(255,255,255,0.14);
+
             backdrop-filter: blur(12px);
-            transition: transform 0.25s ease, border-color 0.25s ease;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
         }
 
         .plan:hover {
@@ -139,7 +156,9 @@
         .price {
             font-size: 38px;
             font-weight: bold;
+
             color: #f5b5c8;
+
             margin: 15px 0;
         }
 
@@ -157,28 +176,62 @@
 
         .buy-button {
             display: inline-block;
+
             margin-top: 25px;
             padding: 13px 30px;
+
             border-radius: 30px;
+
             background: #a52f55;
             color: #fff;
+
             text-decoration: none;
             font-weight: bold;
+
             border: none;
             cursor: pointer;
-            transition: background 0.2s ease;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .buy-button:hover {
             background: #c0446c;
+            transform: translateY(-2px);
+        }
+
+        .buy-button:active {
+            transform: translateY(0);
+        }
+
+        .warning {
+            display: none;
+
+            max-width: 700px;
+            margin: 25px auto 0;
+
+            padding: 15px 20px;
+
+            border-radius: 12px;
+
+            background: rgba(180, 40, 70, 0.25);
+            border: 1px solid rgba(255,120,150,0.35);
+
+            color: #ffdce5;
+            line-height: 1.5;
         }
 
         .rules {
             max-width: 820px;
             margin: 45px auto 0;
+
             padding: 28px;
+
             text-align: left;
+
             border-radius: 18px;
+
             background: rgba(0,0,0,0.25);
             border: 1px solid rgba(255,255,255,0.1);
         }
@@ -194,6 +247,7 @@
 
         .rules li {
             margin: 12px 0;
+
             color: #ddd;
             line-height: 1.5;
         }
@@ -203,8 +257,18 @@
         }
 
         @media (max-width: 700px) {
+
             header {
                 padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .logo img {
+                width: 42px;
+                height: 42px;
             }
 
             .intro h1 {
@@ -225,6 +289,7 @@
 <body>
 
 <header>
+
     <a href="index.html" class="logo">
         <img src="kmeet-logo.jfif.jfif" alt="Kmeet">
         Kmeet
@@ -233,20 +298,29 @@
     <a href="discover.html" class="back">
         ← Back to Discover
     </a>
+
 </header>
+
 
 <main>
 
     <section class="intro">
-        <h1>Keep the conversation <span>going ❤️</span></h1>
+
+        <h1>
+            Keep the conversation
+            <span>going ❤️</span>
+        </h1>
 
         <p>
             Use Kmeet chat credits to continue meaningful conversations
             with people you're interested in.
         </p>
+
     </section>
 
+
     <section class="free-box">
+
         <h2>Your first message is free</h2>
 
         <p>
@@ -254,11 +328,17 @@
             <strong>“Hi”</strong> or <strong>“Hey”</strong>.
             After that, additional messages use chat credits.
         </p>
+
     </section>
+
 
     <section class="plans">
 
+
+        <!-- 3 CHAT PLAN -->
+
         <div class="plan">
+
             <h2>3 Chats</h2>
 
             <div class="price">
@@ -269,12 +349,23 @@
                 Get 3 paid chat messages to continue your conversations.
             </p>
 
-            <a href="#" class="buy-button">
+            <a
+                href="#"
+                class="buy-button"
+                data-package="3"
+                data-amount="49"
+            >
                 Get 3 Chats
             </a>
+
         </div>
 
+
+
+        <!-- 8 CHAT PLAN -->
+
         <div class="plan">
+
             <h2>8 Chats</h2>
 
             <div class="price">
@@ -285,18 +376,33 @@
                 Get 8 paid chat messages for longer conversations.
             </p>
 
-            <a href="#" class="buy-button">
+            <a
+                href="#"
+                class="buy-button"
+                data-package="8"
+                data-amount="100"
+            >
                 Get 8 Chats
             </a>
+
         </div>
 
     </section>
+
+
+    <div id="warning" class="warning">
+        Please open this page from a person's
+        <strong>Get Chat</strong> button so we know which conversation
+        you want to unlock.
+    </div>
+
 
     <section class="rules">
 
         <h2>How Kmeet Chat Works</h2>
 
         <ul>
+
             <li>
                 <strong>Sender:</strong>
                 One opening “Hi” or “Hey” message is free.
@@ -328,11 +434,99 @@
                 <strong>KSh 11:</strong>
                 This is a continuation fee for the receiver, not a reward.
             </li>
+
         </ul>
 
     </section>
 
 </main>
+
+
+<script>
+
+    /*
+     * Get the person the visitor wants to chat with.
+     *
+     * Example:
+     * subscription.html?userId=FSZby0iNn4fDK59Lnc3oCBFoYlA3
+     */
+
+    const params = new URLSearchParams(window.location.search);
+
+    const userId = params.get("userId") || params.get("user");
+
+
+    /*
+     * Show a warning if no person was selected.
+     */
+
+    const warning = document.getElementById("warning");
+
+    if (!userId) {
+        warning.style.display = "block";
+    }
+
+
+    /*
+     * Handle both package buttons.
+     */
+
+    document.querySelectorAll(".buy-button").forEach(button => {
+
+        button.addEventListener("click", function(event) {
+
+            event.preventDefault();
+
+
+            /*
+             * We cannot continue without knowing
+             * which Kmeet member the visitor selected.
+             */
+
+            if (!userId) {
+
+                warning.style.display = "block";
+
+                window.scrollTo({
+                    top: warning.offsetTop - 120,
+                    behavior: "smooth"
+                });
+
+                return;
+            }
+
+
+            /*
+             * Get the selected package.
+             */
+
+            const packageSize = this.dataset.package;
+            const amount = this.dataset.amount;
+
+
+            /*
+             * Send the selected package and person
+             * to the payment page.
+             *
+             * Example:
+             *
+             * payment.html?userId=ABC123&package=3&amount=49
+             */
+
+            const paymentUrl =
+                "payment.html" +
+                "?userId=" + encodeURIComponent(userId) +
+                "&package=" + encodeURIComponent(packageSize) +
+                "&amount=" + encodeURIComponent(amount);
+
+
+            window.location.href = paymentUrl;
+
+        });
+
+    });
+
+</script>
 
 </body>
 </html>
