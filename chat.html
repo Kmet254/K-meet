@@ -31,6 +31,7 @@ body{
 body{
     font-family:"Poppins",sans-serif;
     color:#fff;
+
     background:
         linear-gradient(
             rgba(25,10,24,.62),
@@ -47,12 +48,17 @@ body{
 
 .topbar{
     height:70px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     padding:0 28px;
+
     background:rgba(10,5,12,.40);
+
     border-bottom:1px solid rgba(255,255,255,.10);
+
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
 }
@@ -72,10 +78,15 @@ body{
 .back-btn{
     text-decoration:none;
     color:#fff;
+
     padding:9px 17px;
+
     border-radius:999px;
+
     border:1px solid rgba(255,255,255,.18);
+
     background:rgba(255,255,255,.08);
+
     transition:.2s ease;
 }
 
@@ -86,16 +97,22 @@ body{
 
 .chat-shell{
     width:min(920px,calc(100% - 30px));
+
     height:calc(100vh - 92px);
+
     min-height:520px;
+
     margin:11px auto;
+
     display:flex;
     flex-direction:column;
+
     overflow:hidden;
 
     border-radius:26px;
 
     background:rgba(19,9,18,.48);
+
     border:1px solid rgba(255,255,255,.15);
 
     box-shadow:
@@ -108,13 +125,16 @@ body{
 
 .chat-header{
     min-height:82px;
+
     padding:14px 20px;
 
     display:flex;
     align-items:center;
+
     gap:13px;
 
     border-bottom:1px solid rgba(255,255,255,.10);
+
     background:rgba(255,255,255,.035);
 }
 
@@ -122,8 +142,11 @@ body{
 .avatar-fallback{
     width:50px;
     height:50px;
+
     flex:none;
+
     border-radius:50%;
+
     object-fit:cover;
 
     border:2px solid rgba(255,255,255,.22);
@@ -154,17 +177,22 @@ body{
 
 .status{
     margin-top:2px;
+
     font-size:12px;
+
     color:rgba(255,255,255,.58);
 }
 
 .messages{
     flex:1;
+
     overflow-y:auto;
+
     padding:22px;
 
     display:flex;
     flex-direction:column;
+
     gap:10px;
 
     scrollbar-width:thin;
@@ -172,7 +200,9 @@ body{
 
 .message{
     max-width:76%;
+
     padding:11px 15px;
+
     border-radius:18px;
 
     font-size:14px;
@@ -202,6 +232,7 @@ body{
     align-self:flex-start;
 
     background:rgba(255,255,255,.105);
+
     border:1px solid rgba(255,255,255,.10);
 
     border-bottom-left-radius:5px;
@@ -209,23 +240,30 @@ body{
 
 .empty{
     flex:1;
+
     min-height:180px;
 
     display:grid;
     place-items:center;
 
     text-align:center;
+
     color:rgba(255,255,255,.54);
+
     font-size:14px;
+
     padding:30px;
 }
 
 .composer{
     display:flex;
+
     gap:10px;
+
     padding:13px;
 
     border-top:1px solid rgba(255,255,255,.10);
+
     background:rgba(8,4,9,.26);
 }
 
@@ -245,11 +283,13 @@ body{
     border-radius:17px;
 
     font-family:"Poppins",sans-serif;
+
     font-size:14px;
 
     color:#fff;
 
     background:rgba(255,255,255,.09);
+
     border:1px solid rgba(255,255,255,.12);
 }
 
@@ -268,15 +308,19 @@ body{
     align-self:stretch;
 
     padding:0 21px;
+
     min-width:78px;
 
     border:none;
+
     border-radius:17px;
 
     cursor:pointer;
 
     color:#fff;
+
     font-family:"Poppins",sans-serif;
+
     font-weight:600;
 
     background:
@@ -304,22 +348,32 @@ body{
     cursor:not-allowed;
 }
 
+
+/* ============================================================
+   GATES
+   ============================================================ */
+
 .gate{
     flex:1;
+
     display:grid;
+
     place-items:center;
+
     padding:35px;
+
     text-align:center;
 }
 
 .gate-card{
-    width:min(520px,100%);
+    width:min(560px,100%);
 
     padding:34px 28px;
 
     border-radius:24px;
 
     background:rgba(15,7,14,.55);
+
     border:1px solid rgba(255,255,255,.17);
 
     box-shadow:
@@ -331,20 +385,101 @@ body{
 
 .gate-icon{
     font-size:42px;
+
     margin-bottom:10px;
 }
 
 .gate-card h2{
     margin:0 0 10px;
+
     font-size:27px;
 }
 
 .gate-card p{
     margin:0 auto 22px;
+
     max-width:440px;
 
     color:rgba(255,255,255,.78);
+
     line-height:1.65;
+}
+
+
+/* ============================================================
+   PACKAGE OPTIONS
+   ============================================================ */
+
+.package-options{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.package-btn{
+    border:none;
+
+    cursor:pointer;
+
+    padding:17px 12px;
+
+    border-radius:18px;
+
+    color:#fff;
+
+    font-family:"Poppins",sans-serif;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.13);
+
+    transition:.2s ease;
+}
+
+.package-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.13);
+
+    border-color:rgba(230,106,148,.45);
+}
+
+.package-btn strong{
+    display:block;
+
+    font-size:16px;
+
+    margin-bottom:4px;
+}
+
+.package-btn span{
+    display:block;
+
+    font-size:12px;
+
+    color:rgba(255,255,255,.58);
+}
+
+.package-btn.primary{
+    background:
+        linear-gradient(
+            135deg,
+            #e66a94,
+            #a9426d
+        );
+
+    border-color:transparent;
+
+    box-shadow:
+        0 8px 22px rgba(150,47,88,.30);
+}
+
+.package-btn.primary span{
+    color:rgba(255,255,255,.78);
 }
 
 .pay-btn{
@@ -355,7 +490,9 @@ body{
     border-radius:999px;
 
     color:#fff;
+
     text-decoration:none;
+
     font-weight:600;
 
     background:
@@ -377,9 +514,16 @@ body{
 
 .secondary-note{
     margin-top:14px;
+
     font-size:12px;
+
     color:rgba(255,255,255,.48);
 }
+
+
+/* ============================================================
+   ERROR
+   ============================================================ */
 
 .error{
     color:#ffd0d8;
@@ -397,8 +541,14 @@ body{
     display:none;
 
     font-size:13px;
+
     line-height:1.5;
 }
+
+
+/* ============================================================
+   RULE NOTE
+   ============================================================ */
 
 .rule-note{
     margin:0 14px 10px;
@@ -418,6 +568,11 @@ body{
     text-align:center;
 }
 
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
 @media(max-width:650px){
 
     .topbar{
@@ -431,7 +586,9 @@ body{
 
     .chat-shell{
         width:calc(100% - 12px);
+
         height:calc(100vh - 76px);
+
         min-height:0;
 
         margin:6px auto;
@@ -468,14 +625,20 @@ body{
         padding:28px 20px;
     }
 
+    .package-options{
+        grid-template-columns:1fr;
+    }
+
 }
 
 </style>
 </head>
 
+
 <body>
 
 <div class="page">
+
 
 <header class="topbar">
 
@@ -492,13 +655,19 @@ body{
 
 <main class="chat-shell">
 
+
     <div id="errorBox" class="error"></div>
 
+
+    <!-- ======================================================
+         CHAT
+         ====================================================== -->
 
     <section
         id="chatArea"
         style="display:none;height:100%;flex-direction:column;"
     >
+
 
         <div class="chat-header">
 
@@ -509,12 +678,14 @@ body{
                 K
             </div>
 
+
             <img
                 id="avatar"
                 class="avatar"
                 alt=""
                 style="display:none"
             >
+
 
             <div>
 
@@ -571,6 +742,7 @@ body{
                 required
             ></textarea>
 
+
             <button
                 id="sendBtn"
                 class="send-btn"
@@ -581,10 +753,13 @@ body{
 
         </form>
 
+
     </section>
 
 
-    <!-- PAYMENT GATE -->
+    <!-- ======================================================
+         PAYMENT / CHAT CREDIT GATE
+         ====================================================== -->
 
     <section
         id="gate"
@@ -594,38 +769,92 @@ body{
 
         <div class="gate-card">
 
+
             <div
                 id="gateIcon"
                 class="gate-icon"
             >
-                💗
+                🔒
             </div>
 
+
             <h2 id="gateTitle">
-                Continue your conversation
+                Keep the conversation going
             </h2>
 
+
             <p id="gateText">
-                Continue for KSh 11 to keep chatting.
+                Your free opening message has been used.
+                Choose a chat package to continue.
             </p>
 
+
+            <div
+                id="senderPackages"
+                class="package-options"
+            >
+
+                <button
+                    type="button"
+                    class="package-btn primary"
+                    data-package="3"
+                    data-amount="49"
+                >
+
+                    <strong>
+                        3 chats — KSh 49
+                    </strong>
+
+                    <span>
+                        Continue for 3 chats
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="package-btn"
+                    data-package="8"
+                    data-amount="100"
+                >
+
+                    <strong>
+                        8 chats — KSh 100
+                    </strong>
+
+                    <span>
+                        Get 8 chat credits
+                    </span>
+
+                </button>
+
+            </div>
+
+
             <a
+                id="receiverPayBtn"
                 class="pay-btn"
-                href="payment.html"
+                href="#"
+                style="display:none;"
             >
                 Continue for KSh 11
             </a>
 
+
             <div class="secondary-note">
-                After completing payment, return to this conversation.
+                Kmeet keeps free conversations contact-safe.
             </div>
+
 
         </div>
 
     </section>
 
 
-    <!-- LOADING -->
+    <!-- ======================================================
+         LOADING
+         ====================================================== -->
 
     <section
         id="loading"
@@ -638,9 +867,11 @@ body{
                 🌹
             </div>
 
+
             <h2>
                 Opening Kmeet chat…
             </h2>
+
 
             <p>
                 Please wait while we securely prepare your conversation.
@@ -650,12 +881,18 @@ body{
 
     </section>
 
+
 </main>
 
 </div>
 
 
 <script type="module">
+
+
+/* ============================================================
+   FIREBASE
+   ============================================================ */
 
 import {
     auth,
@@ -672,6 +909,8 @@ import {
 import {
     doc,
     getDoc,
+    setDoc,
+    updateDoc,
     collection,
     addDoc,
     query,
@@ -747,6 +986,15 @@ const gateTitle =
 const gateText =
     document.getElementById("gateText");
 
+const gateIcon =
+    document.getElementById("gateIcon");
+
+const senderPackages =
+    document.getElementById("senderPackages");
+
+const receiverPayBtn =
+    document.getElementById("receiverPayBtn");
+
 
 
 /* ============================================================
@@ -761,6 +1009,8 @@ let unsubscribeMessages = null;
 
 let messageList = [];
 
+let conversationData = {};
+
 
 
 /* ============================================================
@@ -769,23 +1019,28 @@ let messageList = [];
 
 function showError(message){
 
-    errorBox.textContent = message;
+    errorBox.textContent =
+        message;
 
-    errorBox.style.display = "block";
+    errorBox.style.display =
+        "block";
 }
 
 
 function hideError(){
 
-    errorBox.textContent = "";
+    errorBox.textContent =
+        "";
 
-    errorBox.style.display = "none";
+    errorBox.style.display =
+        "none";
 }
 
 
 function hideLoading(){
 
-    loading.style.display = "none";
+    loading.style.display =
+        "none";
 }
 
 
@@ -793,19 +1048,56 @@ function openChat(){
 
     hideLoading();
 
-    gate.style.display = "none";
+    gate.style.display =
+        "none";
 
-    chatArea.style.display = "flex";
+    chatArea.style.display =
+        "flex";
 }
 
 
-function showPayment(reason){
+function showChatCreditGate(){
 
     hideLoading();
 
-    chatArea.style.display = "none";
+    chatArea.style.display =
+        "none";
 
-    gate.style.display = "grid";
+    gate.style.display =
+        "grid";
+
+    gateIcon.textContent =
+        "🔒";
+
+    gateTitle.textContent =
+        "Keep the conversation going";
+
+    gateText.textContent =
+        "Your free opening message has been used. Choose a chat package to continue.";
+
+    senderPackages.style.display =
+        "grid";
+
+    receiverPayBtn.style.display =
+        "none";
+}
+
+
+function showReceiverGate(reason){
+
+    hideLoading();
+
+    chatArea.style.display =
+        "none";
+
+    gate.style.display =
+        "grid";
+
+    gateIcon.textContent =
+        reason === "contact"
+            ? "🔐"
+            : "💗";
+
 
     if(reason === "contact"){
 
@@ -813,7 +1105,7 @@ function showPayment(reason){
             "Contact details aren't allowed";
 
         gateText.textContent =
-            "Kmeet blocks contact details in free chat. To continue this conversation, please pay KSh 11.";
+            "Kmeet blocks contact details in free chat. Pay KSh 11 to continue this conversation.";
 
     }
     else{
@@ -825,6 +1117,17 @@ function showPayment(reason){
             "Your 3 free replies have been used. Continue for KSh 11 to keep chatting.";
 
     }
+
+
+    senderPackages.style.display =
+        "none";
+
+    receiverPayBtn.style.display =
+        "inline-block";
+
+
+    receiverPayBtn.href =
+        `payment.html?userId=${encodeURIComponent(targetId)}&type=receiver&amount=11`;
 
 }
 
@@ -847,49 +1150,44 @@ function containsContactInfo(text){
     }
 
 
-    /*
-       EMAIL ADDRESS
-    */
+    /* EMAIL */
 
     const emailPattern =
         /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
+
 
     if(emailPattern.test(value)){
         return true;
     }
 
 
-    /*
-       WEBSITE / URL
-    */
+    /* WEBSITE / URL */
 
     const urlPattern =
         /\b(?:https?:\/\/|www\.)[^\s]+/i;
+
 
     if(urlPattern.test(value)){
         return true;
     }
 
 
-    /*
-       SOCIAL / CONTACT REQUESTS
-    */
+    /* CONTACT REQUESTS */
 
     const contactPhrasePattern =
         /\b(?:whatsapp|telegram|signal|call me|text me|sms me|my number|my phone|my contact|contact me|reach me|email me|my email|dm me|message me on|find me on|follow me on|send me your number|send your number)\b/i;
+
 
     if(contactPhrasePattern.test(value)){
         return true;
     }
 
 
-    /*
-       @USERNAME
-       Avoid treating ordinary punctuation as contact info.
-    */
+    /* @USERNAME */
 
     const handlePattern =
         /(^|\s)@[a-z0-9._]{3,32}\b/i;
+
 
     if(handlePattern.test(value)){
         return true;
@@ -897,9 +1195,9 @@ function containsContactInfo(text){
 
 
     /*
-       KENYAN PHONE NUMBERS
+       Kenyan phone numbers.
 
-       Detects examples such as:
+       Examples:
 
        0712345678
        0722345678
@@ -924,7 +1222,7 @@ function containsContactInfo(text){
     for(const part of possibleNumberParts){
 
         const digits =
-            part.replace(/\D/g, "");
+            part.replace(/\D/g,"");
 
 
         if(
@@ -934,16 +1232,11 @@ function containsContactInfo(text){
 
             return true;
         }
+
     }
 
 
-    /*
-       Extra direct check for compact Kenyan numbers.
-    */
-
-    const compact =
-        value.replace(/\D/g, "");
-
+    /* Direct compact check */
 
     if(
         /(?:^|[^0-9])0[17]\d{8}(?:$|[^0-9])/.test(value)
@@ -953,8 +1246,12 @@ function containsContactInfo(text){
     }
 
 
+    const compact =
+        value.replace(/\D/g,"");
+
+
     if(
-        /(?:^|[^0-9])254[17]\d{8}(?:$|[^0-9])/.test(compact)
+        /254[17]\d{8}/.test(compact)
     ){
 
         return true;
@@ -967,7 +1264,7 @@ function containsContactInfo(text){
 
 
 /* ============================================================
-   FIRST MESSAGE RULE
+   OPENING MESSAGE
    ============================================================ */
 
 function isValidOpeningMessage(text){
@@ -990,6 +1287,19 @@ async function loadTargetProfile(){
         throw new Error(
             "No profile was selected for this chat."
         );
+
+    }
+
+
+    if(
+        currentUser &&
+        currentUser.uid === targetId
+    ){
+
+        throw new Error(
+            "You cannot start a chat with your own profile."
+        );
+
     }
 
 
@@ -1008,6 +1318,7 @@ async function loadTargetProfile(){
         throw new Error(
             "The selected profile could not be found."
         );
+
     }
 
 
@@ -1043,6 +1354,7 @@ async function loadTargetProfile(){
 
         avatarFallback.style.display =
             "none";
+
     }
 
 }
@@ -1050,15 +1362,266 @@ async function loadTargetProfile(){
 
 
 /* ============================================================
-   UPDATE CHAT RULE INFORMATION
+   CONVERSATION DOCUMENT
+   ============================================================ */
+
+async function loadConversation(){
+
+    const ref =
+        doc(
+            db,
+            "conversations",
+            conversationId
+        );
+
+
+    const snap =
+        await getDoc(ref);
+
+
+    if(snap.exists()){
+
+        conversationData =
+            snap.data() || {};
+
+        return;
+    }
+
+
+    /*
+       Conversation does not exist yet.
+
+       It will be created automatically when
+       the first "hi" or "hey" message is sent.
+    */
+
+    conversationData = {
+
+        initiatorId:null,
+
+        senderCredits:0,
+
+        senderFreeUsed:false,
+
+        receiverFreeReplies:3,
+
+        receiverPaid:false,
+
+        createdAt:null
+
+    };
+
+}
+
+
+
+/* ============================================================
+   SAVE / UPDATE CONVERSATION
+   ============================================================ */
+
+async function ensureConversationDocument(){
+
+    const ref =
+        doc(
+            db,
+            "conversations",
+            conversationId
+        );
+
+
+    const snap =
+        await getDoc(ref);
+
+
+    if(!snap.exists()){
+
+        await setDoc(
+            ref,
+            {
+                initiatorId:
+                    currentUser.uid,
+
+                targetId:
+                    targetId,
+
+                senderCredits:
+                    0,
+
+                senderFreeUsed:
+                    true,
+
+                receiverFreeReplies:
+                    3,
+
+                receiverPaid:
+                    false,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        conversationData = {
+
+            initiatorId:
+                currentUser.uid,
+
+            targetId:
+                targetId,
+
+            senderCredits:
+                0,
+
+            senderFreeUsed:
+                true,
+
+            receiverFreeReplies:
+                3,
+
+            receiverPaid:
+                false
+
+        };
+
+    }
+
+}
+
+
+
+/* ============================================================
+   DETERMINE INITIATOR
+   ============================================================ */
+
+function getInitiatorId(){
+
+    if(conversationData.initiatorId){
+
+        return conversationData.initiatorId;
+
+    }
+
+
+    if(messageList.length > 0){
+
+        return messageList[0].senderId;
+
+    }
+
+
+    return null;
+}
+
+
+
+/* ============================================================
+   SENDER CREDIT STATUS
+   ============================================================ */
+
+function senderNeedsCredits(){
+
+    const initiatorId =
+        getInitiatorId();
+
+
+    if(
+        !initiatorId ||
+        currentUser.uid !== initiatorId
+    ){
+
+        return false;
+    }
+
+
+    /*
+       The very first message is free.
+
+       Once the first message has been sent,
+       all subsequent sender messages require
+       chat credits.
+    */
+
+    if(messageList.length === 0){
+
+        return false;
+    }
+
+
+    const credits =
+        Number(
+            conversationData.senderCredits || 0
+        );
+
+
+    return credits <= 0;
+}
+
+
+
+/* ============================================================
+   RECEIVER STATUS
+   ============================================================ */
+
+function isCurrentUserReceiver(){
+
+    const initiatorId =
+        getInitiatorId();
+
+
+    if(!initiatorId){
+
+        return false;
+    }
+
+
+    return (
+        currentUser.uid !== initiatorId
+    );
+
+}
+
+
+function receiverReplyCount(){
+
+    if(!isCurrentUserReceiver()){
+
+        return 0;
+    }
+
+
+    return messageList.filter(
+        message =>
+            message.senderId === currentUser.uid
+    ).length;
+}
+
+
+function receiverNeedsPayment(){
+
+    if(!isCurrentUserReceiver()){
+
+        return false;
+    }
+
+
+    if(conversationData.receiverPaid){
+
+        return false;
+    }
+
+
+    return receiverReplyCount() >= 3;
+}
+
+
+
+/* ============================================================
+   UPDATE CHAT STATUS
    ============================================================ */
 
 function updateChatStatus(){
-
-    /*
-       No messages yet.
-       The person who opens the chat is the initiator.
-    */
 
     if(messageList.length === 0){
 
@@ -1075,73 +1638,102 @@ function updateChatStatus(){
     }
 
 
-    /*
-       First message determines who initiated.
-    */
-
-    const firstMessage =
-        messageList[0];
-
-
     const initiatorId =
-        firstMessage.senderId;
+        getInitiatorId();
 
 
-    const isReceiver =
-        currentUser.uid !== initiatorId;
+    const isInitiator =
+        currentUser.uid === initiatorId;
 
 
-    if(isReceiver){
+    if(isInitiator){
 
-        const replyCount =
-            messageList.filter(
-                message =>
-                    message.senderId === currentUser.uid
-            ).length;
-
-
-        const remaining =
-            Math.max(
-                0,
-                3 - replyCount
+        const credits =
+            Number(
+                conversationData.senderCredits || 0
             );
 
 
-        if(remaining > 0){
+        if(credits > 0){
 
             statusText.textContent =
-                `${remaining} free repl${remaining === 1 ? "y" : "ies"} remaining`;
+                `${credits} chat credit${credits === 1 ? "" : "s"} available`;
 
             ruleNote.style.display =
                 "block";
 
             ruleNote.textContent =
-                `You have ${remaining} free repl${remaining === 1 ? "y" : "ies"} remaining. Contact details are not allowed in free chat.`;
+                "Your opening message was free. Chat credits are used for your additional messages.";
 
         }
         else{
 
             statusText.textContent =
-                "Continuation payment required";
+                "Chat credits required";
 
             ruleNote.style.display =
                 "block";
 
             ruleNote.textContent =
-                "Your free replies are finished. Continue for KSh 11.";
+                "Your free opening message has been used. Choose a chat package to continue.";
+
         }
 
+
+        return;
     }
-    else{
+
+
+    /* Receiver */
+
+    const replies =
+        receiverReplyCount();
+
+
+    const remaining =
+        Math.max(
+            0,
+            3 - replies
+        );
+
+
+    if(
+        conversationData.receiverPaid
+    ){
 
         statusText.textContent =
-            "Your Kmeet conversation";
+            "Conversation unlocked";
 
         ruleNote.style.display =
             "block";
 
         ruleNote.textContent =
-            "Keep the conversation respectful. Contact details are not allowed in free chat.";
+            "You can continue chatting. Contact details are still restricted.";
+
+    }
+    else if(remaining > 0){
+
+        statusText.textContent =
+            `${remaining} free repl${remaining === 1 ? "y" : "ies"} remaining`;
+
+        ruleNote.style.display =
+            "block";
+
+        ruleNote.textContent =
+            `You have ${remaining} free repl${remaining === 1 ? "y" : "ies"} remaining. Contact details are not allowed in free chat.`;
+
+    }
+    else{
+
+        statusText.textContent =
+            "Continuation payment required";
+
+        ruleNote.style.display =
+            "block";
+
+        ruleNote.textContent =
+            "Your 3 free replies are finished. Continue for KSh 11.";
+
     }
 
 }
@@ -1154,7 +1746,8 @@ function updateChatStatus(){
 
 function renderMessages(){
 
-    messages.innerHTML = "";
+    messages.innerHTML =
+        "";
 
 
     if(messageList.length === 0){
@@ -1170,33 +1763,30 @@ function renderMessages(){
     }
 
 
-    messageList.forEach(message => {
+    messageList.forEach(
+        message => {
 
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            "message " +
-            (
-                message.senderId === currentUser.uid
-                    ? "mine"
-                    : "theirs"
-            );
+            const div =
+                document.createElement("div");
 
 
-        /*
-           textContent prevents HTML from being
-           interpreted as code.
-        */
+            div.className =
+                "message " +
+                (
+                    message.senderId === currentUser.uid
+                        ? "mine"
+                        : "theirs"
+                );
 
-        div.textContent =
-            message.text || "";
+
+            div.textContent =
+                message.text || "";
 
 
-        messages.appendChild(div);
+            messages.appendChild(div);
 
-    });
+        }
+    );
 
 
     messages.scrollTop =
@@ -1224,63 +1814,120 @@ function startMessages(){
         .join("_");
 
 
-    const ref =
-        collection(
-            db,
-            "conversations",
-            conversationId,
-            "messages"
-        );
+    loadConversation()
+        .then(() => {
 
-
-    const q =
-        query(
-            ref,
-            orderBy(
-                "createdAt",
-                "asc"
-            )
-        );
-
-
-    unsubscribeMessages =
-        onSnapshot(
-            q,
-            snapshot => {
-
-                messageList =
-                    snapshot.docs.map(
-                        item => ({
-                            id: item.id,
-                            ...item.data()
-                        })
-                    );
-
-
-                renderMessages();
-
-                openChat();
-
-            },
-
-            error => {
-
-                console.error(
-                    "KMEET CHAT ERROR:",
-                    error
+            const ref =
+                collection(
+                    db,
+                    "conversations",
+                    conversationId,
+                    "messages"
                 );
 
 
-                showError(
-                    "Unable to load messages. Please refresh the page."
+            const q =
+                query(
+                    ref,
+                    orderBy(
+                        "createdAt",
+                        "asc"
+                    )
                 );
 
-                hideLoading();
+
+            unsubscribeMessages =
+                onSnapshot(
+                    q,
+                    snapshot => {
+
+                        messageList =
+                            snapshot.docs.map(
+                                item => ({
+                                    id:item.id,
+                                    ...item.data()
+                                })
+                            );
+
+
+                        renderMessages();
+
+                        openChat();
+
+                    },
+
+                    error => {
+
+                        console.error(
+                            "KMEET CHAT ERROR:",
+                            error
+                        );
+
+
+                        showError(
+                            "Unable to load messages. Please refresh the page."
+                        );
+
+
+                        hideLoading();
+
+                    }
+                );
+
+        })
+        .catch(error => {
+
+            console.error(
+                "KMEET CONVERSATION ERROR:",
+                error
+            );
+
+
+            showError(
+                "Unable to prepare this conversation."
+            );
+
+
+            hideLoading();
+
+        });
+
+}
+
+
+
+/* ============================================================
+   PACKAGE CLICK
+   ============================================================ */
+
+document
+    .querySelectorAll(".package-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const packageSize =
+                    button.dataset.package;
+
+
+                const amount =
+                    button.dataset.amount;
+
+
+                /*
+                   Send the selected package to
+                   your existing payment page.
+                */
+
+                window.location.href =
+                    `subscription.html?userId=${encodeURIComponent(targetId)}&package=${encodeURIComponent(packageSize)}&amount=${encodeURIComponent(amount)}&from=chat`;
 
             }
         );
 
-}
+    });
 
 
 
@@ -1317,10 +1964,9 @@ composer.addEventListener(
 
 
         /*
-           -----------------------------------------------------
-           RULE 1
-           FIRST MESSAGE MUST BE HI OR HEY
-           -----------------------------------------------------
+           =====================================================
+           FIRST MESSAGE
+           =====================================================
         */
 
         if(messageList.length === 0){
@@ -1340,85 +1986,94 @@ composer.addEventListener(
 
 
         /*
-           -----------------------------------------------------
-           RULE 2
-           CONTACT INFORMATION IS NEVER ALLOWED IN FREE CHAT
-           -----------------------------------------------------
+           =====================================================
+           DETERMINE ROLE
+           =====================================================
         */
 
-        if(containsContactInfo(text)){
+        const initiatorId =
+            getInitiatorId();
 
-            messageInput.value = "";
 
-            showPayment("contact");
+        const isExistingConversation =
+            messageList.length > 0;
+
+
+        const isReceiver =
+            isExistingConversation &&
+            currentUser.uid !== initiatorId;
+
+
+        const isInitiator =
+            isExistingConversation &&
+            currentUser.uid === initiatorId;
+
+
+
+        /*
+           =====================================================
+           SENDER CREDIT GATE
+           =====================================================
+        */
+
+        if(
+            isInitiator &&
+            senderNeedsCredits()
+        ){
+
+            showChatCreditGate();
 
             return;
         }
 
 
+
         /*
-           -----------------------------------------------------
-           DETERMINE WHETHER CURRENT USER IS RECEIVER
-           -----------------------------------------------------
+           =====================================================
+           RECEIVER CONTACT CHECK
+           =====================================================
         */
 
-        let isReceiver = false;
+        if(
+            containsContactInfo(text)
+        ){
 
-        let receiverReplyCount = 0;
+            messageInput.value =
+                "";
 
+            showReceiverGate("contact");
 
-        if(messageList.length > 0){
-
-            const firstMessage =
-                messageList[0];
-
-
-            isReceiver =
-                currentUser.uid !==
-                firstMessage.senderId;
-
-
-            if(isReceiver){
-
-                receiverReplyCount =
-                    messageList.filter(
-                        message =>
-                            message.senderId ===
-                            currentUser.uid
-                    ).length;
-
-            }
-
+            return;
         }
 
 
+
         /*
-           -----------------------------------------------------
-           RULE 3
-           RECEIVER GETS ONLY 3 FREE REPLIES
-           -----------------------------------------------------
+           =====================================================
+           RECEIVER 3-REPLY LIMIT
+           =====================================================
         */
 
         if(
             isReceiver &&
-            receiverReplyCount >= 3
+            receiverNeedsPayment()
         ){
 
-            showPayment("replies");
+            showReceiverGate("replies");
 
             return;
         }
 
 
+
         /*
-           -----------------------------------------------------
+           =====================================================
            SAVE MESSAGE
-           -----------------------------------------------------
+           =====================================================
         */
 
         sendBtn.disabled =
             true;
-
 
         messageInput.disabled =
             true;
@@ -1426,27 +2081,168 @@ composer.addEventListener(
 
         try{
 
-            await addDoc(
-                collection(
-                    db,
-                    "conversations",
-                    conversationId,
-                    "messages"
-                ),
-                {
-                    senderId:
-                        currentUser.uid,
+            /*
+               First message creates the conversation.
+            */
 
-                    targetId:
-                        targetId,
+            if(messageList.length === 0){
 
-                    text:
-                        text,
+                await ensureConversationDocument();
 
-                    createdAt:
-                        serverTimestamp()
+            }
+
+
+            const messageRef =
+                await addDoc(
+                    collection(
+                        db,
+                        "conversations",
+                        conversationId,
+                        "messages"
+                    ),
+                    {
+
+                        senderId:
+                            currentUser.uid,
+
+                        targetId:
+                            targetId,
+
+                        text:
+                            text,
+
+                        createdAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+
+            /*
+               =================================================
+               AFTER FIRST FREE MESSAGE
+               =================================================
+            */
+
+            if(
+                messageList.length === 0 &&
+                currentUser.uid ===
+                    conversationData.initiatorId
+            ){
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "conversations",
+                        conversationId
+                    ),
+                    {
+                        senderFreeUsed:true
+                    }
+                );
+
+
+                conversationData.senderFreeUsed =
+                    true;
+
+            }
+
+
+            /*
+               =================================================
+               IF SENDER USED A PAID CREDIT
+               =================================================
+            */
+
+            if(
+                isInitiator &&
+                Number(
+                    conversationData.senderCredits || 0
+                ) > 0
+            ){
+
+                const newCredits =
+                    Math.max(
+                        0,
+                        Number(
+                            conversationData.senderCredits || 0
+                        ) - 1
+                    );
+
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "conversations",
+                        conversationId
+                    ),
+                    {
+                        senderCredits:
+                            newCredits
+                    }
+                );
+
+
+                conversationData.senderCredits =
+                    newCredits;
+
+            }
+
+
+            /*
+               =================================================
+               IF RECEIVER HAS NOW USED A FREE REPLY
+               =================================================
+            */
+
+            if(isReceiver){
+
+                const replyNumber =
+                    receiverReplyCount() + 1;
+
+
+                /*
+                   We don't deduct the reply here from
+                   receiverFreeReplies because the current
+                   message snapshot updates immediately.
+                */
+
+
+                if(
+                    replyNumber >= 3
+                ){
+
+                    try{
+
+                        await updateDoc(
+                            doc(
+                                db,
+                                "conversations",
+                                conversationId
+                            ),
+                            {
+                                receiverFreeReplies:
+                                    0
+                            }
+                        );
+
+
+                        conversationData.receiverFreeReplies =
+                            0;
+
+                    }
+                    catch(error){
+
+                        console.warn(
+                            "Could not update receiver reply count:",
+                            error
+                        );
+
+                    }
+
                 }
-            );
+
+            }
 
 
             messageInput.value =
@@ -1454,7 +2250,6 @@ composer.addEventListener(
 
 
             messageInput.focus();
-
 
         }
         catch(error){
@@ -1496,8 +2291,7 @@ onAuthStateChanged(
         try{
 
             /*
-               If a real logged-in user exists,
-               use that account.
+               Use the current authenticated user.
             */
 
             if(user){
@@ -1505,17 +2299,21 @@ onAuthStateChanged(
                 currentUser =
                     user;
 
+
                 await loadTargetProfile();
+
 
                 startMessages();
 
+
                 return;
+
             }
 
 
             /*
-               Keep compatibility with the current
-               Kmeet Firebase chat setup.
+               Keep compatibility with the existing
+               Kmeet Firebase configuration.
             */
 
             await signInAnonymously(auth);
