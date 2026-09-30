@@ -1,1873 +1,647 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta charset="utf-8">
+  <title>Kmeet - Discover People</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <title>Kmeet - Discover</title>
-
-  <link
-    rel="stylesheet"
-    href="styles.css"
-  >
-
-  <link
-    rel="icon"
-    type="image/jpeg"
-    href="kmeet-logo.jfif.jfif"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-
-    /* =========================================================
-       KMEET DISCOVER
-       DARK ROMANTIC / PINK / PURPLE GLASS DESIGN
-       ========================================================= */
-
-    body.discover-page {
-
-      margin: 0 !important;
-
-      min-height: 100vh;
-
-      background:
-        radial-gradient(
-          circle at top left,
-          rgba(174, 57, 112, 0.18),
-          transparent 35%
-        ),
-        radial-gradient(
-          circle at top right,
-          rgba(111, 54, 145, 0.16),
-          transparent 35%
-        ),
-        linear-gradient(
-          135deg,
-          #0d0a0f 0%,
-          #171019 48%,
-          #0b090d 100%
-        ) !important;
-
-      background-attachment: fixed;
-
-      color: #fff !important;
-
-      font-family:
-        "Poppins",
-        Arial,
-        sans-serif;
-
-    }
-
-
-    .discover-page *,
-    .discover-page *::before,
-    .discover-page *::after {
-
+    * {
       box-sizing: border-box;
-
     }
 
-
-    /* =========================================================
-       NAVIGATION
-       ========================================================= */
-
-    .discover-nav {
-
-      width: 100%;
-
-      min-height: 76px;
-
-      padding: 0 5%;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      background:
-        rgba(12, 7, 12, 0.92);
-
-      border-bottom:
-        1px solid rgba(255, 255, 255, 0.08);
-
-      backdrop-filter:
-        blur(18px);
-
-      -webkit-backdrop-filter:
-        blur(18px);
-
-      position: sticky;
-
-      top: 0;
-
-      z-index: 100;
-
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
     }
 
-
-    .discover-logo {
-
-      color: #fff !important;
-
-      text-decoration: none !important;
-
-      font-family:
-        Georgia,
-        serif;
-
-      font-size: 29px;
-
-      font-weight: 700;
-
-      letter-spacing: 1px;
-
-    }
-
-
-    .discover-logo::before {
-
-      content: "♥";
-
-      color: #e95c91;
-
-      font-size: 19px;
-
-      margin-right: 7px;
-
-    }
-
-
-    .discover-navlinks {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 28px;
-
-    }
-
-
-    .discover-navlinks a {
-
-      color:
-        rgba(255,255,255,0.78) !important;
-
-      text-decoration: none !important;
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-      letter-spacing: .6px;
-
-      transition:
-        color .2s ease;
-
-    }
-
-
-    .discover-navlinks a:hover {
-
-      color: #f07aaa !important;
-
-    }
-
-
-    /* =========================================================
-       MAIN
-       ========================================================= */
-
-    .discover-container {
-
-      width:
-        min(1400px, calc(100% - 36px));
-
-      margin: auto;
-
-      padding:
-        45px 0 75px;
-
-    }
-
-
-    .discover-heading {
-
-      text-align: center;
-
-      margin-bottom: 34px;
-
-    }
-
-
-    .discover-heading h1 {
-
-      margin:
-        0 0 9px;
-
-      font-family:
-        Georgia,
-        serif;
-
-      font-size:
-        clamp(34px, 5vw, 52px);
-
-      font-weight: 600;
-
-      letter-spacing: .2px;
-
-    }
-
-
-    .discover-heading h1::after {
-
-      content: "";
-
-      display: block;
-
-      width: 58px;
-
-      height: 2px;
-
-      margin: 12px auto 0;
+    body {
+      font-family: "Poppins", sans-serif;
+      color: #fff;
 
       background:
         linear-gradient(
-          90deg,
-          #d94782,
-          #9b55c7
+          rgba(18, 9, 17, .72),
+          rgba(10, 5, 12, .90)
+        ),
+        url("kmeet-background.jpg.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 15% 15%,
+          rgba(255, 150, 190, .12),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 80%,
+          rgba(255, 80, 150, .10),
+          transparent 35%
         );
 
-      border-radius: 5px;
-
+      pointer-events: none;
+      z-index: 0;
     }
 
-
-    .discover-heading p {
-
-      margin:
-        13px 0 0;
-
-      color:
-        rgba(255,255,255,0.58);
-
-      font-size: 14px;
-
+    .discover-page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
     }
 
+    /* NAVIGATION */
 
-    /* =========================================================
-       ONLINE SUMMARY
-       ========================================================= */
-
-    .presence-summary {
+    .discover-nav {
+      width: 100%;
+      height: 76px;
 
       display: flex;
-
       align-items: center;
+      justify-content: space-between;
 
-      justify-content: center;
+      padding: 0 35px;
 
-      gap: 8px;
+      background: rgba(15, 8, 15, .42);
+      border-bottom: 1px solid rgba(255,255,255,.12);
 
-      margin:
-        0 auto 28px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
 
-      width: fit-content;
-
-      padding:
-        8px 16px;
-
-      border:
-        1px solid rgba(255,255,255,0.08);
-
-      border-radius: 30px;
-
-      background:
-        rgba(255,255,255,0.045);
-
-      color:
-        rgba(255,255,255,0.65);
-
-      font-size: 12px;
-
-      backdrop-filter:
-        blur(10px);
-
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
+    .discover-logo {
+      color: #fff;
+      text-decoration: none;
 
-    .summary-dot {
+      font-family: "Playfair Display", serif;
+      font-size: 28px;
+      font-weight: 600;
 
-      width: 8px;
-
-      height: 8px;
-
-      border-radius: 50%;
-
-      background: #54d989;
-
-      box-shadow:
-        0 0 10px rgba(84,217,137,.6);
-
+      letter-spacing: .3px;
     }
 
+    .discover-logo::before {
+      content: "♥";
+      color: #ff8eaf;
+      font-size: 17px;
+      margin-right: 7px;
+    }
 
-    /* =========================================================
-       GRID
-       ========================================================= */
+    .discover-navlinks {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .discover-navlinks a {
+      color: rgba(255,255,255,.88);
+      text-decoration: none;
+
+      font-size: 13px;
+      font-weight: 500;
+
+      transition: .2s ease;
+    }
+
+    .discover-navlinks a:hover {
+      color: #ff9fbd;
+    }
+
+    /* MAIN */
+
+    .discover-container {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 55px 0 70px;
+    }
+
+    .discover-heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .discover-heading h1 {
+      margin: 0 0 9px;
+
+      font-family: "Playfair Display", serif;
+      font-size: 42px;
+      font-weight: 600;
+    }
+
+    .discover-heading p {
+      margin: 0;
+
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+    }
+
+    /* GRID */
 
     .discover-grid {
-
       display: grid;
 
       grid-template-columns:
-        repeat(
-          auto-fill,
-          minmax(215px, 1fr)
-        );
+        repeat(4, minmax(0, 1fr));
 
-      gap: 18px;
-
-      width: 100%;
-
+      gap: 22px;
     }
 
-
-    /* =========================================================
-       PROFILE CARD
-       ========================================================= */
+    /* PROFILE CARD */
 
     .profile-card {
-
       overflow: hidden;
 
-      position: relative;
+      border-radius: 22px;
 
       background:
         linear-gradient(
           145deg,
-          rgba(43, 23, 42, 0.90),
-          rgba(17, 12, 20, 0.96)
-        ) !important;
+          rgba(255,255,255,.11),
+          rgba(255,255,255,.045)
+        );
 
-      border:
-        1px solid
-        rgba(238, 106, 158, 0.13) !important;
-
-      border-radius:
-        20px !important;
+      border: 1px solid rgba(255,255,255,.15);
 
       box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.34);
+        0 20px 45px rgba(0,0,0,.30);
+
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
 
       transition:
         transform .25s ease,
-        box-shadow .25s ease,
-        border-color .25s ease;
-
+        box-shadow .25s ease;
     }
-
 
     .profile-card:hover {
-
-      transform:
-        translateY(-5px);
-
-      border-color:
-        rgba(232, 92, 145, 0.30) !important;
+      transform: translateY(-5px);
 
       box-shadow:
-        0 22px 48px
-        rgba(0,0,0,.48);
-
+        0 25px 55px rgba(0,0,0,.42);
     }
 
-
-    /* =========================================================
-       PHOTO
-       ========================================================= */
-
-    .photo-wrap {
-
+    .profile-photo-wrap {
       position: relative;
-
-      width: 100%;
-
-      height: 255px;
-
+      height: 285px;
       overflow: hidden;
-
-      background:
-        linear-gradient(
-          135deg,
-          #281421,
-          #160e18
-        );
-
+      background: rgba(255,255,255,.08);
     }
-
 
     .profile-photo {
+      width: 100%;
+      height: 100%;
 
       display: block;
 
-      width: 100%;
-
-      height: 100%;
-
       object-fit: cover;
 
-      transition:
-        transform .35s ease;
-
+      transition: transform .35s ease;
     }
 
-
-    .profile-card:hover
-    .profile-photo {
-
-      transform:
-        scale(1.035);
-
+    .profile-card:hover .profile-photo {
+      transform: scale(1.035);
     }
 
-
-    /* =========================================================
-       PRESENCE BADGE
-       ========================================================= */
-
-    .presence-badge {
-
+    .online-dot {
       position: absolute;
 
-      left: 11px;
+      right: 13px;
+      top: 13px;
 
-      bottom: 11px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 6px;
-
-      padding:
-        6px 9px;
-
-      border-radius: 20px;
-
-      background:
-        rgba(10,8,12,.82);
-
-      border:
-        1px solid
-        rgba(255,255,255,.10);
-
-      backdrop-filter:
-        blur(9px);
-
-      -webkit-backdrop-filter:
-        blur(9px);
-
-      font-size: 10px;
-
-      font-weight: 600;
-
-      color: #fff;
-
-    }
-
-
-    .presence-dot {
-
-      width: 7px;
-
-      height: 7px;
+      width: 11px;
+      height: 11px;
 
       border-radius: 50%;
 
-      flex-shrink: 0;
+      background: #62e6a2;
 
-    }
-
-
-    .online .presence-dot {
-
-      background: #48dc82;
+      border: 2px solid rgba(20,10,18,.9);
 
       box-shadow:
-        0 0 9px
-        rgba(72,220,130,.75);
-
+        0 0 12px rgba(98,230,162,.7);
     }
-
-
-    .recent .presence-dot {
-
-      background: #f1ad55;
-
-      box-shadow:
-        0 0 8px
-        rgba(241,173,85,.55);
-
-    }
-
-
-    .offline .presence-dot {
-
-      background: #999;
-
-    }
-
-
-    /* =========================================================
-       CARD DETAILS
-       ========================================================= */
 
     .profile-inside {
-
-      padding: 15px;
-
+      padding: 17px;
     }
-
 
     .profile-name {
+      margin: 0;
 
-      margin:
-        0 0 4px;
-
-      color: #fff;
-
-      font-family:
-        Georgia,
-        serif;
-
-      font-size: 20px;
-
+      font-size: 18px;
       font-weight: 600;
-
-      white-space: nowrap;
-
-      overflow: hidden;
-
-      text-overflow: ellipsis;
-
     }
-
 
     .profile-location {
+      margin: 5px 0 11px;
 
-      margin:
-        0 0 11px;
-
-      color:
-        rgba(255,255,255,.52);
-
+      color: rgba(255,255,255,.62);
       font-size: 12px;
-
     }
-
-
-    /* =========================================================
-       INTEREST TAGS
-       ========================================================= */
 
     .tags {
-
       display: flex;
-
       flex-wrap: wrap;
+      gap: 6px;
 
-      gap: 5px;
-
-      min-height: 24px;
-
+      min-height: 28px;
+      margin-bottom: 15px;
     }
-
 
     .tag {
+      padding: 5px 9px;
 
-      display: inline-block;
+      border-radius: 999px;
 
-      padding:
-        4px 8px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.10);
 
-      color:
-        rgba(255,255,255,.78);
-
-      background:
-        rgba(210,72,132,.07);
-
-      border:
-        1px solid
-        rgba(220,86,145,.16);
-
-      border-radius: 20px;
+      color: rgba(255,255,255,.78);
 
       font-size: 10px;
-
     }
-
-
-    /* =========================================================
-       BUTTONS
-       ========================================================= */
 
     .profile-actions {
-
       display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-      gap: 7px;
-
-      margin-top: 14px;
-
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
-
 
     .profile-button,
     .chat-button {
+      min-height: 42px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
-      min-height: 39px;
+      border-radius: 12px;
 
-      border-radius: 10px;
+      text-decoration: none;
 
-      text-decoration: none !important;
-
-      font-size: 11px;
-
+      font-size: 12px;
       font-weight: 600;
 
-      transition:
-        transform .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
-
+      transition: .2s ease;
     }
-
 
     .profile-button {
+      color: #fff;
 
-      color: #fff !important;
-
-      background:
-        rgba(255,255,255,.055);
-
-      border:
-        1px solid
-        rgba(255,255,255,.12);
-
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.15);
     }
-
 
     .profile-button:hover {
-
-      background:
-        rgba(255,255,255,.10);
-
-      transform:
-        translateY(-2px);
-
+      background: rgba(255,255,255,.16);
     }
 
-
     .chat-button {
-
-      color: #fff !important;
+      color: #fff;
 
       background:
         linear-gradient(
           135deg,
-          #d94683,
-          #914bb6
+          #e66a94,
+          #a9426d
         );
 
-      border:
-        1px solid
-        rgba(255,255,255,.08);
-
       box-shadow:
-        0 6px 16px
-        rgba(164,60,125,.22);
-
+        0 8px 20px rgba(150,47,88,.25);
     }
-
 
     .chat-button:hover {
-
-      transform:
-        translateY(-2px);
+      transform: translateY(-2px);
 
       box-shadow:
-        0 9px 22px
-        rgba(183,63,134,.36);
-
+        0 12px 25px rgba(150,47,88,.35);
     }
-
-
-    /* =========================================================
-       MESSAGE
-       ========================================================= */
-
-    .message {
-
-      margin-bottom: 20px;
-
-      padding:
-        14px 18px;
-
-      border-radius: 12px;
-
-      background:
-        rgba(255,255,255,.05);
-
-      border:
-        1px solid
-        rgba(255,255,255,.08);
-
-      color:
-        rgba(255,255,255,.70);
-
-      font-size: 13px;
-
-    }
-
-
-    .message.error {
-
-      color: #ffb5c9;
-
-      border-color:
-        rgba(255,100,145,.18);
-
-    }
-
-
-    /* =========================================================
-       EMPTY STATE
-       ========================================================= */
 
     .empty-card {
+      grid-column: 1 / -1;
 
-      grid-column:
-        1 / -1;
-
-      padding:
-        65px 20px;
+      padding: 60px 25px;
 
       text-align: center;
 
-      color:
-        rgba(255,255,255,.62);
+      color: rgba(255,255,255,.72);
 
-      background:
-        rgba(255,255,255,.035);
+      background: rgba(255,255,255,.06);
 
       border:
-        1px solid
-        rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.12);
 
-      border-radius: 20px;
-
+      border-radius: 22px;
     }
 
+    .message {
+      margin-bottom: 20px;
+      padding: 12px 15px;
 
-    /* =========================================================
-       MOBILE
-       ========================================================= */
+      border-radius: 13px;
 
-    @media (max-width: 900px) {
+      background: rgba(150,30,55,.28);
 
+      border: 1px solid rgba(255,150,170,.18);
+
+      color: #ffd8e0;
+
+      text-align: center;
+    }
+
+    @media (max-width: 1000px) {
       .discover-grid {
-
         grid-template-columns:
-          repeat(
-            auto-fill,
-            minmax(185px, 1fr)
-          );
-
-        gap: 14px;
-
+          repeat(3, minmax(0, 1fr));
       }
-
-
-      .photo-wrap {
-
-        height: 225px;
-
-      }
-
     }
 
-
-    @media (max-width: 560px) {
-
+    @media (max-width: 720px) {
       .discover-nav {
-
-        padding:
-          0 16px;
-
+        padding: 0 18px;
       }
-
-
-      .discover-logo {
-
-        font-size: 25px;
-
-      }
-
 
       .discover-navlinks {
-
-        gap: 12px;
-
+        gap: 13px;
       }
-
 
       .discover-navlinks a {
-
         font-size: 11px;
-
       }
-
 
       .discover-container {
-
-        width:
-          calc(100% - 20px);
-
-        padding-top:
-          30px;
-
+        width: min(100% - 24px, 600px);
+        padding-top: 35px;
       }
-
 
       .discover-heading h1 {
-
         font-size: 34px;
-
       }
-
 
       .discover-grid {
-
         grid-template-columns:
-          repeat(2, 1fr);
+          repeat(2, minmax(0, 1fr));
 
-        gap: 10px;
-
+        gap: 12px;
       }
 
-
-      .profile-card {
-
-        border-radius:
-          15px !important;
-
+      .profile-photo-wrap {
+        height: 235px;
       }
-
-
-      .photo-wrap {
-
-        height: 220px;
-
-      }
-
 
       .profile-inside {
-
-        padding: 10px;
-
+        padding: 11px;
       }
-
-
-      .profile-name {
-
-        font-size: 17px;
-
-      }
-
 
       .profile-actions {
-
-        grid-template-columns:
-          1fr;
-
-        gap: 5px;
-
+        grid-template-columns: 1fr;
       }
-
-
-      .profile-button,
-      .chat-button {
-
-        min-height: 35px;
-
-        font-size: 10px;
-
-      }
-
     }
 
+    @media (max-width: 430px) {
+      .discover-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-photo-wrap {
+        height: 330px;
+      }
+    }
   </style>
-
 </head>
-
 
 <body class="discover-page">
 
-
-  <!-- =======================================================
-       NAVIGATION
-       ======================================================= -->
-
   <nav class="discover-nav">
 
-    <a
-      class="discover-logo"
-      href="index.html"
-    >
+    <a class="discover-logo" href="index.html">
       Kmeet
     </a>
 
-
     <div class="discover-navlinks">
-
-      <a href="discover.html">
-        Discover
-      </a>
-
-      <a
-        id="profileLink"
-        href="login.html"
-      >
-        Profile
-      </a>
-
-      <a href="index.html">
-        Home
-      </a>
-
+      <a href="discover.html">Discover</a>
+      <a id="profileLink" href="login.html">Profile</a>
+      <a href="index.html">Home</a>
     </div>
 
   </nav>
 
-
-  <!-- =======================================================
-       MAIN
-       ======================================================= -->
-
   <main class="discover-container">
 
-
     <div class="discover-heading">
-
-      <h1>
-        Discover People
-      </h1>
-
-      <p>
-        Meet interesting people joining Kmeet ❤️
-      </p>
-
+      <h1>Discover People</h1>
+      <p>Meet interesting people joining Kmeet ❤️</p>
     </div>
-
-
-    <!-- ONLINE SUMMARY -->
-
-    <div class="presence-summary">
-
-      <span class="summary-dot"></span>
-
-      <span id="presenceSummary">
-        Checking who's online...
-      </span>
-
-    </div>
-
 
     <div id="msg"></div>
 
-
-    <div
-      id="grid"
-      class="discover-grid"
-    ></div>
-
+    <div id="grid" class="discover-grid"></div>
 
   </main>
 
-
-  <!-- =======================================================
-       FIREBASE
-       ======================================================= -->
-
   <script type="module">
 
-
     import {
-
       auth,
-
       db,
-
       onAuthStateChanged,
-
       collection,
-
-      onSnapshot,
-
-      database,
-
-      databaseRef,
-
-      databaseSet,
-
-      databaseOnValue,
-
-      onDisconnect
-
+      onSnapshot
     } from "./firebase-config.js";
 
-
-    /* =======================================================
+    /* -----------------------------
        PROFILE LINK
-       ======================================================= */
+    ----------------------------- */
 
-    onAuthStateChanged(
-      auth,
-      user => {
+    onAuthStateChanged(auth, user => {
 
-        const profileLink =
-          document.getElementById(
-            "profileLink"
-          );
-
-
-        if (
-          user &&
-          !user.isAnonymous
-        ) {
-
-          profileLink.href =
-            "profile.html";
-
-          setupOwnPresence(
-            user.uid
-          );
-
-        }
-
-      }
-    );
-
-
-    /* =======================================================
-       FALLBACK AVATARS
-       
-       These are only used when a real Kmeet member has
-       not uploaded a profile photo yet.
-       
-       There are 30 different choices.
-       ======================================================= */
-
-    const fallbackAvatars = [
-
-      "https://randomuser.me/api/portraits/women/1.jpg",
-      "https://randomuser.me/api/portraits/men/1.jpg",
-      "https://randomuser.me/api/portraits/women/2.jpg",
-      "https://randomuser.me/api/portraits/men/2.jpg",
-      "https://randomuser.me/api/portraits/women/3.jpg",
-      "https://randomuser.me/api/portraits/men/3.jpg",
-      "https://randomuser.me/api/portraits/women/4.jpg",
-      "https://randomuser.me/api/portraits/men/4.jpg",
-      "https://randomuser.me/api/portraits/women/5.jpg",
-      "https://randomuser.me/api/portraits/men/5.jpg",
-      "https://randomuser.me/api/portraits/women/6.jpg",
-      "https://randomuser.me/api/portraits/men/6.jpg",
-      "https://randomuser.me/api/portraits/women/7.jpg",
-      "https://randomuser.me/api/portraits/men/7.jpg",
-      "https://randomuser.me/api/portraits/women/8.jpg",
-      "https://randomuser.me/api/portraits/men/8.jpg",
-      "https://randomuser.me/api/portraits/women/9.jpg",
-      "https://randomuser.me/api/portraits/men/9.jpg",
-      "https://randomuser.me/api/portraits/women/10.jpg",
-      "https://randomuser.me/api/portraits/men/10.jpg",
-      "https://randomuser.me/api/portraits/women/11.jpg",
-      "https://randomuser.me/api/portraits/men/11.jpg",
-      "https://randomuser.me/api/portraits/women/12.jpg",
-      "https://randomuser.me/api/portraits/men/12.jpg",
-      "https://randomuser.me/api/portraits/women/13.jpg",
-      "https://randomuser.me/api/portraits/men/13.jpg",
-      "https://randomuser.me/api/portraits/women/14.jpg",
-      "https://randomuser.me/api/portraits/men/14.jpg",
-      "https://randomuser.me/api/portraits/women/15.jpg",
-      "https://randomuser.me/api/portraits/men/15.jpg"
-
-    ];
-
-
-    /* =======================================================
-       PRESENCE DATA
-       ======================================================= */
-
-    let presenceData = {};
-
-
-    /* =======================================================
-       LISTEN TO ALL MEMBER PRESENCE
-       ======================================================= */
-
-    databaseOnValue(
-
-      databaseRef(
-        database,
-        "status"
-      ),
-
-      snapshot => {
-
-        presenceData =
-          snapshot.val() || {};
-
-        updatePresenceSummary();
-
-        if (lastMembersSnapshot) {
-
-          renderMembers(
-            lastMembersSnapshot
-          );
-
-        }
-
-      },
-
-      error => {
-
-        console.error(
-          "Presence error:",
-          error
-        );
-
+      if (user && !user.isAnonymous) {
+        document.getElementById("profileLink").href =
+          "profile.html";
       }
 
-    );
+    });
 
+    /* -----------------------------
+       LOAD PROFILES
+    ----------------------------- */
 
-    /* =======================================================
-       OWN PRESENCE
-       ======================================================= */
-
-    async function setupOwnPresence(uid) {
-
-      try {
-
-        const connectedRef =
-          databaseRef(
-            database,
-            ".info/connected"
-          );
-
-
-        const statusRef =
-          databaseRef(
-            database,
-            "status/" + uid
-          );
-
-
-        databaseOnValue(
-          connectedRef,
-          async snapshot => {
-
-            if (
-              snapshot.val() !== true
-            ) {
-
-              return;
-
-            }
-
-
-            try {
-
-              await onDisconnect(
-                statusRef
-              ).set({
-
-                state:
-                  "offline",
-
-                lastChanged:
-                  Date.now()
-
-              });
-
-
-              await databaseSet(
-                statusRef,
-                {
-
-                  state:
-                    "online",
-
-                  lastChanged:
-                    Date.now()
-
-                }
-              );
-
-            } catch (error) {
-
-              console.error(
-                "Could not update presence:",
-                error
-              );
-
-            }
-
-          }
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Presence setup failed:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =======================================================
-       SNAPSHOT
-       ======================================================= */
-
-    let lastMembersSnapshot = null;
-
-
-    /* =======================================================
-       LOAD REAL KMEET MEMBERS
-       ======================================================= */
+    const grid =
+      document.getElementById("grid");
 
     onSnapshot(
-
-      collection(
-        db,
-        "users"
-      ),
+      collection(db, "users"),
 
       snapshot => {
 
-        lastMembersSnapshot =
-          snapshot;
+        grid.innerHTML = "";
 
-        renderMembers(
-          snapshot
-        );
+        if (snapshot.empty) {
 
-      },
+          grid.innerHTML = `
+            <div class="empty-card">
+              No profiles yet.
+              Create the first Kmeet account ❤️
+            </div>
+          `;
 
-      error => {
+          return;
+        }
 
-        console.error(
-          error
-        );
+        snapshot.forEach(snap => {
 
-
-        document.getElementById(
-          "msg"
-        ).innerHTML = `
-
-          <div class="message error">
-
-            Could not load Kmeet profiles.
-
-            Please refresh the page.
-
-          </div>
-
-        `;
-
-      }
-
-    );
-
-
-    /* =======================================================
-       RENDER MEMBERS
-       ======================================================= */
-
-    function renderMembers(
-      snapshot
-    ) {
-
-      const grid =
-        document.getElementById(
-          "grid"
-        );
-
-
-      grid.innerHTML = "";
-
-
-      if (
-        snapshot.empty
-      ) {
-
-        grid.innerHTML = `
-
-          <div class="empty-card">
-
-            No Kmeet members yet.
-
-            Create an account and become
-            one of the first people here ❤️
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      /*
-       * Show a maximum of 30 real members.
-       */
-
-      const members =
-        snapshot.docs.slice(
-          0,
-          30
-        );
-
-
-      /*
-       * Used to make fallback photos different.
-       */
-
-      const usedFallbacks =
-        new Set();
-
-
-      members.forEach(
-        (snap, index) => {
-
-          const p =
-            snap.data();
-
-
-          const uid =
-            snap.id;
-
+          const p = snap.data();
 
           const name =
             p.name ||
             p.username ||
             "Kmeet Member";
 
-
           const age =
             p.age
               ? `, ${p.age}`
               : "";
 
+          /*
+            Support both names because some of
+            your existing profiles use avatar and
+            others use photoURL.
+          */
 
-          /* =================================================
-             REAL UPLOADED PHOTO
-             
-             The uploaded photo always wins.
-             ================================================= */
-
-          let avatar =
+          const avatar =
             p.photoURL ||
             p.avatar ||
-            p.photo ||
-            p.profilePhoto ||
-            "";
-
-
-          /*
-           * If there is no uploaded photo,
-           * choose a different fallback.
-           */
-
-          if (!avatar) {
-
-            avatar =
-              getUniqueFallbackAvatar(
-                uid,
-                usedFallbacks,
-                index
-              );
-
-          }
-
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=700&q=80";
 
           const interests =
-            Array.isArray(
-              p.interests
-            )
-              ? p.interests.slice(
-                  0,
-                  3
-                )
+            Array.isArray(p.interests)
+              ? p.interests.slice(0, 3)
               : [];
 
-
-          const status =
-            getPresenceStatus(
-              uid
-            );
-
-
-          const statusClass =
-            status.className;
-
-
-          const statusText =
-            status.text;
-
+          const location =
+            p.location ||
+            "Kenya";
 
           grid.insertAdjacentHTML(
-
             "beforeend",
 
             `
+            <article class="profile-card">
 
-              <article
-                class="profile-card"
-              >
+              <div class="profile-photo-wrap">
 
-                <div
-                  class="photo-wrap"
+                <img
+                  class="profile-photo"
+                  src="${escapeHtml(avatar)}"
+                  alt="${escapeHtml(name)}"
+                  loading="lazy"
                 >
 
-                  <img
+                <span class="online-dot"></span>
 
-                    class="profile-photo"
+              </div>
 
-                    src="${escapeHtml(
-                      avatar
-                    )}"
+              <div class="profile-inside">
 
-                    alt="${escapeHtml(
-                      name
-                    )}"
+                <h3 class="profile-name">
+                  ${escapeHtml(name)}${age}
+                </h3>
 
-                    loading="lazy"
+                <p class="profile-location">
+                  ${escapeHtml(location)}
+                </p>
 
-                    onerror="
-                      this.onerror=null;
-                      this.src='${fallbackAvatars[index % fallbackAvatars.length]}';
-                    "
+                <div class="tags">
 
-                  >
-
-
-                  <div
-                    class="presence-badge ${statusClass}"
-                  >
-
-                    <span
-                      class="presence-dot"
-                    ></span>
-
-                    ${escapeHtml(
-                      statusText
-                    )}
-
-                  </div>
+                  ${
+                    interests.map(i => `
+                      <span class="tag">
+                        ${escapeHtml(i)}
+                      </span>
+                    `).join("")
+                  }
 
                 </div>
 
+                <div class="profile-actions">
 
-                <div
-                  class="profile-inside"
-                >
-
-                  <h3
-                    class="profile-name"
+                  <a
+                    class="profile-button"
+                    href="profile.html?id=${encodeURIComponent(snap.id)}"
                   >
+                    View Profile
+                  </a>
 
-                    ${escapeHtml(
-                      name
-                    )}
+                  <!-- IMPORTANT:
+                       CHAT OPENS DIRECTLY.
+                       NO SUBSCRIPTION PAGE FIRST.
+                  -->
 
-                    ${escapeHtml(
-                      age
-                    )}
-
-                  </h3>
-
-
-                  <p
-                    class="profile-location"
+                  <a
+                    class="chat-button"
+                    href="chat.html?userId=${encodeURIComponent(snap.id)}"
                   >
-
-                    📍
-                    ${escapeHtml(
-                      p.location ||
-                      "Kenya"
-                    )}
-
-                  </p>
-
-
-                  <div
-                    class="tags"
-                  >
-
-                    ${interests
-                      .map(
-                        interest => `
-
-                          <span
-                            class="tag"
-                          >
-                            ${escapeHtml(
-                              interest
-                            )}
-                          </span>
-
-                        `
-                      )
-                      .join("")}
-
-                  </div>
-
-
-                  <div
-                    class="profile-actions"
-                  >
-
-                    <a
-
-                      class="profile-button"
-
-                      href="profile.html?id=${encodeURIComponent(
-                        uid
-                      )}"
-
-                    >
-                      View Profile
-                    </a>
-
-
-                    <a
-
-                      class="chat-button"
-
-                      href="subscription.html?userId=${encodeURIComponent(
-                        uid
-                      )}"
-
-                    >
-                      💬 Chat
-                    </a>
-
-                  </div>
+                    💬 Chat
+                  </a>
 
                 </div>
 
-              </article>
+              </div>
 
+            </article>
             `
-
           );
 
-        }
+        });
 
-      );
+      },
 
+      error => {
 
-      updatePresenceSummary();
+        console.error(error);
 
-    }
-
-
-    /* =======================================================
-       UNIQUE FALLBACK AVATAR
-       ======================================================= */
-
-    function getUniqueFallbackAvatar(
-      uid,
-      used,
-      index
-    ) {
-
-      /*
-       * Generate a stable number from the Firebase UID.
-       */
-
-      let hash = 0;
-
-
-      for (
-        let i = 0;
-        i < uid.length;
-        i++
-      ) {
-
-        hash =
-          (
-            hash * 31 +
-            uid.charCodeAt(i)
-          ) >>> 0;
+        document.getElementById("msg").innerHTML = `
+          <div class="message">
+            Could not load profiles.
+            Please refresh the page.
+          </div>
+        `;
 
       }
+    );
 
+    function escapeHtml(value) {
 
-      let position =
-        hash %
-        fallbackAvatars.length;
-
-
-      /*
-       * Make sure another member
-       * does not get the same fallback
-       * where possible.
-       */
-
-      let attempts = 0;
-
-
-      while (
-        used.has(position) &&
-        attempts < fallbackAvatars.length
-      ) {
-
-        position =
-          (
-            position + 1
-          ) %
-          fallbackAvatars.length;
-
-        attempts++;
-
-      }
-
-
-      used.add(
-        position
-      );
-
-
-      return fallbackAvatars[
-        position
-      ];
-
-    }
-
-
-    /* =======================================================
-       PRESENCE STATUS
-       ======================================================= */
-
-    function getPresenceStatus(
-      uid
-    ) {
-
-      const item =
-        presenceData[uid];
-
-
-      if (!item) {
-
-        return {
-
-          className:
-            "offline",
-
-          text:
-            "Offline"
-
-        };
-
-      }
-
-
-      if (
-        item.state ===
-        "online"
-      ) {
-
-        return {
-
-          className:
-            "online",
-
-          text:
-            "Online now"
-
-        };
-
-      }
-
-
-      const lastChanged =
-        Number(
-          item.lastChanged ||
-          0
-        );
-
-
-      const fifteenMinutes =
-        15 * 60 * 1000;
-
-
-      if (
-        lastChanged &&
-        Date.now() -
-        lastChanged <
-        fifteenMinutes
-      ) {
-
-        return {
-
-          className:
-            "recent",
-
-          text:
-            "Active recently"
-
-        };
-
-      }
-
-
-      return {
-
-        className:
-          "offline",
-
-        text:
-          "Offline"
-
-      };
-
-    }
-
-
-    /* =======================================================
-       ONLINE SUMMARY
-       ======================================================= */
-
-    function updatePresenceSummary() {
-
-      const element =
-        document.getElementById(
-          "presenceSummary"
-        );
-
-
-      if (!element) {
-
-        return;
-
-      }
-
-
-      let onlineCount = 0;
-
-
-      Object.values(
-        presenceData
-      ).forEach(
-        item => {
-
-          if (
-            item &&
-            item.state ===
-            "online"
-          ) {
-
-            onlineCount++;
-
-          }
-
-        }
-      );
-
-
-      if (
-        onlineCount === 0
-      ) {
-
-        element.textContent =
-          "No members online right now";
-
-      } else if (
-        onlineCount === 1
-      ) {
-
-        element.textContent =
-          "1 member online now";
-
-      } else {
-
-        element.textContent =
-          `${onlineCount} members online now`;
-
-      }
-
-    }
-
-
-    /* =======================================================
-       SECURITY
-       ======================================================= */
-
-    function escapeHtml(
-      value
-    ) {
-
-      return String(
-        value
-      ).replace(
-
+      return String(value).replace(
         /[&<>"']/g,
 
-        character => ({
-
-          "&":
-            "&amp;",
-
-          "<":
-            "&lt;",
-
-          ">":
-            "&gt;",
-
-          '"':
-            "&quot;",
-
-          "'":
-            "&#039;"
-
-        }[character])
+        c => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[c])
 
       );
 
@@ -1876,5 +650,4 @@
   </script>
 
 </body>
-
 </html>
