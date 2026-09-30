@@ -1,840 +1,776 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kmeet - Chat</title>
-
-<link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Kmeet — Chat</title>
 
 <style>
-*{
-    box-sizing:border-box;
+
+* {
+  box-sizing: border-box;
 }
 
-html,body{
-    margin:0;
-    width:100%;
-    height:100%;
-    font-family:"Poppins",sans-serif;
-    color:#fff;
+html,
+body {
+  margin: 0;
+  min-height: 100%;
 }
 
-body{
-    background:
-        linear-gradient(
-            rgba(20,10,25,.58),
-            rgba(13,7,18,.84)
-        ),
-        url("chat.jpg") center/cover fixed no-repeat;
+body {
+
+  min-height: 100vh;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color: #fff;
+
+  background:
+    linear-gradient(
+      rgba(10,5,10,.45),
+      rgba(10,5,10,.70)
+    ),
+    url("chat.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  overflow-x: hidden;
+}
+
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255,190,210,.10),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 82% 78%,
+      rgba(255,90,150,.10),
+      transparent 36%
+    );
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+.page {
+
+  min-height: 100vh;
+
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
 }
 
 /* NAV */
 
-.nav{
-    height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 7%;
-    background:rgba(18,10,22,.72);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.10);
+.topbar {
+
+  width: 100%;
+
+  padding: 18px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background:
+    rgba(15,8,15,.38);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.14);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.logo{
-    color:#fff;
-    text-decoration:none;
-    font-family:"Playfair Display",serif;
-    font-size:30px;
-    font-weight:700;
+.brand {
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  letter-spacing: .5px;
 }
 
-.logo span{
-    color:#ff79ad;
+.brand span {
+  color: #ff9ab9;
 }
 
-.navlinks{
-    display:flex;
-    gap:25px;
-}
+.back-btn {
 
-.navlinks a{
-    color:rgba(255,255,255,.86);
-    text-decoration:none;
-    font-size:14px;
-}
+  color: #fff;
 
-.navlinks a:hover{
-    color:#ff82b5;
-}
+  text-decoration: none;
 
-/* PAGE */
+  padding: 9px 15px;
 
-.page{
-    width:100%;
-    height:calc(100vh - 72px);
-    padding:25px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+  border-radius: 999px;
 
-.chat-shell{
-    width:min(1100px,100%);
-    height:min(760px,calc(100vh - 122px));
-    min-height:540px;
+  background:
+    rgba(255,255,255,.12);
 
-    display:flex;
-    flex-direction:column;
-
-    overflow:hidden;
-
-    background:rgba(20,12,25,.70);
-
-    border:1px solid rgba(255,255,255,.14);
-    border-radius:28px;
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.42),
-        inset 0 1px 0 rgba(255,255,255,.08);
-
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-
-    position:relative;
-}
-
-/* HEADER */
-
-.chat-header{
-    min-height:82px;
-    padding:14px 20px;
-
-    display:flex;
-    align-items:center;
-    gap:14px;
-
-    border-bottom:1px solid rgba(255,255,255,.10);
-
-    background:rgba(255,255,255,.045);
-}
-
-.back{
-    width:42px;
-    height:42px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#fff;
-    text-decoration:none;
-
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.10);
-
-    font-size:20px;
-}
-
-.person-photo{
-    width:50px;
-    height:50px;
-
-    border-radius:50%;
-    object-fit:cover;
-
-    background:linear-gradient(135deg,#f06b9d,#6e426f);
-
-    border:2px solid rgba(255,255,255,.25);
-}
-
-.person-info{
-    min-width:0;
-    flex:1;
-}
-
-.person-name{
-    margin:0;
-
-    font-size:17px;
-    font-weight:600;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.person-status{
-    margin-top:2px;
-
-    font-size:12px;
-
-    color:rgba(255,255,255,.58);
-}
-
-.online-dot{
-    display:inline-block;
-
-    width:7px;
-    height:7px;
-
-    margin-right:5px;
-
-    border-radius:50%;
-
-    background:#6ee7a5;
-
-    box-shadow:0 0 10px rgba(110,231,165,.65);
+  border:
+    1px solid rgba(255,255,255,.18);
 }
 
 /* CHAT */
 
-.chat-area{
-    flex:1;
-    min-height:0;
+.chat-shell {
 
-    display:flex;
-    flex-direction:column;
+  width:
+    min(
+      900px,
+      calc(100% - 28px)
+    );
+
+  height:
+    calc(100vh - 105px);
+
+  min-height: 560px;
+
+  margin: 18px auto;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background:
+    rgba(25,12,23,.46);
+
+  border:
+    1px solid rgba(255,255,255,.20);
+
+  border-radius: 26px;
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.42);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
-.messages{
-    flex:1;
-    min-height:0;
+/* HEADER */
 
-    overflow-y:auto;
+.chat-header {
 
-    padding:24px;
+  padding: 16px 20px;
 
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  background:
+    rgba(10,5,10,.28);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.13);
 }
 
-.messages::-webkit-scrollbar{
-    width:6px;
+.avatar,
+.avatar-fallback {
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  flex: 0 0 auto;
 }
 
-.messages::-webkit-scrollbar-thumb{
-    background:rgba(255,255,255,.15);
-    border-radius:10px;
+.avatar {
+
+  object-fit: cover;
+
+  background:
+    rgba(255,255,255,.14);
+
+  border:
+    2px solid rgba(255,255,255,.3);
 }
 
-.empty{
-    margin:auto;
+.avatar-fallback {
 
-    max-width:430px;
+  display: grid;
 
-    text-align:center;
+  place-items: center;
 
-    color:rgba(255,255,255,.58);
+  background:
+    linear-gradient(
+      135deg,
+      #ff9ab9,
+      #b85d82
+    );
 
-    font-size:14px;
-    line-height:1.7;
+  font-weight: 700;
+
+  font-size: 19px;
+
+  border:
+    2px solid rgba(255,255,255,.3);
 }
 
-.message{
-    max-width:min(72%,560px);
+.person-name {
 
-    padding:11px 15px;
+  font-size: 18px;
 
-    border-radius:18px;
-
-    font-size:14px;
-    line-height:1.5;
-
-    word-wrap:break-word;
-    overflow-wrap:anywhere;
-
-    animation:messageIn .18s ease;
+  font-weight: 700;
 }
 
-@keyframes messageIn{
-    from{
-        opacity:0;
-        transform:translateY(5px);
-    }
+.status {
 
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+  margin-top: 3px;
+
+  font-size: 13px;
+
+  color:
+    rgba(255,255,255,.72);
 }
 
-.message.mine{
-    align-self:flex-end;
+/* MESSAGES */
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(226,82,137,.92),
-            rgba(170,59,119,.88)
-        );
+.messages {
 
-    border-bottom-right-radius:5px;
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 22px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  scroll-behavior: smooth;
 }
 
-.message.theirs{
-    align-self:flex-start;
+.message {
 
-    background:rgba(255,255,255,.095);
+  max-width:
+    min(72%,600px);
 
-    border:1px solid rgba(255,255,255,.09);
+  padding:
+    11px 14px;
 
-    border-bottom-left-radius:5px;
+  border-radius: 18px;
+
+  line-height: 1.45;
+
+  word-wrap: break-word;
+
+  white-space: pre-wrap;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,.12);
+}
+
+.message.mine {
+
+  align-self: flex-end;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(225,94,137,.94),
+      rgba(164,64,105,.94)
+    );
+
+  border-bottom-right-radius: 5px;
+}
+
+.message.theirs {
+
+  align-self: flex-start;
+
+  background:
+    rgba(255,255,255,.15);
+
+  border:
+    1px solid rgba(255,255,255,.13);
+
+  border-bottom-left-radius: 5px;
+}
+
+.empty {
+
+  margin: auto;
+
+  text-align: center;
+
+  color:
+    rgba(255,255,255,.72);
+
+  max-width: 360px;
+
+  line-height: 1.6;
 }
 
 /* COMPOSER */
 
-.composer{
-    padding:15px 18px;
+.composer {
 
-    display:flex;
-    gap:10px;
+  padding: 14px;
 
-    border-top:1px solid rgba(255,255,255,.10);
+  display: flex;
 
-    background:rgba(10,6,14,.35);
+  gap: 10px;
+
+  background:
+    rgba(8,4,8,.35);
+
+  border-top:
+    1px solid rgba(255,255,255,.13);
 }
 
-.input-wrap{
-    flex:1;
+.composer textarea {
+
+  flex: 1;
+
+  resize: none;
+
+  min-height: 48px;
+  max-height: 130px;
+
+  padding:
+    13px 15px;
+
+  border:
+    1px solid rgba(255,255,255,.18);
+
+  border-radius: 17px;
+
+  outline: none;
+
+  color: #fff;
+
+  background:
+    rgba(255,255,255,.10);
+
+  font: inherit;
 }
 
-.message-input{
-    width:100%;
-    min-height:48px;
-    max-height:120px;
+.composer textarea::placeholder {
 
-    resize:none;
-
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:16px;
-
-    outline:none;
-
-    padding:14px 15px;
-
-    color:#fff;
-
-    background:rgba(255,255,255,.07);
-
-    font-family:"Poppins",sans-serif;
-    font-size:14px;
+  color:
+    rgba(255,255,255,.62);
 }
 
-.message-input::placeholder{
-    color:rgba(255,255,255,.40);
+.send-btn {
+
+  padding: 0 21px;
+
+  min-width: 78px;
+
+  cursor: pointer;
+
+  border: 0;
+
+  border-radius: 17px;
+
+  color: #fff;
+
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e66a94,
+      #a9426d
+    );
+
+  box-shadow:
+    0 8px 22px rgba(150,47,88,.30);
 }
 
-.message-input:focus{
-    border-color:rgba(255,117,168,.55);
+.send-btn:disabled {
 
-    box-shadow:
-        0 0 0 3px rgba(255,117,168,.08);
+  opacity: .55;
+
+  cursor: not-allowed;
 }
 
-.send-btn{
-    width:52px;
-    height:48px;
+/* PAYMENT GATE */
 
-    flex-shrink:0;
+.gate {
 
-    border:none;
-    border-radius:16px;
+  flex: 1;
 
-    cursor:pointer;
+  display: grid;
 
-    color:#fff;
+  place-items: center;
 
-    font-size:19px;
+  padding: 35px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ed659d,
-            #b94c86
-        );
-
-    transition:.2s;
+  text-align: center;
 }
 
-.send-btn:hover{
-    transform:translateY(-1px);
+.gate-card {
+
+  width:
+    min(560px,100%);
+
+  padding:
+    36px 30px;
+
+  border-radius: 24px;
+
+  background:
+    rgba(15,7,14,.58);
+
+  border:
+    1px solid rgba(255,255,255,.17);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.3);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
-.send-btn:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    transform:none;
+.gate-icon {
+
+  font-size: 42px;
+
+  margin-bottom: 10px;
 }
 
-.rule-note{
-    padding:0 20px 12px;
+.gate-card h2 {
 
-    text-align:center;
+  margin:
+    0 0 10px;
 
-    font-size:11px;
-
-    color:rgba(255,255,255,.40);
+  font-size: 27px;
 }
 
-/* GATE */
+.gate-card p {
 
-.gate{
-    position:absolute;
-    inset:82px 0 0;
+  margin:
+    0 auto 22px;
 
-    z-index:5;
+  max-width: 450px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  color:
+    rgba(255,255,255,.78);
 
-    padding:25px;
-
-    background:rgba(10,6,15,.48);
-
-    backdrop-filter:blur(7px);
-    -webkit-backdrop-filter:blur(7px);
+  line-height: 1.6;
 }
 
-.gate-card{
-    width:min(470px,100%);
+.gate-buttons {
 
-    padding:30px;
+  display: flex;
 
-    text-align:center;
+  justify-content: center;
 
-    border-radius:24px;
+  flex-wrap: wrap;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.10),
-            rgba(255,255,255,.045)
-        );
-
-    border:1px solid rgba(255,255,255,.14);
-
-    box-shadow:0 25px 70px rgba(0,0,0,.35);
+  gap: 10px;
 }
 
-.gate-icon{
-    width:64px;
-    height:64px;
+.pay-btn {
 
-    margin:0 auto 14px;
+  display: inline-flex;
 
-    border-radius:50%;
+  align-items: center;
+  justify-content: center;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  min-width: 145px;
 
-    font-size:28px;
+  padding:
+    13px 20px;
 
-    background:rgba(255,105,160,.13);
+  border-radius: 999px;
 
-    border:1px solid rgba(255,130,175,.18);
+  text-decoration: none;
+
+  color: #fff;
+
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e66a94,
+      #a9426d
+    );
+
+  border: 0;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 22px rgba(150,47,88,.30);
 }
 
-.gate-card h2{
-    margin:0 0 9px;
+.secondary-btn {
 
-    font-family:"Playfair Display",serif;
+  background:
+    rgba(255,255,255,.10);
 
-    font-size:27px;
-}
-
-.gate-card p{
-    margin:0;
-
-    color:rgba(255,255,255,.62);
-
-    font-size:13px;
-    line-height:1.65;
-}
-
-.package-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-
-    gap:10px;
-
-    margin-top:20px;
-}
-
-.package{
-    padding:14px 10px;
-
-    border-radius:15px;
-
-    border:1px solid rgba(255,255,255,.11);
-
-    background:rgba(255,255,255,.055);
-
-    color:#fff;
-
-    cursor:pointer;
-
-    font-family:"Poppins",sans-serif;
-
-    transition:.2s;
-}
-
-.package:hover{
-    background:rgba(255,255,255,.10);
-    transform:translateY(-1px);
-}
-
-.package strong{
-    display:block;
-    font-size:16px;
-}
-
-.package span{
-    display:block;
-    margin-top:3px;
-
-    font-size:11px;
-
-    color:rgba(255,255,255,.52);
-}
-
-.pay-btn{
-    display:block;
-
-    margin-top:18px;
-
-    padding:13px 18px;
-
-    border-radius:14px;
-
-    color:#fff;
-    text-decoration:none;
-
-    font-size:14px;
-    font-weight:600;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e8649c,
-            #b84780
-        );
-}
-
-.secondary-btn{
-    display:block;
-
-    margin-top:10px;
-
-    padding:11px 18px;
-
-    border-radius:14px;
-
-    color:rgba(255,255,255,.78);
-
-    text-decoration:none;
-
-    font-size:13px;
-
-    background:rgba(255,255,255,.055);
-
-    border:1px solid rgba(255,255,255,.09);
+  border:
+    1px solid rgba(255,255,255,.18);
 }
 
 /* ERROR */
 
-.error-box{
-    margin:10px 20px;
+.error {
 
-    padding:12px 14px;
+  color:
+    #ffd0d8;
 
-    border-radius:13px;
+  background:
+    rgba(150,30,55,.30);
 
-    display:none;
+  border:
+    1px solid rgba(255,150,170,.22);
 
-    color:#ffdce9;
+  padding:
+    12px 14px;
 
-    background:rgba(220,60,112,.12);
+  border-radius: 12px;
 
-    border:1px solid rgba(255,100,150,.18);
+  margin: 14px;
 
-    font-size:12px;
+  display: none;
+}
 
-    line-height:1.5;
+/* INFO */
+
+.info-bar {
+
+  padding:
+    8px 14px;
+
+  text-align: center;
+
+  color:
+    rgba(255,255,255,.70);
+
+  font-size: 11px;
 }
 
 /* MOBILE */
 
-@media(max-width:700px){
+@media(max-width:650px) {
 
-    .nav{
-        padding:0 18px;
-    }
+  .topbar {
+    padding: 14px 15px;
+  }
 
-    .navlinks{
-        gap:12px;
-    }
+  .brand {
+    font-size: 21px;
+  }
 
-    .navlinks a{
-        font-size:12px;
-    }
+  .chat-shell {
 
-    .page{
-        padding:0;
-        align-items:stretch;
-    }
+    width:
+      calc(100% - 12px);
 
-    .chat-shell{
-        width:100%;
-        height:calc(100vh - 72px);
+    height:
+      calc(100vh - 83px);
 
-        min-height:0;
+    min-height: 0;
 
-        border-radius:0;
+    margin:
+      6px auto;
 
-        border-left:0;
-        border-right:0;
-    }
+    border-radius: 20px;
+  }
 
-    .messages{
-        padding:17px;
-    }
+  .messages {
+    padding: 15px;
+  }
 
-    .message{
-        max-width:82%;
-    }
+  .message {
+    max-width: 84%;
+  }
 
-    .composer{
-        padding:11px;
-    }
+  .composer {
+    padding: 10px;
+  }
 
-    .package-row{
-        grid-template-columns:1fr;
-    }
+  .send-btn {
+    min-width: 64px;
+    padding: 0 14px;
+  }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
-<nav class="nav">
-
-    <a class="logo" href="index.html">
-        K<span>meet</span>
-    </a>
-
-    <div class="navlinks">
-        <a href="discover.html">Discover</a>
-        <a href="profile.html">Profile</a>
-    </div>
-
-</nav>
-
-
 <div class="page">
+
+<header class="topbar">
+
+  <div class="brand">
+    K<span>meet</span>
+  </div>
+
+  <a
+    class="back-btn"
+    href="discover.html"
+  >
+    ← Back
+  </a>
+
+</header>
 
 <main class="chat-shell">
 
-    <!-- HEADER -->
+  <div
+    id="errorBox"
+    class="error"
+  ></div>
 
-    <header class="chat-header">
+  <!-- CHAT -->
 
-        <a
-            class="back"
-            href="discover.html"
-            aria-label="Back"
-        >
-            ←
-        </a>
+  <section
+    id="chatArea"
+    style="
+      display:flex;
+      height:100%;
+      flex-direction:column;
+    "
+  >
 
-        <img
-            id="personPhoto"
-            class="person-photo"
-            src="kmeet-logo.jfif.jfif"
-            alt="Kmeet member"
-        >
+    <div class="chat-header">
 
-        <div class="person-info">
+      <div
+        id="avatarFallback"
+        class="avatar-fallback"
+      >
+        K
+      </div>
 
-            <h1
-                id="personName"
-                class="person-name"
-            >
-                Kmeet member
-            </h1>
+      <img
+        id="avatar"
+        class="avatar"
+        alt=""
+        style="display:none"
+      >
 
-            <div class="person-status">
-
-                <span class="online-dot"></span>
-
-                <span id="statusText">
-                    Ready to chat
-                </span>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-    <!-- CHAT -->
-
-    <section
-        id="chatArea"
-        class="chat-area"
-    >
+      <div>
 
         <div
-            id="messages"
-            class="messages"
+          id="personName"
+          class="person-name"
         >
-
-            <div class="empty">
-                Say hello and start the connection. ❤️
-            </div>
-
+          Kmeet Member
         </div>
 
-
-        <div
-            id="errorBox"
-            class="error-box"
-        ></div>
-
-
-        <div class="rule-note">
-            Start with <strong>hi</strong> or <strong>hey</strong>.
-            Contact information cannot be shared for free.
+        <div class="status">
+          Your Kmeet conversation
         </div>
 
+      </div>
 
-        <form
-            id="composer"
-            class="composer"
-        >
+    </div>
 
-            <div class="input-wrap">
+    <div
+      id="infoBar"
+      class="info-bar"
+    >
+      Say hello and let the connection grow ❤️
+    </div>
 
-                <textarea
-                    id="messageInput"
-                    class="message-input"
-                    rows="1"
-                    maxlength="1000"
-                    placeholder="Write a message..."
-                    autocomplete="off"
-                ></textarea>
-
-            </div>
-
-            <button
-                id="sendBtn"
-                class="send-btn"
-                type="submit"
-                aria-label="Send"
-            >
-                ➤
-            </button>
-
-        </form>
-
-    </section>
-
-
-    <!-- PAYMENT GATE -->
-
-    <section
-        id="gate"
-        class="gate"
-        style="display:none;"
+    <div
+      id="messages"
+      class="messages"
     >
 
-        <div class="gate-card">
+      <div
+        id="emptyState"
+        class="empty"
+      >
+        Start the conversation and let the connection grow. ❤️
+      </div>
 
-            <div
-                id="gateIcon"
-                class="gate-icon"
-            >
-                🔒
-            </div>
+    </div>
 
-            <h2 id="gateTitle">
-                Continue chatting
-            </h2>
+    <form
+      id="composer"
+      class="composer"
+    >
 
-            <p id="gateText">
-                Choose a chat package to continue.
-            </p>
+      <textarea
+        id="messageInput"
+        placeholder="Write a message…"
+        maxlength="2000"
+        required
+      ></textarea>
 
+      <button
+        id="sendBtn"
+        class="send-btn"
+        type="submit"
+      >
+        Send
+      </button>
 
-            <div
-                id="packageRow"
-                class="package-row"
-            >
+    </form>
 
-                <button
-                    class="package"
-                    type="button"
-                    data-package="3"
-                    data-amount="49"
-                >
-                    <strong>3 chats</strong>
-                    <span>KSh 49</span>
-                </button>
+  </section>
 
+  <!-- PAYMENT GATE -->
 
-                <button
-                    class="package"
-                    type="button"
-                    data-package="8"
-                    data-amount="100"
-                >
-                    <strong>8 chats</strong>
-                    <span>KSh 100</span>
-                </button>
+  <section
+    id="gate"
+    class="gate"
+    style="display:none"
+  >
 
-            </div>
+    <div class="gate-card">
 
+      <div
+        id="gateIcon"
+        class="gate-icon"
+      >
+        💗
+      </div>
 
-            <div
-                id="receiverPayment"
-                style="display:none;"
-            >
+      <h2 id="gateTitle">
+        Unlock your conversation
+      </h2>
 
-                <a
-                    id="receiverPayBtn"
-                    class="pay-btn"
-                    href="#"
-                >
-                    Continue for KSh 11
-                </a>
+      <p id="gateText">
+        Continue chatting with Kmeet credits.
+      </p>
 
-            </div>
+      <div
+        id="gateButtons"
+        class="gate-buttons"
+      ></div>
 
+    </div>
 
-            <a
-                class="secondary-btn"
-                href="discover.html"
-            >
-                Back to Discover
-            </a>
-
-        </div>
-
-    </section>
+  </section>
 
 </main>
 
@@ -843,105 +779,101 @@ body{
 
 <script type="module">
 
-/*
-===========================================================
-KMEET CHAT
-
-IMPORTANT:
-We only import auth/db from firebase-config.js.
-
-We DO NOT import signInAnonymously from it.
-===========================================================
-*/
-
 import {
-    auth,
-    db
+  auth,
+  db
 } from "./firebase-config.js";
 
 
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+/*
+  IMPORTANT:
 
+  signInAnonymously is imported directly
+  from Firebase here because your current
+  firebase-config.js does NOT export it.
+*/
 
 import {
-    doc,
-    getDoc,
-    collection,
-    addDoc,
-    setDoc,
-    updateDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  onAuthStateChanged,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+  doc,
+  getDoc,
+  collection,
+  addDoc,
+  setDoc,
+  getDocs,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 
 /* =========================================================
-   ELEMENTS
-========================================================= */
-
-const personName =
-    document.getElementById("personName");
-
-const personPhoto =
-    document.getElementById("personPhoto");
-
-const statusText =
-    document.getElementById("statusText");
-
-const messages =
-    document.getElementById("messages");
-
-const composer =
-    document.getElementById("composer");
-
-const messageInput =
-    document.getElementById("messageInput");
-
-const sendBtn =
-    document.getElementById("sendBtn");
-
-const errorBox =
-    document.getElementById("errorBox");
-
-const gate =
-    document.getElementById("gate");
-
-const gateTitle =
-    document.getElementById("gateTitle");
-
-const gateText =
-    document.getElementById("gateText");
-
-const gateIcon =
-    document.getElementById("gateIcon");
-
-const packageRow =
-    document.getElementById("packageRow");
-
-const receiverPayment =
-    document.getElementById("receiverPayment");
-
-const receiverPayBtn =
-    document.getElementById("receiverPayBtn");
-
-
-/* =========================================================
-   TARGET
+   URL
 ========================================================= */
 
 const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
+  new URLSearchParams(
+    window.location.search
+  );
 
 const targetId =
-    params.get("userId") ||
-    params.get("user");
+  params.get("userId") ||
+  params.get("user");
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const chatArea =
+  document.getElementById("chatArea");
+
+const gate =
+  document.getElementById("gate");
+
+const gateTitle =
+  document.getElementById("gateTitle");
+
+const gateText =
+  document.getElementById("gateText");
+
+const gateButtons =
+  document.getElementById("gateButtons");
+
+const gateIcon =
+  document.getElementById("gateIcon");
+
+const errorBox =
+  document.getElementById("errorBox");
+
+const personName =
+  document.getElementById("personName");
+
+const avatar =
+  document.getElementById("avatar");
+
+const avatarFallback =
+  document.getElementById("avatarFallback");
+
+const messages =
+  document.getElementById("messages");
+
+const composer =
+  document.getElementById("composer");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const infoBar =
+  document.getElementById("infoBar");
 
 
 /* =========================================================
@@ -952,105 +884,130 @@ let currentUser = null;
 
 let conversationId = null;
 
-let conversation = null;
-
 let unsubscribeMessages = null;
 
+let authStarted = false;
+
+let messagesLoaded = false;
+
 
 /* =========================================================
-   SHOW ERROR
+   CONSTANTS
 ========================================================= */
 
-function showError(text){
+const FREE_OPENING_MESSAGES = [
+  "hi",
+  "hey"
+];
 
-    errorBox.textContent = text;
+const FREE_RECEIVER_REPLIES = 3;
 
-    errorBox.style.display = "block";
+const RECEIVER_FEE = 11;
 
+const SENDER_PACK_3_PRICE = 49;
+
+const SENDER_PACK_8_PRICE = 100;
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message) {
+
+  errorBox.textContent =
+    message;
+
+  errorBox.style.display =
+    "block";
 }
 
 
 /* =========================================================
-   HIDE ERROR
+   ESCAPE HTML
 ========================================================= */
 
-function hideError(){
+function escapeHtml(value) {
 
-    errorBox.style.display = "none";
+  return String(value).replace(
+    /[&<>"']/g,
 
+    c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[c])
+
+  );
 }
 
 
 /* =========================================================
-   PROFILE
+   TARGET PROFILE
 ========================================================= */
 
-async function loadTargetProfile(){
+async function loadTargetProfile() {
 
-    if(!targetId){
-        return;
-    }
+  if (!targetId) {
 
-    try{
+    throw new Error(
+      "No Kmeet profile was selected."
+    );
 
-        const snapshot =
-            await getDoc(
-                doc(
-                    db,
-                    "users",
-                    targetId
-                )
-            );
+  }
 
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "users",
+        targetId
+      )
+    );
 
-        if(!snapshot.exists()){
+  if (!snap.exists()) {
 
-            personName.textContent =
-                "Kmeet member";
+    throw new Error(
+      "The selected Kmeet profile could not be found."
+    );
 
-            statusText.textContent =
-                "Profile unavailable";
+  }
 
-            return;
-        }
+  const data =
+    snap.data();
 
+  const name =
+    data.name ||
+    data.username ||
+    "Kmeet Member";
 
-        const profile =
-            snapshot.data();
+  personName.textContent =
+    name;
 
+  avatarFallback.textContent =
+    name
+      .charAt(0)
+      .toUpperCase();
 
-        personName.textContent =
-            profile.name ||
-            profile.displayName ||
-            "Kmeet member";
+  const photo =
+    data.photoURL ||
+    data.avatar ||
+    "";
 
+  if (photo) {
 
-        personPhoto.src =
-            profile.photoURL ||
-            profile.avatar ||
-            profile.photo ||
-            "kmeet-logo.jfif.jfif";
+    avatar.src =
+      photo;
 
+    avatar.style.display =
+      "block";
 
-        personPhoto.onerror = () => {
+    avatarFallback.style.display =
+      "none";
 
-            personPhoto.src =
-                "kmeet-logo.jfif.jfif";
-
-        };
-
-
-        statusText.textContent =
-            "Ready to chat";
-
-    }catch(error){
-
-        console.error(
-            "Profile error:",
-            error
-        );
-
-    }
+  }
 
 }
 
@@ -1059,987 +1016,947 @@ async function loadTargetProfile(){
    CONVERSATION ID
 ========================================================= */
 
-function makeConversationId(){
+function getConversationId() {
 
-    return [
-        currentUser.uid,
-        targetId
-    ]
-    .sort()
-    .join("_");
+  return [
+    currentUser.uid,
+    targetId
+  ]
+  .sort()
+  .join("_");
 
 }
 
 
 /* =========================================================
-   LOAD CONVERSATION
+   CONTACT DETECTION
 ========================================================= */
 
-async function loadConversation(){
+function containsContactInformation(text) {
 
-    if(!currentUser || !targetId){
-        return;
-    }
-
-
-    conversationId =
-        makeConversationId();
+  const value =
+    String(text)
+      .toLowerCase()
+      .trim();
 
 
-    const ref =
-        doc(
-            db,
-            "conversations",
-            conversationId
-        );
+  /* EMAIL */
+
+  const emailPattern =
+    /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
+
+  if (
+    emailPattern.test(value)
+  ) {
+    return true;
+  }
 
 
-    try{
+  /* KENYAN PHONE NUMBERS */
 
-        const snapshot =
-            await getDoc(ref);
+  const phonePattern =
+    /(?:\+?254[\s-]?(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3,4})|(?:0(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3})/i;
+
+  if (
+    phonePattern.test(value)
+  ) {
+    return true;
+  }
 
 
-        if(snapshot.exists()){
+  /* CONTACT LANGUAGE */
 
-            conversation =
-                snapshot.data();
+  const contactWords =
+    /\b(whatsapp|whats\s*app|call me|text me|message me|contact me|my number|phone number|email me|dm me|instagram|telegram|facebook)\b/i;
 
-        }else{
+  if (
+    contactWords.test(value)
+  ) {
+    return true;
+  }
 
-            conversation = null;
+
+  /* SOCIAL HANDLES */
+
+  const socialHandle =
+    /(?:^|\s)@[a-z0-9_.]{3,}/i;
+
+  if (
+    socialHandle.test(value)
+  ) {
+    return true;
+  }
+
+
+  return false;
+}
+
+
+/* =========================================================
+   OPEN PAYMENT GATE
+========================================================= */
+
+function showGate(
+  type
+) {
+
+  gate.style.display =
+    "grid";
+
+  chatArea.style.display =
+    "none";
+
+
+  gateButtons.innerHTML =
+    "";
+
+
+  if (
+    type === "sender"
+  ) {
+
+    gateIcon.textContent =
+      "💎";
+
+    gateTitle.textContent =
+      "Continue chatting";
+
+    gateText.textContent =
+      "Your free opening message has been used. Choose a Kmeet chat package to continue.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49"
+      >
+        3 Chats — KSh 49
+      </a>
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
+      >
+        8 Chats — KSh 100
+      </a>
+
+      <a
+        class="pay-btn secondary-btn"
+        href="discover.html"
+      >
+        Back to Discover
+      </a>
+
+    `;
+
+    return;
+  }
+
+
+  if (
+    type === "receiver"
+  ) {
+
+    gateIcon.textContent =
+      "💗";
+
+    gateTitle.textContent =
+      "Continue the conversation";
+
+    gateText.textContent =
+      "You have used your free replies or attempted to share contact information. Pay KSh 11 to continue.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=11"
+      >
+        Continue — KSh 11
+      </a>
+
+      <a
+        class="pay-btn secondary-btn"
+        href="discover.html"
+      >
+        Back to Discover
+      </a>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW CHAT
+========================================================= */
+
+function showChat() {
+
+  gate.style.display =
+    "none";
+
+  chatArea.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   LOAD EXISTING MESSAGES
+========================================================= */
+
+function startMessages() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  conversationId =
+    getConversationId();
+
+
+  const ref =
+    collection(
+      db,
+      "conversations",
+      conversationId,
+      "messages"
+    );
+
+
+  const q =
+    query(
+      ref,
+      orderBy(
+        "createdAt",
+        "asc"
+      )
+    );
+
+
+  unsubscribeMessages =
+    onSnapshot(
+
+      q,
+
+      snapshot => {
+
+        messagesLoaded =
+          true;
+
+        messages.innerHTML =
+          "";
+
+
+        if (
+          snapshot.empty
+        ) {
+
+          messages.innerHTML = `
+            <div class="empty">
+              Start the conversation and let the connection grow. ❤️
+            </div>
+          `;
+
+          return;
 
         }
 
 
-        listenForMessages();
+        let firstSenderId =
+          null;
 
-    }catch(error){
+        let receiverReplies =
+          0;
 
-        console.error(
-            "Conversation error:",
-            error
-        );
+        snapshot.forEach(
+          item => {
 
-
-        /*
-           IMPORTANT:
-           Chat stays visible.
-        */
-
-        showError(
-            "Messages could not be loaded. Please refresh if necessary."
-        );
-
-    }
-
-}
+            const data =
+              item.data();
 
 
-/* =========================================================
-   REAL-TIME MESSAGES
-========================================================= */
+            if (
+              !firstSenderId
+            ) {
 
-function listenForMessages(){
-
-    if(!conversationId){
-        return;
-    }
-
-
-    if(unsubscribeMessages){
-        unsubscribeMessages();
-    }
-
-
-    const messagesRef =
-        collection(
-            db,
-            "conversations",
-            conversationId,
-            "messages"
-        );
-
-
-    const messagesQuery =
-        query(
-            messagesRef,
-            orderBy(
-                "createdAt",
-                "asc"
-            )
-        );
-
-
-    unsubscribeMessages =
-        onSnapshot(
-
-            messagesQuery,
-
-            snapshot => {
-
-                messages.innerHTML = "";
-
-
-                if(snapshot.empty){
-
-                    messages.innerHTML = `
-                        <div class="empty">
-                            Say hello and start the connection. ❤️
-                        </div>
-                    `;
-
-                    return;
-                }
-
-
-                snapshot.forEach(item => {
-
-                    const data =
-                        item.data();
-
-
-                    const bubble =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    bubble.className =
-                        "message " +
-                        (
-                            data.senderId === currentUser.uid
-                                ? "mine"
-                                : "theirs"
-                        );
-
-
-                    bubble.textContent =
-                        data.text || "";
-
-
-                    messages.appendChild(
-                        bubble
-                    );
-
-                });
-
-
-                messages.scrollTop =
-                    messages.scrollHeight;
-
-            },
-
-            error => {
-
-                console.error(
-                    "Firestore listener error:",
-                    error
-                );
-
-
-                showError(
-                    "Live messages are temporarily unavailable. Please refresh."
-                );
+              firstSenderId =
+                data.senderId;
 
             }
 
+
+            if (
+              data.senderId !==
+              firstSenderId
+            ) {
+
+              receiverReplies++;
+
+            }
+
+
+            const div =
+              document.createElement(
+                "div"
+              );
+
+
+            div.className =
+              "message " +
+              (
+                data.senderId ===
+                currentUser.uid
+                  ? "mine"
+                  : "theirs"
+              );
+
+
+            div.textContent =
+              data.text || "";
+
+
+            messages.appendChild(
+              div
+            );
+
+          }
         );
 
-}
+
+        messages.scrollTop =
+          messages.scrollHeight;
 
 
-/* =========================================================
-   CONTACT DETECTOR
-========================================================= */
+        /*
+          The first sender is the person
+          who opened the conversation.
+        */
 
-function containsContactInformation(text){
+        if (
+          firstSenderId ===
+          currentUser.uid
+        ) {
 
-    const value =
-        String(text || "")
-        .toLowerCase()
-        .trim();
+          infoBar.textContent =
+            "Your opening message is free. Further messages use chat credits.";
 
+        } else {
 
-    /* EMAIL */
+          infoBar.textContent =
+            `You have ${Math.max(
+              0,
+              FREE_RECEIVER_REPLIES -
+              receiverReplies
+            )} free replies remaining.`;
 
-    const email =
-        /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
+        }
 
+      },
 
-    /* +254 PHONE */
+      error => {
 
-    const internationalPhone =
-        /(?:\+254|00254)[\s.-]*7\d{2}[\s.-]*\d{3}[\s.-]*\d{3}\b/;
+        console.error(
+          "Message listener error:",
+          error
+        );
 
+        /*
+          Do NOT hide the chat if Firestore
+          temporarily fails.
+        */
 
-    /* KENYAN LOCAL PHONE */
+        showError(
+          "The chat interface is open, but messages could not be loaded. Please check your Firebase Firestore rules."
+        );
 
-    const localPhone =
-        /\b0(?:7\d{2})[\s.-]*\d{3}[\s.-]*\d{3}\b/;
+      }
 
-
-    /* LONG NUMBER */
-
-    const longNumber =
-        /(?:\d[\s.-]*){9,}/;
-
-
-    /* CONTACT / SOCIAL REQUESTS */
-
-    const contactWords =
-        /\b(?:whatsapp|what\s*app|telegram|instagram|facebook|snapchat|tiktok|call\s+me|text\s+me|message\s+me|contact\s+me|send\s+your\s+number|give\s+me\s+your\s+number|my\s+number|my\s+phone|email\s+me|email\s+address)\b/i;
-
-
-    return (
-        email.test(value) ||
-        internationalPhone.test(value) ||
-        localPhone.test(value) ||
-        longNumber.test(value) ||
-        contactWords.test(value)
     );
 
 }
 
 
 /* =========================================================
-   OPENING MESSAGE
+   AUTHENTICATION
 ========================================================= */
 
-function isHiOrHey(text){
+async function initialiseAuth() {
 
-    const clean =
-        String(text || "")
-        .trim()
-        .toLowerCase();
+  if (
+    authStarted
+  ) {
+    return;
+  }
 
+  authStarted =
+    true;
 
-    return (
-        clean === "hi" ||
-        clean === "hey"
-    );
 
-}
+  onAuthStateChanged(
+    auth,
 
+    async user => {
 
-/* =========================================================
-   SENDER GATE
-========================================================= */
+      try {
 
-function showSenderGate(){
+        /*
+          Existing logged-in user
+        */
 
-    gate.style.display =
-        "flex";
+        if (user) {
 
+          currentUser =
+            user;
 
-    gateIcon.textContent =
-        "🔒";
+          startMessages();
 
-
-    gateTitle.textContent =
-        "Continue chatting";
-
-
-    gateText.textContent =
-        "Your free opening message has been used. Choose a chat package to continue.";
-
-
-    packageRow.style.display =
-        "grid";
-
-
-    receiverPayment.style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   RECEIVER KSH 11 GATE
-========================================================= */
-
-function showReceiverGate(){
-
-    gate.style.display =
-        "flex";
-
-
-    gateIcon.textContent =
-        "💗";
-
-
-    gateTitle.textContent =
-        "Continue for KSh 11";
-
-
-    gateText.textContent =
-        "Your free replies have been used, or your message attempted to share contact information.";
-
-
-    packageRow.style.display =
-        "none";
-
-
-    receiverPayment.style.display =
-        "block";
-
-
-    receiverPayBtn.href =
-        "payment.html" +
-        "?userId=" +
-        encodeURIComponent(targetId) +
-        "&amount=11" +
-        "&type=receiver";
-
-}
-
-
-/* =========================================================
-   HIDE GATE
-========================================================= */
-
-function hideGate(){
-
-    gate.style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   SEND
-========================================================= */
-
-async function sendMessage(text){
-
-    if(!currentUser){
-
-        showError(
-            "Chat is still connecting. Please try again."
-        );
-
-        return;
-    }
-
-
-    if(!conversationId){
-
-        showError(
-            "The conversation is not ready. Please refresh the page."
-        );
-
-        return;
-    }
-
-
-    const clean =
-        String(text || "")
-        .trim();
-
-
-    if(!clean){
-        return;
-    }
-
-
-    /*
-       CONTACT CHECK FIRST.
-
-       The message is NEVER written to Firestore.
-    */
-
-    if(
-        containsContactInformation(clean)
-    ){
-
-        showReceiverGate();
-
-        return;
-    }
-
-
-    /*
-       LOAD LATEST CONVERSATION STATE.
-    */
-
-    let state =
-        conversation;
-
-
-    try{
-
-        const snapshot =
-            await getDoc(
-                doc(
-                    db,
-                    "conversations",
-                    conversationId
-                )
-            );
-
-
-        if(snapshot.exists()){
-
-            state =
-                snapshot.data();
+          return;
 
         }
-
-    }catch(error){
-
-        console.error(
-            "State refresh error:",
-            error
-        );
-
-    }
-
-
-    /*
-       BRAND NEW CONVERSATION.
-
-       The first sender becomes initiator.
-    */
-
-    if(!state){
-
-        if(!isHiOrHey(clean)){
-
-            showError(
-                'Your first message must be exactly "hi" or "hey".'
-            );
-
-            return;
-        }
-
-
-        try{
-
-            await setDoc(
-                doc(
-                    db,
-                    "conversations",
-                    conversationId
-                ),
-                {
-
-                    initiatorId:
-                        currentUser.uid,
-
-                    targetId:
-                        targetId,
-
-                    senderCredits:
-                        0,
-
-                    senderFreeUsed:
-                        true,
-
-                    receiverFreeReplies:
-                        0,
-
-                    receiverPaid:
-                        false,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            await addDoc(
-                collection(
-                    db,
-                    "conversations",
-                    conversationId,
-                    "messages"
-                ),
-                {
-
-                    senderId:
-                        currentUser.uid,
-
-                    targetId:
-                        targetId,
-
-                    text:
-                        clean,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            conversation = {
-
-                initiatorId:
-                    currentUser.uid,
-
-                targetId:
-                    targetId,
-
-                senderCredits:
-                    0,
-
-                senderFreeUsed:
-                    true,
-
-                receiverFreeReplies:
-                    0,
-
-                receiverPaid:
-                    false
-
-            };
-
-
-            messageInput.value = "";
-
-            return;
-
-        }catch(error){
-
-            console.error(
-                "First message error:",
-                error
-            );
-
-
-            showError(
-                "The message could not be sent. Please try again."
-            );
-
-
-            return;
-
-        }
-
-    }
-
-
-    /*
-       DETERMINE ROLE.
-    */
-
-    const isInitiator =
-        state.initiatorId ===
-        currentUser.uid;
-
-
-    /* =====================================================
-       RECEIVER
-    ===================================================== */
-
-    if(!isInitiator){
-
-        const replies =
-            Number(
-                state.receiverFreeReplies || 0
-            );
 
 
         /*
-           Receiver gets 3 free replies.
+          No current user:
+          create anonymous session.
         */
 
-        if(
-            replies >= 3 &&
-            !state.receiverPaid
-        ){
+        await signInAnonymously(
+          auth
+        );
 
-            showReceiverGate();
+      }
 
-            return;
+      catch (error) {
 
-        }
-
-
-        try{
-
-            await addDoc(
-                collection(
-                    db,
-                    "conversations",
-                    conversationId,
-                    "messages"
-                ),
-                {
-
-                    senderId:
-                        currentUser.uid,
-
-                    targetId:
-                        targetId,
-
-                    text:
-                        clean,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            if(!state.receiverPaid){
-
-                await updateDoc(
-                    doc(
-                        db,
-                        "conversations",
-                        conversationId
-                    ),
-                    {
-                        receiverFreeReplies:
-                            replies + 1
-                    }
-                );
-
-            }
-
-
-            conversation =
-                {
-                    ...state,
-                    receiverFreeReplies:
-                        state.receiverPaid
-                            ? replies
-                            : replies + 1
-                };
-
-
-            messageInput.value = "";
-
-
-            return;
-
-        }catch(error){
-
-            console.error(
-                "Receiver message error:",
-                error
-            );
-
-
-            showError(
-                "Your reply could not be sent."
-            );
-
-
-            return;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       INITIATOR / SENDER
-    ===================================================== */
-
-    const freeOpeningUsed =
-        Boolean(
-            state.senderFreeUsed
+        console.error(
+          "Kmeet authentication error:",
+          error
         );
 
 
-    const credits =
-        Number(
-            state.senderCredits || 0
-        );
+        if (
+          error.code ===
+          "auth/operation-not-allowed"
+        ) {
 
+          showError(
+            "Anonymous Authentication is not enabled in Firebase. Enable Authentication → Sign-in method → Anonymous."
+          );
 
-    /*
-       The opening message was already used.
+        } else {
 
-       Every additional sender message requires a credit.
-    */
-
-    if(freeOpeningUsed){
-
-        if(credits <= 0){
-
-            showSenderGate();
-
-            return;
+          showError(
+            "Kmeet could not start the chat session. Please refresh the page."
+          );
 
         }
 
-
-        try{
-
-            await addDoc(
-                collection(
-                    db,
-                    "conversations",
-                    conversationId,
-                    "messages"
-                ),
-                {
-
-                    senderId:
-                        currentUser.uid,
-
-                    targetId:
-                        targetId,
-
-                    text:
-                        clean,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            await updateDoc(
-                doc(
-                    db,
-                    "conversations",
-                    conversationId
-                ),
-                {
-                    senderCredits:
-                        credits - 1
-                }
-            );
-
-
-            conversation =
-                {
-                    ...state,
-                    senderCredits:
-                        credits - 1
-                };
-
-
-            messageInput.value = "";
-
-
-        }catch(error){
-
-            console.error(
-                "Sender message error:",
-                error
-            );
-
-
-            showError(
-                "Your message could not be sent."
-            );
-
-        }
+      }
 
     }
+
+  );
 
 }
 
 
 /* =========================================================
-   FORM
+   SEND MESSAGE
 ========================================================= */
 
 composer.addEventListener(
-    "submit",
-    async event => {
+  "submit",
 
-        event.preventDefault();
+  async event => {
 
-        sendBtn.disabled =
-            true;
+    event.preventDefault();
 
 
-        try{
+    const text =
+      messageInput.value.trim();
 
-            await sendMessage(
-                messageInput.value
-            );
 
-        }finally{
+    if (!text) {
+      return;
+    }
 
-            sendBtn.disabled =
-                false;
 
-            messageInput.focus();
+    if (!currentUser) {
 
-        }
+      showError(
+        "Kmeet is still preparing your chat session. Please try again in a moment."
+      );
+
+      return;
 
     }
-);
 
 
-/* =========================================================
-   TEXTAREA
-========================================================= */
+    if (!conversationId) {
 
-messageInput.addEventListener(
-    "input",
-    () => {
-
-        messageInput.style.height =
-            "48px";
-
-
-        messageInput.style.height =
-            Math.min(
-                messageInput.scrollHeight,
-                120
-            ) + "px";
+      conversationId =
+        getConversationId();
 
     }
-);
 
 
-/* =========================================================
-   PACKAGE BUTTONS
-========================================================= */
+    /*
+      Get existing messages.
+      This makes the rules work even after
+      refreshing the page.
+    */
 
-document
-    .querySelectorAll(".package")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const packageSize =
-                    button.dataset.package;
+    let existingMessages = [];
 
 
-                const amount =
-                    button.dataset.amount;
+    try {
 
-
-                window.location.href =
-                    "payment.html" +
-                    "?userId=" +
-                    encodeURIComponent(targetId) +
-                    "&package=" +
-                    encodeURIComponent(packageSize) +
-                    "&amount=" +
-                    encodeURIComponent(amount) +
-                    "&type=sender" +
-                    "&from=chat";
-
-            }
+      const snap =
+        await getDocs(
+          query(
+            collection(
+              db,
+              "conversations",
+              conversationId,
+              "messages"
+            ),
+            orderBy(
+              "createdAt",
+              "asc"
+            )
+          )
         );
 
-    });
+
+      snap.forEach(
+        item => {
+
+          existingMessages.push(
+            item.data()
+          );
+
+        }
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      showError(
+        "Kmeet could not check this conversation. Please try again."
+      );
+
+      return;
+
+    }
+
+
+    const firstMessage =
+      existingMessages[0];
+
+
+    /*
+      =========================================
+      FIRST MESSAGE
+      =========================================
+    */
+
+    if (
+      existingMessages.length === 0
+    ) {
+
+      const opening =
+        text.toLowerCase();
+
+
+      if (
+        !FREE_OPENING_MESSAGES.includes(
+          opening
+        )
+      ) {
+
+        showError(
+          "Your first message must be “hi” or “hey”."
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    /*
+      =========================================
+      DETERMINE ROLE
+      =========================================
+    */
+
+    const senderId =
+      firstMessage
+        ? firstMessage.senderId
+        : currentUser.uid;
+
+
+    const isSender =
+      senderId ===
+      currentUser.uid;
+
+
+    /*
+      =========================================
+      CONTACT SHARING
+      =========================================
+    */
+
+    if (
+      containsContactInformation(
+        text
+      )
+    ) {
+
+      if (
+        !isSender
+      ) {
+
+        /*
+          Receiver attempted to share
+          contact information.
+
+          Block it immediately.
+        */
+
+        showGate(
+          "receiver"
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Sender contact sharing requires
+        sender credits as well.
+      */
+
+      showGate(
+        "sender"
+      );
+
+      return;
+
+    }
+
+
+    /*
+      =========================================
+      SENDER RULE
+      =========================================
+    */
+
+    if (
+      isSender &&
+      existingMessages.length > 0
+    ) {
+
+      /*
+        Demo credit storage is kept per
+        Firebase user + conversation.
+      */
+
+      const creditKey =
+        "kmeet_sender_credits_" +
+        currentUser.uid +
+        "_" +
+        targetId;
+
+
+      let credits =
+        parseInt(
+          localStorage.getItem(
+            creditKey
+          ) || "0",
+          10
+        );
+
+
+      if (
+        credits <= 0
+      ) {
+
+        showGate(
+          "sender"
+        );
+
+        return;
+
+      }
+
+      /*
+        Consume one sender chat credit.
+      */
+
+      credits--;
+
+      localStorage.setItem(
+        creditKey,
+        String(credits)
+      );
+
+    }
+
+
+    /*
+      =========================================
+      RECEIVER RULE
+      =========================================
+    */
+
+    if (
+      !isSender
+    ) {
+
+      const receiverReplies =
+        existingMessages.filter(
+          item =>
+            item.senderId ===
+            currentUser.uid
+        ).length;
+
+
+      if (
+        receiverReplies >=
+        FREE_RECEIVER_REPLIES
+      ) {
+
+        const paidKey =
+          "kmeet_receiver_paid_" +
+          currentUser.uid +
+          "_" +
+          targetId;
+
+
+        const paid =
+          localStorage.getItem(
+            paidKey
+          ) === "true";
+
+
+        if (!paid) {
+
+          showGate(
+            "receiver"
+          );
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    /*
+      =========================================
+      SAVE MESSAGE
+      =========================================
+    */
+
+    sendBtn.disabled =
+      true;
+
+
+    try {
+
+      await setDoc(
+
+        doc(
+          db,
+          "conversations",
+          conversationId
+        ),
+
+        {
+          initiatorId:
+            senderId,
+
+          targetId:
+            targetId,
+
+          updatedAt:
+            serverTimestamp(),
+
+          createdAt:
+            serverTimestamp()
+
+        },
+
+        {
+          merge: true
+        }
+
+      );
+
+
+      await addDoc(
+
+        collection(
+          db,
+          "conversations",
+          conversationId,
+          "messages"
+        ),
+
+        {
+          senderId:
+            currentUser.uid,
+
+          targetId:
+            targetId,
+
+          text:
+            text,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+
+      );
+
+
+      messageInput.value =
+        "";
+
+      messageInput.focus();
+
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "Message send failed:",
+        error
+      );
+
+      showError(
+        "Your message could not be sent. Please check your Firestore rules."
+      );
+
+    }
+
+    finally {
+
+      sendBtn.disabled =
+        false;
+
+    }
+
+  }
+);
+
+
+/* ENTER TO SEND */
+
+messageInput.addEventListener(
+  "keydown",
+
+  event => {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      composer.requestSubmit();
+
+    }
+
+  }
+);
 
 
 /* =========================================================
-   STARTUP
+   START
 ========================================================= */
 
-/*
-   VERY IMPORTANT:
+async function start() {
 
-   The chat is already visible in the HTML.
+  /*
+    The chat interface is already visible.
+    Firebase loads in the background.
+  */
 
-   We do NOT wait for Firebase before displaying it.
-*/
-
-if(!targetId){
-
-    personName.textContent =
-        "No member selected";
-
-    statusText.textContent =
-        "Invalid chat link";
-
-    messageInput.disabled =
-        true;
-
-    sendBtn.disabled =
-        true;
-
+  if (!targetId) {
 
     showError(
-        "No Kmeet member was selected."
+      "No profile was selected for this chat."
     );
 
-}else{
+    sendBtn.disabled =
+      true;
 
-    /*
-       Load the selected person's profile in background.
-    */
+    return;
 
-    loadTargetProfile();
-
-
-    /*
-       Wait for Firebase's existing auth state.
-
-       We do NOT call signInAnonymously.
-       We do NOT import it.
-    */
-
-    onAuthStateChanged(
-        auth,
-        async user => {
-
-            if(!user){
-
-                statusText.textContent =
-                    "Please log in to chat";
-
-                messageInput.disabled =
-                    true;
-
-                sendBtn.disabled =
-                    true;
-
-                showError(
-                    "Please log in before starting a conversation."
-                );
-
-                return;
-
-            }
+  }
 
 
-            currentUser =
-                user;
+  try {
 
+    await loadTargetProfile();
 
-            messageInput.disabled =
-                false;
+  }
 
-            sendBtn.disabled =
-                false;
+  catch (error) {
 
+    console.error(error);
 
-            statusText.textContent =
-                "Ready to chat";
-
-
-            await loadConversation();
-
-        }
+    showError(
+      error.message ||
+      "Unable to load the selected profile."
     );
+
+  }
+
+
+  /*
+    Firebase authentication happens after
+    the interface is already visible.
+  */
+
+  initialiseAuth();
 
 }
 
 
-/* =========================================================
-   CLEANUP
-========================================================= */
+start();
+
 
 window.addEventListener(
-    "beforeunload",
-    () => {
+  "beforeunload",
 
-        if(unsubscribeMessages){
+  () => {
 
-            unsubscribeMessages();
+    if (
+      unsubscribeMessages
+    ) {
 
-        }
+      unsubscribeMessages();
 
     }
+
+  }
 );
 
 </script>
