@@ -41,11 +41,11 @@ import {
 
 
 // ============================================================
-// YOUR FIREBASE PROJECT
+// KMEET FIREBASE PROJECT
 // ============================================================
 
 const firebaseConfig = {
-  apiKey: "apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",",
+  apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
   authDomain: "kmeet-database.firebaseapp.com",
   projectId: "kmeet-database",
   storageBucket: "kmeet-database.firebasestorage.app",
@@ -55,7 +55,7 @@ const firebaseConfig = {
 
 
 // ============================================================
-// INITIALIZE
+// INITIALIZE FIREBASE
 // ============================================================
 
 const app = initializeApp(firebaseConfig);
