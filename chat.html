@@ -83,6 +83,7 @@ body::before {
   flex-direction: column;
 }
 
+
 /* NAV */
 
 .topbar {
@@ -135,6 +136,7 @@ body::before {
     1px solid rgba(255,255,255,.18);
 }
 
+
 /* CHAT */
 
 .chat-shell {
@@ -171,6 +173,7 @@ body::before {
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 }
+
 
 /* HEADER */
 
@@ -250,6 +253,7 @@ body::before {
     rgba(255,255,255,.72);
 }
 
+
 /* MESSAGES */
 
 .messages {
@@ -328,6 +332,7 @@ body::before {
 
   line-height: 1.6;
 }
+
 
 /* COMPOSER */
 
@@ -412,6 +417,7 @@ body::before {
 
   cursor: not-allowed;
 }
+
 
 /* PAYMENT GATE */
 
@@ -534,6 +540,7 @@ body::before {
     1px solid rgba(255,255,255,.18);
 }
 
+
 /* ERROR */
 
 .error {
@@ -557,6 +564,7 @@ body::before {
   display: none;
 }
 
+
 /* INFO */
 
 .info-bar {
@@ -571,6 +579,7 @@ body::before {
 
   font-size: 11px;
 }
+
 
 /* MOBILE */
 
@@ -642,12 +651,14 @@ body::before {
 
 </header>
 
+
 <main class="chat-shell">
 
   <div
     id="errorBox"
     class="error"
   ></div>
+
 
   <section
     id="chatArea"
@@ -691,12 +702,14 @@ body::before {
 
     </div>
 
+
     <div
       id="infoBar"
       class="info-bar"
     >
       Say hello and let the connection grow ❤️
     </div>
+
 
     <div
       id="messages"
@@ -711,6 +724,7 @@ body::before {
       </div>
 
     </div>
+
 
     <form
       id="composer"
@@ -735,6 +749,7 @@ body::before {
     </form>
 
   </section>
+
 
   <section
     id="gate"
@@ -772,6 +787,7 @@ body::before {
 
 </div>
 
+
 <script type="module">
 
 import {
@@ -784,6 +800,7 @@ import {
   onAuthStateChanged,
   signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 
 import {
   doc,
@@ -838,9 +855,6 @@ const avatarFallback =
 const messages =
   document.getElementById("messages");
 
-const emptyState =
-  document.getElementById("emptyState");
-
 const composer =
   document.getElementById("composer");
 
@@ -887,7 +901,7 @@ let authStarted =
 
 
 /* =========================================================
-   PRICING / CHAT RULES
+   CHAT RULES
 ========================================================= */
 
 const FREE_OPENING_MESSAGES =
@@ -1205,350 +1219,6 @@ function containsContactInformation(
 
 
 /* =========================================================
-   GATE
-========================================================= */
-
-function showGate(
-  type
-) {
-
-  chatArea.style.display =
-    "none";
-
-  gate.style.display =
-    "grid";
-
-  gateButtons.innerHTML =
-    "";
-
-  if (
-    type ===
-    "anonymous"
-  ) {
-
-    gateIcon.textContent =
-      "💗";
-
-    gateTitle.textContent =
-      "Unlock chat";
-
-    gateText.textContent =
-      "Anonymous visitors can browse Kmeet freely. To send your first message, choose a chat package.";
-
-    const pack3 =
-      document.createElement("button");
-
-    pack3.className =
-      "pay-btn";
-
-    pack3.textContent =
-      `3 chats — KSh ${SENDER_PACK_3_PRICE}`;
-
-    pack3.type =
-      "button";
-
-    pack3.onclick =
-      () => {
-
-        activateSenderCredits(
-          3
-        );
-
-      };
-
-    gateButtons.appendChild(
-      pack3
-    );
-
-
-    const pack8 =
-      document.createElement("button");
-
-    pack8.className =
-      "pay-btn";
-
-    pack8.textContent =
-      `8 chats — KSh ${SENDER_PACK_8_PRICE}`;
-
-    pack8.type =
-      "button";
-
-    pack8.onclick =
-      () => {
-
-        activateSenderCredits(
-          8
-        );
-
-      };
-
-    gateButtons.appendChild(
-      pack8
-    );
-
-
-    const back =
-      document.createElement("a");
-
-    back.className =
-      "pay-btn secondary-btn";
-
-    back.href =
-      "discover.html";
-
-    back.textContent =
-      "Back to Discover";
-
-    gateButtons.appendChild(
-      back
-    );
-
-    return;
-
-  }
-
-
-  if (
-    type ===
-    "sender"
-  ) {
-
-    gateIcon.textContent =
-      "💬";
-
-    gateTitle.textContent =
-      "More chats";
-
-    gateText.textContent =
-      `Your free opening message has been used. Continue with 3 chats for KSh ${SENDER_PACK_3_PRICE}, or get 8 chats for KSh ${SENDER_PACK_8_PRICE}.`;
-
-    const pack3 =
-      document.createElement("button");
-
-    pack3.className =
-      "pay-btn";
-
-    pack3.type =
-      "button";
-
-    pack3.textContent =
-      `3 chats — KSh ${SENDER_PACK_3_PRICE}`;
-
-    pack3.onclick =
-      () => {
-
-        activateSenderCredits(
-          3
-        );
-
-      };
-
-    gateButtons.appendChild(
-      pack3
-    );
-
-
-    const pack8 =
-      document.createElement("button");
-
-    pack8.className =
-      "pay-btn";
-
-    pack8.type =
-      "button";
-
-    pack8.textContent =
-      `8 chats — KSh ${SENDER_PACK_8_PRICE}`;
-
-    pack8.onclick =
-      () => {
-
-        activateSenderCredits(
-          8
-        );
-
-      };
-
-    gateButtons.appendChild(
-      pack8
-    );
-
-    return;
-
-  }
-
-
-  if (
-    type ===
-    "receiver"
-  ) {
-
-    gateIcon.textContent =
-      "🔒";
-
-    gateTitle.textContent =
-      "Continue the conversation";
-
-    gateText.textContent =
-      `Your first ${FREE_RECEIVER_REPLIES} replies are free when you keep contact details private. Continue for KSh ${RECEIVER_CONTINUATION_FEE}.`;
-
-    const pay =
-      document.createElement("button");
-
-    pay.className =
-      "pay-btn";
-
-    pay.type =
-      "button";
-
-    pay.textContent =
-      `Continue — KSh ${RECEIVER_CONTINUATION_FEE}`;
-
-    pay.onclick =
-      () => {
-
-        activateReceiverPayment();
-
-      };
-
-    gateButtons.appendChild(
-      pay
-    );
-
-    return;
-
-  }
-
-}
-
-
-/* =========================================================
-   RETURN TO CHAT
-========================================================= */
-
-function returnToChat() {
-
-  gate.style.display =
-    "none";
-
-  chatArea.style.display =
-    "flex";
-
-  hideError();
-
-  messageInput.focus();
-
-}
-
-
-/* =========================================================
-   DEMO PAYMENT — SENDER
-========================================================= */
-
-function activateSenderCredits(
-  amount
-) {
-
-  if (
-    !currentUser
-  ) {
-
-    showError(
-      "Kmeet is still preparing your account. Please try again."
-    );
-
-    return;
-
-  }
-
-
-  const creditKey =
-    "kmeet_sender_credits_" +
-    currentUser.uid +
-    "_" +
-    targetId;
-
-
-  const current =
-    parseInt(
-      localStorage.getItem(
-        creditKey
-      ) || "0",
-      10
-    );
-
-
-  localStorage.setItem(
-    creditKey,
-    String(
-      current +
-      amount
-    )
-  );
-
-
-  /*
-    This is currently a local
-    payment simulation.
-
-    Daraja/M-Pesa will replace
-    this step later.
-  */
-
-  returnToChat();
-
-  infoBar.textContent =
-    `You have ${current + amount} chat credits available.`;
-
-}
-
-
-/* =========================================================
-   DEMO PAYMENT — RECEIVER
-========================================================= */
-
-function activateReceiverPayment() {
-
-  if (
-    !currentUser
-  ) {
-
-    showError(
-      "Kmeet is still preparing your account. Please try again."
-    );
-
-    return;
-
-  }
-
-
-  const paidKey =
-    "kmeet_receiver_paid_" +
-    currentUser.uid +
-    "_" +
-    targetId;
-
-
-  localStorage.setItem(
-    paidKey,
-    "true"
-  );
-
-
-  /*
-    Daraja/M-Pesa will replace
-    this local payment simulation.
-  */
-
-  returnToChat();
-
-  infoBar.textContent =
-    "Your receiver continuation access is active. ❤️";
-
-}
-
-
-/* =========================================================
    LOAD TARGET PROFILE
 ========================================================= */
 
@@ -1719,3 +1389,1154 @@ async function loadTargetProfile() {
   }
 
 }
+  /* =========================================================
+   CONVERSATION ID
+========================================================= */
+
+function getConversationId() {
+
+  if (
+    !currentUser ||
+    !targetId
+  ) {
+
+    return null;
+
+  }
+
+  return [
+    currentUser.uid,
+    targetId
+  ]
+  .sort()
+  .join("_");
+
+}
+
+
+/* =========================================================
+   CONTACT INFORMATION DETECTION
+========================================================= */
+
+function containsContactInformation(
+  text
+) {
+
+  const value =
+    String(text)
+      .toLowerCase()
+      .trim();
+
+
+  /* EMAIL */
+
+  const emailPattern =
+    /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
+
+  if (
+    emailPattern.test(value)
+  ) {
+
+    return true;
+
+  }
+
+
+  /* KENYAN PHONE NUMBERS */
+
+  const phonePattern =
+    /(?:\+?254[\s-]?(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3,4})|(?:0(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3})/i;
+
+  if (
+    phonePattern.test(value)
+  ) {
+
+    return true;
+
+  }
+
+
+  /* CONTACT WORDS */
+
+  const contactWords =
+    /\b(whatsapp|whats\s*app|call me|text me|message me|contact me|my number|phone number|email me|dm me|instagram|telegram|facebook)\b/i;
+
+  if (
+    contactWords.test(value)
+  ) {
+
+    return true;
+
+  }
+
+
+  /* SOCIAL HANDLES */
+
+  const socialHandle =
+    /(?:^|\s)@[a-z0-9_.]{3,}/i;
+
+  if (
+    socialHandle.test(value)
+  ) {
+
+    return true;
+
+  }
+
+
+  return false;
+
+}
+
+
+/* =========================================================
+   PAYMENT GATE
+========================================================= */
+
+function showGate(
+  type
+) {
+
+  gate.style.display =
+    "grid";
+
+  chatArea.style.display =
+    "none";
+
+
+  gateButtons.innerHTML =
+    "";
+
+
+  /* =======================================================
+     ANONYMOUS USER
+  ======================================================= */
+
+  if (
+    type === "anonymous"
+  ) {
+
+    gateIcon.textContent =
+      "🔒";
+
+    gateTitle.textContent =
+      "Start chatting";
+
+    gateText.textContent =
+      "Anonymous members can browse Kmeet freely, but payment is required before sending the first message.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49&anonymous=true"
+      >
+        3 Chats — KSh 49
+      </a>
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100&anonymous=true"
+      >
+        8 Chats — KSh 100
+      </a>
+
+      <a
+        class="pay-btn secondary-btn"
+        href="discover.html"
+      >
+        Back to Discover
+      </a>
+
+    `;
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     SENDER
+  ======================================================= */
+
+  if (
+    type === "sender"
+  ) {
+
+    gateIcon.textContent =
+      "💎";
+
+    gateTitle.textContent =
+      "Continue chatting";
+
+    gateText.textContent =
+      "Your free opening message has been used. Choose a Kmeet chat package to continue.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49"
+      >
+        3 Chats — KSh 49
+      </a>
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
+      >
+        8 Chats — KSh 100
+      </a>
+
+      <a
+        class="pay-btn secondary-btn"
+        href="discover.html"
+      >
+        Back to Discover
+      </a>
+
+    `;
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     RECEIVER
+  ======================================================= */
+
+  if (
+    type === "receiver"
+  ) {
+
+    gateIcon.textContent =
+      "💗";
+
+    gateTitle.textContent =
+      "Continue the conversation";
+
+    gateText.textContent =
+      "Your free replies have been used, or the message attempted to share contact information. Pay KSh 11 to continue.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=11"
+      >
+        Continue — KSh 11
+      </a>
+
+      <a
+        class="pay-btn secondary-btn"
+        href="discover.html"
+      >
+        Back to Discover
+      </a>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW CHAT
+========================================================= */
+
+function showChat() {
+
+  gate.style.display =
+    "none";
+
+  chatArea.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   START MESSAGE LISTENER
+========================================================= */
+
+function startMessages() {
+
+  if (
+    !currentUser
+  ) {
+
+    return;
+
+  }
+
+
+  conversationId =
+    getConversationId();
+
+
+  if (
+    !conversationId
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    currentUser.isAnonymous
+  ) {
+
+    infoBar.textContent =
+      "Anonymous chat: payment is required before your first message.";
+
+  } else {
+
+    infoBar.textContent =
+      "Your opening message is free — say hi or hey ❤️";
+
+  }
+
+
+  const messagesRef =
+    collection(
+      db,
+      "conversations",
+      conversationId,
+      "messages"
+    );
+
+
+  const messagesQuery =
+    query(
+      messagesRef,
+      orderBy(
+        "createdAt",
+        "asc"
+      )
+    );
+
+
+  unsubscribeMessages =
+    onSnapshot(
+
+      messagesQuery,
+
+      snapshot => {
+
+        messages.innerHTML =
+          "";
+
+
+        if (
+          snapshot.empty
+        ) {
+
+          messages.innerHTML = `
+
+            <div
+              class="empty"
+            >
+              Start the conversation and let the connection grow. ❤️
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        let firstSenderId =
+          null;
+
+        let receiverReplies =
+          0;
+
+
+        snapshot.forEach(
+          item => {
+
+            const data =
+              item.data();
+
+
+            if (
+              !firstSenderId
+            ) {
+
+              firstSenderId =
+                data.senderId;
+
+            }
+
+
+            if (
+              data.senderId !==
+              firstSenderId
+            ) {
+
+              receiverReplies++;
+
+            }
+
+
+            const message =
+              document.createElement(
+                "div"
+              );
+
+
+            message.className =
+              "message " +
+              (
+                data.senderId ===
+                currentUser.uid
+                  ? "mine"
+                  : "theirs"
+              );
+
+
+            message.textContent =
+              data.text || "";
+
+
+            messages.appendChild(
+              message
+            );
+
+          }
+        );
+
+
+        messages.scrollTop =
+          messages.scrollHeight;
+
+
+        if (
+          firstSenderId ===
+          currentUser.uid
+        ) {
+
+          infoBar.textContent =
+            "Your opening message is free. Further messages use chat credits.";
+
+        } else {
+
+          const remaining =
+            Math.max(
+              0,
+              FREE_RECEIVER_REPLIES -
+              receiverReplies
+            );
+
+
+          infoBar.textContent =
+            `${remaining} free replies remaining.`;
+
+        }
+
+      },
+
+      error => {
+
+        console.error(
+          "Message listener error:",
+          error
+        );
+
+
+        showError(
+          "The chat interface is open, but messages could not be loaded. Please check your Firebase Firestore rules."
+        );
+
+      }
+
+    );
+
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+async function initialiseAuth() {
+
+  if (
+    authStarted
+  ) {
+
+    return;
+
+  }
+
+
+  authStarted =
+    true;
+
+
+  onAuthStateChanged(
+
+    auth,
+
+    async user => {
+
+      try {
+
+        /* =================================================
+           EXISTING USER
+        ================================================= */
+
+        if (
+          user
+        ) {
+
+          currentUser =
+            user;
+
+
+          if (
+            user.isAnonymous
+          ) {
+
+            infoBar.textContent =
+              "Anonymous chat: payment is required before your first message.";
+
+          } else {
+
+            infoBar.textContent =
+              "Your opening message is free — say hi or hey ❤️";
+
+          }
+
+
+          startMessages();
+
+          return;
+
+        }
+
+
+        /* =================================================
+           NO USER
+        ================================================= */
+
+        await signInAnonymously(
+          auth
+        );
+
+      }
+
+      catch (
+        error
+      ) {
+
+        console.error(
+          "Kmeet authentication error:",
+          error
+        );
+
+
+        if (
+          error.code ===
+          "auth/operation-not-allowed"
+        ) {
+
+          showError(
+            "Anonymous Authentication is not enabled in Firebase. Enable Authentication → Sign-in method → Anonymous."
+          );
+
+        } else {
+
+          showError(
+            "Kmeet could not start the chat session (" +
+            (
+              error.code ||
+              "authentication error"
+            ) +
+            "). Please check that Anonymous Authentication is enabled in Firebase."
+          );
+
+        }
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+composer.addEventListener(
+
+  "submit",
+
+  async event => {
+
+    event.preventDefault();
+
+
+    const text =
+      messageInput.value.trim();
+
+
+    if (
+      !text
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      !currentUser
+    ) {
+
+      showError(
+        "Kmeet is still preparing your chat session. Please try again in a moment."
+      );
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       ANONYMOUS USERS
+    ===================================================== */
+
+    if (
+      currentUser.isAnonymous
+    ) {
+
+      showGate(
+        "anonymous"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !conversationId
+    ) {
+
+      conversationId =
+        getConversationId();
+
+    }
+
+
+    /* =====================================================
+       LOAD EXISTING MESSAGES
+    ===================================================== */
+
+    let existingMessages =
+      [];
+
+
+    try {
+
+      const snapshot =
+        await getDocs(
+
+          query(
+
+            collection(
+              db,
+              "conversations",
+              conversationId,
+              "messages"
+            ),
+
+            orderBy(
+              "createdAt",
+              "asc"
+            )
+
+          )
+
+        );
+
+
+      snapshot.forEach(
+        item => {
+
+          existingMessages.push(
+            item.data()
+          );
+
+        }
+      );
+
+    }
+
+    catch (
+      error
+    ) {
+
+      console.error(
+        error
+      );
+
+
+      showError(
+        "Kmeet could not check this conversation. Please try again."
+      );
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       FIRST MESSAGE
+    ===================================================== */
+
+    if (
+      existingMessages.length ===
+      0
+    ) {
+
+      const opening =
+        text.toLowerCase();
+
+
+      if (
+        !FREE_OPENING_MESSAGES.includes(
+          opening
+        )
+      ) {
+
+        showError(
+          "Your first message must be “hi” or “hey”."
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       FIND ORIGINAL SENDER
+    ===================================================== */
+
+    const firstMessage =
+      existingMessages[0];
+
+
+    const senderId =
+      firstMessage
+        ? firstMessage.senderId
+        : currentUser.uid;
+
+
+    const isSender =
+      senderId ===
+      currentUser.uid;
+
+
+    /* =====================================================
+       CONTACT INFORMATION
+    ===================================================== */
+
+    if (
+      containsContactInformation(
+        text
+      )
+    ) {
+
+      if (
+        !isSender
+      ) {
+
+        /*
+          Receiver attempted to reveal
+          contact information.
+
+          Message is NOT sent.
+        */
+
+        showGate(
+          "receiver"
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Sender contact-sharing attempt
+        requires paid access.
+      */
+
+      showGate(
+        "sender"
+      );
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       SENDER AFTER FREE OPENING
+    ===================================================== */
+
+    if (
+      isSender &&
+      existingMessages.length > 0
+    ) {
+
+      const creditKey =
+        "kmeet_sender_credits_" +
+        currentUser.uid +
+        "_" +
+        targetId;
+
+
+      const credits =
+        parseInt(
+          localStorage.getItem(
+            creditKey
+          ) || "0",
+          10
+        );
+
+
+      if (
+        credits <= 0
+      ) {
+
+        showGate(
+          "sender"
+        );
+
+        return;
+
+      }
+
+
+      localStorage.setItem(
+        creditKey,
+        String(
+          credits - 1
+        )
+      );
+
+    }
+
+
+    /* =====================================================
+       RECEIVER AFTER THREE FREE REPLIES
+    ===================================================== */
+
+    if (
+      !isSender
+    ) {
+
+      let receiverReplies =
+        0;
+
+
+      existingMessages.forEach(
+        item => {
+
+          if (
+            item.senderId !==
+            senderId
+          ) {
+
+            receiverReplies++;
+
+          }
+
+        }
+      );
+
+
+      const receiverPaidKey =
+        "kmeet_receiver_paid_" +
+        currentUser.uid +
+        "_" +
+        targetId;
+
+
+      const receiverPaid =
+        localStorage.getItem(
+          receiverPaidKey
+        ) ===
+        "true";
+
+
+      if (
+        receiverReplies >=
+        FREE_RECEIVER_REPLIES &&
+        !receiverPaid
+      ) {
+
+        showGate(
+          "receiver"
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       DISABLE BUTTON
+    ===================================================== */
+
+    sendBtn.disabled =
+      true;
+
+
+    try {
+
+      const conversationRef =
+        doc(
+          db,
+          "conversations",
+          conversationId
+        );
+
+
+      /*
+        Ensure conversation exists.
+      */
+
+      await setDoc(
+
+        conversationRef,
+
+        {
+
+          initiatorId:
+            senderId,
+
+          receiverId:
+            senderId ===
+            currentUser.uid
+              ? targetId
+              : currentUser.uid,
+
+          updatedAt:
+            serverTimestamp(),
+
+          createdAt:
+            serverTimestamp()
+
+        },
+
+        {
+          merge:
+            true
+        }
+
+      );
+
+
+      /* ===================================================
+         ADD MESSAGE
+      =================================================== */
+
+      await addDoc(
+
+        collection(
+          db,
+          "conversations",
+          conversationId,
+          "messages"
+        ),
+
+        {
+
+          senderId:
+            currentUser.uid,
+
+          receiverId:
+            targetId,
+
+          text:
+            text,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+
+      );
+
+
+      messageInput.value =
+        "";
+
+
+      messageInput.focus();
+
+
+      hideError();
+
+    }
+
+    catch (
+      error
+    ) {
+
+      console.error(
+        "Message send error:",
+        error
+      );
+
+
+      showError(
+        "Kmeet could not make this conversation. Please check your Firebase Firestore rules and try again."
+      );
+
+    }
+
+    finally {
+
+      sendBtn.disabled =
+        false;
+
+    }
+
+  }
+
+);
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+messageInput.addEventListener(
+
+  "keydown",
+
+  event => {
+
+    if (
+      event.key ===
+      "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      composer.requestSubmit();
+
+    }
+
+  }
+
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+async function start() {
+
+  try {
+
+    hideError();
+
+
+    if (
+      !targetId
+    ) {
+
+      throw new Error(
+        "No Kmeet profile was selected."
+      );
+
+    }
+
+
+    await loadTargetProfile();
+
+
+    /*
+      Display the chat interface while
+      authentication is being initialized.
+    */
+
+    showChat();
+
+
+    await initialiseAuth();
+
+  }
+
+  catch (
+    error
+  ) {
+
+    console.error(
+      error
+    );
+
+
+    showError(
+      error.message ||
+      "Unable to load the selected profile."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   START KMEET CHAT
+========================================================= */
+
+start();
+
+
+/* =========================================================
+   CLEANUP
+========================================================= */
+
+window.addEventListener(
+
+  "beforeunload",
+
+  () => {
+
+    if (
+      unsubscribeMessages
+    ) {
+
+      unsubscribeMessages();
+
+    }
+
+  }
+
+);
+
+</script>
+
+</body>
+
+</html>
