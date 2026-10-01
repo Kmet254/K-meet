@@ -1,1384 +1,2257 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kmeet - Profile</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+>
+
+<link rel="icon" href="kmeet-logo.jfif.jfif" type="image/jpeg">
+
+<style>
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(177, 46, 91, 0.24),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(113, 30, 73, 0.22),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(109, 25, 65, 0.20),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #0c080c 0%,
+      #160b12 48%,
+      #0b070b 100%
+    );
+
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.025),
+      transparent 45%
+    );
+
+  z-index: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  width: 100%;
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 5%;
+
+  background: rgba(13, 7, 12, 0.86);
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
 
-  <title>Kmeet - Profile</title>
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  font-family: "Playfair Display", serif;
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-  <link rel="icon" href="kmeet-logo.jfif.jfif" type="image/jpeg">
+  font-size: 29px;
+  font-weight: 700;
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  letter-spacing: -0.5px;
+}
 
+.brand-heart {
+  color: #f05a91;
+  font-size: 23px;
 
-  <style>
+  filter:
+    drop-shadow(
+      0 0 10px
+      rgba(240,90,145,0.35)
+    );
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+.brand-k {
+  color: #fff;
+}
 
+.brand-meet {
+  color: #ef6b9c;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
 
+.nav-links a,
+.logout-nav {
+  color: rgba(255,255,255,0.78);
 
-    body {
+  font-size: 13px;
+  font-weight: 500;
 
-      min-height: 100vh;
+  transition:
+    color .2s ease,
+    transform .2s ease;
+}
 
-      font-family: "Poppins", sans-serif;
+.nav-links a:hover,
+.logout-nav:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
 
-      color: #ffffff;
+.nav-links .active {
+  color: #f26b9e;
+}
 
-      background:
-        radial-gradient(
-          circle at 15% 10%,
-          rgba(177, 46, 91, 0.24),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 85% 20%,
-          rgba(113, 30, 73, 0.22),
-          transparent 32%
-        ),
-        radial-gradient(
-          circle at 50% 100%,
-          rgba(109, 25, 65, 0.20),
-          transparent 40%
-        ),
-        linear-gradient(
-          135deg,
-          #0c080c 0%,
-          #160b12 48%,
-          #0b070b 100%
-        );
+.logout-nav {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
 
-      overflow-x: hidden;
-    }
+/* =====================================================
+   PAGE
+   ===================================================== */
 
+.page {
+  position: relative;
+  z-index: 1;
 
-    body::before {
+  width: min(
+    calc(100% - 30px),
+    980px
+  );
 
-      content: "";
+  margin: 0 auto;
 
-      position: fixed;
+  padding:
+    42px 0 70px;
+}
 
-      inset: 0;
+.page-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-      pointer-events: none;
+.page-heading .eyebrow {
+  display: inline-block;
 
-      background:
-        linear-gradient(
-          120deg,
-          rgba(255,255,255,0.025),
-          transparent 45%
-        );
+  margin-bottom: 8px;
 
-      z-index: 0;
-    }
+  color: #ee6b9c;
 
+  font-size: 11px;
+  font-weight: 600;
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 
+.page-heading h1 {
+  font-family: "Playfair Display", serif;
 
-    button,
-    input,
-    textarea {
-      font-family: inherit;
-    }
+  font-size:
+    clamp(31px, 5vw, 47px);
 
+  line-height: 1.1;
+  font-weight: 600;
+}
 
-    /* =====================================================
-       NAVIGATION
-       ===================================================== */
+.page-heading p {
+  max-width: 590px;
 
-    .topbar {
+  margin: 10px auto 0;
 
-      position: sticky;
+  color: rgba(255,255,255,0.60);
 
-      top: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
 
-      z-index: 100;
+/* =====================================================
+   PROFILE CARD
+   ===================================================== */
 
-      width: 100%;
+.profile-card {
+  display: grid;
 
-      min-height: 76px;
+  grid-template-columns:
+    330px 1fr;
 
-      display: flex;
+  gap: 30px;
 
-      align-items: center;
+  padding: 25px;
 
-      justify-content: space-between;
+  border:
+    1px solid rgba(255,255,255,0.10);
 
-      padding: 0 5%;
+  border-radius: 28px;
 
-      background:
-        rgba(13, 7, 12, 0.86);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.075),
+      rgba(255,255,255,0.025)
+    );
 
-      border-bottom:
-        1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 25px 80px rgba(0,0,0,0.40),
+    inset 0 1px 0 rgba(255,255,255,0.05);
 
-      backdrop-filter:
-        blur(18px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
 
-      -webkit-backdrop-filter:
-        blur(18px);
-    }
+/* =====================================================
+   PHOTO
+   ===================================================== */
 
+.photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    .brand {
+.photo-frame {
+  position: relative;
 
-      display: flex;
+  width: 100%;
+  max-width: 330px;
 
-      align-items: center;
+  aspect-ratio: 4 / 4.8;
 
-      gap: 8px;
+  overflow: hidden;
 
-      font-family:
-        "Playfair Display",
-        serif;
+  border-radius: 25px;
 
-      font-size: 29px;
+  border:
+    1px solid rgba(255,255,255,0.12);
 
-      font-weight: 700;
+  background:
+    linear-gradient(
+      145deg,
+      #341523,
+      #120a0f
+    );
 
-      letter-spacing: -0.5px;
-    }
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.38);
+}
 
+.profile-photo {
+  width: 100%;
+  height: 100%;
 
-    .brand-heart {
+  display: block;
 
-      color: #f05a91;
+  object-fit: cover;
+  object-position: center;
 
-      font-size: 23px;
+  transition:
+    transform .35s ease;
+}
 
-      filter:
-        drop-shadow(
-          0 0 10px
-          rgba(240,90,145,0.35)
-        );
-    }
+.photo-frame:hover .profile-photo {
+  transform: scale(1.025);
+}
 
+.photo-fallback {
+  position: absolute;
+  inset: 0;
 
-    .brand-k {
-      color: #ffffff;
-    }
+  display: none;
 
+  align-items: center;
+  justify-content: center;
 
-    .brand-meet {
-      color: #ef6b9c;
-    }
+  flex-direction: column;
 
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(241,96,146,0.30),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      #59233c,
+      #130b10
+    );
+}
 
-    .nav-links {
+.photo-fallback.show {
+  display: flex;
+}
 
-      display: flex;
+.fallback-letter {
+  width: 105px;
+  height: 105px;
 
-      align-items: center;
+  border-radius: 50%;
 
-      gap: 25px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  background:
+    rgba(255,255,255,0.12);
 
-    .nav-links a {
+  border:
+    1px solid rgba(255,255,255,0.15);
 
-      color:
-        rgba(255,255,255,0.78);
+  font-family:
+    "Playfair Display",
+    serif;
 
-      font-size: 13px;
+  font-size: 52px;
+  font-weight: 600;
+}
 
-      font-weight: 500;
+.fallback-brand {
+  margin-top: 15px;
 
-      transition:
-        color .2s ease,
-        transform .2s ease;
-    }
+  color:
+    rgba(255,255,255,0.65);
 
+  font-family:
+    "Playfair Display",
+    serif;
 
-    .nav-links a:hover {
+  font-size: 17px;
+}
 
-      color: #ffffff;
+/* =====================================================
+   STATUS
+   ===================================================== */
 
-      transform:
-        translateY(-1px);
-    }
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 
+  margin-top: 15px;
 
-    .nav-links .active {
+  padding:
+    8px 14px;
 
-      color: #f26b9e;
-    }
+  border-radius: 50px;
 
+  background:
+    rgba(255,255,255,0.055);
 
-    .logout-nav {
+  border:
+    1px solid rgba(255,255,255,0.09);
 
-      border: 0;
+  color:
+    rgba(255,255,255,0.76);
 
-      background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+}
 
-      color:
-        rgba(255,255,255,0.72);
+.status-dot {
+  width: 9px;
+  height: 9px;
 
-      cursor: pointer;
+  border-radius: 50%;
 
-      font-size: 13px;
+  background: #777;
+}
 
-      font-weight: 500;
+.status-dot.online {
+  background: #35d487;
 
-      padding: 0;
-    }
+  box-shadow:
+    0 0 0 3px rgba(53,212,135,0.10),
+    0 0 12px rgba(53,212,135,0.45);
+}
 
+.status-dot.offline {
+  background: #888;
+}
 
-    .logout-nav:hover {
-      color: #ff719f;
-    }
+/* =====================================================
+   PROFILE INFO
+   ===================================================== */
 
+.profile-info {
+  display: flex;
+  flex-direction: column;
 
-    /* =====================================================
-       PAGE
-       ===================================================== */
+  min-width: 0;
+}
 
-    .page {
+.profile-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 
-      position: relative;
+  gap: 20px;
 
-      z-index: 1;
+  padding-bottom: 19px;
 
-      width: min(
-        calc(100% - 30px),
+  border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.profile-name {
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size:
+    clamp(29px, 4vw, 40px);
+
+  line-height: 1.12;
+  font-weight: 600;
+}
+
+.profile-location {
+  margin-top: 7px;
+
+  color:
+    rgba(255,255,255,0.55);
+
+  font-size: 13px;
+}
+
+.profile-location::before {
+  content: "⌖ ";
+  color: #ef6b9c;
+}
+
+/* =====================================================
+   OWNER ACTIONS
+   ===================================================== */
+
+.profile-owner-actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: 21px;
+}
+
+.edit-profile-button,
+.secondary-profile-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 47px;
+
+  padding:
+    0 20px;
+
+  border-radius: 13px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-profile-button {
+  color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e95891,
+      #a82f64
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  box-shadow:
+    0 9px 25px
+    rgba(190,53,105,0.25);
+}
+
+.secondary-profile-button {
+  background:
+    rgba(255,255,255,0.055);
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  color:
+    rgba(255,255,255,0.88);
+}
+
+.edit-profile-button:hover,
+.secondary-profile-button:hover {
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   DETAILS
+   ===================================================== */
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0,1fr));
+
+  gap: 12px;
+
+  margin-top: 23px;
+}
+
+.detail-box {
+  min-height: 75px;
+
+  padding:
+    14px 15px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255,255,255,0.035);
+
+  border:
+    1px solid rgba(255,255,255,0.065);
+}
+
+.detail-label {
+  color:
+    rgba(255,255,255,0.42);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.detail-value {
+  margin-top: 6px;
+
+  color:
+    rgba(255,255,255,0.92);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  word-break: break-word;
+}
+
+/* =====================================================
+   SECTIONS
+   ===================================================== */
+
+.section {
+  margin-top: 24px;
+}
+
+.section-title {
+  margin-bottom: 10px;
+
+  color: #ef6b9c;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+.bio {
+  color:
+    rgba(255,255,255,0.72);
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.interest-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 9px;
+}
+
+.interest-chip {
+  padding:
+    8px 12px;
+
+  border-radius: 50px;
+
+  color:
+    rgba(255,255,255,0.82);
+
+  background:
+    rgba(226,73,127,0.10);
+
+  border:
+    1px solid rgba(226,73,127,0.20);
+
+  font-size: 12px;
+}
+
+.no-interests {
+  color:
+    rgba(255,255,255,0.40);
+
+  font-size: 13px;
+}
+
+/* =====================================================
+   VISITOR ACTIONS
+   ===================================================== */
+
+.visitor-actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: auto;
+
+  padding-top: 25px;
+}
+
+.chat-button,
+.back-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  padding:
+    0 22px;
+
+  border-radius: 13px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.chat-button {
+  background:
+    linear-gradient(
+      135deg,
+      #e85a93,
+      #9d2c5f
+    );
+
+  color: white;
+
+  box-shadow:
+    0 10px 28px
+    rgba(192,49,105,0.25);
+}
+
+.back-button {
+  background:
+    rgba(255,255,255,0.055);
+
+  border:
+    1px solid rgba(255,255,255,0.10);
+
+  color:
+    rgba(255,255,255,0.82);
+}
+
+/* =====================================================
+   STATES
+   ===================================================== */
+
+.state-card {
+  width: min(100%, 600px);
+
+  margin:
+    60px auto;
+
+  padding:
+    38px 28px;
+
+  text-align: center;
+
+  border:
+    1px solid rgba(255,255,255,0.10);
+
+  border-radius: 24px;
+
+  background:
+    rgba(255,255,255,0.045);
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,0.35);
+}
+
+.state-icon {
+  font-size: 38px;
+  margin-bottom: 13px;
+  color: #ef6b9c;
+}
+
+.state-card h2 {
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 27px;
+}
+
+.state-card p {
+  margin-top: 9px;
+
+  color:
+    rgba(255,255,255,0.57);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.state-button {
+  display: inline-flex;
+
+  margin-top: 20px;
+
+  padding:
+    12px 20px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e85b93,
+      #a72f63
+    );
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.footer {
+  margin-top: 35px;
+
+  text-align: center;
+
+  color:
+    rgba(255,255,255,0.30);
+
+  font-size: 11px;
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 800px) {
+
+  .topbar {
+    padding: 0 20px;
+  }
+
+  .nav-links {
+    gap: 15px;
+  }
+
+  .nav-links a,
+  .logout-nav {
+    font-size: 11px;
+  }
+
+  .profile-card {
+    grid-template-columns: 1fr;
+
+    padding: 18px;
+
+    gap: 24px;
+  }
+
+  .photo-frame {
+    max-width: 310px;
+  }
+
+  .profile-top {
+    flex-direction: column;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .topbar {
+    min-height: 68px;
+  }
+
+  .brand {
+    font-size: 24px;
+  }
+
+  .brand-heart {
+    font-size: 19px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-links a:nth-child(1) {
+    display: none;
+  }
+
+  .page {
+    width:
+      min(
+        calc(100% - 20px),
         980px
       );
 
-      margin: 0 auto;
-
-      padding:
-        42px 0 70px;
-    }
-
-
-    .page-heading {
-
-      text-align: center;
-
-      margin-bottom: 30px;
-    }
-
-
-    .page-heading .eyebrow {
-
-      display: inline-block;
-
-      margin-bottom: 8px;
-
-      color: #ee6b9c;
-
-      font-size: 11px;
-
-      font-weight: 600;
-
-      text-transform: uppercase;
-
-      letter-spacing: 2px;
-    }
-
-
-    .page-heading h1 {
-
-      font-family:
-        "Playfair Display",
-        serif;
-
-      font-size:
-        clamp(31px, 5vw, 47px);
-
-      line-height: 1.1;
-
-      font-weight: 600;
-    }
-
-
-    .page-heading p {
-
-      max-width: 590px;
-
-      margin: 10px auto 0;
-
-      color:
-        rgba(255,255,255,0.60);
-
-      font-size: 14px;
-
-      line-height: 1.7;
-    }
-
-
-    /* =====================================================
-       PROFILE CARD
-       ===================================================== */
-
-    .profile-card {
-
-      display: grid;
-
-      grid-template-columns:
-        330px 1fr;
-
-      gap: 30px;
-
-      padding: 25px;
-
-      border:
-        1px solid rgba(255,255,255,0.10);
-
-      border-radius: 28px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,0.075),
-          rgba(255,255,255,0.025)
-        );
-
-      box-shadow:
-        0 25px 80px
-        rgba(0,0,0,0.40),
-
-        inset 0 1px 0
-        rgba(255,255,255,0.05);
-
-      backdrop-filter:
-        blur(20px);
-
-      -webkit-backdrop-filter:
-        blur(20px);
-    }
-
-
-    /* =====================================================
-       PHOTO
-       ===================================================== */
-
-    .photo-section {
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-    }
-
-
-    .photo-frame {
-
-      position: relative;
-
-      width: 100%;
-
-      max-width: 330px;
-
-      aspect-ratio: 4 / 4.8;
-
-      overflow: hidden;
-
-      border-radius: 25px;
-
-      border:
-        1px solid rgba(255,255,255,0.12);
-
-      background:
-        linear-gradient(
-          145deg,
-          #341523,
-          #120a0f
-        );
-
-      box-shadow:
-        0 18px 45px
-        rgba(0,0,0,0.38);
-    }
-
-
-    .profile-photo {
-
-      width: 100%;
-
-      height: 100%;
-
-      display: block;
-
-      object-fit: cover;
-
-      object-position: center;
-
-      transition:
-        transform .35s ease;
-    }
-
-
-    .photo-frame:hover
-    .profile-photo {
-
-      transform:
-        scale(1.025);
-    }
-
-
-    .photo-fallback {
-
-      position: absolute;
-
-      inset: 0;
-
-      display: none;
-
-      align-items: center;
-
-      justify-content: center;
-
-      flex-direction: column;
-
-      background:
-        radial-gradient(
-          circle at 50% 30%,
-          rgba(241,96,146,0.30),
-          transparent 38%
-        ),
-        linear-gradient(
-          145deg,
-          #59233c,
-          #130b10
-        );
-    }
-
-
-    .photo-fallback.show {
-      display: flex;
-    }
-
-
-    .fallback-letter {
-
-      width: 105px;
-
-      height: 105px;
-
-      border-radius: 50%;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      background:
-        rgba(255,255,255,0.12);
-
-      border:
-        1px solid rgba(255,255,255,0.15);
-
-      font-family:
-        "Playfair Display",
-        serif;
-
-      font-size: 52px;
-
-      font-weight: 600;
-    }
-
-
-    .fallback-brand {
-
-      margin-top: 15px;
-
-      color:
-        rgba(255,255,255,0.65);
-
-      font-family:
-        "Playfair Display",
-        serif;
-
-      font-size: 17px;
-    }
-
-
-    /* =====================================================
-       ONLINE STATUS
-       ===================================================== */
-
-    .status-pill {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      margin-top: 15px;
-
-      padding:
-        8px 14px;
-
-      border-radius: 50px;
-
-      background:
-        rgba(255,255,255,0.055);
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      color:
-        rgba(255,255,255,0.76);
-
-      font-size: 12px;
-
-      font-weight: 500;
-    }
-
-
-    .status-dot {
-
-      width: 9px;
-
-      height: 9px;
-
-      border-radius: 50%;
-
-      background: #777;
-
-      box-shadow:
-        0 0 0 3px
-        rgba(255,255,255,0.05);
-    }
-
-
-    .status-dot.online {
-
-      background: #35d487;
-
-      box-shadow:
-        0 0 0 3px
-        rgba(53,212,135,0.10),
-
-        0 0 12px
-        rgba(53,212,135,0.45);
-    }
-
-
-    .status-dot.offline {
-      background: #888;
-    }
-
-
-    /* =====================================================
-       PROFILE INFORMATION
-       ===================================================== */
-
-    .profile-info {
-
-      display: flex;
-
-      flex-direction: column;
-
-      min-width: 0;
-    }
-
-
-    .profile-top {
-
-      display: flex;
-
-      align-items: flex-start;
-
-      justify-content: space-between;
-
-      gap: 20px;
-
-      padding-bottom: 19px;
-
-      border-bottom:
-        1px solid rgba(255,255,255,0.08);
-    }
-
-
-    .profile-name {
-
-      font-family:
-        "Playfair Display",
-        serif;
-
-      font-size:
-        clamp(29px, 4vw, 40px);
-
-      line-height: 1.12;
-
-      font-weight: 600;
-    }
-
-
-    .profile-location {
-
-      margin-top: 7px;
-
-      color:
-        rgba(255,255,255,0.55);
-
-      font-size: 13px;
-    }
-
-
-    .profile-location::before {
-      content: "⌖ ";
-      color: #ef6b9c;
-    }
-
-
-    /* =====================================================
-       EDIT BUTTON
-       ===================================================== */
-
-    .profile-owner-actions {
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 10px;
-
-      margin-top: 21px;
-    }
-
-
-    .edit-profile-button {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      min-height: 47px;
-
-      padding:
-        0 20px;
-
-      border-radius: 13px;
-
-      color: #ffffff;
-
-      background:
-        linear-gradient(
-          135deg,
-          #e95891,
-          #a82f64
-        );
-
-      border:
-        1px solid
-        rgba(255,255,255,0.12);
-
-      box-shadow:
-        0 9px 25px
-        rgba(190,53,105,0.25);
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-      cursor: pointer;
-
-      transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-    }
-
-
-    .edit-profile-button:hover {
-
-      transform:
-        translateY(-2px);
-
-      box-shadow:
-        0 13px 32px
-        rgba(190,53,105,0.35);
-    }
-
-
-    .secondary-profile-button {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      min-height: 47px;
-
-      padding:
-        0 19px;
-
-      border-radius: 13px;
-
-      background:
-        rgba(255,255,255,0.055);
-
-      border:
-        1px solid
-        rgba(255,255,255,0.12);
-
-      color:
-        rgba(255,255,255,0.88);
-
-      font-size: 13px;
-
-      font-weight: 500;
-
-      transition:
-        background .2s ease,
-        transform .2s ease;
-    }
-
-
-    .secondary-profile-button:hover {
-
-      background:
-        rgba(255,255,255,0.10);
-
-      transform:
-        translateY(-2px);
-    }
-
-
-    /* =====================================================
-       DETAIL GRID
-       ===================================================== */
-
-    .details-grid {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0,1fr));
-
-      gap: 12px;
-
-      margin-top: 23px;
-    }
-
-
-    .detail-box {
-
-      min-height: 75px;
-
-      padding:
-        14px 15px;
-
-      border-radius: 16px;
-
-      background:
-        rgba(255,255,255,0.035);
-
-      border:
-        1px solid
-        rgba(255,255,255,0.065);
-    }
-
-
-    .detail-label {
-
-      color:
-        rgba(255,255,255,0.42);
-
-      font-size: 10px;
-
-      font-weight: 600;
-
-      text-transform: uppercase;
-
-      letter-spacing: 1.2px;
-    }
-
-
-    .detail-value {
-
-      margin-top: 6px;
-
-      color:
-        rgba(255,255,255,0.92);
-
-      font-size: 14px;
-
-      font-weight: 500;
-
-      word-break: break-word;
-    }
-
-
-    /* =====================================================
-       ABOUT
-       ===================================================== */
-
-    .section {
-
-      margin-top: 24px;
-    }
-
-
-    .section-title {
-
-      margin-bottom: 10px;
-
-      color: #ef6b9c;
-
-      font-size: 11px;
-
-      font-weight: 600;
-
-      text-transform: uppercase;
-
-      letter-spacing: 1.8px;
-    }
-
-
-    .bio {
-
-      color:
-        rgba(255,255,255,0.72);
-
-      font-size: 14px;
-
-      line-height: 1.8;
-    }
-
-
-    /* =====================================================
-       INTERESTS
-       ===================================================== */
-
-    .interest-list {
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 9px;
-    }
-
-
-    .interest-chip {
-
-      padding:
-        8px 12px;
-
-      border-radius: 50px;
-
-      color:
-        rgba(255,255,255,0.82);
-
-      background:
-        rgba(226,73,127,0.10);
-
-      border:
-        1px solid
-        rgba(226,73,127,0.20);
-
-      font-size: 12px;
-    }
-
-
-    .no-interests {
-
-      color:
-        rgba(255,255,255,0.40);
-
-      font-size: 13px;
-    }
-
-
-    /* =====================================================
-       VISITOR ACTIONS
-       ===================================================== */
-
-    .visitor-actions {
-
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 10px;
-
-      margin-top: auto;
-
-      padding-top: 25px;
-    }
-
-
-    .chat-button {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      min-height: 48px;
-
-      padding:
-        0 22px;
-
-      border-radius: 13px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #e85a93,
-          #9d2c5f
-        );
-
-      color: white;
-
-      font-size: 13px;
-
-      font-weight: 600;
-
-      box-shadow:
-        0 10px 28px
-        rgba(192,49,105,0.25);
-    }
-
-
-    .back-button {
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      min-height: 48px;
-
-      padding:
-        0 20px;
-
-      border-radius: 13px;
-
-      background:
-        rgba(255,255,255,0.055);
-
-      border:
-        1px solid
-        rgba(255,255,255,0.10);
-
-      color:
-        rgba(255,255,255,0.82);
-
-      font-size: 13px;
-
-      font-weight: 500;
-    }
-
-
-    /* =====================================================
-       LOADING / ERROR
-       ===================================================== */
-
-    .state-card {
-
-      width: min(
-        100%,
-        600px
-      );
-
-      margin:
-        60px auto;
-
-      padding: 38px 28px;
-
-      text-align: center;
-
-      border:
-        1px solid
-        rgba(255,255,255,0.10);
-
-      border-radius: 24px;
-
-      background:
-        rgba(255,255,255,0.045);
-
-      box-shadow:
-        0 25px 70px
-        rgba(0,0,0,0.35);
-    }
-
-
-    .state-icon {
-
-      font-size: 38px;
-
-      margin-bottom: 13px;
-    }
-
-
-    .state-card h2 {
-
-      font-family:
-        "Playfair Display",
-        serif;
-
-      font-size: 27px;
-    }
-
-
-    .state-card p {
-
-      margin-top: 9px;
-
-      color:
-        rgba(255,255,255,0.57);
-
-      font-size: 13px;
-
-      line-height: 1.7;
-    }
-
-
-    .state-button {
-
-      display: inline-flex;
-
-      margin-top: 20px;
-
-      padding:
-        12px 20px;
-
-      border-radius: 12px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #e85b93,
-          #a72f63
-        );
-
-      font-size: 13px;
-
-      font-weight: 600;
-    }
-
-
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-
-    .footer {
-
-      margin-top: 35px;
-
-      text-align: center;
-
-      color:
-        rgba(255,255,255,0.30);
-
-      font-size: 11px;
-    }
-
-
-    /* =====================================================
-       MOBILE
-       ===================================================== */
-
-    @media (max-width: 800px) {
-
-      .topbar {
-        padding: 0 20px;
-      }
-
-
-      .nav-links {
-        gap: 15px;
-      }
-
-
-      .nav-links a,
-      .logout-nav {
-        font-size: 11px;
-      }
-
-
-      .profile-card {
-
-        grid-template-columns: 1fr;
-
-        padding: 18px;
-
-        gap: 24px;
-      }
-
-
-      .photo-frame {
-
-        max-width: 310px;
-      }
-
-
-      .photo-section {
-
-        align-items: center;
-      }
-
-
-      .profile-top {
-        flex-direction: column;
-      }
-
-    }
-
-
-    @media (max-width: 520px) {
-
-      .topbar {
-        min-height: 68px;
-      }
-
-
-      .brand {
-        font-size: 24px;
-      }
-
-
-      .brand-heart {
-        font-size: 19px;
-      }
-
-
-      .nav-links {
-        gap: 10px;
-      }
-
-
-      .nav-links a:nth-child(1) {
-        display: none;
-      }
-
-
-      .page {
-        width:
-          min(
-            calc(100% - 20px),
-            980px
-          );
-
-        padding-top: 28px;
-      }
-
-
-      .details-grid {
-        grid-template-columns: 1fr;
-      }
-
-
-      .profile-owner-actions,
-      .visitor-actions {
-        flex-direction: column;
-      }
-
-
-      .edit-profile-button,
-      .secondary-profile-button,
-      .chat-button,
-      .back-button {
-        width: 100%;
-      }
-
-    }
-
-  </style>
+    padding-top: 28px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-owner-actions,
+  .visitor-actions {
+    flex-direction: column;
+  }
+
+  .edit-profile-button,
+  .secondary-profile-button,
+  .chat-button,
+  .back-button {
+    width: 100%;
+  }
+
+}
+
+</style>
 
 </head>
 
-
 <body>
 
+<header class="topbar">
 
-  <!-- =====================================================
-       NAVIGATION
-       ===================================================== -->
+  <a class="brand" href="index.html">
 
-  <header class="topbar">
+    <span class="brand-heart">♥</span>
 
-    <a
-      class="brand"
-      href="index.html"
-    >
-
-      <span class="brand-heart">♥</span>
-
+    <span>
       <span class="brand-k">K</span><span class="brand-meet">meet</span>
+    </span>
 
+  </a>
+
+  <nav class="nav-links">
+
+    <a href="discover.html">
+      Discover
     </a>
 
+    <a href="likes.html">
+      My Likes
+    </a>
 
-    <nav class="nav-links">
+    <a
+      href="profile.html"
+      class="active"
+    >
+      Profile
+    </a>
 
-      <a href="discover.html">
-        Discover
-      </a>
+    <a href="index.html">
+      Home
+    </a>
 
+    <button
+      type="button"
+      id="logoutBtn"
+      class="logout-nav"
+    >
+      Logout
+    </button>
 
-      <a
-        href="likes.html"
-        id="likesLink"
-      >
-        My Likes
-      </a>
+  </nav>
 
-
-      <a
-        href="profile.html"
-        id="profileNav"
-        class="active"
-      >
-        Profile
-      </a>
-
-
-      <a href="index.html">
-        Home
-      </a>
+</header>
 
 
-      <button
-        type="button"
-        id="logoutBtn"
-        class="logout-nav"
-      >
-        Logout
-      </button>
+<main class="page">
 
-    </nav>
+  <div class="page-heading">
 
-  </header>
+    <span class="eyebrow">
+      Kmeet
+    </span>
 
+    <h1 id="headingTitle">
+      Your Profile
+    </h1>
 
+    <p id="headingSubtitle">
+      Your profile helps people discover who you are.
+    </p>
 
-  <!-- =====================================================
-       MAIN
-       ===================================================== -->
-
-  <main class="page">
+  </div>
 
 
-    <div class="page-heading">
+  <!-- LOADING -->
 
-      <span class="eyebrow">
-        Kmeet
-      </span>
+  <section
+    id="loadingState"
+    class="state-card"
+  >
 
-      <h1 id="headingTitle">
-        Your Profile
-      </h1>
+    <div class="state-icon">
+      ♥
+    </div>
 
-      <p id="headingSubtitle">
-        Your profile helps people discover who you are.
-      </p>
+    <h2>
+      Loading your profile
+    </h2>
+
+    <p>
+      Please wait while Kmeet loads your profile.
+    </p>
+
+  </section>
+
+
+  <!-- ERROR -->
+
+  <section
+    id="errorState"
+    class="state-card"
+    style="display:none;"
+  >
+
+    <div class="state-icon">
+      ♡
+    </div>
+
+    <h2>
+      Profile could not be loaded
+    </h2>
+
+    <p id="errorText">
+      Something went wrong while loading this profile.
+    </p>
+
+    <a
+      href="login.html"
+      class="state-button"
+      id="errorButton"
+    >
+      Go to Login
+    </a>
+
+  </section>
+
+
+  <!-- PROFILE -->
+
+  <section
+    id="profileCard"
+    class="profile-card"
+    style="display:none;"
+  >
+
+    <!-- PHOTO -->
+
+    <div class="photo-section">
+
+      <div class="photo-frame">
+
+        <img
+          id="profilePhoto"
+          class="profile-photo"
+          src=""
+          alt="Kmeet profile photo"
+        >
+
+        <div
+          id="photoFallback"
+          class="photo-fallback"
+        >
+
+          <div
+            id="fallbackLetter"
+            class="fallback-letter"
+          >
+            K
+          </div>
+
+          <div class="fallback-brand">
+            Kmeet
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="status-pill">
+
+        <span
+          id="statusDot"
+          class="status-dot offline"
+        ></span>
+
+        <span id="statusText">
+          Offline
+        </span>
+
+      </div>
 
     </div>
 
 
-    <!-- LOADING -->
+    <!-- INFORMATION -->
 
-    <section
-      id="loadingState"
-      class="state-card"
-    >
+    <div class="profile-info">
 
-      <div class="state-icon">
-        ♥
+      <div class="profile-top">
+
+        <div>
+
+          <h2
+            id="profileName"
+            class="profile-name"
+          >
+            Kmeet Member
+          </h2>
+
+          <p
+            id="profileLocation"
+            class="profile-location"
+          >
+            Kenya
+          </p>
+
+        </div>
+
       </div>
 
-      <h2>
-        Loading your profile
-      </h2>
 
-      <p>
-        Please wait while Kmeet loads your profile.
-      </p>
+      <!-- OWNER BUTTONS -->
 
-    </section>
-
-
-    <!-- ERROR -->
-
-    <section
-      id="errorState"
-      class="state-card"
-      style="display:none;"
-    >
-
-      <div class="state-icon">
-        ♡
-      </div>
-
-      <h2>
-        Profile could not be loaded
-      </h2>
-
-      <p id="errorText">
-        Something went wrong while loading this profile.
-      </p>
-
-      <a
-        href="login.html"
-        class="state-button"
-        id="errorButton"
+      <div
+        id="ownerActions"
+        class="profile-owner-actions"
+        style="display:none;"
       >
-        Go to Login
-      </a>
 
-    </section>
+        <a
+          href="edit-profile.html"
+          class="edit-profile-button"
+        >
+          ✎ Edit My Profile
+        </a>
 
+        <a
+          href="discover.html"
+          class="secondary-profile-button"
+        >
+          Discover People
+        </a>
 
-    <!-- PROFILE -->
-
-    <section
-      id="profileCard"
-      class="profile-card"
-      style="display:none;"
-    >
-
-
-      <!-- =================================================
-           PHOTO
-           ================================================= -->
-
-      <div class="photo-section">
+      </div>
 
 
-        <div class="photo-frame">
+      <!-- DETAILS -->
 
-          <img
-           
+      <div class="details-grid">
+
+        <div class="detail-box">
+
+          <div class="detail-label">
+            Age
+          </div>
+
+          <div
+            id="profileAge"
+            class="detail-value"
+          >
+            Not added
+          </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+          <div class="detail-label">
+            Gender
+          </div>
+
+          <div
+            id="profileGender"
+            class="detail-value"
+          >
+            Not added
+          </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+          <div class="detail-label">
+            Location
+          </div>
+
+          <div
+            id="profileLocationBox"
+            class="detail-value"
+          >
+            Kenya
+          </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+          <div class="detail-label">
+            Member
+          </div>
+
+          <div
+            id="memberSince"
+            class="detail-value"
+          >
+            Kmeet Member
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ABOUT -->
+
+      <div class="section">
+
+        <div class="section-title">
+          About Me
+        </div>
+
+        <p
+          id="profileBio"
+          class="bio"
+        >
+          New Kmeet member.
+        </p>
+
+      </div>
+
+
+      <!-- INTERESTS -->
+
+      <div class="section">
+
+        <div class="section-title">
+          Interests
+        </div>
+
+        <div
+          id="interestList"
+          class="interest-list"
+        ></div>
+
+      </div>
+
+
+      <!-- VISITOR BUTTONS -->
+
+      <div
+        id="visitorActions"
+        class="visitor-actions"
+        style="display:none;"
+      >
+
+        <a
+          id="chatButton"
+          class="chat-button"
+          href="#"
+        >
+          ♥ Chat
+        </a>
+
+        <a
+          href="discover.html"
+          class="back-button"
+        >
+          ← Back to Discover
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="footer">
+    Kmeet · Connecting hearts naturally
+  </div>
+
+</main>
+
+
+<script type="module">
+
+import {
+  auth,
+  db,
+  database,
+  databaseRef,
+  databaseSet,
+  databaseOnValue,
+  onDisconnect,
+  onAuthStateChanged,
+  signOut,
+  doc,
+  getDoc
+} from "./firebase-config.js";
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const loadingState =
+  document.getElementById("loadingState");
+
+const errorState =
+  document.getElementById("errorState");
+
+const errorText =
+  document.getElementById("errorText");
+
+const errorButton =
+  document.getElementById("errorButton");
+
+const profileCard =
+  document.getElementById("profileCard");
+
+const profileName =
+  document.getElementById("profileName");
+
+const profileLocation =
+  document.getElementById("profileLocation");
+
+const profileLocationBox =
+  document.getElementById("profileLocationBox");
+
+const profileAge =
+  document.getElementById("profileAge");
+
+const profileGender =
+  document.getElementById("profileGender");
+
+const profileBio =
+  document.getElementById("profileBio");
+
+const profilePhoto =
+  document.getElementById("profilePhoto");
+
+const photoFallback =
+  document.getElementById("photoFallback");
+
+const fallbackLetter =
+  document.getElementById("fallbackLetter");
+
+const interestList =
+  document.getElementById("interestList");
+
+const ownerActions =
+  document.getElementById("ownerActions");
+
+const visitorActions =
+  document.getElementById("visitorActions");
+
+const chatButton =
+  document.getElementById("chatButton");
+
+const headingTitle =
+  document.getElementById("headingTitle");
+
+const headingSubtitle =
+  document.getElementById("headingSubtitle");
+
+const statusDot =
+  document.getElementById("statusDot");
+
+const statusText =
+  document.getElementById("statusText");
+
+const memberSince =
+  document.getElementById("memberSince");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+
+/* =====================================================
+   URL
+   ===================================================== */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const requestedUserId =
+  params.get("id");
+
+
+/* =====================================================
+   BASIC HELPERS
+   ===================================================== */
+
+function showLoading() {
+
+  loadingState.style.display =
+    "block";
+
+  errorState.style.display =
+    "none";
+
+  profileCard.style.display =
+    "none";
+}
+
+
+function showError(message, showLogin = true) {
+
+  loadingState.style.display =
+    "none";
+
+  profileCard.style.display =
+    "none";
+
+  errorState.style.display =
+    "block";
+
+  errorText.textContent =
+    message;
+
+  if (showLogin) {
+
+    errorButton.style.display =
+      "inline-flex";
+
+    errorButton.href =
+      "login.html";
+
+  } else {
+
+    errorButton.style.display =
+      "inline-flex";
+
+    errorButton.href =
+      "discover.html";
+
+    errorButton.textContent =
+      "Back to Discover";
+
+  }
+
+}
+
+
+function showProfile() {
+
+  loadingState.style.display =
+    "none";
+
+  errorState.style.display =
+    "none";
+
+  profileCard.style.display =
+    "grid";
+}
+
+
+function cleanValue(value, fallback) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    String(value).trim() === ""
+  ) {
+
+    return fallback;
+
+  }
+
+  return String(value).trim();
+
+}
+
+
+/* =====================================================
+   PHOTO
+   ===================================================== */
+
+function getPhotoUrl(data, authUser) {
+
+  const possiblePhotos = [
+
+    data.photoURL,
+
+    data.photoUrl,
+
+    data.profilePhoto,
+
+    data.profileImage,
+
+    data.avatar,
+
+    data.photo,
+
+    authUser?.photoURL
+
+  ];
+
+  for (
+    const photo of possiblePhotos
+  ) {
+
+    if (
+      photo &&
+      typeof photo === "string" &&
+      photo.trim() !== ""
+    ) {
+
+      return photo.trim();
+
+    }
+
+  }
+
+  return "";
+
+}
+
+
+function showFallback(name) {
+
+  profilePhoto.style.display =
+    "none";
+
+  photoFallback.classList.add(
+    "show"
+  );
+
+  const firstLetter =
+    String(name || "K")
+      .trim()
+      .charAt(0)
+      .toUpperCase() || "K";
+
+  fallbackLetter.textContent =
+    firstLetter;
+
+}
+
+
+function showPhoto(url, name) {
+
+  if (!url) {
+
+    showFallback(name);
+
+    return;
+
+  }
+
+  photoFallback.classList.remove(
+    "show"
+  );
+
+  profilePhoto.style.display =
+    "block";
+
+  profilePhoto.src =
+    url;
+
+  profilePhoto.alt =
+    `${name} profile photo`;
+
+  profilePhoto.onerror =
+    () => {
+
+      showFallback(name);
+
+    };
+
+}
+
+
+/* =====================================================
+   INTERESTS
+   ===================================================== */
+
+function renderInterests(interests) {
+
+  interestList.innerHTML =
+    "";
+
+  if (
+    !Array.isArray(interests) ||
+    interests.length === 0
+  ) {
+
+    interestList.innerHTML = `
+      <span class="no-interests">
+        No interests added yet.
+      </span>
+    `;
+
+    return;
+
+  }
+
+  interests
+    .filter(
+      interest =>
+        interest !== null &&
+        interest !== undefined &&
+        String(interest).trim() !== ""
+    )
+    .slice(0, 20)
+    .forEach(
+      interest => {
+
+        const chip =
+          document.createElement("span");
+
+        chip.className =
+          "interest-chip";
+
+        chip.textContent =
+          String(interest);
+
+        interestList.appendChild(
+          chip
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   MEMBER DATE
+   ===================================================== */
+
+function formatMemberDate(value) {
+
+  if (!value) {
+
+    return "Kmeet Member";
+
+  }
+
+  try {
+
+    let date;
+
+    if (
+      typeof value.toDate ===
+      "function"
+    ) {
+
+      date =
+        value.toDate();
+
+    } else if (
+      value.seconds
+    ) {
+
+      date =
+        new Date(
+          value.seconds * 1000
+        );
+
+    } else {
+
+      date =
+        new Date(value);
+
+    }
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+
+      return "Kmeet Member";
+
+    }
+
+    return (
+      "Since " +
+      date.toLocaleDateString(
+        undefined,
+        {
+          month: "short",
+          year: "numeric"
+        }
+      )
+    );
+
+  } catch {
+
+    return "Kmeet Member";
+
+  }
+
+}
+
+
+/* =====================================================
+   PRESENCE
+   ===================================================== */
+
+let presenceUnsubscribe =
+  null;
+
+
+function clearPresenceListener() {
+
+  if (
+    typeof presenceUnsubscribe ===
+    "function"
+  ) {
+
+    presenceUnsubscribe();
+
+    presenceUnsubscribe =
+      null;
+
+  }
+
+}
+
+
+function watchPresence(uid) {
+
+  clearPresenceListener();
+
+  if (!uid) {
+
+    setStatus(false);
+
+    return;
+
+  }
+
+  const connectionsRef =
+    databaseRef(
+      database,
+      `presence/${uid}/connections`
+    );
+
+  presenceUnsubscribe =
+    databaseOnValue(
+      connectionsRef,
+      snapshot => {
+
+        const value =
+          snapshot.val();
+
+        const online =
+          value &&
+          Object.keys(value).length >
+            0;
+
+        setStatus(
+          Boolean(online)
+        );
+
+      },
+      error => {
+
+        console.warn(
+          "Kmeet presence error:",
+          error
+        );
+
+        setStatus(false);
+
+      }
+    );
+
+}
+
+
+function setStatus(online) {
+
+  statusDot.classList.toggle(
+    "online",
+    online
+  );
+
+  statusDot.classList.toggle(
+    "offline",
+    !online
+  );
+
+  statusText.textContent =
+    online
+      ? "Online"
+      : "Offline";
+
+}
+
+
+/* =====================================================
+   OWN USER PRESENCE
+   ===================================================== */
+
+let ownPresenceConnection =
+  null;
+
+
+function startOwnPresence(uid) {
+
+  if (!uid) {
+    return;
+  }
+
+  try {
+
+    const connectedRef =
+      databaseRef(
+        database,
+        ".info/connected"
+      );
+
+    databaseOnValue(
+      connectedRef,
+      snapshot => {
+
+        if (
+          snapshot.val() !== true
+        ) {
+
+          setStatus(false);
+
+          return;
+
+        }
+
+        const connectionId =
+          crypto.randomUUID();
+
+        const connectionRef =
+          databaseRef(
+            database,
+            `presence/${uid}/connections/${connectionId}`
+          );
+
+        ownPresenceConnection =
+          connectionRef;
+
+        onDisconnect(
+          connectionRef
+        )
+          .remove()
+          .catch(
+            error =>
+              console.warn(
+                "Presence disconnect setup failed:",
+                error
+              )
+          );
+
+        databaseSet(
+          connectionRef,
+          true
+        )
+        .then(
+          () =>
+            setStatus(true)
+        )
+        .catch(
+          error =>
+            console.warn(
+              "Presence write failed:",
+              error
+            )
+        );
+
+      }
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Presence could not start:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD PROFILE
+   ===================================================== */
+
+async function loadProfile(
+  profileUid,
+  currentAuthUser,
+  isOwnProfile
+) {
+
+  showLoading();
+
+  console.log(
+    "KMEET: Loading profile document:",
+    profileUid
+  );
+
+  try {
+
+    /*
+     * IMPORTANT:
+     * A profile is ONE document:
+     *
+     * users/{uid}
+     *
+     * Therefore we use doc(), not collection().
+     */
+
+    const profileRef =
+      doc(
+        db,
+        "users",
+        profileUid
+      );
+
+    const profileSnap =
+      await getDoc(
+        profileRef
+      );
+
+    if (!profileSnap.exists()) {
+
+      throw new Error(
+        "The Kmeet profile document does not exist yet."
+      );
+
+    }
+
+    const data =
+      profileSnap.data() || {};
+
+    console.log(
+      "KMEET: Profile loaded:",
+      data
+    );
+
+
+    /* =================================================
+       NAME
+       ================================================= */
+
+    const name =
+      cleanValue(
+        data.name ||
+        data.displayName ||
+        data.username ||
+        currentAuthUser?.displayName,
+        "Kmeet Member"
+      );
+
+
+    /* =================================================
+       LOCATION
+       ================================================= */
+
+    const location =
+      cleanValue(
+        data.location,
+        "Kenya"
+      );
+
+
+    /* =================================================
+       AGE
+       ================================================= */
+
+    const age =
+      data.age !== null &&
+      data.age !== undefined &&
+      String(data.age).trim() !== ""
+        ? String(data.age)
+        : "Not added";
+
+
+    /* =================================================
+       GENDER
+       ================================================= */
+
+    const gender =
+      cleanValue(
+        data.gender,
+        "Not added"
+      );
+
+
+    /* =================================================
+       BIO
+       ================================================= */
+
+    const bio =
+      cleanValue(
+        data.bio ||
+        data.about ||
+        data.description,
+        "New Kmeet member."
+      );
+
+
+    /* =================================================
+       PHOTO
+       ================================================= */
+
+    const photoUrl =
+      getPhotoUrl(
+        data,
+        currentAuthUser
+      );
+
+
+    /* =================================================
+       RENDER
+       ================================================= */
+
+    profileName.textContent =
+      name;
+
+    profileLocation.textContent =
+      location;
+
+    profileLocationBox.textContent =
+      location;
+
+    profileAge.textContent =
+      age;
+
+    profileGender.textContent =
+      gender;
+
+    profileBio.textContent =
+      bio;
+
+    renderInterests(
+      Array.isArray(data.interests)
+        ? data.interests
+        : []
+    );
+
+    showPhoto(
+      photoUrl,
+      name
+    );
+
+
+    memberSince.textContent =
+      formatMemberDate(
+        data.createdAt
+      );
+
+
+    /* =================================================
+       OWN / VISITOR
+       ================================================= */
+
+    if (isOwnProfile) {
+
+      headingTitle.textContent =
+        "Your Profile";
+
+      headingSubtitle.textContent =
+        "Your profile helps people discover who you are.";
+
+      ownerActions.style.display =
+        "flex";
+
+      visitorActions.style.display =
+        "none";
+
+      logoutBtn.style.display =
+        "inline-block";
+
+      startOwnPresence(
+        profileUid
+      );
+
+    } else {
+
+      headingTitle.textContent =
+        name;
+
+      headingSubtitle.textContent =
+        "Get to know this Kmeet member.";
+
+      ownerActions.style.display =
+        "none";
+
+      visitorActions.style.display =
+        "flex";
+
+      logoutBtn.style.display =
+        currentAuthUser &&
+        !currentAuthUser.isAnonymous
+          ? "inline-block"
+          : "none";
+
+      chatButton.href =
+        `chat.html?userId=${encodeURIComponent(profileUid)}`;
+
+      watchPresence(
+        profileUid
+      );
+
+    }
+
+
+    showProfile();
+
+  } catch (error) {
+
+    console.error(
+      "KMEET profile loading error:",
+      error
+    );
+
+    showError(
+      error?.message ||
+      "Kmeet could not load this profile.",
+      isOwnProfile
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+logoutBtn.addEventListener(
+  "click",
+  async () => {
+
+    try {
+
+      await signOut(auth);
+
+      window.location.replace(
+        "login.html"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Kmeet logout error:",
+        error
+      );
+
+      alert(
+        "Could not log out. Please try again."
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   AUTHENTICATION
+   ===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    console.log(
+      "KMEET: Auth state:",
+      user
+        ? user.uid
+        : "No user"
+    );
+
+
+    /*
+     * -------------------------------------------------
+     * VISITING ANOTHER MEMBER
+     * -------------------------------------------------
+     */
+
+    if (requestedUserId) {
+
+      /*
+       * If somebody is trying to open their
+       * own profile through ?id=UID, treat it
+       * as their own profile.
+       */
+
+      const isOwnProfile =
+        Boolean(
+          user &&
+          !user.isAnonymous &&
+          user.uid === requestedUserId
+        );
+
+
+      /*
+       * A visitor can view another profile
+       * without being logged in.
+       */
+
+      await loadProfile(
+        requestedUserId,
+        user,
+        isOwnProfile
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * -------------------------------------------------
+     * OWN PROFILE
+     * -------------------------------------------------
+     */
+
+    if (
+      !user ||
+      user.isAnonymous
+    ) {
+
+      console.log(
+        "KMEET: No registered user. Redirecting to login."
+      );
+
+      window.location.replace(
+        "login.html"
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Load the logged-in user's document:
+     *
+     * users/{auth.uid}
+     */
+
+    await loadProfile(
+      user.uid,
+      user,
+      true
+    );
+
+  }
+);
+
+</script>
+
+</body>
+</html>
