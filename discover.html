@@ -405,7 +405,8 @@
       border: 0;
 
       transition:
-        transform 0.35s ease;
+        transform 0.35s ease,
+        opacity 0.25s ease;
     }
 
     .discover-page .profile-card:hover
@@ -529,7 +530,7 @@
     .discover-page .profile-location {
 
       margin:
-        0 0 12px;
+        0 0 8px;
 
       color:
         rgba(255,255,255,0.58);
@@ -550,14 +551,11 @@
       color:
         rgba(255,255,255,0.72);
 
-      font-size:
-        12.5px;
+      font-size: 12px;
 
-      line-height:
-        1.65;
+      line-height: 1.65;
 
-      min-height:
-        62px;
+      min-height: 40px;
     }
 
 
@@ -703,10 +701,7 @@
     .discover-page .demo-button {
 
       opacity:
-        0.65;
-
-      cursor:
-        default;
+        0.78;
     }
 
 
@@ -792,7 +787,6 @@
         grid-template-columns:
           1fr 1fr;
       }
-
     }
 
 
@@ -815,7 +809,6 @@
         height:
           330px;
       }
-
     }
 
   </style>
@@ -957,6 +950,65 @@
 
 
     /* =====================================================
+       BACKUP PHOTOS
+       
+       These are used when:
+       - a demo photo fails
+       - a real member has no photo
+       - a Firebase photo field is missing
+       ===================================================== */
+
+    const backupPhotos = [
+
+      "https://randomuser.me/api/portraits/women/44.jpg",
+      "https://randomuser.me/api/portraits/men/32.jpg",
+      "https://randomuser.me/api/portraits/women/65.jpg",
+      "https://randomuser.me/api/portraits/men/46.jpg",
+      "https://randomuser.me/api/portraits/women/32.jpg",
+      "https://randomuser.me/api/portraits/men/52.jpg",
+      "https://randomuser.me/api/portraits/women/68.jpg",
+      "https://randomuser.me/api/portraits/men/75.jpg",
+      "https://randomuser.me/api/portraits/women/50.jpg",
+      "https://randomuser.me/api/portraits/men/22.jpg",
+      "https://randomuser.me/api/portraits/women/21.jpg",
+      "https://randomuser.me/api/portraits/men/41.jpg",
+      "https://randomuser.me/api/portraits/women/12.jpg",
+      "https://randomuser.me/api/portraits/men/61.jpg",
+      "https://randomuser.me/api/portraits/women/49.jpg",
+      "https://randomuser.me/api/portraits/men/19.jpg",
+      "https://randomuser.me/api/portraits/women/36.jpg",
+      "https://randomuser.me/api/portraits/men/29.jpg",
+      "https://randomuser.me/api/portraits/women/57.jpg",
+      "https://randomuser.me/api/portraits/men/37.jpg",
+      "https://randomuser.me/api/portraits/women/63.jpg",
+      "https://randomuser.me/api/portraits/men/11.jpg",
+      "https://randomuser.me/api/portraits/women/75.jpg",
+      "https://randomuser.me/api/portraits/men/64.jpg",
+      "https://randomuser.me/api/portraits/women/23.jpg",
+      "https://randomuser.me/api/portraits/men/70.jpg",
+      "https://randomuser.me/api/portraits/women/41.jpg",
+      "https://randomuser.me/api/portraits/men/35.jpg",
+      "https://randomuser.me/api/portraits/women/45.jpg",
+      "https://randomuser.me/api/portraits/men/55.jpg",
+      "https://randomuser.me/api/portraits/women/58.jpg",
+      "https://randomuser.me/api/portraits/men/43.jpg",
+      "https://randomuser.me/api/portraits/women/38.jpg",
+      "https://randomuser.me/api/portraits/men/48.jpg",
+      "https://randomuser.me/api/portraits/women/55.jpg",
+      "https://randomuser.me/api/portraits/men/76.jpg"
+    ];
+
+
+    function getBackupPhoto(index = 0) {
+
+      return backupPhotos[
+        Math.abs(index) % backupPhotos.length
+      ];
+
+    }
+
+
+    /* =====================================================
        DEMO PROFILES
        ===================================================== */
 
@@ -968,8 +1020,8 @@
         age: 27,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=88",
-        description: "Easy-going and curious. I enjoy good conversations, travelling and discovering beautiful places.",
+        photo: backupPhotos[0],
+        description: "Easy-going, curious and always ready for a good conversation.",
         interests: ["Travel", "Music", "Coffee"]
       },
 
@@ -979,8 +1031,8 @@
         age: 30,
         location: "Mombasa, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=88",
-        description: "I love the coast, staying active and meeting people who bring positive energy into life.",
+        photo: backupPhotos[1],
+        description: "Enjoys fitness, football, road trips and meeting genuine people.",
         interests: ["Fitness", "Football", "Travel"]
       },
 
@@ -990,8 +1042,8 @@
         age: 25,
         location: "Kisumu, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=88",
-        description: "Quiet at first, but full of stories once we connect. Books, art and nature keep me inspired.",
+        photo: backupPhotos[2],
+        description: "Quiet personality with a love for books, creativity and nature.",
         interests: ["Books", "Art", "Nature"]
       },
 
@@ -1001,8 +1053,8 @@
         age: 29,
         location: "Nakuru, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=88",
-        description: "Ambitious, friendly and always interested in learning something new from people around me.",
+        photo: backupPhotos[3],
+        description: "Music lover who enjoys cars, fitness and spontaneous adventures.",
         interests: ["Music", "Cars", "Fitness"]
       },
 
@@ -1012,8 +1064,8 @@
         age: 28,
         location: "Nairobi, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=88",
-        description: "I appreciate honesty, laughter and meaningful conversations. Looking for a genuine connection.",
+        photo: backupPhotos[4],
+        description: "Fashion, good food and discovering new places are my kind of fun.",
         interests: ["Fashion", "Travel", "Food"]
       },
 
@@ -1023,8 +1075,8 @@
         age: 31,
         location: "Eldoret, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=900&q=88",
-        description: "Business-minded but easy-going. Weekends are for music, sports and spending time with good people.",
+        photo: backupPhotos[5],
+        description: "Business-minded, social and always looking for something new to learn.",
         interests: ["Business", "Sports", "Music"]
       },
 
@@ -1034,8 +1086,8 @@
         age: 26,
         location: "Mombasa, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=88",
-        description: "Coastal girl who loves good food, warm conversations and spontaneous adventures.",
+        photo: backupPhotos[6],
+        description: "Beach walks, cooking and travel make me happiest.",
         interests: ["Beach", "Cooking", "Travel"]
       },
 
@@ -1045,8 +1097,8 @@
         age: 33,
         location: "Nairobi, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=88",
-        description: "Technology enthusiast with a calm personality. I enjoy travelling and thoughtful conversations.",
+        photo: backupPhotos[7],
+        description: "Technology enthusiast who also enjoys books and seeing new places.",
         interests: ["Technology", "Reading", "Travel"]
       },
 
@@ -1056,8 +1108,8 @@
         age: 29,
         location: "Kiambu, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=88",
-        description: "Creative, cheerful and always ready for a new experience. Photography is my favourite escape.",
+        photo: backupPhotos[8],
+        description: "Photography, coffee and peaceful outdoor moments are my favorites.",
         interests: ["Photography", "Coffee", "Nature"]
       },
 
@@ -1067,8 +1119,8 @@
         age: 28,
         location: "Thika, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=88",
-        description: "Football fan, movie lover and traveller. I value kindness and people who can make me laugh.",
+        photo: backupPhotos[9],
+        description: "Football fan who enjoys movies, travel and relaxed conversations.",
         interests: ["Football", "Movies", "Travel"]
       },
 
@@ -1078,8 +1130,8 @@
         age: 30,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=88",
-        description: "I love music, dancing and trying new restaurants. Looking for someone genuine and positive.",
+        photo: backupPhotos[10],
+        description: "Music and dancing keep me going, especially when shared with good company.",
         interests: ["Music", "Dancing", "Food"]
       },
 
@@ -1089,8 +1141,8 @@
         age: 32,
         location: "Kakamega, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=88&sat=-15",
-        description: "Focused on building a good life while making time for friendships, fitness and adventure.",
+        photo: backupPhotos[11],
+        description: "Focused on business, fitness and personal growth.",
         interests: ["Business", "Fitness", "Books"]
       },
 
@@ -1100,8 +1152,8 @@
         age: 24,
         location: "Nairobi, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=88",
-        description: "Young at heart and curious about the world. I enjoy creativity, music and fashion.",
+        photo: backupPhotos[12],
+        description: "Creative at heart and happiest around music, art and good style.",
         interests: ["Art", "Fashion", "Music"]
       },
 
@@ -1111,8 +1163,8 @@
         age: 35,
         location: "Mombasa, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=900&q=88",
-        description: "I enjoy the ocean, travelling and cooking. Hoping to meet someone who values honesty.",
+        photo: backupPhotos[13],
+        description: "Ocean lover who enjoys cooking, travel and meaningful conversations.",
         interests: ["Ocean", "Travel", "Cooking"]
       },
 
@@ -1122,8 +1174,8 @@
         age: 27,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=900&q=88",
-        description: "Peaceful, thoughtful and optimistic. I enjoy yoga, books and relaxed coffee dates.",
+        photo: backupPhotos[14],
+        description: "A calm soul who enjoys yoga, books, coffee and thoughtful people.",
         interests: ["Yoga", "Books", "Coffee"]
       },
 
@@ -1133,8 +1185,8 @@
         age: 30,
         location: "Kisumu, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=900&q=88",
-        description: "Technology keeps me busy, but I always make time for movies, gaming and good company.",
+        photo: backupPhotos[15],
+        description: "Technology, movies and gaming are usually where you will find me.",
         interests: ["Technology", "Movies", "Gaming"]
       },
 
@@ -1144,8 +1196,8 @@
         age: 26,
         location: "Nakuru, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1496440737103-cd596325d314?auto=format&fit=crop&w=900&q=88",
-        description: "Nature lover with a passion for photography. I enjoy quiet places and spontaneous road trips.",
+        photo: backupPhotos[16],
+        description: "Love nature, photography and finding beautiful places to explore.",
         interests: ["Nature", "Travel", "Photography"]
       },
 
@@ -1155,8 +1207,8 @@
         age: 34,
         location: "Nairobi, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=900&q=88",
-        description: "Driven and independent, but I believe life is better when shared with the right person.",
+        photo: backupPhotos[17],
+        description: "Business, cars and music make for a pretty good weekend.",
         interests: ["Business", "Cars", "Music"]
       },
 
@@ -1166,8 +1218,8 @@
         age: 28,
         location: "Mombasa, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=900&q=88",
-        description: "Beach walks, great food and laughter are my kind of happiness. I love meeting warm-hearted people.",
+        photo: backupPhotos[18],
+        description: "Beach days, great food and travelling whenever possible.",
         interests: ["Beach", "Food", "Travel"]
       },
 
@@ -1177,8 +1229,8 @@
         age: 31,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=88&sat=-10",
-        description: "Fitness keeps me balanced. I also enjoy football, movies and discovering new places.",
+        photo: backupPhotos[19],
+        description: "Fitness enthusiast who enjoys football, movies and active weekends.",
         interests: ["Fitness", "Football", "Movies"]
       },
 
@@ -1188,8 +1240,8 @@
         age: 25,
         location: "Eldoret, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=900&q=88",
-        description: "I love books, music and peaceful outdoor places. Looking for friendship that can grow naturally.",
+        photo: backupPhotos[20],
+        description: "I enjoy books, music and quiet places surrounded by nature.",
         interests: ["Books", "Music", "Nature"]
       },
 
@@ -1199,8 +1251,8 @@
         age: 29,
         location: "Nakuru, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=900&q=88",
-        description: "Adventurous and social. I enjoy sports, travelling and long conversations over coffee.",
+        photo: backupPhotos[21],
+        description: "Always interested in travel, sports and discovering good coffee spots.",
         interests: ["Travel", "Sports", "Coffee"]
       },
 
@@ -1210,8 +1262,8 @@
         age: 32,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=88",
-        description: "Creative and family-oriented. Cooking, fashion and art are some of the things that make me happy.",
+        photo: backupPhotos[22],
+        description: "Food, fashion and art are some of the things that brighten my day.",
         interests: ["Cooking", "Fashion", "Art"]
       },
 
@@ -1221,8 +1273,8 @@
         age: 36,
         location: "Kisumu, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1522556189639-3a06f4a8d7b8?auto=format&fit=crop&w=900&q=88",
-        description: "I enjoy quiet weekends, fishing and exploring nature. I value honesty and good character.",
+        photo: backupPhotos[23],
+        description: "Nature lover who enjoys fishing, travel and peaceful weekends.",
         interests: ["Fishing", "Nature", "Travel"]
       },
 
@@ -1232,8 +1284,8 @@
         age: 27,
         location: "Kiambu, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=900&q=88",
-        description: "Music and dancing are my happy places. I am also a big fan of travel and new experiences.",
+        photo: backupPhotos[24],
+        description: "Music and dancing are even better when shared with good company.",
         interests: ["Music", "Dancing", "Travel"]
       },
 
@@ -1243,8 +1295,8 @@
         age: 33,
         location: "Nairobi, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=88",
-        description: "Technology and business keep me curious. Outside work, I enjoy fitness and relaxed evenings.",
+        photo: backupPhotos[25],
+        description: "Technology and business during the week, fitness after work.",
         interests: ["Technology", "Business", "Fitness"]
       },
 
@@ -1254,8 +1306,8 @@
         age: 29,
         location: "Mombasa, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=88",
-        description: "I love the coast, books and coffee. Hoping to meet someone who appreciates simple moments.",
+        photo: backupPhotos[26],
+        description: "Beach walks, books and a good cup of coffee sound perfect.",
         interests: ["Beach", "Books", "Coffee"]
       },
 
@@ -1265,8 +1317,8 @@
         age: 30,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=900&q=88",
-        description: "Football, music and travel are my favourite ways to spend free time. Always open to a good conversation.",
+        photo: backupPhotos[27],
+        description: "Football, music and travelling are my favorite ways to unwind.",
         interests: ["Football", "Music", "Travel"]
       },
 
@@ -1276,8 +1328,8 @@
         age: 26,
         location: "Nakuru, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=88",
-        description: "Artistic, playful and curious. I enjoy movies, fashion and people who don't take life too seriously.",
+        photo: backupPhotos[28],
+        description: "Creative, fashionable and always ready for a good movie.",
         interests: ["Art", "Fashion", "Movies"]
       },
 
@@ -1287,8 +1339,8 @@
         age: 34,
         location: "Mombasa, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=900&q=88",
-        description: "The ocean is my happy place. I enjoy photography, travel and meeting interesting people.",
+        photo: backupPhotos[29],
+        description: "Travel and photography are my favorite ways to experience life.",
         interests: ["Travel", "Ocean", "Photography"]
       },
 
@@ -1298,8 +1350,8 @@
         age: 28,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?auto=format&fit=crop&w=900&q=88",
-        description: "I enjoy cooking for people I care about, listening to music and spending time outdoors.",
+        photo: backupPhotos[30],
+        description: "I love cooking, music and spending time outdoors.",
         interests: ["Cooking", "Music", "Nature"]
       },
 
@@ -1309,8 +1361,8 @@
         age: 31,
         location: "Eldoret, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=88",
-        description: "Sports fan and lifelong learner. I enjoy books, technology and meaningful conversations.",
+        photo: backupPhotos[31],
+        description: "Sports and technology keep me busy, with books for quiet evenings.",
         interests: ["Sports", "Books", "Technology"]
       },
 
@@ -1320,8 +1372,8 @@
         age: 30,
         location: "Nairobi, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?auto=format&fit=crop&w=900&q=88",
-        description: "Travel, food and fashion make me happy. I appreciate kindness, humour and emotional maturity.",
+        photo: backupPhotos[32],
+        description: "Travel, fashion and good food are always welcome.",
         interests: ["Travel", "Fashion", "Food"]
       },
 
@@ -1331,8 +1383,8 @@
         age: 29,
         location: "Kisumu, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=900&q=88&sat=-15",
-        description: "Music lover with a soft spot for road trips. I enjoy cars, travelling and good company.",
+        photo: backupPhotos[33],
+        description: "Music, cars and travelling make a great combination for me.",
         interests: ["Music", "Cars", "Travel"]
       },
 
@@ -1342,8 +1394,8 @@
         age: 27,
         location: "Nairobi, Kenya",
         online: false,
-        photo: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=88",
-        description: "Calm, friendly and optimistic. I enjoy yoga, nature walks and getting lost in a good book.",
+        photo: backupPhotos[34],
+        description: "Yoga, nature and books are my favorite ways to slow down.",
         interests: ["Yoga", "Nature", "Books"]
       },
 
@@ -1353,8 +1405,8 @@
         age: 32,
         location: "Nakuru, Kenya",
         online: true,
-        photo: "https://images.unsplash.com/photo-1504257432389-52343af06ae3?auto=format&fit=crop&w=900&q=88",
-        description: "Business-minded and adventurous. I enjoy football, travelling and building meaningful connections.",
+        photo: backupPhotos[35],
+        description: "Business, football and travel keep life interesting.",
         interests: ["Business", "Football", "Travel"]
       }
 
@@ -1398,51 +1450,95 @@
 
 
     /* =====================================================
-       REAL FIREBASE USERS
+       REAL FIREBASE USER PROFILE
        ===================================================== */
 
-    function getRealProfile(snap) {
+    function getRealProfile(
+      snap,
+      index
+    ) {
 
       const p =
         snap.data() || {};
+
+
+      const name =
+        p.name ||
+        p.username ||
+        p.displayName ||
+        "Kmeet Member";
+
+
+      let age = "";
+
+      if (
+        p.age !== undefined &&
+        p.age !== null &&
+        String(p.age).trim() !== ""
+      ) {
+
+        age = `, ${p.age}`;
+
+      }
+
+
+      /*
+       * Kmeet may use different photo field names
+       * depending on which version of the profile
+       * page created the account.
+       */
+
+      const photo =
+        p.photoURL ||
+        p.photoUrl ||
+        p.avatar ||
+        p.profilePhoto ||
+        p.profileImage ||
+        p.image ||
+        getBackupPhoto(index);
+
+
+      const interests =
+        Array.isArray(p.interests)
+          ? p.interests.slice(0, 4)
+          : [];
+
+
+      const description =
+        p.description ||
+        p.bio ||
+        p.about ||
+        p.intro ||
+        "Getting to know people and discovering meaningful connections on Kmeet.";
+
+
+      const online =
+        p.online === true ||
+        String(
+          p.status || ""
+        ).toLowerCase() === "online";
+
 
       return {
 
         id: snap.id,
 
-        name:
-          p.name ||
-          p.username ||
-          "Kmeet Member",
+        name,
 
-        age:
-          p.age
-            ? `, ${p.age}`
-            : "",
+        age,
 
         location:
           p.location ||
+          p.city ||
           "Kenya",
 
-        photo:
-          p.photoURL ||
-          p.avatar ||
-          "",
+        photo,
 
-        description:
-          p.description ||
-          p.bio ||
-          "Tell people a little about yourself and what makes you unique.",
+        description,
 
-        interests:
-          Array.isArray(p.interests)
-            ? p.interests.slice(0, 4)
-            : [],
+        interests,
 
-        online:
-          p.online === true ||
-          String(p.status || "")
-            .toLowerCase() === "online",
+        online,
 
         demo: false
 
@@ -1452,15 +1548,145 @@
 
 
     /* =====================================================
+       FINAL SVG FALLBACK
+       
+       This is only used if every external image fails.
+       It guarantees that the card never becomes blank.
+       ===================================================== */
+
+    function finalImageFallback() {
+
+      return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="800"
+            height="1000"
+            viewBox="0 0 800 1000"
+          >
+
+            <defs>
+
+              <linearGradient
+                id="bg"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#6b2946"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#1a0e14"
+                />
+
+              </linearGradient>
+
+            </defs>
+
+            <rect
+              width="800"
+              height="1000"
+              fill="url(#bg)"
+            />
+
+            <circle
+              cx="400"
+              cy="360"
+              r="120"
+              fill="rgba(255,255,255,0.20)"
+            />
+
+            <path
+              d="
+                M180 850
+                C210 650 590 650 620 850
+                Z
+              "
+              fill="rgba(255,255,255,0.20)"
+            />
+
+            <text
+              x="400"
+              y="930"
+              text-anchor="middle"
+              font-family="Georgia, serif"
+              font-size="58"
+              fill="white"
+            >
+              Kmeet
+            </text>
+
+          </svg>
+        `);
+
+    }
+
+
+    /* =====================================================
+       IMAGE ERROR HANDLER
+       
+       First failure:
+       -> use another backup photo.
+
+       Second failure:
+       -> use the Kmeet visual fallback.
+
+       This removes the old LEGO placeholder completely.
+       ===================================================== */
+
+    function imageFallback(img) {
+
+      const current =
+        Number(
+          img.dataset.fallbackIndex || "0"
+        );
+
+      if (
+        current < backupPhotos.length - 1
+      ) {
+
+        const next =
+          current + 1;
+
+        img.dataset.fallbackIndex =
+          String(next);
+
+        img.src =
+          getBackupPhoto(next);
+
+        return;
+
+      }
+
+
+      img.onerror = null;
+
+      img.src =
+        finalImageFallback();
+
+    }
+
+
+    /* =====================================================
        RENDER ONE PROFILE
        ===================================================== */
 
-    function renderProfile(person) {
+    function renderProfile(
+      person,
+      index
+    ) {
 
       const statusText =
         person.online
           ? "Online"
           : "Offline";
+
 
       const statusClass =
         person.online
@@ -1490,8 +1716,12 @@
             `;
 
 
-      let actions;
+      let actions = "";
 
+
+      /*
+       * REAL FIREBASE MEMBER
+       */
 
       if (!person.demo) {
 
@@ -1513,7 +1743,14 @@
 
         `;
 
-      } else {
+      }
+
+
+      /*
+       * DEMO MEMBER
+       */
+
+      else {
 
         actions = `
 
@@ -1536,52 +1773,9 @@
       }
 
 
-      /*
-       * No LEGO placeholder.
-       */
-
-      const photoHtml =
-        person.photo
-
-          ? `
-            <img
-              src="${escapeHtml(person.photo)}"
-              alt="${escapeHtml(person.name)}"
-              loading="lazy"
-              decoding="async"
-              onerror="
-                this.onerror=null;
-                this.style.opacity='0';
-              "
-            >
-          `
-
-          : `
-            <div
-              style="
-                width:100%;
-                height:100%;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                background:
-                  linear-gradient(
-                    135deg,
-                    #3b202d,
-                    #171015
-                  );
-                font-family:'Playfair Display',Georgia,serif;
-                font-size:58px;
-                color:rgba(255,255,255,.8);
-              "
-            >
-              ${escapeHtml(
-                String(person.name || "K")
-                  .charAt(0)
-                  .toUpperCase()
-              )}
-            </div>
-          `;
+      const safePhoto =
+        person.photo ||
+        getBackupPhoto(index);
 
 
       return `
@@ -1593,7 +1787,13 @@
 
           <div class="photo-wrap">
 
-            ${photoHtml}
+            <img
+              src="${escapeHtml(safePhoto)}"
+              alt="${escapeHtml(person.name)}"
+              loading="lazy"
+              data-fallback-index="${index % backupPhotos.length}"
+              onerror="imageFallback(this)"
+            >
 
             <div class="status-badge">
 
@@ -1660,10 +1860,17 @@
        DRAW PROFILES
        ===================================================== */
 
-    function renderProfiles(realProfiles) {
+    function renderProfiles(
+      realProfiles
+    ) {
+
+      /*
+       * Remove duplicate Firebase profiles.
+       */
 
       const usedIds =
         new Set();
+
 
       const cleanReal =
         realProfiles.filter(
@@ -1679,9 +1886,11 @@
 
             }
 
+
             usedIds.add(
               person.id
             );
+
 
             return true;
 
@@ -1690,7 +1899,8 @@
 
 
       /*
-       * Keep at least 36 people visible.
+       * Always keep at least 36
+       * visible profiles.
        */
 
       const needed =
@@ -1707,16 +1917,43 @@
         );
 
 
-      const allProfiles = [
-        ...cleanReal,
-        ...demo
-      ];
+      const allProfiles =
+        [
+          ...cleanReal,
+          ...demo
+        ];
+
+
+      if (
+        !allProfiles.length
+      ) {
+
+        grid.innerHTML = `
+
+          <div class="empty-card">
+
+            No profiles are available yet.
+
+          </div>
+
+        `;
+
+        memberCount.textContent =
+          "People are joining Kmeet";
+
+        return;
+
+      }
 
 
       grid.innerHTML =
         allProfiles
           .map(
-            renderProfile
+            (person, index) =>
+              renderProfile(
+                person,
+                index
+              )
           )
           .join("");
 
@@ -1728,84 +1965,129 @@
 
 
     /* =====================================================
+       SHOW DEMO PROFILES IMMEDIATELY
+       
+       This means Discover does not stay blank while
+       Firebase is connecting.
+       ===================================================== */
+
+    renderProfiles([]);
+
+
+    /* =====================================================
        FIREBASE LISTENER
        ===================================================== */
 
-    onSnapshot(
+    try {
 
-      collection(
-        db,
-        "users"
-      ),
+      onSnapshot(
 
-      snapshot => {
+        collection(
+          db,
+          "users"
+        ),
 
-        const realProfiles = [];
+        snapshot => {
 
-
-        snapshot.forEach(
-          snap => {
-
-            const data =
-              snap.data() || {};
+          const realProfiles = [];
 
 
-            if (
-              data.name ||
-              data.username ||
-              data.photoURL ||
-              data.avatar
-            ) {
+          snapshot.forEach(
+            snap => {
 
-              realProfiles.push(
-                getRealProfile(
-                  snap
-                )
-              );
+              const data =
+                snap.data() || {};
+
+
+              /*
+               * Accept users that contain either a name
+               * or any supported photo/profile field.
+               */
+
+              if (
+
+                data.name ||
+                data.username ||
+                data.displayName ||
+                data.photoURL ||
+                data.photoUrl ||
+                data.avatar ||
+                data.profilePhoto ||
+                data.profileImage
+
+              ) {
+
+                realProfiles.push(
+                  getRealProfile(
+                    snap,
+                    realProfiles.length
+                  )
+                );
+
+              }
 
             }
-
-          }
-        );
+          );
 
 
-        renderProfiles(
-          realProfiles
-        );
+          /*
+           * Successful Firebase load.
+           * Keep the page clean.
+           */
 
-      },
-
-
-      error => {
-
-        console.error(
-          "Kmeet Discover error:",
-          error
-        );
+          msg.innerHTML = "";
 
 
-        /*
-         * Keep Discover populated
-         * even if Firebase has a problem.
-         */
+          renderProfiles(
+            realProfiles
+          );
 
-        renderProfiles([]);
+        },
 
 
-        msg.innerHTML = `
+        error => {
 
-          <div class="message error">
+          console.error(
+            "Kmeet Discover Firebase error:",
+            error
+          );
 
-            We couldn't load the latest member updates,
-            so you're seeing the Discover preview.
 
-          </div>
+          /*
+           * Firebase may fail because of permissions,
+           * network problems or temporary configuration
+           * issues.
+           *
+           * Do not leave Discover blank.
+           */
 
-        `;
+          renderProfiles([]);
 
-      }
 
-    );
+          /*
+           * We intentionally do not show a large error
+           * banner to visitors.
+           */
+
+          msg.innerHTML = "";
+
+        }
+
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Kmeet Discover startup error:",
+        error
+      );
+
+
+      renderProfiles([]);
+
+      msg.innerHTML = "";
+
+    }
 
   </script>
 
