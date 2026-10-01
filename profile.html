@@ -2,24 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Kmeet - Your Profile</title>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -47,6 +35,7 @@
       min-height: 100vh;
       font-family: "Poppins", sans-serif;
       color: #fff;
+
       background:
         radial-gradient(
           circle at 15% 15%,
@@ -76,6 +65,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
+
       background:
         linear-gradient(
           120deg,
@@ -83,6 +73,7 @@
           transparent 35%,
           rgba(255,255,255,0.018)
         );
+
       z-index: 0;
     }
 
@@ -131,8 +122,6 @@
       font-family: "Playfair Display", serif;
       font-size: 25px;
       font-weight: 700;
-
-      letter-spacing: 0.2px;
     }
 
     .brand-heart {
@@ -153,8 +142,6 @@
     }
 
     .nav-links a {
-      position: relative;
-
       color: rgba(255,255,255,0.72);
 
       font-size: 13px;
@@ -326,7 +313,7 @@
 
 
     /* =====================================================
-       PROFILE LAYOUT
+       PROFILE
     ===================================================== */
 
     #profileContent {
@@ -347,7 +334,7 @@
 
 
     /* =====================================================
-       PHOTO CARD
+       PHOTO
     ===================================================== */
 
     .photo-card {
@@ -392,7 +379,6 @@
       height: 100%;
 
       object-fit: cover;
-
       object-position: center;
 
       transition:
@@ -434,10 +420,16 @@
     }
 
     .photo-name {
+      max-width: 65%;
+
       font-family: "Playfair Display", serif;
 
       font-size: 25px;
       font-weight: 700;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       text-shadow:
         0 2px 15px
@@ -539,7 +531,7 @@
 
 
     /* =====================================================
-       INFO BOXES
+       INFO
     ===================================================== */
 
     .info-grid {
@@ -629,9 +621,7 @@
 
     .interests {
       display: flex;
-
       flex-wrap: wrap;
-
       gap: 8px;
     }
 
@@ -662,7 +652,7 @@
 
 
     /* =====================================================
-       ACTIONS
+       BUTTONS
     ===================================================== */
 
     .actions {
@@ -693,12 +683,9 @@
       font-size: 12px;
       font-weight: 600;
 
-      cursor: pointer;
-
       transition:
         transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        box-shadow 0.2s ease;
     }
 
     .action-btn:hover {
@@ -716,8 +703,6 @@
           #d94b83,
           #a72d63
         );
-
-      color: #fff;
 
       box-shadow:
         0 10px 25px
@@ -785,21 +770,6 @@
       font-size: 12px;
 
       line-height: 1.7;
-    }
-
-    .error-action {
-      display: inline-flex;
-
-      margin-top: 18px;
-
-      padding: 10px 17px;
-
-      border-radius: 12px;
-
-      background:
-        rgba(255,255,255,0.07);
-
-      font-size: 12px;
     }
 
 
@@ -942,9 +912,7 @@
         Discover
       </a>
 
-      <a
-        href="likes.html"
-      >
+      <a href="likes.html">
         My Likes
       </a>
 
@@ -969,7 +937,7 @@
 
 
   <!-- =====================================================
-       MAIN PAGE
+       MAIN
   ===================================================== -->
 
   <main class="page">
@@ -1027,13 +995,6 @@
       <p id="errorMessage">
         We couldn't load your profile.
       </p>
-
-      <a
-        class="error-action"
-        href="login.html"
-      >
-        Go to Login
-      </a>
 
     </div>
 
@@ -1118,7 +1079,6 @@
 
         <div class="info-grid">
 
-
           <div class="info-box">
 
             <span class="info-label">
@@ -1150,7 +1110,6 @@
 
           </div>
 
-
         </div>
 
 
@@ -1170,8 +1129,7 @@
             id="profileBio"
             class="bio"
           >
-            Welcome to Kmeet. Tell people a little
-            about yourself and what makes you unique.
+            Welcome to Kmeet.
           </p>
 
         </div>
@@ -1245,18 +1203,6 @@
 
   <script type="module">
 
-    /*
-      IMPORTANT:
-
-      We import ONLY auth and db from your existing
-      firebase-config.js.
-
-      Firestore functions are imported directly from
-      the same Firebase version.
-
-      This avoids the previous collection() error.
-    */
-
     import {
       auth,
       db
@@ -1280,70 +1226,43 @@
     ===================================================== */
 
     const loading =
-      document.getElementById(
-        "loading"
-      );
+      document.getElementById("loading");
 
     const profileContent =
-      document.getElementById(
-        "profileContent"
-      );
+      document.getElementById("profileContent");
 
     const errorBox =
-      document.getElementById(
-        "errorBox"
-      );
+      document.getElementById("errorBox");
 
     const errorTitle =
-      document.getElementById(
-        "errorTitle"
-      );
+      document.getElementById("errorTitle");
 
     const errorMessage =
-      document.getElementById(
-        "errorMessage"
-      );
-
+      document.getElementById("errorMessage");
 
     const profilePhoto =
-      document.getElementById(
-        "profilePhoto"
-      );
+      document.getElementById("profilePhoto");
 
     const profileName =
-      document.getElementById(
-        "profileName"
-      );
+      document.getElementById("profileName");
 
     const photoName =
-      document.getElementById(
-        "photoName"
-      );
+      document.getElementById("photoName");
 
     const profileLocation =
-      document.getElementById(
-        "profileLocation"
-      );
+      document.getElementById("profileLocation");
 
     const profileAge =
-      document.getElementById(
-        "profileAge"
-      );
+      document.getElementById("profileAge");
 
     const profileGender =
-      document.getElementById(
-        "profileGender"
-      );
+      document.getElementById("profileGender");
 
     const profileBio =
-      document.getElementById(
-        "profileBio"
-      );
+      document.getElementById("profileBio");
 
     const profileInterests =
-      document.getElementById(
-        "profileInterests"
-      );
+      document.getElementById("profileInterests");
 
 
     /* =====================================================
@@ -1373,23 +1292,7 @@
 
 
     /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
-
-    function escapeHtml(value) {
-
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    /* =====================================================
-       FIND PHOTO
+       GET PHOTO
     ===================================================== */
 
     function getPhoto(data) {
@@ -1397,17 +1300,11 @@
       const possiblePhotos = [
 
         data.photoURL,
-
         data.photoUrl,
-
         data.avatar,
-
         data.profilePhoto,
-
         data.profileImage,
-
         data.image,
-
         data.photo
 
       ];
@@ -1460,7 +1357,7 @@
 
 
     /* =====================================================
-       SHOW PROFILE
+       DISPLAY PROFILE
     ===================================================== */
 
     function displayProfile(
@@ -1470,63 +1367,41 @@
 
       const name =
 
-        cleanValue(
-          data.name
-        ) ||
+        cleanValue(data.name) ||
 
-        cleanValue(
-          data.username
-        ) ||
+        cleanValue(data.username) ||
 
-        cleanValue(
-          data.displayName
-        ) ||
+        cleanValue(data.displayName) ||
 
-        cleanValue(
-          firebaseUser.displayName
-        ) ||
+        cleanValue(firebaseUser.displayName) ||
 
         "Kmeet Member";
 
 
       const location =
 
-        cleanValue(
-          data.location
-        ) ||
+        cleanValue(data.location) ||
 
-        cleanValue(
-          data.city
-        ) ||
+        cleanValue(data.city) ||
 
         "Kenya";
 
 
       const age =
-        cleanValue(
-          data.age
-        );
+        cleanValue(data.age);
 
 
       const gender =
-        cleanValue(
-          data.gender
-        );
+        cleanValue(data.gender);
 
 
       const bio =
 
-        cleanValue(
-          data.bio
-        ) ||
+        cleanValue(data.bio) ||
 
-        cleanValue(
-          data.description
-        ) ||
+        cleanValue(data.description) ||
 
-        cleanValue(
-          data.about
-        ) ||
+        cleanValue(data.about) ||
 
         "Welcome to Kmeet. Tell people a little about yourself and what makes you unique.";
 
@@ -1535,44 +1410,24 @@
         getPhoto(data);
 
 
-      /* NAME */
-
       profileName.textContent =
         name;
 
       photoName.textContent =
         name;
 
-
-      /* LOCATION */
-
       profileLocation.textContent =
         location;
 
-
-      /* AGE */
-
       profileAge.textContent =
-        age
-          ? age
-          : "Not specified";
-
-
-      /* GENDER */
+        age || "Not specified";
 
       profileGender.textContent =
-        gender
-          ? gender
-          : "Not specified";
-
-
-      /* BIO */
+        gender || "Not specified";
 
       profileBio.textContent =
         bio;
 
-
-      /* PHOTO */
 
       profilePhoto.src =
         photo;
@@ -1606,9 +1461,7 @@
 
 
       let interests =
-        Array.isArray(
-          data.interests
-        )
+        Array.isArray(data.interests)
           ? data.interests
           : [];
 
@@ -1631,10 +1484,11 @@
       ) {
 
         profileInterests.innerHTML =
-
-          `<span class="no-interests">
-             No interests added yet.
-           </span>`;
+          `
+            <span class="no-interests">
+              No interests added yet.
+            </span>
+          `;
 
       } else {
 
@@ -1662,8 +1516,6 @@
       }
 
 
-      /* SHOW */
-
       loading.style.display =
         "none";
 
@@ -1687,13 +1539,11 @@
       try {
 
         /*
-          IMPORTANT:
+          Read exactly:
 
-          This reads exactly:
+          users/{current user's UID}
 
-          users/{current-user-uid}
-
-          We are using doc(), NOT collection().
+          This uses doc(), NOT collection().
         */
 
         const profileRef =
@@ -1709,11 +1559,6 @@
             profileRef
           );
 
-
-        /*
-          If Firestore has the profile,
-          display it.
-        */
 
         if (
           profileSnap.exists()
@@ -1733,19 +1578,15 @@
 
 
         /*
-          If the Auth account exists but
-          Firestore profile is missing,
-          still show a useful profile
-          using Firebase Auth data.
+          Auth exists but Firestore
+          profile does not.
         */
 
         displayProfile(
+
           {
             name:
               firebaseUser.displayName || "",
-
-            email:
-              firebaseUser.email || "",
 
             location:
               "Kenya",
@@ -1766,7 +1607,9 @@
               firebaseUser.photoURL || ""
 
           },
+
           firebaseUser
+
         );
 
 
@@ -1777,10 +1620,9 @@
           error
         );
 
-
         showError(
           "Profile could not be loaded",
-          "There was a problem reading your Kmeet profile from Firebase. Please refresh the page and try again."
+          "There was a problem reading your Kmeet profile from Firebase."
         );
 
       }
@@ -1790,6 +1632,10 @@
 
     /* =====================================================
        AUTHENTICATION
+       
+       IMPORTANT:
+       If there is no logged-in user,
+       automatically go to login.html.
     ===================================================== */
 
     onAuthStateChanged(
@@ -1800,7 +1646,9 @@
         try {
 
           /*
-            No logged-in user.
+            NOT LOGGED IN
+            ----------------
+            Send directly to Login.
           */
 
           if (
@@ -1808,9 +1656,8 @@
             user.isAnonymous
           ) {
 
-            showError(
-              "Please log in",
-              "You need to log in to view your Kmeet profile."
+            window.location.replace(
+              "login.html"
             );
 
             return;
@@ -1819,12 +1666,15 @@
 
 
           /*
-            User is authenticated.
+            LOGGED IN
+            ---------
+            Load their profile.
           */
 
           await loadProfile(
             user
           );
+
 
         } catch (error) {
 
@@ -1833,9 +1683,8 @@
             error
           );
 
-          showError(
-            "Something went wrong",
-            "Please refresh the page and try again."
+          window.location.replace(
+            "login.html"
           );
 
         }
@@ -1862,18 +1711,15 @@
               auth
             );
 
-            window.location.href =
-              "login.html";
+            window.location.replace(
+              "login.html"
+            );
 
           } catch (error) {
 
             console.error(
               "Logout error:",
               error
-            );
-
-            alert(
-              "Could not log out. Please try again."
             );
 
           }
