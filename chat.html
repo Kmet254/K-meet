@@ -649,8 +649,6 @@ body::before {
     class="error"
   ></div>
 
-  <!-- CHAT -->
-
   <section
     id="chatArea"
     style="
@@ -738,8 +736,6 @@ body::before {
 
   </section>
 
-  <!-- PAYMENT GATE -->
-
   <section
     id="gate"
     class="gate"
@@ -785,18 +781,11 @@ import {
 } from "./firebase-config.js";
 
 
-/*
-  IMPORTANT:
-
-  signInAnonymously is imported directly
-  from Firebase here because your current
-  firebase-config.js does NOT export it.
-*/
-
 import {
   onAuthStateChanged,
   signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 
 import {
   doc,
@@ -993,7 +982,11 @@ async function loadTargetProfile() {
 
   const photo =
     data.photoURL ||
+    data.photoUrl ||
     data.avatar ||
+    data.profilePhoto ||
+    data.profileImage ||
+    data.image ||
     "";
 
   if (photo) {
@@ -1006,6 +999,16 @@ async function loadTargetProfile() {
 
     avatarFallback.style.display =
       "none";
+
+    avatar.onerror = () => {
+
+      avatar.style.display =
+        "none";
+
+      avatarFallback.style.display =
+        "grid";
+
+    };
 
   }
 
@@ -1096,9 +1099,7 @@ function containsContactInformation(text) {
    OPEN PAYMENT GATE
 ========================================================= */
 
-function showGate(
-  type
-) {
+function showGate(type) {
 
   gate.style.display =
     "grid";
@@ -1106,10 +1107,55 @@ function showGate(
   chatArea.style.display =
     "none";
 
-
   gateButtons.innerHTML =
     "";
 
+
+  /* ANONYMOUS USER */
+
+  if (
+    type === "anonymous"
+  ) {
+
+    gateIcon.textContent =
+      "💎";
+
+    gateTitle.textContent =
+      "Start your Kmeet conversation";
+
+    gateText.textContent =
+      "Anonymous members do not receive a free opening message. Choose a Kmeet chat package to start this conversation.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49"
+      >
+        3 Chats — KSh 49
+      </a>
+
+      <a
+        class="pay-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
+      >
+        8 Chats — KSh 100
+      </a>
+
+      <a
+        class="pay-btn secondary-btn"
+        href="discover.html"
+      >
+        Back to Discover
+      </a>
+
+    `;
+
+    return;
+  }
+
+
+  /* REGISTERED SENDER */
 
   if (
     type === "sender"
@@ -1152,6 +1198,8 @@ function showGate(
     return;
   }
 
+
+  /* RECEIVER */
 
   if (
     type === "receiver"
@@ -1272,6 +1320,7 @@ function startMessages() {
         let receiverReplies =
           0;
 
+
         snapshot.forEach(
           item => {
 
@@ -1331,18 +1380,24 @@ function startMessages() {
           messages.scrollHeight;
 
 
-        /*
-          The first sender is the person
-          who opened the conversation.
-        */
-
         if (
           firstSenderId ===
           currentUser.uid
         ) {
 
-          infoBar.textContent =
-            "Your opening message is free. Further messages use chat credits.";
+          if (
+            currentUser.isAnonymous
+          ) {
+
+            infoBar.textContent =
+              "Anonymous chat: payment is required for your messages.";
+
+          } else {
+
+            infoBar.textContent =
+              "Your opening message is free. Further messages use chat credits.";
+
+          }
 
         } else {
 
@@ -1363,11 +1418,6 @@ function startMessages() {
           "Message listener error:",
           error
         );
-
-        /*
-          Do NOT hide the chat if Firestore
-          temporarily fails.
-        */
 
         showError(
           "The chat interface is open, but messages could not be loaded. Please check your Firebase Firestore rules."
@@ -1404,13 +1454,29 @@ async function initialiseAuth() {
       try {
 
         /*
-          Existing logged-in user
+          Existing logged-in or anonymous user
         */
 
         if (user) {
 
           currentUser =
             user;
+
+
+          if (
+            user.isAnonymous
+          ) {
+
+            infoBar.textContent =
+              "Anonymous chat: payment is required before your first message.";
+
+          } else {
+
+            infoBar.textContent =
+              "Your opening message is free — say hi or hey ❤️";
+
+          }
+
 
           startMessages();
 
@@ -1449,8 +1515,16 @@ async function initialiseAuth() {
 
         } else {
 
+          console.error(
+            "Kmeet authentication failed:",
+            error.code,
+            error.message
+          );
+
           showError(
-            "Kmeet could not start the chat session. Please refresh the page."
+            "Kmeet could not start the chat session (" +
+            (error.code || "authentication error") +
+            "). Please check that Anonymous Authentication is enabled in Firebase."
           );
 
         }
@@ -1489,6 +1563,29 @@ composer.addEventListener(
 
       showError(
         "Kmeet is still preparing your chat session. Please try again in a moment."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      ANONYMOUS SENDER RULE
+
+      Anonymous members may browse and open a chat,
+      but they do not receive the free hi/hey opening.
+
+      Send them directly to payment before accepting
+      their first message.
+    */
+
+    if (
+      currentUser.isAnonymous
+    ) {
+
+      showGate(
+        "anonymous"
       );
 
       return;
@@ -1546,7 +1643,9 @@ composer.addEventListener(
 
     catch (error) {
 
-      console.error(error);
+      console.error(
+        error
+      );
 
       showError(
         "Kmeet could not check this conversation. Please try again."
@@ -1666,11 +1765,6 @@ composer.addEventListener(
       existingMessages.length > 0
     ) {
 
-      /*
-        Demo credit storage is kept per
-        Firebase user + conversation.
-      */
-
       const creditKey =
         "kmeet_sender_credits_" +
         currentUser.uid +
@@ -1699,11 +1793,9 @@ composer.addEventListener(
 
       }
 
-      /*
-        Consume one sender chat credit.
-      */
 
       credits--;
+
 
       localStorage.setItem(
         creditKey,
@@ -1865,7 +1957,9 @@ composer.addEventListener(
 );
 
 
-/* ENTER TO SEND */
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
 
 messageInput.addEventListener(
   "keydown",
@@ -1893,11 +1987,6 @@ messageInput.addEventListener(
 
 async function start() {
 
-  /*
-    The chat interface is already visible.
-    Firebase loads in the background.
-  */
-
   if (!targetId) {
 
     showError(
@@ -1920,7 +2009,9 @@ async function start() {
 
   catch (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     showError(
       error.message ||
@@ -1929,11 +2020,6 @@ async function start() {
 
   }
 
-
-  /*
-    Firebase authentication happens after
-    the interface is already visible.
-  */
 
   initialiseAuth();
 
