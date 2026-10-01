@@ -50,16 +50,8 @@
 
     body {
       min-height: 100vh;
-
       font-family: "Poppins", sans-serif;
-
       color: #fff;
-
-      /*
-        IMPORTANT:
-        No bg34.jpg here.
-        The page uses a built-in gradient background.
-      */
 
       background:
         radial-gradient(
@@ -89,11 +81,8 @@
 
     body::before {
       content: "";
-
       position: fixed;
-
       inset: 0;
-
       pointer-events: none;
 
       background:
@@ -131,21 +120,16 @@
 
       padding: 12px 6%;
 
-      background:
-        rgba(10, 7, 12, .78);
+      background: rgba(10, 7, 12, .78);
 
       border-bottom:
         1px solid rgba(255,255,255,.09);
 
-      backdrop-filter:
-        blur(18px);
-
-      -webkit-backdrop-filter:
-        blur(18px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
 
       position: sticky;
       top: 0;
-
       z-index: 1000;
     }
 
@@ -157,15 +141,10 @@
     .brand {
       display: flex;
       align-items: center;
-
       gap: 12px;
 
-      font-family:
-        "Playfair Display",
-        serif;
-
+      font-family: "Playfair Display", serif;
       font-size: 28px;
-
       font-weight: 700;
 
       flex-shrink: 0;
@@ -185,7 +164,6 @@
       justify-content: center;
 
       overflow: hidden;
-
       border-radius: 50%;
 
       background: #fff;
@@ -213,13 +191,11 @@
       max-height: 50px !important;
 
       object-fit: cover !important;
-
       object-position: center !important;
 
       border-radius: 50%;
 
       opacity: 1 !important;
-
       visibility: visible !important;
 
       flex-shrink: 0;
@@ -237,7 +213,6 @@
     .nav-links {
       display: flex;
       align-items: center;
-
       gap: 10px;
     }
 
@@ -270,11 +245,8 @@
 
     .nav-links a:hover,
     .logout-btn:hover {
-      transform:
-        translateY(-2px);
-
-      background:
-        rgba(255,255,255,.11);
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.11);
     }
 
     .nav-links .active {
@@ -301,8 +273,7 @@
           960px
         );
 
-      margin:
-        0 auto;
+      margin: 0 auto;
 
       padding:
         48px 0 70px;
@@ -390,7 +361,6 @@
         serif;
 
       font-size: 27px;
-
       margin-bottom: 10px;
     }
 
@@ -399,7 +369,6 @@
         rgba(255,255,255,.65);
 
       line-height: 1.7;
-
       font-size: 14px;
     }
 
@@ -414,7 +383,6 @@
 
     .profile-card {
       position: relative;
-
       overflow: hidden;
 
       border-radius: 30px;
@@ -544,9 +512,7 @@
 
     .profile-location i {
       margin-right: 5px;
-
-      color:
-        #f08bad;
+      color: #f08bad;
     }
 
 
@@ -621,11 +587,9 @@
       margin-bottom: 12px;
 
       font-size: 13px;
-
       font-weight: 600;
 
       text-transform: uppercase;
-
       letter-spacing: 1.2px;
     }
 
@@ -639,7 +603,6 @@
         rgba(255,255,255,.69);
 
       font-size: 15px;
-
       line-height: 1.8;
     }
 
@@ -652,7 +615,7 @@
       display: grid;
 
       grid-template-columns:
-        repeat(2,minmax(0,1fr));
+        repeat(3,minmax(0,1fr));
 
       gap: 12px;
     }
@@ -759,7 +722,6 @@
         16px;
 
       font-size: 14px;
-
       font-weight: 600;
 
       cursor: pointer;
@@ -827,14 +789,11 @@
 
       .profile-nav {
         min-height: 70px;
-
-        padding:
-          10px 15px;
+        padding: 10px 15px;
       }
 
       .brand {
         font-size: 24px;
-
         gap: 9px;
       }
 
@@ -957,7 +916,6 @@
 
       <a
         href="discover.html"
-        class="active"
       >
         <i class="fa-solid fa-compass"></i>
         Discover
@@ -1043,9 +1001,7 @@
     >
 
 
-      <!-- =================================================
-           PROFILE TOP
-           ================================================= -->
+      <!-- PROFILE TOP -->
 
       <div class="profile-top">
 
@@ -1105,9 +1061,7 @@
 
 
 
-      <!-- =================================================
-           PROFILE BODY
-           ================================================= -->
+      <!-- PROFILE BODY -->
 
       <div class="profile-body">
 
@@ -1399,17 +1353,13 @@
 
     function showError(message) {
 
-      loading.style.display =
-        "none";
+      loading.style.display = "none";
 
-      profileContent.style.display =
-        "none";
+      profileContent.style.display = "none";
 
-      errorArea.style.display =
-        "block";
+      errorArea.style.display = "block";
 
-      errorText.textContent =
-        message;
+      errorText.textContent = message;
 
     }
 
@@ -1428,51 +1378,42 @@
 
       if (!cleanUrl) {
 
-        profilePhoto.style.display =
-          "none";
+        profilePhoto.style.display = "none";
 
-        defaultAvatar.style.display =
-          "flex";
+        defaultAvatar.style.display = "flex";
 
         return;
       }
 
 
-      profilePhoto.onload =
-        () => {
+      profilePhoto.onload = () => {
 
-          profilePhoto.style.display =
-            "block";
+        profilePhoto.style.display = "block";
 
-          defaultAvatar.style.display =
-            "none";
+        defaultAvatar.style.display = "none";
 
-          console.log(
-            "KMEET: Profile photo loaded."
-          );
+        console.log(
+          "KMEET: Profile photo loaded."
+        );
 
-        };
+      };
 
 
-      profilePhoto.onerror =
-        () => {
+      profilePhoto.onerror = () => {
 
-          console.error(
-            "KMEET: Profile photo failed to load:",
-            cleanUrl
-          );
+        console.error(
+          "KMEET: Profile photo failed to load:",
+          cleanUrl
+        );
 
-          profilePhoto.style.display =
-            "none";
+        profilePhoto.style.display = "none";
 
-          defaultAvatar.style.display =
-            "flex";
+        defaultAvatar.style.display = "flex";
 
-        };
+      };
 
 
-      profilePhoto.src =
-        cleanUrl;
+      profilePhoto.src = cleanUrl;
 
     }
 
@@ -1539,17 +1480,6 @@
         data.gender ||
         "—";
 
-
-      /*
-        Your Firestore record has:
-
-        photoURL
-        profilePhoto
-        photo
-        avatar
-
-        All are supported.
-      */
 
       setProfilePhoto(
         getPhotoUrl(data)
@@ -1634,30 +1564,11 @@
 
       return String(value)
 
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
-
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
     }
 
@@ -1680,13 +1591,7 @@
 
 
         /*
-          IMPORTANT:
-
-          A single profile is a document:
-
-          users/{uid}
-
-          NOT a collection.
+          users/{uid} is a Firestore document.
         */
 
         const profileRef =
@@ -1724,8 +1629,37 @@
         );
 
 
+        /* ===============================================
+           RENDER PROFILE FIRST
+           =============================================== */
+
         displayProfile(
           profileData
+        );
+
+
+        /*
+          IMPORTANT:
+
+          The profile is made visible BEFORE
+          Realtime Database presence starts.
+
+          Therefore presence can never leave
+          the page stuck on Loading.
+        */
+
+        loading.style.display =
+          "none";
+
+        errorArea.style.display =
+          "none";
+
+        profileContent.style.display =
+          "block";
+
+
+        console.log(
+          "KMEET: Profile is now visible."
         );
 
 
@@ -1743,14 +1677,21 @@
 
 
           /*
-            Start REAL Firebase presence.
-
-            Do NOT force the user Offline.
+            Show a neutral state immediately.
           */
 
-          startOwnPresence(
-            userId
-          );
+          setStatusDisplay(false);
+
+
+          /*
+            Start real presence AFTER rendering.
+          */
+
+          setTimeout(() => {
+
+            startOwnPresence(userId);
+
+          }, 100);
 
         }
 
@@ -1775,21 +1716,16 @@
             );
 
 
-          watchMemberPresence(
-            userId
-          );
+          setStatusDisplay(false);
+
+
+          setTimeout(() => {
+
+            watchMemberPresence(userId);
+
+          }, 100);
 
         }
-
-
-        loading.style.display =
-          "none";
-
-        errorArea.style.display =
-          "none";
-
-        profileContent.style.display =
-          "block";
 
 
       } catch (error) {
@@ -1822,22 +1758,12 @@
 
       try {
 
-        /*
-          Firebase connection state.
-        */
-
         const connectedRef =
           databaseRef(
             database,
             ".info/connected"
           );
 
-
-        /*
-          Current user's status location.
-
-          status/{uid}
-        */
 
         const statusRef =
           databaseRef(
@@ -1864,9 +1790,7 @@
               connected !== true
             ) {
 
-              setStatusDisplay(
-                false
-              );
+              setStatusDisplay(false);
 
               return;
 
@@ -1876,15 +1800,17 @@
             try {
 
               /*
-                First tell Firebase what to do
-                if this connection disappears.
-
-                This prevents stale ONLINE status.
+                Tell Firebase to mark this user
+                offline when the connection disappears.
               */
 
-              await onDisconnect(
-                statusRef
-              ).set({
+              const disconnectHandler =
+                onDisconnect(
+                  statusRef
+                );
+
+
+              await disconnectHandler.set({
 
                 state:
                   "offline",
@@ -1896,7 +1822,7 @@
 
 
               /*
-                Now write ONLINE.
+                Now mark the user ONLINE.
               */
 
               await databaseSet(
@@ -1913,9 +1839,7 @@
               );
 
 
-              setStatusDisplay(
-                true
-              );
+              setStatusDisplay(true);
 
 
               console.log(
@@ -1930,11 +1854,24 @@
                 error
               );
 
-              setStatusDisplay(
-                false
-              );
+              /*
+                Presence failure must NOT
+                hide the profile.
+              */
+
+              setStatusDisplay(false);
 
             }
+
+          },
+          error => {
+
+            console.error(
+              "KMEET: Connection listener error:",
+              error
+            );
+
+            setStatusDisplay(false);
 
           }
         );
@@ -1947,9 +1884,7 @@
           error
         );
 
-        setStatusDisplay(
-          false
-        );
+        setStatusDisplay(false);
 
       }
 
@@ -1960,9 +1895,7 @@
        WATCH ANOTHER MEMBER
        ===================================================== */
 
-    function watchMemberPresence(
-      userId
-    ) {
+    function watchMemberPresence(userId) {
 
       console.log(
         "KMEET: Watching presence:",
@@ -1992,15 +1925,11 @@
               status.state === "online"
             ) {
 
-              setStatusDisplay(
-                true
-              );
+              setStatusDisplay(true);
 
             } else {
 
-              setStatusDisplay(
-                false
-              );
+              setStatusDisplay(false);
 
             }
 
@@ -2012,9 +1941,7 @@
               error
             );
 
-            setStatusDisplay(
-              false
-            );
+            setStatusDisplay(false);
 
           }
         );
@@ -2027,9 +1954,7 @@
           error
         );
 
-        setStatusDisplay(
-          false
-        );
+        setStatusDisplay(false);
 
       }
 
@@ -2040,9 +1965,7 @@
        STATUS DISPLAY
        ===================================================== */
 
-    function setStatusDisplay(
-      online
-    ) {
+    function setStatusDisplay(online) {
 
       if (online) {
 
@@ -2118,9 +2041,7 @@
           }
 
 
-          await signOut(
-            auth
-          );
+          await signOut(auth);
 
 
           window.location.replace(
@@ -2168,10 +2089,7 @@
 
 
           /*
-            No ?id= means:
-
-            Show the logged-in user's
-            own profile.
+            No ?id= means own profile.
           */
 
           if (!requestedUserId) {
@@ -2201,9 +2119,7 @@
 
 
           /*
-            ?id=UID means:
-
-            Show another member's profile.
+            ?id=UID means member profile.
           */
 
           const ownProfile =
@@ -2243,9 +2159,15 @@
        LOGO CHECK
        ===================================================== */
 
-    document
-      .getElementById("brandLogo")
-      .addEventListener(
+    const brandLogo =
+      document.getElementById(
+        "brandLogo"
+      );
+
+
+    if (brandLogo) {
+
+      brandLogo.addEventListener(
         "load",
         () => {
 
@@ -2257,9 +2179,7 @@
       );
 
 
-    document
-      .getElementById("brandLogo")
-      .addEventListener(
+      brandLogo.addEventListener(
         "error",
         () => {
 
@@ -2269,6 +2189,8 @@
 
         }
       );
+
+    }
 
   </script>
 
