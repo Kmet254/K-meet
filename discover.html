@@ -1,19 +1,8 @@
 <script type="module">
 
 /* =========================================================
-   KMEET DISCOVER - SAFE VERSION
-   Profiles render FIRST.
-   Firebase loads AFTERWARDS.
-   ========================================================= */
-
-const grid = document.getElementById("grid");
-const msg = document.getElementById("msg");
-const memberCount = document.getElementById("memberCount");
-const profileLink = document.getElementById("profileLink");
-
-
-/* =========================================================
-   36 DISCOVER PROFILES
+   KMEET DISCOVER
+   SAFE VERSION
    ========================================================= */
 
 const demoProfiles = [
@@ -22,7 +11,7 @@ const demoProfiles = [
     id: "demo-01",
     name: "Amara",
     age: 27,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/44.jpg",
     description: "Travel lover who enjoys music, coffee, beautiful places and meaningful conversations.",
@@ -33,7 +22,7 @@ const demoProfiles = [
     id: "demo-02",
     name: "Brian",
     age: 30,
-    location: "Mombasa",
+    location: "Mombasa, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/32.jpg",
     description: "Fitness enthusiast who enjoys football, coastal adventures and meeting positive people.",
@@ -44,7 +33,7 @@ const demoProfiles = [
     id: "demo-03",
     name: "Nia",
     age: 25,
-    location: "Kisumu",
+    location: "Kisumu, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/women/65.jpg",
     description: "Quiet and creative, Nia loves books, art, nature and relaxed weekend conversations.",
@@ -55,7 +44,7 @@ const demoProfiles = [
     id: "demo-04",
     name: "Daniel",
     age: 29,
-    location: "Nakuru",
+    location: "Nakuru, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/46.jpg",
     description: "Music lover and fitness fan who enjoys cars, good food and spontaneous road trips.",
@@ -66,7 +55,7 @@ const demoProfiles = [
     id: "demo-05",
     name: "Zuri",
     age: 28,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/women/32.jpg",
     description: "Fashion and food lover who enjoys travelling, discovering new restaurants and great company.",
@@ -77,7 +66,7 @@ const demoProfiles = [
     id: "demo-06",
     name: "Kevin",
     age: 31,
-    location: "Eldoret",
+    location: "Eldoret, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/52.jpg",
     description: "Business-minded and energetic, with a love for sports, music and ambitious conversations.",
@@ -88,7 +77,7 @@ const demoProfiles = [
     id: "demo-07",
     name: "Aisha",
     age: 26,
-    location: "Mombasa",
+    location: "Mombasa, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/68.jpg",
     description: "Beach lover who enjoys cooking, travelling and relaxed evenings by the ocean.",
@@ -99,7 +88,7 @@ const demoProfiles = [
     id: "demo-08",
     name: "Michael",
     age: 33,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/75.jpg",
     description: "Technology enthusiast who enjoys reading, travel and conversations that go beyond small talk.",
@@ -110,7 +99,7 @@ const demoProfiles = [
     id: "demo-09",
     name: "Wanjiku",
     age: 29,
-    location: "Kiambu",
+    location: "Kiambu, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/50.jpg",
     description: "Photography and coffee lover who enjoys nature walks and capturing beautiful moments.",
@@ -121,7 +110,7 @@ const demoProfiles = [
     id: "demo-10",
     name: "Eric",
     age: 28,
-    location: "Thika",
+    location: "Thika, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/22.jpg",
     description: "Football and movie fan who enjoys travel, laughter and meeting down-to-earth people.",
@@ -132,7 +121,7 @@ const demoProfiles = [
     id: "demo-11",
     name: "Leah",
     age: 30,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/21.jpg",
     description: "Music and dancing enthusiast who enjoys good food, laughter and memorable weekends.",
@@ -143,7 +132,7 @@ const demoProfiles = [
     id: "demo-12",
     name: "Samuel",
     age: 32,
-    location: "Kakamega",
+    location: "Kakamega, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/41.jpg",
     description: "Business and fitness enthusiast who enjoys books, learning and building meaningful connections.",
@@ -154,7 +143,7 @@ const demoProfiles = [
     id: "demo-13",
     name: "Faith",
     age: 24,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/women/12.jpg",
     description: "Creative soul who enjoys art, fashion, music and discovering inspiring new places.",
@@ -165,7 +154,7 @@ const demoProfiles = [
     id: "demo-14",
     name: "James",
     age: 35,
-    location: "Mombasa",
+    location: "Mombasa, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/61.jpg",
     description: "Ocean lover who enjoys cooking, travel and peaceful coastal weekends.",
@@ -176,7 +165,7 @@ const demoProfiles = [
     id: "demo-15",
     name: "Maya",
     age: 27,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/49.jpg",
     description: "Calm and thoughtful, Maya enjoys yoga, books, coffee and meaningful conversations.",
@@ -187,7 +176,7 @@ const demoProfiles = [
     id: "demo-16",
     name: "Alex",
     age: 30,
-    location: "Kisumu",
+    location: "Kisumu, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/19.jpg",
     description: "Technology and gaming enthusiast who also enjoys movies, travel and good company.",
@@ -198,7 +187,7 @@ const demoProfiles = [
     id: "demo-17",
     name: "Ivy",
     age: 26,
-    location: "Nakuru",
+    location: "Nakuru, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/36.jpg",
     description: "Nature lover who enjoys photography, travel and finding beautiful hidden places.",
@@ -209,7 +198,7 @@ const demoProfiles = [
     id: "demo-18",
     name: "David",
     age: 34,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/29.jpg",
     description: "Business and car enthusiast who enjoys music, road trips and thoughtful conversations.",
@@ -220,7 +209,7 @@ const demoProfiles = [
     id: "demo-19",
     name: "Sharon",
     age: 28,
-    location: "Mombasa",
+    location: "Mombasa, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/57.jpg",
     description: "Coastal girl at heart who loves beaches, food, travel and cheerful company.",
@@ -231,7 +220,7 @@ const demoProfiles = [
     id: "demo-20",
     name: "Chris",
     age: 31,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/37.jpg",
     description: "Fitness and football fan who enjoys movies, travel and active weekends.",
@@ -242,7 +231,7 @@ const demoProfiles = [
     id: "demo-21",
     name: "Esther",
     age: 25,
-    location: "Eldoret",
+    location: "Eldoret, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/women/63.jpg",
     description: "Book and music lover who enjoys nature, peaceful evenings and genuine conversations.",
@@ -253,7 +242,7 @@ const demoProfiles = [
     id: "demo-22",
     name: "Anthony",
     age: 29,
-    location: "Nakuru",
+    location: "Nakuru, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/11.jpg",
     description: "Adventurous and social, Anthony enjoys travel, sports, coffee and discovering new places.",
@@ -264,7 +253,7 @@ const demoProfiles = [
     id: "demo-23",
     name: "Linda",
     age: 32,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/75.jpg",
     description: "Creative and outgoing, Linda enjoys cooking, fashion, art and trying new experiences.",
@@ -275,7 +264,7 @@ const demoProfiles = [
     id: "demo-24",
     name: "Joseph",
     age: 36,
-    location: "Kisumu",
+    location: "Kisumu, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/64.jpg",
     description: "Nature and fishing enthusiast who enjoys peaceful trips, the outdoors and discovering new places.",
@@ -286,7 +275,7 @@ const demoProfiles = [
     id: "demo-25",
     name: "Cynthia",
     age: 27,
-    location: "Kiambu",
+    location: "Kiambu, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/23.jpg",
     description: "Bright and outgoing, Cynthia enjoys music, dancing, travel and spontaneous weekend plans.",
@@ -297,7 +286,7 @@ const demoProfiles = [
     id: "demo-26",
     name: "Mark",
     age: 33,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/70.jpg",
     description: "Technology and business enthusiast who enjoys fitness, learning and ambitious conversations.",
@@ -308,7 +297,7 @@ const demoProfiles = [
     id: "demo-27",
     name: "Mercy",
     age: 29,
-    location: "Mombasa",
+    location: "Mombasa, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/41.jpg",
     description: "Beach lover who enjoys books, coffee, relaxed conversations and beautiful coastal evenings.",
@@ -319,7 +308,7 @@ const demoProfiles = [
     id: "demo-28",
     name: "Peter",
     age: 30,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/35.jpg",
     description: "Football fan and music lover who enjoys travel, social weekends and meeting genuine people.",
@@ -330,7 +319,7 @@ const demoProfiles = [
     id: "demo-29",
     name: "Joy",
     age: 26,
-    location: "Nakuru",
+    location: "Nakuru, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/women/45.jpg",
     description: "Creative and stylish, Joy enjoys art, fashion, movies and discovering new places around Kenya.",
@@ -341,7 +330,7 @@ const demoProfiles = [
     id: "demo-30",
     name: "George",
     age: 34,
-    location: "Mombasa",
+    location: "Mombasa, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/55.jpg",
     description: "Outdoor enthusiast who loves travel, the ocean, photography and unforgettable adventures.",
@@ -352,7 +341,7 @@ const demoProfiles = [
     id: "demo-31",
     name: "Ruth",
     age: 28,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/58.jpg",
     description: "Warm and caring, Ruth enjoys cooking, music, nature and creating happy memories.",
@@ -363,7 +352,7 @@ const demoProfiles = [
     id: "demo-32",
     name: "Martin",
     age: 31,
-    location: "Eldoret",
+    location: "Eldoret, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/men/43.jpg",
     description: "Sports and technology enthusiast who enjoys books, learning and staying active.",
@@ -374,7 +363,7 @@ const demoProfiles = [
     id: "demo-33",
     name: "Angela",
     age: 30,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/women/38.jpg",
     description: "Fashion and travel lover who enjoys food, new experiences and positive conversations.",
@@ -385,7 +374,7 @@ const demoProfiles = [
     id: "demo-34",
     name: "Patrick",
     age: 29,
-    location: "Kisumu",
+    location: "Kisumu, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/48.jpg",
     description: "Easygoing and adventurous, Patrick enjoys music, cars, travel and discovering great places.",
@@ -396,7 +385,7 @@ const demoProfiles = [
     id: "demo-35",
     name: "Stella",
     age: 27,
-    location: "Nairobi",
+    location: "Nairobi, Kenya",
     online: false,
     photo: "https://randomuser.me/api/portraits/women/55.jpg",
     description: "Calm and thoughtful, Stella enjoys yoga, nature, books and peaceful weekend escapes.",
@@ -407,7 +396,7 @@ const demoProfiles = [
     id: "demo-36",
     name: "William",
     age: 32,
-    location: "Nakuru",
+    location: "Nakuru, Kenya",
     online: true,
     photo: "https://randomuser.me/api/portraits/men/76.jpg",
     description: "Business-minded and energetic, William enjoys football, travel and building a life full of experiences.",
@@ -418,7 +407,7 @@ const demoProfiles = [
 
 
 /* =========================================================
-   ESCAPE TEXT
+   HTML ESCAPER
    ========================================================= */
 
 function escapeHtml(value) {
@@ -440,29 +429,25 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   RENDER PROFILE
+   CREATE PROFILE CARD
    ========================================================= */
 
-function renderProfile(person) {
+function createCard(person) {
 
   const status =
-    person.online
-      ? "Online"
-      : "Offline";
+    person.online ? "Online" : "Offline";
 
   const statusClass =
-    person.online
-      ? "online"
-      : "offline";
+    person.online ? "online" : "offline";
 
 
-  const tags =
-    person.interests
-      .map(function(interest) {
+  const interests =
+    (person.interests || [])
+      .map(function(item) {
 
         return `
           <span class="tag">
-            ${escapeHtml(interest)}
+            ${escapeHtml(item)}
           </span>
         `;
 
@@ -472,10 +457,7 @@ function renderProfile(person) {
 
   return `
 
-    <article
-      class="profile-card"
-      data-profile-id="${escapeHtml(person.id)}"
-    >
+    <article class="profile-card">
 
       <div class="photo-wrap">
 
@@ -483,6 +465,10 @@ function renderProfile(person) {
           src="${escapeHtml(person.photo)}"
           alt="${escapeHtml(person.name)}"
           loading="lazy"
+          onerror="
+            this.onerror=null;
+            this.src='https://randomuser.me/api/portraits/lego/1.jpg';
+          "
         >
 
         <div class="status-badge">
@@ -520,7 +506,7 @@ function renderProfile(person) {
 
 
         <div class="tags">
-          ${tags}
+          ${interests}
         </div>
 
 
@@ -559,60 +545,111 @@ function renderProfile(person) {
 
 
 /* =========================================================
-   SHOW DEMO PROFILES IMMEDIATELY
+   INITIALIZE DISCOVER
    ========================================================= */
 
-function showDemoProfiles() {
+function initializeDiscover() {
+
+  const grid =
+    document.getElementById("grid");
+
+  const memberCount =
+    document.getElementById("memberCount");
+
+  const profileLink =
+    document.getElementById("profileLink");
+
+
+  /* -----------------------------------------
+     SAFETY CHECK
+     ----------------------------------------- */
+
+  if (!grid) {
+
+    console.error(
+      "Kmeet Discover: #grid does not exist."
+    );
+
+    return;
+
+  }
+
+
+  /* -----------------------------------------
+     SHOW 36 PEOPLE IMMEDIATELY
+     ----------------------------------------- */
 
   grid.innerHTML =
     demoProfiles
-      .map(renderProfile)
+      .map(createCard)
       .join("");
 
-  memberCount.textContent =
-    "36 people to discover";
+
+  if (memberCount) {
+
+    memberCount.textContent =
+      "36 people to discover";
+
+  }
+
+
+  /* -----------------------------------------
+     PROFILE LINK
+     ----------------------------------------- */
+
+  if (profileLink) {
+
+    profileLink.href =
+      "login.html";
+
+  }
+
+
+  /* -----------------------------------------
+     LOAD FIREBASE AFTER DISPLAY
+     ----------------------------------------- */
+
+  loadFirebaseMembers(
+    grid,
+    memberCount,
+    profileLink
+  );
 
 }
 
 
-/*
- * THIS HAPPENS IMMEDIATELY.
- * Firebase cannot block the page.
- */
-
-showDemoProfiles();
-
-
 /* =========================================================
-   TRY FIREBASE AFTER PAGE IS ALREADY VISIBLE
+   FIREBASE
    ========================================================= */
 
-(async function loadFirebaseMembers() {
+async function loadFirebaseMembers(
+  grid,
+  memberCount,
+  profileLink
+) {
 
   try {
 
-    /*
-     * Import ONLY your existing config.
-     *
-     * We do NOT require collection/onSnapshot
-     * to be exported by firebase-config.js.
-     */
-
-    const firebaseConfig =
+    const firebase =
       await import("./firebase-config.js");
 
 
+    /*
+     * We deliberately don't import
+     * collection/onSnapshot from your config.
+     */
+
     const auth =
-      firebaseConfig.auth;
+      firebase.auth;
 
     const db =
-      firebaseConfig.db;
+      firebase.db;
 
 
     if (!auth || !db) {
 
       console.warn(
-        "Kmeet: Firebase auth/db not available."
+        "Kmeet: Firebase auth/db unavailable."
       );
 
       return;
@@ -620,18 +657,13 @@ showDemoProfiles();
     }
 
 
-    /*
-     * Import Firebase functions directly.
-     * This avoids the export problem that caused
-     * Discover to get stuck.
-     */
-
-    const authModule =
+    const authFunctions =
       await import(
         "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"
       );
 
-    const firestoreModule =
+
+    const firestoreFunctions =
       await import(
         "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
       );
@@ -639,18 +671,18 @@ showDemoProfiles();
 
     const {
       onAuthStateChanged
-    } = authModule;
+    } = authFunctions;
 
 
     const {
       collection,
       onSnapshot
-    } = firestoreModule;
+    } = firestoreFunctions;
 
 
-    /* =====================================================
-       PROFILE LINK
-       ===================================================== */
+    /* -----------------------------------------
+       AUTH STATE
+       ----------------------------------------- */
 
     onAuthStateChanged(
       auth,
@@ -679,9 +711,9 @@ showDemoProfiles();
     );
 
 
-    /* =====================================================
-       LOAD REAL MEMBERS
-       ===================================================== */
+    /* -----------------------------------------
+       REAL MEMBERS
+       ----------------------------------------- */
 
     onSnapshot(
 
@@ -702,124 +734,108 @@ showDemoProfiles();
               docSnap.data() || {};
 
 
-            /*
-             * Only include actual profiles
-             * containing useful information.
-             */
-
             if (
-              data.name ||
-              data.username ||
-              data.photoURL ||
-              data.avatar
+              !data.name &&
+              !data.username &&
+              !data.photoURL &&
+              !data.avatar
             ) {
 
-              realProfiles.push({
-
-                id: docSnap.id,
-
-                name:
-                  data.name ||
-                  data.username ||
-                  "Kmeet Member",
-
-                age:
-                  data.age ||
-                  "",
-
-                location:
-                  data.location ||
-                  "Kenya",
-
-                online:
-                  data.online === true ||
-                  String(
-                    data.status || ""
-                  ).toLowerCase()
-                    === "online",
-
-                photo:
-                  data.photoURL ||
-                  data.avatar ||
-                  demoProfiles[
-                    realProfiles.length %
-                    demoProfiles.length
-                  ].photo,
-
-                description:
-                  data.description ||
-                  data.bio ||
-                  "A Kmeet member looking forward to meeting someone genuine and sharing meaningful conversations.",
-
-                interests:
-                  Array.isArray(data.interests)
-                    ? data.interests.slice(0, 4)
-                    : [],
-
-                real:
-                  true
-
-              });
+              return;
 
             }
+
+
+            realProfiles.push({
+
+              id: docSnap.id,
+
+              name:
+                data.name ||
+                data.username ||
+                "Kmeet Member",
+
+              age:
+                data.age ||
+                "",
+
+              location:
+                data.location ||
+                "Kenya",
+
+              online:
+                data.online === true ||
+                String(
+                  data.status || ""
+                ).toLowerCase() === "online",
+
+              photo:
+                data.photoURL ||
+                data.avatar ||
+                "https://randomuser.me/api/portraits/lego/1.jpg",
+
+              description:
+                data.description ||
+                data.bio ||
+                "A Kmeet member looking forward to meeting someone genuine and sharing meaningful conversations.",
+
+              interests:
+                Array.isArray(data.interests)
+                  ? data.interests.slice(0, 4)
+                  : []
+
+            });
 
           }
         );
 
 
         /*
-         * We keep all 36 demo profiles visible
-         * and put real members first.
+         * If there are real users, place them first.
+         * Keep enough demo profiles so Discover
+         * always has at least 36 cards.
          */
 
-        if (
-          realProfiles.length === 0
-        ) {
+        if (realProfiles.length > 0) {
 
-          return;
-
-        }
-
-
-        const realCards =
-          realProfiles.map(
-            function(person) {
-
-              return renderRealProfile(
-                person
-              );
-
-            }
-          ).join("");
-
-
-        const remaining =
-          demoProfiles
-            .slice(
+          const remaining =
+            demoProfiles.slice(
               0,
               Math.max(
                 36 - realProfiles.length,
                 0
               )
-            )
-            .map(renderProfile)
-            .join("");
+            );
 
 
-        grid.innerHTML =
-          realCards +
-          remaining;
+          const combined =
+            [
+              ...realProfiles,
+              ...remaining
+            ];
 
 
-        memberCount.textContent =
-          `${realProfiles.length + Math.max(36 - realProfiles.length, 0)} people to discover`;
+          grid.innerHTML =
+            combined
+              .map(createCard)
+              .join("");
+
+
+          if (memberCount) {
+
+            memberCount.textContent =
+              `${combined.length} people to discover`;
+
+          }
+
+        }
 
       },
 
       function(error) {
 
         /*
-         * Firebase failure DOES NOT blank Discover.
+         * Do NOT clear the existing cards.
          */
 
         console.warn(
@@ -835,146 +851,36 @@ showDemoProfiles();
   } catch (error) {
 
     /*
-     * Important:
-     *
-     * Nothing is cleared.
-     * The 36 demo profiles remain visible.
+     * Firebase failure must NEVER
+     * make Discover blank.
      */
 
     console.warn(
-      "Kmeet Firebase connection skipped:",
+      "Kmeet Firebase connection unavailable:",
       error
     );
 
   }
 
-})();
+}
 
 
 /* =========================================================
-   REAL PROFILE RENDERER
+   START ONLY WHEN DOM EXISTS
    ========================================================= */
 
-function renderRealProfile(person) {
+if (
+  document.readyState === "loading"
+) {
 
-  const status =
-    person.online
-      ? "Online"
-      : "Offline";
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeDiscover
+  );
 
-  const statusClass =
-    person.online
-      ? "online"
-      : "offline";
+} else {
 
-
-  const tags =
-    person.interests.length
-
-      ? person.interests
-          .map(function(interest) {
-
-            return `
-              <span class="tag">
-                ${escapeHtml(interest)}
-              </span>
-            `;
-
-          })
-          .join("")
-
-      : `
-          <span class="tag">
-            Kmeet
-          </span>
-        `;
-
-
-  return `
-
-    <article
-      class="profile-card"
-      data-profile-id="${escapeHtml(person.id)}"
-    >
-
-      <div class="photo-wrap">
-
-        <img
-          src="${escapeHtml(person.photo)}"
-          alt="${escapeHtml(person.name)}"
-          loading="lazy"
-        >
-
-        <div class="status-badge">
-
-          <span
-            class="status-dot ${statusClass}"
-          ></span>
-
-          ${status}
-
-        </div>
-
-      </div>
-
-
-      <div class="profile-inside">
-
-        <div class="profile-name-row">
-
-          <h3>
-            ${escapeHtml(person.name)}
-            ${person.age ? ", " + escapeHtml(person.age) : ""}
-          </h3>
-
-        </div>
-
-
-        <p class="profile-location">
-          📍 ${escapeHtml(person.location)}
-        </p>
-
-
-        <p class="profile-description">
-          ${escapeHtml(person.description)}
-        </p>
-
-
-        <div class="tags">
-          ${tags}
-        </div>
-
-
-        <div class="profile-actions">
-
-          <a
-            class="profile-button chat-button"
-            href="chat.html?userId=${encodeURIComponent(person.id)}"
-          >
-            👋 Say Hi
-          </a>
-
-          <a
-            class="profile-button view-button"
-            href="chat.html?userId=${encodeURIComponent(person.id)}"
-          >
-            👋 Hello
-          </a>
-
-          <a
-            class="profile-button view-button full-width"
-            href="profile.html?id=${encodeURIComponent(person.id)}"
-          >
-            👤 View Profile
-          </a>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  `;
+  initializeDiscover();
 
 }
 
