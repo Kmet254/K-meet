@@ -66,16 +66,11 @@
 
     .top-nav {
       width: 100%;
-
       min-height: 72px;
-
-      padding:
-        0 28px;
+      padding: 0 28px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
 
       border-bottom:
@@ -91,29 +86,23 @@
         blur(18px);
 
       position: sticky;
-
       top: 0;
-
       z-index: 50;
     }
 
 
     .brand {
       display: inline-flex;
-
       align-items: center;
-
       gap: 9px;
 
       text-decoration: none;
-
       color: #fff;
     }
 
 
     .brand-heart {
       font-size: 24px;
-
       color: #ff4f91;
 
       text-shadow:
@@ -128,18 +117,14 @@
         serif;
 
       font-size: 27px;
-
       font-weight: 700;
-
       letter-spacing: -0.5px;
     }
 
 
     .nav-links {
       display: flex;
-
       align-items: center;
-
       gap: 24px;
     }
 
@@ -150,7 +135,6 @@
       text-decoration: none;
 
       font-size: 14px;
-
       font-weight: 600;
 
       transition:
@@ -178,8 +162,7 @@
           850px
         );
 
-      margin:
-        0 auto;
+      margin: 0 auto;
 
       padding:
         55px 0 80px;
@@ -231,7 +214,6 @@
 
     .profile-card {
       position: relative;
-
       overflow: hidden;
 
       border-radius: 30px;
@@ -262,9 +244,7 @@
         42px 34px 28px;
 
       display: flex;
-
       gap: 30px;
-
       align-items: center;
     }
 
@@ -278,7 +258,6 @@
         0 0 190px;
 
       width: 190px;
-
       height: 190px;
 
       position: relative;
@@ -287,7 +266,6 @@
 
     .photo-ring {
       width: 100%;
-
       height: 100%;
 
       padding: 4px;
@@ -310,7 +288,6 @@
 
     .profile-photo {
       width: 100%;
-
       height: 100%;
 
       display: block;
@@ -326,15 +303,12 @@
 
     .photo-fallback {
       width: 100%;
-
       height: 100%;
 
       border-radius: 50%;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
       background:
@@ -363,11 +337,9 @@
       position: absolute;
 
       right: 7px;
-
       bottom: 12px;
 
       width: 25px;
-
       height: 25px;
 
       border-radius: 50%;
@@ -409,7 +381,6 @@
 
     .profile-summary {
       flex: 1;
-
       min-width: 0;
     }
 
@@ -423,7 +394,6 @@
         #ff72a7;
 
       font-size: 12px;
-
       font-weight: 700;
 
       letter-spacing: 1.5px;
@@ -489,7 +459,6 @@
 
     .presence-dot {
       width: 8px;
-
       height: 8px;
 
       border-radius: 50%;
@@ -629,7 +598,6 @@
       display: inline-flex;
 
       align-items: center;
-
       justify-content: center;
 
       min-height: 46px;
@@ -724,7 +692,6 @@
       display: flex;
 
       align-items: center;
-
       justify-content: center;
 
       flex-direction: column;
@@ -738,7 +705,6 @@
 
     .spinner {
       width: 40px;
-
       height: 40px;
 
       border-radius: 50%;
@@ -844,13 +810,7 @@
         flex-basis: 160px;
 
         width: 160px;
-
         height: 160px;
-      }
-
-
-      .profile-location {
-        justify-content: center;
       }
 
 
@@ -992,15 +952,24 @@
 
   <script type="module">
 
+    /*
+      IMPORTANT:
+
+      Firebase is imported ONLY from
+      firebase-config.js.
+
+      This keeps the whole page on
+      Firebase 12.19.0.
+    */
+
     import {
       auth,
       db,
-      database,
 
+      database,
       databaseRef,
       databaseSet,
       databaseOnValue,
-
       onDisconnect,
       databaseServerTimestamp,
 
@@ -1014,7 +983,7 @@
 
 
     console.log(
-      "KMEET PROFILE + PRESENCE STARTED"
+      "KMEET PROFILE STARTED"
     );
 
 
@@ -1030,11 +999,9 @@
 
 
     /*
-      The URL can be:
+      URL examples:
 
       profile.html
-
-      OR
 
       profile.html?id=USER_ID
     */
@@ -1051,8 +1018,9 @@
     let currentPresenceConnectionId =
       null;
 
-    let presenceDisconnectHandler =
-      null;
+
+    let presenceStarted =
+      false;
 
 
     /* =========================================
@@ -1143,7 +1111,309 @@
 
 
     /* =========================================
-       PRESENCE
+       PRESENCE DISPLAY
+       ========================================= */
+
+    function updatePresenceDisplay(
+      online
+    ) {
+
+      try {
+
+        const indicator =
+          document.getElementById(
+            "onlineIndicator"
+          );
+
+        const dot =
+          document.getElementById(
+            "presenceDot"
+          );
+
+        const text =
+          document.getElementById(
+            "presenceText"
+          );
+
+
+        if (!indicator) {
+          return;
+        }
+
+
+        indicator.classList.toggle(
+          "online",
+          online
+        );
+
+        indicator.classList.toggle(
+          "offline",
+          !online
+        );
+
+
+        indicator.title =
+          online
+            ? "Online"
+            : "Offline";
+
+
+        if (dot) {
+
+          dot.classList.toggle(
+            "online",
+            online
+          );
+
+        }
+
+
+        if (text) {
+
+          text.textContent =
+            online
+              ? "Online now"
+              : "Offline";
+
+
+          text.classList.toggle(
+            "online",
+            online
+          );
+
+        }
+
+      }
+
+      catch (error) {
+
+        /*
+          Presence must NEVER break
+          the profile page.
+        */
+
+        console.warn(
+          "KMEET presence display warning:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       START OWN PRESENCE
+       ========================================= */
+
+    function startOwnPresence(
+      userId
+    ) {
+
+      /*
+        Do not start twice.
+      */
+
+      if (
+        presenceStarted
+      ) {
+
+        return;
+
+      }
+
+
+      presenceStarted =
+        true;
+
+
+      /*
+        Generate a unique connection ID.
+
+        crypto.randomUUID() is built into
+        modern browsers.
+      */
+
+      let connectionId;
+
+
+      try {
+
+        connectionId =
+          crypto.randomUUID();
+
+      }
+
+      catch (error) {
+
+        connectionId =
+          Date.now().toString() +
+          "-" +
+          Math.random()
+            .toString(36)
+            .slice(2);
+
+      }
+
+
+      currentPresenceConnectionId =
+        connectionId;
+
+
+      try {
+
+        const connectedRef =
+          databaseRef(
+            database,
+            ".info/connected"
+          );
+
+
+        const connectionRef =
+          databaseRef(
+            database,
+            "presence/" +
+            userId +
+            "/connections/" +
+            connectionId
+          );
+
+
+        /*
+          Listen for Firebase connection.
+        */
+
+        databaseOnValue(
+          connectedRef,
+
+          async function(snapshot) {
+
+            try {
+
+              if (
+                snapshot.val() !== true
+              ) {
+
+                updatePresenceDisplay(
+                  false
+                );
+
+                return;
+
+              }
+
+
+              console.log(
+                "KMEET: Realtime Database connected."
+              );
+
+
+              /*
+                If browser disconnects,
+                Firebase removes this connection.
+              */
+
+              const disconnectOperation =
+                onDisconnect(
+                  connectionRef
+                );
+
+
+              await disconnectOperation.remove();
+
+
+              /*
+                Mark this browser session
+                as online.
+              */
+
+              await databaseSet(
+                connectionRef,
+                {
+                  online: true,
+
+                  lastChanged:
+                    databaseServerTimestamp()
+                }
+              );
+
+
+              console.log(
+                "KMEET: User marked ONLINE."
+              );
+
+
+              updatePresenceDisplay(
+                true
+              );
+
+            }
+
+            catch (error) {
+
+              /*
+                IMPORTANT:
+
+                If RTDB rules or another
+                RTDB problem occurs, the
+                profile remains usable.
+              */
+
+              console.warn(
+                "KMEET presence setup warning:",
+                error
+              );
+
+
+              updatePresenceDisplay(
+                false
+              );
+
+            }
+
+          },
+
+          function(error) {
+
+            console.warn(
+              "KMEET presence connection warning:",
+              error
+            );
+
+
+            /*
+              Presence failure must not
+              affect profile loading.
+            */
+
+            updatePresenceDisplay(
+              false
+            );
+
+          }
+        );
+
+      }
+
+      catch (error) {
+
+        console.warn(
+          "KMEET presence initialization warning:",
+          error
+        );
+
+
+        updatePresenceDisplay(
+          false
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       WATCH SOMEONE'S PRESENCE
        ========================================= */
 
     function watchPresence(
@@ -1151,334 +1421,145 @@
       isOwnProfile
     ) {
 
-      if (!userId) {
-        return;
-      }
-
-
-      console.log(
-        "KMEET: Watching presence for:",
-        userId
-      );
-
-
-      const presenceRoot =
-        databaseRef(
-          database,
-          "presence/" + userId
-        );
-
-
       /*
-        This is the important part.
+        IMPORTANT:
 
-        A user is considered online when
-        Firebase Realtime Database contains
-        at least one active connection.
+        This entire function is protected
+        so a Realtime Database problem
+        cannot break the profile.
       */
 
-      databaseOnValue(
-        presenceRoot,
+      try {
 
-        function(snapshot) {
-
-          const value =
-            snapshot.val();
-
-
-          let online = false;
-
-
-          if (
-            value &&
-            value.connections
-          ) {
-
-            online =
-              Object.keys(
-                value.connections
-              ).length > 0;
-
-          }
-
-
-          updatePresenceDisplay(
-            online
-          );
-
-        },
-
-        function(error) {
-
-          console.error(
-            "KMEET presence read error:",
-            error
-          );
-
-          /*
-            Do not prevent the profile
-            from loading if presence cannot
-            be read.
-          */
-
-          updatePresenceDisplay(
-            false
-          );
-
+        if (!userId) {
+          return;
         }
-      );
 
 
-      /*
-        Only the currently logged-in
-        non-anonymous user creates
-        their own presence connection.
-      */
-
-      if (
-        !isOwnProfile
-      ) {
-        return;
-      }
-
-
-      if (
-        !auth.currentUser ||
-        auth.currentUser.isAnonymous
-      ) {
-        return;
-      }
-
-
-      startOwnPresence(
-        userId
-      );
-
-    }
-
-
-    function updatePresenceDisplay(
-      online
-    ) {
-
-      const indicator =
-        document.getElementById(
-          "onlineIndicator"
-        );
-
-      const dot =
-        document.getElementById(
-          "presenceDot"
-        );
-
-      const text =
-        document.getElementById(
-          "presenceText"
+        console.log(
+          "KMEET: Watching presence for:",
+          userId
         );
 
 
-      if (!indicator) {
-        return;
-      }
-
-
-      indicator.classList.toggle(
-        "online",
-        online
-      );
-
-      indicator.classList.toggle(
-        "offline",
-        !online
-      );
-
-
-      if (dot) {
-
-        dot.classList.toggle(
-          "online",
-          online
-        );
-
-      }
-
-
-      if (text) {
-
-        text.textContent =
-          online
-            ? "Online now"
-            : "Offline";
-
-        text.classList.toggle(
-          "online",
-          online
-        );
-
-      }
-
-    }
-
-
-    function startOwnPresence(
-      userId
-    ) {
-
-      /*
-        Prevent creating the same
-        connection more than once.
-      */
-
-      if (
-        currentPresenceConnectionId
-      ) {
-
-        return;
-
-      }
-
-
-      const connectionId =
-        crypto.randomUUID();
-
-
-      currentPresenceConnectionId =
-        connectionId;
-
-
-      const connectedRef =
-        databaseRef(
-          database,
-          ".info/connected"
-        );
-
-
-      const connectionRef =
-        databaseRef(
-          database,
-          "presence/" +
-          userId +
-          "/connections/" +
-          connectionId
-        );
-
-
-      databaseOnValue(
-        connectedRef,
-
-        async function(snapshot) {
-
-          if (
-            snapshot.val() !== true
-          ) {
-
-            return;
-
-          }
-
-
-          console.log(
-            "KMEET: Realtime Database connected."
+        const presenceRoot =
+          databaseRef(
+            database,
+            "presence/" +
+            userId
           );
 
 
-          /*
-            When this browser disconnects,
-            Firebase removes this connection
-            automatically.
-          */
+        databaseOnValue(
+          presenceRoot,
 
-          try {
+          function(snapshot) {
 
-            presenceDisconnectHandler =
-              onDisconnect(
-                connectionRef
+            try {
+
+              const value =
+                snapshot.val();
+
+
+              let online =
+                false;
+
+
+              if (
+                value &&
+                value.connections
+              ) {
+
+                online =
+                  Object.keys(
+                    value.connections
+                  ).length > 0;
+
+              }
+
+
+              updatePresenceDisplay(
+                online
               );
 
+            }
 
-            await presenceDisconnectHandler.remove();
+            catch (error) {
 
+              console.warn(
+                "KMEET presence processing warning:",
+                error
+              );
 
-            /*
-              Mark this connection online.
-            */
+            }
 
-            await databaseSet(
-              connectionRef,
-              {
-                online: true,
-                lastChanged:
-                  databaseServerTimestamp()
-              }
-            );
+          },
 
+          function(error) {
 
-            console.log(
-              "KMEET: User marked ONLINE."
-            );
-
-          }
-
-          catch (error) {
-
-            console.error(
-              "KMEET presence setup error:",
+            console.warn(
+              "KMEET presence read warning:",
               error
             );
 
+
+            updatePresenceDisplay(
+              false
+            );
+
           }
+        );
 
-        }
-
-      );
-
-    }
-
-
-    /* =========================================
-       CLEAN UP OWN PRESENCE
-       ========================================= */
-
-    window.addEventListener(
-      "beforeunload",
-      function() {
 
         /*
-          Firebase onDisconnect() is the
-          primary mechanism.
-
-          This is only an additional attempt
-          to remove the connection immediately
-          when possible.
+          Only the logged-in registered
+          user creates their own presence.
         */
 
         if (
-          currentPresenceConnectionId &&
-          auth.currentUser &&
-          !auth.currentUser.isAnonymous
+          !isOwnProfile
         ) {
 
-          const connectionRef =
-            databaseRef(
-              database,
-              "presence/" +
-              auth.currentUser.uid +
-              "/connections/" +
-              currentPresenceConnectionId
-            );
-
-
-          databaseSet(
-            connectionRef,
-            null
-          ).catch(
-            function() {}
-          );
+          return;
 
         }
 
+
+        if (
+          !auth.currentUser ||
+          auth.currentUser.isAnonymous
+        ) {
+
+          return;
+
+        }
+
+
+        startOwnPresence(
+          userId
+        );
+
       }
-    );
+
+      catch (error) {
+
+        console.warn(
+          "KMEET presence watcher warning:",
+          error
+        );
+
+
+        /*
+          Again, profile stays working.
+        */
+
+        updatePresenceDisplay(
+          false
+        );
+
+      }
+
+    }
 
 
     /* =========================================
@@ -1581,7 +1662,13 @@
       let actionsMarkup = "";
 
 
-      if (isOwnProfile) {
+      /*
+        OWN PROFILE
+      */
+
+      if (
+        isOwnProfile
+      ) {
 
         actionsMarkup = `
 
@@ -1615,6 +1702,11 @@
 
       }
 
+
+      /*
+        OTHER PROFILE
+      */
+
       else {
 
         actionsMarkup = `
@@ -1641,6 +1733,13 @@
 
       }
 
+
+      /*
+        DISPLAY THE COMPLETE PROFILE FIRST.
+
+        Presence is deliberately started
+        AFTER this HTML has been created.
+      */
 
       profileContainer.innerHTML = `
 
@@ -1744,8 +1843,7 @@
 
 
       /*
-        If a photo exists but fails,
-        use the initials fallback.
+        PHOTO ERROR FALLBACK
       */
 
       const image =
@@ -1789,7 +1887,7 @@
 
 
       /*
-        Logout only exists on own profile.
+        LOGOUT
       */
 
       const logoutButton =
@@ -1813,7 +1911,10 @@
 
             try {
 
-              await signOut(auth);
+              await signOut(
+                auth
+              );
+
 
               window.location.replace(
                 "login.html"
@@ -1827,6 +1928,7 @@
                 "KMEET logout error:",
                 error
               );
+
 
               logoutButton.disabled =
                 false;
@@ -1843,21 +1945,35 @@
 
 
       /*
-        Start presence monitoring only
-        after the profile itself has been
-        successfully displayed.
+        PROFILE IS NOW ALREADY DISPLAYED.
+
+        Presence is optional and isolated.
+        If it fails, the profile still works.
       */
 
-      watchPresence(
-        profileUserId,
-        isOwnProfile
-      );
+      try {
+
+        watchPresence(
+          profileUserId,
+          isOwnProfile
+        );
+
+      }
+
+      catch (error) {
+
+        console.warn(
+          "KMEET: Presence was unavailable.",
+          error
+        );
+
+      }
 
     }
 
 
     /* =========================================
-       LOAD ONE FIRESTORE PROFILE
+       LOAD FIRESTORE PROFILE
        ========================================= */
 
     async function loadProfile(
@@ -1872,6 +1988,15 @@
 
 
       try {
+
+        /*
+          IMPORTANT:
+
+          This is the correct Firestore
+          document lookup.
+
+          No collection() is used here.
+        */
 
         const profileRef =
           doc(
@@ -1944,6 +2069,11 @@
         );
 
 
+        /*
+          Display profile BEFORE doing
+          anything related to presence.
+        */
+
         displayProfile(
           data,
           userId,
@@ -1989,6 +2119,7 @@
 
         `;
 
+
         showStatus(
           error.message ||
           "Profile loading error.",
@@ -2027,10 +2158,10 @@
           A specific profile was requested.
 
           Example:
+
           profile.html?id=abc123
 
-          This profile can be viewed by
-          guests as well.
+          Guests may view this profile.
         */
 
         if (
@@ -2062,11 +2193,10 @@
 
         /*
           CASE 2:
-          No ID was supplied.
+          No ID.
 
-          This means the page is intended
-          to show the logged-in user's own
-          profile.
+          Therefore this is the
+          logged-in user's own profile.
         */
 
         if (
