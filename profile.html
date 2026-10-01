@@ -3,907 +3,1119 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>Kmeet - Profile</title>
+  <title>Kmeet - Profile</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta
+    name="description"
+    content="Your Kmeet profile"
+  >
 
-<link
-  rel="preconnect"
-  href="https://fonts.googleapis.com"
->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-  rel="stylesheet"
->
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
+  <style>
 
-<style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
 
-body{
+    html {
+      min-height: 100%;
+      background: #100b10;
+    }
 
-  min-height:100vh;
 
-  font-family:
-    "Poppins",
-    sans-serif;
+    body {
+      min-height: 100vh;
 
-  color:#fff;
+      font-family:
+        "Poppins",
+        sans-serif;
 
-  background:
-    radial-gradient(
-      circle at 15% 10%,
-      rgba(214,62,117,.18),
-      transparent 30%
-    ),
+      color: #ffffff;
 
-    radial-gradient(
-      circle at 85% 15%,
-      rgba(120,30,80,.20),
-      transparent 32%
-    ),
+      background:
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(170, 55, 105, 0.24),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(112, 40, 88, 0.24),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #100b10 0%,
+          #180d15 45%,
+          #0d0a0e 100%
+        );
 
-    linear-gradient(
-      135deg,
-      #080609,
-      #130a12 50%,
-      #080609
-    );
+      background-attachment: fixed;
+    }
 
-}
 
-a{
-  color:inherit;
-  text-decoration:none;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
 
-/* =========================
-   NAV
-========================= */
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+    }
 
-.nav{
 
-  position:sticky;
-  top:0;
-  z-index:50;
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
 
-  height:68px;
+    .topbar {
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+      width: 100%;
 
-  padding:0 6%;
+      height: 76px;
 
-  background:
-    rgba(8,6,10,.82);
+      display: flex;
 
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.07);
+      align-items: center;
 
-  backdrop-filter:blur(18px);
+      justify-content: space-between;
 
-}
+      padding:
+        0 5%;
 
-.logo{
+      position: sticky;
 
-  display:flex;
-  align-items:center;
+      top: 0;
 
-  gap:8px;
+      z-index: 50;
 
-  font-family:
-    "Playfair Display",
-    serif;
+      background:
+        rgba(13, 9, 13, 0.84);
 
-  font-size:26px;
-  font-weight:700;
+      border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.08);
 
-}
+      backdrop-filter:
+        blur(18px);
 
-.logo-heart{
+      -webkit-backdrop-filter:
+        blur(18px);
+    }
 
-  color:#ff5c91;
 
-  font-size:24px;
+    .brand {
 
-  text-shadow:
-    0 0 15px
-    rgba(255,92,145,.5);
+      display: flex;
 
-}
+      align-items: center;
 
-.nav-links{
+      gap: 9px;
 
-  display:flex;
-  align-items:center;
+      font-family:
+        "Playfair Display",
+        serif;
 
-  gap:22px;
+      font-size: 28px;
 
-}
+      font-weight: 700;
 
-.nav-links a{
+      letter-spacing: -0.5px;
+    }
 
-  color:
-    rgba(255,255,255,.68);
 
-  font-size:12px;
-  font-weight:500;
+    .brand-heart {
 
-}
+      color: #f08aaa;
 
-.nav-links a:hover{
+      font-size: 25px;
 
-  color:#fff;
+      line-height: 1;
+    }
 
-}
 
-.nav-links .active{
+    .brand-text {
+      color: #ffffff;
+    }
 
-  color:#ff72a2;
 
-}
+    .brand-text span {
+      color: #f08aaa;
+    }
 
 
-/* =========================
-   PAGE
-========================= */
+    .nav-links {
 
-.container{
+      display: flex;
 
-  width:
-    min(
-      calc(100% - 28px),
-      1050px
-    );
+      align-items: center;
 
-  margin:auto;
+      gap: 25px;
+    }
 
-  padding:
-    42px 0 70px;
 
-}
+    .nav-links a {
 
+      color:
+        rgba(255, 255, 255, 0.76);
 
-/* =========================
-   HEADING
-========================= */
+      font-size: 13px;
 
-.heading{
+      font-weight: 500;
 
-  text-align:center;
+      transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
 
-  margin-bottom:30px;
 
-}
+    .nav-links a:hover {
 
-.heading small{
+      color: #ffffff;
 
-  display:block;
+      transform:
+        translateY(-1px);
+    }
 
-  margin-bottom:8px;
 
-  color:#ff679a;
+    .nav-links .active {
 
-  font-size:10px;
-  font-weight:600;
+      color: #f29ab8;
+    }
 
-  letter-spacing:2px;
 
-  text-transform:uppercase;
+    .logout-btn {
 
-}
+      border: 1px solid
+        rgba(240, 138, 170, 0.34);
 
-.heading h1{
+      background:
+        rgba(240, 138, 170, 0.08);
 
-  font-family:
-    "Playfair Display",
-    serif;
+      color: #f4a0bd;
 
-  font-size:
-    clamp(34px,5vw,48px);
+      border-radius: 999px;
 
-  margin-bottom:8px;
+      padding:
+        9px 15px;
 
-}
+      cursor: pointer;
 
-.heading p{
+      font-size: 12px;
 
-  color:
-    rgba(255,255,255,.52);
+      font-weight: 600;
 
-  font-size:13px;
+      transition:
+        all 0.2s ease;
+    }
 
-}
 
+    .logout-btn:hover {
 
-/* =========================
-   LOADING
-========================= */
+      background:
+        rgba(240, 138, 170, 0.16);
 
-#loading{
+      border-color:
+        rgba(240, 138, 170, 0.55);
+    }
 
-  min-height:400px;
 
-  display:flex;
+    /* =====================================================
+       PAGE
+       ===================================================== */
 
-  align-items:center;
-  justify-content:center;
+    .page {
 
-}
+      width:
+        min(
+          calc(100% - 28px),
+          980px
+        );
 
-.loading-card{
+      margin:
+        0 auto;
 
-  width:
-    min(100%,430px);
+      padding:
+        42px 0 70px;
+    }
 
-  padding:40px 25px;
 
-  text-align:center;
+    .page-heading {
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+      text-align: center;
 
-  border-radius:24px;
+      margin-bottom: 30px;
+    }
 
-  background:
-    rgba(255,255,255,.035);
 
-}
+    .page-heading h1 {
 
-.spinner{
+      font-family:
+        "Playfair Display",
+        serif;
 
-  width:40px;
-  height:40px;
+      font-size:
+        clamp(32px, 5vw, 48px);
 
-  margin:
-    0 auto 18px;
+      line-height: 1.1;
 
-  border:
-    3px solid
-    rgba(255,255,255,.10);
+      margin-bottom: 10px;
+    }
 
-  border-top-color:
-    #ff6297;
 
-  border-radius:50%;
+    .page-heading h1 span {
+      color: #f09ab8;
+    }
 
-  animation:
-    spin .8s linear infinite;
 
-}
+    .page-heading p {
 
-@keyframes spin{
+      color:
+        rgba(255, 255, 255, 0.62);
 
-  to{
-    transform:rotate(360deg);
-  }
+      font-size: 14px;
 
-}
+      line-height: 1.7;
+    }
 
 
-/* =========================
-   ERROR
-========================= */
+    /* =====================================================
+       LOADING
+       ===================================================== */
 
-#errorBox{
+    #loading {
 
-  display:none;
+      min-height: 400px;
 
-  max-width:600px;
+      display: flex;
 
-  margin:
-    35px auto;
+      flex-direction: column;
 
-  padding:30px;
+      align-items: center;
 
-  text-align:center;
+      justify-content: center;
 
-  border:
-    1px solid
-    rgba(255,90,140,.18);
+      text-align: center;
 
-  border-radius:22px;
+      color:
+        rgba(255, 255, 255, 0.65);
+    }
 
-  background:
-    rgba(130,25,65,.10);
 
-}
+    .loading-heart {
 
-#errorBox i{
+      font-size: 42px;
 
-  color:#ff679b;
+      color: #ed8eae;
 
-  font-size:30px;
+      margin-bottom: 14px;
 
-  margin-bottom:12px;
+      animation:
+        heartbeat 1.25s infinite;
+    }
 
-}
 
-#errorBox h2{
+    @keyframes heartbeat {
 
-  font-family:
-    "Playfair Display",
-    serif;
+      0%,
+      100% {
+        transform: scale(1);
+      }
 
-  margin-bottom:8px;
+      25% {
+        transform: scale(1.12);
+      }
 
-}
+      45% {
+        transform: scale(1);
+      }
+    }
 
-#errorBox p{
 
-  color:
-    rgba(255,255,255,.55);
+    /* =====================================================
+       ERROR
+       ===================================================== */
 
-  font-size:12px;
+    #errorState {
 
-  line-height:1.7;
+      display: none;
 
-}
+      max-width: 600px;
 
+      margin:
+        35px auto;
 
-/* =========================
-   PROFILE
-========================= */
+      padding: 28px;
 
-#profile{
+      text-align: center;
 
-  display:none;
+      border:
+        1px solid
+        rgba(240, 138, 170, 0.20);
 
-}
+      background:
+        rgba(255, 255, 255, 0.045);
 
-.profile-layout{
+      border-radius: 22px;
 
-  display:grid;
+      backdrop-filter:
+        blur(18px);
+    }
 
-  grid-template-columns:
-    370px
-    1fr;
 
-  gap:25px;
+    #errorState .error-icon {
 
-  align-items:start;
+      font-size: 36px;
 
-}
+      margin-bottom: 12px;
+    }
 
 
-/* =========================
-   PHOTO
-========================= */
+    #errorState h2 {
 
-.photo-card{
+      font-family:
+        "Playfair Display",
+        serif;
 
-  overflow:hidden;
+      margin-bottom: 8px;
+    }
 
-  border:
-    1px solid
-    rgba(255,255,255,.09);
 
-  border-radius:27px;
+    #errorMessage {
 
-  background:
-    rgba(255,255,255,.035);
+      color:
+        rgba(255, 255, 255, 0.62);
 
-  box-shadow:
-    0 25px 70px
-    rgba(0,0,0,.38);
+      font-size: 13px;
 
-}
+      line-height: 1.7;
 
-.photo-box{
+      margin-bottom: 18px;
+    }
 
-  position:relative;
 
-  height:470px;
+    .error-link {
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,74,135,.16),
-      transparent 60%
-    ),
-    #110a10;
+      display: inline-block;
 
-}
+      padding:
+        11px 18px;
 
-.photo{
+      border-radius: 999px;
 
-  width:100%;
-  height:100%;
+      background:
+        linear-gradient(
+          135deg,
+          #d96f99,
+          #a94d79
+        );
 
-  display:block;
+      font-size: 13px;
 
-  object-fit:cover;
+      font-weight: 600;
+    }
 
-}
 
-.photo-gradient{
+    /* =====================================================
+       PROFILE
+       ===================================================== */
 
-  position:absolute;
+    #profileContent {
+      display: none;
+    }
 
-  left:0;
-  right:0;
-  bottom:0;
 
-  height:42%;
+    .profile-shell {
 
-  background:
-    linear-gradient(
-      to top,
-      rgba(5,3,6,.94),
-      transparent
-    );
+      display: grid;
 
-}
+      grid-template-columns:
+        340px
+        1fr;
 
-.photo-info{
+      gap: 24px;
 
-  position:absolute;
+      align-items: start;
+    }
 
-  left:20px;
-  right:20px;
-  bottom:19px;
 
-  display:flex;
+    .glass-card {
 
-  align-items:end;
-  justify-content:space-between;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.075),
+          rgba(255, 255, 255, 0.035)
+        );
 
-}
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
 
-.photo-name{
+      border-radius: 26px;
 
-  max-width:65%;
+      box-shadow:
+        0 22px 70px
+        rgba(0, 0, 0, 0.30);
 
-  font-family:
-    "Playfair Display",
-    serif;
+      backdrop-filter:
+        blur(20px);
 
-  font-size:25px;
-  font-weight:700;
+      -webkit-backdrop-filter:
+        blur(20px);
+    }
 
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
 
-}
+    /* =====================================================
+       PHOTO CARD
+       ===================================================== */
 
-.status{
+    .photo-card {
 
-  display:flex;
+      padding: 16px;
 
-  align-items:center;
+      overflow: hidden;
+    }
 
-  gap:6px;
 
-  padding:
-    7px 10px;
+    .photo-frame {
 
-  border-radius:20px;
+      position: relative;
 
-  background:
-    rgba(0,0,0,.48);
+      width: 100%;
 
-  border:
-    1px solid
-    rgba(255,255,255,.10);
+      aspect-ratio: 4 / 5;
 
-  font-size:9px;
+      overflow: hidden;
 
-}
+      border-radius: 20px;
 
-.status-dot{
+      background:
+        linear-gradient(
+          145deg,
+          #6b2948,
+          #1b0d15
+        );
 
-  width:7px;
-  height:7px;
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+    }
 
-  border-radius:50%;
 
-  background:#55d88a;
+    .profile-photo {
 
-  box-shadow:
-    0 0 9px
-    rgba(85,216,138,.7);
+      width: 100%;
 
-}
+      height: 100%;
 
+      display: none;
 
-/* =========================
-   DETAILS
-========================= */
+      object-fit: cover;
 
-.details{
+      object-position: center;
 
-  padding:30px;
+      position: absolute;
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+      inset: 0;
+    }
 
-  border-radius:27px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.065),
-      rgba(255,255,255,.025)
-    );
+    .photo-placeholder {
 
-  box-shadow:
-    0 25px 70px
-    rgba(0,0,0,.28);
+      position: absolute;
 
-}
+      inset: 0;
 
-.name{
+      display: flex;
 
-  font-family:
-    "Playfair Display",
-    serif;
+      flex-direction: column;
 
-  font-size:32px;
+      align-items: center;
 
-  margin-bottom:7px;
+      justify-content: center;
 
-}
+      text-align: center;
 
-.location{
+      padding: 20px;
+    }
 
-  display:flex;
 
-  align-items:center;
+    .placeholder-heart {
 
-  gap:7px;
+      font-size: 60px;
 
-  color:
-    rgba(255,255,255,.55);
+      color:
+        rgba(255, 255, 255, 0.82);
 
-  font-size:12px;
+      margin-bottom: 8px;
+    }
 
-}
 
-.location i{
+    .placeholder-name {
 
-  color:#ff6598;
+      font-family:
+        "Playfair Display",
+        serif;
 
-}
+      font-size: 26px;
 
+      font-weight: 600;
+    }
 
-/* =========================
-   INFO
-========================= */
 
-.info-grid{
+    .photo-status {
 
-  display:grid;
+      position: absolute;
 
-  grid-template-columns:
-    1fr 1fr;
+      left: 14px;
 
-  gap:10px;
+      bottom: 14px;
 
-  margin-top:25px;
+      display: flex;
 
-}
+      align-items: center;
 
-.info{
+      gap: 7px;
 
-  padding:14px;
+      padding:
+        7px 11px;
 
-  border:
-    1px solid
-    rgba(255,255,255,.065);
+      border-radius: 999px;
 
-  border-radius:15px;
+      background:
+        rgba(10, 7, 10, 0.72);
 
-  background:
-    rgba(0,0,0,.16);
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
 
-}
+      backdrop-filter:
+        blur(10px);
 
-.info-label{
+      font-size: 11px;
 
-  display:block;
+      font-weight: 500;
+    }
 
-  color:
-    rgba(255,255,255,.35);
 
-  font-size:9px;
+    .status-dot {
 
-  text-transform:uppercase;
+      width: 8px;
 
-  letter-spacing:1px;
+      height: 8px;
 
-  margin-bottom:5px;
+      border-radius: 50%;
 
-}
+      background: #888;
+    }
 
-.info-value{
 
-  color:
-    rgba(255,255,255,.86);
+    .status-dot.online {
+      background: #65d895;
+      box-shadow:
+        0 0 10px
+        rgba(101, 216, 149, 0.65);
+    }
 
-  font-size:13px;
 
-}
+    .status-dot.offline {
+      background: #85808a;
+    }
 
 
-/* =========================
-   SECTION
-========================= */
+    .photo-note {
 
-.section{
+      padding:
+        13px 4px 3px;
 
-  margin-top:27px;
+      text-align: center;
 
-}
+      color:
+        rgba(255, 255, 255, 0.52);
 
-.section-title{
+      font-size: 11px;
 
-  display:flex;
+      line-height: 1.6;
+    }
 
-  align-items:center;
 
-  gap:8px;
+    /* =====================================================
+       DETAILS
+       ===================================================== */
 
-  margin-bottom:10px;
+    .details-card {
 
-  font-size:13px;
-  font-weight:600;
+      padding: 28px;
+    }
 
-}
 
-.section-title i{
+    .profile-top {
 
-  color:#ff6398;
+      display: flex;
 
-}
+      align-items: flex-start;
 
-.bio{
+      justify-content: space-between;
 
-  color:
-    rgba(255,255,255,.62);
+      gap: 15px;
 
-  font-size:13px;
+      margin-bottom: 25px;
+    }
 
-  line-height:1.8;
 
-}
+    .profile-name {
 
+      font-family:
+        "Playfair Display",
+        serif;
 
-/* =========================
-   INTERESTS
-========================= */
+      font-size:
+        clamp(30px, 5vw, 42px);
 
-.interests{
+      line-height: 1.05;
 
-  display:flex;
+      margin-bottom: 7px;
 
-  flex-wrap:wrap;
+      word-break: break-word;
+    }
 
-  gap:8px;
 
-}
+    .profile-location {
 
-.interest{
+      color:
+        rgba(255, 255, 255, 0.57);
 
-  padding:
-    7px 12px;
+      font-size: 13px;
+    }
 
-  border:
-    1px solid
-    rgba(255,95,145,.20);
 
-  border-radius:20px;
+    .profile-badge {
 
-  background:
-    rgba(255,77,132,.075);
+      flex-shrink: 0;
 
-  color:
-    rgba(255,255,255,.75);
+      padding:
+        7px 11px;
 
-  font-size:11px;
+      border-radius: 999px;
 
-}
+      color: #f3a0bc;
 
+      border:
+        1px solid
+        rgba(240, 138, 170, 0.25);
 
-/* =========================
-   BUTTONS
-========================= */
+      background:
+        rgba(240, 138, 170, 0.08);
 
-.actions{
+      font-size: 10px;
 
-  display:flex;
+      font-weight: 600;
 
-  gap:10px;
+      text-transform: uppercase;
 
-  margin-top:30px;
+      letter-spacing: 0.5px;
+    }
 
-}
 
-.button{
+    .section {
 
-  min-height:45px;
+      padding:
+        20px 0;
 
-  flex:1;
+      border-top:
+        1px solid
+        rgba(255, 255, 255, 0.075);
+    }
 
-  display:flex;
 
-  align-items:center;
-  justify-content:center;
+    .section:first-of-type {
+      border-top: 0;
+    }
 
-  gap:8px;
 
-  border-radius:14px;
+    .section-title {
 
-  font-size:11px;
-  font-weight:600;
+      font-size: 11px;
 
-  transition:
-    transform .2s ease;
+      text-transform: uppercase;
 
-}
+      letter-spacing: 1.4px;
 
-.button:hover{
+      color: #f09ab8;
 
-  transform:
-    translateY(-2px);
+      font-weight: 600;
 
-}
+      margin-bottom: 10px;
+    }
 
-.primary{
 
-  background:
-    linear-gradient(
-      135deg,
-      #d94d83,
-      #a92e63
-    );
+    .about {
 
-  border:
-    1px solid
-    rgba(255,105,155,.25);
+      color:
+        rgba(255, 255, 255, 0.73);
 
-}
+      font-size: 13px;
 
-.secondary{
+      line-height: 1.85;
 
-  background:
-    rgba(255,255,255,.045);
+      white-space: pre-wrap;
 
-  border:
-    1px solid
-    rgba(255,255,255,.10);
+      word-break: break-word;
+    }
 
-}
 
+    .info-grid {
 
-/* =========================
-   FOOTER
-========================= */
+      display: grid;
 
-.footer{
+      grid-template-columns:
+        repeat(2, 1fr);
 
-  padding-top:40px;
+      gap: 12px;
+    }
 
-  text-align:center;
 
-  color:
-    rgba(255,255,255,.28);
+    .info-box {
 
-  font-size:10px;
+      padding:
+        13px 14px;
 
-}
+      border-radius: 15px;
 
+      background:
+        rgba(255, 255, 255, 0.045);
 
-/* =========================
-   MOBILE
-========================= */
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.065);
+    }
 
-@media(max-width:760px){
 
-  .nav{
+    .info-label {
 
-    padding:
-      0 17px;
+      color:
+        rgba(255, 255, 255, 0.43);
 
-  }
+      font-size: 10px;
 
-  .nav-links{
+      margin-bottom: 4px;
 
-    gap:12px;
+      text-transform: uppercase;
 
-  }
+      letter-spacing: 0.8px;
+    }
 
-  .nav-links a{
 
-    font-size:10px;
+    .info-value {
 
-  }
+      color:
+        rgba(255, 255, 255, 0.88);
 
-  .container{
+      font-size: 13px;
 
-    width:
-      min(
-        calc(100% - 20px),
-        600px
-      );
+      font-weight: 500;
 
-    padding-top:28px;
+      word-break: break-word;
+    }
 
-  }
 
-  .profile-layout{
+    /* =====================================================
+       INTERESTS
+       ===================================================== */
 
-    grid-template-columns:1fr;
+    .interests {
 
-  }
+      display: flex;
 
-  .photo-box{
+      flex-wrap: wrap;
 
-    height:430px;
+      gap: 8px;
+    }
 
-  }
 
-  .details{
+    .interest {
 
-    padding:23px;
+      padding:
+        8px 12px;
 
-  }
+      border-radius: 999px;
 
-}
+      background:
+        rgba(222, 104, 148, 0.11);
 
+      border:
+        1px solid
+        rgba(240, 138, 170, 0.19);
 
-@media(max-width:480px){
+      color:
+        rgba(255, 255, 255, 0.78);
 
-  .logo{
+      font-size: 11px;
+    }
 
-    font-size:21px;
 
-  }
+    /* =====================================================
+       ACTIONS
+       ===================================================== */
 
-  .nav-links a:nth-child(2){
+    .profile-actions {
 
-    display:none;
+      display: grid;
 
-  }
+      grid-template-columns:
+        repeat(2, 1fr);
 
-  .photo-box{
+      gap: 10px;
 
-    height:400px;
+      margin-top: 8px;
+    }
 
-  }
 
-  .actions{
+    .action-btn {
 
-    flex-direction:column;
+      min-height: 45px;
 
-  }
+      display: flex;
 
-}
+      align-items: center;
 
-</style>
+      justify-content: center;
+
+      border-radius: 14px;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+
+    .action-btn:hover {
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    .primary-btn {
+
+      background:
+        linear-gradient(
+          135deg,
+          #d86f98,
+          #a84d79
+        );
+
+      border-color:
+        rgba(255, 255, 255, 0.05);
+    }
+
+
+    .secondary-btn {
+
+      background:
+        rgba(255, 255, 255, 0.055);
+
+      color:
+        rgba(255, 255, 255, 0.80);
+    }
+
+
+    .chat-btn {
+
+      grid-column:
+        1 / -1;
+
+      background:
+        linear-gradient(
+          135deg,
+          #b95884,
+          #793b60
+        );
+
+      border-color:
+        rgba(255, 255, 255, 0.08);
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .footer-note {
+
+      text-align: center;
+
+      margin-top: 35px;
+
+      color:
+        rgba(255, 255, 255, 0.35);
+
+      font-size: 11px;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 780px) {
+
+      .topbar {
+        height: auto;
+
+        min-height: 70px;
+
+        padding:
+          14px 18px;
+
+        gap: 15px;
+
+        flex-wrap: wrap;
+      }
+
+
+      .brand {
+        font-size: 25px;
+      }
+
+
+      .nav-links {
+        gap: 14px;
+      }
+
+
+      .nav-links a {
+        font-size: 11px;
+      }
+
+
+      .profile-shell {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .photo-card {
+
+        max-width: 430px;
+
+        width: 100%;
+
+        margin: 0 auto;
+      }
+
+    }
+
+
+    @media (max-width: 480px) {
+
+      .page {
+
+        width:
+          calc(100% - 22px);
+
+        padding-top: 28px;
+      }
+
+
+      .page-heading {
+
+        margin-bottom: 22px;
+      }
+
+
+      .page-heading h1 {
+
+        font-size: 34px;
+      }
+
+
+      .details-card {
+
+        padding: 21px;
+      }
+
+
+      .profile-top {
+
+        flex-direction: column;
+      }
+
+
+      .profile-badge {
+
+        align-self: flex-start;
+      }
+
+
+      .info-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .profile-actions {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .chat-btn {
+
+        grid-column: auto;
+      }
+
+
+      .nav-links a:nth-child(4) {
+
+        display: none;
+      }
+
+    }
+
+  </style>
 
 </head>
 
@@ -911,960 +1123,1179 @@ a{
 <body>
 
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+  <!-- =====================================================
+       NAVIGATION
+       ===================================================== -->
 
-<nav class="nav">
-
-  <a
-    href="index.html"
-    class="logo"
-  >
-
-    <span class="logo-heart">
-      ♥
-    </span>
-
-    Kmeet
-
-  </a>
-
-
-  <div class="nav-links">
-
-    <a href="discover.html">
-      Discover
-    </a>
-
-    <a href="likes.html">
-      My Likes
-    </a>
+  <header class="topbar">
 
     <a
-      href="profile.html"
-      class="active"
+      href="index.html"
+      class="brand"
     >
-      Profile
+
+      <span class="brand-heart">
+        ♥
+      </span>
+
+      <span class="brand-text">
+        K<span>meet</span>
+      </span>
+
     </a>
 
-    <a
-      href="#"
-      id="logout"
-    >
-      Logout
-    </a>
 
-  </div>
+    <nav class="nav-links">
 
-</nav>
+      <a
+        href="discover.html"
+      >
+        Discover
+      </a>
 
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main class="container">
-
-
-  <div class="heading">
-
-    <small>
-      KMEET PROFILE
-    </small>
-
-    <h1 id="pageTitle">
-      Your Profile
-    </h1>
-
-    <p id="pageSubtitle">
-      Your space on Kmeet
-    </p>
-
-  </div>
+      <a
+        href="likes.html"
+      >
+        ♥ My Likes
+      </a>
 
 
+      <a
+        href="profile.html"
+        class="active"
+      >
+        Profile
+      </a>
 
-  <!-- LOADING -->
 
-  <div id="loading">
+      <a
+        href="index.html"
+      >
+        Home
+      </a>
 
-    <div class="loading-card">
 
-      <div class="spinner"></div>
+      <button
+        id="logoutBtn"
+        class="logout-btn"
+        type="button"
+      >
+        Logout
+      </button>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =====================================================
+       PAGE
+       ===================================================== -->
+
+  <main class="page">
+
+
+    <div class="page-heading">
+
+      <h1>
+        Your <span>Kmeet</span> Profile
+      </h1>
 
       <p>
-        Loading profile...
+        Let people know a little more about you.
       </p>
 
     </div>
 
-  </div>
 
+    <!-- ===================================================
+         LOADING
+         =================================================== -->
 
+    <section
+      id="loading"
+    >
 
-  <!-- ERROR -->
-
-  <div id="errorBox">
-
-    <i class="fa-solid fa-heart-crack"></i>
-
-    <h2 id="errorTitle">
-      Profile unavailable
-    </h2>
-
-    <p id="errorText">
-      We could not load this profile.
-    </p>
-
-  </div>
-
-
-
-  <!-- PROFILE -->
-
-  <section
-    id="profile"
-    class="profile-layout"
-  >
-
-
-    <!-- PHOTO -->
-
-    <div class="photo-card">
-
-      <div class="photo-box">
-
-        <img
-          id="profilePhoto"
-          class="photo"
-          src=""
-          alt="Kmeet profile"
-        >
-
-        <div class="photo-gradient"></div>
-
-
-        <div class="photo-info">
-
-          <div
-            id="photoName"
-            class="photo-name"
-          >
-            Kmeet Member
-          </div>
-
-
-          <div class="status">
-
-            <span class="status-dot"></span>
-
-            Active
-
-          </div>
-
-        </div>
-
+      <div class="loading-heart">
+        ♥
       </div>
 
-    </div>
+      <div>
+        Loading your Kmeet profile…
+      </div>
+
+    </section>
 
 
+    <!-- ===================================================
+         ERROR
+         =================================================== -->
 
-    <!-- DETAILS -->
+    <section
+      id="errorState"
+    >
 
-    <div class="details">
+      <div class="error-icon">
+        ♥
+      </div>
 
-
-      <h2
-        id="profileName"
-        class="name"
-      >
-        Kmeet Member
+      <h2>
+        Profile could not be loaded
       </h2>
 
+      <p id="errorMessage">
+        Something went wrong while loading your profile.
+      </p>
 
-      <div class="location">
+      <a
+        class="error-link"
+        href="login.html"
+      >
+        Go to Login
+      </a>
 
-        <i class="fa-solid fa-location-dot"></i>
-
-        <span id="profileLocation">
-          Kenya
-        </span>
-
-      </div>
-
-
-
-      <!-- AGE / GENDER -->
-
-      <div class="info-grid">
+    </section>
 
 
-        <div class="info">
+    <!-- ===================================================
+         PROFILE CONTENT
+         =================================================== -->
 
-          <span class="info-label">
-            Age
-          </span>
+    <section
+      id="profileContent"
+    >
 
-          <span
-            id="profileAge"
-            class="info-value"
-          >
-            Not specified
-          </span>
-
-        </div>
+      <div class="profile-shell">
 
 
-        <div class="info">
+        <!-- ===============================================
+             PHOTO
+             =============================================== -->
 
-          <span class="info-label">
-            Gender
-          </span>
+        <div class="glass-card photo-card">
 
-          <span
-            id="profileGender"
-            class="info-value"
-          >
-            Not specified
-          </span>
-
-        </div>
+          <div class="photo-frame">
 
 
-      </div>
+            <img
+              id="profilePhoto"
+              class="profile-photo"
+              alt="Kmeet profile photo"
+            >
 
 
+            <div
+              id="photoPlaceholder"
+              class="photo-placeholder"
+            >
 
-      <!-- ABOUT -->
+              <div class="placeholder-heart">
+                ♥
+              </div>
 
-      <div class="section">
+              <div
+                id="placeholderName"
+                class="placeholder-name"
+              >
+                Kmeet
+              </div>
 
-        <div class="section-title">
-
-          <i class="fa-regular fa-comment-dots"></i>
-
-          About Me
-
-        </div>
-
-
-        <p
-          id="profileBio"
-          class="bio"
-        >
-          Welcome to Kmeet.
-        </p>
-
-      </div>
+            </div>
 
 
+            <div class="photo-status">
 
-      <!-- INTERESTS -->
+              <span
+                id="statusDot"
+                class="status-dot offline"
+              ></span>
 
-      <div class="section">
+              <span id="statusText">
+                Offline
+              </span>
 
-        <div class="section-title">
+            </div>
 
-          <i class="fa-solid fa-heart"></i>
+          </div>
 
-          Interests
+
+          <div class="photo-note">
+            Your profile photo helps people recognize you on Kmeet.
+          </div>
 
         </div>
 
 
-        <div
-          id="profileInterests"
-          class="interests"
-        ></div>
+        <!-- ===============================================
+             DETAILS
+             =============================================== -->
+
+        <div class="glass-card details-card">
+
+
+          <div class="profile-top">
+
+            <div>
+
+              <h2
+                id="profileName"
+                class="profile-name"
+              >
+                Kmeet Member
+              </h2>
+
+              <div
+                id="profileLocation"
+                class="profile-location"
+              >
+                Kenya
+              </div>
+
+            </div>
+
+
+            <div class="profile-badge">
+              Kmeet Member
+            </div>
+
+          </div>
+
+
+          <!-- ABOUT -->
+
+          <div class="section">
+
+            <div class="section-title">
+              About Me
+            </div>
+
+            <div
+              id="profileBio"
+              class="about"
+            >
+              Tell people a little about yourself.
+            </div>
+
+          </div>
+
+
+          <!-- BASIC DETAILS -->
+
+          <div class="section">
+
+            <div class="section-title">
+              Details
+            </div>
+
+
+            <div class="info-grid">
+
+
+              <div class="info-box">
+
+                <div class="info-label">
+                  Age
+                </div>
+
+                <div
+                  id="profileAge"
+                  class="info-value"
+                >
+                  Not provided
+                </div>
+
+              </div>
+
+
+              <div class="info-box">
+
+                <div class="info-label">
+                  Gender
+                </div>
+
+                <div
+                  id="profileGender"
+                  class="info-value"
+                >
+                  Not provided
+                </div>
+
+              </div>
+
+
+              <div class="info-box">
+
+                <div class="info-label">
+                  Location
+                </div>
+
+                <div
+                  id="profileLocationDetail"
+                  class="info-value"
+                >
+                  Kenya
+                </div>
+
+              </div>
+
+
+              <div class="info-box">
+
+                <div class="info-label">
+                  Email
+                </div>
+
+                <div
+                  id="profileEmail"
+                  class="info-value"
+                >
+                  Hidden
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+          <!-- INTERESTS -->
+
+          <div class="section">
+
+            <div class="section-title">
+              Interests
+            </div>
+
+
+            <div
+              id="profileInterests"
+              class="interests"
+            >
+
+              <span class="interest">
+                Getting to know Kmeet
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- ACTIONS -->
+
+          <div class="section">
+
+            <div class="profile-actions">
+
+
+              <a
+                href="discover.html"
+                class="action-btn primary-btn"
+              >
+                Discover People
+              </a>
+
+
+              <a
+                href="likes.html"
+                class="action-btn secondary-btn"
+              >
+                ♥ My Likes
+              </a>
+
+
+              <a
+                href="discover.html"
+                class="action-btn chat-btn"
+              >
+                Find Someone to Chat With
+              </a>
+
+
+            </div>
+
+          </div>
+
+
+        </div>
 
       </div>
 
 
-
-      <!-- BUTTONS -->
-
-      <div class="actions">
-
-        <a
-          href="discover.html"
-          class="button primary"
-        >
-
-          <i class="fa-solid fa-compass"></i>
-
-          Discover
-
-        </a>
-
-
-        <a
-          href="likes.html"
-          class="button secondary"
-        >
-
-          <i class="fa-solid fa-heart"></i>
-
-          My Likes
-
-        </a>
-
+      <div class="footer-note">
+        Kmeet — Connecting hearts naturally.
       </div>
 
+    </section>
 
-    </div>
 
-  </section>
+  </main>
 
 
+  <!-- =====================================================
+       FIREBASE
+       IMPORTANT:
+       There is NO collection() in this profile file.
+       A user's profile is one document:
+       users/{uid}
+       ===================================================== -->
 
-  <div class="footer">
+  <script type="module">
 
-    Kmeet · Connecting hearts naturally ❤️
 
-  </div>
+    import {
+      auth,
+      db
+    } from "./firebase-config.js";
 
 
-</main>
+    import {
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 
+    import {
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-<!-- =========================
-     FIREBASE
-========================= -->
 
-<script type="module">
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
-/*
-=========================================================
-KMEET PROFILE
+    const loading =
+      document.getElementById(
+        "loading"
+      );
 
-IMPORTANT:
 
-There is NO collection() call in this file.
+    const errorState =
+      document.getElementById(
+        "errorState"
+      );
 
-A user's profile is stored at:
 
-users/{uid}
+    const errorMessage =
+      document.getElementById(
+        "errorMessage"
+      );
 
-Therefore we use:
 
-doc(db, "users", uid)
-getDoc(profileRef)
+    const profileContent =
+      document.getElementById(
+        "profileContent"
+      );
 
-=========================================================
-*/
 
+    const profilePhoto =
+      document.getElementById(
+        "profilePhoto"
+      );
 
-import {
-  auth,
-  db
-} from "./firebase-config.js";
 
+    const photoPlaceholder =
+      document.getElementById(
+        "photoPlaceholder"
+      );
 
-import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
+    const placeholderName =
+      document.getElementById(
+        "placeholderName"
+      );
 
-import {
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
+    const profileName =
+      document.getElementById(
+        "profileName"
+      );
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+    const profileLocation =
+      document.getElementById(
+        "profileLocation"
+      );
 
-const loading =
-  document.getElementById("loading");
 
-const profile =
-  document.getElementById("profile");
+    const profileLocationDetail =
+      document.getElementById(
+        "profileLocationDetail"
+      );
 
-const errorBox =
-  document.getElementById("errorBox");
 
-const errorTitle =
-  document.getElementById("errorTitle");
+    const profileBio =
+      document.getElementById(
+        "profileBio"
+      );
 
-const errorText =
-  document.getElementById("errorText");
 
-const pageTitle =
-  document.getElementById("pageTitle");
+    const profileAge =
+      document.getElementById(
+        "profileAge"
+      );
 
-const pageSubtitle =
-  document.getElementById("pageSubtitle");
 
-const profilePhoto =
-  document.getElementById("profilePhoto");
+    const profileGender =
+      document.getElementById(
+        "profileGender"
+      );
 
-const profileName =
-  document.getElementById("profileName");
 
-const photoName =
-  document.getElementById("photoName");
+    const profileEmail =
+      document.getElementById(
+        "profileEmail"
+      );
 
-const profileLocation =
-  document.getElementById("profileLocation");
 
-const profileAge =
-  document.getElementById("profileAge");
+    const profileInterests =
+      document.getElementById(
+        "profileInterests"
+      );
 
-const profileGender =
-  document.getElementById("profileGender");
 
-const profileBio =
-  document.getElementById("profileBio");
+    const statusDot =
+      document.getElementById(
+        "statusDot"
+      );
 
-const profileInterests =
-  document.getElementById("profileInterests");
 
+    const statusText =
+      document.getElementById(
+        "statusText"
+      );
 
 
-/* =====================================================
-   TARGET ID
+    const logoutBtn =
+      document.getElementById(
+        "logoutBtn"
+      );
 
-   Discover sends:
 
-   profile.html?id=USER_ID
+    /* =====================================================
+       URL
+       
+       No id:
+       -> show logged-in user's own profile.
 
-   Own profile sends:
+       With id:
+       -> show that Firebase member's profile.
+       ===================================================== */
 
-   profile.html
-===================================================== */
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
 
-const targetId =
-  params.get("id");
+    const requestedProfileId =
+      params.get("id");
 
 
+    /* =====================================================
+       HELPERS
+       ===================================================== */
 
-/* =====================================================
-   FALLBACK PHOTO
-===================================================== */
+    function cleanValue(value) {
 
-const fallbackPhoto =
-  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=85";
+      if (
+        value === null ||
+        value === undefined
+      ) {
 
+        return "";
 
+      }
 
-/* =====================================================
-   CLEAN VALUE
-===================================================== */
-
-function clean(value){
-
-  if(
-    value === null ||
-    value === undefined
-  ){
-
-    return "";
-
-  }
-
-  return String(value).trim();
-
-}
-
-
-
-/* =====================================================
-   GET PHOTO
-
-   Your signup currently creates these
-   photo fields:
-
-   photoURL
-   avatar
-   photo
-   profilePhoto
-
-   We check all of them.
-===================================================== */
-
-function getPhoto(data, firebaseUser){
-
-  const photos = [
-
-    data.photoURL,
-
-    data.photoUrl,
-
-    data.avatar,
-
-    data.profilePhoto,
-
-    data.profileImage,
-
-    data.image,
-
-    data.photo,
-
-    firebaseUser
-      ? firebaseUser.photoURL
-      : ""
-
-  ];
-
-
-  for(
-    const value of photos
-  ){
-
-    const photo =
-      clean(value);
-
-    if(photo){
-
-      return photo;
+      return String(value).trim();
 
     }
 
-  }
 
+    function showError(message) {
 
-  return fallbackPhoto;
+      loading.style.display =
+        "none";
 
-}
+      profileContent.style.display =
+        "none";
 
+      errorState.style.display =
+        "block";
 
+      errorMessage.textContent =
+        message;
 
-/* =====================================================
-   ERROR
-===================================================== */
+    }
 
-function showError(
-  title,
-  message
-){
 
-  loading.style.display =
-    "none";
+    function escapeHtml(value) {
 
-  profile.style.display =
-    "none";
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
-  errorBox.style.display =
-    "block";
+    }
 
-  errorTitle.textContent =
-    title;
 
-  errorText.textContent =
-    message;
+    function getProfilePhoto(data) {
 
-}
+      const possiblePhotos = [
 
+        data.photoURL,
 
+        data.photoUrl,
 
-/* =====================================================
-   DISPLAY PROFILE
-===================================================== */
+        data.profilePhoto,
 
-function displayProfile(
-  data,
-  firebaseUser,
-  isOwnProfile
-){
+        data.profileImage,
 
-  const name =
+        data.avatar,
 
-    clean(data.name) ||
+        data.photo,
 
-    clean(data.username) ||
+        data.image
 
-    clean(data.displayName) ||
+      ];
 
-    (
-      firebaseUser
-        ? clean(firebaseUser.displayName)
-        : ""
-    ) ||
 
-    "Kmeet Member";
+      for (
+        const photo of possiblePhotos
+      ) {
 
+        const value =
+          cleanValue(photo);
 
-  const location =
+        if (value) {
 
-    clean(data.location) ||
+          return value;
 
-    clean(data.city) ||
-
-    "Kenya";
-
-
-  const age =
-    clean(data.age);
-
-
-  const gender =
-    clean(data.gender);
-
-
-  const bio =
-
-    clean(data.bio) ||
-
-    clean(data.description) ||
-
-    clean(data.about) ||
-
-    "Welcome to Kmeet. Tell people a little about yourself and what makes you unique.";
-
-
-  const photo =
-    getPhoto(
-      data,
-      firebaseUser
-    );
-
-
-  /* PAGE TITLE */
-
-  if(isOwnProfile){
-
-    pageTitle.textContent =
-      "Your Profile";
-
-    pageSubtitle.textContent =
-      "Your space on Kmeet";
-
-  }else{
-
-    pageTitle.textContent =
-      "Kmeet Profile";
-
-    pageSubtitle.textContent =
-      "Discover someone new";
-
-  }
-
-
-  /* DETAILS */
-
-  profileName.textContent =
-    name;
-
-  photoName.textContent =
-    name;
-
-  profileLocation.textContent =
-    location;
-
-  profileAge.textContent =
-    age || "Not specified";
-
-  profileGender.textContent =
-    gender || "Not specified";
-
-  profileBio.textContent =
-    bio;
-
-
-  /* PHOTO */
-
-  profilePhoto.src =
-    photo;
-
-  profilePhoto.alt =
-    name;
-
-
-  profilePhoto.onerror =
-    function(){
-
-      if(
-        this.src !==
-        fallbackPhoto
-      ){
-
-        this.src =
-          fallbackPhoto;
+        }
 
       }
 
-    };
+
+      return "";
+
+    }
 
 
+    function getInterests(data) {
 
-  /* ===================================================
-     INTERESTS
-  =================================================== */
-
-  profileInterests.innerHTML =
-    "";
+      let interests =
+        data.interests;
 
 
-  let interests =
-    Array.isArray(data.interests)
-      ? data.interests
-      : [];
+      if (
+        Array.isArray(interests)
+      ) {
+
+        return interests
+          .map(item =>
+            cleanValue(item)
+          )
+          .filter(Boolean);
+
+      }
 
 
-  interests =
-    interests
-      .map(
-        item =>
-          clean(item)
-      )
-      .filter(
-        item =>
-          item.length > 0
-      )
-      .slice(0,12);
+      if (
+        typeof interests ===
+        "string"
+      ) {
+
+        return interests
+          .split(",")
+          .map(item =>
+            item.trim()
+          )
+          .filter(Boolean);
+
+      }
 
 
-  if(
-    interests.length === 0
-  ){
+      return [];
 
-    profileInterests.innerHTML =
+    }
 
-      `<span
-        style="
-          color:rgba(255,255,255,.38);
-          font-size:12px;
-        "
-      >
-        No interests added yet.
-      </span>`;
 
-  }else{
+    function getLocation(data) {
 
-    interests.forEach(
-      interest => {
+      return (
+        cleanValue(data.location) ||
 
-        const tag =
-          document.createElement(
-            "span"
-          );
+        cleanValue(data.city) ||
 
-        tag.className =
-          "interest";
+        cleanValue(data.town) ||
 
-        tag.textContent =
-          interest;
+        cleanValue(data.county) ||
 
-        profileInterests.appendChild(
-          tag
+        "Kenya"
+      );
+
+    }
+
+
+    function getBio(data) {
+
+      return (
+
+        cleanValue(data.bio) ||
+
+        cleanValue(data.description) ||
+
+        cleanValue(data.about) ||
+
+        "New Kmeet member."
+
+      );
+
+    }
+
+
+    function getName(data, fallbackUser) {
+
+      return (
+
+        cleanValue(data.name) ||
+
+        cleanValue(data.displayName) ||
+
+        cleanValue(data.username) ||
+
+        cleanValue(
+          fallbackUser &&
+          fallbackUser.displayName
+        ) ||
+
+        "Kmeet Member"
+
+      );
+
+    }
+
+
+    function getAge(data) {
+
+      if (
+        data.age !== null &&
+        data.age !== undefined &&
+        String(data.age).trim() !== ""
+      ) {
+
+        return String(
+          data.age
         );
 
       }
-    );
 
-  }
+      return "Not provided";
 
-
-  /* SHOW */
-
-  loading.style.display =
-    "none";
-
-  errorBox.style.display =
-    "none";
-
-  profile.style.display =
-    "grid";
-
-}
+    }
 
 
+    function getGender(data) {
 
-/* =====================================================
-   LOAD FIRESTORE PROFILE
+      return (
+        cleanValue(data.gender) ||
+        "Not provided"
+      );
 
-   THIS IS THE IMPORTANT FIX.
-
-   NEVER:
-
-   collection(db, "users", uid)
-
-   Instead:
-
-   doc(db, "users", uid)
-===================================================== */
-
-async function loadFirestoreProfile(
-  uid,
-  firebaseUser,
-  isOwnProfile
-){
-
-  try{
-
-    console.log(
-      "KMEET: Loading profile document:",
-      uid
-    );
+    }
 
 
-    const profileRef =
-      doc(
-        db,
-        "users",
+    function getOnlineState(data) {
+
+      if (
+        typeof data.online ===
+        "boolean"
+      ) {
+
+        return data.online;
+
+      }
+
+
+      if (
+        typeof data.isOnline ===
+        "boolean"
+      ) {
+
+        return data.isOnline;
+
+      }
+
+
+      return false;
+
+    }
+
+
+    /* =====================================================
+       DISPLAY PROFILE
+       ===================================================== */
+
+    function displayProfile(
+      data,
+      firebaseUser
+    ) {
+
+      const name =
+        getName(
+          data,
+          firebaseUser
+        );
+
+
+      const location =
+        getLocation(
+          data
+        );
+
+
+      const bio =
+        getBio(
+          data
+        );
+
+
+      const age =
+        getAge(
+          data
+        );
+
+
+      const gender =
+        getGender(
+          data
+        );
+
+
+      const interests =
+        getInterests(
+          data
+        );
+
+
+      const photo =
+        getProfilePhoto(
+          data
+        );
+
+
+      const online =
+        getOnlineState(
+          data
+        );
+
+
+      /* ---------------------------------------------
+         NAME
+         --------------------------------------------- */
+
+      profileName.textContent =
+        name;
+
+
+      placeholderName.textContent =
+        name;
+
+
+      /* ---------------------------------------------
+         LOCATION
+         --------------------------------------------- */
+
+      profileLocation.textContent =
+        location;
+
+
+      profileLocationDetail.textContent =
+        location;
+
+
+      /* ---------------------------------------------
+         ABOUT
+         --------------------------------------------- */
+
+      profileBio.textContent =
+        bio;
+
+
+      /* ---------------------------------------------
+         AGE
+         --------------------------------------------- */
+
+      profileAge.textContent =
+        age;
+
+
+      /* ---------------------------------------------
+         GENDER
+         --------------------------------------------- */
+
+      profileGender.textContent =
+        gender;
+
+
+      /* ---------------------------------------------
+         EMAIL
+         --------------------------------------------- */
+
+      if (
+        firebaseUser &&
+        firebaseUser.email
+      ) {
+
+        profileEmail.textContent =
+          firebaseUser.email;
+
+      } else if (
+        data.email
+      ) {
+
+        profileEmail.textContent =
+          data.email;
+
+      } else {
+
+        profileEmail.textContent =
+          "Hidden";
+
+      }
+
+
+      /* ---------------------------------------------
+         INTERESTS
+         --------------------------------------------- */
+
+      if (
+        interests.length === 0
+      ) {
+
+        profileInterests.innerHTML = `
+
+          <span class="interest">
+            Getting to know Kmeet
+          </span>
+
+        `;
+
+      } else {
+
+        profileInterests.innerHTML =
+          interests
+            .slice(0, 12)
+            .map(
+              interest => `
+
+                <span class="interest">
+                  ${escapeHtml(interest)}
+                </span>
+
+              `
+            )
+            .join("");
+
+      }
+
+
+      /* ---------------------------------------------
+         PHOTO
+         --------------------------------------------- */
+
+      if (photo) {
+
+        profilePhoto.src =
+          photo;
+
+        profilePhoto.style.display =
+          "block";
+
+        photoPlaceholder.style.display =
+          "none";
+
+
+        profilePhoto.onerror =
+          function() {
+
+            profilePhoto.onerror =
+              null;
+
+            profilePhoto.style.display =
+              "none";
+
+            photoPlaceholder.style.display =
+              "flex";
+
+          };
+
+      } else {
+
+        profilePhoto.style.display =
+          "none";
+
+        photoPlaceholder.style.display =
+          "flex";
+
+      }
+
+
+      /* ---------------------------------------------
+         ONLINE STATUS
+         --------------------------------------------- */
+
+      if (online) {
+
+        statusDot.className =
+          "status-dot online";
+
+        statusText.textContent =
+          "Online";
+
+      } else {
+
+        statusDot.className =
+          "status-dot offline";
+
+        statusText.textContent =
+          "Offline";
+
+      }
+
+
+      /* ---------------------------------------------
+         SHOW PROFILE
+         --------------------------------------------- */
+
+      loading.style.display =
+        "none";
+
+      errorState.style.display =
+        "none";
+
+      profileContent.style.display =
+        "block";
+
+    }
+
+
+    /* =====================================================
+       LOAD FIRESTORE PROFILE
+
+       IMPORTANT:
+       THIS IS THE FIX.
+
+       Correct:
+       doc(db, "users", uid)
+
+       NOT:
+       collection(db, ...)
+       ===================================================== */
+
+    async function loadFirestoreProfile(
+      uid,
+      firebaseUser
+    ) {
+
+      console.log(
+        "KMEET: Loading profile document:",
         uid
       );
 
 
-    const profileSnap =
-      await getDoc(
-        profileRef
-      );
+      /* ---------------------------------------------
+         ONE USER = ONE DOCUMENT
+         --------------------------------------------- */
+
+      const profileRef =
+        doc(
+          db,
+          "users",
+          uid
+        );
 
 
-    if(
-      profileSnap.exists()
-    ){
+      /* ---------------------------------------------
+         READ THAT DOCUMENT
+         --------------------------------------------- */
 
-      console.log(
-        "KMEET: Profile document found."
-      );
-
-
-      const data =
-        profileSnap.data() || {};
+      const profileSnap =
+        await getDoc(
+          profileRef
+        );
 
 
-      displayProfile(
-        data,
-        firebaseUser,
-        isOwnProfile
-      );
+      /* ---------------------------------------------
+         DOCUMENT DOES NOT EXIST
+         --------------------------------------------- */
+
+      if (
+        !profileSnap.exists()
+      ) {
+
+        console.warn(
+          "KMEET: Profile document does not exist:",
+          uid
+        );
 
 
-      return;
+        /*
+          The signup process creates this document,
+          but if it has not been created yet we can
+          still show the Firebase account information.
+        */
 
-    }
+        const fallbackData = {
 
-
-    /*
-      If the authenticated user's
-      document doesn't exist, still
-      show a basic profile using Auth.
-    */
-
-    if(isOwnProfile){
-
-      console.log(
-        "KMEET: Firestore profile not found. Using Firebase Auth data."
-      );
-
-
-      displayProfile(
-
-        {
           name:
-            firebaseUser.displayName || "",
+            firebaseUser &&
+            firebaseUser.displayName
+              ? firebaseUser.displayName
+              : "Kmeet Member",
+
+          email:
+            firebaseUser &&
+            firebaseUser.email
+              ? firebaseUser.email
+              : "",
 
           location:
             "Kenya",
 
           age:
-            "",
+            null,
 
           gender:
             "",
 
           bio:
-            "Your Kmeet profile is ready. Add more details to tell people about yourself.",
+            "New Kmeet member.",
 
           interests:
             [],
 
           photoURL:
-            firebaseUser.photoURL || ""
+            firebaseUser &&
+            firebaseUser.photoURL
+              ? firebaseUser.photoURL
+              : "",
 
-        },
+          online:
+            true
 
-        firebaseUser,
-
-        true
-
-      );
-
-
-      return;
-
-    }
+        };
 
 
-    showError(
-      "Profile not found",
-      "This Kmeet profile is no longer available."
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "KMEET profile loading error:",
-      error
-    );
-
-
-    showError(
-      "Profile could not be loaded",
-      error.message ||
-      "There was a problem loading this Kmeet profile."
-    );
-
-  }
-
-}
-
-
-
-/* =====================================================
-   AUTH STATE
-
-   CASE 1:
-   profile.html
-   ----------------
-   Load current user.
-
-   CASE 2:
-   profile.html?id=...
-   ----------------
-   Load selected Discover profile.
-
-   Logged-out visitors can view a selected
-   profile, but cannot access their own profile.
-===================================================== */
-
-onAuthStateChanged(
-  auth,
-  async firebaseUser => {
-
-    try{
-
-      /* ================================================
-         VIEWING ANOTHER PERSON
-      ================================================= */
-
-      if(targetId){
-
-        console.log(
-          "KMEET: Viewing selected profile:",
-          targetId
-        );
-
-
-        await loadFirestoreProfile(
-          targetId,
-          firebaseUser,
-          false
+        displayProfile(
+          fallbackData,
+          firebaseUser
         );
 
 
@@ -1873,124 +2304,200 @@ onAuthStateChanged(
       }
 
 
+      /* ---------------------------------------------
+         DOCUMENT EXISTS
+         --------------------------------------------- */
 
-      /* ================================================
-         VIEWING OWN PROFILE
-
-         Must be logged in.
-      ================================================= */
-
-      if(
-        !firebaseUser ||
-        firebaseUser.isAnonymous
-      ){
-
-        console.log(
-          "KMEET: No logged-in user. Redirecting to login."
-        );
-
-
-        window.location.replace(
-          "login.html"
-        );
-
-
-        return;
-
-      }
+      const data =
+        profileSnap.data();
 
 
       console.log(
-        "KMEET: Logged-in user:",
-        firebaseUser.uid
+        "KMEET: Profile document loaded successfully.",
+        data
       );
 
 
-      await loadFirestoreProfile(
-        firebaseUser.uid,
-        firebaseUser,
-        true
+      displayProfile(
+        data,
+        firebaseUser
       );
-
-
-    }catch(error){
-
-      console.error(
-        "KMEET authentication/profile error:",
-        error
-      );
-
-
-      /*
-        Only redirect when this is the
-        user's own profile.
-
-        Do NOT redirect when someone is
-        simply viewing a Discover profile.
-      */
-
-      if(!targetId){
-
-        window.location.replace(
-          "login.html"
-        );
-
-      }else{
-
-        showError(
-          "Profile unavailable",
-          error.message ||
-          "Could not load this profile."
-        );
-
-      }
 
     }
 
-  }
-);
 
+    /* =====================================================
+       AUTHENTICATION
+       ===================================================== */
 
+    onAuthStateChanged(
+      auth,
+      async firebaseUser => {
 
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-document
-  .getElementById("logout")
-  .addEventListener(
-    "click",
-    async event => {
-
-      event.preventDefault();
-
-
-      try{
-
-        await signOut(
-          auth
+        console.log(
+          "KMEET: Auth state:",
+          firebaseUser
+            ? firebaseUser.uid
+            : "NO USER"
         );
 
 
-        window.location.replace(
-          "login.html"
+        /*
+          No user:
+          Send directly to login.
+        */
+
+        if (
+          !firebaseUser ||
+          firebaseUser.isAnonymous
+        ) {
+
+          console.log(
+            "KMEET: No registered user. Redirecting to login."
+          );
+
+
+          window.location.replace(
+            "login.html"
+          );
+
+
+          return;
+
+        }
+
+
+        /*
+          Registered Firebase user.
+        */
+
+        console.log(
+          "KMEET: Logged-in user:",
+          firebaseUser.uid
         );
 
 
-      }catch(error){
+        /*
+          If this is the normal Profile link,
+          load the logged-in user's own document.
 
-        console.error(
-          "KMEET logout error:",
-          error
-        );
+          If ?id= exists, load that member instead.
+        */
+
+        const profileId =
+          requestedProfileId ||
+          firebaseUser.uid;
+
+
+        try {
+
+          await loadFirestoreProfile(
+            profileId,
+            profileId === firebaseUser.uid
+              ? firebaseUser
+              : null
+          );
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "KMEET profile loading error:",
+            error
+          );
+
+
+          /*
+            Give a useful error instead of hiding
+            the actual Firebase problem.
+          */
+
+          if (
+            error &&
+            error.code ===
+            "permission-denied"
+          ) {
+
+            showError(
+              "Kmeet could not access this profile because Firestore permissions are blocking the request."
+            );
+
+          } else if (
+            error &&
+            error.code ===
+            "failed-precondition"
+          ) {
+
+            showError(
+              "Kmeet could not access Firestore right now. Please check your Firebase connection."
+            );
+
+          } else {
+
+            showError(
+              "Kmeet could not load this profile. Please refresh the page and try again."
+            );
+
+          }
+
+        }
 
       }
 
-    }
-  );
+    );
 
-</script>
+
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    logoutBtn.addEventListener(
+      "click",
+      async () => {
+
+        logoutBtn.disabled =
+          true;
+
+        logoutBtn.textContent =
+          "Logging out…";
+
+
+        try {
+
+          await signOut(
+            auth
+          );
+
+
+          window.location.replace(
+            "login.html"
+          );
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "KMEET logout error:",
+            error
+          );
+
+
+          logoutBtn.disabled =
+            false;
+
+          logoutBtn.textContent =
+            "Logout";
+
+        }
+
+      }
+    );
+
+  </script>
 
 
 </body>
+
 </html>
