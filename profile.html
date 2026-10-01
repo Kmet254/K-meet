@@ -1721,4 +1721,419 @@
           </section>
 
 
-          <section class="
+          <section class="section">
+
+            <h2 class="section-title">
+              Interests
+            </h2>
+
+            <div class="interests">
+
+              ${interestsMarkup}
+
+            </div>
+
+          </section>
+
+
+          ${actionsMarkup}
+
+        </div>
+
+      `;
+
+
+      /*
+        If a photo exists but fails,
+        use the initials fallback.
+      */
+
+      const image =
+        document.getElementById(
+          "profilePhoto"
+        );
+
+
+      if (image) {
+
+        image.addEventListener(
+          "error",
+          function() {
+
+            const fallback =
+              document.createElement(
+                "div"
+              );
+
+
+            fallback.id =
+              "profilePhotoFallback";
+
+
+            fallback.className =
+              "photo-fallback";
+
+
+            fallback.textContent =
+              getInitial(name);
+
+
+            image.replaceWith(
+              fallback
+            );
+
+          }
+        );
+
+      }
+
+
+      /*
+        Logout only exists on own profile.
+      */
+
+      const logoutButton =
+        document.getElementById(
+          "logoutButton"
+        );
+
+
+      if (logoutButton) {
+
+        logoutButton.addEventListener(
+          "click",
+          async function() {
+
+            logoutButton.disabled =
+              true;
+
+            logoutButton.textContent =
+              "Logging out...";
+
+
+            try {
+
+              await signOut(auth);
+
+              window.location.replace(
+                "login.html"
+              );
+
+            }
+
+            catch (error) {
+
+              console.error(
+                "KMEET logout error:",
+                error
+              );
+
+              logoutButton.disabled =
+                false;
+
+              logoutButton.textContent =
+                "Log Out";
+
+            }
+
+          }
+        );
+
+      }
+
+
+      /*
+        Start presence monitoring only
+        after the profile itself has been
+        successfully displayed.
+      */
+
+      watchPresence(
+        profileUserId,
+        isOwnProfile
+      );
+
+    }
+
+
+    /* =========================================
+       LOAD ONE FIRESTORE PROFILE
+       ========================================= */
+
+    async function loadProfile(
+      userId,
+      isOwnProfile
+    ) {
+
+      console.log(
+        "KMEET: Loading profile document:",
+        userId
+      );
+
+
+      try {
+
+        const profileRef =
+          doc(
+            db,
+            "users",
+            userId
+          );
+
+
+        console.log(
+          "KMEET: Reading Firestore document..."
+        );
+
+
+        const profileSnap =
+          await getDoc(
+            profileRef
+          );
+
+
+        console.log(
+          "KMEET: Firestore response received."
+        );
+
+
+        if (
+          !profileSnap.exists()
+        ) {
+
+          console.error(
+            "KMEET: Profile document does not exist."
+          );
+
+
+          profileContainer.innerHTML = `
+
+            <div class="error-card">
+
+              <h2>
+                Profile not found
+              </h2>
+
+              <p>
+                This Kmeet profile could not be found.
+              </p>
+
+              <a
+                class="button primary-button"
+                href="discover.html"
+              >
+                Back to Discover
+              </a>
+
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        const data =
+          profileSnap.data();
+
+
+        console.log(
+          "KMEET: Profile data:",
+          data
+        );
+
+
+        displayProfile(
+          data,
+          userId,
+          isOwnProfile
+        );
+
+
+        console.log(
+          "KMEET: PROFILE DISPLAYED SUCCESSFULLY."
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "KMEET profile loading error:",
+          error
+        );
+
+
+        profileContainer.innerHTML = `
+
+          <div class="error-card">
+
+            <h2>
+              Could not load profile
+            </h2>
+
+            <p>
+              Kmeet could not load this profile right now.
+              Please refresh the page and try again.
+            </p>
+
+            <a
+              class="button primary-button"
+              href="discover.html"
+            >
+              Back to Discover
+            </a>
+
+          </div>
+
+        `;
+
+        showStatus(
+          error.message ||
+          "Profile loading error.",
+          true
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       AUTHENTICATION
+       ========================================= */
+
+    let authFinished =
+      false;
+
+
+    onAuthStateChanged(
+      auth,
+      async function(user) {
+
+        authFinished =
+          true;
+
+
+        console.log(
+          "KMEET: AUTH STATE RECEIVED:",
+          user
+        );
+
+
+        /*
+          CASE 1:
+          A specific profile was requested.
+
+          Example:
+          profile.html?id=abc123
+
+          This profile can be viewed by
+          guests as well.
+        */
+
+        if (
+          requestedUserId
+        ) {
+
+          const isOwnProfile =
+            Boolean(
+              user &&
+              !user.isAnonymous &&
+              user.uid ===
+              requestedUserId
+            );
+
+
+          hideStatus();
+
+
+          await loadProfile(
+            requestedUserId,
+            isOwnProfile
+          );
+
+
+          return;
+
+        }
+
+
+        /*
+          CASE 2:
+          No ID was supplied.
+
+          This means the page is intended
+          to show the logged-in user's own
+          profile.
+        */
+
+        if (
+          !user ||
+          user.isAnonymous
+        ) {
+
+          console.log(
+            "KMEET: No registered user. Redirecting to login."
+          );
+
+
+          window.location.replace(
+            "login.html"
+          );
+
+
+          return;
+
+        }
+
+
+        hideStatus();
+
+
+        await loadProfile(
+          user.uid,
+          true
+        );
+
+      }
+    );
+
+
+    /* =========================================
+       AUTH DIAGNOSTIC
+       ========================================= */
+
+    setTimeout(
+      function() {
+
+        if (
+          authFinished
+        ) {
+
+          return;
+
+        }
+
+
+        console.warn(
+          "KMEET: Authentication callback has not completed after 10 seconds."
+        );
+
+
+        showStatus(
+          "Kmeet is still waiting for Firebase authentication. Please refresh the page.",
+          true
+        );
+
+      },
+      10000
+    );
+
+
+  </script>
+
+</body>
+
+</html>
