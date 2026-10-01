@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Kmeet - Find Your Connection</title>
 
-    <!-- Main stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <base target="_self">
 
-    <!-- Google Fonts -->
+    <!-- KMEET LOGO / FAVICON -->
+    <link
+        rel="icon"
+        type="image/jpeg"
+        href="./kmeet-logo.jfif.jfif"
+    >
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet"
     >
 
-    <!-- Font Awesome -->
     <link
         rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     >
 
     <style>
 
-        /* =====================================================
-           KMEET HOME PAGE
-        ===================================================== */
+        /* =========================================================
+           KMEET HOME
+           ========================================================= */
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         html {
@@ -46,10 +46,10 @@
         }
 
         body {
-            font-family: "Poppins", sans-serif;
-            background: #09070b;
+            min-height: 100vh;
+            font-family: "Poppins", Arial, sans-serif;
             color: #ffffff;
-            overflow-x: hidden;
+            background: #100b0f;
         }
 
         a {
@@ -58,1476 +58,1553 @@
         }
 
 
-        /* =====================================================
-           NAVIGATION
-        ===================================================== */
+        /* =========================================================
+           MAIN HERO
+           ========================================================= */
 
-        .kmeet-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .header {
+            position: relative;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(12, 7, 10, 0.58),
+                    rgba(12, 7, 10, 0.72)
+                ),
+                url("./kmeet-background.jpg.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
+
+        .main-nav {
             width: 100%;
-            height: 78px;
-            z-index: 1000;
+            min-height: 82px;
+
+            padding: 14px 52px;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 28px;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(13, 8, 11, 0.94),
+                    rgba(20, 10, 15, 0.76)
+                );
 
-            background: rgba(14, 10, 15, 0.86);
+            border-bottom: 1px solid rgba(255,255,255,0.10);
 
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            border-bottom: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+            z-index: 20;
         }
 
 
-        .kmeet-brand {
+        /* =========================================================
+           KMEET LOGO
+           ========================================================= */
+
+        .brand {
             display: flex;
             align-items: center;
-            gap: 13px;
-            flex-shrink: 0;
+            min-width: 230px;
         }
 
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
 
-        /*
-         * KMEET LOGO
-         */
+            color: #ffffff;
+            font-family: "Playfair Display", Georgia, serif;
 
-        .kmeet-logo {
-            width: 47px;
-            height: 47px;
+            font-size: 18px;
+            font-weight: 600;
 
-            display: block;
+            letter-spacing: 0.3px;
 
-            object-fit: cover;
-
-            border-radius: 13px;
-
-            background: #ffffff;
-
-            box-shadow:
-                0 5px 20px rgba(0,0,0,0.25);
+            white-space: nowrap;
         }
 
-
         /*
-         * Fallback logo shown if the image
-         * cannot be loaded.
-         */
+           IMPORTANT:
+           The logo image is deliberately given its own container.
+           This prevents inherited CSS from hiding or collapsing it.
+        */
 
-        .kmeet-logo-fallback {
-            width: 47px;
-            height: 47px;
+        .kmeet-logo-link {
+            width: 54px;
+            height: 54px;
 
-            display: none;
+            min-width: 54px;
+            min-height: 54px;
 
+            display: flex;
             align-items: center;
             justify-content: center;
 
-            flex-shrink: 0;
+            border-radius: 50%;
 
-            border-radius: 13px;
+            overflow: hidden;
+
+            background: rgba(255,255,255,0.96);
+
+            border: 2px solid rgba(255,255,255,0.80);
+
+            box-shadow:
+                0 0 18px rgba(230,106,148,0.35);
+
+            flex-shrink: 0;
+        }
+
+        .kmeet-logo {
+            display: block !important;
+
+            width: 50px !important;
+            height: 50px !important;
+
+            min-width: 50px !important;
+            min-height: 50px !important;
+
+            max-width: 50px !important;
+            max-height: 50px !important;
+
+            object-fit: cover;
+            object-position: center;
+
+            border-radius: 50%;
+
+            opacity: 1 !important;
+            visibility: visible !important;
+
+            background: #ffffff;
+        }
+
+        .brand-heart {
+            color: #e66a94;
+            font-size: 18px;
+
+            text-shadow:
+                0 0 15px rgba(230,106,148,0.55);
+        }
+
+
+        /* =========================================================
+           CENTER INTERESTED BUTTON
+           ========================================================= */
+
+        .interested-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            padding: 11px 20px;
+
+            border-radius: 30px;
 
             background:
                 linear-gradient(
                     135deg,
-                    #ff4fa7,
-                    #c83bea
+                    rgba(230,106,148,0.95),
+                    rgba(160,54,98,0.95)
                 );
 
-            color: #ffffff;
-
-            font-size: 21px;
+            border: 1px solid rgba(255,255,255,0.16);
 
             box-shadow:
-                0 5px 20px rgba(255,70,160,0.25);
-        }
+                0 8px 25px rgba(0,0,0,0.25);
 
-
-        .kmeet-brand-name {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-
-        .kmeet-nav {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-
-        .kmeet-nav a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 11px 15px;
-
-            border-radius: 14px;
-
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
 
-            color: rgba(255,255,255,0.78);
-
             transition:
-                background 0.25s ease,
-                color 0.25s ease,
-                transform 0.25s ease;
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .interested-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.34);
         }
 
 
-        .kmeet-nav a:hover {
-            color: #ffffff;
+        /* =========================================================
+           RIGHT NAVIGATION
+           ========================================================= */
 
-            background:
-                rgba(255,255,255,0.08);
+        .nav-links {
+            min-width: 230px;
 
-            transform:
-                translateY(-1px);
+            display: flex;
+            justify-content: flex-end;
         }
 
-
-        .kmeet-nav .active {
-            color: #ffffff;
-
-            background:
-                rgba(255,255,255,0.12);
-        }
-
-
-        .kmeet-nav .login-link {
-            border:
-                1px solid rgba(255,91,170,0.38);
-
-            background:
-                rgba(255,75,160,0.08);
-        }
-
-
-        .kmeet-nav .login-link:hover {
-            background:
-                rgba(255,75,160,0.17);
-        }
-
-
-        /* =====================================================
-           HERO
-        ===================================================== */
-
-        .kmeet-hero {
-            position: relative;
-
-            min-height: 100vh;
+        .nav-links ul {
+            list-style: none;
 
             display: flex;
             align-items: center;
-            justify-content: center;
 
-            padding: 125px 24px 85px;
+            gap: 27px;
+        }
 
-            background-image:
-                linear-gradient(
-                    rgba(39,22,42,0.48),
-                    rgba(17,9,23,0.78)
-                ),
-                url("kmeet-background.jpg.jpg");
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            font-size: 12px;
+            font-weight: 500;
+
+            letter-spacing: 1px;
+
+            transition:
+                color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f08aaa;
         }
 
 
-        .kmeet-hero::after {
+        /* =========================================================
+           HERO CONTENT
+           ========================================================= */
+
+        .hero-content {
+            width: min(92%, 720px);
+
+            margin: auto;
+
+            padding: 58px 25px 75px;
+
+            text-align: center;
+
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-content::before {
             content: "";
 
             position: absolute;
-            inset: 0;
+
+            inset: 15px;
 
             background:
-                radial-gradient(
-                    circle at 50% 45%,
-                    rgba(255,95,174,0.10),
-                    transparent 40%
-                );
-
-            pointer-events: none;
-        }
-
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-
-            width: min(900px,100%);
-
-            text-align: center;
-        }
-
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-
-            padding: 10px 18px;
-
-            margin-bottom: 30px;
-
-            border-radius: 999px;
-
-            color: rgba(255,255,255,0.90);
-
-            background:
-                rgba(255,255,255,0.09);
+                rgba(16, 9, 13, 0.42);
 
             border:
-                1px solid rgba(255,255,255,0.13);
+                1px solid rgba(255,255,255,0.10);
 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            border-radius: 30px;
 
-            font-size: 14px;
-            font-weight: 500;
+            backdrop-filter: blur(4px);
 
             box-shadow:
-                0 10px 35px rgba(0,0,0,0.16);
+                0 25px 80px rgba(0,0,0,0.30);
+
+            z-index: -1;
         }
 
 
-        .hero-badge i {
-            color: #ff68ae;
+        /* =========================================================
+           GUEST CONTENT
+           ========================================================= */
+
+        #guestState {
+            padding: 35px 25px;
         }
 
-
-        .hero-title {
-            max-width: 850px;
-
-            margin: 0 auto;
+        #guestState h1 {
+            margin-bottom: 22px;
 
             font-family:
                 "Playfair Display",
+                Georgia,
                 serif;
 
-            font-size:
-                clamp(48px,7vw,82px);
+            font-size: clamp(38px, 6vw, 64px);
 
             line-height: 1.04;
 
             font-weight: 600;
 
-            letter-spacing: -2px;
+            letter-spacing: 1px;
 
             text-shadow:
-                0 8px 35px rgba(0,0,0,0.30);
+                0 5px 25px rgba(0,0,0,0.45);
         }
 
-
-        .hero-title span {
-            color: #ff72b5;
-        }
-
-
-        .hero-description {
-            max-width: 720px;
-
-            margin: 30px auto 0;
+        #guestState > p {
+            margin-bottom: 13px;
 
             color:
-                rgba(255,255,255,0.75);
-
-            font-size: 17px;
-
-            line-height: 1.8;
-
-            font-weight: 400;
-        }
-
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            gap: 16px;
-
-            margin-top: 40px;
-        }
-
-
-        .hero-button {
-            min-width: 205px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 10px;
-
-            padding: 17px 25px;
-
-            border-radius: 17px;
+                rgba(255,255,255,0.84);
 
             font-size: 15px;
-            font-weight: 600;
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease,
-                background 0.25s ease;
-        }
-
-
-        .hero-button:hover {
-            transform:
-                translateY(-3px);
-        }
-
-
-        .discover-button {
-            color: #ffffff;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff4fa7,
-                    #c93bea
-                );
-
-            box-shadow:
-                0 12px 35px rgba(232,55,166,0.30);
-        }
-
-
-        .discover-button:hover {
-            box-shadow:
-                0 17px 42px rgba(232,55,166,0.42);
-        }
-
-
-        .create-button {
-            color: #ffffff;
-
-            background:
-                rgba(255,255,255,0.08);
-
-            border:
-                1px solid rgba(255,255,255,0.19);
-
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-
-        .create-button:hover {
-            background:
-                rgba(255,255,255,0.13);
-        }
-
-
-        /* =====================================================
-           CONNECTION SECTION
-        ===================================================== */
-
-        .connection-section {
-            position: relative;
-
-            padding: 120px 24px 110px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(104,43,100,0.18),
-                    transparent 42%
-                ),
-                #09070b;
-        }
-
-
-        .connection-container {
-            width: min(900px,100%);
-
-            margin: 0 auto;
-        }
-
-
-        .section-heading {
-            text-align: center;
-
-            margin-bottom: 55px;
-        }
-
-
-        .section-heading h2 {
-            font-family:
-                "Playfair Display",
-                serif;
-
-            font-size:
-                clamp(40px,6vw,58px);
-
-            line-height: 1.15;
-
-            font-weight: 600;
-
-            margin-bottom: 18px;
-        }
-
-
-        .section-heading p {
-            max-width: 700px;
-
-            margin: 0 auto;
-
-            color:
-                rgba(255,255,255,0.65);
-
-            font-size: 16px;
 
             line-height: 1.8;
         }
 
 
-        /* =====================================================
-           GLASS CARDS
-        ===================================================== */
+        /* =========================================================
+           SIGNUP FORM
+           ========================================================= */
 
-        .connection-cards {
+        .auth-form {
+            width: min(100%, 470px);
+
+            margin: 30px auto 15px;
+
             display: flex;
-
             flex-direction: column;
 
-            gap: 20px;
+            gap: 12px;
         }
 
+        .input-group {
+            width: 100%;
+        }
 
-        .connection-card {
-            position: relative;
+        .input-group input {
+            width: 100%;
 
-            padding: 35px 30px;
+            height: 54px;
 
-            border-radius: 27px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255,255,255,0.075),
-                    rgba(255,255,255,0.035)
-                );
+            padding:
+                0 20px;
 
             border:
-                1px solid rgba(255,255,255,0.10);
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,0.20);
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease,
-                background 0.3s ease;
-        }
-
-
-        .connection-card:hover {
-            transform:
-                translateY(-4px);
-
-            border-color:
-                rgba(255,101,178,0.22);
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255,255,255,0.095),
-                    rgba(255,255,255,0.045)
-                );
-        }
-
-
-        .card-icon {
-            width: 65px;
-            height: 65px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 25px;
-
-            border-radius: 18px;
-
-            color: #ff72b5;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255,75,168,0.24),
-                    rgba(145,46,176,0.22)
-                );
-
-            font-size: 25px;
-        }
-
-
-        .connection-card h3 {
-            font-size: 22px;
-
-            margin-bottom: 11px;
-
-            font-weight: 600;
-        }
-
-
-        .connection-card p {
-            color:
-                rgba(255,255,255,0.65);
-
-            font-size: 15px;
-
-            line-height: 1.85;
-
-            max-width: 760px;
-        }
-
-
-        /* =====================================================
-           FINAL CTA
-        ===================================================== */
-
-        .final-section {
-            padding:
-                15px 24px 100px;
-
-            background: #09070b;
-        }
-
-
-        .final-card {
-            position: relative;
-
-            width: min(1050px,100%);
-
-            margin: 0 auto;
-
-            padding: 75px 35px;
-
-            text-align: center;
+                1px solid rgba(255,255,255,0.18);
 
             border-radius: 30px;
 
+            outline: none;
+
             background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(255,71,170,0.10),
-                    transparent 45%
-                ),
-                linear-gradient(
-                    135deg,
-                    rgba(86,24,68,0.30),
-                    rgba(38,14,36,0.35)
-                );
-
-            border:
-                1px solid rgba(255,104,180,0.14);
-
-            box-shadow:
-                0 25px 70px rgba(0,0,0,0.30);
-        }
-
-
-        .final-card h2 {
-            max-width: 720px;
-
-            margin:
-                0 auto 22px;
-
-            font-family:
-                "Playfair Display",
-                serif;
-
-            font-size:
-                clamp(39px,6vw,58px);
-
-            line-height: 1.15;
-        }
-
-
-        .final-card p {
-            max-width: 700px;
-
-            margin: 0 auto;
-
-            color:
-                rgba(255,255,255,0.67);
-
-            font-size: 15px;
-
-            line-height: 1.85;
-        }
-
-
-        .explore-button {
-            display: inline-flex;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 10px;
-
-            margin-top: 32px;
-
-            padding: 16px 28px;
-
-            border-radius: 16px;
+                rgba(255,255,255,0.10);
 
             color: #ffffff;
 
-            font-size: 15px;
+            font-family: "Poppins", sans-serif;
 
+            font-size: 14px;
+
+            backdrop-filter: blur(8px);
+
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .input-group input::placeholder {
+            color:
+                rgba(255,255,255,0.58);
+        }
+
+        .input-group input:focus {
+            border-color:
+                rgba(230,106,148,0.75);
+
+            background:
+                rgba(255,255,255,0.14);
+        }
+
+
+        /* =========================================================
+           BUTTONS
+           ========================================================= */
+
+        .btn {
+            min-height: 52px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            padding:
+                0 24px;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 14px;
             font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .btn-primary {
+            color: #ffffff;
 
             background:
                 linear-gradient(
                     135deg,
-                    #ff4fa7,
-                    #c83bea
+                    #e66a94,
+                    #a9426d
                 );
 
-            box-shadow:
-                0 12px 35px rgba(225,50,165,0.30);
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-
-        .explore-button:hover {
-            transform:
-                translateY(-3px);
+            border:
+                1px solid rgba(255,255,255,0.14);
 
             box-shadow:
-                0 17px 42px rgba(225,50,165,0.42);
+                0 10px 28px rgba(125,38,72,0.34);
         }
 
+        .btn-primary:hover {
+            transform: translateY(-2px);
 
-        /* =====================================================
-           FOOTER
-        ===================================================== */
+            box-shadow:
+                0 15px 32px rgba(125,38,72,0.44);
+        }
 
-        .kmeet-footer {
-            padding:
-                28px 20px 35px;
+        .login-option {
+            margin-top: 18px;
 
-            text-align: center;
-
-            border-top:
-                1px solid rgba(255,255,255,0.06);
-
-            background: #08060a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
 
             color:
-                rgba(255,255,255,0.48);
+                rgba(255,255,255,0.65);
 
             font-size: 13px;
         }
 
+        .btn-link {
+            color: #f08aaa;
 
-        .kmeet-footer strong {
-            color:
-                rgba(255,255,255,0.75);
+            font-weight: 600;
+
+            text-decoration: underline;
+
+            text-underline-offset: 4px;
+        }
+
+        .btn-link:hover {
+            color: #ffffff;
         }
 
 
-        /* =====================================================
+        /* =========================================================
+           LOGGED-IN HOME PROFILE
+           ========================================================= */
+
+        #userState {
+            padding: 35px 25px;
+        }
+
+        .home-profile-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home-avatar {
+            width: 115px !important;
+            height: 115px !important;
+
+            min-width: 115px;
+            min-height: 115px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border:
+                4px solid rgba(255,255,255,0.88);
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.35);
+        }
+
+        .home-profile-preview h2 {
+            margin-top: 18px;
+
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size: 30px;
+        }
+
+        .home-email {
+            margin-top: 7px;
+
+            color:
+                rgba(255,255,255,0.62);
+
+            font-size: 13px;
+        }
+
+        .home-interests-tags {
+            margin-top: 18px;
+
+            display: flex;
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 8px;
+        }
+
+        .home-tag {
+            padding:
+                6px 12px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(230,106,148,0.16);
+
+            border:
+                1px solid rgba(230,106,148,0.30);
+
+            color:
+                rgba(255,255,255,0.88);
+
+            font-size: 11px;
+        }
+
+        .home-profile-actions {
+            width: min(100%, 430px);
+
+            margin-top: 25px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .home-profile-actions .btn {
+            width: 100%;
+        }
+
+        .btn-link-logout {
+            padding: 10px;
+
+            border: none;
+
+            background: transparent;
+
+            color:
+                rgba(255,255,255,0.64);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+
+            cursor: pointer;
+        }
+
+        .btn-link-logout:hover {
+            color: #ffffff;
+        }
+
+
+        /* =========================================================
+           LOWER INFORMATION SECTION
+           ========================================================= */
+
+        .home-info {
+            background:
+                linear-gradient(
+                    180deg,
+                    #100b0f,
+                    #170d13
+                );
+
+            padding:
+                75px 25px 85px;
+
+            text-align: center;
+        }
+
+        .home-info-inner {
+            width: min(1100px, 100%);
+
+            margin: auto;
+        }
+
+        .home-info h2 {
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size: clamp(30px, 4vw, 45px);
+
+            margin-bottom: 12px;
+        }
+
+        .home-info-intro {
+            max-width: 650px;
+
+            margin:
+                0 auto 45px;
+
+            color:
+                rgba(255,255,255,0.65);
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+        .home-features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .feature-card {
+            padding:
+                32px 25px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.15);
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(230,106,148,0.30);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+
+            margin:
+                0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(230,106,148,0.13);
+
+            color: #e66a94;
+
+            font-size: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size: 22px;
+        }
+
+        .feature-card p {
+            color:
+                rgba(255,255,255,0.62);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           FINAL CTA
+           ========================================================= */
+
+        .home-cta {
+            padding:
+                70px 25px;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(130,45,78,0.25),
+                    transparent 65%
+                );
+        }
+
+        .home-cta h2 {
+            font-family:
+                "Playfair Display",
+                Georgia,
+                serif;
+
+            font-size: clamp(30px, 4vw, 44px);
+
+            margin-bottom: 12px;
+        }
+
+        .home-cta p {
+            max-width: 580px;
+
+            margin:
+                0 auto 25px;
+
+            color:
+                rgba(255,255,255,0.63);
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-flex;
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        footer {
+            padding:
+                25px;
+
+            text-align: center;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            background: #0b0709;
+
+            color:
+                rgba(255,255,255,0.45);
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           FADE
+           ========================================================= */
+
+        body.fade-out {
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+
+        /* =========================================================
            MOBILE
-        ===================================================== */
+           ========================================================= */
 
-        @media (max-width:760px) {
+        @media (max-width: 800px) {
 
-            .kmeet-navbar {
-                height: 72px;
-
+            .main-nav {
                 padding:
-                    0 18px;
+                    12px 18px;
+
+                min-height: 72px;
             }
 
-
-            .kmeet-logo,
-            .kmeet-logo-fallback {
-                width: 43px;
-                height: 43px;
-
-                border-radius: 12px;
+            .brand {
+                min-width: auto;
             }
 
-
-            .kmeet-brand {
-                gap: 10px;
+            .brand-link > span:last-child {
+                display: none;
             }
 
+            .kmeet-logo-link {
+                width: 50px;
+                height: 50px;
 
-            .kmeet-brand-name {
-                font-size: 21px;
+                min-width: 50px;
+                min-height: 50px;
             }
 
+            .kmeet-logo {
+                width: 46px !important;
+                height: 46px !important;
 
-            .kmeet-nav {
-                gap: 3px;
+                min-width: 46px !important;
+                min-height: 46px !important;
+
+                max-width: 46px !important;
+                max-height: 46px !important;
             }
 
-
-            .kmeet-nav a {
-                padding:
-                    9px 9px;
-
-                gap: 5px;
-
-                font-size: 12px;
-            }
-
-
-            .kmeet-nav a i {
-                font-size: 11px;
-            }
-
-
-            .kmeet-hero {
-                min-height: 100svh;
-
-                padding:
-                    115px
-                    20px
-                    70px;
-
-                background-position:
-                    center;
-            }
-
-
-            .hero-badge {
-                font-size: 12px;
-
+            .interested-btn {
                 padding:
                     9px 14px;
 
-                margin-bottom:
-                    23px;
+                font-size: 11px;
             }
 
-
-            .hero-title {
-                font-size:
-                    clamp(43px,12vw,58px);
-
-                letter-spacing:
-                    -1.5px;
+            .nav-links {
+                min-width: auto;
             }
 
-
-            .hero-description {
-                margin-top:
-                    23px;
-
-                font-size: 14px;
-
-                line-height:
-                    1.8;
-            }
-
-
-            .hero-buttons {
-                flex-direction:
-                    column;
-
+            .nav-links ul {
                 gap: 12px;
-
-                margin-top:
-                    32px;
             }
 
-
-            .hero-button {
-                width:
-                    min(290px,100%);
-
-                min-width: 0;
-
-                padding:
-                    15px 20px;
+            .nav-links a {
+                font-size: 10px;
             }
 
-
-            .connection-section {
-                padding:
-                    85px 18px 80px;
-            }
-
-
-            .section-heading {
-                margin-bottom:
-                    35px;
-            }
-
-
-            .section-heading h2 {
-                font-size: 39px;
-            }
-
-
-            .section-heading p {
-                font-size: 14px;
-            }
-
-
-            .connection-card {
-                padding:
-                    30px 25px;
-
-                border-radius:
-                    24px;
-            }
-
-
-            .card-icon {
-                width: 62px;
-                height: 62px;
-
-                margin-bottom:
-                    22px;
-            }
-
-
-            .connection-card h3 {
-                font-size: 20px;
-            }
-
-
-            .connection-card p {
-                font-size: 14px;
-            }
-
-
-            .final-section {
-                padding:
-                    5px
-                    18px
-                    75px;
-            }
-
-
-            .final-card {
-                padding:
-                    58px 23px;
-
-                border-radius:
-                    26px;
-            }
-
-
-            .final-card h2 {
-                font-size:
-                    39px;
-            }
-
-
-            .final-card p {
-                font-size:
-                    14px;
-            }
-
-
-            .explore-button {
-                width:
-                    min(240px,100%);
+            .home-features {
+                grid-template-columns: 1fr;
             }
 
         }
 
 
-        /* =====================================================
-           VERY SMALL PHONES
-        ===================================================== */
+        @media (max-width: 480px) {
 
-        @media (max-width:430px) {
-
-            .kmeet-navbar {
+            .main-nav {
                 padding:
-                    0 13px;
+                    10px 12px;
             }
 
-
-            .kmeet-brand-name {
-                font-size:
-                    19px;
+            .nav-links ul {
+                gap: 9px;
             }
 
+            .nav-links a {
+                font-size: 9px;
+                letter-spacing: 0.5px;
+            }
 
-            .kmeet-nav a {
+            .interested-btn {
+                display: none;
+            }
+
+            .hero-content {
+                width: 100%;
                 padding:
-                    8px 6px;
-
-                font-size:
-                    11px;
+                    35px 10px 55px;
             }
 
-
-            .kmeet-nav a span {
-                display:
-                    none;
+            .hero-content::before {
+                inset: 8px;
+                border-radius: 24px;
             }
 
-
-            .kmeet-nav a i {
-                font-size:
-                    14px;
-            }
-
-
-            .kmeet-nav .login-link {
+            #guestState,
+            #userState {
                 padding:
-                    9px 11px;
+                    28px 15px;
             }
 
-
-            .kmeet-nav .login-link span {
-                display:
-                    inline;
+            #guestState h1 {
+                font-size: 38px;
             }
 
-
-            .hero-title {
-                font-size:
-                    43px;
+            #guestState > p {
+                font-size: 13px;
             }
 
-
-            .hero-description {
-                font-size:
-                    13px;
+            .home-info {
+                padding:
+                    55px 18px;
             }
 
         }
 
     </style>
-
 </head>
 
 
 <body>
 
 
+<!-- =========================================================
+     HERO / HEADER
+     ========================================================= -->
+
+<section class="header">
+
+
     <!-- =====================================================
          NAVIGATION
-    ===================================================== -->
+         ===================================================== -->
 
-    <header class="kmeet-navbar">
+    <nav class="main-nav">
 
+
+        <!-- KMEET LOGO -->
+
+        <div class="brand">
+
+            <a
+                href="index.html"
+                class="brand-link"
+                aria-label="Kmeet Home"
+            >
+
+                <span class="kmeet-logo-link">
+
+                    <img
+                        src="./kmeet-logo.jfif.jfif"
+                        alt="Kmeet"
+                        class="kmeet-logo"
+                    >
+
+                </span>
+
+                <span>
+                    Kmeet
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- INTERESTED -->
 
         <a
-            href="index.html"
-            class="kmeet-brand"
+            href="#signup"
+            class="interested-btn"
         >
 
-            <!-- REAL KMEET LOGO -->
+            <i class="fa-solid fa-heart"></i>
 
-            <img
-                src="kmeet-logo.jfif.jfif"
-                alt="Kmeet logo"
-                class="kmeet-logo"
-                id="kmeetLogo"
-            >
-
-
-            <!-- FALLBACK HEART LOGO -->
-
-            <span
-                class="kmeet-logo-fallback"
-                id="kmeetLogoFallback"
-                aria-label="Kmeet logo"
-            >
-
-                <i class="fa-solid fa-heart"></i>
-
-            </span>
-
-
-            <span class="kmeet-brand-name">
-                Kmeet
+            <span>
+                Interested?
             </span>
 
         </a>
 
 
-        <nav class="kmeet-nav">
+        <!-- NAVIGATION LINKS -->
 
+        <div class="nav-links">
 
-            <a
-                href="index.html"
-                class="active"
-            >
+            <ul>
 
-                <i class="fa-solid fa-house"></i>
+                <li>
+                    <a href="discover.html">
+                        DISCOVER
+                    </a>
+                </li>
 
-                <span>
-                    Home
-                </span>
+                <li id="navProfileLink">
+                    <a href="login.html">
+                        LOG IN
+                    </a>
+                </li>
 
-            </a>
+            </ul>
 
+        </div>
 
-            <a href="discover.html">
-
-                <i class="fa-solid fa-compass"></i>
-
-                <span>
-                    Discover
-                </span>
-
-            </a>
-
-
-            <a
-                href="profile.html"
-                id="profileNav"
-            >
-
-                <i class="fa-solid fa-user"></i>
-
-                <span>
-                    Profile
-                </span>
-
-            </a>
-
-
-            <a
-                href="login.html"
-                class="login-link"
-                id="accountNav"
-            >
-
-                <i
-                    class="fa-solid fa-right-to-bracket"
-                    id="accountNavIcon"
-                ></i>
-
-                <span id="accountNavText">
-                    Log In
-                </span>
-
-            </a>
-
-
-        </nav>
-
-    </header>
+    </nav>
 
 
     <!-- =====================================================
-         HERO
-    ===================================================== -->
+         HERO CONTENT
+         ===================================================== -->
 
-    <main>
-
-
-        <section class="kmeet-hero">
-
-
-            <div class="hero-content">
+    <div
+        class="hero-content"
+        id="heroCard"
+    >
 
 
-                <div class="hero-badge">
+        <!-- =================================================
+             GUEST STATE
+             ================================================= -->
 
-                    <i class="fa-solid fa-heart"></i>
+        <div id="guestState">
 
-                    <span>
-                        Meaningful connections start here
-                    </span>
+            <h1>
+                KMEET YOUR HEARTS TRUE<br>
+                ECHO
+            </h1>
+
+            <p>
+                Find a connection built for intentional,<br>
+                romantic courtship
+            </p>
+
+            <p>
+                A sanctuary for intentional courtship
+            </p>
+
+
+            <!-- SIGNUP -->
+
+            <form
+                id="signupForm"
+                class="auth-form"
+            >
+
+                <div class="input-group">
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                        autocomplete="email"
+                    >
 
                 </div>
 
 
-                <h1 class="hero-title">
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
 
-                    Meet someone who
-                    <span>gets you.</span>
+                    <i class="fa-solid fa-heart"></i>
 
-                </h1>
+                    Create Account
 
+                </button>
 
-                <p class="hero-description">
-
-                    Kmeet is a place to discover interesting people,
-                    share your interests and build genuine connections
-                    naturally.
-
-                </p>
+            </form>
 
 
-                <div class="hero-buttons">
+            <div class="login-option">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <a
+                    href="login.html"
+                    class="btn-link"
+                >
+                    Log In
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             LOGGED-IN STATE
+             ================================================= -->
+
+        <div
+            id="userState"
+            style="display:none;"
+        >
+
+            <div class="home-profile-preview">
+
+
+                <img
+                    id="homeUserAvatar"
+                    src=""
+                    alt="Profile Photo"
+                    class="home-avatar"
+                >
+
+
+                <h2 id="homeUserName">
+                    Welcome Back
+                </h2>
+
+
+                <p
+                    id="homeUserEmail"
+                    class="home-email"
+                ></p>
+
+
+                <div
+                    class="home-interests-tags"
+                    id="homeInterests"
+                ></div>
+
+
+                <div class="home-profile-actions">
 
 
                     <a
                         href="discover.html"
-                        class="hero-button discover-button"
+                        class="btn btn-primary"
                     >
 
                         <i class="fa-solid fa-compass"></i>
 
-                        <span>
-                            Discover People
-                        </span>
+                        Discover People
 
                     </a>
 
 
                     <a
-                        href="interests.html"
-                        class="hero-button create-button"
-                        id="heroAccountButton"
+                        href="profile.html"
+                        class="btn btn-primary"
                     >
 
-                        <i
-                            class="fa-solid fa-user-plus"
-                            id="heroAccountIcon"
-                        ></i>
-
-                        <span id="heroAccountText">
-                            Create Account
-                        </span>
+                        View Full Profile
 
                     </a>
 
 
-                </div>
+                    <button
+                        id="homeLogoutBtn"
+                        class="btn-link-logout"
+                    >
 
+                        Log Out
+
+                    </button>
+
+
+                </div>
 
             </div>
 
+        </div>
 
-        </section>
+    </div>
 
-
-        <!-- =================================================
-             CONNECTION MADE SIMPLE
-        ================================================== -->
-
-        <section class="connection-section">
+</section>
 
 
-            <div class="connection-container">
+
+<!-- =========================================================
+     CONNECTION MADE SIMPLE
+     ========================================================= -->
+
+<section class="home-info">
+
+    <div class="home-info-inner">
 
 
-                <div class="section-heading">
+        <h2>
+            Connection Made Simple
+        </h2>
 
 
-                    <h2>
-                        Connection, made simple.
-                    </h2>
+        <p class="home-info-intro">
+
+            Kmeet gives you a place to discover people,
+            explore shared interests and build meaningful
+            connections naturally.
+
+        </p>
 
 
-                    <p>
-                        Take your time, explore profiles and find
-                        people who share the things that matter to you.
-                    </p>
+        <div class="home-features">
 
 
-                </div>
+            <article class="feature-card">
 
+                <div class="feature-icon">
 
-                <div class="connection-cards">
-
-
-                    <!-- DISCOVER -->
-
-                    <div class="connection-card">
-
-
-                        <div class="card-icon">
-
-                            <i class="fa-solid fa-compass"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Discover
-                        </h3>
-
-
-                        <p>
-                            Browse Kmeet profiles and discover people
-                            with different interests, personalities
-                            and stories.
-                        </p>
-
-
-                    </div>
-
-
-                    <!-- COMMON GROUND -->
-
-                    <div class="connection-card">
-
-
-                        <div class="card-icon">
-
-                            <i class="fa-solid fa-heart"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Find Common Ground
-                        </h3>
-
-
-                        <p>
-                            Interests give you an easy starting point
-                            for finding someone you naturally connect
-                            with.
-                        </p>
-
-
-                    </div>
-
-
-                    <!-- CONVERSATION -->
-
-                    <div class="connection-card">
-
-
-                        <div class="card-icon">
-
-                            <i class="fa-solid fa-comments"></i>
-
-                        </div>
-
-
-                        <h3>
-                            Start a Conversation
-                        </h3>
-
-
-                        <p>
-                            When you find someone interesting, take
-                            the next step and start getting to know them.
-                        </p>
-
-
-                    </div>
-
+                    <i class="fa-solid fa-compass"></i>
 
                 </div>
 
-
-            </div>
-
-
-        </section>
-
-
-        <!-- =================================================
-             FINAL CTA
-        ================================================== -->
-
-        <section class="final-section">
-
-
-            <div class="final-card">
-
-
-                <h2>
-                    Your next connection could be here.
-                </h2>
-
+                <h3>
+                    Discover
+                </h3>
 
                 <p>
-                    Explore Kmeet and see who you might meet.
-                    You can browse Discover before creating an account.
+
+                    Browse Kmeet profiles and discover
+                    people whose interests and personality
+                    feel right for you.
+
                 </p>
 
-
-                <a
-                    href="discover.html"
-                    class="explore-button"
-                >
-
-                    <i class="fa-solid fa-users"></i>
-
-                    <span>
-                        Explore Kmeet
-                    </span>
-
-                </a>
+            </article>
 
 
-            </div>
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+                <h3>
+                    Connect
+                </h3>
+
+                <p>
+
+                    Find people who catch your attention
+                    and explore the possibility of a genuine
+                    connection.
+
+                </p>
+
+            </article>
 
 
-        </section>
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="fa-solid fa-comments"></i>
+
+                </div>
+
+                <h3>
+                    Communicate
+                </h3>
+
+                <p>
+
+                    Start meaningful conversations and
+                    get to know each other naturally.
+
+                </p>
+
+            </article>
 
 
-    </main>
+        </div>
+
+    </div>
+
+</section>
 
 
-    <!-- =====================================================
-         FOOTER
-    ===================================================== -->
 
-    <footer class="kmeet-footer">
+<!-- =========================================================
+     FINAL CTA
+     ========================================================= -->
 
-        <strong>
-            Kmeet
-        </strong>
+<section class="home-cta">
 
-        <span>
-            · Find your connection naturally.
-        </span>
+    <h2>
+        Ready to Meet Someone?
+    </h2>
 
-    </footer>
+    <p>
 
+        Take the first step toward discovering
+        a meaningful connection on Kmeet.
 
-    <!-- =====================================================
-         LOGO + FIREBASE ACCOUNT
-    ===================================================== -->
-
-    <script type="module">
-
-        /*
-         * IMPORTANT:
-         *
-         * Your firebase-config.js already uses
-         * Firebase 12.19.0.
-         *
-         * We therefore use its exported
-         * onAuthStateChanged and signOut.
-         *
-         * We do NOT load Firebase 10.8.0 here.
-         */
-
-        import {
-            auth,
-            onAuthStateChanged,
-            signOut
-        } from "./firebase-config.js";
+    </p>
 
 
-        /* =================================================
-           LOGO FALLBACK
-        ================================================= */
+    <a
+        href="discover.html"
+        class="btn btn-primary cta-button"
+    >
 
-        const kmeetLogo =
-            document.getElementById("kmeetLogo");
+        <i class="fa-solid fa-compass"></i>
 
-        const kmeetLogoFallback =
-            document.getElementById("kmeetLogoFallback");
+        Discover People
 
+    </a>
 
-        if (kmeetLogo) {
-
-            kmeetLogo.addEventListener(
-                "error",
-                function () {
-
-                    console.warn(
-                        "KMEET: Logo image could not be loaded."
-                    );
+</section>
 
 
-                    kmeetLogo.style.display =
-                        "none";
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer>
+
+    © 2026 Kmeet. Find your connection naturally.
+
+</footer>
 
 
-                    if (kmeetLogoFallback) {
 
-                        kmeetLogoFallback.style.display =
-                            "flex";
+<!-- =========================================================
+     KMEET JAVASCRIPT
+     ========================================================= -->
 
-                    }
+<script type="module">
 
-                }
-            );
+    import {
+        auth,
+        onAuthStateChanged,
+        signOut
+    } from "./firebase-config.js";
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const guestState =
+        document.getElementById("guestState");
+
+    const userState =
+        document.getElementById("userState");
+
+    const navProfileLink =
+        document.getElementById("navProfileLink");
+
+    const homeUserAvatar =
+        document.getElementById("homeUserAvatar");
+
+    const homeUserName =
+        document.getElementById("homeUserName");
+
+    const homeUserEmail =
+        document.getElementById("homeUserEmail");
+
+    const homeInterests =
+        document.getElementById("homeInterests");
+
+    const signupForm =
+        document.getElementById("signupForm");
+
+    const homeLogoutBtn =
+        document.getElementById("homeLogoutBtn");
+
+
+    /* =====================================================
+       LOGO CHECK
+       ===================================================== */
+
+    const logo =
+        document.querySelector(".kmeet-logo");
+
+    if (logo) {
+
+        logo.addEventListener(
+            "error",
+            function () {
+
+                console.error(
+                    "KMEET: kmeet-logo.jfif.jfif could not be loaded."
+                );
+
+            }
+        );
+
+        logo.addEventListener(
+            "load",
+            function () {
+
+                console.log(
+                    "KMEET: Logo loaded successfully."
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       DEFAULT AVATAR
+       ===================================================== */
+
+    const defaultAvatar =
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80";
+
+
+    /* =====================================================
+       DISPLAY LOGGED-IN USER
+       ===================================================== */
+
+    function showLoggedInUser(user) {
+
+        guestState.style.display = "none";
+
+        userState.style.display = "block";
+
+
+        navProfileLink.innerHTML =
+            '<a href="profile.html">MY PROFILE</a>';
+
+
+        const displayName =
+            user.displayName ||
+            (user.email
+                ? user.email.split("@")[0]
+                : "Kmeet Member");
+
+
+        homeUserName.textContent =
+            displayName.charAt(0).toUpperCase() +
+            displayName.slice(1);
+
+
+        homeUserEmail.textContent =
+            user.email || "";
+
+
+        if (user.photoURL) {
+
+            homeUserAvatar.src =
+                user.photoURL;
+
+        } else {
+
+            homeUserAvatar.src =
+                defaultAvatar;
 
         }
 
 
-        /* =================================================
-           ACCOUNT ELEMENTS
-        ================================================= */
+        homeUserAvatar.onerror =
+            function () {
 
-        const accountNav =
-            document.getElementById("accountNav");
+                this.onerror = null;
 
-        const accountNavText =
-            document.getElementById("accountNavText");
+                this.src =
+                    defaultAvatar;
 
-        const accountNavIcon =
-            document.getElementById("accountNavIcon");
+            };
 
 
-        const heroAccountButton =
-            document.getElementById("heroAccountButton");
+        let interests = [];
 
-        const heroAccountText =
-            document.getElementById("heroAccountText");
+        try {
 
-        const heroAccountIcon =
-            document.getElementById("heroAccountIcon");
+            interests =
+                JSON.parse(
+                    localStorage.getItem("userInterests") || "[]"
+                );
 
+        } catch {
 
-        /* =================================================
-           FIREBASE AUTH
-        ================================================= */
+            interests = [];
 
-        onAuthStateChanged(
-            auth,
-            (user) => {
+        }
 
 
-                /*
-                 * ===========================================
-                 * LOGGED OUT
-                 * ===========================================
-                 */
-
-                if (!user) {
+        homeInterests.innerHTML = "";
 
 
-                    accountNav.href =
-                        "login.html";
+        interests
+            .slice(0, 4)
+            .forEach(function (interest) {
+
+                const tag =
+                    document.createElement("span");
+
+                tag.className =
+                    "home-tag";
+
+                tag.textContent =
+                    interest;
+
+                homeInterests.appendChild(tag);
+
+            });
+
+    }
 
 
-                    accountNavText.textContent =
-                        "Log In";
+    /* =====================================================
+       DISPLAY GUEST
+       ===================================================== */
+
+    function showGuest() {
+
+        guestState.style.display =
+            "block";
+
+        userState.style.display =
+            "none";
 
 
-                    accountNavIcon.className =
-                        "fa-solid fa-right-to-bracket";
+        navProfileLink.innerHTML =
+            '<a href="login.html">LOG IN</a>';
+
+    }
 
 
-                    heroAccountButton.href =
-                        "interests.html";
+    /* =====================================================
+       FIREBASE AUTH STATE
+       ===================================================== */
+
+    onAuthStateChanged(
+        auth,
+        function (user) {
+
+            if (
+                user &&
+                !user.isAnonymous
+            ) {
+
+                showLoggedInUser(user);
+
+            } else {
+
+                showGuest();
+
+            }
+
+        }
+    );
 
 
-                    heroAccountText.textContent =
-                        "Create Account";
+    /* =====================================================
+       SIGNUP FORM
+       ===================================================== */
+
+    if (signupForm) {
+
+        signupForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
 
 
-                    heroAccountIcon.className =
-                        "fa-solid fa-user-plus";
+                const emailInput =
+                    signupForm.querySelector(
+                        'input[type="email"]'
+                    );
 
+
+                if (
+                    !emailInput ||
+                    !emailInput.value.trim()
+                ) {
 
                     return;
 
@@ -1535,76 +1612,122 @@
 
 
                 /*
-                 * ===========================================
-                 * LOGGED IN
-                 * ===========================================
-                 */
+                   Keep the email so the onboarding page
+                   can use it if needed.
+                */
 
-                accountNav.href =
-                    "#";
-
-
-                accountNavText.textContent =
-                    "Log Out";
+                localStorage.setItem(
+                    "userEmail",
+                    emailInput.value.trim()
+                );
 
 
-                accountNavIcon.className =
-                    "fa-solid fa-right-from-bracket";
+                document.body.classList.add(
+                    "fade-out"
+                );
 
 
-                heroAccountButton.href =
-                    "profile.html";
+                setTimeout(
+                    function () {
 
+                        window.location.href =
+                            "interests.html";
 
-                heroAccountText.textContent =
-                    "View My Profile";
-
-
-                heroAccountIcon.className =
-                    "fa-solid fa-user";
-
-
-                /*
-                 * Logout is only performed when
-                 * the user deliberately clicks it.
-                 */
-
-                accountNav.onclick =
-                    async (event) => {
-
-                        event.preventDefault();
-
-
-                        try {
-
-                            await signOut(auth);
-
-
-                            window.location.href =
-                                "index.html";
-
-
-                        } catch (error) {
-
-                            console.error(
-                                "Kmeet logout error:",
-                                error
-                            );
-
-
-                            alert(
-                                "We couldn't log you out right now. Please try again."
-                            );
-
-                        }
-
-                    };
-
+                    },
+                    250
+                );
 
             }
         );
 
-    </script>
+    }
+
+
+    /* =====================================================
+       INTERESTED BUTTON
+       ===================================================== */
+
+    const interestedButton =
+        document.querySelector(
+            ".interested-btn"
+        );
+
+
+    if (interestedButton) {
+
+        interestedButton.addEventListener(
+            "click",
+            function () {
+
+                const emailInput =
+                    document.querySelector(
+                        '#signupForm input[type="email"]'
+                    );
+
+
+                if (emailInput) {
+
+                    setTimeout(
+                        function () {
+
+                            emailInput.focus();
+
+                        },
+                        150
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    if (homeLogoutBtn) {
+
+        homeLogoutBtn.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    await signOut(auth);
+
+                    localStorage.removeItem(
+                        "userEmail"
+                    );
+
+                    localStorage.removeItem(
+                        "userAvatar"
+                    );
+
+                    localStorage.removeItem(
+                        "userInterests"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                } catch (error) {
+
+                    console.error(
+                        "KMEET logout error:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
 
 
 </body>
