@@ -2,821 +2,874 @@
 
 /* =========================================================
    KMEET DISCOVER
-   SAFE VERSION
+   DEMO PROFILES LOAD FIRST
+   FIREBASE LOADS AFTERWARD
    ========================================================= */
 
-const demoProfiles = [
-
-  {
-    id: "demo-01",
-    name: "Amara",
-    age: 27,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/44.jpg",
-    description: "Travel lover who enjoys music, coffee, beautiful places and meaningful conversations.",
-    interests: ["Travel", "Music", "Coffee"]
-  },
-
-  {
-    id: "demo-02",
-    name: "Brian",
-    age: 30,
-    location: "Mombasa, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/32.jpg",
-    description: "Fitness enthusiast who enjoys football, coastal adventures and meeting positive people.",
-    interests: ["Fitness", "Football", "Travel"]
-  },
-
-  {
-    id: "demo-03",
-    name: "Nia",
-    age: 25,
-    location: "Kisumu, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/women/65.jpg",
-    description: "Quiet and creative, Nia loves books, art, nature and relaxed weekend conversations.",
-    interests: ["Books", "Art", "Nature"]
-  },
-
-  {
-    id: "demo-04",
-    name: "Daniel",
-    age: 29,
-    location: "Nakuru, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/46.jpg",
-    description: "Music lover and fitness fan who enjoys cars, good food and spontaneous road trips.",
-    interests: ["Music", "Cars", "Fitness"]
-  },
-
-  {
-    id: "demo-05",
-    name: "Zuri",
-    age: 28,
-    location: "Nairobi, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/women/32.jpg",
-    description: "Fashion and food lover who enjoys travelling, discovering new restaurants and great company.",
-    interests: ["Fashion", "Travel", "Food"]
-  },
-
-  {
-    id: "demo-06",
-    name: "Kevin",
-    age: 31,
-    location: "Eldoret, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/52.jpg",
-    description: "Business-minded and energetic, with a love for sports, music and ambitious conversations.",
-    interests: ["Business", "Sports", "Music"]
-  },
-
-  {
-    id: "demo-07",
-    name: "Aisha",
-    age: 26,
-    location: "Mombasa, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/68.jpg",
-    description: "Beach lover who enjoys cooking, travelling and relaxed evenings by the ocean.",
-    interests: ["Beach", "Cooking", "Travel"]
-  },
-
-  {
-    id: "demo-08",
-    name: "Michael",
-    age: 33,
-    location: "Nairobi, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/75.jpg",
-    description: "Technology enthusiast who enjoys reading, travel and conversations that go beyond small talk.",
-    interests: ["Technology", "Reading", "Travel"]
-  },
-
-  {
-    id: "demo-09",
-    name: "Wanjiku",
-    age: 29,
-    location: "Kiambu, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/50.jpg",
-    description: "Photography and coffee lover who enjoys nature walks and capturing beautiful moments.",
-    interests: ["Photography", "Coffee", "Nature"]
-  },
-
-  {
-    id: "demo-10",
-    name: "Eric",
-    age: 28,
-    location: "Thika, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/22.jpg",
-    description: "Football and movie fan who enjoys travel, laughter and meeting down-to-earth people.",
-    interests: ["Football", "Movies", "Travel"]
-  },
-
-  {
-    id: "demo-11",
-    name: "Leah",
-    age: 30,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/21.jpg",
-    description: "Music and dancing enthusiast who enjoys good food, laughter and memorable weekends.",
-    interests: ["Music", "Dancing", "Food"]
-  },
-
-  {
-    id: "demo-12",
-    name: "Samuel",
-    age: 32,
-    location: "Kakamega, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/41.jpg",
-    description: "Business and fitness enthusiast who enjoys books, learning and building meaningful connections.",
-    interests: ["Business", "Fitness", "Books"]
-  },
-
-  {
-    id: "demo-13",
-    name: "Faith",
-    age: 24,
-    location: "Nairobi, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/women/12.jpg",
-    description: "Creative soul who enjoys art, fashion, music and discovering inspiring new places.",
-    interests: ["Art", "Fashion", "Music"]
-  },
-
-  {
-    id: "demo-14",
-    name: "James",
-    age: 35,
-    location: "Mombasa, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/61.jpg",
-    description: "Ocean lover who enjoys cooking, travel and peaceful coastal weekends.",
-    interests: ["Ocean", "Travel", "Cooking"]
-  },
-
-  {
-    id: "demo-15",
-    name: "Maya",
-    age: 27,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/49.jpg",
-    description: "Calm and thoughtful, Maya enjoys yoga, books, coffee and meaningful conversations.",
-    interests: ["Yoga", "Books", "Coffee"]
-  },
-
-  {
-    id: "demo-16",
-    name: "Alex",
-    age: 30,
-    location: "Kisumu, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/19.jpg",
-    description: "Technology and gaming enthusiast who also enjoys movies, travel and good company.",
-    interests: ["Technology", "Movies", "Gaming"]
-  },
-
-  {
-    id: "demo-17",
-    name: "Ivy",
-    age: 26,
-    location: "Nakuru, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/36.jpg",
-    description: "Nature lover who enjoys photography, travel and finding beautiful hidden places.",
-    interests: ["Nature", "Travel", "Photography"]
-  },
-
-  {
-    id: "demo-18",
-    name: "David",
-    age: 34,
-    location: "Nairobi, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/29.jpg",
-    description: "Business and car enthusiast who enjoys music, road trips and thoughtful conversations.",
-    interests: ["Business", "Cars", "Music"]
-  },
-
-  {
-    id: "demo-19",
-    name: "Sharon",
-    age: 28,
-    location: "Mombasa, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/57.jpg",
-    description: "Coastal girl at heart who loves beaches, food, travel and cheerful company.",
-    interests: ["Beach", "Food", "Travel"]
-  },
-
-  {
-    id: "demo-20",
-    name: "Chris",
-    age: 31,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/37.jpg",
-    description: "Fitness and football fan who enjoys movies, travel and active weekends.",
-    interests: ["Fitness", "Football", "Movies"]
-  },
-
-  {
-    id: "demo-21",
-    name: "Esther",
-    age: 25,
-    location: "Eldoret, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/women/63.jpg",
-    description: "Book and music lover who enjoys nature, peaceful evenings and genuine conversations.",
-    interests: ["Books", "Music", "Nature"]
-  },
-
-  {
-    id: "demo-22",
-    name: "Anthony",
-    age: 29,
-    location: "Nakuru, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/11.jpg",
-    description: "Adventurous and social, Anthony enjoys travel, sports, coffee and discovering new places.",
-    interests: ["Travel", "Sports", "Coffee"]
-  },
-
-  {
-    id: "demo-23",
-    name: "Linda",
-    age: 32,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/75.jpg",
-    description: "Creative and outgoing, Linda enjoys cooking, fashion, art and trying new experiences.",
-    interests: ["Cooking", "Fashion", "Art"]
-  },
-
-  {
-    id: "demo-24",
-    name: "Joseph",
-    age: 36,
-    location: "Kisumu, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/64.jpg",
-    description: "Nature and fishing enthusiast who enjoys peaceful trips, the outdoors and discovering new places.",
-    interests: ["Fishing", "Nature", "Travel"]
-  },
-
-  {
-    id: "demo-25",
-    name: "Cynthia",
-    age: 27,
-    location: "Kiambu, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/23.jpg",
-    description: "Bright and outgoing, Cynthia enjoys music, dancing, travel and spontaneous weekend plans.",
-    interests: ["Music", "Dancing", "Travel"]
-  },
-
-  {
-    id: "demo-26",
-    name: "Mark",
-    age: 33,
-    location: "Nairobi, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/70.jpg",
-    description: "Technology and business enthusiast who enjoys fitness, learning and ambitious conversations.",
-    interests: ["Technology", "Business", "Fitness"]
-  },
-
-  {
-    id: "demo-27",
-    name: "Mercy",
-    age: 29,
-    location: "Mombasa, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/41.jpg",
-    description: "Beach lover who enjoys books, coffee, relaxed conversations and beautiful coastal evenings.",
-    interests: ["Beach", "Books", "Coffee"]
-  },
-
-  {
-    id: "demo-28",
-    name: "Peter",
-    age: 30,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/35.jpg",
-    description: "Football fan and music lover who enjoys travel, social weekends and meeting genuine people.",
-    interests: ["Football", "Music", "Travel"]
-  },
-
-  {
-    id: "demo-29",
-    name: "Joy",
-    age: 26,
-    location: "Nakuru, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/women/45.jpg",
-    description: "Creative and stylish, Joy enjoys art, fashion, movies and discovering new places around Kenya.",
-    interests: ["Art", "Fashion", "Movies"]
-  },
-
-  {
-    id: "demo-30",
-    name: "George",
-    age: 34,
-    location: "Mombasa, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/55.jpg",
-    description: "Outdoor enthusiast who loves travel, the ocean, photography and unforgettable adventures.",
-    interests: ["Travel", "Ocean", "Photography"]
-  },
-
-  {
-    id: "demo-31",
-    name: "Ruth",
-    age: 28,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/58.jpg",
-    description: "Warm and caring, Ruth enjoys cooking, music, nature and creating happy memories.",
-    interests: ["Cooking", "Music", "Nature"]
-  },
-
-  {
-    id: "demo-32",
-    name: "Martin",
-    age: 31,
-    location: "Eldoret, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/men/43.jpg",
-    description: "Sports and technology enthusiast who enjoys books, learning and staying active.",
-    interests: ["Sports", "Books", "Technology"]
-  },
-
-  {
-    id: "demo-33",
-    name: "Angela",
-    age: 30,
-    location: "Nairobi, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/women/38.jpg",
-    description: "Fashion and travel lover who enjoys food, new experiences and positive conversations.",
-    interests: ["Travel", "Fashion", "Food"]
-  },
-
-  {
-    id: "demo-34",
-    name: "Patrick",
-    age: 29,
-    location: "Kisumu, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/48.jpg",
-    description: "Easygoing and adventurous, Patrick enjoys music, cars, travel and discovering great places.",
-    interests: ["Music", "Cars", "Travel"]
-  },
-
-  {
-    id: "demo-35",
-    name: "Stella",
-    age: 27,
-    location: "Nairobi, Kenya",
-    online: false,
-    photo: "https://randomuser.me/api/portraits/women/55.jpg",
-    description: "Calm and thoughtful, Stella enjoys yoga, nature, books and peaceful weekend escapes.",
-    interests: ["Yoga", "Nature", "Books"]
-  },
-
-  {
-    id: "demo-36",
-    name: "William",
-    age: 32,
-    location: "Nakuru, Kenya",
-    online: true,
-    photo: "https://randomuser.me/api/portraits/men/76.jpg",
-    description: "Business-minded and energetic, William enjoys football, travel and building a life full of experiences.",
-    interests: ["Business", "Football", "Travel"]
-  }
-
-];
+const grid = document.getElementById("grid");
+const memberCount = document.getElementById("memberCount");
+const profileLink = document.getElementById("profileLink");
+const msg = document.getElementById("msg");
 
 
 /* =========================================================
-   HTML ESCAPER
+   SAFETY CHECK
    ========================================================= */
 
-function escapeHtml(value) {
-
-  return String(value)
-    .replace(/[&<>"']/g, function(char) {
-
-      return {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[char];
-
-    });
-
-}
-
-
-/* =========================================================
-   CREATE PROFILE CARD
-   ========================================================= */
-
-function createCard(person) {
-
-  const status =
-    person.online ? "Online" : "Offline";
-
-  const statusClass =
-    person.online ? "online" : "offline";
-
-
-  const interests =
-    (person.interests || [])
-      .map(function(item) {
-
-        return `
-          <span class="tag">
-            ${escapeHtml(item)}
-          </span>
-        `;
-
-      })
-      .join("");
-
-
-  return `
-
-    <article class="profile-card">
-
-      <div class="photo-wrap">
-
-        <img
-          src="${escapeHtml(person.photo)}"
-          alt="${escapeHtml(person.name)}"
-          loading="lazy"
-          onerror="
-            this.onerror=null;
-            this.src='https://randomuser.me/api/portraits/lego/1.jpg';
-          "
-        >
-
-        <div class="status-badge">
-
-          <span
-            class="status-dot ${statusClass}"
-          ></span>
-
-          ${status}
-
-        </div>
-
-      </div>
-
-
-      <div class="profile-inside">
-
-        <div class="profile-name-row">
-
-          <h3>
-            ${escapeHtml(person.name)}, ${escapeHtml(person.age)}
-          </h3>
-
-        </div>
-
-
-        <p class="profile-location">
-          📍 ${escapeHtml(person.location)}
-        </p>
-
-
-        <p class="profile-description">
-          ${escapeHtml(person.description)}
-        </p>
-
-
-        <div class="tags">
-          ${interests}
-        </div>
-
-
-        <div class="profile-actions">
-
-          <a
-            class="profile-button chat-button"
-            href="login.html"
-          >
-            👋 Say Hi
-          </a>
-
-          <a
-            class="profile-button view-button"
-            href="login.html"
-          >
-            👋 Hello
-          </a>
-
-          <a
-            class="profile-button view-button full-width"
-            href="login.html"
-          >
-            👤 View Profile
-          </a>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   INITIALIZE DISCOVER
-   ========================================================= */
-
-function initializeDiscover() {
-
-  const grid =
-    document.getElementById("grid");
-
-  const memberCount =
-    document.getElementById("memberCount");
-
-  const profileLink =
-    document.getElementById("profileLink");
-
-
-  /* -----------------------------------------
-     SAFETY CHECK
-     ----------------------------------------- */
-
-  if (!grid) {
-
-    console.error(
-      "Kmeet Discover: #grid does not exist."
-    );
-
-    return;
-
-  }
-
-
-  /* -----------------------------------------
-     SHOW 36 PEOPLE IMMEDIATELY
-     ----------------------------------------- */
-
-  grid.innerHTML =
-    demoProfiles
-      .map(createCard)
-      .join("");
-
-
-  if (memberCount) {
-
-    memberCount.textContent =
-      "36 people to discover";
-
-  }
-
-
-  /* -----------------------------------------
-     PROFILE LINK
-     ----------------------------------------- */
-
-  if (profileLink) {
-
-    profileLink.href =
-      "login.html";
-
-  }
-
-
-  /* -----------------------------------------
-     LOAD FIREBASE AFTER DISPLAY
-     ----------------------------------------- */
-
-  loadFirebaseMembers(
-    grid,
-    memberCount,
-    profileLink
-  );
-
-}
-
-
-/* =========================================================
-   FIREBASE
-   ========================================================= */
-
-async function loadFirebaseMembers(
-  grid,
-  memberCount,
-  profileLink
-) {
-
-  try {
-
-    const firebase =
-      await import("./firebase-config.js");
-
-
-    /*
-     * We deliberately don't import
-     * collection/onSnapshot from your config.
-     */
-
-    const auth =
-      firebase.auth;
-
-    const db =
-      firebase.db;
-
-
-    if (!auth || !db) {
-
-      console.warn(
-        "Kmeet: Firebase auth/db unavailable."
-      );
-
-      return;
-
+if (!grid) {
+
+  console.error("KMEET ERROR: #grid was not found.");
+
+} else {
+
+
+  /* =======================================================
+     DEMO PROFILES
+     ======================================================= */
+
+  const demoProfiles = [
+
+    {
+      id: "demo-01",
+      name: "Amara",
+      age: 27,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/44.jpg",
+      description: "I enjoy meaningful conversations, travel and discovering beautiful places.",
+      interests: ["Travel", "Music", "Coffee"]
+    },
+
+    {
+      id: "demo-02",
+      name: "Brian",
+      age: 30,
+      location: "Mombasa, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/32.jpg",
+      description: "Easygoing, ambitious and always ready for a good adventure.",
+      interests: ["Fitness", "Football", "Travel"]
+    },
+
+    {
+      id: "demo-03",
+      name: "Nia",
+      age: 25,
+      location: "Kisumu, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/women/65.jpg",
+      description: "Creative soul who loves books, art and peaceful evenings.",
+      interests: ["Books", "Art", "Nature"]
+    },
+
+    {
+      id: "demo-04",
+      name: "Daniel",
+      age: 29,
+      location: "Nakuru, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/46.jpg",
+      description: "Positive person who believes great connections start with friendship.",
+      interests: ["Movies", "Fitness", "Food"]
+    },
+
+    {
+      id: "demo-05",
+      name: "Zuri",
+      age: 28,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/32.jpg",
+      description: "I love good conversations, dancing and exploring new places.",
+      interests: ["Dance", "Travel", "Music"]
+    },
+
+    {
+      id: "demo-06",
+      name: "Kevin",
+      age: 31,
+      location: "Mombasa, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/men/75.jpg",
+      description: "Calm, friendly and passionate about technology and the ocean.",
+      interests: ["Technology", "Beach", "Travel"]
+    },
+
+    {
+      id: "demo-07",
+      name: "Aisha",
+      age: 26,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/47.jpg",
+      description: "Life is better when shared with someone who appreciates the little things.",
+      interests: ["Cooking", "Fashion", "Music"]
+    },
+
+    {
+      id: "demo-08",
+      name: "Mark",
+      age: 33,
+      location: "Eldoret, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/men/52.jpg",
+      description: "Outdoor lover who enjoys fitness and weekend adventures.",
+      interests: ["Running", "Nature", "Football"]
+    },
+
+    {
+      id: "demo-09",
+      name: "Wanjiku",
+      age: 29,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/49.jpg",
+      description: "Warm-hearted, curious and always looking for something new to learn.",
+      interests: ["Books", "Travel", "Coffee"]
+    },
+
+    {
+      id: "demo-10",
+      name: "Samuel",
+      age: 28,
+      location: "Kisumu, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/41.jpg",
+      description: "I enjoy music, good food and conversations that last all night.",
+      interests: ["Music", "Food", "Movies"]
+    },
+
+    {
+      id: "demo-11",
+      name: "Lilian",
+      age: 27,
+      location: "Mombasa, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/women/51.jpg",
+      description: "Beach lover with a soft spot for sunsets and meaningful connections.",
+      interests: ["Beach", "Photography", "Travel"]
+    },
+
+    {
+      id: "demo-12",
+      name: "James",
+      age: 32,
+      location: "Nakuru, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/61.jpg",
+      description: "Friendly, focused and happiest when surrounded by good people.",
+      interests: ["Business", "Fitness", "Travel"]
+    },
+
+    {
+      id: "demo-13",
+      name: "Esther",
+      age: 30,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/68.jpg",
+      description: "I appreciate honesty, laughter and people who are comfortable being themselves.",
+      interests: ["Cooking", "Movies", "Books"]
+    },
+
+    {
+      id: "demo-14",
+      name: "David",
+      age: 34,
+      location: "Thika, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/men/64.jpg",
+      description: "Adventurous at heart and always planning the next weekend escape.",
+      interests: ["Travel", "Cars", "Nature"]
+    },
+
+    {
+      id: "demo-15",
+      name: "Maya",
+      age: 24,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/24.jpg",
+      description: "Young, energetic and passionate about creativity and music.",
+      interests: ["Music", "Art", "Dance"]
+    },
+
+    {
+      id: "demo-16",
+      name: "Eric",
+      age: 29,
+      location: "Mombasa, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/22.jpg",
+      description: "Laid-back personality who enjoys beaches, friends and good food.",
+      interests: ["Beach", "Food", "Football"]
+    },
+
+    {
+      id: "demo-17",
+      name: "Grace",
+      age: 31,
+      location: "Kisumu, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/women/45.jpg",
+      description: "Kind, thoughtful and happiest around positive people.",
+      interests: ["Nature", "Books", "Travel"]
+    },
+
+    {
+      id: "demo-18",
+      name: "Alex",
+      age: 27,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/36.jpg",
+      description: "Tech enthusiast who enjoys exploring restaurants and new places.",
+      interests: ["Technology", "Food", "Travel"]
+    },
+
+    {
+      id: "demo-19",
+      name: "Faith",
+      age: 26,
+      location: "Eldoret, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/57.jpg",
+      description: "Positive energy, big dreams and a love for music.",
+      interests: ["Music", "Fitness", "Travel"]
+    },
+
+    {
+      id: "demo-20",
+      name: "Michael",
+      age: 35,
+      location: "Nairobi, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/men/45.jpg",
+      description: "Simple person who values honesty, friendship and good conversation.",
+      interests: ["Business", "Movies", "Food"]
+    },
+
+    {
+      id: "demo-21",
+      name: "Sheila",
+      age: 28,
+      location: "Mombasa, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/33.jpg",
+      description: "Sunshine, ocean views and great conversations are my happy place.",
+      interests: ["Beach", "Travel", "Photography"]
+    },
+
+    {
+      id: "demo-22",
+      name: "Joseph",
+      age: 30,
+      location: "Nakuru, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/38.jpg",
+      description: "Football fan who also enjoys quiet evenings and good company.",
+      interests: ["Football", "Music", "Movies"]
+    },
+
+    {
+      id: "demo-23",
+      name: "Joy",
+      age: 25,
+      location: "Nairobi, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/women/29.jpg",
+      description: "I love laughing, travelling and meeting people with beautiful personalities.",
+      interests: ["Travel", "Dance", "Food"]
+    },
+
+    {
+      id: "demo-24",
+      name: "Anthony",
+      age: 32,
+      location: "Kisumu, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/48.jpg",
+      description: "Ambitious, friendly and always interested in learning something new.",
+      interests: ["Business", "Technology", "Fitness"]
+    },
+
+    {
+      id: "demo-25",
+      name: "Mercy",
+      age: 29,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/43.jpg",
+      description: "A lover of art, food and conversations that actually mean something.",
+      interests: ["Art", "Food", "Books"]
+    },
+
+    {
+      id: "demo-26",
+      name: "Peter",
+      age: 36,
+      location: "Mombasa, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/men/68.jpg",
+      description: "Easygoing and adventurous. Always ready for a new experience.",
+      interests: ["Travel", "Beach", "Cars"]
+    },
+
+    {
+      id: "demo-27",
+      name: "Cynthia",
+      age: 27,
+      location: "Nakuru, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/63.jpg",
+      description: "Friendly soul who enjoys music, cooking and spontaneous adventures.",
+      interests: ["Cooking", "Music", "Travel"]
+    },
+
+    {
+      id: "demo-28",
+      name: "George",
+      age: 31,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/31.jpg",
+      description: "Positive, ambitious and a big believer in genuine connections.",
+      interests: ["Business", "Football", "Travel"]
+    },
+
+    {
+      id: "demo-29",
+      name: "Irene",
+      age: 30,
+      location: "Kisumu, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/women/38.jpg",
+      description: "Quiet personality with a big love for books, nature and travel.",
+      interests: ["Books", "Nature", "Travel"]
+    },
+
+    {
+      id: "demo-30",
+      name: "Collins",
+      age: 28,
+      location: "Eldoret, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/72.jpg",
+      description: "Fitness enthusiast who loves music and meeting interesting people.",
+      interests: ["Fitness", "Music", "Football"]
+    },
+
+    {
+      id: "demo-31",
+      name: "Ann",
+      age: 26,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/12.jpg",
+      description: "Creative, cheerful and always looking for a reason to smile.",
+      interests: ["Art", "Fashion", "Music"]
+    },
+
+    {
+      id: "demo-32",
+      name: "Victor",
+      age: 33,
+      location: "Mombasa, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/men/57.jpg",
+      description: "Ocean lover, traveller and someone who enjoys relaxed conversations.",
+      interests: ["Beach", "Travel", "Photography"]
+    },
+
+    {
+      id: "demo-33",
+      name: "Caroline",
+      age: 29,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/women/19.jpg",
+      description: "I enjoy good food, beautiful places and people with a great sense of humour.",
+      interests: ["Food", "Travel", "Movies"]
+    },
+
+    {
+      id: "demo-34",
+      name: "Dennis",
+      age: 30,
+      location: "Thika, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/59.jpg",
+      description: "Friendly and outgoing. I enjoy sports and weekend adventures.",
+      interests: ["Football", "Fitness", "Travel"]
+    },
+
+    {
+      id: "demo-35",
+      name: "Beatrice",
+      age: 28,
+      location: "Nakuru, Kenya",
+      online: false,
+      photo: "https://randomuser.me/api/portraits/women/55.jpg",
+      description: "A calm and caring person who loves meaningful conversations.",
+      interests: ["Books", "Cooking", "Nature"]
+    },
+
+    {
+      id: "demo-36",
+      name: "Robert",
+      age: 34,
+      location: "Nairobi, Kenya",
+      online: true,
+      photo: "https://randomuser.me/api/portraits/men/76.jpg",
+      description: "Adventurous, curious and always interested in meeting new people.",
+      interests: ["Travel", "Technology", "Music"]
     }
 
-
-    const authFunctions =
-      await import(
-        "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"
-      );
+  ];
 
 
-    const firestoreFunctions =
-      await import(
-        "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
-      );
+  /* =======================================================
+     ESCAPE HTML
+     ======================================================= */
 
+  function escapeHtml(value) {
 
-    const {
-      onAuthStateChanged
-    } = authFunctions;
+    return String(value ?? "").replace(
+      /[&<>"']/g,
+      function(character) {
 
+        const entities = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        };
 
-    const {
-      collection,
-      onSnapshot
-    } = firestoreFunctions;
-
-
-    /* -----------------------------------------
-       AUTH STATE
-       ----------------------------------------- */
-
-    onAuthStateChanged(
-      auth,
-      function(user) {
-
-        if (!profileLink) {
-          return;
-        }
-
-        if (
-          user &&
-          !user.isAnonymous
-        ) {
-
-          profileLink.href =
-            "profile.html";
-
-        } else {
-
-          profileLink.href =
-            "login.html";
-
-        }
+        return entities[character];
 
       }
     );
 
-
-    /* -----------------------------------------
-       REAL MEMBERS
-       ----------------------------------------- */
-
-    onSnapshot(
-
-      collection(
-        db,
-        "users"
-      ),
-
-      function(snapshot) {
-
-        const realProfiles = [];
+  }
 
 
-        snapshot.forEach(
-          function(docSnap) {
+  /* =======================================================
+     CREATE PROFILE CARD
+     ======================================================= */
 
-            const data =
-              docSnap.data() || {};
+  function createCard(person) {
 
+    const statusText =
+      person.online
+        ? "Online"
+        : "Offline";
+
+    const statusClass =
+      person.online
+        ? "online"
+        : "offline";
+
+    const interests =
+      Array.isArray(person.interests)
+        ? person.interests
+        : [];
+
+    const tags =
+      interests
+        .slice(0, 4)
+        .map(function(item) {
+
+          return `
+            <span class="tag">
+              ${escapeHtml(item)}
+            </span>
+          `;
+
+        })
+        .join("");
+
+
+    const isDemo =
+      String(person.id).startsWith("demo-");
+
+
+    let actions = "";
+
+
+    if (isDemo) {
+
+      actions = `
+        <a
+          class="profile-button chat-button demo-button"
+          href="login.html"
+        >
+          💬 Chat
+        </a>
+
+        <a
+          class="profile-button view-button demo-button"
+          href="login.html"
+        >
+          👤 View Profile
+        </a>
+      `;
+
+    } else {
+
+      actions = `
+        <a
+          class="profile-button chat-button"
+          href="chat.html?userId=${encodeURIComponent(person.id)}"
+        >
+          💬 Chat
+        </a>
+
+        <a
+          class="profile-button view-button"
+          href="profile.html?id=${encodeURIComponent(person.id)}"
+        >
+          👤 View Profile
+        </a>
+      `;
+
+    }
+
+
+    return `
+
+      <article
+        class="profile-card"
+        data-profile-id="${escapeHtml(person.id)}"
+      >
+
+        <div class="photo-wrap">
+
+          <img
+            src="${escapeHtml(person.photo)}"
+            alt="${escapeHtml(person.name)}"
+            loading="lazy"
+          >
+
+          <div class="status-badge">
+
+            <span
+              class="status-dot ${statusClass}"
+            ></span>
+
+            ${statusText}
+
+          </div>
+
+        </div>
+
+
+        <div class="profile-inside">
+
+          <div class="profile-name-row">
+
+            <h3>
+              ${escapeHtml(person.name)}, ${escapeHtml(person.age)}
+            </h3>
+
+          </div>
+
+
+          <p class="profile-location">
+            📍 ${escapeHtml(person.location)}
+          </p>
+
+
+          <p class="profile-description">
+            ${escapeHtml(person.description)}
+          </p>
+
+
+          <div class="tags">
+            ${tags}
+          </div>
+
+
+          <div class="profile-actions">
+            ${actions}
+          </div>
+
+        </div>
+
+      </article>
+
+    `;
+
+  }
+
+
+  /* =======================================================
+     SHOW DEMO PROFILES IMMEDIATELY
+     ======================================================= */
+
+  function showDemoProfiles() {
+
+    console.log(
+      "KMEET: Showing demo profiles..."
+    );
+
+    grid.innerHTML =
+      demoProfiles
+        .map(createCard)
+        .join("");
+
+    if (memberCount) {
+
+      memberCount.textContent =
+        `${demoProfiles.length} people to discover`;
+
+    }
+
+    console.log(
+      "KMEET: Demo profiles displayed:",
+      demoProfiles.length
+    );
+
+  }
+
+
+  /* =======================================================
+     SHOW DEMOS NOW
+     ======================================================= */
+
+  showDemoProfiles();
+
+
+  /* =======================================================
+     FIREBASE IS OPTIONAL
+     ======================================================= */
+
+  async function loadFirebaseMembers() {
+
+    try {
+
+      console.log(
+        "KMEET: Loading Firebase members..."
+      );
+
+
+      const firebase =
+        await import("./firebase-config.js");
+
+
+      const auth =
+        firebase.auth;
+
+      const db =
+        firebase.db;
+
+      const onAuthStateChanged =
+        firebase.onAuthStateChanged;
+
+      const collection =
+        firebase.collection;
+
+      const onSnapshot =
+        firebase.onSnapshot;
+
+
+      /* -----------------------------------------------------
+         UPDATE PROFILE LINK
+         ----------------------------------------------------- */
+
+      if (
+        auth &&
+        onAuthStateChanged &&
+        profileLink
+      ) {
+
+        onAuthStateChanged(
+          auth,
+          function(user) {
 
             if (
-              !data.name &&
-              !data.username &&
-              !data.photoURL &&
-              !data.avatar
+              user &&
+              !user.isAnonymous
             ) {
 
-              return;
+              profileLink.href =
+                "profile.html";
+
+            } else {
+
+              profileLink.href =
+                "login.html";
 
             }
-
-
-            realProfiles.push({
-
-              id: docSnap.id,
-
-              name:
-                data.name ||
-                data.username ||
-                "Kmeet Member",
-
-              age:
-                data.age ||
-                "",
-
-              location:
-                data.location ||
-                "Kenya",
-
-              online:
-                data.online === true ||
-                String(
-                  data.status || ""
-                ).toLowerCase() === "online",
-
-              photo:
-                data.photoURL ||
-                data.avatar ||
-                "https://randomuser.me/api/portraits/lego/1.jpg",
-
-              description:
-                data.description ||
-                data.bio ||
-                "A Kmeet member looking forward to meeting someone genuine and sharing meaningful conversations.",
-
-              interests:
-                Array.isArray(data.interests)
-                  ? data.interests.slice(0, 4)
-                  : []
-
-            });
 
           }
         );
 
+      }
 
-        /*
-         * If there are real users, place them first.
-         * Keep enough demo profiles so Discover
-         * always has at least 36 cards.
-         */
 
-        if (realProfiles.length > 0) {
+      /* -----------------------------------------------------
+         CHECK FIREBASE FUNCTIONS
+         ----------------------------------------------------- */
 
-          const remaining =
-            demoProfiles.slice(
-              0,
-              Math.max(
-                36 - realProfiles.length,
-                0
-              )
+      if (
+        !db ||
+        !collection ||
+        !onSnapshot
+      ) {
+
+        console.warn(
+          "KMEET: Firebase functions unavailable. Keeping demo profiles."
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------------
+         LISTEN FOR REAL MEMBERS
+         ----------------------------------------------------- */
+
+      onSnapshot(
+
+        collection(
+          db,
+          "users"
+        ),
+
+        function(snapshot) {
+
+          const realProfiles = [];
+
+
+          snapshot.forEach(
+            function(docSnap) {
+
+              const data =
+                docSnap.data() || {};
+
+
+              const name =
+                data.name ||
+                data.username;
+
+
+              if (!name) {
+                return;
+              }
+
+
+              const photo =
+                data.photoURL ||
+                data.avatar ||
+                data.photo ||
+                data.profilePhoto;
+
+
+              if (!photo) {
+                return;
+              }
+
+
+              const interests =
+                Array.isArray(data.interests)
+                  ? data.interests
+                  : [];
+
+
+              realProfiles.push({
+
+                id:
+                  docSnap.id,
+
+                name:
+                  name,
+
+                age:
+                  data.age || "",
+
+                location:
+                  data.location ||
+                  "Kenya",
+
+                online:
+                  data.online === true ||
+                  data.status === "online",
+
+                photo:
+                  photo,
+
+                description:
+                  data.description ||
+                  data.bio ||
+                  "Kmeet member. Say hello and start a conversation.",
+
+                interests:
+                  interests
+
+              });
+
+            }
+          );
+
+
+          /* -------------------------------------------------
+             REMOVE DUPLICATES
+             ------------------------------------------------- */
+
+          const used =
+            new Set();
+
+
+          const cleanReal =
+            realProfiles.filter(
+              function(person) {
+
+                if (
+                  used.has(person.id)
+                ) {
+
+                  return false;
+
+                }
+
+                used.add(person.id);
+
+                return true;
+
+              }
             );
 
 
-          const combined =
+          /* -------------------------------------------------
+             REAL MEMBERS FIRST
+             DEMO MEMBERS FILL THE REST
+             ------------------------------------------------- */
+
+          const remaining =
+            Math.max(
+              36 - cleanReal.length,
+              0
+            );
+
+
+          const demos =
+            demoProfiles.slice(
+              0,
+              remaining
+            );
+
+
+          const allProfiles =
             [
-              ...realProfiles,
-              ...remaining
+              ...cleanReal,
+              ...demos
             ];
 
 
           grid.innerHTML =
-            combined
+            allProfiles
               .map(createCard)
               .join("");
 
@@ -824,64 +877,78 @@ async function loadFirebaseMembers(
           if (memberCount) {
 
             memberCount.textContent =
-              `${combined.length} people to discover`;
+              `${allProfiles.length} people to discover`;
 
           }
 
+
+          console.log(
+            "KMEET: Real profiles:",
+            cleanReal.length
+          );
+
+          console.log(
+            "KMEET: Profiles displayed:",
+            allProfiles.length
+          );
+
+        },
+
+
+        function(error) {
+
+          console.warn(
+            "KMEET: Firebase profile loading failed.",
+            error
+          );
+
+          /*
+
+            IMPORTANT:
+
+            Do NOT erase the demo profiles.
+
+          */
+
+          showDemoProfiles();
+
         }
 
-      },
-
-      function(error) {
-
-        /*
-         * Do NOT clear the existing cards.
-         */
-
-        console.warn(
-          "Kmeet Firebase Discover:",
-          error
-        );
-
-      }
-
-    );
+      );
 
 
-  } catch (error) {
+    } catch (error) {
 
-    /*
-     * Firebase failure must NEVER
-     * make Discover blank.
-     */
+      console.warn(
+        "KMEET: Firebase could not be loaded.",
+        error
+      );
 
-    console.warn(
-      "Kmeet Firebase connection unavailable:",
-      error
-    );
+      /*
+
+        Discover must still work without Firebase.
+
+      */
+
+      showDemoProfiles();
+
+    }
 
   }
+
+
+  /* =======================================================
+     START FIREBASE AFTER DEMO PAGE IS ALREADY VISIBLE
+     ======================================================= */
+
+  loadFirebaseMembers();
+
 
 }
 
 
 /* =========================================================
-   START ONLY WHEN DOM EXISTS
+   END
    ========================================================= */
-
-if (
-  document.readyState === "loading"
-) {
-
-  document.addEventListener(
-    "DOMContentLoaded",
-    initializeDiscover
-  );
-
-} else {
-
-  initializeDiscover();
-
-}
 
 </script>
