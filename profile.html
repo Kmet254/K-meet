@@ -11,8 +11,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="icon" type="image/png" href="heart.png.png">
-
 <style>
 *{
     box-sizing:border-box;
@@ -23,10 +21,8 @@
 :root{
     --pink:#ff4f91;
     --pink-light:#ff8fba;
-    --pink-soft:#ffd2e3;
     --dark:#0c090d;
-    --dark2:#151016;
-    --card:rgba(28,20,29,.88);
+    --card:rgba(28,20,29,.90);
     --border:rgba(255,255,255,.10);
     --text:#fff;
     --muted:#bdb1ba;
@@ -36,10 +32,24 @@ body{
     min-height:100vh;
     font-family:'Poppins',sans-serif;
     color:var(--text);
+
     background:
-        radial-gradient(circle at 15% 10%,rgba(255,79,145,.18),transparent 32%),
-        radial-gradient(circle at 85% 80%,rgba(255,79,145,.12),transparent 30%),
-        linear-gradient(135deg,#09070a,#170e16 50%,#0a080b);
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(255,79,145,.18),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(255,79,145,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #09070a,
+            #170e16 50%,
+            #0a080b
+        );
 }
 
 a{
@@ -54,12 +64,17 @@ button{
 .navbar{
     width:100%;
     padding:18px 6%;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     border-bottom:1px solid rgba(255,255,255,.07);
-    background:rgba(10,7,11,.78);
+
+    background:rgba(10,7,11,.82);
+
     backdrop-filter:blur(18px);
+
     position:sticky;
     top:0;
     z-index:50;
@@ -69,21 +84,25 @@ button{
     display:flex;
     align-items:center;
     gap:9px;
+
     font-family:'Playfair Display',serif;
-    font-size:26px;
+    font-size:27px;
     font-weight:700;
 }
 
 .brand-heart{
     color:var(--pink);
-    font-size:25px;
-    text-shadow:0 0 18px rgba(255,79,145,.45);
+    font-size:26px;
+
+    text-shadow:
+        0 0 18px rgba(255,79,145,.45);
 }
 
 .nav-links{
     display:flex;
     align-items:center;
     gap:25px;
+
     font-size:14px;
 }
 
@@ -92,34 +111,45 @@ button{
     transition:.2s;
 }
 
-.nav-links a:hover,
-.nav-links a.active{
+.nav-links a:hover{
     color:#fff;
 }
 
 .nav-links a.active{
+    color:#fff;
     position:relative;
 }
 
 .nav-links a.active::after{
     content:"";
+
     position:absolute;
     left:0;
     right:0;
     bottom:-8px;
+
     height:2px;
+
     background:var(--pink);
+
     border-radius:10px;
 }
 
 .logout-btn{
     border:1px solid rgba(255,79,145,.45);
+
     background:rgba(255,79,145,.08);
+
     color:#fff;
+
     padding:9px 16px;
+
     border-radius:22px;
+
     cursor:pointer;
+
     font-size:13px;
+
     transition:.2s;
 }
 
@@ -129,107 +159,235 @@ button{
 
 .page{
     width:min(1050px,92%);
+
     margin:45px auto 70px;
 }
 
 .heading{
     text-align:center;
+
     margin-bottom:30px;
 }
 
 .heading h1{
     font-family:'Playfair Display',serif;
+
     font-size:42px;
+
     margin-bottom:8px;
 }
 
 .heading p{
     color:var(--muted);
+
     font-size:14px;
+}
+
+.status-box{
+    display:none;
+
+    width:min(650px,100%);
+
+    margin:0 auto 25px;
+
+    padding:18px 20px;
+
+    text-align:center;
+
+    border-radius:17px;
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:#d5cbd2;
+}
+
+.status-box.show{
+    display:block;
+}
+
+.status-box.error{
+    border-color:rgba(255,79,145,.35);
+
+    color:#ffc5d9;
+}
+
+.loading{
+    padding:50px;
+
+    text-align:center;
+
+    color:#bcaeb8;
+}
+
+.spinner{
+    width:30px;
+    height:30px;
+
+    margin:0 auto 14px;
+
+    border-radius:50%;
+
+    border:3px solid rgba(255,255,255,.12);
+
+    border-top-color:var(--pink);
+
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.hidden{
+    display:none !important;
 }
 
 .profile-card{
     display:grid;
+
     grid-template-columns:330px 1fr;
+
     overflow:hidden;
+
     background:var(--card);
+
     border:1px solid var(--border);
+
     border-radius:28px;
-    box-shadow:0 25px 70px rgba(0,0,0,.42);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.42);
+
     backdrop-filter:blur(20px);
 }
 
 .photo-side{
     padding:28px;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     justify-content:flex-start;
+
     background:
-        radial-gradient(circle at 50% 20%,rgba(255,79,145,.18),transparent 45%),
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(255,79,145,.18),
+            transparent 45%
+        ),
         rgba(255,255,255,.025);
+
     border-right:1px solid var(--border);
 }
 
 .photo-frame{
     width:245px;
     height:290px;
+
     border-radius:24px;
+
     overflow:hidden;
+
     position:relative;
-    background:linear-gradient(145deg,#251b25,#100c12);
+
+    background:
+        linear-gradient(
+            145deg,
+            #251b25,
+            #100c12
+        );
+
     border:1px solid rgba(255,255,255,.10);
-    box-shadow:0 18px 45px rgba(0,0,0,.35);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.35);
 }
 
 .photo-frame img{
     width:100%;
     height:100%;
+
     display:block;
+
     object-fit:cover;
 }
 
 .initial-avatar{
     width:100%;
     height:100%;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     font-family:'Playfair Display',serif;
+
     font-size:82px;
+
     color:#fff;
+
     background:
-        radial-gradient(circle at 50% 25%,rgba(255,143,186,.38),transparent 30%),
-        linear-gradient(145deg,#351d2c,#130d15);
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255,143,186,.38),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #351d2c,
+            #130d15
+        );
 }
 
 .online-badge{
     margin-top:17px;
+
     display:flex;
+
     align-items:center;
+
     gap:8px;
+
     color:#d9d1d8;
+
     font-size:13px;
 }
 
 .online-dot{
     width:9px;
     height:9px;
+
     border-radius:50%;
+
     background:#55d98a;
-    box-shadow:0 0 10px rgba(85,217,138,.65);
+
+    box-shadow:
+        0 0 10px rgba(85,217,138,.65);
 }
 
 .offline-dot{
     background:#777;
+
     box-shadow:none;
 }
 
 .photo-caption{
     margin-top:15px;
+
     text-align:center;
+
     color:#9f939d;
+
     font-size:12px;
+
     line-height:1.6;
 }
 
@@ -239,19 +397,20 @@ button{
 
 .profile-name{
     font-family:'Playfair Display',serif;
+
     font-size:38px;
+
     line-height:1.15;
+
     margin-bottom:7px;
 }
 
 .profile-location{
     color:#bcaeb8;
-    font-size:14px;
-    margin-bottom:28px;
-}
 
-.profile-location span{
-    margin-right:5px;
+    font-size:14px;
+
+    margin-bottom:28px;
 }
 
 .info-section{
@@ -260,90 +419,134 @@ button{
 
 .section-title{
     font-size:12px;
+
     text-transform:uppercase;
+
     letter-spacing:1.4px;
+
     color:var(--pink-light);
+
     margin-bottom:9px;
+
     font-weight:600;
 }
 
 .bio{
     color:#ddd5dc;
+
     line-height:1.8;
+
     font-size:14px;
 }
 
 .details{
     display:grid;
+
     grid-template-columns:repeat(2,1fr);
+
     gap:13px;
 }
 
 .detail-box{
     padding:15px;
+
     border-radius:15px;
+
     background:rgba(255,255,255,.035);
+
     border:1px solid rgba(255,255,255,.07);
 }
 
 .detail-label{
     color:#968a94;
+
     font-size:11px;
+
     margin-bottom:4px;
+
     text-transform:uppercase;
+
     letter-spacing:.7px;
 }
 
 .detail-value{
     color:#f3edf1;
+
     font-size:14px;
 }
 
 .interests{
     display:flex;
+
     flex-wrap:wrap;
+
     gap:8px;
 }
 
 .interest{
     padding:7px 12px;
+
     border-radius:20px;
+
     background:rgba(255,79,145,.10);
+
     border:1px solid rgba(255,79,145,.25);
+
     color:#f4cad9;
+
     font-size:12px;
 }
 
 .actions{
     display:flex;
+
     flex-wrap:wrap;
+
     gap:11px;
+
     margin-top:28px;
 }
 
 .action-btn{
     border:none;
+
     border-radius:25px;
+
     padding:12px 20px;
+
     cursor:pointer;
+
     font-size:13px;
+
     transition:.2s;
 }
 
 .primary-btn{
     color:#fff;
-    background:linear-gradient(135deg,#ff4f91,#e83e7d);
-    box-shadow:0 9px 24px rgba(255,79,145,.18);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4f91,
+            #e83e7d
+        );
+
+    box-shadow:
+        0 9px 24px rgba(255,79,145,.18);
 }
 
 .primary-btn:hover{
     transform:translateY(-1px);
-    box-shadow:0 12px 30px rgba(255,79,145,.28);
+
+    box-shadow:
+        0 12px 30px rgba(255,79,145,.28);
 }
 
 .secondary-btn{
     color:#eee;
+
     background:rgba(255,255,255,.06);
+
     border:1px solid rgba(255,255,255,.10);
 }
 
@@ -351,59 +554,18 @@ button{
     background:rgba(255,255,255,.10);
 }
 
-.status-box{
-    display:none;
-    margin:0 auto 25px;
-    width:min(650px,100%);
-    padding:18px 20px;
-    text-align:center;
-    border-radius:17px;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.08);
-    color:#d5cbd2;
-}
-
-.status-box.show{
-    display:block;
-}
-
-.status-box.error{
-    border-color:rgba(255,79,145,.3);
-    color:#ffc5d9;
-}
-
-.loading{
-    padding:50px;
-    text-align:center;
-    color:#bcaeb8;
-}
-
-.spinner{
-    width:30px;
-    height:30px;
-    margin:0 auto 14px;
-    border-radius:50%;
-    border:3px solid rgba(255,255,255,.12);
-    border-top-color:var(--pink);
-    animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-    to{transform:rotate(360deg);}
-}
-
-.hidden{
-    display:none !important;
-}
-
 .footer{
     text-align:center;
+
     margin-top:40px;
+
     color:#746a72;
+
     font-size:12px;
 }
 
 @media(max-width:780px){
+
     .navbar{
         padding:15px 5%;
     }
@@ -431,6 +593,7 @@ button{
 
     .photo-side{
         border-right:none;
+
         border-bottom:1px solid var(--border);
     }
 
@@ -444,6 +607,7 @@ button{
 }
 
 @media(max-width:480px){
+
     .brand{
         font-size:22px;
     }
@@ -467,25 +631,47 @@ button{
 
     .action-btn{
         width:100%;
+        text-align:center;
     }
 }
 </style>
 </head>
+
 
 <body>
 
 <header class="navbar">
 
     <a class="brand" href="index.html">
+
         <span class="brand-heart">♥</span>
+
         <span>Kmeet</span>
+
     </a>
 
+
     <nav class="nav-links">
-        <a href="discover.html">Discover</a>
-        <a href="likes.html">My Likes</a>
-        <a href="index.html">Home</a>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+
+        <a href="discover.html">
+            Discover
+        </a>
+
+        <a href="likes.html">
+            My Likes
+        </a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+        >
+            Logout
+        </button>
+
     </nav>
 
 </header>
@@ -494,21 +680,42 @@ button{
 <main class="page">
 
     <div class="heading">
-        <h1>Your Kmeet Profile</h1>
-        <p>Your profile is how people get to know you.</p>
+
+        <h1>
+            Your Kmeet Profile
+        </h1>
+
+        <p>
+            Your profile is how people get to know you.
+        </p>
+
     </div>
 
 
-    <div id="statusBox" class="status-box"></div>
+    <div
+        id="statusBox"
+        class="status-box"
+    ></div>
 
 
-    <div id="loadingBox" class="loading">
+    <div
+        id="loadingBox"
+        class="loading"
+    >
+
         <div class="spinner"></div>
-        <div>Loading your profile...</div>
+
+        <div>
+            Loading your profile...
+        </div>
+
     </div>
 
 
-    <section id="profileCard" class="profile-card hidden">
+    <section
+        id="profileCard"
+        class="profile-card hidden"
+    >
 
         <div class="photo-side">
 
@@ -529,13 +736,26 @@ button{
 
             </div>
 
+
             <div class="online-badge">
-                <span id="onlineDot" class="online-dot"></span>
-                <span id="onlineText">Online</span>
+
+                <span
+                    id="onlineDot"
+                    class="online-dot"
+                ></span>
+
+                <span id="onlineText">
+                    Online
+                </span>
+
             </div>
 
+
             <div class="photo-caption">
-                Keep your profile welcoming and authentic.
+
+                Keep your profile welcoming
+                and authentic.
+
             </div>
 
         </div>
@@ -543,13 +763,19 @@ button{
 
         <div class="info-side">
 
-            <h2 id="profileName" class="profile-name">
+            <h2
+                id="profileName"
+                class="profile-name"
+            >
                 Kmeet Member
             </h2>
 
-            <div id="profileLocation" class="profile-location">
-                <span>📍</span>
-                <span>Kenya</span>
+
+            <div
+                id="profileLocation"
+                class="profile-location"
+            >
+                📍 Kenya
             </div>
 
 
@@ -559,7 +785,10 @@ button{
                     About Me
                 </div>
 
-                <p id="profileBio" class="bio">
+                <p
+                    id="profileBio"
+                    class="bio"
+                >
                     New Kmeet member.
                 </p>
 
@@ -572,20 +801,38 @@ button{
                     Details
                 </div>
 
+
                 <div class="details">
 
                     <div class="detail-box">
-                        <div class="detail-label">Age</div>
-                        <div id="profileAge" class="detail-value">
+
+                        <div class="detail-label">
+                            Age
+                        </div>
+
+                        <div
+                            id="profileAge"
+                            class="detail-value"
+                        >
                             Not added
                         </div>
+
                     </div>
 
+
                     <div class="detail-box">
-                        <div class="detail-label">Gender</div>
-                        <div id="profileGender" class="detail-value">
+
+                        <div class="detail-label">
+                            Gender
+                        </div>
+
+                        <div
+                            id="profileGender"
+                            class="detail-value"
+                        >
                             Not added
                         </div>
+
                     </div>
 
                 </div>
@@ -599,10 +846,16 @@ button{
                     Interests
                 </div>
 
-                <div id="profileInterests" class="interests">
+
+                <div
+                    id="profileInterests"
+                    class="interests"
+                >
+
                     <span class="interest">
                         Getting to know people
                     </span>
+
                 </div>
 
             </div>
@@ -611,12 +864,12 @@ button{
             <div class="actions">
 
                 <a
-                    id="discoverBtn"
                     class="action-btn primary-btn"
                     href="discover.html"
                 >
                     Discover People
                 </a>
+
 
                 <a
                     class="action-btn secondary-btn"
@@ -643,196 +896,382 @@ button{
 
 /*
 =========================================================
- KMEET PROFILE — FIXED VERSION
+ KMEET PROFILE
+ Firebase SDK: 12.19.0
+
  IMPORTANT:
- This file DOES NOT use collection().
- It reads:
+ This file does NOT use collection().
+ It reads one user document:
+
  users/{uid}
- using doc() + getDoc().
+
+ using:
+
+ doc()
+ getDoc()
 =========================================================
 */
 
-console.log("KMEET PROFILE FIX V4 — NO COLLECTION");
+
+console.log(
+    "KMEET PROFILE — FIREBASE 12.19.0 — NO COLLECTION"
+);
 
 
-import { auth, db } from "./firebase-config.js";
+import {
+    auth
+} from "./firebase-config.js";
+
 
 import {
     onAuthStateChanged,
     signOut
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 import {
+    getFirestore,
     doc,
     getDoc
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+/*
+=========================================================
+ IMPORTANT
+
+ We create the Firestore instance directly here using
+ the same Firebase app that firebase-config.js exports.
+
+ This avoids mixing Firestore instances or versions.
+=========================================================
+*/
+
+
+import {
+    getApps
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+const firebaseApps =
+    getApps();
+
+
+if(!firebaseApps.length){
+
+    throw new Error(
+        "Kmeet Firebase app was not initialized."
+    );
+
+}
+
+
+const firebaseApp =
+    firebaseApps[0];
+
+
+const db =
+    getFirestore(
+        firebaseApp
+    );
+
+
+console.log(
+    "KMEET: Firestore initialized directly."
+);
 
 
 const loadingBox =
-    document.getElementById("loadingBox");
+    document.getElementById(
+        "loadingBox"
+    );
+
 
 const profileCard =
-    document.getElementById("profileCard");
+    document.getElementById(
+        "profileCard"
+    );
+
 
 const statusBox =
-    document.getElementById("statusBox");
+    document.getElementById(
+        "statusBox"
+    );
+
 
 const logoutBtn =
-    document.getElementById("logoutBtn");
+    document.getElementById(
+        "logoutBtn"
+    );
+
 
 const profileImage =
-    document.getElementById("profileImage");
+    document.getElementById(
+        "profileImage"
+    );
+
 
 const initialAvatar =
-    document.getElementById("initialAvatar");
+    document.getElementById(
+        "initialAvatar"
+    );
+
 
 const profileName =
-    document.getElementById("profileName");
+    document.getElementById(
+        "profileName"
+    );
+
 
 const profileLocation =
-    document.getElementById("profileLocation");
+    document.getElementById(
+        "profileLocation"
+    );
+
 
 const profileBio =
-    document.getElementById("profileBio");
+    document.getElementById(
+        "profileBio"
+    );
+
 
 const profileAge =
-    document.getElementById("profileAge");
+    document.getElementById(
+        "profileAge"
+    );
+
 
 const profileGender =
-    document.getElementById("profileGender");
+    document.getElementById(
+        "profileGender"
+    );
+
 
 const profileInterests =
-    document.getElementById("profileInterests");
+    document.getElementById(
+        "profileInterests"
+    );
+
 
 const onlineDot =
-    document.getElementById("onlineDot");
+    document.getElementById(
+        "onlineDot"
+    );
+
 
 const onlineText =
-    document.getElementById("onlineText");
+    document.getElementById(
+        "onlineText"
+    );
 
 
-function showStatus(message, isError = false){
+function showStatus(
+    message,
+    isError = false
+){
 
-    statusBox.textContent = message;
+    statusBox.textContent =
+        message;
 
-    statusBox.classList.add("show");
+    statusBox.classList.add(
+        "show"
+    );
+
 
     if(isError){
-        statusBox.classList.add("error");
+
+        statusBox.classList.add(
+            "error"
+        );
+
     }else{
-        statusBox.classList.remove("error");
+
+        statusBox.classList.remove(
+            "error"
+        );
+
     }
+
 }
 
 
 function hideStatus(){
 
-    statusBox.classList.remove("show");
+    statusBox.classList.remove(
+        "show"
+    );
 
-    statusBox.textContent = "";
+    statusBox.textContent =
+        "";
+
 }
 
 
-function cleanValue(value, fallback = ""){
+function cleanValue(
+    value,
+    fallback = ""
+){
 
     if(
         value === undefined ||
         value === null ||
         String(value).trim() === ""
     ){
+
         return fallback;
+
     }
 
+
     return String(value).trim();
+
 }
 
 
-function getFirstValue(data, fields, fallback = ""){
+function getFirstValue(
+    data,
+    fields,
+    fallback = ""
+){
 
-    for(const field of fields){
+    for(
+        const field of fields
+    ){
 
-        const value = data?.[field];
+        const value =
+            data?.[field];
+
 
         if(
             value !== undefined &&
             value !== null &&
             String(value).trim() !== ""
         ){
+
             return value;
+
         }
+
     }
 
+
     return fallback;
+
 }
 
 
-function getPhoto(data, firebaseUser){
+function getPhoto(
+    data,
+    firebaseUser
+){
 
     const possiblePhotos = [
 
         data?.photoURL,
+
         data?.photoUrl,
+
         data?.profilePhoto,
+
         data?.profileImage,
+
         data?.avatar,
+
         data?.image,
+
         data?.photo,
 
         firebaseUser?.photoURL
 
     ];
 
-    for(const photo of possiblePhotos){
+
+    for(
+        const photo of possiblePhotos
+    ){
 
         if(
             typeof photo === "string" &&
             photo.trim() !== ""
         ){
+
             return photo.trim();
+
         }
+
     }
 
+
     return "";
+
 }
 
 
-function getInitial(name){
+function getInitial(
+    name
+){
 
     const value =
-        cleanValue(name, "K");
+        cleanValue(
+            name,
+            "K"
+        );
+
 
     return value
         .charAt(0)
         .toUpperCase();
+
 }
 
 
-function normalizeInterests(value){
+function normalizeInterests(
+    value
+){
 
-    if(Array.isArray(value)){
+    if(
+        Array.isArray(value)
+    ){
+
         return value
-            .filter(item =>
-                item !== null &&
-                item !== undefined &&
-                String(item).trim() !== ""
+            .filter(
+                item =>
+                    item !== null &&
+                    item !== undefined &&
+                    String(item).trim() !== ""
             )
-            .map(item => String(item).trim());
+            .map(
+                item =>
+                    String(item).trim()
+            );
+
     }
 
-    if(typeof value === "string"){
+
+    if(
+        typeof value === "string"
+    ){
 
         return value
             .split(",")
-            .map(item => item.trim())
+            .map(
+                item =>
+                    item.trim()
+            )
             .filter(Boolean);
 
     }
 
+
     return [];
+
 }
 
 
-function displayProfile(data, firebaseUser){
+function displayProfile(
+    data,
+    firebaseUser
+){
 
     const name =
         getFirstValue(
@@ -842,7 +1281,8 @@ function displayProfile(data, firebaseUser){
                 "displayName",
                 "username"
             ],
-            firebaseUser?.displayName || "Kmeet Member"
+            firebaseUser?.displayName ||
+            "Kmeet Member"
         );
 
 
@@ -860,7 +1300,9 @@ function displayProfile(data, firebaseUser){
     const age =
         getFirstValue(
             data,
-            ["age"],
+            [
+                "age"
+            ],
             ""
         );
 
@@ -868,7 +1310,9 @@ function displayProfile(data, firebaseUser){
     const gender =
         getFirstValue(
             data,
-            ["gender"],
+            [
+                "gender"
+            ],
             ""
         );
 
@@ -886,7 +1330,10 @@ function displayProfile(data, firebaseUser){
 
 
     const photo =
-        getPhoto(data, firebaseUser);
+        getPhoto(
+            data,
+            firebaseUser
+        );
 
 
     const interests =
@@ -902,10 +1349,12 @@ function displayProfile(data, firebaseUser){
         );
 
 
-    profileLocation.innerHTML =
-        `<span>📍</span><span>${escapeHtml(
-            cleanValue(location, "Kenya")
-        )}</span>`;
+    profileLocation.textContent =
+        "📍 " +
+        cleanValue(
+            location,
+            "Kenya"
+        );
 
 
     profileBio.textContent =
@@ -933,66 +1382,132 @@ function displayProfile(data, firebaseUser){
         getInitial(name);
 
 
+    /*
+    =====================================================
+    PROFILE PHOTO
+    =====================================================
+    */
+
     if(photo){
 
-        profileImage.src = photo;
-
-        profileImage.classList.remove("hidden");
-
-        initialAvatar.classList.add("hidden");
+        profileImage.src =
+            photo;
 
 
-        profileImage.onerror = () => {
+        profileImage.classList.remove(
+            "hidden"
+        );
 
-            profileImage.classList.add("hidden");
 
-            initialAvatar.classList.remove("hidden");
+        initialAvatar.classList.add(
+            "hidden"
+        );
 
-        };
+
+        profileImage.onerror =
+            () => {
+
+                console.warn(
+                    "KMEET: Profile photo could not be loaded."
+                );
+
+
+                profileImage.classList.add(
+                    "hidden"
+                );
+
+
+                initialAvatar.classList.remove(
+                    "hidden"
+                );
+
+            };
 
     }else{
 
-        profileImage.removeAttribute("src");
+        profileImage.removeAttribute(
+            "src"
+        );
 
-        profileImage.classList.add("hidden");
 
-        initialAvatar.classList.remove("hidden");
+        profileImage.classList.add(
+            "hidden"
+        );
+
+
+        initialAvatar.classList.remove(
+            "hidden"
+        );
 
     }
 
 
-    profileInterests.innerHTML = "";
+    /*
+    =====================================================
+    INTERESTS
+    =====================================================
+    */
+
+    profileInterests.innerHTML =
+        "";
 
 
-    if(interests.length){
+    if(
+        interests.length > 0
+    ){
 
-        interests.forEach(interest => {
+        interests.forEach(
+            interest => {
 
-            const span =
-                document.createElement("span");
+                const span =
+                    document.createElement(
+                        "span"
+                    );
 
-            span.className = "interest";
 
-            span.textContent = interest;
+                span.className =
+                    "interest";
 
-            profileInterests.appendChild(span);
 
-        });
+                span.textContent =
+                    interest;
+
+
+                profileInterests.appendChild(
+                    span
+                );
+
+            }
+        );
 
     }else{
 
         const span =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
-        span.className = "interest";
+
+        span.className =
+            "interest";
+
 
         span.textContent =
             "Getting to know people";
 
-        profileInterests.appendChild(span);
+
+        profileInterests.appendChild(
+            span
+        );
 
     }
 
+
+    /*
+    =====================================================
+    ONLINE STATUS
+    =====================================================
+    */
 
     const isOnline =
         data?.online === true ||
@@ -1001,47 +1516,48 @@ function displayProfile(data, firebaseUser){
 
     if(isOnline){
 
-        onlineDot.classList.remove("offline-dot");
+        onlineDot.classList.remove(
+            "offline-dot"
+        );
 
-        onlineText.textContent = "Online";
+
+        onlineText.textContent =
+            "Online";
 
     }else{
 
-        onlineDot.classList.add("offline-dot");
+        onlineDot.classList.add(
+            "offline-dot"
+        );
 
-        onlineText.textContent = "Offline";
+
+        onlineText.textContent =
+            "Offline";
 
     }
 
 
-    loadingBox.classList.add("hidden");
-
-    profileCard.classList.remove("hidden");
-
-}
+    loadingBox.classList.add(
+        "hidden"
+    );
 
 
-function escapeHtml(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    profileCard.classList.remove(
+        "hidden"
+    );
 
 }
 
 
 /*
 =========================================================
- LOAD FIRESTORE PROFILE
+ LOAD PROFILE
 
- CORRECT:
- doc(db, "users", uid)
+ THIS IS THE ONLY FIRESTORE READ NEEDED.
 
- NOT:
- collection(db, "users", uid)
+ users/{uid}
+
+ NOT collection()
 =========================================================
 */
 
@@ -1065,17 +1581,17 @@ async function loadFirestoreProfile(
     }
 
 
-    /*
-      THIS IS THE IMPORTANT FIX.
-      A single user is a DOCUMENT.
-    */
-
     const profileRef =
         doc(
             db,
             "users",
             uid
         );
+
+
+    console.log(
+        "KMEET: Document reference created."
+    );
 
 
     const profileSnap =
@@ -1085,15 +1601,23 @@ async function loadFirestoreProfile(
 
 
     console.log(
-        "KMEET: Firestore response:",
+        "KMEET: Firestore document exists:",
         profileSnap.exists()
     );
 
 
-    if(!profileSnap.exists()){
+    /*
+    =====================================================
+    IF THE DOCUMENT DOES NOT EXIST
+    =====================================================
+    */
+
+    if(
+        !profileSnap.exists()
+    ){
 
         console.warn(
-            "KMEET: Profile document does not exist. Showing Auth information."
+            "KMEET: No Firestore profile found."
         );
 
 
@@ -1137,6 +1661,7 @@ async function loadFirestoreProfile(
             firebaseUser
         );
 
+
         return;
 
     }
@@ -1147,7 +1672,8 @@ async function loadFirestoreProfile(
 
 
     console.log(
-        "KMEET: Profile document loaded successfully."
+        "KMEET: Profile document loaded successfully.",
+        data
     );
 
 
@@ -1178,8 +1704,9 @@ onAuthStateChanged(
         try{
 
             /*
-              Profile is for a registered member.
-              Anonymous users are sent to login.
+            ------------------------------------------------
+            If there is no registered account, go to Login.
+            ------------------------------------------------
             */
 
             if(
@@ -1191,9 +1718,11 @@ onAuthStateChanged(
                     "KMEET: No registered user. Redirecting to login."
                 );
 
+
                 window.location.replace(
                     "login.html"
                 );
+
 
                 return;
 
@@ -1223,10 +1752,21 @@ onAuthStateChanged(
             );
 
 
-            loadingBox.classList.add("hidden");
+            loadingBox.classList.add(
+                "hidden"
+            );
 
-            profileCard.classList.add("hidden");
 
+            profileCard.classList.add(
+                "hidden"
+            );
+
+
+            /*
+            ------------------------------------------------
+            Firestore permission error
+            ------------------------------------------------
+            */
 
             if(
                 error?.code ===
@@ -1234,18 +1774,26 @@ onAuthStateChanged(
             ){
 
                 showStatus(
-                    "Kmeet could not access your profile. Please check your Firebase Firestore permissions.",
+                    "Kmeet could not access your profile. Please check your Firestore rules.",
                     true
                 );
 
-            }else{
 
-                showStatus(
-                    "Your profile could not be loaded. Please refresh the page and try again.",
-                    true
-                );
+                return;
 
             }
+
+
+            /*
+            ------------------------------------------------
+            Network / Firebase error
+            ------------------------------------------------
+            */
+
+            showStatus(
+                "Your profile could not be loaded. Please refresh the page and try again.",
+                true
+            );
 
         }
 
@@ -1265,13 +1813,17 @@ logoutBtn.addEventListener(
 
         try{
 
-            logoutBtn.disabled = true;
+            logoutBtn.disabled =
+                true;
+
 
             logoutBtn.textContent =
                 "Logging out...";
 
 
-            await signOut(auth);
+            await signOut(
+                auth
+            );
 
 
             window.location.replace(
@@ -1287,7 +1839,9 @@ logoutBtn.addEventListener(
             );
 
 
-            logoutBtn.disabled = false;
+            logoutBtn.disabled =
+                false;
+
 
             logoutBtn.textContent =
                 "Logout";
