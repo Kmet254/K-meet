@@ -649,8 +649,6 @@ body::before {
     class="error"
   ></div>
 
-  <!-- CHAT -->
-
   <section
     id="chatArea"
     style="
@@ -738,8 +736,6 @@ body::before {
 
   </section>
 
-  <!-- PAYMENT GATE -->
-
   <section
     id="gate"
     class="gate"
@@ -779,12 +775,17 @@ body::before {
 
 <script type="module">
 
-import { auth, db } from "./firebase-config.js";
+import {
+  auth,
+  db
+} from "./firebase-config.js";
+
 
 import {
   onAuthStateChanged,
   signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 
 import {
   doc,
@@ -815,7 +816,7 @@ const targetId =
 
 
 /* =========================================================
-   ELEMENTS
+   DOM
 ========================================================= */
 
 const chatArea =
@@ -874,9 +875,9 @@ let conversationId = null;
 
 let unsubscribeMessages = null;
 
-let targetIsDemo = false;
-
 let authStarted = false;
+
+let targetIsDemo = false;
 
 
 /* =========================================================
@@ -890,7 +891,7 @@ const FREE_OPENING_MESSAGES = [
 
 const FREE_RECEIVER_REPLIES = 3;
 
-const RECEIVER_CONTINUATION_FEE = 11;
+const RECEIVER_FEE = 11;
 
 const SENDER_PACK_3_PRICE = 49;
 
@@ -904,297 +905,214 @@ const SENDER_PACK_8_PRICE = 100;
 const demoProfiles = {
 
   "demo-01": {
-    name: "Amara",
-    gender: "women",
-    age: 44,
-    photo: "https://randomuser.me/api/portraits/women/44.jpg"
+    name:"Amara",
+    photo:"https://randomuser.me/api/portraits/women/44.jpg"
   },
 
   "demo-02": {
-    name: "Brian",
-    gender: "men",
-    age: 32,
-    photo: "https://randomuser.me/api/portraits/men/32.jpg"
+    name:"Brian",
+    photo:"https://randomuser.me/api/portraits/men/32.jpg"
   },
 
   "demo-03": {
-    name: "Nia",
-    gender: "women",
-    age: 65,
-    photo: "https://randomuser.me/api/portraits/women/65.jpg"
+    name:"Nia",
+    photo:"https://randomuser.me/api/portraits/women/65.jpg"
   },
 
   "demo-04": {
-    name: "Daniel",
-    gender: "men",
-    age: 46,
-    photo: "https://randomuser.me/api/portraits/men/46.jpg"
+    name:"Daniel",
+    photo:"https://randomuser.me/api/portraits/men/46.jpg"
   },
 
   "demo-05": {
-    name: "Zuri",
-    gender: "women",
-    age: 32,
-    photo: "https://randomuser.me/api/portraits/women/32.jpg"
+    name:"Zuri",
+    photo:"https://randomuser.me/api/portraits/women/32.jpg"
   },
 
   "demo-06": {
-    name: "Kevin",
-    gender: "men",
-    age: 52,
-    photo: "https://randomuser.me/api/portraits/men/52.jpg"
+    name:"Kevin",
+    photo:"https://randomuser.me/api/portraits/men/52.jpg"
   },
 
   "demo-07": {
-    name: "Aisha",
-    gender: "women",
-    age: 68,
-    photo: "https://randomuser.me/api/portraits/women/68.jpg"
+    name:"Aisha",
+    photo:"https://randomuser.me/api/portraits/women/68.jpg"
   },
 
   "demo-08": {
-    name: "Michael",
-    gender: "men",
-    age: 75,
-    photo: "https://randomuser.me/api/portraits/men/75.jpg"
+    name:"Michael",
+    photo:"https://randomuser.me/api/portraits/men/75.jpg"
   },
 
   "demo-09": {
-    name: "Wanjiku",
-    gender: "women",
-    age: 50,
-    photo: "https://randomuser.me/api/portraits/women/50.jpg"
+    name:"Wanjiku",
+    photo:"https://randomuser.me/api/portraits/women/50.jpg"
   },
 
   "demo-10": {
-    name: "Eric",
-    gender: "men",
-    age: 22,
-    photo: "https://randomuser.me/api/portraits/men/22.jpg"
+    name:"Eric",
+    photo:"https://randomuser.me/api/portraits/men/22.jpg"
   },
 
   "demo-11": {
-    name: "Leah",
-    gender: "women",
-    age: 21,
-    photo: "https://randomuser.me/api/portraits/women/21.jpg"
+    name:"Leah",
+    photo:"https://randomuser.me/api/portraits/women/21.jpg"
   },
 
   "demo-12": {
-    name: "Samuel",
-    gender: "men",
-    age: 41,
-    photo: "https://randomuser.me/api/portraits/men/41.jpg"
+    name:"Samuel",
+    photo:"https://randomuser.me/api/portraits/men/41.jpg"
   },
 
   "demo-13": {
-    name: "Faith",
-    gender: "women",
-    age: 12,
-    photo: "https://randomuser.me/api/portraits/women/12.jpg"
+    name:"Faith",
+    photo:"https://randomuser.me/api/portraits/women/12.jpg"
   },
 
   "demo-14": {
-    name: "James",
-    gender: "men",
-    age: 61,
-    photo: "https://randomuser.me/api/portraits/men/61.jpg"
+    name:"James",
+    photo:"https://randomuser.me/api/portraits/men/61.jpg"
   },
 
   "demo-15": {
-    name: "Maya",
-    gender: "women",
-    age: 49,
-    photo: "https://randomuser.me/api/portraits/women/49.jpg"
+    name:"Maya",
+    photo:"https://randomuser.me/api/portraits/women/49.jpg"
   },
 
   "demo-16": {
-    name: "Alex",
-    gender: "men",
-    age: 19,
-    photo: "https://randomuser.me/api/portraits/men/19.jpg"
+    name:"Alex",
+    photo:"https://randomuser.me/api/portraits/men/19.jpg"
   },
 
   "demo-17": {
-    name: "Ivy",
-    gender: "women",
-    age: 36,
-    photo: "https://randomuser.me/api/portraits/women/36.jpg"
+    name:"Ivy",
+    photo:"https://randomuser.me/api/portraits/women/36.jpg"
   },
 
   "demo-18": {
-    name: "David",
-    gender: "men",
-    age: 29,
-    photo: "https://randomuser.me/api/portraits/men/29.jpg"
+    name:"David",
+    photo:"https://randomuser.me/api/portraits/men/29.jpg"
   },
 
   "demo-19": {
-    name: "Sharon",
-    gender: "women",
-    age: 57,
-    photo: "https://randomuser.me/api/portraits/women/57.jpg"
+    name:"Sharon",
+    photo:"https://randomuser.me/api/portraits/women/57.jpg"
   },
 
   "demo-20": {
-    name: "Chris",
-    gender: "men",
-    age: 37,
-    photo: "https://randomuser.me/api/portraits/men/37.jpg"
+    name:"Chris",
+    photo:"https://randomuser.me/api/portraits/men/37.jpg"
   },
 
   "demo-21": {
-    name: "Esther",
-    gender: "women",
-    age: 63,
-    photo: "https://randomuser.me/api/portraits/women/63.jpg"
+    name:"Esther",
+    photo:"https://randomuser.me/api/portraits/women/63.jpg"
   },
 
   "demo-22": {
-    name: "Anthony",
-    gender: "men",
-    age: 11,
-    photo: "https://randomuser.me/api/portraits/men/11.jpg"
+    name:"Anthony",
+    photo:"https://randomuser.me/api/portraits/men/11.jpg"
   },
 
   "demo-23": {
-    name: "Linda",
-    gender: "women",
-    age: 75,
-    photo: "https://randomuser.me/api/portraits/women/75.jpg"
+    name:"Linda",
+    photo:"https://randomuser.me/api/portraits/women/75.jpg"
   },
 
   "demo-24": {
-    name: "Joseph",
-    gender: "men",
-    age: 64,
-    photo: "https://randomuser.me/api/portraits/men/64.jpg"
+    name:"Joseph",
+    photo:"https://randomuser.me/api/portraits/men/64.jpg"
   },
 
   "demo-25": {
-    name: "Cynthia",
-    gender: "women",
-    age: 23,
-    photo: "https://randomuser.me/api/portraits/women/23.jpg"
+    name:"Cynthia",
+    photo:"https://randomuser.me/api/portraits/women/23.jpg"
   },
 
   "demo-26": {
-    name: "Mark",
-    gender: "men",
-    age: 70,
-    photo: "https://randomuser.me/api/portraits/men/70.jpg"
+    name:"Mark",
+    photo:"https://randomuser.me/api/portraits/men/70.jpg"
   },
 
   "demo-27": {
-    name: "Mercy",
-    gender: "women",
-    age: 41,
-    photo: "https://randomuser.me/api/portraits/women/41.jpg"
+    name:"Mercy",
+    photo:"https://randomuser.me/api/portraits/women/41.jpg"
   },
 
   "demo-28": {
-    name: "Peter",
-    gender: "men",
-    age: 35,
-    photo: "https://randomuser.me/api/portraits/men/35.jpg"
+    name:"Peter",
+    photo:"https://randomuser.me/api/portraits/men/35.jpg"
   },
 
   "demo-29": {
-    name: "Joy",
-    gender: "women",
-    age: 45,
-    photo: "https://randomuser.me/api/portraits/women/45.jpg"
+    name:"Joy",
+    photo:"https://randomuser.me/api/portraits/women/45.jpg"
   },
 
   "demo-30": {
-    name: "George",
-    gender: "men",
-    age: 55,
-    photo: "https://randomuser.me/api/portraits/men/55.jpg"
+    name:"George",
+    photo:"https://randomuser.me/api/portraits/men/55.jpg"
   },
 
   "demo-31": {
-    name: "Ruth",
-    gender: "women",
-    age: 58,
-    photo: "https://randomuser.me/api/portraits/women/58.jpg"
+    name:"Ruth",
+    photo:"https://randomuser.me/api/portraits/women/58.jpg"
   },
 
   "demo-32": {
-    name: "Martin",
-    gender: "men",
-    age: 43,
-    photo: "https://randomuser.me/api/portraits/men/43.jpg"
+    name:"Martin",
+    photo:"https://randomuser.me/api/portraits/men/43.jpg"
   },
 
   "demo-33": {
-    name: "Angela",
-    gender: "women",
-    age: 38,
-    photo: "https://randomuser.me/api/portraits/women/38.jpg"
+    name:"Angela",
+    photo:"https://randomuser.me/api/portraits/women/38.jpg"
   },
 
   "demo-34": {
-    name: "Patrick",
-    gender: "men",
-    age: 48,
-    photo: "https://randomuser.me/api/portraits/men/48.jpg"
+    name:"Patrick",
+    photo:"https://randomuser.me/api/portraits/men/48.jpg"
   },
 
   "demo-35": {
-    name: "Stella",
-    gender: "women",
-    age: 55,
-    photo: "https://randomuser.me/api/portraits/women/55.jpg"
+    name:"Stella",
+    photo:"https://randomuser.me/api/portraits/women/55.jpg"
   },
 
   "demo-36": {
-    name: "William",
-    gender: "men",
-    age: 76,
-    photo: "https://randomuser.me/api/portraits/men/76.jpg"
+    name:"William",
+    photo:"https://randomuser.me/api/portraits/men/76.jpg"
   }
 
 };
 
 
 /* =========================================================
-   ERROR HELPERS
+   ERROR
 ========================================================= */
 
 function showError(message) {
 
-  errorBox.textContent = message;
+  errorBox.textContent =
+    message;
 
-  errorBox.style.display = "block";
-
+  errorBox.style.display =
+    "block";
 }
+
 
 function clearError() {
 
-  errorBox.textContent = "";
+  errorBox.textContent =
+    "";
 
-  errorBox.style.display = "none";
-
+  errorBox.style.display =
+    "none";
 }
 
 
 /* =========================================================
-   DEMO CHECK
-========================================================= */
-
-function isDemoProfile() {
-
-  return Object.prototype.hasOwnProperty.call(
-    demoProfiles,
-    targetId
-  );
-
-}
-
-
-/* =========================================================
-   LOCAL STORAGE KEYS
+   PAYMENT / CREDIT STORAGE
 ========================================================= */
 
 function senderCreditKey() {
@@ -1208,6 +1126,7 @@ function senderCreditKey() {
 
 }
 
+
 function receiverPaidKey() {
 
   return (
@@ -1220,41 +1139,38 @@ function receiverPaidKey() {
 }
 
 
-/* =========================================================
-   SENDER CREDITS
-========================================================= */
-
 function getSenderCredits() {
 
-  return (
-    parseInt(
-      localStorage.getItem(
-        senderCreditKey()
-      ) || "0",
-      10
-    ) || 0
-  );
+  return parseInt(
+
+    localStorage.getItem(
+      senderCreditKey()
+    ) || "0",
+
+    10
+
+  ) || 0;
 
 }
+
 
 function setSenderCredits(value) {
 
   localStorage.setItem(
+
     senderCreditKey(),
+
     String(
       Math.max(
         0,
         value
       )
     )
+
   );
 
 }
 
-
-/* =========================================================
-   RECEIVER PAYMENT
-========================================================= */
 
 function receiverHasPaid() {
 
@@ -1274,11 +1190,16 @@ function receiverHasPaid() {
 function getConversationId() {
 
   return [
+
     currentUser.uid,
+
     targetId
+
   ]
-    .sort()
-    .join("_");
+
+  .sort()
+
+  .join("_");
 
 }
 
@@ -1298,8 +1219,11 @@ function containsContactInformation(text) {
   /* EMAIL */
 
   if (
+
     /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i
+
       .test(value)
+
   ) {
 
     return true;
@@ -1310,8 +1234,11 @@ function containsContactInformation(text) {
   /* KENYAN PHONE NUMBERS */
 
   if (
+
     /(?:\+?254[\s-]?(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3,4})|(?:0(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3})/i
+
       .test(value)
+
   ) {
 
     return true;
@@ -1319,11 +1246,14 @@ function containsContactInformation(text) {
   }
 
 
-  /* CONTACT LANGUAGE */
+  /* CONTACT WORDS */
 
   if (
+
     /\b(whatsapp|whats\s*app|call me|text me|message me|contact me|my number|phone number|email me|dm me|instagram|telegram|facebook)\b/i
+
       .test(value)
+
   ) {
 
     return true;
@@ -1334,8 +1264,11 @@ function containsContactInformation(text) {
   /* SOCIAL HANDLES */
 
   if (
+
     /(?:^|\s)@[a-z0-9_.]{3,}/i
+
       .test(value)
+
   ) {
 
     return true;
@@ -1364,7 +1297,10 @@ async function loadTargetProfile() {
 
 
   targetIsDemo =
-    isDemoProfile();
+    Object.prototype.hasOwnProperty.call(
+      demoProfiles,
+      targetId
+    );
 
 
   /* DEMO PROFILE */
@@ -1495,7 +1431,9 @@ function showGate(type) {
     "";
 
 
-  /* ANONYMOUS */
+  /* =======================================================
+     ANONYMOUS USER
+  ======================================================= */
 
   if (
     type === "anonymous"
@@ -1514,14 +1452,14 @@ function showGate(type) {
 
       <a
         class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=${SENDER_PACK_3_PRICE}&anonymous=true"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49&anonymous=true"
       >
         3 Chats — KSh 49
       </a>
 
       <a
         class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=${SENDER_PACK_8_PRICE}&anonymous=true"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100&anonymous=true"
       >
         8 Chats — KSh 100
       </a>
@@ -1540,7 +1478,9 @@ function showGate(type) {
   }
 
 
-  /* SENDER */
+  /* =======================================================
+     SENDER
+  ======================================================= */
 
   if (
     type === "sender"
@@ -1553,20 +1493,20 @@ function showGate(type) {
       "Continue chatting";
 
     gateText.textContent =
-      "Your free opening message has been used. Choose a Kmeet chat package to continue.";
+      "Your free opening message has been used, or this message requires a paid chat. Choose a Kmeet chat package to continue.";
 
     gateButtons.innerHTML = `
 
       <a
         class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=${SENDER_PACK_3_PRICE}"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49"
       >
         3 Chats — KSh 49
       </a>
 
       <a
         class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=${SENDER_PACK_8_PRICE}"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
       >
         8 Chats — KSh 100
       </a>
@@ -1585,7 +1525,9 @@ function showGate(type) {
   }
 
 
-  /* RECEIVER */
+  /* =======================================================
+     RECEIVER
+  ======================================================= */
 
   if (
     type === "receiver"
@@ -1604,7 +1546,7 @@ function showGate(type) {
 
       <a
         class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=${RECEIVER_CONTINUATION_FEE}"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=11"
       >
         Continue — KSh 11
       </a>
@@ -1624,7 +1566,7 @@ function showGate(type) {
 
 
 /* =========================================================
-   LOAD EXISTING MESSAGES
+   GET EXISTING MESSAGES
 ========================================================= */
 
 async function getExistingMessages() {
@@ -1637,24 +1579,29 @@ async function getExistingMessages() {
   }
 
 
-  const snapshot =
+  const snap =
     await getDocs(
+
       query(
+
         collection(
           db,
           "conversations",
           conversationId,
           "messages"
         ),
+
         orderBy(
           "createdAt",
           "asc"
         )
+
       )
+
     );
 
 
-  return snapshot.docs.map(
+  return snap.docs.map(
     item => item.data()
   );
 
@@ -1673,8 +1620,13 @@ function renderMessages(items) {
 
   if (!items.length) {
 
-    messages.innerHTML =
-      '<div class="empty">Start the conversation and let the connection grow. ❤️</div>';
+    messages.innerHTML = `
+
+      <div class="empty">
+        Start the conversation and let the connection grow. ❤️
+      </div>
+
+    `;
 
     return;
 
@@ -1693,7 +1645,8 @@ function renderMessages(items) {
       div.className =
         "message " +
         (
-          data.senderId === currentUser.uid
+          data.senderId ===
+          currentUser.uid
             ? "mine"
             : "theirs"
         );
@@ -1718,14 +1671,15 @@ function renderMessages(items) {
 
 
 /* =========================================================
-   REAL USER MESSAGE LISTENER
+   START REAL-TIME MESSAGES
 ========================================================= */
 
 function startMessages() {
 
   if (
     !currentUser ||
-    currentUser.isAnonymous
+    currentUser.isAnonymous ||
+    targetIsDemo
   ) {
 
     return;
@@ -1748,11 +1702,14 @@ function startMessages() {
 
   const q =
     query(
+
       ref,
+
       orderBy(
         "createdAt",
         "asc"
       )
+
     );
 
 
@@ -1774,9 +1731,7 @@ function startMessages() {
         );
 
 
-        if (
-          !items.length
-        ) {
+        if (!items.length) {
 
           infoBar.textContent =
             "Your opening message is free — say hi or hey ❤️";
@@ -1792,9 +1747,11 @@ function startMessages() {
 
         const myReplies =
           items.filter(
+
             item =>
               item.senderId ===
               currentUser.uid
+
           ).length;
 
 
@@ -1806,17 +1763,21 @@ function startMessages() {
           infoBar.textContent =
             "Your opening message is free. Further messages use chat credits.";
 
-        } else {
+        }
+
+        else {
 
           infoBar.textContent =
             `You have ${Math.max(
               0,
-              FREE_RECEIVER_REPLIES - myReplies
+              FREE_RECEIVER_REPLIES -
+              myReplies
             )} free replies remaining.`;
 
         }
 
       },
+
 
       error => {
 
@@ -1857,18 +1818,16 @@ async function initialiseAuth() {
 
 
   onAuthStateChanged(
+
     auth,
+
     async user => {
 
       try {
 
-        /*
-          If the visitor has no Firebase session,
-          create an anonymous session.
-
-          Anonymous users can browse the chat page,
-          but payment is required before sending.
-        */
+        /* =================================================
+           NO USER
+        ================================================= */
 
         if (!user) {
 
@@ -1881,6 +1840,10 @@ async function initialiseAuth() {
         }
 
 
+        /* =================================================
+           USER FOUND
+        ================================================= */
+
         currentUser =
           user;
 
@@ -1892,30 +1855,45 @@ async function initialiseAuth() {
         clearError();
 
 
-        /* ANONYMOUS */
+        /* =================================================
+           ANONYMOUS USER
+        ================================================= */
 
         if (
           user.isAnonymous
         ) {
 
-          infoBar.textContent =
-            "Anonymous chat: payment is required before your first message.";
+          const credits =
+            getSenderCredits();
+
+
+          if (
+            credits > 0
+          ) {
+
+            infoBar.textContent =
+              `Anonymous chat: ${credits} paid chat credit${credits === 1 ? "" : "s"} available.`;
+
+          }
+
+          else {
+
+            infoBar.textContent =
+              "Anonymous chat: payment is required before your first message.";
+
+          }
+
 
           showChat();
-
-          /*
-            IMPORTANT:
-            Do NOT start the Firestore listener here.
-            This prevents anonymous visitors from hitting
-            conversation permissions before payment.
-          */
 
           return;
 
         }
 
 
-        /* REGISTERED USER */
+        /* =================================================
+           REGISTERED USER
+        ================================================= */
 
         infoBar.textContent =
           "Your opening message is free — say hi or hey ❤️";
@@ -1924,13 +1902,23 @@ async function initialiseAuth() {
         showChat();
 
 
-        startMessages();
+        /*
+          Demo profiles are display profiles only.
+          Do not start a Firestore listener for them.
+        */
+
+        if (
+          !targetIsDemo
+        ) {
+
+          startMessages();
+
+        }
 
       }
 
-      catch (
-        error
-      ) {
+
+      catch (error) {
 
         console.error(
           "Kmeet authentication error:",
@@ -1947,15 +1935,21 @@ async function initialiseAuth() {
             "Anonymous Authentication is not enabled in Firebase. Enable Authentication → Sign-in method → Anonymous."
           );
 
-        } else {
+        }
+
+        else {
 
           showError(
+
             "Kmeet could not start the chat session (" +
+
             (
               error.code ||
               "authentication error"
             ) +
+
             "). Please check your Firebase Authentication settings."
+
           );
 
         }
@@ -1963,6 +1957,7 @@ async function initialiseAuth() {
       }
 
     }
+
   );
 
 }
@@ -1973,10 +1968,13 @@ async function initialiseAuth() {
 ========================================================= */
 
 composer.addEventListener(
+
   "submit",
+
   async event => {
 
     event.preventDefault();
+
 
     clearError();
 
@@ -2003,15 +2001,35 @@ composer.addEventListener(
     }
 
 
-    /*
-      ANONYMOUS USER
-
-      No free opening message.
-      Payment gate appears immediately.
-    */
+    /* =====================================================
+       DEMO PROFILE
+    ===================================================== */
 
     if (
-      currentUser.isAnonymous
+      targetIsDemo
+    ) {
+
+      showError(
+        "This is a demonstration profile. A real conversation can only be started with a registered Kmeet member."
+      );
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       ANONYMOUS USER PAYMENT RULE
+       
+       Anonymous users do NOT get free hi/hey.
+
+       They can send only when payment has already
+       provided sender credits.
+    ===================================================== */
+
+    if (
+      currentUser.isAnonymous &&
+      getSenderCredits() <= 0
     ) {
 
       showGate(
@@ -2031,29 +2049,11 @@ composer.addEventListener(
     }
 
 
-    /*
-      DEMO PROFILES
+    /* =====================================================
+       READ EXISTING MESSAGES
+    ===================================================== */
 
-      Demo profiles exist for Discover presentation.
-      They do not have Firebase user documents.
-      Therefore we do not attempt to create a
-      Firestore conversation with a fake demo recipient.
-    */
-
-    if (
-      targetIsDemo
-    ) {
-
-      showGate(
-        "sender"
-      );
-
-      return;
-
-    }
-
-
-    let existingMessages;
+    let existingMessages = [];
 
 
     try {
@@ -2063,9 +2063,8 @@ composer.addEventListener(
 
     }
 
-    catch (
-      error
-    ) {
+
+    catch (error) {
 
       console.error(
         "Conversation read failed:",
@@ -2077,64 +2076,109 @@ composer.addEventListener(
         "Kmeet could not check this conversation. Please check your Firestore rules and try again."
       );
 
+
       return;
 
     }
 
 
-    /*
-      FIRST MESSAGE
+    /* =====================================================
+       FIRST MESSAGE RULE
+       
+       REGISTERED USER:
+       First message MUST be exactly:
+       hi
+       or
+       hey
 
-      Registered sender gets one free opening
-      message, but it must be exactly hi or hey.
-    */
+       ANONYMOUS USER:
+       No free opening message.
+       Payment is required first.
+    ===================================================== */
 
     if (
-      existingMessages.length === 0 &&
-      !FREE_OPENING_MESSAGES.includes(
-        text.toLowerCase()
-      )
+
+      !currentUser.isAnonymous &&
+
+      existingMessages.length === 0
+
     ) {
 
-      showError(
-        "Your first message must be “hi” or “hey”."
-      );
+      const opening =
+        text.toLowerCase();
 
-      return;
+
+      if (
+
+        !FREE_OPENING_MESSAGES.includes(
+          opening
+        )
+
+      ) {
+
+        showGate(
+          "sender"
+        );
+
+        return;
+
+      }
 
     }
 
 
-    /*
-      THE FIRST MESSAGE ESTABLISHES
-      WHO THE ORIGINAL SENDER IS.
-    */
+    /* =====================================================
+       DETERMINE ORIGINAL SENDER
+    ===================================================== */
 
     const originalSenderId =
+
       existingMessages.length
+
         ? existingMessages[0].senderId
+
         : currentUser.uid;
 
 
     const isSender =
+
       originalSenderId ===
       currentUser.uid;
 
 
-    /*
-      CONTACT INFORMATION PROTECTION
-    */
+    /* =====================================================
+       CONTACT INFORMATION RULE
+       
+       Receiver contact information:
+       BLOCKED and KSh 11 gate.
+
+       Sender contact information:
+       Requires sender payment/credits.
+    ===================================================== */
 
     if (
+
       containsContactInformation(
         text
       )
+
     ) {
 
+      if (
+        !isSender
+      ) {
+
+        showGate(
+          "receiver"
+        );
+
+        return;
+
+      }
+
+
       showGate(
-        isSender
-          ? "sender"
-          : "receiver"
+        "sender"
       );
 
       return;
@@ -2142,9 +2186,17 @@ composer.addEventListener(
     }
 
 
-    /*
-      SENDER CREDIT CHECK
-    */
+    /* =====================================================
+       SENDER CREDIT RULE
+       
+       Registered sender:
+       - first hi/hey is FREE
+       - later messages require credits
+
+       Anonymous sender:
+       - no free message
+       - every sent message uses a paid credit
+    ===================================================== */
 
     let creditConsumed =
       false;
@@ -2153,16 +2205,18 @@ composer.addEventListener(
       0;
 
 
-    /*
-      The opening "hi"/"hey" is free.
-
-      Every later sender message consumes
-      one sender credit.
-    */
-
     if (
+
       isSender &&
-      existingMessages.length > 0
+
+      (
+
+        existingMessages.length > 0 ||
+
+        currentUser.isAnonymous
+
+      )
+
     ) {
 
       creditsBefore =
@@ -2193,51 +2247,66 @@ composer.addEventListener(
     }
 
 
-    /*
-      RECEIVER FREE REPLIES
+    /* =====================================================
+       RECEIVER RULE
+       
+       First 3 receiver replies are FREE.
 
-      Receiver gets the first 3 replies free.
-      After that, KSh 11 is required.
-    */
+       After 3 replies:
+       KSh 11 is required.
+
+       Contact information is always blocked
+       before payment.
+    ===================================================== */
 
     if (
       !isSender
     ) {
 
       const receiverReplies =
+
         existingMessages.filter(
+
           item =>
             item.senderId ===
             currentUser.uid
+
         ).length;
 
 
       if (
+
         receiverReplies >=
-          FREE_RECEIVER_REPLIES &&
-        !receiverHasPaid()
+        FREE_RECEIVER_REPLIES
+
       ) {
 
-        showGate(
-          "receiver"
-        );
+        if (
+          !receiverHasPaid()
+        ) {
 
-        return;
+          showGate(
+            "receiver"
+          );
+
+          return;
+
+        }
 
       }
 
     }
 
 
+    /* =====================================================
+       SAVE MESSAGE
+    ===================================================== */
+
     sendBtn.disabled =
       true;
 
 
     try {
-
-      /*
-        Create/update conversation.
-      */
 
       await setDoc(
 
@@ -2248,6 +2317,7 @@ composer.addEventListener(
         ),
 
         {
+
           initiatorId:
             originalSenderId,
 
@@ -2259,6 +2329,7 @@ composer.addEventListener(
 
           createdAt:
             serverTimestamp()
+
         },
 
         {
@@ -2268,20 +2339,22 @@ composer.addEventListener(
       );
 
 
-      /*
-        Save message.
-      */
-
       await addDoc(
 
         collection(
+
           db,
+
           "conversations",
+
           conversationId,
+
           "messages"
+
         ),
 
         {
+
           senderId:
             currentUser.uid,
 
@@ -2293,6 +2366,7 @@ composer.addEventListener(
 
           createdAt:
             serverTimestamp()
+
         }
 
       );
@@ -2301,13 +2375,32 @@ composer.addEventListener(
       messageInput.value =
         "";
 
+
       messageInput.focus();
+
+
+      /*
+        If anonymous, update the information
+        shown to them after using a credit.
+      */
+
+      if (
+        currentUser.isAnonymous
+      ) {
+
+        const remaining =
+          getSenderCredits();
+
+
+        infoBar.textContent =
+          `Anonymous chat: ${remaining} paid chat credit${remaining === 1 ? "" : "s"} remaining.`;
+
+      }
 
     }
 
-    catch (
-      error
-    ) {
+
+    catch (error) {
 
       console.error(
         "Message send failed:",
@@ -2316,9 +2409,9 @@ composer.addEventListener(
 
 
       /*
-        If a sender credit was consumed
-        but Firebase rejected the message,
-        restore that credit.
+        IMPORTANT:
+        Restore the credit if Firestore
+        failed to save the message.
       */
 
       if (
@@ -2338,6 +2431,7 @@ composer.addEventListener(
 
     }
 
+
     finally {
 
       sendBtn.disabled =
@@ -2355,21 +2449,28 @@ composer.addEventListener(
 ========================================================= */
 
 messageInput.addEventListener(
+
   "keydown",
+
   event => {
 
     if (
+
       event.key === "Enter" &&
+
       !event.shiftKey
+
     ) {
 
       event.preventDefault();
+
 
       composer.requestSubmit();
 
     }
 
   }
+
 );
 
 
@@ -2385,8 +2486,10 @@ async function start() {
       "No profile was selected for this chat."
     );
 
+
     sendBtn.disabled =
       true;
+
 
     return;
 
@@ -2397,13 +2500,13 @@ async function start() {
 
     await loadTargetProfile();
 
+
     initialiseAuth();
 
   }
 
-  catch (
-    error
-  ) {
+
+  catch (error) {
 
     console.error(
       error
@@ -2428,7 +2531,9 @@ start();
 ========================================================= */
 
 window.addEventListener(
+
   "beforeunload",
+
   () => {
 
     if (
@@ -2440,10 +2545,10 @@ window.addEventListener(
     }
 
   }
+
 );
 
 </script>
 
 </body>
-
 </html>
