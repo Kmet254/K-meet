@@ -772,7 +772,6 @@ body::before {
 
 </div>
 
-
 <script type="module">
 
 import {
@@ -785,7 +784,6 @@ import {
   onAuthStateChanged,
   signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-
 
 import {
   doc,
@@ -825,18 +823,6 @@ const chatArea =
 const gate =
   document.getElementById("gate");
 
-const gateTitle =
-  document.getElementById("gateTitle");
-
-const gateText =
-  document.getElementById("gateText");
-
-const gateButtons =
-  document.getElementById("gateButtons");
-
-const gateIcon =
-  document.getElementById("gateIcon");
-
 const errorBox =
   document.getElementById("errorBox");
 
@@ -852,6 +838,9 @@ const avatarFallback =
 const messages =
   document.getElementById("messages");
 
+const emptyState =
+  document.getElementById("emptyState");
+
 const composer =
   document.getElementById("composer");
 
@@ -864,153 +853,276 @@ const sendBtn =
 const infoBar =
   document.getElementById("infoBar");
 
+const gateIcon =
+  document.getElementById("gateIcon");
+
+const gateTitle =
+  document.getElementById("gateTitle");
+
+const gateText =
+  document.getElementById("gateText");
+
+const gateButtons =
+  document.getElementById("gateButtons");
+
 
 /* =========================================================
    STATE
 ========================================================= */
 
-let currentUser = null;
+let currentUser =
+  null;
 
-let conversationId = null;
+let targetProfile =
+  null;
 
-let unsubscribeMessages = null;
+let conversationId =
+  null;
 
-let authStarted = false;
+let unsubscribeMessages =
+  null;
 
-let messagesLoaded = false;
+let authStarted =
+  false;
 
 
 /* =========================================================
-   CONSTANTS
+   PRICING / CHAT RULES
 ========================================================= */
 
-const FREE_OPENING_MESSAGES = [
-  "hi",
-  "hey"
-];
+const FREE_OPENING_MESSAGES =
+  [
+    "hi",
+    "hey"
+  ];
 
-const FREE_RECEIVER_REPLIES = 3;
+const FREE_RECEIVER_REPLIES =
+  3;
 
-const RECEIVER_FEE = 11;
+const RECEIVER_CONTINUATION_FEE =
+  11;
 
-const SENDER_PACK_3_PRICE = 49;
+const SENDER_PACK_3_PRICE =
+  49;
 
-const SENDER_PACK_8_PRICE = 100;
+const SENDER_PACK_8_PRICE =
+  100;
+
+
+/* =========================================================
+   DEMO PROFILES
+========================================================= */
+
+const demoProfiles = {
+
+  "demo-01": {
+    name: "Amara",
+    photo: "https://randomuser.me/api/portraits/women/44.jpg"
+  },
+
+  "demo-02": {
+    name: "Brian",
+    photo: "https://randomuser.me/api/portraits/men/32.jpg"
+  },
+
+  "demo-03": {
+    name: "Nia",
+    photo: "https://randomuser.me/api/portraits/women/65.jpg"
+  },
+
+  "demo-04": {
+    name: "Daniel",
+    photo: "https://randomuser.me/api/portraits/men/46.jpg"
+  },
+
+  "demo-05": {
+    name: "Zuri",
+    photo: "https://randomuser.me/api/portraits/women/32.jpg"
+  },
+
+  "demo-06": {
+    name: "Kevin",
+    photo: "https://randomuser.me/api/portraits/men/52.jpg"
+  },
+
+  "demo-07": {
+    name: "Aisha",
+    photo: "https://randomuser.me/api/portraits/women/68.jpg"
+  },
+
+  "demo-08": {
+    name: "Michael",
+    photo: "https://randomuser.me/api/portraits/men/75.jpg"
+  },
+
+  "demo-09": {
+    name: "Wanjiku",
+    photo: "https://randomuser.me/api/portraits/women/50.jpg"
+  },
+
+  "demo-10": {
+    name: "Eric",
+    photo: "https://randomuser.me/api/portraits/men/22.jpg"
+  },
+
+  "demo-11": {
+    name: "Leah",
+    photo: "https://randomuser.me/api/portraits/women/21.jpg"
+  },
+
+  "demo-12": {
+    name: "Samuel",
+    photo: "https://randomuser.me/api/portraits/men/41.jpg"
+  },
+
+  "demo-13": {
+    name: "Faith",
+    photo: "https://randomuser.me/api/portraits/women/12.jpg"
+  },
+
+  "demo-14": {
+    name: "James",
+    photo: "https://randomuser.me/api/portraits/men/61.jpg"
+  },
+
+  "demo-15": {
+    name: "Maya",
+    photo: "https://randomuser.me/api/portraits/women/49.jpg"
+  },
+
+  "demo-16": {
+    name: "Alex",
+    photo: "https://randomuser.me/api/portraits/men/19.jpg"
+  },
+
+  "demo-17": {
+    name: "Ivy",
+    photo: "https://randomuser.me/api/portraits/women/36.jpg"
+  },
+
+  "demo-18": {
+    name: "David",
+    photo: "https://randomuser.me/api/portraits/men/29.jpg"
+  },
+
+  "demo-19": {
+    name: "Sharon",
+    photo: "https://randomuser.me/api/portraits/women/57.jpg"
+  },
+
+  "demo-20": {
+    name: "Chris",
+    photo: "https://randomuser.me/api/portraits/men/37.jpg"
+  },
+
+  "demo-21": {
+    name: "Esther",
+    photo: "https://randomuser.me/api/portraits/women/63.jpg"
+  },
+
+  "demo-22": {
+    name: "Anthony",
+    photo: "https://randomuser.me/api/portraits/men/11.jpg"
+  },
+
+  "demo-23": {
+    name: "Linda",
+    photo: "https://randomuser.me/api/portraits/women/75.jpg"
+  },
+
+  "demo-24": {
+    name: "Joseph",
+    photo: "https://randomuser.me/api/portraits/men/64.jpg"
+  },
+
+  "demo-25": {
+    name: "Cynthia",
+    photo: "https://randomuser.me/api/portraits/women/23.jpg"
+  },
+
+  "demo-26": {
+    name: "Mark",
+    photo: "https://randomuser.me/api/portraits/men/70.jpg"
+  },
+
+  "demo-27": {
+    name: "Mercy",
+    photo: "https://randomuser.me/api/portraits/women/41.jpg"
+  },
+
+  "demo-28": {
+    name: "Peter",
+    photo: "https://randomuser.me/api/portraits/men/35.jpg"
+  },
+
+  "demo-29": {
+    name: "Joy",
+    photo: "https://randomuser.me/api/portraits/women/45.jpg"
+  },
+
+  "demo-30": {
+    name: "George",
+    photo: "https://randomuser.me/api/portraits/men/55.jpg"
+  },
+
+  "demo-31": {
+    name: "Ruth",
+    photo: "https://randomuser.me/api/portraits/women/58.jpg"
+  },
+
+  "demo-32": {
+    name: "Martin",
+    photo: "https://randomuser.me/api/portraits/men/43.jpg"
+  },
+
+  "demo-33": {
+    name: "Angela",
+    photo: "https://randomuser.me/api/portraits/women/38.jpg"
+  },
+
+  "demo-34": {
+    name: "Patrick",
+    photo: "https://randomuser.me/api/portraits/men/48.jpg"
+  },
+
+  "demo-35": {
+    name: "Stella",
+    photo: "https://randomuser.me/api/portraits/women/55.jpg"
+  },
+
+  "demo-36": {
+    name: "William",
+    photo: "https://randomuser.me/api/portraits/men/76.jpg"
+  }
+
+};
 
 
 /* =========================================================
    ERROR
 ========================================================= */
 
-function showError(message) {
+function showError(
+  message
+) {
 
   errorBox.textContent =
     message;
 
   errorBox.style.display =
     "block";
+
 }
 
 
 /* =========================================================
-   ESCAPE HTML
+   HIDE ERROR
 ========================================================= */
 
-function escapeHtml(value) {
+function hideError() {
 
-  return String(value).replace(
-    /[&<>"']/g,
-
-    c => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    }[c])
-
-  );
-}
-
-
-/* =========================================================
-   TARGET PROFILE
-========================================================= */
-
-async function loadTargetProfile() {
-
-  if (!targetId) {
-
-    throw new Error(
-      "No Kmeet profile was selected."
-    );
-
-  }
-
-  const snap =
-    await getDoc(
-      doc(
-        db,
-        "users",
-        targetId
-      )
-    );
-
-  if (!snap.exists()) {
-
-    throw new Error(
-      "The selected Kmeet profile could not be found."
-    );
-
-  }
-
-  const data =
-    snap.data();
-
-  const name =
-    data.name ||
-    data.username ||
-    "Kmeet Member";
-
-  personName.textContent =
-    name;
-
-  avatarFallback.textContent =
-    name
-      .charAt(0)
-      .toUpperCase();
-
-  const photo =
-    data.photoURL ||
-    data.photoUrl ||
-    data.avatar ||
-    data.profilePhoto ||
-    data.profileImage ||
-    data.image ||
-    "";
-
-  if (photo) {
-
-    avatar.src =
-      photo;
-
-    avatar.style.display =
-      "block";
-
-    avatarFallback.style.display =
-      "none";
-
-    avatar.onerror = () => {
-
-      avatar.style.display =
-        "none";
-
-      avatarFallback.style.display =
-        "grid";
-
-    };
-
-  }
+  errorBox.style.display =
+    "none";
 
 }
 
@@ -1021,12 +1133,28 @@ async function loadTargetProfile() {
 
 function getConversationId() {
 
-  return [
+  if (
+    !currentUser ||
+    !targetId
+  ) {
+
+    return null;
+
+  }
+
+  const ids = [
+
     currentUser.uid,
+
     targetId
-  ]
-  .sort()
-  .join("_");
+
+  ].sort();
+
+  return (
+    ids[0] +
+    "_" +
+    ids[1]
+  );
 
 }
 
@@ -1035,202 +1163,259 @@ function getConversationId() {
    CONTACT DETECTION
 ========================================================= */
 
-function containsContactInformation(text) {
+function containsContactInformation(
+  text
+) {
 
   const value =
-    String(text)
-      .toLowerCase()
-      .trim();
+    text.toLowerCase();
 
-
-  /* EMAIL */
+  const phonePattern =
+    /(?:\+?254|0)?7\d{8}\b/;
 
   const emailPattern =
     /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
 
-  if (
-    emailPattern.test(value)
-  ) {
-    return true;
-  }
+  const whatsappPattern =
+    /\b(?:whatsapp|wa\.me)\b/i;
 
+  const telegramPattern =
+    /\btelegram\b/i;
 
-  /* KENYAN PHONE NUMBERS */
+  const instagramPattern =
+    /\b(?:instagram|ig)\b/i;
 
-  const phonePattern =
-    /(?:\+?254[\s-]?(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3,4})|(?:0(?:7\d|1\d)[\s-]?\d{3}[\s-]?\d{3})/i;
+  const facebookPattern =
+    /\bfacebook\b/i;
 
-  if (
-    phonePattern.test(value)
-  ) {
-    return true;
-  }
+  const contactWordsPattern =
+    /\b(?:call me|text me|message me|my number|phone number|contact me|reach me)\b/i;
 
+  return (
+    phonePattern.test(value) ||
+    emailPattern.test(value) ||
+    whatsappPattern.test(value) ||
+    telegramPattern.test(value) ||
+    instagramPattern.test(value) ||
+    facebookPattern.test(value) ||
+    contactWordsPattern.test(value)
+  );
 
-  /* CONTACT LANGUAGE */
-
-  const contactWords =
-    /\b(whatsapp|whats\s*app|call me|text me|message me|contact me|my number|phone number|email me|dm me|instagram|telegram|facebook)\b/i;
-
-  if (
-    contactWords.test(value)
-  ) {
-    return true;
-  }
-
-
-  /* SOCIAL HANDLES */
-
-  const socialHandle =
-    /(?:^|\s)@[a-z0-9_.]{3,}/i;
-
-  if (
-    socialHandle.test(value)
-  ) {
-    return true;
-  }
-
-
-  return false;
 }
 
 
 /* =========================================================
-   OPEN PAYMENT GATE
+   GATE
 ========================================================= */
 
-function showGate(type) {
-
-  gate.style.display =
-    "grid";
+function showGate(
+  type
+) {
 
   chatArea.style.display =
     "none";
 
+  gate.style.display =
+    "grid";
+
   gateButtons.innerHTML =
     "";
 
-
-  /* ANONYMOUS USER */
-
   if (
-    type === "anonymous"
-  ) {
-
-    gateIcon.textContent =
-      "💎";
-
-    gateTitle.textContent =
-      "Start your Kmeet conversation";
-
-    gateText.textContent =
-      "Anonymous members do not receive a free opening message. Choose a Kmeet chat package to start this conversation.";
-
-    gateButtons.innerHTML = `
-
-      <a
-        class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49"
-      >
-        3 Chats — KSh 49
-      </a>
-
-      <a
-        class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
-      >
-        8 Chats — KSh 100
-      </a>
-
-      <a
-        class="pay-btn secondary-btn"
-        href="discover.html"
-      >
-        Back to Discover
-      </a>
-
-    `;
-
-    return;
-  }
-
-
-  /* REGISTERED SENDER */
-
-  if (
-    type === "sender"
-  ) {
-
-    gateIcon.textContent =
-      "💎";
-
-    gateTitle.textContent =
-      "Continue chatting";
-
-    gateText.textContent =
-      "Your free opening message has been used. Choose a Kmeet chat package to continue.";
-
-    gateButtons.innerHTML = `
-
-      <a
-        class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49"
-      >
-        3 Chats — KSh 49
-      </a>
-
-      <a
-        class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
-      >
-        8 Chats — KSh 100
-      </a>
-
-      <a
-        class="pay-btn secondary-btn"
-        href="discover.html"
-      >
-        Back to Discover
-      </a>
-
-    `;
-
-    return;
-  }
-
-
-  /* RECEIVER */
-
-  if (
-    type === "receiver"
+    type ===
+    "anonymous"
   ) {
 
     gateIcon.textContent =
       "💗";
 
     gateTitle.textContent =
+      "Unlock chat";
+
+    gateText.textContent =
+      "Anonymous visitors can browse Kmeet freely. To send your first message, choose a chat package.";
+
+    const pack3 =
+      document.createElement("button");
+
+    pack3.className =
+      "pay-btn";
+
+    pack3.textContent =
+      `3 chats — KSh ${SENDER_PACK_3_PRICE}`;
+
+    pack3.type =
+      "button";
+
+    pack3.onclick =
+      () => {
+
+        activateSenderCredits(
+          3
+        );
+
+      };
+
+    gateButtons.appendChild(
+      pack3
+    );
+
+
+    const pack8 =
+      document.createElement("button");
+
+    pack8.className =
+      "pay-btn";
+
+    pack8.textContent =
+      `8 chats — KSh ${SENDER_PACK_8_PRICE}`;
+
+    pack8.type =
+      "button";
+
+    pack8.onclick =
+      () => {
+
+        activateSenderCredits(
+          8
+        );
+
+      };
+
+    gateButtons.appendChild(
+      pack8
+    );
+
+
+    const back =
+      document.createElement("a");
+
+    back.className =
+      "pay-btn secondary-btn";
+
+    back.href =
+      "discover.html";
+
+    back.textContent =
+      "Back to Discover";
+
+    gateButtons.appendChild(
+      back
+    );
+
+    return;
+
+  }
+
+
+  if (
+    type ===
+    "sender"
+  ) {
+
+    gateIcon.textContent =
+      "💬";
+
+    gateTitle.textContent =
+      "More chats";
+
+    gateText.textContent =
+      `Your free opening message has been used. Continue with 3 chats for KSh ${SENDER_PACK_3_PRICE}, or get 8 chats for KSh ${SENDER_PACK_8_PRICE}.`;
+
+    const pack3 =
+      document.createElement("button");
+
+    pack3.className =
+      "pay-btn";
+
+    pack3.type =
+      "button";
+
+    pack3.textContent =
+      `3 chats — KSh ${SENDER_PACK_3_PRICE}`;
+
+    pack3.onclick =
+      () => {
+
+        activateSenderCredits(
+          3
+        );
+
+      };
+
+    gateButtons.appendChild(
+      pack3
+    );
+
+
+    const pack8 =
+      document.createElement("button");
+
+    pack8.className =
+      "pay-btn";
+
+    pack8.type =
+      "button";
+
+    pack8.textContent =
+      `8 chats — KSh ${SENDER_PACK_8_PRICE}`;
+
+    pack8.onclick =
+      () => {
+
+        activateSenderCredits(
+          8
+        );
+
+      };
+
+    gateButtons.appendChild(
+      pack8
+    );
+
+    return;
+
+  }
+
+
+  if (
+    type ===
+    "receiver"
+  ) {
+
+    gateIcon.textContent =
+      "🔒";
+
+    gateTitle.textContent =
       "Continue the conversation";
 
     gateText.textContent =
-      "You have used your free replies or attempted to share contact information. Pay KSh 11 to continue.";
+      `Your first ${FREE_RECEIVER_REPLIES} replies are free when you keep contact details private. Continue for KSh ${RECEIVER_CONTINUATION_FEE}.`;
 
-    gateButtons.innerHTML = `
+    const pay =
+      document.createElement("button");
 
-      <a
-        class="pay-btn"
-        href="payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=11"
-      >
-        Continue — KSh 11
-      </a>
+    pay.className =
+      "pay-btn";
 
-      <a
-        class="pay-btn secondary-btn"
-        href="discover.html"
-      >
-        Back to Discover
-      </a>
+    pay.type =
+      "button";
 
-    `;
+    pay.textContent =
+      `Continue — KSh ${RECEIVER_CONTINUATION_FEE}`;
+
+    pay.onclick =
+      () => {
+
+        activateReceiverPayment();
+
+      };
+
+    gateButtons.appendChild(
+      pay
+    );
+
+    return;
 
   }
 
@@ -1238,10 +1423,10 @@ function showGate(type) {
 
 
 /* =========================================================
-   SHOW CHAT
+   RETURN TO CHAT
 ========================================================= */
 
-function showChat() {
+function returnToChat() {
 
   gate.style.display =
     "none";
@@ -1249,803 +1434,288 @@ function showChat() {
   chatArea.style.display =
     "flex";
 
-}
+  hideError();
 
-
-/* =========================================================
-   LOAD EXISTING MESSAGES
-========================================================= */
-
-function startMessages() {
-
-  if (!currentUser) {
-    return;
-  }
-
-  conversationId =
-    getConversationId();
-
-
-  const ref =
-    collection(
-      db,
-      "conversations",
-      conversationId,
-      "messages"
-    );
-
-
-  const q =
-    query(
-      ref,
-      orderBy(
-        "createdAt",
-        "asc"
-      )
-    );
-
-
-  unsubscribeMessages =
-    onSnapshot(
-
-      q,
-
-      snapshot => {
-
-        messagesLoaded =
-          true;
-
-        messages.innerHTML =
-          "";
-
-
-        if (
-          snapshot.empty
-        ) {
-
-          messages.innerHTML = `
-            <div class="empty">
-              Start the conversation and let the connection grow. ❤️
-            </div>
-          `;
-
-          return;
-
-        }
-
-
-        let firstSenderId =
-          null;
-
-        let receiverReplies =
-          0;
-
-
-        snapshot.forEach(
-          item => {
-
-            const data =
-              item.data();
-
-
-            if (
-              !firstSenderId
-            ) {
-
-              firstSenderId =
-                data.senderId;
-
-            }
-
-
-            if (
-              data.senderId !==
-              firstSenderId
-            ) {
-
-              receiverReplies++;
-
-            }
-
-
-            const div =
-              document.createElement(
-                "div"
-              );
-
-
-            div.className =
-              "message " +
-              (
-                data.senderId ===
-                currentUser.uid
-                  ? "mine"
-                  : "theirs"
-              );
-
-
-            div.textContent =
-              data.text || "";
-
-
-            messages.appendChild(
-              div
-            );
-
-          }
-        );
-
-
-        messages.scrollTop =
-          messages.scrollHeight;
-
-
-        if (
-          firstSenderId ===
-          currentUser.uid
-        ) {
-
-          if (
-            currentUser.isAnonymous
-          ) {
-
-            infoBar.textContent =
-              "Anonymous chat: payment is required for your messages.";
-
-          } else {
-
-            infoBar.textContent =
-              "Your opening message is free. Further messages use chat credits.";
-
-          }
-
-        } else {
-
-          infoBar.textContent =
-            `You have ${Math.max(
-              0,
-              FREE_RECEIVER_REPLIES -
-              receiverReplies
-            )} free replies remaining.`;
-
-        }
-
-      },
-
-      error => {
-
-        console.error(
-          "Message listener error:",
-          error
-        );
-
-        showError(
-          "The chat interface is open, but messages could not be loaded. Please check your Firebase Firestore rules."
-        );
-
-      }
-
-    );
+  messageInput.focus();
 
 }
 
 
 /* =========================================================
-   AUTHENTICATION
+   DEMO PAYMENT — SENDER
 ========================================================= */
 
-async function initialiseAuth() {
+function activateSenderCredits(
+  amount
+) {
 
   if (
-    authStarted
+    !currentUser
   ) {
+
+    showError(
+      "Kmeet is still preparing your account. Please try again."
+    );
+
     return;
+
   }
 
-  authStarted =
-    true;
+
+  const creditKey =
+    "kmeet_sender_credits_" +
+    currentUser.uid +
+    "_" +
+    targetId;
 
 
-  onAuthStateChanged(
-    auth,
-
-    async user => {
-
-      try {
-
-        /*
-          Existing logged-in or anonymous user
-        */
-
-        if (user) {
-
-          currentUser =
-            user;
+  const current =
+    parseInt(
+      localStorage.getItem(
+        creditKey
+      ) || "0",
+      10
+    );
 
 
-          if (
-            user.isAnonymous
-          ) {
-
-            infoBar.textContent =
-              "Anonymous chat: payment is required before your first message.";
-
-          } else {
-
-            infoBar.textContent =
-              "Your opening message is free — say hi or hey ❤️";
-
-          }
-
-
-          startMessages();
-
-          return;
-
-        }
-
-
-        /*
-          No current user:
-          create anonymous session.
-        */
-
-        await signInAnonymously(
-          auth
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "Kmeet authentication error:",
-          error
-        );
-
-
-        if (
-          error.code ===
-          "auth/operation-not-allowed"
-        ) {
-
-          showError(
-            "Anonymous Authentication is not enabled in Firebase. Enable Authentication → Sign-in method → Anonymous."
-          );
-
-        } else {
-
-          console.error(
-            "Kmeet authentication failed:",
-            error.code,
-            error.message
-          );
-
-          showError(
-            "Kmeet could not start the chat session (" +
-            (error.code || "authentication error") +
-            "). Please check that Anonymous Authentication is enabled in Firebase."
-          );
-
-        }
-
-      }
-
-    }
-
+  localStorage.setItem(
+    creditKey,
+    String(
+      current +
+      amount
+    )
   );
 
+
+  /*
+    This is currently a local
+    payment simulation.
+
+    Daraja/M-Pesa will replace
+    this step later.
+  */
+
+  returnToChat();
+
+  infoBar.textContent =
+    `You have ${current + amount} chat credits available.`;
+
 }
 
 
 /* =========================================================
-   SEND MESSAGE
+   DEMO PAYMENT — RECEIVER
 ========================================================= */
 
-composer.addEventListener(
-  "submit",
-
-  async event => {
-
-    event.preventDefault();
-
-
-    const text =
-      messageInput.value.trim();
-
-
-    if (!text) {
-      return;
-    }
-
-
-    if (!currentUser) {
-
-      showError(
-        "Kmeet is still preparing your chat session. Please try again in a moment."
-      );
-
-      return;
-
-    }
-
-
-    /*
-      ANONYMOUS SENDER RULE
-
-      Anonymous members may browse and open a chat,
-      but they do not receive the free hi/hey opening.
-
-      Send them directly to payment before accepting
-      their first message.
-    */
-
-    if (
-      currentUser.isAnonymous
-    ) {
-
-      showGate(
-        "anonymous"
-      );
-
-      return;
-
-    }
-
-
-    if (!conversationId) {
-
-      conversationId =
-        getConversationId();
-
-    }
-
-
-    /*
-      Get existing messages.
-      This makes the rules work even after
-      refreshing the page.
-    */
-
-    let existingMessages = [];
-
-
-    try {
-
-      const snap =
-        await getDocs(
-          query(
-            collection(
-              db,
-              "conversations",
-              conversationId,
-              "messages"
-            ),
-            orderBy(
-              "createdAt",
-              "asc"
-            )
-          )
-        );
-
-
-      snap.forEach(
-        item => {
-
-          existingMessages.push(
-            item.data()
-          );
-
-        }
-      );
-
-    }
-
-    catch (error) {
-
-      console.error(
-        error
-      );
-
-      showError(
-        "Kmeet could not check this conversation. Please try again."
-      );
-
-      return;
-
-    }
-
-
-    const firstMessage =
-      existingMessages[0];
-
-
-    /*
-      =========================================
-      FIRST MESSAGE
-      =========================================
-    */
-
-    if (
-      existingMessages.length === 0
-    ) {
-
-      const opening =
-        text.toLowerCase();
-
-
-      if (
-        !FREE_OPENING_MESSAGES.includes(
-          opening
-        )
-      ) {
-
-        showError(
-          "Your first message must be “hi” or “hey”."
-        );
-
-        return;
-
-      }
-
-    }
-
-
-    /*
-      =========================================
-      DETERMINE ROLE
-      =========================================
-    */
-
-    const senderId =
-      firstMessage
-        ? firstMessage.senderId
-        : currentUser.uid;
-
-
-    const isSender =
-      senderId ===
-      currentUser.uid;
-
-
-    /*
-      =========================================
-      CONTACT SHARING
-      =========================================
-    */
-
-    if (
-      containsContactInformation(
-        text
-      )
-    ) {
-
-      if (
-        !isSender
-      ) {
-
-        /*
-          Receiver attempted to share
-          contact information.
-
-          Block it immediately.
-        */
-
-        showGate(
-          "receiver"
-        );
-
-        return;
-
-      }
-
-
-      /*
-        Sender contact sharing requires
-        sender credits as well.
-      */
-
-      showGate(
-        "sender"
-      );
-
-      return;
-
-    }
-
-
-    /*
-      =========================================
-      SENDER RULE
-      =========================================
-    */
-
-    if (
-      isSender &&
-      existingMessages.length > 0
-    ) {
-
-      const creditKey =
-        "kmeet_sender_credits_" +
-        currentUser.uid +
-        "_" +
-        targetId;
-
-
-      let credits =
-        parseInt(
-          localStorage.getItem(
-            creditKey
-          ) || "0",
-          10
-        );
-
-
-      if (
-        credits <= 0
-      ) {
-
-        showGate(
-          "sender"
-        );
-
-        return;
-
-      }
-
-
-      credits--;
-
-
-      localStorage.setItem(
-        creditKey,
-        String(credits)
-      );
-
-    }
-
-
-    /*
-      =========================================
-      RECEIVER RULE
-      =========================================
-    */
-
-    if (
-      !isSender
-    ) {
-
-      const receiverReplies =
-        existingMessages.filter(
-          item =>
-            item.senderId ===
-            currentUser.uid
-        ).length;
-
-
-      if (
-        receiverReplies >=
-        FREE_RECEIVER_REPLIES
-      ) {
-
-        const paidKey =
-          "kmeet_receiver_paid_" +
-          currentUser.uid +
-          "_" +
-          targetId;
-
-
-        const paid =
-          localStorage.getItem(
-            paidKey
-          ) === "true";
-
-
-        if (!paid) {
-
-          showGate(
-            "receiver"
-          );
-
-          return;
-
-        }
-
-      }
-
-    }
-
-
-    /*
-      =========================================
-      SAVE MESSAGE
-      =========================================
-    */
-
-    sendBtn.disabled =
-      true;
-
-
-    try {
-
-      await setDoc(
-
-        doc(
-          db,
-          "conversations",
-          conversationId
-        ),
-
-        {
-          initiatorId:
-            senderId,
-
-          targetId:
-            targetId,
-
-          updatedAt:
-            serverTimestamp(),
-
-          createdAt:
-            serverTimestamp()
-
-        },
-
-        {
-          merge: true
-        }
-
-      );
-
-
-      await addDoc(
-
-        collection(
-          db,
-          "conversations",
-          conversationId,
-          "messages"
-        ),
-
-        {
-          senderId:
-            currentUser.uid,
-
-          targetId:
-            targetId,
-
-          text:
-            text,
-
-          createdAt:
-            serverTimestamp()
-
-        }
-
-      );
-
-
-      messageInput.value =
-        "";
-
-      messageInput.focus();
-
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Message send failed:",
-        error
-      );
-
-      showError(
-        "Your message could not be sent. Please check your Firestore rules."
-      );
-
-    }
-
-    finally {
-
-      sendBtn.disabled =
-        false;
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   ENTER TO SEND
-========================================================= */
-
-messageInput.addEventListener(
-  "keydown",
-
-  event => {
-
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-
-      event.preventDefault();
-
-      composer.requestSubmit();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   START
-========================================================= */
-
-async function start() {
-
-  if (!targetId) {
+function activateReceiverPayment() {
+
+  if (
+    !currentUser
+  ) {
 
     showError(
-      "No profile was selected for this chat."
+      "Kmeet is still preparing your account. Please try again."
     );
-
-    sendBtn.disabled =
-      true;
 
     return;
 
   }
 
 
-  try {
-
-    await loadTargetProfile();
-
-  }
-
-  catch (error) {
-
-    console.error(
-      error
-    );
-
-    showError(
-      error.message ||
-      "Unable to load the selected profile."
-    );
-
-  }
+  const paidKey =
+    "kmeet_receiver_paid_" +
+    currentUser.uid +
+    "_" +
+    targetId;
 
 
-  initialiseAuth();
+  localStorage.setItem(
+    paidKey,
+    "true"
+  );
+
+
+  /*
+    Daraja/M-Pesa will replace
+    this local payment simulation.
+  */
+
+  returnToChat();
+
+  infoBar.textContent =
+    "Your receiver continuation access is active. ❤️";
 
 }
 
 
-start();
+/* =========================================================
+   LOAD TARGET PROFILE
+========================================================= */
+
+async function loadTargetProfile() {
+
+  if (
+    !targetId
+  ) {
+
+    throw new Error(
+      "No Kmeet profile was selected."
+    );
+
+  }
 
 
-window.addEventListener(
-  "beforeunload",
+  /*
+    DEMO PROFILE
 
-  () => {
+    Discover contains local demonstration
+    profiles. They do not exist in Firebase,
+    so we must not call getDoc() for them.
+  */
 
-    if (
-      unsubscribeMessages
-    ) {
+  if (
+    targetId.startsWith(
+      "demo-"
+    )
+  ) {
 
-      unsubscribeMessages();
+    const demo =
+      demoProfiles[targetId];
+
+
+    if (!demo) {
+
+      throw new Error(
+        "The selected Kmeet demo profile could not be found."
+      );
 
     }
 
+
+    targetProfile =
+      {
+        id:
+          targetId,
+
+        name:
+          demo.name,
+
+        photo:
+          demo.photo
+
+      };
+
+
+    personName.textContent =
+      demo.name;
+
+
+    avatar.alt =
+      demo.name;
+
+
+    avatar.src =
+      demo.photo;
+
+
+    avatar.style.display =
+      "block";
+
+
+    avatarFallback.style.display =
+      "none";
+
+
+    return;
+
   }
-);
 
-</script>
 
-</body>
-</html>
+  /*
+    REAL FIREBASE PROFILE
+  */
+
+  const snap =
+    await getDoc(
+      doc(
+        db,
+        "users",
+        targetId
+      )
+    );
+
+
+  if (
+    !snap.exists()
+  ) {
+
+    throw new Error(
+      "The selected Kmeet profile could not be found."
+    );
+
+  }
+
+
+  const data =
+    snap.data();
+
+
+  targetProfile =
+    {
+      id:
+        targetId,
+
+      name:
+        data.displayName ||
+        data.name ||
+        "Kmeet Member",
+
+      photo:
+        data.photoURL ||
+        data.photoUrl ||
+        data.avatar ||
+        data.profilePhoto ||
+        data.profileImage ||
+        data.image ||
+        ""
+
+    };
+
+
+  personName.textContent =
+    targetProfile.name;
+
+
+  avatar.alt =
+    targetProfile.name;
+
+
+  if (
+    targetProfile.photo
+  ) {
+
+    avatar.src =
+      targetProfile.photo;
+
+    avatar.style.display =
+      "block";
+
+    avatarFallback.style.display =
+      "none";
+
+  } else {
+
+    avatar.style.display =
+      "none";
+
+    avatarFallback.style.display =
+      "grid";
+
+    avatarFallback.textContent =
+      targetProfile.name
+        .charAt(0)
+        .toUpperCase();
+
+  }
+
+}
