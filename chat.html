@@ -357,25 +357,50 @@ body::before{
 </head>
 
 <body>
+
 <div class="page">
 
 <header class="topbar">
+
   <a class="brand-link" href="index.html" aria-label="Kmeet home">
-    <img class="brand-logo" src="./kmeet-logo.jfif.jfif" alt="Kmeet">
-    <div class="brand">K<span>meet</span></div>
+
+    <img
+      class="brand-logo"
+      src="./kmeet-logo.jfif.jfif"
+      alt="Kmeet"
+    >
+
+    <div class="brand">
+      K<span>meet</span>
+    </div>
+
   </a>
 
-  <a class="back-btn" href="discover.html">← Back</a>
+  <a class="back-btn" href="discover.html">
+    ← Back
+  </a>
+
 </header>
+
 
 <main class="chat-shell">
 
   <div id="errorBox" class="error"></div>
 
-  <section id="chatArea" style="display:flex;height:100%;flex-direction:column">
+
+  <section
+    id="chatArea"
+    style="display:flex;height:100%;flex-direction:column"
+  >
 
     <div class="chat-header">
-      <div id="avatarFallback" class="avatar-fallback">K</div>
+
+      <div
+        id="avatarFallback"
+        class="avatar-fallback"
+      >
+        K
+      </div>
 
       <img
         id="avatar"
@@ -385,53 +410,95 @@ body::before{
       >
 
       <div>
-        <div id="personName" class="person-name">Kmeet Member</div>
-        <div id="personStatus" class="status">Your Kmeet conversation</div>
+
+        <div
+          id="personName"
+          class="person-name"
+        >
+          Kmeet Member
+        </div>
+
+        <div
+          id="personStatus"
+          class="status"
+        >
+          Your Kmeet conversation
+        </div>
+
       </div>
+
     </div>
 
-    <div id="infoBar" class="info-bar">
+
+    <div
+      id="infoBar"
+      class="info-bar"
+    >
       Say hello and let the connection grow ❤️
     </div>
 
-    <div id="messages" class="messages">
-      <div id="emptyState" class="empty">
+
+    <div
+      id="messages"
+      class="messages"
+    >
+
+      <div
+        id="emptyState"
+        class="empty"
+      >
         Start the conversation and let the connection grow. ❤️
       </div>
+
     </div>
 
-    <!-- IMPORTANT:
-         onsubmit="return false;" prevents the browser from navigating
-         to /chat? if normal form submission ever occurs.
-         JavaScript below still handles the submit event. -->
-    <form
+
+    <!--
+      IMPORTANT:
+      This is deliberately NOT a form.
+
+      Therefore pressing Enter cannot submit a form
+      or navigate to /chat?.
+    -->
+
+    <div
       id="composer"
       class="composer"
-      onsubmit="return false;"
     >
+
       <textarea
         id="messageInput"
         placeholder="Write a message…"
         maxlength="2000"
-        required
       ></textarea>
 
       <button
         id="sendBtn"
         class="send-btn"
-        type="submit"
+        type="button"
       >
         Send
       </button>
-    </form>
+
+    </div>
 
   </section>
 
-  <section id="gate" class="gate" style="display:none">
+
+  <section
+    id="gate"
+    class="gate"
+    style="display:none"
+  >
 
     <div class="gate-card">
 
-      <div id="gateIcon" class="gate-icon">💗</div>
+      <div
+        id="gateIcon"
+        class="gate-icon"
+      >
+        💗
+      </div>
 
       <h2 id="gateTitle">
         Unlock your conversation
@@ -441,7 +508,10 @@ body::before{
         Continue chatting with Kmeet credits.
       </p>
 
-      <div id="gateButtons" class="gate-buttons"></div>
+      <div
+        id="gateButtons"
+        class="gate-buttons"
+      ></div>
 
     </div>
 
@@ -450,6 +520,7 @@ body::before{
 </main>
 
 </div>
+
 
 <script type="module">
 
@@ -471,7 +542,10 @@ import {
 } from "./firebase-config.js";
 
 
-const params = new URLSearchParams(window.location.search);
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
 const targetId =
   params.get("userId") ||
@@ -514,9 +588,6 @@ const avatarFallback =
 const messages =
   document.getElementById("messages");
 
-const composer =
-  document.getElementById("composer");
-
 const messageInput =
   document.getElementById("messageInput");
 
@@ -536,14 +607,6 @@ let unsubscribeMessages = null;
 let authStarted = false;
 
 let targetIsDemo = false;
-
-
-/*
-  Keeps demo conversations visible immediately after Send.
-
-  Local storage is only used to remember messages
-  on this browser.
-*/
 
 let demoMessages = [];
 
@@ -749,38 +812,46 @@ const demoProfiles = {
 
 function showError(message){
 
-  errorBox.textContent = message;
+  errorBox.textContent =
+    message;
 
-  errorBox.style.display = "block";
+  errorBox.style.display =
+    "block";
 
 }
 
 
 function clearError(){
 
-  errorBox.textContent = "";
+  errorBox.textContent =
+    "";
 
-  errorBox.style.display = "none";
+  errorBox.style.display =
+    "none";
 
 }
 
 
 function senderCreditKey(){
 
-  return "kmeet_sender_credits_" +
+  return (
+    "kmeet_sender_credits_" +
     currentUser.uid +
     "_" +
-    targetId;
+    targetId
+  );
 
 }
 
 
 function receiverPaidKey(){
 
-  return "kmeet_receiver_paid_" +
+  return (
+    "kmeet_receiver_paid_" +
     currentUser.uid +
     "_" +
-    targetId;
+    targetId
+  );
 
 }
 
@@ -788,7 +859,9 @@ function receiverPaidKey(){
 function getSenderCredits(){
 
   return parseInt(
-    localStorage.getItem(senderCreditKey()) || "0",
+    localStorage.getItem(
+      senderCreditKey()
+    ) || "0",
     10
   ) || 0;
 
@@ -799,7 +872,9 @@ function setSenderCredits(value){
 
   localStorage.setItem(
     senderCreditKey(),
-    String(Math.max(0,value))
+    String(
+      Math.max(0,value)
+    )
   );
 
 }
@@ -807,9 +882,11 @@ function setSenderCredits(value){
 
 function receiverHasPaid(){
 
-  return localStorage.getItem(
-    receiverPaidKey()
-  ) === "true";
+  return (
+    localStorage.getItem(
+      receiverPaidKey()
+    ) === "true"
+  );
 
 }
 
@@ -827,12 +904,15 @@ function getConversationId(){
 function demoMessageKey(){
 
   const userPart =
-    currentUser?.uid || "visitor";
+    currentUser?.uid ||
+    "visitor";
 
-  return "kmeet_demo_chat_" +
+  return (
+    "kmeet_demo_chat_" +
     userPart +
     "_" +
-    targetId;
+    targetId
+  );
 
 }
 
@@ -897,12 +977,15 @@ function showDemoEmptyState(){
     const empty =
       document.createElement("div");
 
-    empty.className = "empty";
+    empty.className =
+      "empty";
 
     empty.textContent =
       "Start the conversation and let the connection grow. ❤️";
 
-    messages.appendChild(empty);
+    messages.appendChild(
+      empty
+    );
 
   }
 
@@ -913,7 +996,8 @@ function renderDemoMessages(
   items = demoMessages
 ){
 
-  messages.innerHTML = "";
+  messages.innerHTML =
+    "";
 
   if(!items.length){
 
@@ -931,16 +1015,21 @@ function renderDemoMessages(
     const div =
       document.createElement("div");
 
-    div.className = "message mine";
+    div.className =
+      "message mine";
 
     div.textContent =
       data.text || "";
 
-    fragment.appendChild(div);
+    fragment.appendChild(
+      div
+    );
 
   });
 
-  messages.appendChild(fragment);
+  messages.appendChild(
+    fragment
+  );
 
   messages.scrollTop =
     messages.scrollHeight;
@@ -951,7 +1040,9 @@ function renderDemoMessages(
 function appendDemoMessage(data){
 
   const empty =
-    messages.querySelector(".empty");
+    messages.querySelector(
+      ".empty"
+    );
 
   if(empty){
 
@@ -962,12 +1053,15 @@ function appendDemoMessage(data){
   const div =
     document.createElement("div");
 
-  div.className = "message mine";
+  div.className =
+    "message mine";
 
   div.textContent =
     data.text || "";
 
-  messages.appendChild(div);
+  messages.appendChild(
+    div
+  );
 
   messages.scrollTop =
     messages.scrollHeight;
@@ -1052,7 +1146,9 @@ async function loadTargetProfile(){
       "Kmeet connection";
 
     avatarFallback.textContent =
-      demo.name.charAt(0).toUpperCase();
+      demo.name
+        .charAt(0)
+        .toUpperCase();
 
     avatar.src =
       demo.photo;
@@ -1076,8 +1172,13 @@ async function loadTargetProfile(){
 
   const snap =
     await getDoc(
-      doc(db,"users",targetId)
+      doc(
+        db,
+        "users",
+        targetId
+      )
     );
+
 
   if(!snap.exists()){
 
@@ -1086,6 +1187,7 @@ async function loadTargetProfile(){
     );
 
   }
+
 
   const data =
     snap.data() || {};
@@ -1100,7 +1202,9 @@ async function loadTargetProfile(){
     name;
 
   avatarFallback.textContent =
-    name.charAt(0).toUpperCase();
+    name
+      .charAt(0)
+      .toUpperCase();
 
 
   const photo =
@@ -1111,6 +1215,7 @@ async function loadTargetProfile(){
     data.profileImage ||
     data.image ||
     "";
+
 
   if(photo){
 
@@ -1276,6 +1381,7 @@ async function getExistingMessages(){
 
   }
 
+
   const snap =
     await getDocs(
       query(
@@ -1292,6 +1398,7 @@ async function getExistingMessages(){
       )
     );
 
+
   return snap.docs.map(
     item => item.data()
   );
@@ -1301,7 +1408,9 @@ async function getExistingMessages(){
 
 function renderMessages(items){
 
-  messages.innerHTML = "";
+  messages.innerHTML =
+    "";
+
 
   if(!items.length){
 
@@ -1311,6 +1420,7 @@ function renderMessages(items){
     return;
 
   }
+
 
   items.forEach(data=>{
 
@@ -1328,9 +1438,12 @@ function renderMessages(items){
     div.textContent =
       data.text || "";
 
-    messages.appendChild(div);
+    messages.appendChild(
+      div
+    );
 
   });
+
 
   messages.scrollTop =
     messages.scrollHeight;
@@ -1350,8 +1463,10 @@ function startMessages(){
 
   }
 
+
   conversationId =
     getConversationId();
+
 
   const ref =
     collection(
@@ -1360,6 +1475,7 @@ function startMessages(){
       conversationId,
       "messages"
     );
+
 
   const q =
     query(
@@ -1381,7 +1497,10 @@ function startMessages(){
             item => item.data()
           );
 
-        renderMessages(items);
+
+        renderMessages(
+          items
+        );
 
 
         if(!items.length){
@@ -1397,14 +1516,19 @@ function startMessages(){
         const firstSenderId =
           items[0].senderId;
 
+
         const myReplies =
           items.filter(
             item =>
-              item.senderId === currentUser.uid
+              item.senderId ===
+              currentUser.uid
           ).length;
 
 
-        if(firstSenderId === currentUser.uid){
+        if(
+          firstSenderId ===
+          currentUser.uid
+        ){
 
           infoBar.textContent =
             "Your opening message is free. Further messages use chat credits.";
@@ -1414,7 +1538,8 @@ function startMessages(){
           infoBar.textContent =
             `You have ${Math.max(
               0,
-              FREE_RECEIVER_REPLIES - myReplies
+              FREE_RECEIVER_REPLIES -
+              myReplies
             )} free replies remaining.`;
 
         }
@@ -1445,7 +1570,8 @@ async function initialiseAuth(){
 
   }
 
-  authStarted = true;
+  authStarted =
+    true;
 
 
   onAuthStateChanged(
@@ -1468,8 +1594,10 @@ async function initialiseAuth(){
         currentUser =
           user;
 
+
         conversationId =
           getConversationId();
+
 
         clearError();
 
@@ -1491,10 +1619,14 @@ async function initialiseAuth(){
           const credits =
             getSenderCredits();
 
+
           infoBar.textContent =
             credits > 0
+
               ? `Anonymous chat: ${credits} paid chat credit${credits === 1 ? "" : "s"} available.`
+
               : "Anonymous chat: payment is required before your first message.";
+
 
           showChat();
 
@@ -1505,6 +1637,7 @@ async function initialiseAuth(){
 
         infoBar.textContent =
           "Your opening message is free — say hi or hey ❤️";
+
 
         showChat();
 
@@ -1536,7 +1669,10 @@ async function initialiseAuth(){
 
           showError(
             "Kmeet could not start the chat session (" +
-            (error.code || "authentication error") +
+            (
+              error.code ||
+              "authentication error"
+            ) +
             "). Please check your Firebase Authentication settings."
           );
 
@@ -1551,56 +1687,216 @@ async function initialiseAuth(){
 
 
 /*
-  MAIN SEND HANDLER
-
-  The form's inline onsubmit safeguard prevents
-  browser navigation, while this listener performs
-  the actual Kmeet send operation.
+=========================================================
+SEND MESSAGE
+=========================================================
 */
 
-composer.addEventListener(
-  "submit",
-  async event=>{
+async function sendMessage(){
 
-    event.preventDefault();
-
-    clearError();
+  clearError();
 
 
-    const text =
-      messageInput.value.trim();
+  const text =
+    messageInput.value.trim();
 
 
-    if(!text){
+  if(!text){
 
-      return;
+    return;
 
-    }
+  }
 
 
-    if(!currentUser){
+  if(!currentUser){
 
-      showError(
-        "Kmeet is still preparing your chat session. Please try again in a moment."
+    showError(
+      "Kmeet is still preparing your chat session. Please try again in a moment."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Anonymous visitors need paid chat credit.
+  */
+
+  if(
+    currentUser.isAnonymous &&
+    getSenderCredits() <= 0
+  ){
+
+    showGate(
+      "anonymous"
+    );
+
+    return;
+
+  }
+
+
+  /*
+    DEMO PROFILE CHAT
+
+    Message appears locally.
+    Nothing is written to Firestore.
+    No fake reply is generated.
+  */
+
+  if(targetIsDemo){
+
+    const newMessage = {
+
+      text:text,
+
+      createdAt:
+        new Date().toISOString()
+
+    };
+
+
+    demoMessages.push(
+      newMessage
+    );
+
+
+    appendDemoMessage(
+      newMessage
+    );
+
+
+    saveDemoMessages(
+      demoMessages
+    );
+
+
+    if(currentUser.isAnonymous){
+
+      const before =
+        getSenderCredits();
+
+
+      setSenderCredits(
+        before - 1
       );
 
-      return;
+
+      const remaining =
+        getSenderCredits();
+
+
+      infoBar.textContent =
+        `Anonymous chat: ${remaining} paid chat credit${remaining === 1 ? "" : "s"} remaining. ❤️`;
+
+    }else{
+
+      infoBar.textContent =
+        "Your message is shown in this conversation ❤️";
 
     }
 
 
-    /*
-      Anonymous visitors must still have
-      paid chat credit before sending.
-    */
+    messageInput.value =
+      "";
+
+    messageInput.focus();
+
+    return;
+
+  }
+
+
+  /*
+    REAL MEMBER CHAT
+  */
+
+  if(!conversationId){
+
+    conversationId =
+      getConversationId();
+
+  }
+
+
+  let existingMessages = [];
+
+
+  try{
+
+    existingMessages =
+      await getExistingMessages();
+
+  }catch(error){
+
+    console.error(
+      "Conversation read failed:",
+      error
+    );
+
+    showError(
+      "Kmeet could not check this conversation. Please check your Firestore rules."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    First message must be hi or hey.
+  */
+
+  if(
+    !currentUser.isAnonymous &&
+    existingMessages.length === 0
+  ){
+
+    const opening =
+      text.toLowerCase();
+
 
     if(
-      currentUser.isAnonymous &&
-      getSenderCredits() <= 0
+      !FREE_OPENING_MESSAGES.includes(
+        opening
+      )
     ){
 
       showGate(
-        "anonymous"
+        "sender"
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  const originalSenderId =
+    existingMessages.length
+      ? existingMessages[0].senderId
+      : currentUser.uid;
+
+
+  const isSender =
+    originalSenderId ===
+    currentUser.uid;
+
+
+  /*
+    Contact information protection.
+  */
+
+  if(
+    containsContactInformation(text)
+  ){
+
+    if(!isSender){
+
+      showGate(
+        "receiver"
       );
 
       return;
@@ -1608,162 +1904,39 @@ composer.addEventListener(
     }
 
 
-    /*
-      DEMO CHAT
+    showGate(
+      "sender"
+    );
 
-      This is a local preview conversation.
-      The message is added directly to the visible
-      chat and saved in this browser.
+    return;
 
-      It is never written to Firestore and
-      no fake reply is generated.
-    */
-
-    if(targetIsDemo){
-
-      const newMessage = {
-
-        text,
-
-        createdAt:
-          new Date().toISOString()
-
-      };
+  }
 
 
-      demoMessages.push(
-        newMessage
-      );
+  let creditConsumed =
+    false;
+
+  let creditsBefore =
+    0;
 
 
-      /*
-        Append only the new bubble.
-        Do not rebuild the messages container.
-        This prevents the just-sent message
-        from disappearing.
-      */
+  /*
+    Sender paid credits.
+  */
 
-      appendDemoMessage(
-        newMessage
-      );
+  if(
+    isSender &&
+    (
+      existingMessages.length > 0 ||
+      currentUser.isAnonymous
+    )
+  ){
 
-      saveDemoMessages(
-        demoMessages
-      );
-
-
-      if(currentUser.isAnonymous){
-
-        const before =
-          getSenderCredits();
-
-        setSenderCredits(
-          before - 1
-        );
-
-        const remaining =
-          getSenderCredits();
-
-        infoBar.textContent =
-          `Anonymous chat: ${remaining} paid chat credit${remaining === 1 ? "" : "s"} remaining. ❤️`;
-
-      }else{
-
-        infoBar.textContent =
-          "Your message is shown in this conversation ❤️";
-
-      }
+    creditsBefore =
+      getSenderCredits();
 
 
-      messageInput.value = "";
-
-      messageInput.focus();
-
-      return;
-
-    }
-
-
-    if(!conversationId){
-
-      conversationId =
-        getConversationId();
-
-    }
-
-
-    let existingMessages = [];
-
-
-    try{
-
-      existingMessages =
-        await getExistingMessages();
-
-    }catch(error){
-
-      console.error(
-        "Conversation read failed:",
-        error
-      );
-
-      showError(
-        "Kmeet could not check this conversation. Please check your Firestore rules."
-      );
-
-      return;
-
-    }
-
-
-    if(
-      !currentUser.isAnonymous &&
-      existingMessages.length === 0
-    ){
-
-      const opening =
-        text.toLowerCase();
-
-      if(
-        !FREE_OPENING_MESSAGES.includes(
-          opening
-        )
-      ){
-
-        showGate(
-          "sender"
-        );
-
-        return;
-
-      }
-
-    }
-
-
-    const originalSenderId =
-      existingMessages.length
-        ? existingMessages[0].senderId
-        : currentUser.uid;
-
-
-    const isSender =
-      originalSenderId === currentUser.uid;
-
-
-    if(
-      containsContactInformation(text)
-    ){
-
-      if(!isSender){
-
-        showGate(
-          "receiver"
-        );
-
-        return;
-
-      }
+    if(creditsBefore <= 0){
 
       showGate(
         "sender"
@@ -1774,182 +1947,178 @@ composer.addEventListener(
     }
 
 
-    let creditConsumed =
-      false;
+    setSenderCredits(
+      creditsBefore - 1
+    );
 
-    let creditsBefore =
-      0;
+
+    creditConsumed =
+      true;
+
+  }
+
+
+  /*
+    Receiver free replies.
+  */
+
+  if(!isSender){
+
+    const receiverReplies =
+      existingMessages.filter(
+        item =>
+          item.senderId ===
+          currentUser.uid
+      ).length;
 
 
     if(
-      isSender &&
-      (
-        existingMessages.length > 0 ||
-        currentUser.isAnonymous
-      )
+      receiverReplies >=
+        FREE_RECEIVER_REPLIES &&
+      !receiverHasPaid()
     ){
 
-      creditsBefore =
+      showGate(
+        "receiver"
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  sendBtn.disabled =
+    true;
+
+
+  try{
+
+    await setDoc(
+      doc(
+        db,
+        "conversations",
+        conversationId
+      ),
+      {
+        initiatorId:
+          originalSenderId,
+
+        receiverId:
+          targetId,
+
+        updatedAt:
+          serverTimestamp(),
+
+        createdAt:
+          serverTimestamp()
+      },
+      {
+        merge:true
+      }
+    );
+
+
+    await addDoc(
+      collection(
+        db,
+        "conversations",
+        conversationId,
+        "messages"
+      ),
+      {
+        senderId:
+          currentUser.uid,
+
+        receiverId:
+          targetId,
+
+        text:text,
+
+        createdAt:
+          serverTimestamp()
+      }
+    );
+
+
+    messageInput.value =
+      "";
+
+    messageInput.focus();
+
+
+    if(currentUser.isAnonymous){
+
+      const remaining =
         getSenderCredits();
 
 
-      if(creditsBefore <= 0){
+      infoBar.textContent =
+        `Anonymous chat: ${remaining} paid chat credit${remaining === 1 ? "" : "s"} remaining.`;
 
-        showGate(
-          "sender"
-        );
+    }
 
-        return;
 
-      }
+  }catch(error){
 
+    console.error(
+      "Message send failed:",
+      error
+    );
+
+
+    if(creditConsumed){
 
       setSenderCredits(
-        creditsBefore - 1
+        creditsBefore
       );
 
-      creditConsumed =
-        true;
-
     }
 
 
-    if(!isSender){
-
-      const receiverReplies =
-        existingMessages.filter(
-          item =>
-            item.senderId ===
-            currentUser.uid
-        ).length;
+    showError(
+      "Your message could not be sent. Please check your Firestore rules."
+    );
 
 
-      if(
-        receiverReplies >=
-          FREE_RECEIVER_REPLIES &&
-        !receiverHasPaid()
-      ){
-
-        showGate(
-          "receiver"
-        );
-
-        return;
-
-      }
-
-    }
-
+  }finally{
 
     sendBtn.disabled =
-      true;
+      false;
+
+  }
+
+}
 
 
-    try{
+/*
+=========================================================
+SEND BUTTON
+=========================================================
+*/
 
-      await setDoc(
-        doc(
-          db,
-          "conversations",
-          conversationId
-        ),
-        {
-          initiatorId:
-            originalSenderId,
-
-          receiverId:
-            targetId,
-
-          updatedAt:
-            serverTimestamp(),
-
-          createdAt:
-            serverTimestamp()
-        },
-        {
-          merge:true
-        }
-      );
-
-
-      await addDoc(
-        collection(
-          db,
-          "conversations",
-          conversationId,
-          "messages"
-        ),
-        {
-          senderId:
-            currentUser.uid,
-
-          receiverId:
-            targetId,
-
-          text,
-
-          createdAt:
-            serverTimestamp()
-        }
-      );
-
-
-      messageInput.value = "";
-
-      messageInput.focus();
-
-
-      if(currentUser.isAnonymous){
-
-        const remaining =
-          getSenderCredits();
-
-        infoBar.textContent =
-          `Anonymous chat: ${remaining} paid chat credit${remaining === 1 ? "" : "s"} remaining.`;
-
-      }
-
-
-    }catch(error){
-
-      console.error(
-        "Message send failed:",
-        error
-      );
-
-
-      if(creditConsumed){
-
-        setSenderCredits(
-          creditsBefore
-        );
-
-      }
-
-
-      showError(
-        "Your message could not be sent. Please check your Firestore rules."
-      );
-
-
-    }finally{
-
-      sendBtn.disabled =
-        false;
-
-    }
-
+sendBtn.addEventListener(
+  "click",
+  ()=>{
+    sendMessage();
   }
 );
 
 
 /*
-  ENTER = SEND
-  SHIFT + ENTER = NEW LINE
+=========================================================
+ENTER KEY
+=========================================================
 
-  preventDefault stops the textarea from
-  creating a newline and then requestSubmit()
-  sends through the normal Kmeet submit handler.
+Enter:
+    SEND
+
+Shift + Enter:
+    NEW LINE
+
+There is NO form submission anymore.
+Therefore the browser cannot navigate to /chat?.
 */
 
 messageInput.addEventListener(
@@ -1963,13 +2132,21 @@ messageInput.addEventListener(
 
       event.preventDefault();
 
-      composer.requestSubmit();
+      event.stopPropagation();
+
+      sendMessage();
 
     }
 
   }
 );
 
+
+/*
+=========================================================
+START
+=========================================================
+*/
 
 async function start(){
 
