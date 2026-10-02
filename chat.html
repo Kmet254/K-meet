@@ -917,8 +917,6 @@ import {
 
   setDoc,
 
-  getDocs,
-
   query,
 
   orderBy,
@@ -928,6 +926,16 @@ import {
   serverTimestamp
 
 } from "./firebase-config.js";
+
+/*
+  getDocs is imported directly here because the current
+  firebase-config.js does not export getDocs. If a module
+  import fails, the browser never attaches the submit handler
+  and the HTML form performs a normal page reload.
+*/
+import {
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 
