@@ -2282,22 +2282,18 @@ async function initialiseAuth(){
             loaded them from localStorage.
           */
 
+          /*
+            DEMO CHAT FIX
+
+            The demo conversation is stored in localStorage and was
+            already loaded by loadTargetProfile(). Do not re-render it
+            from the Firebase auth callback, because authentication can
+            fire after the message is displayed.
+          */
+
           if(targetIsDemo){
-
-            if(!demoMessages.length){
-
-              demoMessages =
-                getDemoMessages();
-
-            }
-
-
-            renderDemoMessages(
-              demoMessages
-            );
-
+            demoMessages = getDemoMessages();
           }
-
 
           return;
 
@@ -2329,20 +2325,16 @@ async function initialiseAuth(){
           replacing it with an empty array.
         */
 
+        /*
+          DEMO CHAT FIX
+
+          Do not re-render the demo message area from the Firebase
+          auth callback. The demo chat is localStorage-based and was
+          already loaded by loadTargetProfile().
+        */
+
         if(targetIsDemo){
-
-          if(!demoMessages.length){
-
-            demoMessages =
-              getDemoMessages();
-
-          }
-
-
-          renderDemoMessages(
-            demoMessages
-          );
-
+          demoMessages = getDemoMessages();
         }
 
       }
@@ -2505,6 +2497,16 @@ composer.addEventListener(
         message.
       */
 
+      /*
+        Always start from the latest saved demo conversation.
+        This prevents an older in-memory array from overwriting a
+        message that was already stored in localStorage.
+      */
+
+      demoMessages =
+        getDemoMessages();
+
+
       const newMessage = {
 
         text:text,
@@ -2534,8 +2536,14 @@ composer.addEventListener(
 
 
       /*
-        Render the saved list.
+        Read the saved list back before rendering.
+        This guarantees that what appears on screen is exactly what
+        was persisted.
       */
+
+      demoMessages =
+        getDemoMessages();
+
 
       renderDemoMessages(
         demoMessages
