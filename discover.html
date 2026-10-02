@@ -204,31 +204,59 @@
       background:rgba(255,255,255,0.055);
       box-shadow:0 12px 30px rgba(0,0,0,0.16);
     }
-    .discover-page .activity-copy strong { display:block; font-size:14px; }
-    .discover-page .activity-copy span { display:block; margin-top:3px; color:rgba(255,255,255,0.62); font-size:12px; }
-    .discover-page .likes-link {
-      flex:0 0 auto; padding:10px 15px; border-radius:999px;
-      color:#fff !important; text-decoration:none !important;
-      background:linear-gradient(135deg,#a83d68,#d85d8c);
-      font-size:12px; font-weight:600;
+
+    .discover-page .activity-copy strong {
+      display:block;
+      font-size:14px;
     }
+
+    .discover-page .activity-copy span {
+      display:block;
+      margin-top:3px;
+      color:rgba(255,255,255,0.62);
+      font-size:12px;
+    }
+
+    .discover-page .likes-link {
+      flex:0 0 auto;
+      padding:10px 15px;
+      border-radius:999px;
+      color:#fff !important;
+      text-decoration:none !important;
+      background:linear-gradient(135deg,#a83d68,#d85d8c);
+      font-size:12px;
+      font-weight:600;
+    }
+
     .discover-page .like-button {
       border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.055); color:#fff;
-      cursor:pointer; padding:10px 14px; border-radius:999px;
+      background:rgba(255,255,255,0.055);
+      color:#fff;
+      cursor:pointer;
+      padding:10px 14px;
+      border-radius:999px;
       font:500 12px Poppins,Arial,sans-serif;
     }
+
     .discover-page .like-button.liked {
-      background:rgba(216,93,140,0.20); border-color:rgba(216,93,140,0.45); color:#ff9fbe;
+      background:rgba(216,93,140,0.20);
+      border-color:rgba(216,93,140,0.45);
+      color:#ff9fbe;
     }
-    .discover-page .profile-actions { flex-wrap:wrap; }
+
+    .discover-page .profile-actions {
+      flex-wrap:wrap;
+    }
+
     @media (max-width:700px) {
+
       .discover-page .discover-logo-image {
         width: 47px;
         height: 47px;
         min-width: 47px;
         min-height: 47px;
       }
+
       .discover-page .discover-kmeet-logo {
         width: 43px !important;
         height: 43px !important;
@@ -240,9 +268,18 @@
     }
 
     @media (max-width:600px){
-      .discover-page .activity-bar{align-items:flex-start; flex-direction:column;}
-      .discover-page .likes-link{width:100%; text-align:center;}
+
+      .discover-page .activity-bar {
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .discover-page .likes-link {
+        width:100%;
+        text-align:center;
+      }
     }
+
 
     /* =====================================================
        MAIN
@@ -1049,7 +1086,7 @@
 
     /* =====================================================
        BACKUP PHOTOS
-       
+
        These are used when:
        - a demo photo fails
        - a real member has no photo
@@ -1058,42 +1095,43 @@
 
     const backupPhotos = [
 
-      "https://randomuser.me/api/portraits/women/44.jpg",
-      "https://randomuser.me/api/portraits/men/32.jpg",
-      "https://randomuser.me/api/portraits/women/65.jpg",
-      "https://randomuser.me/api/portraits/men/46.jpg",
-      "https://randomuser.me/api/portraits/women/32.jpg",
-      "https://randomuser.me/api/portraits/men/52.jpg",
-      "https://randomuser.me/api/portraits/women/68.jpg",
-      "https://randomuser.me/api/portraits/men/75.jpg",
-      "https://randomuser.me/api/portraits/women/50.jpg",
-      "https://randomuser.me/api/portraits/men/22.jpg",
-      "https://randomuser.me/api/portraits/women/21.jpg",
-      "https://randomuser.me/api/portraits/men/41.jpg",
-      "https://randomuser.me/api/portraits/women/12.jpg",
-      "https://randomuser.me/api/portraits/men/61.jpg",
-      "https://randomuser.me/api/portraits/women/49.jpg",
-      "https://randomuser.me/api/portraits/men/19.jpg",
-      "https://randomuser.me/api/portraits/women/36.jpg",
-      "https://randomuser.me/api/portraits/men/29.jpg",
-      "https://randomuser.me/api/portraits/women/57.jpg",
-      "https://randomuser.me/api/portraits/men/37.jpg",
-      "https://randomuser.me/api/portraits/women/63.jpg",
-      "https://randomuser.me/api/portraits/men/11.jpg",
-      "https://randomuser.me/api/portraits/women/75.jpg",
-      "https://randomuser.me/api/portraits/men/64.jpg",
-      "https://randomuser.me/api/portraits/women/23.jpg",
-      "https://randomuser.me/api/portraits/men/70.jpg",
-      "https://randomuser.me/api/portraits/women/41.jpg",
-      "https://randomuser.me/api/portraits/men/35.jpg",
-      "https://randomuser.me/api/portraits/women/45.jpg",
-      "https://randomuser.me/api/portraits/men/55.jpg",
-      "https://randomuser.me/api/portraits/women/58.jpg",
-      "https://randomuser.me/api/portraits/men/43.jpg",
-      "https://randomuser.me/api/portraits/women/38.jpg",
-      "https://randomuser.me/api/portraits/men/48.jpg",
-      "https://randomuser.me/api/portraits/women/55.jpg",
-      "https://randomuser.me/api/portraits/men/76.jpg"
+      "https://i.pravatar.cc/1000?img=1",
+      "https://i.pravatar.cc/1000?img=2",
+      "https://i.pravatar.cc/1000?img=3",
+      "https://i.pravatar.cc/1000?img=4",
+      "https://i.pravatar.cc/1000?img=5",
+      "https://i.pravatar.cc/1000?img=6",
+      "https://i.pravatar.cc/1000?img=7",
+      "https://i.pravatar.cc/1000?img=8",
+      "https://i.pravatar.cc/1000?img=9",
+      "https://i.pravatar.cc/1000?img=10",
+      "https://i.pravatar.cc/1000?img=11",
+      "https://i.pravatar.cc/1000?img=12",
+      "https://i.pravatar.cc/1000?img=13",
+      "https://i.pravatar.cc/1000?img=14",
+      "https://i.pravatar.cc/1000?img=15",
+      "https://i.pravatar.cc/1000?img=16",
+      "https://i.pravatar.cc/1000?img=17",
+      "https://i.pravatar.cc/1000?img=18",
+      "https://i.pravatar.cc/1000?img=19",
+      "https://i.pravatar.cc/1000?img=20",
+      "https://i.pravatar.cc/1000?img=21",
+      "https://i.pravatar.cc/1000?img=22",
+      "https://i.pravatar.cc/1000?img=23",
+      "https://i.pravatar.cc/1000?img=24",
+      "https://i.pravatar.cc/1000?img=25",
+      "https://i.pravatar.cc/1000?img=26",
+      "https://i.pravatar.cc/1000?img=27",
+      "https://i.pravatar.cc/1000?img=28",
+      "https://i.pravatar.cc/1000?img=29",
+      "https://i.pravatar.cc/1000?img=30",
+      "https://i.pravatar.cc/1000?img=31",
+      "https://i.pravatar.cc/1000?img=32",
+      "https://i.pravatar.cc/1000?img=33",
+      "https://i.pravatar.cc/1000?img=34",
+      "https://i.pravatar.cc/1000?img=35",
+      "https://i.pravatar.cc/1000?img=36"
+
     ];
 
 
@@ -1647,7 +1685,7 @@
 
     /* =====================================================
        FINAL SVG FALLBACK
-       
+
        This is only used if every external image fails.
        It guarantees that the card never becomes blank.
        ===================================================== */
@@ -1728,7 +1766,7 @@
 
     /* =====================================================
        IMAGE ERROR HANDLER
-       
+
        First failure:
        -> use another backup photo.
 
@@ -2088,12 +2126,20 @@
     const MEMBER_LIKES_KEY = "kmeet_member_likes_v1";
 
     function readLikes(key) {
-      try { return JSON.parse(localStorage.getItem(key) || "[]"); }
-      catch { return []; }
+      try {
+        return JSON.parse(
+          localStorage.getItem(key) || "[]"
+        );
+      } catch {
+        return [];
+      }
     }
 
     function writeLikes(key, value) {
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(
+        key,
+        JSON.stringify(value)
+      );
     }
 
     function likeStorageKey(user) {
@@ -2103,98 +2149,281 @@
     }
 
     function hasLiked(user, targetId) {
-      return readLikes(likeStorageKey(user)).some(x => x.targetId === targetId);
+      return readLikes(
+        likeStorageKey(user)
+      ).some(
+        x => x.targetId === targetId
+      );
     }
 
-    async function saveLike(targetId, targetName, targetIsDemo) {
-      const user = auth.currentUser;
-      const key = likeStorageKey(user);
-      const likes = readLikes(key);
+    async function saveLike(
+      targetId,
+      targetName,
+      targetIsDemo
+    ) {
 
-      if (likes.some(x => x.targetId === targetId)) return false;
+      const user =
+        auth.currentUser;
+
+      const key =
+        likeStorageKey(user);
+
+      const likes =
+        readLikes(key);
+
+      if (
+        likes.some(
+          x => x.targetId === targetId
+        )
+      ) {
+
+        return false;
+
+      }
 
       likes.push({
-        targetId,
-        targetName,
-        demo: !!targetIsDemo,
-        createdAt: Date.now()
-      });
-      writeLikes(key, likes);
 
-      if (user && !user.isAnonymous && !targetIsDemo) {
+        targetId,
+
+        targetName,
+
+        demo: !!targetIsDemo,
+
+        createdAt: Date.now()
+
+      });
+
+      writeLikes(
+        key,
+        likes
+      );
+
+
+      if (
+        user &&
+        !user.isAnonymous &&
+        !targetIsDemo
+      ) {
+
         try {
+
           await setDoc(
-            doc(db, "users", targetId, "likesReceived", user.uid),
+
+            doc(
+              db,
+              "users",
+              targetId,
+              "likesReceived",
+              user.uid
+            ),
+
             {
-              fromUserId: user.uid,
-              targetUserId: targetId,
-              createdAt: serverTimestamp()
+              fromUserId:
+                user.uid,
+
+              targetUserId:
+                targetId,
+
+              createdAt:
+                serverTimestamp()
+
             },
-            { merge: true }
+
+            {
+              merge: true
+            }
+
           );
+
         } catch (error) {
-          console.warn("Kmeet like saved locally; Firestore write was not available.", error);
+
+          console.warn(
+            "Kmeet like saved locally; Firestore write was not available.",
+            error
+          );
+
         }
+
       }
+
 
       return true;
+
     }
+
 
     function refreshLikeButtons() {
-      const user = auth.currentUser;
-      document.querySelectorAll("[data-like-id]").forEach(button => {
-        const liked = hasLiked(user, button.dataset.likeId);
-        button.classList.toggle("liked", liked);
-        button.textContent = liked ? "♥ Liked" : "♥ Like";
-      });
+
+      const user =
+        auth.currentUser;
+
+      document
+        .querySelectorAll(
+          "[data-like-id]"
+        )
+        .forEach(
+          button => {
+
+            const liked =
+              hasLiked(
+                user,
+                button.dataset.likeId
+              );
+
+            button.classList.toggle(
+              "liked",
+              liked
+            );
+
+            button.textContent =
+              liked
+                ? "♥ Liked"
+                : "♥ Like";
+
+          }
+        );
+
     }
+
 
     function updateActivity(user) {
-      const title = document.getElementById("activityTitle");
-      const subtitle = document.getElementById("activitySubtitle");
-      const likes = readLikes(likeStorageKey(user));
 
-      if (user && !user.isAnonymous) {
-        title.textContent = likes.length ? `❤️ You liked ${likes.length} ${likes.length === 1 ? "person" : "people"}` : "❤️ Welcome to Kmeet";
-        subtitle.textContent = likes.length ? "Your likes are saved with this account." : "Your profile is live. Discover people and send your first like.";
+      const title =
+        document.getElementById(
+          "activityTitle"
+        );
+
+      const subtitle =
+        document.getElementById(
+          "activitySubtitle"
+        );
+
+      const likes =
+        readLikes(
+          likeStorageKey(user)
+        );
+
+
+      if (
+        user &&
+        !user.isAnonymous
+      ) {
+
+        title.textContent =
+          likes.length
+            ? `❤️ You liked ${likes.length} ${likes.length === 1 ? "person" : "people"}`
+            : "❤️ Welcome to Kmeet";
+
+        subtitle.textContent =
+          likes.length
+            ? "Your likes are saved with this account."
+            : "Your profile is live. Discover people and send your first like.";
+
       } else {
-        title.textContent = likes.length ? `❤️ ${likes.length} ${likes.length === 1 ? "profile liked" : "profiles liked"}` : "❤️ Find your first connection";
-        subtitle.textContent = likes.length ? "Your likes are saved for this browser session." : "You can like profiles without creating an account.";
+
+        title.textContent =
+          likes.length
+            ? `❤️ ${likes.length} ${likes.length === 1 ? "profile liked" : "profiles liked"}`
+            : "❤️ Find your first connection";
+
+        subtitle.textContent =
+          likes.length
+            ? "Your likes are saved for this browser session."
+            : "You can like profiles without creating an account.";
+
       }
+
     }
 
-    document.addEventListener("click", async event => {
-      const button = event.target.closest("[data-like-id]");
-      if (!button) return;
 
-      const user = auth.currentUser;
-      const targetId = button.dataset.likeId;
-      const targetName = button.dataset.likeName || "this profile";
-      const targetIsDemo = targetId.startsWith("demo-");
+    document.addEventListener(
+      "click",
+      async event => {
 
-      if (hasLiked(user, targetId)) return;
+        const button =
+          event.target.closest(
+            "[data-like-id]"
+          );
 
-      button.disabled = true;
-      const saved = await saveLike(targetId, targetName, targetIsDemo);
-      button.disabled = false;
+        if (!button) return;
 
-      if (saved) {
-        button.classList.add("liked");
-        button.textContent = "♥ Liked";
-        updateActivity(user);
+
+        const user =
+          auth.currentUser;
+
+        const targetId =
+          button.dataset.likeId;
+
+        const targetName =
+          button.dataset.likeName ||
+          "this profile";
+
+        const targetIsDemo =
+          targetId.startsWith(
+            "demo-"
+          );
+
+
+        if (
+          hasLiked(
+            user,
+            targetId
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        button.disabled =
+          true;
+
+
+        const saved =
+          await saveLike(
+            targetId,
+            targetName,
+            targetIsDemo
+          );
+
+
+        button.disabled =
+          false;
+
+
+        if (saved) {
+
+          button.classList.add(
+            "liked"
+          );
+
+          button.textContent =
+            "♥ Liked";
+
+          updateActivity(
+            user
+          );
+
+        }
+
       }
-    });
+    );
 
 
     /* =====================================================
        SHOW DEMO PROFILES IMMEDIATELY
-       
+
        This means Discover does not stay blank while
        Firebase is connecting.
        ===================================================== */
 
     renderProfiles([]);
-    updateActivity(auth.currentUser);
+
+    updateActivity(
+      auth.currentUser
+    );
+
     refreshLikeButtons();
 
 
