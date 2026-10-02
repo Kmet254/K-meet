@@ -2270,19 +2270,29 @@ async function initialiseAuth(){
             chat credits before sending.
           */
 
-          infoBar.textContent =
-            credits > 0
+          /*
+            Anonymous visitors may explore profiles, but they must
+            purchase chat credits BEFORE the chat composer is opened.
+            This keeps the flow: Discover → Profile → Payment → Chat.
+          */
 
-              ? `Anonymous chat: ${credits} paid chat credit${
-                  credits === 1
-                    ? ""
-                    : "s"
-                } available.`
+          if(credits > 0){
 
-              : "Anonymous chat: payment is required before your first message.";
+            infoBar.textContent =
+              `Anonymous chat: ${credits} paid chat credit${
+                credits === 1
+                  ? ""
+                  : "s"
+              } available.`;
 
+            showChat();
 
-          showChat();
+          }
+          else{
+
+            showGate("anonymous");
+
+          }
 
 
           /*
