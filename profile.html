@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -550,9 +549,7 @@ body::before {
 
 </head>
 
-
 <body>
-
 
 <header class="navbar">
 
@@ -567,7 +564,6 @@ body::before {
         </span>
 
     </a>
-
 
     <nav class="nav-links">
 
@@ -584,26 +580,21 @@ body::before {
 </header>
 
 
-
 <main class="container">
-
 
 <section id="loading"
          class="profile-card loading">
 
-    Loading your Kmeet profile...
+    Loading Kmeet profile...
 
 </section>
-
 
 
 <section id="profileCard"
          class="profile-card"
          style="display:none;">
 
-
     <div class="profile-top">
-
 
         <div class="main-photo">
 
@@ -613,45 +604,35 @@ body::before {
 
             <span id="initial"
                   class="initial">
-
                 K
-
             </span>
 
         </div>
 
 
-
         <div id="profileName"
              class="name">
-
             Kmeet Member
-
         </div>
-
 
 
         <div id="profileLocation"
              class="location">
-
         </div>
-
 
 
         <div class="status">
 
             <span class="status-dot"></span>
 
-            <span>
+            <span id="statusText">
                 Online
             </span>
 
         </div>
 
 
-
         <div class="actions">
-
 
             <a id="editButton"
                class="action edit"
@@ -661,46 +642,40 @@ body::before {
 
             </a>
 
+            <a id="chatButton"
+               class="action chat"
+               href="#"
+               style="display:none;">
+
+                💬 Chat
+
+            </a>
 
         </div>
-
 
     </div>
 
 
-
     <section class="section">
 
-
         <h2 class="section-title">
-
             About Me
-
         </h2>
-
 
         <div id="bio"
              class="bio">
-
         </div>
-
 
     </section>
 
 
-
     <section class="section">
 
-
         <h2 class="section-title">
-
             My Details
-
         </h2>
 
-
         <div class="details">
-
 
             <div class="detail">
 
@@ -710,11 +685,9 @@ body::before {
 
                 <span id="age"
                       class="detail-value">
-
                 </span>
 
             </div>
-
 
 
             <div class="detail">
@@ -725,11 +698,9 @@ body::before {
 
                 <span id="gender"
                       class="detail-value">
-
                 </span>
 
             </div>
-
 
 
             <div class="detail">
@@ -740,91 +711,62 @@ body::before {
 
                 <span id="locationDetail"
                       class="detail-value">
-
                 </span>
 
             </div>
 
-
         </div>
-
 
     </section>
 
 
-
     <section class="section">
 
-
         <h2 class="section-title">
-
             Interests
-
         </h2>
-
 
         <div id="interests"
              class="tags">
-
         </div>
 
-
     </section>
-
 
 
     <section class="section">
 
-
         <div class="gallery-header">
 
-
             <h2 class="section-title">
-
                 My Photo Gallery
-
             </h2>
-
 
             <span id="galleryCount"
                   class="gallery-count">
-
                 0 photos
-
             </span>
 
-
         </div>
-
-
 
         <div id="gallery"
              class="gallery">
-
         </div>
-
 
     </section>
 
-
 </section>
-
 
 
 <section id="errorCard"
          class="profile-card error"
          style="display:none;">
-
 </section>
-
 
 </main>
 
 
-
 <div id="lightbox"
      class="lightbox">
-
 
     <button id="closeLightbox"
             class="close-lightbox">
@@ -833,98 +775,102 @@ body::before {
 
     </button>
 
-
     <img id="lightboxImage"
          alt="Kmeet gallery photo">
-
 
 </div>
 
 
-
 <script type="module">
 
-
 import {
-
     auth,
     db,
     onAuthStateChanged,
     doc,
     getDoc,
     setDoc
-
 } from "./firebase-config.js";
-
 
 
 const loading =
     document.getElementById("loading");
 
-
 const profileCard =
     document.getElementById("profileCard");
-
 
 const errorCard =
     document.getElementById("errorCard");
 
-
 const mainPhoto =
     document.getElementById("mainPhoto");
-
 
 const initial =
     document.getElementById("initial");
 
-
 const profileName =
     document.getElementById("profileName");
-
 
 const profileLocation =
     document.getElementById("profileLocation");
 
-
 const locationDetail =
     document.getElementById("locationDetail");
-
 
 const age =
     document.getElementById("age");
 
-
 const gender =
     document.getElementById("gender");
-
 
 const bio =
     document.getElementById("bio");
 
-
 const interests =
     document.getElementById("interests");
-
 
 const gallery =
     document.getElementById("gallery");
 
-
 const galleryCount =
     document.getElementById("galleryCount");
-
 
 const lightbox =
     document.getElementById("lightbox");
 
-
 const lightboxImage =
     document.getElementById("lightboxImage");
-
 
 const closeLightbox =
     document.getElementById("closeLightbox");
 
+const editButton =
+    document.getElementById("editButton");
+
+const chatButton =
+    document.getElementById("chatButton");
+
+const statusText =
+    document.getElementById("statusText");
+
+
+/*
+ * IMPORTANT:
+ *
+ * Discover sends:
+ *
+ * profile.html?id=FIREBASE_UID
+ *
+ * We must read that ID.
+ */
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const requestedProfileId =
+    urlParams.get("id");
 
 
 /*
@@ -933,7 +879,6 @@ const closeLightbox =
 
 const ROTATION_TIME =
     24 * 60 * 60 * 1000;
-
 
 
 function getPhotoURL(data) {
@@ -950,12 +895,13 @@ function getPhotoURL(data) {
 
         data.profileImage ||
 
+        data.image ||
+
         ""
 
     );
 
 }
-
 
 
 function getGallery(data, currentPhoto) {
@@ -981,23 +927,13 @@ function getGallery(data, currentPhoto) {
 
 
     photos = [
-
         ...new Set(photos)
-
     ];
 
 
-    /*
-     * Protect an older photo that was
-     * saved before the gallery existed.
-     */
-
     if (
-
         currentPhoto &&
-
         !photos.includes(currentPhoto)
-
     ) {
 
         photos.unshift(currentPhoto);
@@ -1010,16 +946,13 @@ function getGallery(data, currentPhoto) {
 }
 
 
-
 function timestampValue(value) {
 
     if (!value) return 0;
 
 
     if (
-
         typeof value.toMillis === "function"
-
     ) {
 
         return value.toMillis();
@@ -1035,9 +968,7 @@ function timestampValue(value) {
 
 
     if (
-
         typeof value.seconds === "number"
-
     ) {
 
         return value.seconds * 1000;
@@ -1046,37 +977,30 @@ function timestampValue(value) {
 
 
     const result =
-
         new Date(value).getTime();
 
 
     return Number.isNaN(result)
-
         ? 0
-
         : result;
 
 }
 
 
+/*
+ * Only the OWNER's profile is allowed
+ * to perform the automatic photo rotation.
+ *
+ * We never modify another member's profile
+ * simply because somebody viewed it.
+ */
 
 async function rotatePhotoIfNeeded(
-
     uid,
-
     data,
-
     currentPhoto,
-
     photos
-
 ) {
-
-
-    /*
-     * Don't rotate when there is
-     * only one gallery picture.
-     */
 
     if (photos.length < 2) {
 
@@ -1086,27 +1010,22 @@ async function rotatePhotoIfNeeded(
 
 
     const lastRotation =
-
         timestampValue(
-
             data.photoRotationAt
-
         );
 
 
-    /*
-     * First time using rotation.
-     */
-
     if (!lastRotation) {
-
 
         await setDoc(
 
-            doc(db, "users", uid),
+            doc(
+                db,
+                "users",
+                uid
+            ),
 
             {
-
                 photoRotationAt:
                     new Date(),
 
@@ -1117,7 +1036,6 @@ async function rotatePhotoIfNeeded(
                             currentPhoto
                         )
                     )
-
             },
 
             {
@@ -1132,16 +1050,9 @@ async function rotatePhotoIfNeeded(
     }
 
 
-    /*
-     * Wait until 24 hours have passed.
-     */
-
     if (
-
         Date.now() - lastRotation <
-
         ROTATION_TIME
-
     ) {
 
         return currentPhoto;
@@ -1150,7 +1061,6 @@ async function rotatePhotoIfNeeded(
 
 
     let currentIndex =
-
         photos.indexOf(
             currentPhoto
         );
@@ -1163,32 +1073,24 @@ async function rotatePhotoIfNeeded(
     }
 
 
-    /*
-     * Pick the next picture.
-     */
-
     const nextIndex =
-
         (currentIndex + 1) %
-
         photos.length;
 
 
     const nextPhoto =
-
         photos[nextIndex];
 
 
-    /*
-     * Save the new current picture.
-     */
-
     await setDoc(
 
-        doc(db, "users", uid),
+        doc(
+            db,
+            "users",
+            uid
+        ),
 
         {
-
             photoURL:
                 nextPhoto,
 
@@ -1200,7 +1102,6 @@ async function rotatePhotoIfNeeded(
 
             photoGallery:
                 photos
-
         },
 
         {
@@ -1215,48 +1116,33 @@ async function rotatePhotoIfNeeded(
 }
 
 
-
 function showPhoto(url, name) {
 
-
     if (url) {
-
 
         mainPhoto.src =
             url;
 
-
         mainPhoto.style.display =
             "block";
-
 
         initial.style.display =
             "none";
 
-
     } else {
-
 
         mainPhoto.style.display =
             "none";
 
-
         initial.textContent =
 
             (
-
                 name ||
-
                 "K"
-
             )
-
             .trim()
-
             .charAt(0)
-
             .toUpperCase();
-
 
         initial.style.display =
             "block";
@@ -1266,37 +1152,27 @@ function showPhoto(url, name) {
 }
 
 
-
 function showInterests(list) {
-
 
     interests.innerHTML =
         "";
 
 
     if (
-
         !Array.isArray(list) ||
-
         !list.length
-
     ) {
-
 
         const tag =
             document.createElement("span");
 
-
         tag.className =
             "tag";
-
 
         tag.textContent =
             "Still discovering interests";
 
-
         interests.appendChild(tag);
-
 
         return;
 
@@ -1305,36 +1181,27 @@ function showInterests(list) {
 
     list.forEach(item => {
 
-
         const tag =
             document.createElement("span");
-
 
         tag.className =
             "tag";
 
-
         tag.textContent =
             item;
 
-
         interests.appendChild(tag);
-
 
     });
 
 }
 
 
-
 function showGallery(
-
     photos,
-
-    currentPhoto
-
+    currentPhoto,
+    isOwner
 ) {
-
 
     gallery.innerHTML =
         "";
@@ -1345,31 +1212,27 @@ function showGallery(
         `${photos.length} photo` +
 
         (
-
             photos.length === 1
-
                 ? ""
-
                 : "s"
-
         );
 
 
     if (!photos.length) {
 
-
         gallery.innerHTML = `
 
             <div class="empty-gallery">
 
-                Your photo gallery is empty.<br>
-
-                Add photos from Edit Profile.
+                ${
+                    isOwner
+                        ? "Your photo gallery is empty.<br>Add photos from Edit Profile."
+                        : "No photos have been added yet."
+                }
 
             </div>
 
         `;
-
 
         return;
 
@@ -1377,15 +1240,12 @@ function showGallery(
 
 
     photos.forEach(
-
         (photo, index) => {
-
 
             const item =
                 document.createElement(
                     "div"
                 );
-
 
             item.className =
                 "gallery-item";
@@ -1396,18 +1256,22 @@ function showGallery(
                     "img"
                 );
 
-
             image.src =
                 photo;
 
-
             image.alt =
-
                 `Gallery photo ${index + 1}`;
-
 
             image.loading =
                 "lazy";
+
+
+            image.onerror = () => {
+
+                item.style.display =
+                    "none";
+
+            };
 
 
             item.appendChild(
@@ -1415,26 +1279,26 @@ function showGallery(
             );
 
 
+            /*
+             * Only show "Current" to the
+             * owner viewing their own profile.
+             */
+
             if (
-
+                isOwner &&
                 photo === currentPhoto
-
             ) {
-
 
                 const current =
                     document.createElement(
                         "div"
                     );
 
-
                 current.className =
                     "gallery-current";
 
-
                 current.textContent =
                     "Current";
-
 
                 item.appendChild(
                     current
@@ -1444,23 +1308,17 @@ function showGallery(
 
 
             item.addEventListener(
-
                 "click",
-
                 () => {
-
 
                     lightboxImage.src =
                         photo;
-
 
                     lightbox.classList.add(
                         "show"
                     );
 
-
                 }
-
             );
 
 
@@ -1469,34 +1327,40 @@ function showGallery(
             );
 
         }
-
     );
 
 }
 
 
+/*
+ * Load a profile by Firebase UID.
+ *
+ * This is the main fix.
+ *
+ * If profile.html?id=OTHER_UID
+ * then OTHER_UID is loaded.
+ *
+ * If there is no id parameter,
+ * the logged-in user's own profile
+ * is loaded.
+ */
 
-async function loadProfile(user) {
-
+async function loadProfile(
+    profileId,
+    loggedInUser
+) {
 
     try {
 
-
         const reference =
-
             doc(
-
                 db,
-
                 "users",
-
-                user.uid
-
+                profileId
             );
 
 
         const snapshot =
-
             await getDoc(
                 reference
             );
@@ -1504,29 +1368,33 @@ async function loadProfile(user) {
 
         if (!snapshot.exists()) {
 
-
             throw new Error(
-
-                "Your Kmeet profile has not been created yet."
-
+                "This Kmeet profile could not be found."
             );
 
         }
 
 
-        let data =
+        const data =
             snapshot.data();
 
 
-        let currentPhoto =
+        /*
+         * Determine whether this is
+         * the logged-in user's profile.
+         */
 
-            getPhotoURL(
-                data
-            );
+        const isOwner =
+            !!loggedInUser &&
+            !loggedInUser.isAnonymous &&
+            profileId === loggedInUser.uid;
+
+
+        let currentPhoto =
+            getPhotoURL(data);
 
 
         let photos =
-
             getGallery(
                 data,
                 currentPhoto
@@ -1534,38 +1402,27 @@ async function loadProfile(user) {
 
 
         /*
-         * Automatically rotate the current
-         * picture when 24 hours have passed.
+         * ONLY rotate photos when the
+         * logged-in user is viewing
+         * their own profile.
          */
 
-        currentPhoto =
+        if (isOwner) {
 
-            await rotatePhotoIfNeeded(
+            currentPhoto =
+                await rotatePhotoIfNeeded(
+                    profileId,
+                    data,
+                    currentPhoto,
+                    photos
+                );
 
-                user.uid,
+        }
 
-                data,
-
-                currentPhoto,
-
-                photos
-
-            );
-
-
-        /*
-         * Make sure the current picture is
-         * always present in the gallery.
-         */
 
         if (
-
             currentPhoto &&
-
-            !photos.includes(
-                currentPhoto
-            )
-
+            !photos.includes(currentPhoto)
         ) {
 
             photos.unshift(
@@ -1583,8 +1440,6 @@ async function loadProfile(user) {
 
             data.displayName ||
 
-            user.displayName ||
-
             "Kmeet Member";
 
 
@@ -1596,11 +1451,12 @@ async function loadProfile(user) {
 
             data.location ||
 
+            data.city ||
+
             "Kenya";
 
 
         profileLocation.textContent =
-
             "📍 " + location;
 
 
@@ -1611,16 +1467,13 @@ async function loadProfile(user) {
         age.textContent =
 
             data.age
-
                 ? data.age
-
                 : "Not provided";
 
 
         gender.textContent =
 
             data.gender ||
-
             "Not provided";
 
 
@@ -1628,32 +1481,84 @@ async function loadProfile(user) {
 
             data.bio ||
 
+            data.description ||
+
+            data.about ||
+
+            data.intro ||
+
             "Connecting hearts naturally.";
 
 
         showPhoto(
-
             currentPhoto,
-
             name
-
         );
 
 
         showInterests(
-
             data.interests
-
         );
 
 
         showGallery(
-
             photos,
-
-            currentPhoto
-
+            currentPhoto,
+            isOwner
         );
+
+
+        /*
+         * OWNER:
+         * Show Edit Profile.
+         *
+         * OTHER MEMBER:
+         * Hide Edit Profile and show Chat.
+         */
+
+        if (isOwner) {
+
+            editButton.style.display =
+                "inline-flex";
+
+            chatButton.style.display =
+                "none";
+
+        } else {
+
+            editButton.style.display =
+                "none";
+
+            chatButton.href =
+                `chat.html?userId=${encodeURIComponent(profileId)}`;
+
+            chatButton.style.display =
+                "inline-flex";
+
+        }
+
+
+        /*
+         * Online status.
+         */
+
+        const isOnline =
+            data.online === true ||
+            data.status === "online" ||
+            data.isOnline === true;
+
+
+        if (isOnline) {
+
+            statusText.textContent =
+                "Online";
+
+        } else {
+
+            statusText.textContent =
+                "Offline";
+
+        }
 
 
         loading.style.display =
@@ -1666,7 +1571,6 @@ async function loadProfile(user) {
 
     } catch (error) {
 
-
         console.error(
             "Profile error:",
             error
@@ -1674,6 +1578,10 @@ async function loadProfile(user) {
 
 
         loading.style.display =
+            "none";
+
+
+        profileCard.style.display =
             "none";
 
 
@@ -1685,55 +1593,41 @@ async function loadProfile(user) {
 
             error.message ||
 
-            "We could not load your profile.";
+            "We could not load this profile.";
 
     }
 
 }
 
 
-
 closeLightbox.addEventListener(
-
     "click",
-
     () => {
-
 
         lightbox.classList.remove(
             "show"
         );
-
 
         lightboxImage.removeAttribute(
             "src"
         );
 
     }
-
 );
 
 
-
 lightbox.addEventListener(
-
     "click",
-
     event => {
 
-
         if (
-
             event.target ===
             lightbox
-
         ) {
-
 
             lightbox.classList.remove(
                 "show"
             );
-
 
             lightboxImage.removeAttribute(
                 "src"
@@ -1742,25 +1636,17 @@ lightbox.addEventListener(
         }
 
     }
-
 );
 
 
-
 document.addEventListener(
-
     "keydown",
-
     event => {
 
-
         if (
-
             event.key ===
             "Escape"
-
         ) {
-
 
             lightbox.classList.remove(
                 "show"
@@ -1769,38 +1655,75 @@ document.addEventListener(
         }
 
     }
-
 );
 
 
+/*
+ * Authentication is still used to determine
+ * whether the visitor owns the profile.
+ *
+ * BUT we do NOT require login to view a
+ * specific public Firebase profile.
+ */
 
 onAuthStateChanged(
-
     auth,
-
     async user => {
 
+        try {
 
-        if (!user) {
+            /*
+             * If Discover supplied an ID,
+             * use that person's ID.
+             */
+
+            if (requestedProfileId) {
+
+                await loadProfile(
+                    requestedProfileId,
+                    user
+                );
+
+                return;
+
+            }
 
 
-            window.location.href =
-                "login.html";
+            /*
+             * No ?id= was supplied.
+             *
+             * In this case the page means
+             * "my profile", so login is required.
+             */
+
+            if (!user || user.isAnonymous) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
 
 
-            return;
+            await loadProfile(
+                user.uid,
+                user
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Profile loading error:",
+                error
+            );
 
         }
 
-
-        await loadProfile(user);
-
     }
-
 );
 
 </script>
 
 </body>
 </html>
-```
