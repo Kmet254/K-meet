@@ -28,10 +28,7 @@ body {
     font-family: "Poppins", sans-serif;
     color: #fff;
     background:
-        linear-gradient(
-            rgba(13, 8, 14, 0.82),
-            rgba(20, 7, 17, 0.94)
-        ),
+        linear-gradient(rgba(13,8,14,.84), rgba(20,7,17,.95)),
         url("img/bg34.jpg") center/cover fixed no-repeat;
 }
 
@@ -39,10 +36,10 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background:
-        radial-gradient(circle at top left, rgba(255, 72, 151, 0.16), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(255, 0, 102, 0.13), transparent 35%);
     pointer-events: none;
+    background:
+        radial-gradient(circle at top left, rgba(255,72,151,.16), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(255,0,102,.13), transparent 35%);
 }
 
 .navbar {
@@ -53,17 +50,17 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    background: rgba(10, 7, 11, 0.55);
+    background: rgba(10,7,11,.58);
+    border-bottom: 1px solid rgba(255,255,255,.08);
     backdrop-filter: blur(14px);
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
+    color: white;
     text-decoration: none;
-    color: #fff;
     font-family: "Playfair Display", serif;
     font-size: 27px;
     font-weight: 700;
@@ -71,20 +68,17 @@ body::before {
 
 .logo-heart {
     color: #ff4f9a;
-    font-size: 25px;
 }
 
 .nav-links {
     display: flex;
-    align-items: center;
     gap: 22px;
 }
 
 .nav-links a {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,.82);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 500;
 }
 
 .nav-links a:hover {
@@ -99,13 +93,11 @@ body::before {
 }
 
 .card {
-    background: rgba(25, 13, 23, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(25,13,23,.80);
+    border: 1px solid rgba(255,255,255,.10);
     border-radius: 26px;
     padding: 34px;
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow: 0 25px 70px rgba(0,0,0,.45);
     backdrop-filter: blur(18px);
 }
 
@@ -118,7 +110,7 @@ h1 {
 
 .subtitle {
     text-align: center;
-    color: rgba(255,255,255,0.65);
+    color: rgba(255,255,255,.63);
     font-size: 14px;
     margin: 8px 0 30px;
 }
@@ -129,21 +121,14 @@ h1 {
 }
 
 .photo-preview {
-    width: 145px;
-    height: 145px;
+    width: 150px;
+    height: 150px;
     margin: 0 auto 16px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid rgba(255, 80, 150, 0.75);
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 70, 145, 0.25),
-            rgba(255, 255, 255, 0.05)
-        );
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.4),
-        0 0 25px rgba(255, 65, 145, 0.16);
+    border: 3px solid rgba(255,80,150,.75);
+    background: rgba(255,255,255,.04);
+    box-shadow: 0 15px 40px rgba(0,0,0,.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -167,17 +152,15 @@ h1 {
     cursor: pointer;
     padding: 11px 20px;
     border-radius: 25px;
-    background: rgba(255, 63, 140, 0.15);
-    border: 1px solid rgba(255, 91, 158, 0.38);
+    background: rgba(255,63,140,.15);
+    border: 1px solid rgba(255,91,158,.38);
     color: #ff8ab9;
     font-size: 13px;
     font-weight: 600;
-    transition: 0.2s ease;
 }
 
 .photo-label:hover {
-    background: rgba(255, 63, 140, 0.25);
-    transform: translateY(-1px);
+    background: rgba(255,63,140,.25);
 }
 
 #photoInput {
@@ -186,7 +169,7 @@ h1 {
 
 .photo-note {
     margin-top: 9px;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,.45);
     font-size: 11px;
 }
 
@@ -198,35 +181,32 @@ h1 {
     display: block;
     margin-bottom: 8px;
     font-size: 13px;
-    color: rgba(255,255,255,0.78);
-    font-weight: 500;
+    color: rgba(255,255,255,.78);
 }
 
 .field input,
 .field select,
 .field textarea {
     width: 100%;
-    border: 1px solid rgba(255,255,255,0.11);
+    border: 1px solid rgba(255,255,255,.11);
     border-radius: 14px;
     padding: 13px 14px;
-    background: rgba(255,255,255,0.055);
-    color: #fff;
+    background: rgba(255,255,255,.055);
+    color: white;
     outline: none;
     font-family: "Poppins", sans-serif;
     font-size: 14px;
-    transition: border-color 0.2s, background 0.2s;
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-    border-color: rgba(255, 87, 153, 0.65);
-    background: rgba(255,255,255,0.075);
+    border-color: rgba(255,87,153,.65);
 }
 
 .field select option {
     background: #24121f;
-    color: #fff;
+    color: white;
 }
 
 .field textarea {
@@ -247,24 +227,19 @@ h1 {
 }
 
 .interest {
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.045);
-    color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.045);
+    color: rgba(255,255,255,.75);
     padding: 8px 13px;
     border-radius: 20px;
     cursor: pointer;
     font-family: "Poppins", sans-serif;
     font-size: 12px;
-    transition: 0.2s ease;
-}
-
-.interest:hover {
-    border-color: rgba(255,91,158,0.45);
 }
 
 .interest.selected {
-    background: rgba(255,67,143,0.22);
-    border-color: rgba(255,89,156,0.7);
+    background: rgba(255,67,143,.22);
+    border-color: rgba(255,89,156,.7);
     color: #ff9ac3;
 }
 
@@ -275,37 +250,25 @@ h1 {
     padding: 15px;
     margin-top: 10px;
     cursor: pointer;
-    background: linear-gradient(135deg, #ff3f8e, #ff6aab);
+    background: linear-gradient(135deg,#ff3f8e,#ff6aab);
     color: white;
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins",sans-serif;
     font-size: 15px;
     font-weight: 700;
-    box-shadow: 0 12px 30px rgba(255, 52, 132, 0.20);
-    transition: 0.2s ease;
-}
-
-.save-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 15px 35px rgba(255, 52, 132, 0.30);
 }
 
 .save-btn:disabled {
-    opacity: 0.6;
+    opacity: .6;
     cursor: not-allowed;
-    transform: none;
 }
 
 .cancel-btn {
     display: block;
     text-align: center;
     margin-top: 15px;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,.55);
     text-decoration: none;
     font-size: 13px;
-}
-
-.cancel-btn:hover {
-    color: #ff8ab9;
 }
 
 .message {
@@ -319,42 +282,25 @@ h1 {
 
 .message.error {
     display: block;
-    background: rgba(255, 55, 90, 0.12);
-    border: 1px solid rgba(255, 80, 100, 0.25);
+    background: rgba(255,55,90,.12);
+    border: 1px solid rgba(255,80,100,.25);
     color: #ffb0ba;
 }
 
 .message.success {
     display: block;
-    background: rgba(70, 210, 140, 0.12);
-    border: 1px solid rgba(70, 210, 140, 0.25);
+    background: rgba(70,210,140,.12);
+    border: 1px solid rgba(70,210,140,.25);
     color: #9df0c4;
 }
 
-@media (max-width: 650px) {
-    .navbar {
-        padding: 15px 5%;
-    }
-
-    .nav-links {
-        gap: 12px;
-    }
-
-    .nav-links a {
-        font-size: 12px;
+@media (max-width:650px) {
+    .row {
+        grid-template-columns: 1fr;
     }
 
     .card {
         padding: 23px 18px;
-        border-radius: 21px;
-    }
-
-    h1 {
-        font-size: 29px;
-    }
-
-    .row {
-        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -363,6 +309,7 @@ h1 {
 <body>
 
 <header class="navbar">
+
     <a class="logo" href="index.html">
         <span class="logo-heart">♥</span>
         <span>Kmeet</span>
@@ -372,168 +319,116 @@ h1 {
         <a href="discover.html">Discover</a>
         <a href="profile.html">Profile</a>
     </nav>
+
 </header>
 
 <main class="container">
 
-    <section class="card">
+<section class="card">
 
-        <h1>Edit Your Profile</h1>
+    <h1>Edit Your Profile</h1>
 
-        <p class="subtitle">
-            Let people know a little more about you.
-        </p>
+    <p class="subtitle">
+        Keep your profile fresh and show people who you are.
+    </p>
 
-        <div id="message" class="message"></div>
+    <div id="message" class="message"></div>
 
-        <form id="profileForm">
+    <form id="profileForm">
 
-            <div class="photo-section">
+        <div class="photo-section">
 
-                <div class="photo-preview">
-                    <img id="photoPreview" alt="Profile photo">
-                    <span id="photoInitial" class="photo-initial">K</span>
-                </div>
+            <div class="photo-preview">
+                <img id="photoPreview" alt="Profile photo">
+                <span id="photoInitial" class="photo-initial">K</span>
+            </div>
 
-                <label class="photo-label" for="photoInput">
-                    📷 Choose Profile Photo
-                </label>
+            <label class="photo-label" for="photoInput">
+                📷 Choose New Profile Photo
+            </label>
 
-                <input
-                    id="photoInput"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                >
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+            >
 
-                <div class="photo-note">
-                    JPG, PNG or WebP · Maximum 5 MB
-                </div>
+            <div class="photo-note">
+                JPG, PNG or WebP · Maximum 5 MB
+                <br>
+                Your previous photos remain in your gallery.
+            </div>
 
+        </div>
+
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" maxlength="40" required>
+        </div>
+
+        <div class="row">
+
+            <div class="field">
+                <label for="age">Age</label>
+                <input id="age" type="number" min="18" max="100" required>
             </div>
 
             <div class="field">
-                <label for="name">Name</label>
-                <input
-                    id="name"
-                    type="text"
-                    maxlength="40"
-                    required
-                    placeholder="Your name"
-                >
+                <label for="gender">Gender</label>
+                <select id="gender">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
             </div>
 
-            <div class="row">
+        </div>
 
-                <div class="field">
-                    <label for="age">Age</label>
-                    <input
-                        id="age"
-                        type="number"
-                        min="18"
-                        max="100"
-                        required
-                        placeholder="18"
-                    >
-                </div>
+        <div class="field">
+            <label for="location">Location</label>
+            <input id="location" type="text" maxlength="80">
+        </div>
 
-                <div class="field">
-                    <label for="gender">Gender</label>
-                    <select id="gender">
-                        <option value="">Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+        <div class="field">
+            <label for="bio">About You</label>
+            <textarea id="bio" maxlength="500"></textarea>
+        </div>
+
+        <div class="field">
+
+            <label>Interests</label>
+
+            <div class="interests">
+
+                <button type="button" class="interest" data-interest="Music">Music</button>
+                <button type="button" class="interest" data-interest="Travel">Travel</button>
+                <button type="button" class="interest" data-interest="Movies">Movies</button>
+                <button type="button" class="interest" data-interest="Sports">Sports</button>
+                <button type="button" class="interest" data-interest="Food">Food</button>
+                <button type="button" class="interest" data-interest="Reading">Reading</button>
+                <button type="button" class="interest" data-interest="Fitness">Fitness</button>
+                <button type="button" class="interest" data-interest="Photography">Photography</button>
+                <button type="button" class="interest" data-interest="Nature">Nature</button>
+                <button type="button" class="interest" data-interest="Gaming">Gaming</button>
+                <button type="button" class="interest" data-interest="Cooking">Cooking</button>
+                <button type="button" class="interest" data-interest="Dancing">Dancing</button>
 
             </div>
 
-            <div class="field">
-                <label for="location">Location</label>
-                <input
-                    id="location"
-                    type="text"
-                    maxlength="80"
-                    placeholder="e.g. Nairobi, Kenya"
-                >
-            </div>
+        </div>
 
-            <div class="field">
-                <label for="bio">About You</label>
-                <textarea
-                    id="bio"
-                    maxlength="500"
-                    placeholder="Tell people something about yourself..."
-                ></textarea>
-            </div>
+        <button id="saveBtn" class="save-btn" type="submit">
+            Save Profile
+        </button>
 
-            <div class="field">
-                <label>Interests</label>
+        <a class="cancel-btn" href="profile.html">
+            Cancel
+        </a>
 
-                <div class="interests">
+    </form>
 
-                    <button type="button" class="interest" data-interest="Music">
-                        Music
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Travel">
-                        Travel
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Movies">
-                        Movies
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Sports">
-                        Sports
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Food">
-                        Food
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Reading">
-                        Reading
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Fitness">
-                        Fitness
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Photography">
-                        Photography
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Nature">
-                        Nature
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Gaming">
-                        Gaming
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Cooking">
-                        Cooking
-                    </button>
-
-                    <button type="button" class="interest" data-interest="Dancing">
-                        Dancing
-                    </button>
-
-                </div>
-            </div>
-
-            <button id="saveBtn" class="save-btn" type="submit">
-                Save Profile
-            </button>
-
-            <a class="cancel-btn" href="profile.html">
-                Cancel
-            </a>
-
-        </form>
-
-    </section>
+</section>
 
 </main>
 
@@ -549,17 +444,8 @@ import {
 } from "./firebase-config.js";
 
 
-/* =========================================
-   CLOUDINARY SETTINGS
-========================================= */
-
-const CLOUDINARY_CLOUD_NAME = "whnrdsfq";
-const CLOUDINARY_UPLOAD_PRESET = "kmeet_profiles";
-
-
-/* =========================================
-   ELEMENTS
-========================================= */
+const CLOUD_NAME = "whnrdsfq";
+const UPLOAD_PRESET = "kmeet_profiles";
 
 const form = document.getElementById("profileForm");
 const nameInput = document.getElementById("name");
@@ -575,44 +461,32 @@ const photoInitial = document.getElementById("photoInitial");
 const saveBtn = document.getElementById("saveBtn");
 const message = document.getElementById("message");
 
-const interestButtons =
-    document.querySelectorAll(".interest");
-
+const interestButtons = document.querySelectorAll(".interest");
 
 let currentUser = null;
 let currentPhotoURL = "";
+let photoGallery = [];
 let selectedInterests = [];
 
 
-/* =========================================
-   MESSAGE
-========================================= */
-
 function showMessage(text, type = "error") {
-
     message.textContent = text;
     message.className = "message " + type;
-
 }
 
-
-/* =========================================
-   HIDE MESSAGE
-========================================= */
 
 function clearMessage() {
-
     message.textContent = "";
     message.className = "message";
-
 }
 
 
-/* =========================================
-   SET PHOTO PREVIEW
-========================================= */
+function getFirstLetter(name) {
+    return (name || "K").trim().charAt(0).toUpperCase() || "K";
+}
 
-function setPhotoPreview(url, name = "") {
+
+function setPreview(url) {
 
     if (url) {
 
@@ -622,133 +496,29 @@ function setPhotoPreview(url, name = "") {
 
     } else {
 
-        photoPreview.removeAttribute("src");
         photoPreview.style.display = "none";
+        photoPreview.removeAttribute("src");
 
-        const firstLetter =
-            (name || "K").trim().charAt(0).toUpperCase();
+        photoInitial.textContent =
+            getFirstLetter(nameInput.value);
 
-        photoInitial.textContent = firstLetter || "K";
         photoInitial.style.display = "block";
-
     }
-
 }
 
-
-/* =========================================
-   LOAD PROFILE
-========================================= */
-
-async function loadProfile(user) {
-
-    try {
-
-        const userRef = doc(db, "users", user.uid);
-        const snapshot = await getDoc(userRef);
-
-        if (!snapshot.exists()) {
-
-            nameInput.value = user.displayName || "";
-
-            currentPhotoURL = user.photoURL || "";
-
-            setPhotoPreview(
-                currentPhotoURL,
-                nameInput.value
-            );
-
-            return;
-        }
-
-        const data = snapshot.data();
-
-        const savedName =
-            data.name ||
-            data.username ||
-            data.displayName ||
-            user.displayName ||
-            "";
-
-        nameInput.value = savedName;
-
-        ageInput.value =
-            data.age !== undefined &&
-            data.age !== null
-                ? data.age
-                : "";
-
-        genderInput.value =
-            data.gender || "";
-
-        locationInput.value =
-            data.location || "";
-
-        bioInput.value =
-            data.bio || "";
-
-        selectedInterests =
-            Array.isArray(data.interests)
-                ? [...data.interests]
-                : [];
-
-        /*
-         * Read all the photo field names that older
-         * versions of Kmeet may have used.
-         */
-        currentPhotoURL =
-            data.photoURL ||
-            data.photoUrl ||
-            data.profilePhoto ||
-            data.profileImage ||
-            data.avatar ||
-            data.photo ||
-            user.photoURL ||
-            "";
-
-        setPhotoPreview(
-            currentPhotoURL,
-            savedName
-        );
-
-        updateInterestButtons();
-
-    } catch (error) {
-
-        console.error("Profile loading error:", error);
-
-        showMessage(
-            "We could not load your profile. Please refresh the page."
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   INTEREST BUTTONS
-========================================= */
 
 function updateInterestButtons() {
 
     interestButtons.forEach(button => {
 
-        const interest =
-            button.dataset.interest;
+        const interest = button.dataset.interest;
 
-        if (selectedInterests.includes(interest)) {
-
-            button.classList.add("selected");
-
-        } else {
-
-            button.classList.remove("selected");
-
-        }
+        button.classList.toggle(
+            "selected",
+            selectedInterests.includes(interest)
+        );
 
     });
-
 }
 
 
@@ -756,8 +526,7 @@ interestButtons.forEach(button => {
 
     button.addEventListener("click", () => {
 
-        const interest =
-            button.dataset.interest;
+        const interest = button.dataset.interest;
 
         if (selectedInterests.includes(interest)) {
 
@@ -769,7 +538,6 @@ interestButtons.forEach(button => {
         } else {
 
             selectedInterests.push(interest);
-
         }
 
         updateInterestButtons();
@@ -779,9 +547,87 @@ interestButtons.forEach(button => {
 });
 
 
-/* =========================================
-   SELECT NEW PHOTO
-========================================= */
+async function loadProfile(user) {
+
+    const snapshot =
+        await getDoc(doc(db, "users", user.uid));
+
+    if (!snapshot.exists()) {
+
+        nameInput.value =
+            user.displayName || "";
+
+        currentPhotoURL =
+            user.photoURL || "";
+
+        if (currentPhotoURL) {
+            photoGallery = [currentPhotoURL];
+        }
+
+        setPreview(currentPhotoURL);
+
+        return;
+    }
+
+    const data = snapshot.data();
+
+    nameInput.value =
+        data.name ||
+        data.username ||
+        data.displayName ||
+        user.displayName ||
+        "";
+
+    ageInput.value =
+        data.age ?? "";
+
+    genderInput.value =
+        data.gender || "";
+
+    locationInput.value =
+        data.location || "";
+
+    bioInput.value =
+        data.bio || "";
+
+    selectedInterests =
+        Array.isArray(data.interests)
+            ? [...data.interests]
+            : [];
+
+    currentPhotoURL =
+        data.photoURL ||
+        data.profilePhoto ||
+        data.photo ||
+        data.avatar ||
+        data.profileImage ||
+        user.photoURL ||
+        "";
+
+    /*
+     * Read the permanent gallery.
+     */
+    photoGallery =
+        Array.isArray(data.photoGallery)
+            ? [...data.photoGallery]
+            : [];
+
+    /*
+     * Protect an older existing photo.
+     * If there is a current photo that isn't
+     * already in the gallery, add it.
+     */
+    if (
+        currentPhotoURL &&
+        !photoGallery.includes(currentPhotoURL)
+    ) {
+        photoGallery.unshift(currentPhotoURL);
+    }
+
+    setPreview(currentPhotoURL);
+    updateInterestButtons();
+}
+
 
 photoInput.addEventListener("change", () => {
 
@@ -789,43 +635,34 @@ photoInput.addEventListener("change", () => {
 
     const file = photoInput.files[0];
 
-    if (!file) {
-        return;
-    }
+    if (!file) return;
 
-    const allowedTypes = [
+    const allowed = [
         "image/jpeg",
         "image/png",
         "image/webp"
     ];
 
-    if (!allowedTypes.includes(file.type)) {
+    if (!allowed.includes(file.type)) {
 
         showMessage(
             "Please choose a JPG, PNG or WebP image."
         );
 
         photoInput.value = "";
-
         return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
 
         showMessage(
-            "Your profile photo must be smaller than 5 MB."
+            "Your photo must be smaller than 5 MB."
         );
 
         photoInput.value = "";
-
         return;
     }
 
-    /*
-     * Show the selected photo immediately.
-     * It is only permanently saved after
-     * the user presses Save Profile.
-     */
     const reader = new FileReader();
 
     reader.onload = event => {
@@ -837,95 +674,45 @@ photoInput.addEventListener("change", () => {
     };
 
     reader.readAsDataURL(file);
-
 });
 
 
-/* =========================================
-   UPLOAD PHOTO TO CLOUDINARY
-========================================= */
+async function uploadToCloudinary(file) {
 
-async function uploadPhotoToCloudinary(file) {
-
-    const uploadURL =
-        "https://api.cloudinary.com/v1_1/" +
-        CLOUDINARY_CLOUD_NAME +
-        "/image/upload";
+    const url =
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
     const formData = new FormData();
 
-    formData.append(
-        "file",
-        file
-    );
-
-    formData.append(
-        "upload_preset",
-        CLOUDINARY_UPLOAD_PRESET
-    );
-
-    /*
-     * Put Kmeet profile photos into a
-     * dedicated Cloudinary folder.
-     */
-    formData.append(
-        "folder",
-        "kmeet/profiles"
-    );
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("folder", "kmeet/profiles");
 
     const response =
-        await fetch(
-            uploadURL,
-            {
-                method: "POST",
-                body: formData
-            }
-        );
+        await fetch(url, {
+            method: "POST",
+            body: formData
+        });
 
-    let result = {};
+    const result =
+        await response.json();
 
-    try {
-
-        result = await response.json();
-
-    } catch (error) {
-
-        throw new Error(
-            "Cloudinary returned an invalid response."
-        );
-
-    }
-
-    if (!response.ok) {
+    if (!response.ok || !result.secure_url) {
 
         console.error(
-            "Cloudinary upload error:",
+            "Cloudinary error:",
             result
         );
 
         throw new Error(
             result.error?.message ||
-            "Profile photo upload failed."
+            "The photo could not be uploaded."
         );
-
-    }
-
-    if (!result.secure_url) {
-
-        throw new Error(
-            "Cloudinary did not return a photo URL."
-        );
-
     }
 
     return result.secure_url;
-
 }
 
-
-/* =========================================
-   SAVE PROFILE
-========================================= */
 
 form.addEventListener("submit", async event => {
 
@@ -942,32 +729,17 @@ form.addEventListener("submit", async event => {
         return;
     }
 
-
-    /* -------------------------------
-       VALIDATE NAME
-    -------------------------------- */
-
     const name =
         nameInput.value.trim();
 
-    if (!name) {
-
-        showMessage(
-            "Please enter your name."
-        );
-
-        nameInput.focus();
-
-        return;
-    }
-
-
-    /* -------------------------------
-       VALIDATE AGE
-    -------------------------------- */
-
     const age =
         Number(ageInput.value);
+
+    if (!name) {
+
+        showMessage("Please enter your name.");
+        return;
+    }
 
     if (!age || age < 18 || age > 100) {
 
@@ -975,65 +747,62 @@ form.addEventListener("submit", async event => {
             "Please enter a valid age between 18 and 100."
         );
 
-        ageInput.focus();
-
         return;
     }
 
-
-    /* -------------------------------
-       DISABLE BUTTON
-    -------------------------------- */
-
     saveBtn.disabled = true;
     saveBtn.textContent = "Saving...";
-
 
     try {
 
         let photoURL =
             currentPhotoURL || "";
 
-
-        /* -------------------------------
-           UPLOAD NEW PHOTO IF SELECTED
-        -------------------------------- */
-
         const selectedFile =
             photoInput.files[0];
 
+        /*
+         * Upload the new picture first.
+         */
         if (selectedFile) {
 
             saveBtn.textContent =
                 "Uploading photo...";
 
-            photoURL =
-                await uploadPhotoToCloudinary(
+            const newURL =
+                await uploadToCloudinary(
                     selectedFile
                 );
 
+            photoURL = newURL;
+
             /*
-             * Keep the new URL locally too.
+             * Add the new picture permanently
+             * to the gallery.
              */
-            currentPhotoURL =
-                photoURL;
+            if (!photoGallery.includes(newURL)) {
+
+                photoGallery.push(newURL);
+            }
 
         }
 
-
-        /* -------------------------------
-           SAVE FIRESTORE PROFILE
-        -------------------------------- */
+        /*
+         * Make absolutely sure the current
+         * picture is also preserved in gallery.
+         */
+        if (
+            photoURL &&
+            !photoGallery.includes(photoURL)
+        ) {
+            photoGallery.push(photoURL);
+        }
 
         saveBtn.textContent =
             "Saving profile...";
 
         await setDoc(
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            ),
+            doc(db, "users", currentUser.uid),
             {
                 uid: currentUser.uid,
 
@@ -1061,10 +830,32 @@ form.addEventListener("submit", async event => {
                     selectedInterests,
 
                 /*
-                 * This is now the Cloudinary URL.
+                 * Current active photo.
                  */
-                photoURL:
-                    photoURL || "",
+                photoURL: photoURL || "",
+
+                /*
+                 * Permanent photo gallery.
+                 */
+                photoGallery: photoGallery,
+
+                /*
+                 * Reset the 24-hour rotation timer
+                 * whenever the member manually chooses
+                 * a new profile photo.
+                 */
+                photoRotationAt:
+                    new Date(),
+
+                /*
+                 * Start rotation from the current
+                 * picture's position in the gallery.
+                 */
+                photoRotationIndex:
+                    Math.max(
+                        0,
+                        photoGallery.indexOf(photoURL)
+                    ),
 
                 updatedAt:
                     new Date()
@@ -1074,31 +865,20 @@ form.addEventListener("submit", async event => {
             }
         );
 
-
-        /* -------------------------------
-           SUCCESS
-        -------------------------------- */
-
         showMessage(
-            "Your profile has been saved successfully.",
+            "Your profile and photo gallery have been saved.",
             "success"
         );
 
         saveBtn.textContent =
             "Saved ✓";
 
-
-        /*
-         * Give Firebase a moment to finish,
-         * then return to the profile page.
-         */
         setTimeout(() => {
 
             window.location.href =
                 "profile.html";
 
-        }, 900);
-
+        }, 1000);
 
     } catch (error) {
 
@@ -1107,49 +887,18 @@ form.addEventListener("submit", async event => {
             error
         );
 
-        let friendlyMessage =
-            "Your profile could not be saved.";
-
-        if (
-            error.message &&
-            error.message.toLowerCase().includes("upload")
-        ) {
-
-            friendlyMessage =
-                "The profile photo could not be uploaded. Please try another photo.";
-
-        } else if (
-            error.code === "permission-denied"
-        ) {
-
-            friendlyMessage =
-                "Firebase permission was denied. Please make sure you are logged in.";
-
-        } else if (
-            error.message
-        ) {
-
-            friendlyMessage =
-                error.message;
-
-        }
-
         showMessage(
-            friendlyMessage
+            error.message ||
+            "Your profile could not be saved."
         );
 
         saveBtn.disabled = false;
         saveBtn.textContent =
             "Save Profile";
-
     }
 
 });
 
-
-/* =========================================
-   AUTHENTICATION
-========================================= */
 
 onAuthStateChanged(
     auth,
@@ -1163,10 +912,23 @@ onAuthStateChanged(
             return;
         }
 
-        currentUser =
-            user;
+        currentUser = user;
 
-        await loadProfile(user);
+        try {
+
+            await loadProfile(user);
+
+        } catch (error) {
+
+            console.error(
+                "PROFILE LOAD ERROR:",
+                error
+            );
+
+            showMessage(
+                "We could not load your profile."
+            );
+        }
 
     }
 );
