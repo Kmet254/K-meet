@@ -1,100 +1,93 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Kmeet - Discover</title>
 
-  <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
+  <link rel="stylesheet" href="styles.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
-  <style>
-    * { box-sizing: border-box; }
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
 
-    body.discover-page {
-      margin: 0;
+  <style>
+    .discover-page {
       min-height: 100vh;
+      background:
+        linear-gradient(
+          rgba(13, 11, 14, 0.72),
+          rgba(13, 11, 14, 0.82)
+        ),
+        url("img/bg34.jpg") center center / cover fixed no-repeat;
       color: #fff;
       font-family: "Poppins", sans-serif;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(190, 43, 90, .22), transparent 28%),
-        radial-gradient(circle at 85% 20%, rgba(122, 25, 61, .24), transparent 30%),
-        linear-gradient(135deg, #12070c 0%, #210b14 48%, #10060a 100%);
     }
 
     .discover-nav {
       width: 100%;
-      min-height: 76px;
+      padding: 18px 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 5%;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      background: rgba(13, 5, 9, .72);
-      backdrop-filter: blur(18px);
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 100;
+      background: rgba(13, 11, 14, 0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .discover-brand {
       display: flex;
       align-items: center;
-      gap: 9px;
-      color: #fff;
+      gap: 10px;
       text-decoration: none;
+      color: #fff;
       font-family: "Playfair Display", serif;
-      font-size: 25px;
+      font-size: 1.7rem;
       font-weight: 700;
     }
 
-    .discover-logo-image {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      overflow: hidden;
+    .discover-brand i {
+      color: #ff5f9e;
+      font-size: 1.35rem;
+    }
+
+    .discover-links {
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,.08);
+      gap: 24px;
     }
 
-    .discover-kmeet-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .discover-navlinks {
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .discover-navlinks a {
-      color: rgba(255,255,255,.78);
+    .discover-links a {
+      color: rgba(255,255,255,0.88);
       text-decoration: none;
-      font-size: 14px;
-      transition: .2s ease;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: 0.25s ease;
     }
 
-    .discover-navlinks a:hover {
-      color: #fff;
+    .discover-links a:hover,
+    .discover-links a.active {
+      color: #ff6da8;
     }
 
     .discover-container {
-      width: min(1220px, 92%);
+      width: min(1400px, 92%);
       margin: 0 auto;
-      padding: 54px 0 70px;
+      padding: 42px 0 70px;
     }
 
     .discover-heading {
@@ -103,103 +96,98 @@
     }
 
     .discover-heading h1 {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       font-family: "Playfair Display", serif;
-      font-size: clamp(36px, 5vw, 58px);
-      line-height: 1.05;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
     }
 
     .discover-heading p {
-      margin: 0 auto 18px;
-      max-width: 650px;
-      color: rgba(255,255,255,.68);
-      font-size: 15px;
+      margin: 0;
+      color: rgba(255,255,255,0.72);
+      font-size: 0.96rem;
     }
 
     .member-count {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 15px;
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 16px;
       border-radius: 999px;
-      color: rgba(255,255,255,.88);
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.09);
-      font-size: 13px;
-    }
-
-    .member-count-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #e96b9a;
-      box-shadow: 0 0 12px rgba(233,107,154,.75);
+      background: rgba(255, 95, 158, 0.12);
+      border: 1px solid rgba(255, 95, 158, 0.25);
+      color: #ff83b4;
+      font-size: 0.84rem;
+      font-weight: 600;
     }
 
     .activity-bar {
+      width: 100%;
+      margin: 0 auto 30px;
+      padding: 13px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      padding: 18px 20px;
-      margin-bottom: 28px;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 18px;
-      background: rgba(255,255,255,.045);
-      backdrop-filter: blur(14px);
+      gap: 15px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(12px);
     }
 
-    .activity-copy {
+    .activity-status {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: center;
+      gap: 9px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
     }
 
-    .activity-copy strong {
-      font-size: 14px;
-    }
-
-    .activity-copy span {
-      color: rgba(255,255,255,.58);
-      font-size: 12px;
+    .activity-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 12px rgba(74,222,128,0.7);
     }
 
     .likes-link {
-      flex: 0 0 auto;
+      color: #ff76ad;
       text-decoration: none;
-      color: #fff;
-      font-size: 13px;
-      padding: 10px 15px;
-      border-radius: 999px;
-      background: rgba(190,43,90,.35);
-      border: 1px solid rgba(255,130,175,.18);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .likes-link:hover {
+      color: #ff9bc4;
     }
 
     .discover-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 20px;
+      gap: 22px;
     }
 
     .profile-card {
       overflow: hidden;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.09);
-      background: rgba(255,255,255,.055);
-      box-shadow: 0 18px 50px rgba(0,0,0,.25);
-      backdrop-filter: blur(14px);
-      transition: transform .22s ease, border-color .22s ease;
+      position: relative;
+      border-radius: 20px;
+      background: rgba(24, 20, 25, 0.82);
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 16px 35px rgba(0,0,0,0.24);
+      backdrop-filter: blur(10px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .profile-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,130,175,.25);
+      transform: translateY(-5px);
+      box-shadow: 0 22px 42px rgba(0,0,0,0.32);
     }
 
     .profile-photo-wrap {
-      position: relative;
       height: 285px;
-      background: #1a0a11;
+      position: relative;
+      overflow: hidden;
+      background: #201b21;
     }
 
     .profile-photo {
@@ -207,174 +195,185 @@
       height: 100%;
       display: block;
       object-fit: cover;
+      object-position: center;
     }
 
-    .status-badge {
+    .online-badge {
       position: absolute;
-      left: 12px;
-      top: 12px;
-      display: inline-flex;
+      top: 13px;
+      right: 13px;
+      display: flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 10px;
+      padding: 6px 10px;
       border-radius: 999px;
-      font-size: 11px;
-      background: rgba(10,10,12,.68);
+      background: rgba(10,10,10,0.62);
       backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 500;
     }
 
-    .status-dot {
+    .online-badge .status-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
+      background: #4ade80;
     }
 
-    .status-online .status-dot {
-      background: #62d991;
-      box-shadow: 0 0 10px rgba(98,217,145,.7);
-    }
-
-    .status-offline .status-dot {
-      background: #888;
+    .online-badge.offline .status-dot {
+      background: #9ca3af;
+      box-shadow: none;
     }
 
     .profile-content {
-      padding: 17px;
+      padding: 17px 17px 18px;
+    }
+
+    .profile-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
 
     .profile-name {
       margin: 0;
       font-family: "Playfair Display", serif;
-      font-size: 22px;
+      font-size: 1.22rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .profile-age {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.78rem;
+      white-space: nowrap;
     }
 
     .profile-location {
-      margin-top: 4px;
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
+      margin: 6px 0 0;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.78rem;
+    }
+
+    .profile-location i {
+      color: #ff6da8;
+      margin-right: 5px;
     }
 
     .profile-description {
-      min-height: 48px;
-      margin: 12px 0;
-      color: rgba(255,255,255,.68);
-      font-size: 12px;
+      margin: 11px 0 0;
+      min-height: 40px;
+      color: rgba(255,255,255,0.72);
+      font-size: 0.78rem;
       line-height: 1.55;
     }
 
-    .profile-tags {
+    .profile-interests {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 15px;
+      margin-top: 12px;
     }
 
-    .profile-tag {
-      padding: 5px 8px;
+    .interest-tag {
+      padding: 5px 9px;
       border-radius: 999px;
-      color: rgba(255,255,255,.72);
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.07);
-      font-size: 10px;
+      background: rgba(255,95,158,0.09);
+      border: 1px solid rgba(255,95,158,0.18);
+      color: #ff91bb;
+      font-size: 0.67rem;
     }
 
     .profile-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 15px;
     }
 
-    .profile-actions a,
-    .profile-actions button {
-      min-width: 0;
+    .chat-btn {
+      flex: 1;
       border: 0;
+      border-radius: 10px;
+      padding: 10px 13px;
       cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      padding: 10px 8px;
-      border-radius: 11px;
       color: #fff;
+      background: linear-gradient(135deg, #e94f91, #ff6da8);
       font-family: "Poppins", sans-serif;
-      font-size: 11px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.08);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: 0.25s ease;
     }
 
-    .profile-actions .chat-button {
-      background: rgba(190,43,90,.52);
-      border-color: rgba(255,130,175,.18);
+    .chat-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
     }
 
-    .profile-actions .like-button.liked {
-      background: rgba(233,107,154,.25);
-      border-color: rgba(255,130,175,.3);
+    .like-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.055);
+      color: rgba(255,255,255,0.78);
+      cursor: pointer;
+      transition: 0.25s ease;
     }
 
-    .empty-card {
+    .like-btn:hover,
+    .like-btn.liked {
+      color: #ff6da8;
+      border-color: rgba(255,109,168,0.35);
+      background: rgba(255,109,168,0.1);
+    }
+
+    .empty-state {
       grid-column: 1 / -1;
       padding: 60px 20px;
       text-align: center;
-      color: rgba(255,255,255,.65);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,0.65);
     }
 
-    @media (max-width: 1000px) {
+    .empty-state i {
+      display: block;
+      margin-bottom: 15px;
+      color: #ff6da8;
+      font-size: 2.2rem;
+    }
+
+    @media (max-width: 1100px) {
       .discover-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 720px) {
-      .discover-nav {
-        padding: 12px 4%;
-      }
-
-      .discover-navlinks {
-        gap: 12px;
-      }
-
-      .discover-navlinks a {
-        font-size: 12px;
-      }
-
-      .discover-container {
-        width: 94%;
-        padding-top: 38px;
-      }
-
-      .activity-bar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
+    @media (max-width: 780px) {
       .discover-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 13px;
       }
 
-      .profile-photo-wrap {
-        height: 245px;
+      .discover-nav {
+        padding: 15px 4%;
       }
 
-      .profile-content {
-        padding: 13px;
+      .discover-links {
+        gap: 14px;
+      }
+
+      .discover-links a {
+        font-size: 0.8rem;
       }
     }
 
-    @media (max-width: 430px) {
-      .discover-brand {
-        font-size: 21px;
-      }
-
-      .discover-logo-image {
-        width: 32px;
-        height: 32px;
-      }
-
-      .discover-navlinks {
-        gap: 8px;
+    @media (max-width: 520px) {
+      .discover-container {
+        width: 94%;
+        padding-top: 30px;
       }
 
       .discover-grid {
@@ -384,793 +383,1208 @@
       .profile-photo-wrap {
         height: 330px;
       }
+
+      .discover-brand {
+        font-size: 1.45rem;
+      }
     }
   </style>
 </head>
 
-<body class="discover-page">
+<body>
 
-<nav class="discover-nav">
-  <a class="discover-brand" href="index.html">
-    <span class="discover-logo-image">
-      <img
-        src="./kmeet-logo.jfif.jfif"
-        alt="Kmeet"
-        class="discover-kmeet-logo"
-      >
-    </span>
-    <span class="discover-logo">Kmeet</span>
-  </a>
+<div class="discover-page">
 
-  <div class="discover-navlinks">
-    <a href="discover.html">Discover</a>
-    <a id="profileLink" href="login.html">Profile</a>
-    <a href="index.html">Home</a>
-  </div>
-</nav>
+  <header class="discover-nav">
 
-<main class="discover-container">
+    <a href="index.html" class="discover-brand">
+      <i class="fa-solid fa-heart"></i>
+      <span>Kmeet</span>
+    </a>
 
-  <div class="discover-heading">
-    <h1>Discover People</h1>
-    <p>Explore profiles and discover someone who shares your interests.</p>
+    <nav class="discover-links">
+      <a href="discover.html" class="active">Discover</a>
+      <a href="profile.html">Profile</a>
+      <a href="index.html">Home</a>
+    </nav>
 
-    <div class="member-count">
-      <span class="member-count-dot"></span>
-      <span id="memberCount">36 people to discover</span>
-    </div>
-  </div>
+  </header>
 
-  <div class="activity-bar">
-    <div class="activity-copy">
-      <strong id="activityTitle">❤️ Find your first connection</strong>
-      <span id="activitySubtitle">
-        Like a profile you are interested in. Your likes are saved for this session.
+
+  <main class="discover-container">
+
+    <section class="discover-heading">
+
+      <h1>Discover</h1>
+
+      <p>
+        Meet interesting people and find your connection.
+      </p>
+
+      <span class="member-count" id="memberCount">
+        36 people to discover
       </span>
+
+    </section>
+
+
+    <div class="activity-bar">
+
+      <div class="activity-status">
+        <span class="activity-dot"></span>
+        <span>People are joining Kmeet</span>
+      </div>
+
+      <a href="likes.html" class="likes-link">
+        <i class="fa-solid fa-heart"></i>
+        My Likes
+      </a>
+
     </div>
 
-    <a class="likes-link" href="likes.html">♥ My Likes</a>
-  </div>
 
-  <div id="msg"></div>
-  <div id="grid" class="discover-grid"></div>
+    <section id="grid" class="discover-grid">
+      <div class="empty-state">
+        <i class="fa-solid fa-heart"></i>
+        Loading people...
+      </div>
+    </section>
 
-</main>
+  </main>
+
+</div>
+
 
 <script type="module">
 
-import {
-  auth,
-  db,
-  onAuthStateChanged,
-  collection,
-  onSnapshot,
-  doc,
-  setDoc,
-  serverTimestamp
-} from "./firebase-config.js";
+  import {
+    auth,
+    db,
+    onAuthStateChanged,
+    collection,
+    onSnapshot,
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "./firebase-config.js";
 
-const grid = document.getElementById("grid");
-const msg = document.getElementById("msg");
-const memberCount = document.getElementById("memberCount");
 
-const BASE_MEMBER_COUNT = 36;
+  /*
+   * ==========================================================
+   * KMEET DISCOVER
+   * ==========================================================
+   *
+   * IMPORTANT:
+   *
+   * 36 permanent profiles ALWAYS remain.
+   *
+   * Firebase members are ADDED AFTER those 36.
+   *
+   * 0 real members  = 36
+   * 1 real member   = 37
+   * 2 real members  = 38
+   * 10 real members = 46
+   *
+   * This is the number fix.
+   * ==========================================================
+   */
 
-onAuthStateChanged(auth, user => {
 
-  const profileLink =
-    document.getElementById("profileLink");
+  const BASE_MEMBER_COUNT = 36;
 
-  if (
-    user &&
-    !user.isAnonymous
-  ) {
-    profileLink.href =
-      "profile.html";
-  } else {
-    profileLink.href =
-      "login.html";
+
+  const grid = document.getElementById("grid");
+  const memberCount = document.getElementById("memberCount");
+
+
+  /*
+   * ==========================================================
+   * PERMANENT PROFILE PHOTOS
+   * ==========================================================
+   *
+   * These are fallback photos for the 36 permanent profiles.
+   * They are kept separate from Firebase members.
+   * ==========================================================
+   */
+
+  const backupPhotos = [
+    "https://randomuser.me/api/portraits/women/44.jpg",
+    "https://randomuser.me/api/portraits/men/32.jpg",
+    "https://randomuser.me/api/portraits/women/68.jpg",
+    "https://randomuser.me/api/portraits/men/45.jpg",
+    "https://randomuser.me/api/portraits/women/12.jpg",
+    "https://randomuser.me/api/portraits/men/67.jpg",
+    "https://randomuser.me/api/portraits/women/25.jpg",
+    "https://randomuser.me/api/portraits/men/18.jpg",
+    "https://randomuser.me/api/portraits/women/49.jpg",
+    "https://randomuser.me/api/portraits/men/76.jpg",
+    "https://randomuser.me/api/portraits/women/32.jpg",
+    "https://randomuser.me/api/portraits/men/51.jpg",
+    "https://randomuser.me/api/portraits/women/57.jpg",
+    "https://randomuser.me/api/portraits/men/27.jpg",
+    "https://randomuser.me/api/portraits/women/81.jpg",
+    "https://randomuser.me/api/portraits/men/63.jpg",
+    "https://randomuser.me/api/portraits/women/36.jpg",
+    "https://randomuser.me/api/portraits/men/9.jpg",
+    "https://randomuser.me/api/portraits/women/72.jpg",
+    "https://randomuser.me/api/portraits/men/38.jpg",
+    "https://randomuser.me/api/portraits/women/53.jpg",
+    "https://randomuser.me/api/portraits/men/71.jpg",
+    "https://randomuser.me/api/portraits/women/16.jpg",
+    "https://randomuser.me/api/portraits/men/83.jpg",
+    "https://randomuser.me/api/portraits/women/61.jpg",
+    "https://randomuser.me/api/portraits/men/22.jpg",
+    "https://randomuser.me/api/portraits/women/29.jpg",
+    "https://randomuser.me/api/portraits/men/54.jpg",
+    "https://randomuser.me/api/portraits/women/75.jpg",
+    "https://randomuser.me/api/portraits/men/41.jpg",
+    "https://randomuser.me/api/portraits/women/8.jpg",
+    "https://randomuser.me/api/portraits/men/60.jpg",
+    "https://randomuser.me/api/portraits/women/42.jpg",
+    "https://randomuser.me/api/portraits/men/35.jpg",
+    "https://randomuser.me/api/portraits/women/64.jpg",
+    "https://randomuser.me/api/portraits/men/14.jpg"
+  ];
+
+
+  /*
+   * ==========================================================
+   * 36 PERMANENT PROFILES
+   * ==========================================================
+   */
+
+  const demoProfiles = [
+
+    {
+      id: "demo-01",
+      name: "Aisha",
+      age: 27,
+      location: "Nairobi",
+      description: "Easygoing, warm and always ready for a good conversation.",
+      interests: ["Travel", "Music", "Food"],
+      online: true
+    },
+
+    {
+      id: "demo-02",
+      name: "Brian",
+      age: 30,
+      location: "Mombasa",
+      description: "I enjoy good company, great food and discovering new places.",
+      interests: ["Travel", "Fitness", "Movies"],
+      online: true
+    },
+
+    {
+      id: "demo-03",
+      name: "Wanjiku",
+      age: 26,
+      location: "Nakuru",
+      description: "Looking for meaningful conversations and genuine connections.",
+      interests: ["Books", "Music", "Coffee"],
+      online: false
+    },
+
+    {
+      id: "demo-04",
+      name: "Kevin",
+      age: 29,
+      location: "Nairobi",
+      description: "Positive energy, good conversations and weekend adventures.",
+      interests: ["Sports", "Travel", "Music"],
+      online: true
+    },
+
+    {
+      id: "demo-05",
+      name: "Faith",
+      age: 28,
+      location: "Kisumu",
+      description: "A simple person who appreciates honesty and laughter.",
+      interests: ["Cooking", "Travel", "Movies"],
+      online: true
+    },
+
+    {
+      id: "demo-06",
+      name: "Daniel",
+      age: 31,
+      location: "Eldoret",
+      description: "Coffee lover with a passion for adventure.",
+      interests: ["Coffee", "Fitness", "Travel"],
+      online: false
+    },
+
+    {
+      id: "demo-07",
+      name: "Sharon",
+      age: 25,
+      location: "Nairobi",
+      description: "I love meeting people who can make me laugh.",
+      interests: ["Fashion", "Music", "Travel"],
+      online: true
+    },
+
+    {
+      id: "demo-08",
+      name: "Mark",
+      age: 33,
+      location: "Mombasa",
+      description: "Beach walks, good food and meaningful conversations.",
+      interests: ["Beach", "Food", "Music"],
+      online: true
+    },
+
+    {
+      id: "demo-09",
+      name: "Mercy",
+      age: 29,
+      location: "Thika",
+      description: "Kind heart looking for someone genuine.",
+      interests: ["Reading", "Travel", "Movies"],
+      online: false
+    },
+
+    {
+      id: "demo-10",
+      name: "Samuel",
+      age: 28,
+      location: "Nairobi",
+      description: "Always interested in meeting interesting people.",
+      interests: ["Football", "Music", "Travel"],
+      online: true
+    },
+
+    {
+      id: "demo-11",
+      name: "Esther",
+      age: 27,
+      location: "Kisumu",
+      description: "Life is better when shared with good people.",
+      interests: ["Cooking", "Books", "Music"],
+      online: true
+    },
+
+    {
+      id: "demo-12",
+      name: "Alex",
+      age: 32,
+      location: "Nairobi",
+      description: "Adventurous and curious about the world.",
+      interests: ["Travel", "Photography", "Fitness"],
+      online: false
+    },
+
+    {
+      id: "demo-13",
+      name: "Lydia",
+      age: 26,
+      location: "Mombasa",
+      description: "Enjoying life one beautiful moment at a time.",
+      interests: ["Beach", "Fashion", "Travel"],
+      online: true
+    },
+
+    {
+      id: "demo-14",
+      name: "Joseph",
+      age: 30,
+      location: "Nakuru",
+      description: "Friendly, honest and easy to talk to.",
+      interests: ["Sports", "Music", "Food"],
+      online: false
+    },
+
+    {
+      id: "demo-15",
+      name: "Cynthia",
+      age: 28,
+      location: "Nairobi",
+      description: "I enjoy meaningful conversations and new experiences.",
+      interests: ["Travel", "Books", "Coffee"],
+      online: true
+    },
+
+    {
+      id: "demo-16",
+      name: "Martin",
+      age: 34,
+      location: "Mombasa",
+      description: "Positive thinker who enjoys exploring new places.",
+      interests: ["Travel", "Beach", "Sports"],
+      online: true
+    },
+
+    {
+      id: "demo-17",
+      name: "Joy",
+      age: 25,
+      location: "Nairobi",
+      description: "Smiles, good conversations and positive energy.",
+      interests: ["Music", "Movies", "Food"],
+      online: true
+    },
+
+    {
+      id: "demo-18",
+      name: "Eric",
+      age: 29,
+      location: "Kisumu",
+      description: "Looking for genuine friendships and connections.",
+      interests: ["Fitness", "Travel", "Football"],
+      online: false
+    },
+
+    {
+      id: "demo-19",
+      name: "Ann",
+      age: 30,
+      location: "Nairobi",
+      description: "A lover of peaceful moments and great conversations.",
+      interests: ["Books", "Coffee", "Travel"],
+      online: true
+    },
+
+    {
+      id: "demo-20",
+      name: "George",
+      age: 32,
+      location: "Eldoret",
+      description: "I enjoy meeting people with positive energy.",
+      interests: ["Sports", "Music", "Food"],
+      online: false
+    },
+
+    {
+      id: "demo-21",
+      name: "Njeri",
+      age: 27,
+      location: "Nairobi",
+      description: "Kind, curious and always open to new adventures.",
+      interests: ["Travel", "Photography", "Music"],
+      online: true
+    },
+
+    {
+      id: "demo-22",
+      name: "Chris",
+      age: 31,
+      location: "Mombasa",
+      description: "Beach lover who enjoys good food and good company.",
+      interests: ["Beach", "Food", "Travel"],
+      online: true
+    },
+
+    {
+      id: "demo-23",
+      name: "Diana",
+      age: 29,
+      location: "Nakuru",
+      description: "Hoping to meet someone kind and genuine.",
+      interests: ["Cooking", "Movies", "Music"],
+      online: false
+    },
+
+    {
+      id: "demo-24",
+      name: "Peter",
+      age: 30,
+      location: "Nairobi",
+      description: "Friendly guy who enjoys sports and travelling.",
+      interests: ["Football", "Travel", "Fitness"],
+      online: true
+    },
+
+    {
+      id: "demo-25",
+      name: "Alice",
+      age: 26,
+      location: "Kisumu",
+      description: "Simple, cheerful and always ready for a laugh.",
+      interests: ["Music", "Food", "Movies"],
+      online: true
+    },
+
+    {
+      id: "demo-26",
+      name: "Anthony",
+      age: 33,
+      location: "Nairobi",
+      description: "Enjoying life, meeting people and making memories.",
+      interests: ["Travel", "Fitness", "Photography"],
+      online: false
+    },
+
+    {
+      id: "demo-27",
+      name: "Susan",
+      age: 28,
+      location: "Mombasa",
+      description: "Warm personality with a love for the ocean.",
+      interests: ["Beach", "Travel", "Music"],
+      online: true
+    },
+
+    {
+      id: "demo-28",
+      name: "David",
+      age: 31,
+      location: "Nairobi",
+      description: "Easygoing and always happy to meet someone new.",
+      interests: ["Sports", "Movies", "Food"],
+      online: true
+    },
+
+    {
+      id: "demo-29",
+      name: "Rachel",
+      age: 27,
+      location: "Thika",
+      description: "Looking for friendship, laughter and something genuine.",
+      interests: ["Books", "Travel", "Coffee"],
+      online: false
+    },
+
+    {
+      id: "demo-30",
+      name: "Michael",
+      age: 34,
+      location: "Mombasa",
+      description: "Adventurous soul who loves discovering new places.",
+      interests: ["Travel", "Beach", "Photography"],
+      online: true
+    },
+
+    {
+      id: "demo-31",
+      name: "Grace",
+      age: 29,
+      location: "Nairobi",
+      description: "Positive, friendly and interested in genuine connections.",
+      interests: ["Music", "Cooking", "Travel"],
+      online: true
+    },
+
+    {
+      id: "demo-32",
+      name: "James",
+      age: 30,
+      location: "Kisumu",
+      description: "Good conversations are always worth having.",
+      interests: ["Football", "Music", "Food"],
+      online: false
+    },
+
+    {
+      id: "demo-33",
+      name: "Caroline",
+      age: 26,
+      location: "Nairobi",
+      description: "Enjoying life and hoping to meet someone special.",
+      interests: ["Fashion", "Travel", "Music"],
+      online: true
+    },
+
+    {
+      id: "demo-34",
+      name: "Victor",
+      age: 32,
+      location: "Nakuru",
+      description: "Friendly, ambitious and always looking for adventure.",
+      interests: ["Fitness", "Travel", "Sports"],
+      online: true
+    },
+
+    {
+      id: "demo-35",
+      name: "Beatrice",
+      age: 28,
+      location: "Mombasa",
+      description: "Love the beach, good food and beautiful conversations.",
+      interests: ["Beach", "Food", "Travel"],
+      online: false
+    },
+
+    {
+      id: "demo-36",
+      name: "Andrew",
+      age: 31,
+      location: "Nairobi",
+      description: "Looking for someone genuine to share great moments with.",
+      interests: ["Music", "Travel", "Movies"],
+      online: true
+    }
+
+  ];
+
+
+  /*
+   * ==========================================================
+   * ATTACH THE 36 BACKUP PHOTOS
+   * ==========================================================
+   */
+
+  const permanentProfiles = demoProfiles.map((profile, index) => ({
+    ...profile,
+    photoURL: backupPhotos[index]
+  }));
+
+
+  /*
+   * ==========================================================
+   * REAL FIREBASE MEMBERS
+   * ==========================================================
+   */
+
+  let realProfiles = [];
+
+  let currentUser = null;
+
+
+  /*
+   * ==========================================================
+   * PHOTO FALLBACK
+   * ==========================================================
+   */
+
+  function getPhoto(profile, index = 0) {
+
+    const possiblePhotos = [
+      profile.photoURL,
+      profile.photoUrl,
+      profile.avatar,
+      profile.profilePhoto,
+      profile.profileImage,
+      profile.image
+    ];
+
+    const foundPhoto = possiblePhotos.find(photo => {
+      return typeof photo === "string" && photo.trim().length > 0;
+    });
+
+    if (foundPhoto) {
+      return foundPhoto;
+    }
+
+    return backupPhotos[index % backupPhotos.length];
   }
 
-  updateActivity(user);
-  refreshLikeButtons();
 
-});
+  /*
+   * ==========================================================
+   * CLEAN FIREBASE PROFILE
+   * ==========================================================
+   */
 
-const backupPhotos = [
-  "https://randomuser.me/api/portraits/women/44.jpg",
-  "https://randomuser.me/api/portraits/men/32.jpg",
-  "https://randomuser.me/api/portraits/women/65.jpg",
-  "https://randomuser.me/api/portraits/men/46.jpg",
-  "https://randomuser.me/api/portraits/women/32.jpg",
-  "https://randomuser.me/api/portraits/men/52.jpg",
-  "https://randomuser.me/api/portraits/women/68.jpg",
-  "https://randomuser.me/api/portraits/men/75.jpg",
-  "https://randomuser.me/api/portraits/women/50.jpg",
-  "https://randomuser.me/api/portraits/men/22.jpg",
-  "https://randomuser.me/api/portraits/women/21.jpg",
-  "https://randomuser.me/api/portraits/men/41.jpg",
-  "https://randomuser.me/api/portraits/women/12.jpg",
-  "https://randomuser.me/api/portraits/men/61.jpg",
-  "https://randomuser.me/api/portraits/women/49.jpg",
-  "https://randomuser.me/api/portraits/men/19.jpg",
-  "https://randomuser.me/api/portraits/women/36.jpg",
-  "https://randomuser.me/api/portraits/men/29.jpg",
-  "https://randomuser.me/api/portraits/women/57.jpg",
-  "https://randomuser.me/api/portraits/men/37.jpg",
-  "https://randomuser.me/api/portraits/women/63.jpg",
-  "https://randomuser.me/api/portraits/men/11.jpg",
-  "https://randomuser.me/api/portraits/women/75.jpg",
-  "https://randomuser.me/api/portraits/men/64.jpg",
-  "https://randomuser.me/api/portraits/women/23.jpg",
-  "https://randomuser.me/api/portraits/men/70.jpg",
-  "https://randomuser.me/api/portraits/women/41.jpg",
-  "https://randomuser.me/api/portraits/men/35.jpg",
-  "https://randomuser.me/api/portraits/women/45.jpg",
-  "https://randomuser.me/api/portraits/men/55.jpg",
-  "https://randomuser.me/api/portraits/women/58.jpg",
-  "https://randomuser.me/api/portraits/men/43.jpg",
-  "https://randomuser.me/api/portraits/women/38.jpg",
-  "https://randomuser.me/api/portraits/men/48.jpg",
-  "https://randomuser.me/api/portraits/women/55.jpg",
-  "https://randomuser.me/api/portraits/men/76.jpg"
-];
+  function getRealProfile(id, data, index) {
 
-function getBackupPhoto(index = 0) {
-  return backupPhotos[
-    index % backupPhotos.length
-  ];
-}
+    const name =
+      data.displayName ||
+      data.name ||
+      data.username ||
+      "";
 
-const demoProfiles = [
-  ["Amara",27,"Nairobi",true,0,"Easy-going, curious and always ready for a good conversation.",["Travel","Music","Coffee"]],
-  ["Brian",30,"Mombasa",true,1,"Enjoys fitness, football, road trips and meeting genuine people.",["Fitness","Football","Travel"]],
-  ["Nia",25,"Kisumu",false,2,"Quiet personality with a love for books, creativity and nature.",["Books","Art","Nature"]],
-  ["Daniel",29,"Nakuru",true,3,"Music lover who enjoys cars, fitness and spontaneous adventures.",["Music","Cars","Fitness"]],
-  ["Zuri",28,"Nairobi",false,4,"Fashion, good food and discovering new places are my kind of fun.",["Fashion","Travel","Food"]],
-  ["Kevin",31,"Eldoret",true,5,"Business-minded, social and always looking for something new to learn.",["Business","Sports","Music"]],
-  ["Aisha",26,"Mombasa",true,6,"Beach walks, cooking and travel make me happiest.",["Beach","Cooking","Travel"]],
-  ["Michael",33,"Nairobi",false,7,"Technology enthusiast who also enjoys books and seeing new places.",["Technology","Reading","Travel"]],
-  ["Wanjiku",29,"Kiambu",true,8,"Photography, coffee and peaceful outdoor moments are my favorites.",["Photography","Coffee","Nature"]],
-  ["Eric",28,"Thika",false,9,"Football fan who enjoys movies, travel and relaxed conversations.",["Football","Movies","Travel"]],
-  ["Leah",30,"Nairobi",true,10,"Music and dancing keep me going, especially when shared with good company.",["Music","Dancing","Food"]],
-  ["Samuel",32,"Kakamega",true,11,"Focused on business, fitness and personal growth.",["Business","Fitness","Books"]],
-  ["Faith",24,"Nairobi",false,12,"Creative at heart and happiest around music, art and good style.",["Art","Fashion","Music"]],
-  ["James",35,"Mombasa",true,13,"Ocean lover who enjoys cooking, travel and meaningful conversations.",["Ocean","Travel","Cooking"]],
-  ["Maya",27,"Nairobi",true,14,"A calm soul who enjoys yoga, books, coffee and thoughtful people.",["Yoga","Books","Coffee"]],
-  ["Alex",30,"Kisumu",false,15,"Technology, movies and gaming are usually where you will find me.",["Technology","Movies","Gaming"]],
-  ["Ivy",26,"Nakuru",true,16,"Love nature, photography and finding beautiful places to explore.",["Nature","Travel","Photography"]],
-  ["David",34,"Nairobi",false,17,"Business, cars and music make for a pretty good weekend.",["Business","Cars","Music"]],
-  ["Sharon",28,"Mombasa",true,18,"Beach days, great food and travelling whenever possible.",["Beach","Food","Travel"]],
-  ["Chris",31,"Nairobi",true,19,"Fitness enthusiast who enjoys football, movies and active weekends.",["Fitness","Football","Movies"]],
-  ["Esther",25,"Eldoret",false,20,"I enjoy books, music and quiet places surrounded by nature.",["Books","Music","Nature"]],
-  ["Anthony",29,"Nakuru",true,21,"Always interested in travel, sports and discovering good coffee spots.",["Travel","Sports","Coffee"]],
-  ["Linda",32,"Nairobi",true,22,"Food, fashion and art are some of the things that brighten my day.",["Cooking","Fashion","Art"]],
-  ["Joseph",36,"Kisumu",false,23,"Nature lover who enjoys fishing, travel and peaceful weekends.",["Fishing","Nature","Travel"]],
-  ["Cynthia",27,"Kiambu",true,24,"Music and dancing are even better when shared with good company.",["Music","Dancing","Travel"]],
-  ["Mark",33,"Nairobi",false,25,"Technology and business during the week, fitness after work.",["Technology","Business","Fitness"]],
-  ["Mercy",29,"Mombasa",true,26,"Beach walks, books and a good cup of coffee sound perfect.",["Beach","Books","Coffee"]],
-  ["Peter",30,"Nairobi",true,27,"Football, music and travelling are my favorite ways to unwind.",["Football","Music","Travel"]],
-  ["Joy",26,"Nakuru",false,28,"Creative, fashionable and always ready for a good movie.",["Art","Fashion","Movies"]],
-  ["George",34,"Mombasa",true,29,"Travel and photography are my favorite ways to experience life.",["Travel","Ocean","Photography"]],
-  ["Ruth",28,"Nairobi",true,30,"I love cooking, music and spending time outdoors.",["Cooking","Music","Nature"]],
-  ["Martin",31,"Eldoret",false,31,"Sports and technology keep me busy, with books for quiet evenings.",["Sports","Books","Technology"]],
-  ["Angela",30,"Nairobi",true,32,"Travel, fashion and good food are always welcome.",["Travel","Fashion","Food"]],
-  ["Patrick",29,"Kisumu",true,33,"Music, cars and travelling make a great combination for me.",["Music","Cars","Travel"]],
-  ["Stella",27,"Nairobi",false,34,"Yoga, nature and books are my favorite ways to slow down.",["Yoga","Nature","Books"]],
-  ["William",32,"Nakuru",true,35,"Business, football and travel keep life interesting.",["Business","Football","Travel"]]
-].map((p,index) => ({
-  id: `demo-${String(index + 1).padStart(2,"0")}`,
-  name: p[0],
-  age: p[1],
-  location: p[2],
-  online: p[3],
-  photo: p[4],
-  description: p[5],
-  interests: p[6],
-  demo: true
-}));
+    if (!name || !String(name).trim()) {
+      return null;
+    }
 
-function getRealProfile(snap,index) {
+    if (String(id).startsWith("demo-")) {
+      return null;
+    }
 
-  const p =
-    snap.data() || {};
-
-  const name =
-    p.name ||
-    p.username ||
-    p.displayName ||
-    "Kmeet Member";
-
-  const age =
-    p.age
-      ? `, ${p.age}`
-      : "";
-
-  const photo =
-    p.photoURL ||
-    p.photoUrl ||
-    p.avatar ||
-    p.profilePhoto ||
-    p.profileImage ||
-    p.image ||
-    getBackupPhoto(index);
-
-  const interests =
-    Array.isArray(p.interests)
-      ? p.interests.slice(0,4)
+    const interests = Array.isArray(data.interests)
+      ? data.interests.filter(Boolean).slice(0, 5)
       : [];
 
-  const description =
-    p.description ||
-    p.bio ||
-    p.about ||
-    p.intro ||
-    "New to Kmeet and ready to make a genuine connection.";
+    return {
+      id,
+      name: String(name).trim(),
 
-  const online =
-    p.online === true ||
-    String(p.status || "").toLowerCase() === "online";
+      age:
+        data.age ||
+        data.years ||
+        "",
 
-  return {
-    id: snap.id,
-    name: `${name}${age}`,
-    location: p.location || p.city || "Kenya",
-    photo,
-    description,
-    interests,
-    online,
-    demo: false
-  };
-}
+      location:
+        data.location ||
+        data.city ||
+        "Kenya",
 
-function finalImageFallback() {
-  return "data:image/svg+xml;charset=UTF-8," +
-    encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600">
-        <rect width="100%" height="100%" fill="#24101a"/>
-        <text x="50%" y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          fill="#f2a0bd"
-          font-family="Arial"
-          font-size="70">
-          K
-        </text>
-      </svg>
-    `);
-}
+      description:
+        data.description ||
+        data.bio ||
+        "Looking forward to meeting new people on Kmeet.",
 
-function imageFallback(img) {
+      interests,
 
-  const current =
-    Number(img.dataset.fallbackIndex || 0);
+      photoURL: getPhoto(data, index),
 
-  if (current < backupPhotos.length) {
-
-    img.dataset.fallbackIndex =
-      String(current + 1);
-
-    img.src =
-      getBackupPhoto(current);
-
-    return;
+      online:
+        data.online === true ||
+        data.isOnline === true
+    };
   }
 
-  img.onerror = null;
-  img.src =
-    finalImageFallback();
-}
 
-function renderProfile(person,index) {
+  /*
+   * ==========================================================
+   * ESCAPE HTML
+   * ==========================================================
+   */
 
-  const statusClass =
-    person.online
-      ? "status-online"
-      : "status-offline";
+  function escapeHTML(value) {
 
-  const statusText =
-    person.online
-      ? "Online"
-      : "Offline";
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
-  const tags =
-    (person.interests || [])
-      .map(
-        interest =>
-          `<span class="profile-tag">${escapeHtml(interest)}</span>`
-      )
-      .join("");
 
-  const profileHref =
-    person.demo
-      ? "login.html"
-      : `profile.html?id=${encodeURIComponent(person.id)}`;
+  /*
+   * ==========================================================
+   * LIKES
+   * ==========================================================
+   */
 
-  const chatHref =
-    person.demo
-      ? `chat.html?userId=${encodeURIComponent(person.id)}`
-      : `chat.html?userId=${encodeURIComponent(person.id)}`;
+  function getLocalLikes() {
 
-  return `
-    <article class="profile-card">
+    try {
+      return JSON.parse(
+        localStorage.getItem("kmeetLikes") || "[]"
+      );
+    } catch {
+      return [];
+    }
+  }
+
+
+  function saveLocalLikes(likes) {
+
+    localStorage.setItem(
+      "kmeetLikes",
+      JSON.stringify(likes)
+    );
+  }
+
+
+  async function toggleLike(profile) {
+
+    const button = document.querySelector(
+      `[data-like-id="${profile.id}"]`
+    );
+
+    if (!button) return;
+
+    const icon = button.querySelector("i");
+
+    if (currentUser && !String(profile.id).startsWith("demo-")) {
+
+      const likeRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "likes",
+        profile.id
+      );
+
+      const liked = button.classList.contains("liked");
+
+      if (liked) {
+
+        button.classList.remove("liked");
+
+        if (icon) {
+          icon.className = "fa-regular fa-heart";
+        }
+
+      } else {
+
+        button.classList.add("liked");
+
+        if (icon) {
+          icon.className = "fa-solid fa-heart";
+        }
+
+        try {
+
+          await setDoc(
+            likeRef,
+            {
+              profileId: profile.id,
+              profileName: profile.name,
+              createdAt: serverTimestamp()
+            },
+            { merge: true }
+          );
+
+        } catch (error) {
+          console.error("Could not save like:", error);
+        }
+      }
+
+      return;
+    }
+
+
+    const likes = getLocalLikes();
+
+    const index = likes.indexOf(profile.id);
+
+    if (index >= 0) {
+
+      likes.splice(index, 1);
+
+      button.classList.remove("liked");
+
+      if (icon) {
+        icon.className = "fa-regular fa-heart";
+      }
+
+    } else {
+
+      likes.push(profile.id);
+
+      button.classList.add("liked");
+
+      if (icon) {
+        icon.className = "fa-solid fa-heart";
+      }
+    }
+
+    saveLocalLikes(likes);
+  }
+
+
+  /*
+   * ==========================================================
+   * PROFILE CARD
+   * ==========================================================
+   */
+
+  function createProfileCard(profile, index) {
+
+    const card = document.createElement("article");
+
+    card.className = "profile-card";
+
+    const photo = getPhoto(profile, index);
+
+    const ageHTML = profile.age
+      ? `<span class="profile-age">${escapeHTML(profile.age)} years</span>`
+      : "";
+
+    const locationHTML = profile.location
+      ? `
+        <p class="profile-location">
+          <i class="fa-solid fa-location-dot"></i>
+          ${escapeHTML(profile.location)}
+        </p>
+      `
+      : "";
+
+
+    const interestsHTML =
+      Array.isArray(profile.interests) &&
+      profile.interests.length
+        ? `
+          <div class="profile-interests">
+            ${profile.interests.map(interest => `
+              <span class="interest-tag">
+                ${escapeHTML(interest)}
+              </span>
+            `).join("")}
+          </div>
+        `
+        : "";
+
+
+    const onlineHTML = profile.online
+      ? `
+        <div class="online-badge">
+          <span class="status-dot"></span>
+          Online
+        </div>
+      `
+      : `
+        <div class="online-badge offline">
+          <span class="status-dot"></span>
+          Offline
+        </div>
+      `;
+
+
+    const chatURL =
+      `chat.html?userId=${encodeURIComponent(profile.id)}`;
+
+
+    card.innerHTML = `
 
       <div class="profile-photo-wrap">
 
         <img
           class="profile-photo"
-          src="${escapeHtml(person.photo)}"
-          alt="${escapeHtml(person.name)}"
+          src="${escapeHTML(photo)}"
+          alt="${escapeHTML(profile.name)}"
           loading="lazy"
-          onerror="imageFallback(this)"
         >
 
-        <div class="status-badge ${statusClass}">
-          <span class="status-dot"></span>
-          ${statusText}
-        </div>
+        ${onlineHTML}
 
       </div>
+
 
       <div class="profile-content">
 
-        <h2 class="profile-name">
-          ${escapeHtml(person.name)}
-        </h2>
+        <div class="profile-name-row">
 
-        <div class="profile-location">
-          ${escapeHtml(person.location)}
+          <h2 class="profile-name">
+            ${escapeHTML(profile.name)}
+          </h2>
+
+          ${ageHTML}
+
         </div>
 
-        <div class="profile-description">
-          ${escapeHtml(person.description)}
-        </div>
 
-        <div class="profile-tags">
-          ${tags}
-        </div>
+        ${locationHTML}
+
+
+        <p class="profile-description">
+          ${escapeHTML(profile.description)}
+        </p>
+
+
+        ${interestsHTML}
+
 
         <div class="profile-actions">
 
-          <a href="${profileHref}">
-            View Profile
+          <a
+            class="chat-btn"
+            href="${chatURL}"
+          >
+            <i class="fa-regular fa-comment"></i>
+            Chat
           </a>
+
 
           <button
+            class="like-btn"
             type="button"
-            class="like-button"
-            data-like-id="${escapeHtml(person.id)}"
-            data-like-name="${escapeHtml(person.name)}"
-            data-like-demo="${person.demo ? "true" : "false"}"
+            data-like-id="${escapeHTML(profile.id)}"
+            aria-label="Like ${escapeHTML(profile.name)}"
           >
-            ♥ Like
+            <i class="fa-regular fa-heart"></i>
           </button>
-
-          <a
-            class="chat-button"
-            href="${chatHref}"
-          >
-            💬 Chat
-          </a>
 
         </div>
 
       </div>
-
-    </article>
-  `;
-}
-
-function escapeHtml(value) {
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-function renderProfiles(realProfiles) {
-
-  const usedIds =
-    new Set();
-
-  const cleanReal =
-    realProfiles.filter(person => {
-
-      if (usedIds.has(person.id)) {
-        return false;
-      }
-
-      usedIds.add(person.id);
-      return true;
-
-    });
-
-  const needed =
-    Math.max(
-      BASE_MEMBER_COUNT - cleanReal.length,
-      0
-    );
-
-  const demo =
-    demoProfiles.slice(0,needed);
-
-  const allProfiles =
-    [...cleanReal,...demo];
-
-  if (!allProfiles.length) {
-
-    grid.innerHTML = `
-      <div class="empty-card">
-        No profiles are available yet.
-      </div>
     `;
 
-    memberCount.textContent =
-      `${BASE_MEMBER_COUNT} people to discover`;
 
-    return;
-  }
+    /*
+     * IMAGE ERROR FALLBACK
+     */
 
-  grid.innerHTML =
-    allProfiles
-      .map(
-        (person,index) =>
-          renderProfile(
-            person,
-            index
-          )
-      )
-      .join("");
+    const image = card.querySelector(".profile-photo");
 
-  /*
-    IMPORTANT:
-    Do not update memberCount here.
+    if (image) {
 
-    The displayed member count is based on:
-    36 baseline members + real Firebase members.
+      image.addEventListener("error", () => {
 
-    Updating it here using allProfiles.length would cause
-    the number to jump back to 36 when demo profiles fill
-    the grid.
-  */
-}
+        const fallback =
+          backupPhotos[index % backupPhotos.length];
 
-const ANON_LIKES_KEY =
-  "kmeet_anonymous_likes_v1";
+        if (image.src !== fallback) {
 
-const MEMBER_LIKES_KEY =
-  "kmeet_member_likes_v1";
+          image.src = fallback;
 
-function readLikes(key) {
+        } else {
 
-  try {
+          image.src =
+            "data:image/svg+xml;charset=UTF-8," +
+            encodeURIComponent(`
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   width="600"
+                   height="600"
+                   viewBox="0 0 600 600">
 
-    return JSON.parse(
-      localStorage.getItem(key) || "[]"
-    );
+                <rect
+                  width="600"
+                  height="600"
+                  fill="#201b21"/>
 
-  } catch {
+                <text
+                  x="50%"
+                  y="50%"
+                  dominant-baseline="middle"
+                  text-anchor="middle"
+                  fill="#ff6da8"
+                  font-size="180"
+                  font-family="Arial">
 
-    return [];
+                  K
 
-  }
-}
+                </text>
 
-function writeLikes(key,value) {
+              </svg>
+            `);
 
-  localStorage.setItem(
-    key,
-    JSON.stringify(value)
-  );
-
-}
-
-function likeStorageKey(user) {
-
-  if (
-    user &&
-    !user.isAnonymous
-  ) {
-    return MEMBER_LIKES_KEY;
-  }
-
-  return ANON_LIKES_KEY;
-}
-
-function hasLiked(user,targetId) {
-
-  const key =
-    likeStorageKey(user);
-
-  return readLikes(key)
-    .some(
-      item =>
-        item.id === targetId
-    );
-}
-
-async function saveLike(
-  targetId,
-  targetName,
-  targetIsDemo
-) {
-
-  const user =
-    auth.currentUser;
-
-  const key =
-    likeStorageKey(user);
-
-  const likes =
-    readLikes(key);
-
-  if (
-    likes.some(
-      item =>
-        item.id === targetId
-    )
-  ) {
-    return;
-  }
-
-  const like = {
-    id: targetId,
-    name: targetName,
-    demo: targetIsDemo,
-    createdAt: new Date().toISOString()
-  };
-
-  writeLikes(
-    key,
-    [...likes,like]
-  );
-
-  if (
-    user &&
-    !user.isAnonymous &&
-    !targetIsDemo
-  ) {
-
-    try {
-
-      await setDoc(
-        doc(
-          db,
-          "users",
-          user.uid,
-          "likes",
-          targetId
-        ),
-        {
-          targetId,
-          targetName,
-          createdAt: serverTimestamp()
         }
-      );
 
-    } catch(error) {
-
-      console.error(
-        "Could not save like to Firebase:",
-        error
-      );
+      });
 
     }
 
+
+    /*
+     * LIKE BUTTON
+     */
+
+    const likeButton =
+      card.querySelector(".like-btn");
+
+    if (likeButton) {
+
+      likeButton.addEventListener(
+        "click",
+        () => toggleLike(profile)
+      );
+
+
+      const likes = getLocalLikes();
+
+      if (likes.includes(profile.id)) {
+
+        likeButton.classList.add("liked");
+
+        const icon =
+          likeButton.querySelector("i");
+
+        if (icon) {
+          icon.className =
+            "fa-solid fa-heart";
+        }
+      }
+    }
+
+
+    return card;
   }
 
-  refreshLikeButtons();
 
-  updateActivity(
-    auth.currentUser
-  );
-}
+  /*
+   * ==========================================================
+   * RENDER DISCOVER
+   * ==========================================================
+   *
+   * THIS IS THE MAIN NUMBER FIX.
+   *
+   * The 36 permanent profiles are NEVER sliced down.
+   *
+   * Real Firebase profiles are appended after them.
+   * ==========================================================
+   */
 
-function refreshLikeButtons() {
+  function renderProfiles(firebaseProfiles = []) {
 
-  const user =
-    auth.currentUser;
+    const cleanReal = firebaseProfiles
+      .filter(profile => profile)
+      .filter(profile => profile.id)
+      .filter(profile => !String(profile.id).startsWith("demo-"));
 
-  document
-    .querySelectorAll(
-      ".like-button"
-    )
-    .forEach(button => {
 
-      const id =
-        button.dataset.likeId;
+    /*
+     * Remove duplicate Firebase profiles.
+     */
 
-      if (
-        hasLiked(
-          user,
-          id
-        )
-      ) {
+    const uniqueMap = new Map();
 
-        button.classList.add(
-          "liked"
-        );
+    cleanReal.forEach(profile => {
+      uniqueMap.set(profile.id, profile);
+    });
 
-        button.textContent =
-          "♥ Liked";
 
-      } else {
+    const uniqueRealProfiles =
+      Array.from(uniqueMap.values());
 
-        button.classList.remove(
-          "liked"
-        );
 
-        button.textContent =
-          "♥ Like";
+    /*
+     * 36 PERMANENT + REAL FIREBASE MEMBERS
+     */
 
-      }
+    const allProfiles = [
+      ...permanentProfiles,
+      ...uniqueRealProfiles
+    ];
+
+
+    /*
+     * CORRECT MEMBER NUMBER
+     *
+     * Never count only the demo profiles.
+     * Never replace the 36.
+     */
+
+    const totalMembers =
+      BASE_MEMBER_COUNT +
+      uniqueRealProfiles.length;
+
+
+    /*
+     * UPDATE NUMBER
+     */
+
+    memberCount.textContent =
+      `${totalMembers} people to discover`;
+
+
+    /*
+     * CLEAR GRID
+     */
+
+    grid.innerHTML = "";
+
+
+    /*
+     * RENDER ALL PROFILES
+     */
+
+    allProfiles.forEach((profile, index) => {
+
+      grid.appendChild(
+        createProfileCard(profile, index)
+      );
 
     });
 
-}
-
-function updateActivity(user) {
-
-  const title =
-    document.getElementById(
-      "activityTitle"
-    );
-
-  const subtitle =
-    document.getElementById(
-      "activitySubtitle"
-    );
-
-  if (
-    user &&
-    !user.isAnonymous
-  ) {
-
-    title.textContent =
-      "❤️ Welcome back to Kmeet";
-
-    subtitle.textContent =
-      "Like someone you are interested in. Your likes are saved to your account.";
-
-  } else {
-
-    title.textContent =
-      "❤️ Find your first connection";
-
-    subtitle.textContent =
-      "Like a profile you are interested in. Your likes are saved for this session.";
-
   }
 
-}
 
-document.addEventListener(
-  "click",
-  async event => {
+  /*
+   * ==========================================================
+   * FIREBASE USERS LISTENER
+   * ==========================================================
+   */
 
-    const button =
-      event.target.closest(
-        ".like-button"
-      );
+  let unsubscribeUsers = null;
 
-    if (!button) {
-      return;
+
+  function startUsersListener() {
+
+    if (unsubscribeUsers) {
+      unsubscribeUsers();
     }
 
-    event.preventDefault();
 
-    await saveLike(
-      button.dataset.likeId,
-      button.dataset.likeName,
-      button.dataset.likeDemo === "true"
-    );
+    unsubscribeUsers = onSnapshot(
 
-  }
-);
+      collection(db, "users"),
 
-renderProfiles([]);
-updateActivity(auth.currentUser);
-refreshLikeButtons();
+      snapshot => {
 
-try {
+        const profiles = [];
 
-  onSnapshot(
-    collection(
-      db,
-      "users"
-    ),
 
-    snapshot => {
+        snapshot.forEach(userDoc => {
 
-      const realProfiles = [];
+          const data = userDoc.data() || {};
 
-      snapshot.forEach(
-        snap => {
+          /*
+           * Ignore empty/malformed documents.
+           *
+           * A real member must have a name/displayName.
+           */
 
-          const data =
-            snap.data() || {};
-
-          if (
-            data.name ||
-            data.username ||
-            data.displayName ||
-            data.photoURL ||
-            data.photoUrl ||
-            data.avatar ||
-            data.profilePhoto ||
-            data.profileImage
-          ) {
-
-            realProfiles.push(
-              getRealProfile(
-                snap,
-                realProfiles.length
-              )
+          const profile =
+            getRealProfile(
+              userDoc.id,
+              data,
+              profiles.length
             );
 
+
+          if (profile) {
+            profiles.push(profile);
           }
 
-        }
-      );
+        });
 
-      msg.innerHTML = "";
 
-      renderProfiles(
-        realProfiles
-      );
+        realProfiles = profiles;
 
-      /*
-        MEMBER COUNT RULE
 
-        36 is the permanent baseline.
-        Every real Firebase member adds 1.
+        /*
+         * RENDER:
+         *
+         * 36 permanent
+         * +
+         * real Firebase members
+         */
 
-        Example:
-        0 real members  = 36
-        1 real member   = 37
-        2 real members  = 38
-        18 real members = 54
-      */
-      memberCount.textContent =
-        `${BASE_MEMBER_COUNT + realProfiles.length} people to discover`;
+        renderProfiles(realProfiles);
 
-    },
+      },
 
-    error => {
+      error => {
 
-      console.error(
-        "Kmeet Discover Firebase error:",
-        error
-      );
+        console.error(
+          "Could not load Firebase members:",
+          error
+        );
 
-      renderProfiles([]);
 
-      memberCount.textContent =
-        `${BASE_MEMBER_COUNT} people to discover`;
+        /*
+         * Even if Firebase fails,
+         * the 36 permanent profiles remain.
+         */
 
-      msg.innerHTML = "";
+        realProfiles = [];
 
-    }
-  );
+        renderProfiles([]);
 
-} catch(error) {
+      }
 
-  console.error(
-    "Kmeet Discover startup error:",
-    error
-  );
+    );
+
+  }
+
+
+  /*
+   * ==========================================================
+   * AUTH STATE
+   * ==========================================================
+   */
+
+  onAuthStateChanged(auth, user => {
+
+    currentUser = user || null;
+
+    /*
+     * Discover remains accessible to guests.
+     */
+
+    startUsersListener();
+
+  });
+
+
+  /*
+   * ==========================================================
+   * INITIAL DISPLAY
+   * ==========================================================
+   *
+   * Shows the 36 permanent profiles immediately while
+   * Firebase loads.
+   * ==========================================================
+   */
 
   renderProfiles([]);
 
-  memberCount.textContent =
-    `${BASE_MEMBER_COUNT} people to discover`;
-
-  msg.innerHTML = "";
-
-}
 
 </script>
 
