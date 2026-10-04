@@ -9,7 +9,9 @@ import {
   updateProfile,
   signInAnonymously,
   sendPasswordResetEmail,
-  deleteUser
+  deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
@@ -57,18 +59,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
-
 const db = getFirestore(app);
-
 const storage = getStorage(app);
-
 const database = getDatabase(app);
 
 
 export {
   app,
 
-  // Firebase Authentication
   auth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -78,8 +76,9 @@ export {
   signInAnonymously,
   sendPasswordResetEmail,
   deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 
-  // Firestore
   db,
   doc,
   getDoc,
@@ -92,13 +91,11 @@ export {
   onSnapshot,
   serverTimestamp,
 
-  // Firebase Storage
   storage,
   ref,
   uploadBytes,
   getDownloadURL,
 
-  // Realtime Database
   database,
   databaseRef,
   databaseSet,
