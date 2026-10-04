@@ -8,6 +8,12 @@
 
   <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
 
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
   <style>
     * {
       box-sizing: border-box;
@@ -124,37 +130,101 @@
     }
 
     .interest {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-height: 58px;
-      padding: 14px 17px;
+      gap: 13px;
+      min-height: 66px;
+      padding: 12px 15px;
       border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
+      border-radius: 16px;
       background: rgba(255,255,255,0.055);
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.92);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.22s ease;
+      overflow: hidden;
     }
 
     .interest:hover {
-      border-color: rgba(255,79,145,0.55);
+      border-color: rgba(255,79,145,0.60);
       background: rgba(255,79,145,0.10);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18);
     }
 
+    /* Hide the default checkbox */
     .interest input {
-      width: 18px;
-      height: 18px;
-      accent-color: #ff4f91;
-      cursor: pointer;
-      flex-shrink: 0;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Icon circle */
+    .interest-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,79,145,0.10);
+      border: 1px solid rgba(255,79,145,0.20);
+      color: #ff6fa7;
+      font-size: 17px;
+      transition: all 0.22s ease;
+    }
+
+    .interest-name {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    /* Custom check indicator */
+    .interest-check {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(255,255,255,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 11px;
+      transition: all 0.2s ease;
     }
 
     .interest:has(input:checked) {
-      border-color: rgba(255,79,145,0.8);
-      background: rgba(255,79,145,0.14);
-      box-shadow: 0 0 0 1px rgba(255,79,145,0.12);
+      border-color: rgba(255,79,145,0.80);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,79,145,0.15),
+          rgba(217,54,114,0.10)
+        );
+      box-shadow:
+        0 0 0 1px rgba(255,79,145,0.12),
+        0 8px 24px rgba(255,79,145,0.08);
+    }
+
+    .interest:has(input:checked) .interest-icon {
+      background: linear-gradient(135deg, #ff4f91, #d93672);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(255,79,145,0.25);
+    }
+
+    .interest:has(input:checked) .interest-check {
+      background: #ff4f91;
+      border-color: #ff4f91;
+      color: #fff;
+    }
+
+    .interest:has(input:checked) .interest-check i {
+      display: block;
     }
 
     .btn {
@@ -245,52 +315,151 @@
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Music">
-            Music
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-music"></i>
+            </span>
+
+            <span class="interest-name">Music</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Sports">
-            Sports
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-futbol"></i>
+            </span>
+
+            <span class="interest-name">Sports</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Gaming">
-            Gaming
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-gamepad"></i>
+            </span>
+
+            <span class="interest-name">Gaming</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Cooking">
-            Cooking
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-utensils"></i>
+            </span>
+
+            <span class="interest-name">Cooking</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Travel">
-            Travel
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-plane"></i>
+            </span>
+
+            <span class="interest-name">Travel</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Art & Design">
-            Art &amp; Design
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-palette"></i>
+            </span>
+
+            <span class="interest-name">Art &amp; Design</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Tech & Coding">
-            Tech &amp; Coding
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-code"></i>
+            </span>
+
+            <span class="interest-name">Tech &amp; Coding</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Fitness">
-            Fitness
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-dumbbell"></i>
+            </span>
+
+            <span class="interest-name">Fitness</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Movies">
-            Movies
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-film"></i>
+            </span>
+
+            <span class="interest-name">Movies</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
+
 
           <label class="interest">
             <input type="checkbox" name="interest" value="Reading">
-            Reading
+
+            <span class="interest-icon">
+              <i class="fa-solid fa-book-open"></i>
+            </span>
+
+            <span class="interest-name">Reading</span>
+
+            <span class="interest-check">
+              <i class="fa-solid fa-check"></i>
+            </span>
           </label>
 
         </div>
