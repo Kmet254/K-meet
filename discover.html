@@ -444,10 +444,15 @@
 
 
     <section id="grid" class="discover-grid">
+
       <div class="empty-state">
+
         <i class="fa-solid fa-heart"></i>
+
         Loading people...
+
       </div>
+
     </section>
 
   </main>
@@ -470,42 +475,45 @@
 
 
   /*
-   * ==========================================================
-   * KMEET DISCOVER
-   * ==========================================================
-   *
-   * IMPORTANT:
-   *
-   * 36 permanent profiles ALWAYS remain.
-   *
-   * Firebase members are ADDED AFTER those 36.
-   *
-   * 0 real members  = 36
-   * 1 real member   = 37
-   * 2 real members  = 38
-   * 10 real members = 46
-   *
-   * This is the number fix.
-   * ==========================================================
-   */
+   ============================================================
+   KMEET DISCOVER NUMBER SYSTEM
+   ============================================================
 
+   36 permanent profiles ALWAYS exist.
+
+   Firebase profiles are added after the 36.
+
+   Guest:
+       36 + all valid Firebase profiles
+
+   Logged in:
+       36 + all valid Firebase profiles
+       - current user's own profile
+
+   Example:
+
+       8 Firestore users
+       logged out = 44
+       logged in  = 43
+
+   ============================================================
+  */
 
   const BASE_MEMBER_COUNT = 36;
-
 
   const grid = document.getElementById("grid");
   const memberCount = document.getElementById("memberCount");
 
+  let currentUser = null;
+  let realProfiles = [];
+  let unsubscribeUsers = null;
+
 
   /*
-   * ==========================================================
-   * PERMANENT PROFILE PHOTOS
-   * ==========================================================
-   *
-   * These are fallback photos for the 36 permanent profiles.
-   * They are kept separate from Firebase members.
-   * ==========================================================
-   */
+   ============================================================
+   36 PERMANENT PROFILE PHOTOS
+   ============================================================
+  */
 
   const backupPhotos = [
     "https://randomuser.me/api/portraits/women/44.jpg",
@@ -548,10 +556,10 @@
 
 
   /*
-   * ==========================================================
-   * 36 PERMANENT PROFILES
-   * ==========================================================
-   */
+   ============================================================
+   36 PERMANENT PROFILES
+   ============================================================
+  */
 
   const demoProfiles = [
 
@@ -918,12 +926,6 @@
   ];
 
 
-  /*
-   * ==========================================================
-   * ATTACH THE 36 BACKUP PHOTOS
-   * ==========================================================
-   */
-
   const permanentProfiles = demoProfiles.map((profile, index) => ({
     ...profile,
     photoURL: backupPhotos[index]
@@ -931,21 +933,27 @@
 
 
   /*
-   * ==========================================================
-   * REAL FIREBASE MEMBERS
-   * ==========================================================
-   */
+   ============================================================
+   ESCAPE HTML
+   ============================================================
+  */
 
-  let realProfiles = [];
+  function escapeHTML(value) {
 
-  let currentUser = null;
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
 
 
   /*
-   * ==========================================================
-   * PHOTO FALLBACK
-   * ==========================================================
-   */
+   ============================================================
+   GET PHOTO
+   ============================================================
+  */
 
   function getPhoto(profile, index = 0) {
 
@@ -958,9 +966,10 @@
       profile.image
     ];
 
-    const foundPhoto = possiblePhotos.find(photo => {
-      return typeof photo === "string" && photo.trim().length > 0;
-    });
+    const foundPhoto = possiblePhotos.find(photo =>
+      typeof photo === "string" &&
+      photo.trim().length > 0
+    );
 
     if (foundPhoto) {
       return foundPhoto;
@@ -971,12 +980,31 @@
 
 
   /*
-   * ==========================================================
-   * CLEAN FIREBASE PROFILE
-   * ==========================================================
-   */
+   ============================================================
+   VALID FIREBASE PROFILE
+   ============================================================
+
+   We only accept a document that has an actual name.
+
+   This prevents empty Firestore documents from becoming
+   "members".
+   ============================================================
+  */
 
   function getRealProfile(id, data, index) {
+
+    if (!id || !data) {
+      return null;
+    }
+
+    /*
+     * Never treat permanent demo profiles as Firebase members.
+     */
+
+    if (String(id).startsWith("demo-")) {
+      return null;
+    }
+
 
     const name =
       data.displayName ||
@@ -984,20 +1012,24 @@
       data.username ||
       "";
 
-    if (!name || !String(name).trim()) {
+
+    if (!String(name).trim()) {
       return null;
     }
 
-    if (String(id).startsWith("demo-")) {
-      return null;
-    }
 
-    const interests = Array.isArray(data.interests)
-      ? data.interests.filter(Boolean).slice(0, 5)
-      : [];
+    const interests =
+      Array.isArray(data.interests)
+        ? data.interests
+            .filter(Boolean)
+            .slice(0, 5)
+        : [];
+
 
     return {
-      id,
+
+      id: String(id),
+
       name: String(name).trim(),
 
       age:
@@ -1022,41 +1054,29 @@
       online:
         data.online === true ||
         data.isOnline === true
+
     };
   }
 
 
   /*
-   * ==========================================================
-   * ESCAPE HTML
-   * ==========================================================
-   */
-
-  function escapeHTML(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-
-  /*
-   * ==========================================================
-   * LIKES
-   * ==========================================================
-   */
+   ============================================================
+   LIKES
+   ============================================================
+  */
 
   function getLocalLikes() {
 
     try {
+
       return JSON.parse(
         localStorage.getItem("kmeetLikes") || "[]"
       );
+
     } catch {
+
       return [];
+
     }
   }
 
@@ -1067,20 +1087,27 @@
       "kmeetLikes",
       JSON.stringify(likes)
     );
+
   }
 
 
   async function toggleLike(profile) {
 
-    const button = document.querySelector(
-      `[data-like-id="${profile.id}"]`
-    );
+    const button =
+      document.querySelector(
+        `[data-like-id="${profile.id}"]`
+      );
 
     if (!button) return;
 
-    const icon = button.querySelector("i");
+    const icon =
+      button.querySelector("i");
 
-    if (currentUser && !String(profile.id).startsWith("demo-")) {
+
+    if (
+      currentUser &&
+      !String(profile.id).startsWith("demo-")
+    ) {
 
       const likeRef = doc(
         db,
@@ -1090,14 +1117,18 @@
         profile.id
       );
 
-      const liked = button.classList.contains("liked");
+
+      const liked =
+        button.classList.contains("liked");
+
 
       if (liked) {
 
         button.classList.remove("liked");
 
         if (icon) {
-          icon.className = "fa-regular fa-heart";
+          icon.className =
+            "fa-regular fa-heart";
         }
 
       } else {
@@ -1105,8 +1136,10 @@
         button.classList.add("liked");
 
         if (icon) {
-          icon.className = "fa-solid fa-heart";
+          icon.className =
+            "fa-solid fa-heart";
         }
+
 
         try {
 
@@ -1117,21 +1150,33 @@
               profileName: profile.name,
               createdAt: serverTimestamp()
             },
-            { merge: true }
+            {
+              merge: true
+            }
           );
 
         } catch (error) {
-          console.error("Could not save like:", error);
+
+          console.error(
+            "Could not save like:",
+            error
+          );
+
         }
+
       }
 
       return;
     }
 
 
-    const likes = getLocalLikes();
+    const likes =
+      getLocalLikes();
 
-    const index = likes.indexOf(profile.id);
+
+    const index =
+      likes.indexOf(profile.id);
+
 
     if (index >= 0) {
 
@@ -1140,7 +1185,8 @@
       button.classList.remove("liked");
 
       if (icon) {
-        icon.className = "fa-regular fa-heart";
+        icon.className =
+          "fa-regular fa-heart";
       }
 
     } else {
@@ -1150,40 +1196,56 @@
       button.classList.add("liked");
 
       if (icon) {
-        icon.className = "fa-solid fa-heart";
+        icon.className =
+          "fa-solid fa-heart";
       }
+
     }
 
+
     saveLocalLikes(likes);
+
   }
 
 
   /*
-   * ==========================================================
-   * PROFILE CARD
-   * ==========================================================
-   */
+   ============================================================
+   CREATE PROFILE CARD
+   ============================================================
+  */
 
   function createProfileCard(profile, index) {
 
-    const card = document.createElement("article");
+    const card =
+      document.createElement("article");
 
-    card.className = "profile-card";
+    card.className =
+      "profile-card";
 
-    const photo = getPhoto(profile, index);
 
-    const ageHTML = profile.age
-      ? `<span class="profile-age">${escapeHTML(profile.age)} years</span>`
-      : "";
+    const photo =
+      getPhoto(profile, index);
 
-    const locationHTML = profile.location
-      ? `
-        <p class="profile-location">
-          <i class="fa-solid fa-location-dot"></i>
-          ${escapeHTML(profile.location)}
-        </p>
-      `
-      : "";
+
+    const ageHTML =
+      profile.age
+        ? `
+          <span class="profile-age">
+            ${escapeHTML(profile.age)} years
+          </span>
+        `
+        : "";
+
+
+    const locationHTML =
+      profile.location
+        ? `
+          <p class="profile-location">
+            <i class="fa-solid fa-location-dot"></i>
+            ${escapeHTML(profile.location)}
+          </p>
+        `
+        : "";
 
 
     const interestsHTML =
@@ -1191,29 +1253,32 @@
       profile.interests.length
         ? `
           <div class="profile-interests">
+
             ${profile.interests.map(interest => `
               <span class="interest-tag">
                 ${escapeHTML(interest)}
               </span>
             `).join("")}
+
           </div>
         `
         : "";
 
 
-    const onlineHTML = profile.online
-      ? `
-        <div class="online-badge">
-          <span class="status-dot"></span>
-          Online
-        </div>
-      `
-      : `
-        <div class="online-badge offline">
-          <span class="status-dot"></span>
-          Offline
-        </div>
-      `;
+    const onlineHTML =
+      profile.online
+        ? `
+          <div class="online-badge">
+            <span class="status-dot"></span>
+            Online
+          </div>
+        `
+        : `
+          <div class="online-badge offline">
+            <span class="status-dot"></span>
+            Offline
+          </div>
+        `;
 
 
     const chatURL =
@@ -1287,56 +1352,68 @@
 
 
     /*
-     * IMAGE ERROR FALLBACK
+     * PHOTO FALLBACK
      */
 
-    const image = card.querySelector(".profile-photo");
+    const image =
+      card.querySelector(".profile-photo");
+
 
     if (image) {
 
-      image.addEventListener("error", () => {
+      image.addEventListener(
+        "error",
+        () => {
 
-        const fallback =
-          backupPhotos[index % backupPhotos.length];
+          const fallback =
+            backupPhotos[index % backupPhotos.length];
 
-        if (image.src !== fallback) {
 
-          image.src = fallback;
+          if (
+            image.dataset.fallbackUsed !== "true"
+          ) {
 
-        } else {
+            image.dataset.fallbackUsed = "true";
 
-          image.src =
-            "data:image/svg+xml;charset=UTF-8," +
-            encodeURIComponent(`
-              <svg xmlns="http://www.w3.org/2000/svg"
-                   width="600"
-                   height="600"
-                   viewBox="0 0 600 600">
+            image.src = fallback;
 
-                <rect
+          } else {
+
+            image.src =
+              "data:image/svg+xml;charset=UTF-8," +
+              encodeURIComponent(`
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   width="600"
                   height="600"
-                  fill="#201b21"/>
+                  viewBox="0 0 600 600"
+                >
 
-                <text
-                  x="50%"
-                  y="50%"
-                  dominant-baseline="middle"
-                  text-anchor="middle"
-                  fill="#ff6da8"
-                  font-size="180"
-                  font-family="Arial">
+                  <rect
+                    width="600"
+                    height="600"
+                    fill="#201b21"
+                  />
 
-                  K
+                  <text
+                    x="50%"
+                    y="50%"
+                    dominant-baseline="middle"
+                    text-anchor="middle"
+                    fill="#ff6da8"
+                    font-size="180"
+                    font-family="Arial"
+                  >
+                    K
+                  </text>
 
-                </text>
+                </svg>
+              `);
 
-              </svg>
-            `);
+          }
 
         }
-
-      });
+      );
 
     }
 
@@ -1348,6 +1425,7 @@
     const likeButton =
       card.querySelector(".like-btn");
 
+
     if (likeButton) {
 
       likeButton.addEventListener(
@@ -1356,7 +1434,9 @@
       );
 
 
-      const likes = getLocalLikes();
+      const likes =
+        getLocalLikes();
+
 
       if (likes.includes(profile.id)) {
 
@@ -1369,52 +1449,109 @@
           icon.className =
             "fa-solid fa-heart";
         }
+
       }
+
     }
 
 
     return card;
+
   }
 
 
   /*
-   * ==========================================================
-   * RENDER DISCOVER
-   * ==========================================================
-   *
-   * THIS IS THE MAIN NUMBER FIX.
-   *
-   * The 36 permanent profiles are NEVER sliced down.
-   *
-   * Real Firebase profiles are appended after them.
-   * ==========================================================
-   */
+   ============================================================
+   RENDER PROFILES
+   ============================================================
+
+   THIS IS THE IMPORTANT FIX.
+
+   We use a Map keyed by the Firestore document ID.
+
+   Therefore:
+
+   - duplicate snapshot processing cannot inflate count
+   - same user cannot appear twice
+   - current logged-in user can be removed
+   - 36 permanent profiles stay untouched
+   ============================================================
+  */
 
   function renderProfiles(firebaseProfiles = []) {
 
-    const cleanReal = firebaseProfiles
-      .filter(profile => profile)
-      .filter(profile => profile.id)
-      .filter(profile => !String(profile.id).startsWith("demo-"));
-
-
     /*
-     * Remove duplicate Firebase profiles.
+     * Deduplicate by Firebase document ID.
      */
 
-    const uniqueMap = new Map();
+    const uniqueMap =
+      new Map();
 
-    cleanReal.forEach(profile => {
-      uniqueMap.set(profile.id, profile);
+
+    firebaseProfiles.forEach(profile => {
+
+      if (!profile || !profile.id) {
+        return;
+      }
+
+
+      /*
+       * Never allow demo profiles into
+       * the real-member count.
+       */
+
+      if (
+        String(profile.id).startsWith("demo-")
+      ) {
+        return;
+      }
+
+
+      uniqueMap.set(
+        String(profile.id),
+        profile
+      );
+
     });
 
 
-    const uniqueRealProfiles =
+    /*
+     * Convert Map to array.
+     */
+
+    let uniqueRealProfiles =
       Array.from(uniqueMap.values());
 
 
     /*
-     * 36 PERMANENT + REAL FIREBASE MEMBERS
+     * IMPORTANT:
+     *
+     * A logged-in user's own profile is NOT another
+     * person to discover.
+     */
+
+    if (currentUser) {
+
+      uniqueRealProfiles =
+        uniqueRealProfiles.filter(
+          profile =>
+            String(profile.id) !==
+            String(currentUser.uid)
+        );
+
+    }
+
+
+    /*
+     * Keep the local list synchronized.
+     */
+
+    realProfiles =
+      uniqueRealProfiles;
+
+
+    /*
+     * ALWAYS keep all 36 permanent profiles.
      */
 
     const allProfiles = [
@@ -1424,10 +1561,20 @@
 
 
     /*
-     * CORRECT MEMBER NUMBER
+     * ========================================================
+     * EXACT MEMBER COUNT
+     * ========================================================
      *
-     * Never count only the demo profiles.
-     * Never replace the 36.
+     * 36 permanent profiles
+     *
+     * PLUS
+     *
+     * valid real Firebase members
+     *
+     * MINUS
+     *
+     * current logged-in user
+     * ========================================================
      */
 
     const totalMembers =
@@ -1435,156 +1582,180 @@
       uniqueRealProfiles.length;
 
 
-    /*
-     * UPDATE NUMBER
-     */
-
     memberCount.textContent =
       `${totalMembers} people to discover`;
 
 
     /*
-     * CLEAR GRID
+     * Clear current cards.
      */
 
     grid.innerHTML = "";
 
 
     /*
-     * RENDER ALL PROFILES
+     * Render all cards.
      */
 
-    allProfiles.forEach((profile, index) => {
+    allProfiles.forEach(
+      (profile, index) => {
 
-      grid.appendChild(
-        createProfileCard(profile, index)
-      );
-
-    });
-
-  }
-
-
-  /*
-   * ==========================================================
-   * FIREBASE USERS LISTENER
-   * ==========================================================
-   */
-
-  let unsubscribeUsers = null;
-
-
-  function startUsersListener() {
-
-    if (unsubscribeUsers) {
-      unsubscribeUsers();
-    }
-
-
-    unsubscribeUsers = onSnapshot(
-
-      collection(db, "users"),
-
-      snapshot => {
-
-        const profiles = [];
-
-
-        snapshot.forEach(userDoc => {
-
-          const data = userDoc.data() || {};
-
-          /*
-           * Ignore empty/malformed documents.
-           *
-           * A real member must have a name/displayName.
-           */
-
-          const profile =
-            getRealProfile(
-              userDoc.id,
-              data,
-              profiles.length
-            );
-
-
-          if (profile) {
-            profiles.push(profile);
-          }
-
-        });
-
-
-        realProfiles = profiles;
-
-
-        /*
-         * RENDER:
-         *
-         * 36 permanent
-         * +
-         * real Firebase members
-         */
-
-        renderProfiles(realProfiles);
-
-      },
-
-      error => {
-
-        console.error(
-          "Could not load Firebase members:",
-          error
+        grid.appendChild(
+          createProfileCard(
+            profile,
+            index
+          )
         );
 
-
-        /*
-         * Even if Firebase fails,
-         * the 36 permanent profiles remain.
-         */
-
-        realProfiles = [];
-
-        renderProfiles([]);
-
       }
-
     );
 
   }
 
 
   /*
-   * ==========================================================
-   * AUTH STATE
-   * ==========================================================
-   */
+   ============================================================
+   FIRESTORE USERS LISTENER
+   ============================================================
+  */
 
-  onAuthStateChanged(auth, user => {
+  function startUsersListener() {
 
-    currentUser = user || null;
+    if (unsubscribeUsers) {
 
-    /*
-     * Discover remains accessible to guests.
-     */
+      unsubscribeUsers();
 
-    startUsersListener();
+      unsubscribeUsers = null;
 
-  });
+    }
+
+
+    unsubscribeUsers =
+      onSnapshot(
+
+        collection(db, "users"),
+
+        snapshot => {
+
+          const profiles = [];
+
+
+          snapshot.forEach(
+            userDoc => {
+
+              const data =
+                userDoc.data() || {};
+
+
+              const profile =
+                getRealProfile(
+                  userDoc.id,
+                  data,
+                  profiles.length
+                );
+
+
+              /*
+               * Only valid profiles are accepted.
+               */
+
+              if (profile) {
+
+                profiles.push(profile);
+
+              }
+
+            }
+          );
+
+
+          /*
+           * Store fresh snapshot.
+           */
+
+          realProfiles =
+            profiles;
+
+
+          /*
+           * Render using exact unique count.
+           */
+
+          renderProfiles(
+            realProfiles
+          );
+
+        },
+
+
+        error => {
+
+          console.error(
+            "Could not load Firebase members:",
+            error
+          );
+
+
+          /*
+           * Firebase failed.
+           *
+           * Do not destroy the 36 permanent profiles.
+           */
+
+          realProfiles = [];
+
+          renderProfiles([]);
+
+        }
+
+      );
+
+  }
 
 
   /*
-   * ==========================================================
-   * INITIAL DISPLAY
-   * ==========================================================
-   *
-   * Shows the 36 permanent profiles immediately while
-   * Firebase loads.
-   * ==========================================================
-   */
+   ============================================================
+   AUTH STATE
+   ============================================================
+  */
+
+  onAuthStateChanged(
+    auth,
+    user => {
+
+      currentUser =
+        user || null;
+
+
+      /*
+       * Re-render immediately when login/logout changes.
+       *
+       * This is important because your own profile should
+       * disappear from Discover when logged in.
+       */
+
+      renderProfiles(
+        realProfiles
+      );
+
+
+      /*
+       * Start/refresh Firebase listener.
+       */
+
+      startUsersListener();
+
+    }
+  );
+
+
+  /*
+   ============================================================
+   INITIAL DISPLAY
+   ============================================================
+  */
 
   renderProfiles([]);
-
 
 </script>
 
