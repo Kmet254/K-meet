@@ -1,716 +1,941 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <title>Kmeet - Discover</title>
 
-  <link
-    rel="icon"
-    type="image/jpeg"
-    href="./kmeet-logo.jfif.jfif"
-  >
+  <link rel="stylesheet" href="styles.css">
+
+  <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
     rel="stylesheet"
-  >
-
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    /* =====================================================
+       KMEET DISCOVER
+       ===================================================== */
 
-    body {
-      margin: 0;
+    body.discover-page {
+      margin: 0 !important;
       min-height: 100vh;
-      font-family: "Poppins", Arial, sans-serif;
-      color: #fff;
 
       background:
         radial-gradient(
-          circle at 15% 10%,
-          rgba(255, 93, 155, .13),
+          circle at 15% 15%,
+          rgba(118, 42, 73, 0.25),
           transparent 32%
         ),
         radial-gradient(
-          circle at 85% 85%,
-          rgba(255, 150, 190, .08),
-          transparent 35%
+          circle at 85% 20%,
+          rgba(76, 35, 58, 0.20),
+          transparent 30%
         ),
         linear-gradient(
           135deg,
-          #0d0b0e 0%,
-          #170e15 45%,
-          #0d0b0e 100%
-        );
+          #120c10 0%,
+          #24151b 50%,
+          #0d0a0c 100%
+        ) !important;
 
-      background-attachment: fixed;
-      overflow-x: hidden;
+      color: #fff !important;
+
+      font-family:
+        "Poppins",
+        Arial,
+        sans-serif;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-
-      background:
-        linear-gradient(
-          rgba(255, 255, 255, .018) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 255, 255, .018) 1px,
-          transparent 1px
-        );
-
-      background-size: 40px 40px;
-      mask-image: linear-gradient(
-        to bottom,
-        rgba(0,0,0,.8),
-        transparent 90%
-      );
+    .discover-page *,
+    .discover-page *::before,
+    .discover-page *::after {
+      box-sizing: border-box;
     }
+
 
     /* =====================================================
        NAVIGATION
        ===================================================== */
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    .discover-page .discover-nav {
 
-      height: 78px;
+      width: 100%;
+      min-height: 78px;
+
+      padding: 0 50px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      padding: 0 5%;
-
-      background: rgba(13, 11, 14, .82);
-      border-bottom: 1px solid rgba(255, 255, 255, .08);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      color: #fff;
-      text-decoration: none;
-
-      font-family: "Playfair Display", serif;
-      font-size: 27px;
-      font-weight: 700;
-      letter-spacing: .2px;
-    }
-
-    .brand-heart {
-      color: #ff5f9e;
-      font-size: 24px;
-
-      filter:
-        drop-shadow(
-          0 0 10px rgba(255, 95, 158, .35)
+      background:
+        linear-gradient(
+          180deg,
+          rgba(20, 12, 16, 0.94),
+          rgba(35, 19, 25, 0.86)
         );
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.12);
+
+      box-shadow:
+        0 8px 30px rgba(0,0,0,0.28);
+
+      position: relative;
+      z-index: 20;
     }
 
-    .brand span {
-      color: #ff73aa;
-    }
 
-    .nav-links {
+    /* LOGO */
+
+    .discover-page .discover-brand {
+
       display: flex;
       align-items: center;
       gap: 10px;
+
+      color: #fff !important;
+
+      text-decoration: none !important;
     }
 
-    .nav-links a {
-      color: rgba(255,255,255,.76);
-      text-decoration: none;
+    .discover-page .discover-logo {
 
-      padding: 10px 17px;
-      border-radius: 24px;
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+      font-size: 30px;
+      font-weight: 700;
+
+      letter-spacing: 1px;
+    }
+
+    .discover-page .discover-logo-image {
+      width: 54px;
+      height: 54px;
+      min-width: 54px;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.96);
+      border: 2px solid rgba(255,255,255,0.80);
+      box-shadow: 0 0 18px rgba(230,106,148,0.35);
+      flex-shrink: 0;
+    }
+
+    .discover-page .discover-kmeet-logo {
+      display: block !important;
+      width: 50px !important;
+      height: 50px !important;
+      min-width: 50px !important;
+      min-height: 50px !important;
+      max-width: 50px !important;
+      max-height: 50px !important;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+
+    /* NAV LINKS */
+
+    .discover-page .discover-navlinks {
+
+      display: flex;
+      align-items: center;
+
+      gap: 30px;
+    }
+
+    .discover-page .discover-navlinks a {
+
+      color:
+        rgba(255,255,255,0.88) !important;
+
+      text-decoration: none !important;
 
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
+
+      letter-spacing: 0.7px;
 
       transition:
-        background .2s ease,
-        color .2s ease,
-        transform .2s ease;
+        color 0.2s ease,
+        transform 0.2s ease;
     }
 
-    .nav-links a:hover {
-      color: #fff;
-      background: rgba(255,255,255,.07);
-      transform: translateY(-1px);
+    .discover-page .discover-navlinks a:hover {
+
+      color: #f19ab7 !important;
+
+      transform:
+        translateY(-1px);
     }
 
-    .nav-links a.active {
-      color: #fff;
-      background: rgba(255, 95, 158, .13);
-      border: 1px solid rgba(255, 95, 158, .20);
+
+    /* =====================================================
+       LIKES / ACTIVITY
+       ===================================================== */
+
+    .discover-page .activity-bar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin: 0 0 24px;
+      padding: 14px 18px;
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:18px;
+      background:rgba(255,255,255,0.055);
+      box-shadow:0 12px 30px rgba(0,0,0,0.16);
+    }
+    .discover-page .activity-copy strong { display:block; font-size:14px; }
+    .discover-page .activity-copy span { display:block; margin-top:3px; color:rgba(255,255,255,0.62); font-size:12px; }
+    .discover-page .likes-link {
+      flex:0 0 auto; padding:10px 15px; border-radius:999px;
+      color:#fff !important; text-decoration:none !important;
+      background:linear-gradient(135deg,#a83d68,#d85d8c);
+      font-size:12px; font-weight:600;
+    }
+    .discover-page .like-button {
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.055); color:#fff;
+      cursor:pointer; padding:10px 14px; border-radius:999px;
+      font:500 12px Poppins,Arial,sans-serif;
+    }
+    .discover-page .like-button.liked {
+      background:rgba(216,93,140,0.20); border-color:rgba(216,93,140,0.45); color:#ff9fbe;
+    }
+    .discover-page .profile-actions { flex-wrap:wrap; }
+    @media (max-width:700px) {
+      .discover-page .discover-logo-image {
+        width: 47px;
+        height: 47px;
+        min-width: 47px;
+        min-height: 47px;
+      }
+      .discover-page .discover-kmeet-logo {
+        width: 43px !important;
+        height: 43px !important;
+        min-width: 43px !important;
+        min-height: 43px !important;
+        max-width: 43px !important;
+        max-height: 43px !important;
+      }
+    }
+
+    @media (max-width:600px){
+      .discover-page .activity-bar{align-items:flex-start; flex-direction:column;}
+      .discover-page .likes-link{width:100%; text-align:center;}
     }
 
     /* =====================================================
-       PAGE
+       MAIN
        ===================================================== */
 
-    .page {
-      width: 100%;
-      max-width: 1280px;
+    .discover-page .discover-container {
 
-      margin: 0 auto;
-      padding: 42px 24px 70px;
+      width:
+        min(1280px, calc(100% - 40px));
+
+      margin:
+        0 auto;
+
+      padding:
+        52px 0 80px;
     }
 
-    .hero {
+
+    /* HEADING */
+
+    .discover-page .discover-heading {
+
       text-align: center;
-      margin-bottom: 34px;
+
+      margin-bottom:
+        42px;
     }
 
-    .hero h1 {
-      margin: 0;
+    .discover-page .discover-heading h1 {
 
-      font-family: "Playfair Display", serif;
-      font-size: clamp(35px, 5vw, 52px);
-      line-height: 1.1;
+      margin:
+        0 0 12px;
 
       color: #fff;
 
-      text-shadow:
-        0 8px 35px rgba(0,0,0,.35);
-    }
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    .hero h1 span {
-      color: #ff6aa4;
-    }
+      font-size:
+        clamp(36px, 5vw, 55px);
 
-    .hero p {
-      margin: 12px auto 0;
-
-      max-width: 650px;
-
-      color: rgba(255,255,255,.65);
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .member-count {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-
-      margin-top: 17px;
-      padding: 8px 15px;
-
-      border-radius: 30px;
-
-      color: rgba(255,255,255,.88);
-      background: rgba(255,255,255,.055);
-
-      border: 1px solid rgba(255,255,255,.09);
-
-      font-size: 13px;
       font-weight: 600;
 
-      box-shadow:
-        0 8px 30px rgba(0,0,0,.12);
+      line-height: 1.1;
+
+      letter-spacing:
+        -0.5px;
     }
 
-    .member-count i {
-      color: #ff6aa4;
+    .discover-page .discover-heading p {
+
+      margin: 0;
+
+      color:
+        rgba(255,255,255,0.66);
+
+      font-size: 15px;
     }
+
+
+    /* MEMBER COUNT */
+
+    .discover-page .member-count {
+
+      margin-top: 14px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding:
+        7px 15px;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(255,255,255,0.055);
+
+      border:
+        1px solid rgba(255,255,255,0.10);
+
+      color:
+        rgba(255,255,255,0.62);
+
+      font-size: 12px;
+    }
+
+    .discover-page .member-count-dot {
+
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #62d391;
+
+      box-shadow:
+        0 0 10px rgba(98,211,145,0.7);
+    }
+
+
+    /* =====================================================
+       MESSAGE
+       ===================================================== */
+
+    .discover-page #msg {
+
+      margin-bottom: 25px;
+    }
+
+    .discover-page .message {
+
+      padding:
+        15px 20px;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(255,255,255,0.07);
+
+      border:
+        1px solid rgba(255,255,255,0.11);
+    }
+
+    .discover-page .message.error {
+
+      color:
+        #ffb4b4;
+
+      border-color:
+        rgba(255,100,100,0.30);
+    }
+
 
     /* =====================================================
        PROFILE GRID
        ===================================================== */
 
-    .profiles-grid {
+    .discover-page .discover-grid {
+
       display: grid;
 
       grid-template-columns:
         repeat(
-          auto-fit,
+          auto-fill,
           minmax(265px, 1fr)
         );
 
-      gap: 24px;
+      gap: 26px;
+
+      width: 100%;
     }
+
 
     /* =====================================================
        PROFILE CARD
        ===================================================== */
 
-    .profile-card {
-      position: relative;
+    .discover-page .profile-card {
 
       overflow: hidden;
 
-      border-radius: 22px;
+      position: relative;
 
       background:
         linear-gradient(
           145deg,
-          rgba(255,255,255,.075),
-          rgba(255,255,255,.025)
-        );
+          rgba(65,43,52,0.76),
+          rgba(25,17,21,0.92)
+        ) !important;
 
-      border: 1px solid rgba(255,255,255,.09);
+      border:
+        1px solid rgba(255,255,255,0.13) !important;
+
+      border-radius:
+        22px !important;
 
       box-shadow:
-        0 20px 55px rgba(0,0,0,.25);
+        0 18px 45px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.06) !important;
 
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      backdrop-filter:
+        blur(12px);
+
+      -webkit-backdrop-filter:
+        blur(12px);
 
       transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
     }
 
-    .profile-card:hover {
-      transform: translateY(-6px);
+    .discover-page .profile-card:hover {
 
-      border-color:
-        rgba(255, 105, 164, .28);
+      transform:
+        translateY(-6px);
 
       box-shadow:
-        0 25px 65px rgba(0,0,0,.34),
-        0 0 30px rgba(255, 72, 145, .06);
+        0 25px 55px rgba(0,0,0,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.08) !important;
     }
+
 
     /* =====================================================
        PHOTO
        ===================================================== */
 
-    .photo-wrap {
+    .discover-page .photo-wrap {
+
       position: relative;
 
       width: 100%;
+
       height: 310px;
 
       overflow: hidden;
 
       background:
-        linear-gradient(
-          145deg,
-          #25151f,
-          #100d11
-        );
+        #1b1116;
     }
 
-    .profile-photo {
-      width: 100%;
-      height: 100%;
+    .discover-page .profile-card > .photo-wrap img {
 
       display: block;
 
+      width: 100%;
+      height: 100%;
+
       object-fit: cover;
 
+      border: 0;
+
       transition:
-        transform .5s ease;
+        transform 0.35s ease,
+        opacity 0.25s ease;
     }
 
-    .profile-card:hover .profile-photo {
-      transform: scale(1.035);
+    .discover-page .profile-card:hover
+    .photo-wrap img {
+
+      transform:
+        scale(1.035);
     }
 
-    .photo-overlay {
-      position: absolute;
-      inset: 0;
-
-      background:
-        linear-gradient(
-          to top,
-          rgba(0,0,0,.68),
-          transparent 48%
-        );
-
-      pointer-events: none;
-    }
 
     /* =====================================================
-       ONLINE STATUS
+       ONLINE / OFFLINE STATUS
        ===================================================== */
 
-    .online-badge {
+    .discover-page .status-badge {
+
       position: absolute;
 
-      top: 13px;
-      left: 13px;
+      left: 14px;
+      bottom: 14px;
 
       display: inline-flex;
+
       align-items: center;
+
       gap: 7px;
 
-      padding: 7px 11px;
+      padding:
+        7px 11px;
 
-      border-radius: 20px;
+      border-radius:
+        999px;
 
-      background: rgba(8,8,10,.72);
+      background:
+        rgba(12,8,11,0.76);
 
-      border: 1px solid rgba(255,255,255,.12);
+      border:
+        1px solid rgba(255,255,255,0.15);
 
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter:
+        blur(10px);
 
-      color: #ddd;
+      -webkit-backdrop-filter:
+        blur(10px);
+
+      color:
+        rgba(255,255,255,0.90);
 
       font-size: 11px;
-      font-weight: 600;
 
-      z-index: 3;
+      font-weight: 500;
     }
 
-    .status-dot {
+    .discover-page .status-dot {
+
       width: 8px;
       height: 8px;
 
       border-radius: 50%;
 
-      background: #8a8a8a;
+      flex: 0 0 auto;
+    }
+
+    .discover-page .status-dot.online {
+
+      background:
+        #61d18b;
 
       box-shadow:
-        0 0 7px rgba(138,138,138,.4);
+        0 0 9px rgba(97,209,139,0.8);
     }
 
-    .online-badge.online .status-dot {
-      background: #44e17c;
+    .discover-page .status-dot.offline {
 
-      box-shadow:
-        0 0 9px rgba(68,225,124,.85);
+      background:
+        #8c8c8c;
     }
 
-    .online-badge.online .status-text {
-      color: #b9ffd0;
-    }
-
-    .online-badge.offline .status-text {
-      color: rgba(255,255,255,.60);
-    }
 
     /* =====================================================
-       PROFILE CONTENT
+       CARD CONTENT
        ===================================================== */
 
-    .profile-info {
-      padding: 17px 17px 18px;
+    .discover-page .profile-inside {
+
+      padding:
+        21px;
     }
 
-    .profile-name {
+    .discover-page .profile-name-row {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 10px;
+
+      margin-bottom: 6px;
+    }
+
+    .discover-page .profile-inside h3 {
+
       margin: 0;
 
       color: #fff;
 
-      font-size: 19px;
-      font-weight: 700;
+      font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-      line-height: 1.3;
+      font-size: 22px;
+
+      font-weight: 600;
+
+      line-height: 1.2;
     }
 
-    .profile-meta {
+    .discover-page .profile-location {
+
+      margin:
+        0 0 8px;
+
+      color:
+        rgba(255,255,255,0.58);
+
+      font-size: 13px;
+    }
+
+
+    /* =====================================================
+       PROFILE DESCRIPTION
+       ===================================================== */
+
+    .discover-page .profile-description {
+
+      margin:
+        0 0 15px;
+
+      color:
+        rgba(255,255,255,0.72);
+
+      font-size: 12px;
+
+      line-height: 1.65;
+
+      min-height: 40px;
+    }
+
+
+    /* =====================================================
+       INTEREST TAGS
+       ===================================================== */
+
+    .discover-page .tags {
+
       display: flex;
-      align-items: center;
+
       flex-wrap: wrap;
 
       gap: 7px;
-
-      margin-top: 7px;
-
-      color: rgba(255,255,255,.60);
-
-      font-size: 12px;
     }
 
-    .profile-meta i {
-      color: #ff6aa4;
+    .discover-page .tag {
+
+      display: inline-block;
+
+      padding:
+        6px 10px;
+
+      color:
+        rgba(255,255,255,0.82);
+
+      background:
+        rgba(230,106,148,0.08);
+
+      border:
+        1px solid rgba(230,106,148,0.18);
+
+      border-radius:
+        30px;
+
+      font-size: 11px;
     }
 
-    .profile-bio {
-      margin: 11px 0 0;
-
-      min-height: 39px;
-
-      color: rgba(255,255,255,.68);
-
-      font-size: 12.5px;
-      line-height: 1.6;
-    }
 
     /* =====================================================
-       ACTION BUTTONS
+       BUTTONS
        ===================================================== */
 
-    .profile-actions {
+    .discover-page .profile-actions {
+
       display: grid;
 
       grid-template-columns:
-        1fr 1fr 40px;
+        1fr 1fr;
 
-      align-items: center;
+      gap: 9px;
 
-      gap: 8px;
-
-      margin-top: 15px;
+      margin-top:
+        20px;
     }
 
-    .profile-btn,
-    .chat-btn,
-    .like-btn {
-      min-height: 40px;
+    .discover-page .profile-button {
 
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
-      gap: 7px;
 
-      border-radius: 12px;
+      min-height: 44px;
 
-      font-family: inherit;
+      padding:
+        9px 12px;
 
-      font-size: 11.5px;
-      font-weight: 700;
+      color: #fff !important;
 
-      text-decoration: none;
+      text-decoration: none !important;
 
-      cursor: pointer;
+      border-radius:
+        11px;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      letter-spacing:
+        0.2px;
 
       transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
-    .profile-btn {
-      color: rgba(255,255,255,.88);
+    .discover-page .profile-button:hover {
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    /* VIEW PROFILE */
+
+    .discover-page .view-button {
 
       background:
-        rgba(255,255,255,.055);
+        rgba(255,255,255,0.07);
 
       border:
-        1px solid rgba(255,255,255,.10);
+        1px solid rgba(255,255,255,0.14);
     }
 
-    .profile-btn:hover {
+    .discover-page .view-button:hover {
+
       background:
-        rgba(255,255,255,.10);
+        rgba(255,255,255,0.11);
 
-      transform: translateY(-1px);
+      box-shadow:
+        0 8px 18px rgba(0,0,0,0.20);
     }
 
-    .chat-btn {
-      color: #fff;
+
+    /* CHAT */
+
+    .discover-page .chat-button {
 
       background:
         linear-gradient(
           135deg,
-          #ff4f94,
-          #ff709f
+          #e66a94,
+          #a9426d
         );
 
       border:
-        1px solid rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,0.12);
 
       box-shadow:
-        0 8px 20px rgba(255, 67, 137, .18);
+        0 8px 20px rgba(150,47,88,0.28);
     }
 
-    .chat-btn:hover {
-      transform: translateY(-1px);
+    .discover-page .chat-button:hover {
 
       box-shadow:
-        0 11px 25px rgba(255, 67, 137, .25);
+        0 12px 25px rgba(150,47,88,0.40);
     }
 
-    .like-btn {
-      width: 40px;
-      padding: 0;
 
-      color: #ff6fa7;
+    /* DEMO PROFILE BUTTON */
 
-      background:
-        rgba(255,95,158,.07);
+    .discover-page .demo-button {
 
-      border:
-        1px solid rgba(255,95,158,.16);
+      opacity:
+        0.78;
     }
 
-    .like-btn:hover {
-      background:
-        rgba(255,95,158,.14);
-
-      transform: translateY(-1px);
-    }
-
-    .like-btn.liked {
-      color: #fff;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ff4f94,
-          #ff709f
-        );
-
-      border-color:
-        rgba(255,255,255,.1);
-    }
 
     /* =====================================================
-       LOADING / EMPTY / ERROR
+       EMPTY
        ===================================================== */
 
-    .message-box {
-      grid-column: 1 / -1;
+    .discover-page .empty-card {
 
-      padding: 45px 20px;
+      grid-column:
+        1 / -1;
 
-      text-align: center;
+      padding:
+        50px 25px;
 
-      color: rgba(255,255,255,.60);
+      text-align:
+        center;
+
+      color:
+        rgba(255,255,255,0.72);
 
       background:
-        rgba(255,255,255,.035);
+        rgba(255,255,255,0.05);
 
       border:
-        1px solid rgba(255,255,255,.07);
+        1px solid rgba(255,255,255,0.10);
 
-      border-radius: 20px;
+      border-radius:
+        20px;
     }
 
-    .message-box i {
-      margin-bottom: 12px;
-
-      color: #ff6aa4;
-      font-size: 28px;
-    }
-
-    .message-box p {
-      margin: 0;
-      font-size: 14px;
-    }
 
     /* =====================================================
-       RESPONSIVE
+       MOBILE
        ===================================================== */
 
     @media (max-width: 700px) {
 
-      nav {
-        height: 70px;
-        padding: 0 18px;
-      }
+      .discover-page .discover-nav {
 
-      .brand {
-        font-size: 23px;
-      }
-
-      .nav-links {
-        gap: 2px;
-      }
-
-      .nav-links a {
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
-      .page {
         padding:
-          32px 15px 55px;
+          0 18px;
       }
 
-      .profiles-grid {
-        grid-template-columns:
-          repeat(
-            auto-fit,
-            minmax(220px, 1fr)
+      .discover-page .discover-logo {
+
+        font-size:
+          25px;
+      }
+
+      .discover-page .discover-navlinks {
+
+        gap:
+          14px;
+      }
+
+      .discover-page .discover-navlinks a {
+
+        font-size:
+          11px;
+      }
+
+      .discover-page .discover-container {
+
+        width:
+          min(
+            calc(100% - 26px),
+            600px
           );
 
-        gap: 17px;
+        padding-top:
+          35px;
       }
 
-      .photo-wrap {
-        height: 285px;
+      .discover-page .photo-wrap {
+
+        height:
+          300px;
+      }
+
+      .discover-page .profile-actions {
+
+        grid-template-columns:
+          1fr 1fr;
       }
     }
+
 
     @media (max-width: 430px) {
 
-      .nav-links a {
-        padding: 7px 8px;
+      .discover-page .discover-navlinks a:nth-child(3) {
+
+        display:
+          none;
       }
 
-      .profiles-grid {
-        grid-template-columns: 1fr;
+      .discover-page .discover-grid {
+
+        grid-template-columns:
+          1fr;
       }
 
-      .photo-wrap {
-        height: 330px;
+      .discover-page .photo-wrap {
+
+        height:
+          330px;
       }
     }
+
   </style>
 </head>
 
-<body>
+
+<body class="discover-page">
+
 
   <!-- =====================================================
        NAVIGATION
        ===================================================== -->
 
-  <nav>
+  <nav class="discover-nav">
 
-    <a class="brand" href="index.html">
-      <span class="brand-heart">♥</span>
-      K<span>meet</span>
+    <a
+      class="discover-brand"
+      href="index.html"
+    >
+
+      <span class="discover-logo-image">
+        <img
+          src="./kmeet-logo.jfif.jfif"
+          alt="Kmeet"
+          class="discover-kmeet-logo"
+        >
+      </span>
+
+      <span class="discover-logo">
+        Kmeet
+      </span>
+
     </a>
 
-    <div class="nav-links">
 
-      <a
-        href="discover.html"
-        class="active"
-      >
+    <div class="discover-navlinks">
+
+      <a href="discover.html">
         Discover
       </a>
 
-      <a href="login.html">
-        Log In
+      <a
+        id="profileLink"
+        href="login.html"
+      >
+        Profile
+      </a>
+
+      <a href="index.html">
+        Home
       </a>
 
     </div>
@@ -718,57 +943,61 @@
   </nav>
 
 
+
   <!-- =====================================================
-       MAIN PAGE
+       MAIN
        ===================================================== -->
 
-  <main class="page">
+  <main class="discover-container">
 
-    <section class="hero">
+
+    <div class="discover-heading">
 
       <h1>
-        Discover <span>Connections</span>
+        Discover People
       </h1>
 
       <p>
-        Meet interesting people, discover shared interests,
-        and find someone who could become something special.
+        Explore profiles and discover someone who shares your interests.
       </p>
 
-      <div
-        class="member-count"
-        id="memberCount"
-      >
-        <i class="fa-solid fa-heart"></i>
-        <span>36 people to discover</span>
-      </div>
+      <div class="member-count">
 
-    </section>
+        <span class="member-count-dot"></span>
 
-
-    <section
-      class="profiles-grid"
-      id="profilesGrid"
-      aria-live="polite"
-    >
-
-      <div class="message-box">
-
-        <i class="fa-solid fa-spinner fa-spin"></i>
-
-        <p>
-          Loading people to discover...
-        </p>
+        <span id="memberCount">
+          People are joining Kmeet
+        </span>
 
       </div>
 
-    </section>
+    </div>
+
+
+    <div class="activity-bar">
+      <div class="activity-copy">
+        <strong id="activityTitle">❤️ Find your first connection</strong>
+        <span id="activitySubtitle">Like a profile you are interested in. Your likes are saved for this session.</span>
+      </div>
+      <a class="likes-link" href="likes.html">♥ My Likes</a>
+    </div>
+
+
+    <div id="msg"></div>
+
+
+    <div
+      id="grid"
+      class="discover-grid"
+    ></div>
+
 
   </main>
 
 
+
   <!-- =====================================================
-       FIREBASE
+       FIREBASE / PROFILE SCRIPT
        ===================================================== -->
 
   <script type="module">
@@ -779,7 +1008,9 @@
       onAuthStateChanged,
       collection,
       onSnapshot,
-
+      doc,
+      setDoc,
+      serverTimestamp,
       database,
       databaseRef,
       databaseSet,
@@ -790,20 +1021,192 @@
 
 
     /* =====================================================
-       SETTINGS
+       PROFILE LINK
        ===================================================== */
 
-    const BASE_MEMBER_COUNT = 36;
+    onAuthStateChanged(
+      auth,
+      user => {
 
-    const profilesGrid =
-      document.getElementById("profilesGrid");
+        const profileLink =
+          document.getElementById("profileLink");
 
-    const memberCount =
-      document.getElementById("memberCount");
+        if (
+          user &&
+          !user.isAnonymous
+        ) {
+
+          profileLink.href =
+            "profile.html";
+
+        } else {
+
+          profileLink.href =
+            "login.html";
+
+        }
+
+        updateActivity(user);
+        refreshLikeButtons();
+        startOwnPresence(user);
+
+      }
+    );
 
 
     /* =====================================================
-       36 PERMANENT DISCOVER PROFILES
+       LIVE PRESENCE
+       ===================================================== */
+
+    const presenceUnsubscribers = new Map();
+    let ownPresenceStarted = false;
+
+    function validPresenceId(value) {
+      return typeof value === "string" &&
+        value.length > 0 &&
+        !/[.#$\[\]]/.test(value);
+    }
+
+    function setStatusBadge(badge, online) {
+      if (!badge) return;
+      badge.className = `status-badge ${online ? "online" : "offline"}`;
+      badge.innerHTML = `
+        <span class="status-dot ${online ? "online" : "offline"}"></span>
+        ${online ? "Online" : "Offline"}
+      `;
+    }
+
+    function listenToPresence(profileId, badge) {
+      // Legacy records such as juxleezbetshaz@gmail.com are not valid
+      // Realtime Database path IDs because they contain a period.
+      if (!validPresenceId(profileId)) {
+        setStatusBadge(badge, false);
+        return;
+      }
+
+      const presenceRef = databaseRef(
+        database,
+        `status/${profileId}/connections`
+      );
+
+      const unsubscribe = databaseOnValue(
+        presenceRef,
+        snapshot => {
+          setStatusBadge(badge, snapshot.exists());
+        },
+        error => {
+          console.warn("Kmeet presence check failed for", profileId, error);
+          setStatusBadge(badge, false);
+        }
+      );
+
+      presenceUnsubscribers.set(profileId, unsubscribe);
+    }
+
+    function refreshPresenceListeners() {
+      presenceUnsubscribers.forEach(unsubscribe => {
+        try { unsubscribe(); } catch (_) {}
+      });
+      presenceUnsubscribers.clear();
+
+      document.querySelectorAll(".profile-card[data-profile-id]").forEach(card => {
+        const profileId = card.dataset.profileId;
+        const badge = card.querySelector(".status-badge");
+        if (!profileId || profileId.startsWith("demo-")) return;
+        listenToPresence(profileId, badge);
+      });
+    }
+
+    function startOwnPresence(user) {
+      if (ownPresenceStarted || !user || user.isAnonymous || !validPresenceId(user.uid)) return;
+      ownPresenceStarted = true;
+
+      const connectedRef = databaseRef(database, ".info/connected");
+      databaseOnValue(connectedRef, async snapshot => {
+        if (snapshot.val() !== true) return;
+
+        const connectionId = databaseRef(database).key || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        const connectionRef = databaseRef(
+          database,
+          `status/${user.uid}/connections/${connectionId}`
+        );
+        const lastOnlineRef = databaseRef(
+          database,
+          `status/${user.uid}/lastOnline`
+        );
+
+        try {
+          await onDisconnect(connectionRef).remove();
+          await onDisconnect(lastOnlineRef).set(databaseServerTimestamp());
+          await databaseSet(connectionRef, true);
+        } catch (error) {
+          console.warn("Kmeet own presence could not be started:", error);
+        }
+      });
+    }
+
+
+    /* =====================================================
+       BACKUP PHOTOS
+       
+       These are used when:
+       - a demo photo fails
+       - a real member has no photo
+       - a Firebase photo field is missing
+       ===================================================== */
+
+    const backupPhotos = [
+
+      "https://randomuser.me/api/portraits/women/44.jpg",
+      "https://randomuser.me/api/portraits/men/32.jpg",
+      "https://randomuser.me/api/portraits/women/65.jpg",
+      "https://randomuser.me/api/portraits/men/46.jpg",
+      "https://randomuser.me/api/portraits/women/32.jpg",
+      "https://randomuser.me/api/portraits/men/52.jpg",
+      "https://randomuser.me/api/portraits/women/68.jpg",
+      "https://randomuser.me/api/portraits/men/75.jpg",
+      "https://randomuser.me/api/portraits/women/50.jpg",
+      "https://randomuser.me/api/portraits/men/22.jpg",
+      "https://randomuser.me/api/portraits/women/21.jpg",
+      "https://randomuser.me/api/portraits/men/41.jpg",
+      "https://randomuser.me/api/portraits/women/12.jpg",
+      "https://randomuser.me/api/portraits/men/61.jpg",
+      "https://randomuser.me/api/portraits/women/49.jpg",
+      "https://randomuser.me/api/portraits/men/19.jpg",
+      "https://randomuser.me/api/portraits/women/36.jpg",
+      "https://randomuser.me/api/portraits/men/29.jpg",
+      "https://randomuser.me/api/portraits/women/57.jpg",
+      "https://randomuser.me/api/portraits/men/37.jpg",
+      "https://randomuser.me/api/portraits/women/63.jpg",
+      "https://randomuser.me/api/portraits/men/11.jpg",
+      "https://randomuser.me/api/portraits/women/75.jpg",
+      "https://randomuser.me/api/portraits/men/64.jpg",
+      "https://randomuser.me/api/portraits/women/23.jpg",
+      "https://randomuser.me/api/portraits/men/70.jpg",
+      "https://randomuser.me/api/portraits/women/41.jpg",
+      "https://randomuser.me/api/portraits/men/35.jpg",
+      "https://randomuser.me/api/portraits/women/45.jpg",
+      "https://randomuser.me/api/portraits/men/55.jpg",
+      "https://randomuser.me/api/portraits/women/58.jpg",
+      "https://randomuser.me/api/portraits/men/43.jpg",
+      "https://randomuser.me/api/portraits/women/38.jpg",
+      "https://randomuser.me/api/portraits/men/48.jpg",
+      "https://randomuser.me/api/portraits/women/55.jpg",
+      "https://randomuser.me/api/portraits/men/76.jpg"
+    ];
+
+
+    function getBackupPhoto(index = 0) {
+
+      return backupPhotos[
+        Math.abs(index) % backupPhotos.length
+      ];
+
+    }
+
+
+    /* =====================================================
+       DEMO PROFILES
        ===================================================== */
 
     const demoProfiles = [
@@ -812,1090 +1215,846 @@
         id: "demo-01",
         name: "Amara",
         age: 27,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/44.jpg"
+        photo: backupPhotos[0],
+        description: "Easy-going, curious and always ready for a good conversation.",
+        interests: ["Travel", "Music", "Coffee"]
       },
 
       {
         id: "demo-02",
         name: "Brian",
         age: 30,
-        location: "Mombasa",
-        gender: "Man",
+        location: "Mombasa, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/32.jpg"
+        photo: backupPhotos[1],
+        description: "Enjoys fitness, football, road trips and meeting genuine people.",
+        interests: ["Fitness", "Football", "Travel"]
       },
 
       {
         id: "demo-03",
         name: "Nia",
         age: 25,
-        location: "Kisumu",
-        gender: "Woman",
+        location: "Kisumu, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/women/65.jpg"
+        photo: backupPhotos[2],
+        description: "Quiet personality with a love for books, creativity and nature.",
+        interests: ["Books", "Art", "Nature"]
       },
 
       {
         id: "demo-04",
         name: "Daniel",
         age: 29,
-        location: "Nakuru",
-        gender: "Man",
+        location: "Nakuru, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/46.jpg"
+        photo: backupPhotos[3],
+        description: "Music lover who enjoys cars, fitness and spontaneous adventures.",
+        interests: ["Music", "Cars", "Fitness"]
       },
 
       {
         id: "demo-05",
         name: "Zuri",
         age: 28,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/women/32.jpg"
+        photo: backupPhotos[4],
+        description: "Fashion, good food and discovering new places are my kind of fun.",
+        interests: ["Fashion", "Travel", "Food"]
       },
 
       {
         id: "demo-06",
         name: "Kevin",
         age: 31,
-        location: "Eldoret",
-        gender: "Man",
+        location: "Eldoret, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/52.jpg"
+        photo: backupPhotos[5],
+        description: "Business-minded, social and always looking for something new to learn.",
+        interests: ["Business", "Sports", "Music"]
       },
 
       {
         id: "demo-07",
         name: "Aisha",
         age: 26,
-        location: "Mombasa",
-        gender: "Woman",
+        location: "Mombasa, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/68.jpg"
+        photo: backupPhotos[6],
+        description: "Beach walks, cooking and travel make me happiest.",
+        interests: ["Beach", "Cooking", "Travel"]
       },
 
       {
         id: "demo-08",
         name: "Michael",
         age: 33,
-        location: "Nairobi",
-        gender: "Man",
+        location: "Nairobi, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/75.jpg"
+        photo: backupPhotos[7],
+        description: "Technology enthusiast who also enjoys books and seeing new places.",
+        interests: ["Technology", "Reading", "Travel"]
       },
 
       {
         id: "demo-09",
         name: "Wanjiku",
         age: 29,
-        location: "Kiambu",
-        gender: "Woman",
+        location: "Kiambu, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/50.jpg"
+        photo: backupPhotos[8],
+        description: "Photography, coffee and peaceful outdoor moments are my favorites.",
+        interests: ["Photography", "Coffee", "Nature"]
       },
 
       {
         id: "demo-10",
         name: "Eric",
         age: 28,
-        location: "Thika",
-        gender: "Man",
+        location: "Thika, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/22.jpg"
+        photo: backupPhotos[9],
+        description: "Football fan who enjoys movies, travel and relaxed conversations.",
+        interests: ["Football", "Movies", "Travel"]
       },
 
       {
         id: "demo-11",
         name: "Leah",
         age: 30,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/21.jpg"
+        photo: backupPhotos[10],
+        description: "Music and dancing keep me going, especially when shared with good company.",
+        interests: ["Music", "Dancing", "Food"]
       },
 
       {
         id: "demo-12",
         name: "Samuel",
         age: 32,
-        location: "Kakamega",
-        gender: "Man",
+        location: "Kakamega, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/41.jpg"
+        photo: backupPhotos[11],
+        description: "Focused on business, fitness and personal growth.",
+        interests: ["Business", "Fitness", "Books"]
       },
 
       {
         id: "demo-13",
         name: "Faith",
         age: 24,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/women/12.jpg"
+        photo: backupPhotos[12],
+        description: "Creative at heart and happiest around music, art and good style.",
+        interests: ["Art", "Fashion", "Music"]
       },
 
       {
         id: "demo-14",
         name: "James",
         age: 35,
-        location: "Mombasa",
-        gender: "Man",
+        location: "Mombasa, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/61.jpg"
+        photo: backupPhotos[13],
+        description: "Ocean lover who enjoys cooking, travel and meaningful conversations.",
+        interests: ["Ocean", "Travel", "Cooking"]
       },
 
       {
         id: "demo-15",
         name: "Maya",
         age: 27,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/49.jpg"
+        photo: backupPhotos[14],
+        description: "A calm soul who enjoys yoga, books, coffee and thoughtful people.",
+        interests: ["Yoga", "Books", "Coffee"]
       },
 
       {
         id: "demo-16",
         name: "Alex",
         age: 30,
-        location: "Kisumu",
-        gender: "Man",
+        location: "Kisumu, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/19.jpg"
+        photo: backupPhotos[15],
+        description: "Technology, movies and gaming are usually where you will find me.",
+        interests: ["Technology", "Movies", "Gaming"]
       },
 
       {
         id: "demo-17",
         name: "Ivy",
         age: 26,
-        location: "Nakuru",
-        gender: "Woman",
+        location: "Nakuru, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/36.jpg"
+        photo: backupPhotos[16],
+        description: "Love nature, photography and finding beautiful places to explore.",
+        interests: ["Nature", "Travel", "Photography"]
       },
 
       {
         id: "demo-18",
         name: "David",
         age: 34,
-        location: "Nairobi",
-        gender: "Man",
+        location: "Nairobi, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/29.jpg"
+        photo: backupPhotos[17],
+        description: "Business, cars and music make for a pretty good weekend.",
+        interests: ["Business", "Cars", "Music"]
       },
 
       {
         id: "demo-19",
         name: "Sharon",
         age: 28,
-        location: "Mombasa",
-        gender: "Woman",
+        location: "Mombasa, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/57.jpg"
+        photo: backupPhotos[18],
+        description: "Beach days, great food and travelling whenever possible.",
+        interests: ["Beach", "Food", "Travel"]
       },
 
       {
         id: "demo-20",
         name: "Chris",
         age: 31,
-        location: "Nairobi",
-        gender: "Man",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/37.jpg"
+        photo: backupPhotos[19],
+        description: "Fitness enthusiast who enjoys football, movies and active weekends.",
+        interests: ["Fitness", "Football", "Movies"]
       },
 
       {
         id: "demo-21",
         name: "Esther",
         age: 25,
-        location: "Eldoret",
-        gender: "Woman",
+        location: "Eldoret, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/women/63.jpg"
+        photo: backupPhotos[20],
+        description: "I enjoy books, music and quiet places surrounded by nature.",
+        interests: ["Books", "Music", "Nature"]
       },
 
       {
         id: "demo-22",
         name: "Anthony",
         age: 29,
-        location: "Nakuru",
-        gender: "Man",
+        location: "Nakuru, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/11.jpg"
+        photo: backupPhotos[21],
+        description: "Always interested in travel, sports and discovering good coffee spots.",
+        interests: ["Travel", "Sports", "Coffee"]
       },
 
       {
         id: "demo-23",
         name: "Linda",
         age: 32,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/75.jpg"
+        photo: backupPhotos[22],
+        description: "Food, fashion and art are some of the things that brighten my day.",
+        interests: ["Cooking", "Fashion", "Art"]
       },
 
       {
         id: "demo-24",
         name: "Joseph",
         age: 36,
-        location: "Kisumu",
-        gender: "Man",
+        location: "Kisumu, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/64.jpg"
+        photo: backupPhotos[23],
+        description: "Nature lover who enjoys fishing, travel and peaceful weekends.",
+        interests: ["Fishing", "Nature", "Travel"]
       },
 
       {
         id: "demo-25",
         name: "Cynthia",
         age: 27,
-        location: "Kiambu",
-        gender: "Woman",
+        location: "Kiambu, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/48.jpg"
+        photo: backupPhotos[24],
+        description: "Music and dancing are even better when shared with good company.",
+        interests: ["Music", "Dancing", "Travel"]
       },
 
       {
         id: "demo-26",
         name: "Mark",
         age: 33,
-        location: "Nairobi",
-        gender: "Man",
+        location: "Nairobi, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/45.jpg"
+        photo: backupPhotos[25],
+        description: "Technology and business during the week, fitness after work.",
+        interests: ["Technology", "Business", "Fitness"]
       },
 
       {
         id: "demo-27",
         name: "Mercy",
         age: 29,
-        location: "Mombasa",
-        gender: "Woman",
+        location: "Mombasa, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/71.jpg"
+        photo: backupPhotos[26],
+        description: "Beach walks, books and a good cup of coffee sound perfect.",
+        interests: ["Beach", "Books", "Coffee"]
       },
 
       {
         id: "demo-28",
         name: "Peter",
         age: 30,
-        location: "Nairobi",
-        gender: "Man",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/68.jpg"
+        photo: backupPhotos[27],
+        description: "Football, music and travelling are my favorite ways to unwind.",
+        interests: ["Football", "Music", "Travel"]
       },
 
       {
         id: "demo-29",
         name: "Joy",
         age: 26,
-        location: "Nakuru",
-        gender: "Woman",
+        location: "Nakuru, Kenya",
         online: false,
-        photo:
-          "https://randomuser.me/api/portraits/women/70.jpg"
+        photo: backupPhotos[28],
+        description: "Creative, fashionable and always ready for a good movie.",
+        interests: ["Art", "Fashion", "Movies"]
       },
 
       {
         id: "demo-30",
         name: "George",
         age: 34,
-        location: "Mombasa",
-        gender: "Man",
+        location: "Mombasa, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/60.jpg"
+        photo: backupPhotos[29],
+        description: "Travel and photography are my favorite ways to experience life.",
+        interests: ["Travel", "Ocean", "Photography"]
       },
 
       {
         id: "demo-31",
         name: "Ruth",
         age: 28,
-        location: "Nairobi",
-        gender: "Woman",
-        online: false,
-        photo:
-          "https://randomuser.me/api/portraits/women/58.jpg"
+        location: "Nairobi, Kenya",
+        online: true,
+        photo: backupPhotos[30],
+        description: "I love cooking, music and spending time outdoors.",
+        interests: ["Cooking", "Music", "Nature"]
       },
 
       {
         id: "demo-32",
         name: "Martin",
         age: 31,
-        location: "Eldoret",
-        gender: "Man",
-        online: true,
-        photo:
-          "https://randomuser.me/api/portraits/men/51.jpg"
+        location: "Eldoret, Kenya",
+        online: false,
+        photo: backupPhotos[31],
+        description: "Sports and technology keep me busy, with books for quiet evenings.",
+        interests: ["Sports", "Books", "Technology"]
       },
 
       {
         id: "demo-33",
         name: "Angela",
         age: 30,
-        location: "Nairobi",
-        gender: "Woman",
+        location: "Nairobi, Kenya",
         online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/33.jpg"
+        photo: backupPhotos[32],
+        description: "Travel, fashion and good food are always welcome.",
+        interests: ["Travel", "Fashion", "Food"]
       },
 
       {
         id: "demo-34",
         name: "Patrick",
         age: 29,
-        location: "Kisumu",
-        gender: "Man",
-        online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/43.jpg"
+        location: "Kisumu, Kenya",
+        online: true,
+        photo: backupPhotos[33],
+        description: "Music, cars and travelling make a great combination for me.",
+        interests: ["Music", "Cars", "Travel"]
       },
 
       {
         id: "demo-35",
         name: "Stella",
         age: 27,
-        location: "Nairobi",
-        gender: "Woman",
-        online: true,
-        photo:
-          "https://randomuser.me/api/portraits/women/56.jpg"
+        location: "Nairobi, Kenya",
+        online: false,
+        photo: backupPhotos[34],
+        description: "Yoga, nature and books are my favorite ways to slow down.",
+        interests: ["Yoga", "Nature", "Books"]
       },
 
       {
         id: "demo-36",
-        name: "Victor",
+        name: "William",
         age: 32,
-        location: "Mombasa",
-        gender: "Man",
-        online: false,
-        photo:
-          "https://randomuser.me/api/portraits/men/76.jpg"
+        location: "Nakuru, Kenya",
+        online: true,
+        photo: backupPhotos[35],
+        description: "Business, football and travel keep life interesting.",
+        interests: ["Business", "Football", "Travel"]
       }
 
     ];
 
 
     /* =====================================================
-       LIVE PRESENCE DATA
+       ELEMENTS
        ===================================================== */
 
-    const presenceMap = new Map();
+    const grid =
+      document.getElementById("grid");
 
-    const presenceUnsubscribers = new Map();
+    const msg =
+      document.getElementById("msg");
 
-    let realProfilesCache = [];
-
-    let currentUser = null;
-
-
-    /* =====================================================
-       SAFE PHOTO FALLBACK
-       ===================================================== */
-
-    function fallbackPhoto(profile) {
-
-      const gender =
-        String(profile.gender || "")
-          .toLowerCase();
-
-      if (
-        gender.includes("woman") ||
-        gender.includes("female") ||
-        gender.includes("girl")
-      ) {
-        return "https://randomuser.me/api/portraits/women/1.jpg";
-      }
-
-      return "https://randomuser.me/api/portraits/men/1.jpg";
-    }
+    const memberCount =
+      document.getElementById("memberCount");
 
 
     /* =====================================================
        ESCAPE HTML
        ===================================================== */
 
-    function escapeHTML(value) {
+    function escapeHtml(value) {
 
       return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /[&<>"']/g,
+
+          c => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+          }[c])
+        );
+
     }
 
 
     /* =====================================================
-       REAL FIRESTORE PROFILE
+       REAL FIREBASE USER PROFILE
        ===================================================== */
 
-    function getRealProfile(id, data) {
+    function getRealProfile(
+      snap,
+      index
+    ) {
 
-      if (!id || !data) {
-        return null;
-      }
+      const p =
+        snap.data() || {};
+
 
       const name =
-        data.name ||
-        data.displayName ||
-        data.username ||
-        "";
+        p.name ||
+        p.username ||
+        p.displayName ||
+        "Kmeet Member";
 
-      if (!String(name).trim()) {
-        return null;
+
+      let age = "";
+
+      if (
+        p.age !== undefined &&
+        p.age !== null &&
+        String(p.age).trim() !== ""
+      ) {
+
+        age = `, ${p.age}`;
+
       }
 
+
+      /*
+       * Kmeet may use different photo field names
+       * depending on which version of the profile
+       * page created the account.
+       */
+
       const photo =
-        data.photoURL ||
-        data.profilePhoto ||
-        data.avatar ||
-        data.photo ||
-        "";
+        p.photoURL ||
+        p.photoUrl ||
+        p.avatar ||
+        p.profilePhoto ||
+        p.profileImage ||
+        p.image ||
+        getBackupPhoto(index);
 
-      const location =
-        data.location ||
-        "Kenya";
 
-      const age =
-        data.age ||
-        "";
+      const interests =
+        Array.isArray(p.interests)
+          ? p.interests.slice(0, 4)
+          : [];
 
-      const gender =
-        data.gender ||
-        "";
 
-      const bio =
-        data.bio ||
-        "New Kmeet member.";
+      const description =
+        p.description ||
+        p.bio ||
+        p.about ||
+        p.intro ||
+        "Getting to know people and discovering meaningful connections on Kmeet.";
+
+
+      const online =
+        p.online === true ||
+        String(
+          p.status || ""
+        ).toLowerCase() === "online";
+
 
       return {
 
-        id,
+        id: snap.id,
 
-        name:
-          String(name).trim(),
+        name,
 
         age,
 
-        location,
-
-        gender,
-
-        bio,
+        location:
+          p.location ||
+          p.city ||
+          "Kenya",
 
         photo,
 
-        online:
-          data.online === true ||
-          data.isOnline === true
+        description,
+
+        interests,
+
+        online,
+
+        demo: false
 
       };
-    }
-
-
-    /* =====================================================
-       INITIALIZE LIVE PRESENCE FOR CURRENT MEMBER
-       ===================================================== */
-
-    let presenceConnectionId = null;
-
-    let presenceConnectionRef = null;
-
-    let presenceConnectedUnsubscribe = null;
-
-
-    function startOwnPresence(user) {
-
-      if (!user) {
-        return;
-      }
-
-      if (user.isAnonymous) {
-        return;
-      }
-
-      if (!user.uid) {
-        return;
-      }
-
-
-      const uid = user.uid;
-
-      const connectedRef =
-        databaseRef(
-          database,
-          ".info/connected"
-        );
-
-
-      presenceConnectedUnsubscribe =
-        databaseOnValue(
-          connectedRef,
-          async (snapshot) => {
-
-            const connected =
-              snapshot.val() === true;
-
-            if (!connected) {
-              return;
-            }
-
-
-            /*
-             * Every browser tab/device gets its own
-             * connection ID.
-             *
-             * This prevents one tab from incorrectly
-             * making the user offline while another
-             * tab is still connected.
-             */
-
-            presenceConnectionId =
-              `${Date.now()}_${Math.random()
-                .toString(36)
-                .slice(2)}`;
-
-
-            presenceConnectionRef =
-              databaseRef(
-                database,
-                `status/${uid}/connections/${presenceConnectionId}`
-              );
-
-
-            const lastOnlineRef =
-              databaseRef(
-                database,
-                `status/${uid}/lastOnline`
-              );
-
-
-            try {
-
-              /*
-               * IMPORTANT:
-               * Register onDisconnect BEFORE marking
-               * this connection online.
-               */
-
-              const disconnectConnection =
-                onDisconnect(
-                  presenceConnectionRef
-                );
-
-              await disconnectConnection.remove();
-
-
-              const disconnectLastOnline =
-                onDisconnect(
-                  lastOnlineRef
-                );
-
-              await disconnectLastOnline.set(
-                databaseServerTimestamp()
-              );
-
-
-              /*
-               * Now mark this connection online.
-               */
-
-              await databaseSet(
-                presenceConnectionRef,
-                true
-              );
-
-            } catch (error) {
-
-              console.error(
-                "Kmeet presence error:",
-                error
-              );
-
-            }
-
-          }
-        );
 
     }
 
 
     /* =====================================================
-       STOP OWN PRESENCE
+       FINAL SVG FALLBACK
+       
+       This is only used if every external image fails.
+       It guarantees that the card never becomes blank.
        ===================================================== */
 
-    function stopOwnPresence() {
+    function finalImageFallback() {
+
+      return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="800"
+            height="1000"
+            viewBox="0 0 800 1000"
+          >
+
+            <defs>
+
+              <linearGradient
+                id="bg"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="1"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#6b2946"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#1a0e14"
+                />
+
+              </linearGradient>
+
+            </defs>
+
+            <rect
+              width="800"
+              height="1000"
+              fill="url(#bg)"
+            />
+
+            <circle
+              cx="400"
+              cy="360"
+              r="120"
+              fill="rgba(255,255,255,0.20)"
+            />
+
+            <path
+              d="
+                M180 850
+                C210 650 590 650 620 850
+                Z
+              "
+              fill="rgba(255,255,255,0.20)"
+            />
+
+            <text
+              x="400"
+              y="930"
+              text-anchor="middle"
+              font-family="Georgia, serif"
+              font-size="58"
+              fill="white"
+            >
+              Kmeet
+            </text>
+
+          </svg>
+        `);
+
+    }
+
+
+    /* =====================================================
+       IMAGE ERROR HANDLER
+       
+       First failure:
+       -> use another backup photo.
+
+       Second failure:
+       -> use the Kmeet visual fallback.
+
+       This removes the old LEGO placeholder completely.
+       ===================================================== */
+
+    function imageFallback(img) {
+
+      const current =
+        Number(
+          img.dataset.fallbackIndex || "0"
+        );
 
       if (
-        presenceConnectedUnsubscribe
+        current < backupPhotos.length - 1
       ) {
 
-        presenceConnectedUnsubscribe();
+        const next =
+          current + 1;
 
-        presenceConnectedUnsubscribe =
-          null;
+        img.dataset.fallbackIndex =
+          String(next);
+
+        img.src =
+          getBackupPhoto(next);
+
+        return;
+
       }
 
-      presenceConnectionId = null;
 
-      presenceConnectionRef = null;
+      img.onerror = null;
+
+      img.src =
+        finalImageFallback();
+
     }
 
 
     /* =====================================================
-       UPDATE A CARD'S ONLINE STATUS
+       RENDER ONE PROFILE
        ===================================================== */
 
-    function updateStatusBadge(
-      profileId,
-      online
+    function renderProfile(
+      person,
+      index
     ) {
 
-      const card =
-        document.querySelector(
-          `.profile-card[data-profile-id="${CSS.escape(profileId)}"]`
-        );
+      const statusText =
+        person.online
+          ? "Online"
+          : "Offline";
 
 
-      if (!card) {
-        return;
-      }
+      const statusClass =
+        person.online
+          ? "online"
+          : "offline";
 
 
-      const badge =
-        card.querySelector(
-          ".online-badge"
-        );
+      const tags =
+        person.interests &&
+        person.interests.length
+
+          ? person.interests
+              .slice(0, 4)
+              .map(
+                interest => `
+                  <span class="tag">
+                    ${escapeHtml(interest)}
+                  </span>
+                `
+              )
+              .join("")
+
+          : `
+              <span class="tag">
+                Getting to know Kmeet
+              </span>
+            `;
 
 
-      if (!badge) {
-        return;
-      }
+      let actions = "";
 
 
-      const dot =
-        badge.querySelector(
-          ".status-dot"
-        );
+      /*
+       * REAL FIREBASE MEMBER
+       */
 
+      if (!person.demo) {
 
-      const text =
-        badge.querySelector(
-          ".status-text"
-        );
+        actions = `
 
+          <a
+            class="profile-button view-button"
+            href="profile.html?id=${encodeURIComponent(person.id)}"
+          >
+            View Profile
+          </a>
 
-      badge.classList.toggle(
-        "online",
-        online
-      );
+          <button
+            type="button"
+            class="like-button"
+            data-like-id="${escapeHtml(person.id)}"
+            data-like-name="${escapeHtml(person.name)}"
+          >♥ Like</button>
 
+          <a
+            class="profile-button chat-button"
+            href="chat.html?userId=${encodeURIComponent(person.id)}"
+          >
+            ♥ Chat
+          </a>
 
-      badge.classList.toggle(
-        "offline",
-        !online
-      );
+        `;
 
-
-      if (text) {
-
-        text.textContent =
-          online
-            ? "Online"
-            : "Offline";
-
-      }
-
-      if (dot) {
-
-        dot.setAttribute(
-          "aria-label",
-          online
-            ? "Online"
-            : "Offline"
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       LISTEN TO ONE MEMBER'S LIVE PRESENCE
-       ===================================================== */
-
-    function listenToPresence(profileId) {
-
-      if (!profileId) {
-        return;
       }
 
 
       /*
-       * Do not try to use the RTDB presence path for
-       * demo profiles.
+       * DEMO MEMBER
        */
 
-      if (
-        String(profileId)
-          .startsWith("demo-")
-      ) {
-        return;
-      }
+      else {
 
+        actions = `
 
-      /*
-       * Clean up an older listener if one exists.
-       */
+          <a
+            class="profile-button view-button"
+            href="login.html"
+          >
+            View Profile
+          </a>
 
-      if (
-        presenceUnsubscribers.has(profileId)
-      ) {
+          <button
+            type="button"
+            class="like-button"
+            data-like-id="${escapeHtml(person.id)}"
+            data-like-name="${escapeHtml(person.name)}"
+          >♥ Like</button>
 
-        try {
+          <a
+            class="profile-button chat-button demo-button"
+            href="chat.html?userId=${encodeURIComponent(person.id)}"
+          >
+            ♥ Chat
+          </a>
 
-          presenceUnsubscribers
-            .get(profileId)();
-
-        } catch (error) {
-
-          console.warn(
-            "Could not remove old presence listener:",
-            error
-          );
-
-        }
+        `;
 
       }
-
-
-      const connectionsRef =
-        databaseRef(
-          database,
-          `status/${profileId}/connections`
-        );
-
-
-      const unsubscribe =
-        databaseOnValue(
-          connectionsRef,
-          (snapshot) => {
-
-            const value =
-              snapshot.val();
-
-
-            let online = false;
-
-
-            if (
-              value &&
-              typeof value === "object"
-            ) {
-
-              online =
-                Object.keys(value).length > 0;
-
-            }
-
-
-            presenceMap.set(
-              profileId,
-              online
-            );
-
-
-            updateStatusBadge(
-              profileId,
-              online
-            );
-
-          },
-          (error) => {
-
-            console.warn(
-              `Presence read failed for ${profileId}:`,
-              error
-            );
-
-
-            /*
-             * If presence cannot be read, don't
-             * falsely show the person as online.
-             */
-
-            presenceMap.set(
-              profileId,
-              false
-            );
-
-
-            updateStatusBadge(
-              profileId,
-              false
-            );
-
-          }
-        );
-
-
-      presenceUnsubscribers.set(
-        profileId,
-        unsubscribe
-      );
-
-    }
-
-
-    /* =====================================================
-       CLEAN UP OLD PRESENCE LISTENERS
-       ===================================================== */
-
-    function clearPresenceListeners() {
-
-      presenceUnsubscribers
-        .forEach(
-          unsubscribe => {
-
-            try {
-
-              unsubscribe();
-
-            } catch (error) {
-
-              console.warn(
-                "Presence cleanup error:",
-                error
-              );
-
-            }
-
-          }
-        );
-
-
-      presenceUnsubscribers.clear();
-
-      presenceMap.clear();
-
-    }
-
-
-    /* =====================================================
-       PROFILE CARD
-       ===================================================== */
-
-    function renderProfile(profile) {
-
-      const isDemo =
-        String(profile.id)
-          .startsWith("demo-");
-
-
-      let online;
-
-
-      if (isDemo) {
-
-        /*
-         * Permanent demo members keep their
-         * existing static Online/Offline state.
-         */
-
-        online =
-          profile.online === true;
-
-      } else {
-
-        /*
-         * Real members use live Realtime Database
-         * presence whenever available.
-         */
-
-        online =
-          presenceMap.has(profile.id)
-            ? presenceMap.get(profile.id)
-            : false;
-
-      }
-
-
-      const photo =
-        profile.photo ||
-        fallbackPhoto(profile);
 
 
       const safePhoto =
-        escapeHTML(photo);
-
-
-      const name =
-        escapeHTML(
-          profile.name
-        );
-
-
-      const location =
-        escapeHTML(
-          profile.location ||
-          "Kenya"
-        );
-
-
-      const age =
-        profile.age
-          ? escapeHTML(profile.age)
-          : "";
-
-
-      const bio =
-        escapeHTML(
-          profile.bio ||
-          "Connecting hearts naturally."
-        );
-
-
-      const profileURL =
-        `profile.html?id=${encodeURIComponent(profile.id)}`;
-
-
-      const chatURL =
-        `chat.html?userId=${encodeURIComponent(profile.id)}`;
+        person.photo ||
+        getBackupPhoto(index);
 
 
       return `
 
         <article
           class="profile-card"
-          data-profile-id="${escapeHTML(profile.id)}"
+          data-profile-id="${escapeHtml(person.id)}"
         >
 
           <div class="photo-wrap">
 
             <img
-              class="profile-photo"
-              src="${safePhoto}"
-              alt="${name}"
+              src="${escapeHtml(safePhoto)}"
+              alt="${escapeHtml(person.name)}"
               loading="lazy"
-              onerror="
-                this.onerror=null;
-                this.src='${fallbackPhoto(profile)}';
-              "
+              data-fallback-index="${index % backupPhotos.length}"
+              onerror="imageFallback(this)"
             >
 
-            <div class="photo-overlay"></div>
-
-
-            <div
-              class="
-                online-badge
-                ${online ? "online" : "offline"}
-              "
-            >
+            <div class="status-badge">
 
               <span
-                class="status-dot"
+                class="status-dot ${statusClass}"
               ></span>
 
-              <span
-                class="status-text"
-              >
-                ${online ? "Online" : "Offline"}
-              </span>
+              ${statusText}
 
             </div>
 
           </div>
 
 
-          <div class="profile-info">
+          <div class="profile-inside">
 
-            <h2 class="profile-name">
-              ${name}
-              ${
-                age
-                  ? `, ${age}`
-                  : ""
-              }
-            </h2>
+            <div class="profile-name-row">
 
-
-            <div class="profile-meta">
-
-              <span>
-                <i class="fa-solid fa-location-dot"></i>
-                ${location}
-              </span>
+              <h3>
+                ${escapeHtml(person.name)}
+                ${escapeHtml(person.age)}
+              </h3>
 
             </div>
 
 
-            <p class="profile-bio">
-              ${bio}
+            <p class="profile-location">
+
+              ${escapeHtml(person.location)}
+
             </p>
+
+
+            <p class="profile-description">
+
+              ${escapeHtml(person.description)}
+
+            </p>
+
+
+            <div class="tags">
+
+              ${tags}
+
+            </div>
 
 
             <div class="profile-actions">
 
-              <a
-                class="profile-btn"
-                href="${profileURL}"
-              >
-                <i class="fa-solid fa-user"></i>
-                Profile
-              </a>
-
-
-              <a
-                class="chat-btn"
-                href="${chatURL}"
-              >
-                <i class="fa-solid fa-comment"></i>
-                Chat
-              </a>
-
-
-              <button
-                class="like-btn"
-                type="button"
-                aria-label="Like ${name}"
-                title="Like ${name}"
-                data-like-id="${escapeHTML(profile.id)}"
-              >
-                <i class="fa-regular fa-heart"></i>
-              </button>
+              ${actions}
 
             </div>
 
@@ -1909,144 +2068,244 @@
 
 
     /* =====================================================
-       RENDER ALL PROFILES
+       DRAW PROFILES
        ===================================================== */
 
     function renderProfiles(
       realProfiles
     ) {
 
-      realProfilesCache =
-        Array.isArray(realProfiles)
-          ? realProfiles
-          : [];
+      /*
+       * Remove duplicate Firebase profiles.
+       */
+
+      const usedIds =
+        new Set();
 
 
-      const allProfiles = [
-        ...demoProfiles,
-        ...realProfilesCache
-      ];
+      const cleanReal =
+        realProfiles.filter(
+          person => {
+
+            if (
+              usedIds.has(
+                person.id
+              )
+            ) {
+
+              return false;
+
+            }
 
 
-      if (!allProfiles.length) {
+            usedIds.add(
+              person.id
+            );
 
-        profilesGrid.innerHTML = `
 
-          <div class="message-box">
+            return true;
 
-            <i class="fa-regular fa-heart"></i>
+          }
+        );
 
-            <p>
-              There are no profiles to show right now.
-            </p>
+
+      /*
+       * Always keep at least 36
+       * visible profiles.
+       */
+
+      const needed =
+        Math.max(
+          36 - cleanReal.length,
+          0
+        );
+
+
+      const demo =
+        demoProfiles.slice(
+          0,
+          needed
+        );
+
+
+      const allProfiles =
+        [
+          ...cleanReal,
+          ...demo
+        ];
+
+
+      if (
+        !allProfiles.length
+      ) {
+
+        grid.innerHTML = `
+
+          <div class="empty-card">
+
+            No profiles are available yet.
 
           </div>
 
         `;
+
+        memberCount.textContent =
+          "People are joining Kmeet";
 
         return;
 
       }
 
 
-      profilesGrid.innerHTML =
+      grid.innerHTML =
         allProfiles
-          .map(renderProfile)
+          .map(
+            (person, index) =>
+              renderProfile(
+                person,
+                index
+              )
+          )
           .join("");
 
 
-      /*
-       * Attach Like buttons.
-       */
+      memberCount.textContent =
+        `${allProfiles.length} people to discover`;
 
-      profilesGrid
-        .querySelectorAll(".like-btn")
-        .forEach(button => {
-
-          const profileId =
-            button.dataset.likeId;
-
-
-          const storageKey =
-            `kmeet-liked-${profileId}`;
-
-
-          if (
-            localStorage.getItem(storageKey)
-            === "1"
-          ) {
-
-            button.classList.add(
-              "liked"
-            );
-
-            button.innerHTML =
-              '<i class="fa-solid fa-heart"></i>';
-
-          }
-
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              const liked =
-                button.classList.toggle(
-                  "liked"
-                );
-
-
-              if (liked) {
-
-                button.innerHTML =
-                  '<i class="fa-solid fa-heart"></i>';
-
-                localStorage.setItem(
-                  storageKey,
-                  "1"
-                );
-
-              } else {
-
-                button.innerHTML =
-                  '<i class="fa-regular fa-heart"></i>';
-
-                localStorage.removeItem(
-                  storageKey
-                );
-
-              }
-
-            }
-          );
-
-        });
-
-
-      /*
-       * Start live presence listeners for
-       * real Firebase members.
-       */
-
-      realProfilesCache
-        .forEach(profile => {
-
-          listenToPresence(
-            profile.id
-          );
-
-        });
+      refreshPresenceListeners();
 
     }
 
 
     /* =====================================================
-       FIRESTORE USERS
+       KMEET LIKES
+       Anonymous visitors can like profiles locally.
+       Registered members also try to save likes in
+       Firestore; local state keeps the button responsive
+       even when Firestore rules are not yet configured.
        ===================================================== */
 
-    function startUserListener() {
+    const ANON_LIKES_KEY = "kmeet_anonymous_likes_v1";
+    const MEMBER_LIKES_KEY = "kmeet_member_likes_v1";
 
-      return onSnapshot(
+    function readLikes(key) {
+      try { return JSON.parse(localStorage.getItem(key) || "[]"); }
+      catch { return []; }
+    }
+
+    function writeLikes(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function likeStorageKey(user) {
+      return user && !user.isAnonymous
+        ? `${MEMBER_LIKES_KEY}_${user.uid}`
+        : ANON_LIKES_KEY;
+    }
+
+    function hasLiked(user, targetId) {
+      return readLikes(likeStorageKey(user)).some(x => x.targetId === targetId);
+    }
+
+    async function saveLike(targetId, targetName, targetIsDemo) {
+      const user = auth.currentUser;
+      const key = likeStorageKey(user);
+      const likes = readLikes(key);
+
+      if (likes.some(x => x.targetId === targetId)) return false;
+
+      likes.push({
+        targetId,
+        targetName,
+        demo: !!targetIsDemo,
+        createdAt: Date.now()
+      });
+      writeLikes(key, likes);
+
+      if (user && !user.isAnonymous && !targetIsDemo) {
+        try {
+          await setDoc(
+            doc(db, "users", targetId, "likesReceived", user.uid),
+            {
+              fromUserId: user.uid,
+              targetUserId: targetId,
+              createdAt: serverTimestamp()
+            },
+            { merge: true }
+          );
+        } catch (error) {
+          console.warn("Kmeet like saved locally; Firestore write was not available.", error);
+        }
+      }
+
+      return true;
+    }
+
+    function refreshLikeButtons() {
+      const user = auth.currentUser;
+      document.querySelectorAll("[data-like-id]").forEach(button => {
+        const liked = hasLiked(user, button.dataset.likeId);
+        button.classList.toggle("liked", liked);
+        button.textContent = liked ? "♥ Liked" : "♥ Like";
+      });
+    }
+
+    function updateActivity(user) {
+      const title = document.getElementById("activityTitle");
+      const subtitle = document.getElementById("activitySubtitle");
+      const likes = readLikes(likeStorageKey(user));
+
+      if (user && !user.isAnonymous) {
+        title.textContent = likes.length ? `❤️ You liked ${likes.length} ${likes.length === 1 ? "person" : "people"}` : "❤️ Welcome to Kmeet";
+        subtitle.textContent = likes.length ? "Your likes are saved with this account." : "Your profile is live. Discover people and send your first like.";
+      } else {
+        title.textContent = likes.length ? `❤️ ${likes.length} ${likes.length === 1 ? "profile liked" : "profiles liked"}` : "❤️ Find your first connection";
+        subtitle.textContent = likes.length ? "Your likes are saved for this browser session." : "You can like profiles without creating an account.";
+      }
+    }
+
+    document.addEventListener("click", async event => {
+      const button = event.target.closest("[data-like-id]");
+      if (!button) return;
+
+      const user = auth.currentUser;
+      const targetId = button.dataset.likeId;
+      const targetName = button.dataset.likeName || "this profile";
+      const targetIsDemo = targetId.startsWith("demo-");
+
+      if (hasLiked(user, targetId)) return;
+
+      button.disabled = true;
+      const saved = await saveLike(targetId, targetName, targetIsDemo);
+      button.disabled = false;
+
+      if (saved) {
+        button.classList.add("liked");
+        button.textContent = "♥ Liked";
+        updateActivity(user);
+      }
+    });
+
+
+    /* =====================================================
+       SHOW DEMO PROFILES IMMEDIATELY
+       
+       This means Discover does not stay blank while
+       Firebase is connecting.
+       ===================================================== */
+
+    renderProfiles([]);
+    updateActivity(auth.currentUser);
+    refreshLikeButtons();
+
+
+    /* =====================================================
+       FIREBASE LISTENER
+       ===================================================== */
+
+    try {
+
+      onSnapshot(
 
         collection(
           db,
@@ -2057,139 +2316,51 @@
 
           const realProfiles = [];
 
-          const seenIds = new Set();
-
 
           snapshot.forEach(
-            userDoc => {
+            snap => {
 
-              const id =
-                userDoc.id;
+              const data =
+                snap.data() || {};
 
 
               /*
-               * Don't display the currently logged-in
-               * member as another person.
+               * Accept users that contain either a name
+               * or any supported photo/profile field.
                */
 
               if (
-                currentUser &&
-                !currentUser.isAnonymous &&
-                id === currentUser.uid
+
+                data.name ||
+                data.username ||
+                data.displayName ||
+                data.photoURL ||
+                data.photoUrl ||
+                data.avatar ||
+                data.profilePhoto ||
+                data.profileImage
+
               ) {
 
-                return;
-
-              }
-
-
-              if (
-                seenIds.has(id)
-              ) {
-
-                return;
-
-              }
-
-
-              const profile =
-                getRealProfile(
-                  id,
-                  userDoc.data() || {}
+                realProfiles.push(
+                  getRealProfile(
+                    snap,
+                    realProfiles.length
+                  )
                 );
 
-
-              if (!profile) {
-
-                return;
-
               }
-
-
-              seenIds.add(id);
-
-              realProfiles.push(
-                profile
-              );
 
             }
           );
 
 
           /*
-           * Clean up presence listeners for profiles
-           * that no longer exist in Firestore.
+           * Successful Firebase load.
+           * Keep the page clean.
            */
 
-          const currentRealIds =
-            new Set(
-              realProfiles.map(
-                profile => profile.id
-              )
-            );
-
-
-          presenceUnsubscribers
-            .forEach(
-              (unsubscribe, id) => {
-
-                if (
-                  !currentRealIds.has(id)
-                ) {
-
-                  try {
-
-                    unsubscribe();
-
-                  } catch (error) {
-
-                    console.warn(
-                      "Presence cleanup error:",
-                      error
-                    );
-
-                  }
-
-
-                  presenceUnsubscribers
-                    .delete(id);
-
-                  presenceMap
-                    .delete(id);
-
-                }
-
-              }
-            );
-
-
-          /*
-           * IMPORTANT:
-           *
-           * The Discover count remains:
-           *
-           * 36 permanent members
-           * +
-           * real Firebase members
-           *
-           * The logged-in user's own profile is
-           * excluded above.
-           */
-
-          const finalCount =
-            BASE_MEMBER_COUNT +
-            realProfiles.length;
-
-
-          memberCount.innerHTML = `
-
-            <i class="fa-solid fa-heart"></i>
-
-            <span>
-              ${finalCount} people to discover
-            </span>
-
-          `;
+          msg.innerHTML = "";
 
 
           renderProfiles(
@@ -2198,106 +2369,50 @@
 
         },
 
+
         error => {
 
           console.error(
-            "Kmeet Discover Firestore error:",
+            "Kmeet Discover Firebase error:",
             error
           );
 
 
           /*
-           * Even if Firestore temporarily fails,
-           * keep the 36 permanent profiles visible.
+           * Firebase may fail because of permissions,
+           * network problems or temporary configuration
+           * issues.
+           *
+           * Do not leave Discover blank.
            */
 
-          memberCount.innerHTML = `
-
-            <i class="fa-solid fa-heart"></i>
-
-            <span>
-              ${BASE_MEMBER_COUNT} people to discover
-            </span>
-
-          `;
-
-
           renderProfiles([]);
+
+
+          /*
+           * We intentionally do not show a large error
+           * banner to visitors.
+           */
+
+          msg.innerHTML = "";
 
         }
 
       );
 
+    } catch (error) {
+
+      console.error(
+        "Kmeet Discover startup error:",
+        error
+      );
+
+
+      renderProfiles([]);
+
+      msg.innerHTML = "";
+
     }
-
-
-    /* =====================================================
-       AUTH STATE
-       ===================================================== */
-
-    onAuthStateChanged(
-      auth,
-      user => {
-
-        /*
-         * Save current user so Discover can exclude
-         * their own Firestore profile.
-         */
-
-        currentUser =
-          user || null;
-
-
-        /*
-         * Restart presence only for a normal
-         * email/password member.
-         *
-         * Guests and anonymous users remain able
-         * to browse Discover without writing presence.
-         */
-
-        stopOwnPresence();
-
-
-        if (
-          user &&
-          !user.isAnonymous
-        ) {
-
-          startOwnPresence(
-            user
-          );
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       START DISCOVER
-       ===================================================== */
-
-    startUserListener();
-
-
-    /* =====================================================
-       PAGE CLEANUP
-       ===================================================== */
-
-    window.addEventListener(
-      "beforeunload",
-      () => {
-
-        /*
-         * Firebase's server-side onDisconnect()
-         * handles the actual connection removal.
-         */
-
-        stopOwnPresence();
-
-      }
-    );
 
   </script>
 
