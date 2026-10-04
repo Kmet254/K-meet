@@ -45,6 +45,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
+/* =========================================================
+   KMEET FIREBASE CONFIGURATION
+   ========================================================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyDgRaeK8CnCpHyxaIE7MaspmRinswwsrNo",
   authDomain: "kmeet-database.firebaseapp.com",
@@ -56,17 +60,30 @@ const firebaseConfig = {
 };
 
 
+/* =========================================================
+   INITIALIZE FIREBASE
+   ========================================================= */
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+
 const db = getFirestore(app);
+
 const storage = getStorage(app);
+
 const database = getDatabase(app);
 
 
+/* =========================================================
+   EXPORT EVERYTHING USED BY KMEET
+   ========================================================= */
+
 export {
+  /* Firebase app */
   app,
 
+  /* Authentication */
   auth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -79,6 +96,7 @@ export {
   EmailAuthProvider,
   reauthenticateWithCredential,
 
+  /* Firestore */
   db,
   doc,
   getDoc,
@@ -91,11 +109,13 @@ export {
   onSnapshot,
   serverTimestamp,
 
+  /* Storage */
   storage,
   ref,
   uploadBytes,
   getDownloadURL,
 
+  /* Realtime Database */
   database,
   databaseRef,
   databaseSet,
