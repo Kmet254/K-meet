@@ -465,14 +465,17 @@
 import {
   auth,
   db,
-  app,
   onAuthStateChanged,
   collection,
   onSnapshot
 } from "./firebase-config.js";
 
-const memberCount = document.getElementById("memberCount");
-const grid = document.getElementById("grid");
+
+const memberCount =
+  document.getElementById("memberCount");
+
+const grid =
+  document.getElementById("grid");
 
 const BASE_MEMBER_COUNT = 36;
 
@@ -480,109 +483,789 @@ let currentUser = null;
 
 
 /* ============================================================
-   TEMPORARY KMEET FIREBASE DIAGNOSTIC
+   36 PERMANENT KMEET PROFILES
    ============================================================ */
 
-const diagnostic = document.createElement("div");
+const permanentProfiles = [
 
-diagnostic.style.cssText = `
-  width:100%;
-  max-width:900px;
-  margin:20px auto 30px;
-  padding:18px;
-  box-sizing:border-box;
-  border-radius:16px;
-  background:rgba(10,10,10,.82);
-  border:1px solid rgba(255,109,168,.35);
-  color:#fff;
-  font-family:Poppins,sans-serif;
-  font-size:13px;
-  line-height:1.7;
-  box-shadow:0 15px 35px rgba(0,0,0,.25);
-`;
+  {
+    id: "demo-01",
+    name: "Amani",
+    age: 27,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    description: "Warm heart, good conversations and beautiful adventures.",
+    interests: ["Travel", "Music", "Coffee"],
+    online: true
+  },
 
-diagnostic.innerHTML = `
-  <strong style="color:#ff83b4;font-size:16px;">
-    Kmeet Firebase Diagnostic
-  </strong>
-  <div id="diagnosticContent" style="margin-top:10px;">
-    Checking Firebase...
-  </div>
-`;
+  {
+    id: "demo-02",
+    name: "Brian",
+    age: 30,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    description: "Easygoing, ambitious and always ready for a good laugh.",
+    interests: ["Fitness", "Travel", "Movies"],
+    online: false
+  },
 
+  {
+    id: "demo-03",
+    name: "Wanjiku",
+    age: 26,
+    location: "Nakuru",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+    description: "Positive energy, meaningful conversations and good vibes.",
+    interests: ["Books", "Food", "Nature"],
+    online: true
+  },
 
-/*
- * Put diagnostic underneath the member count.
- */
+  {
+    id: "demo-04",
+    name: "Kevin",
+    age: 29,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/41.jpg",
+    description: "Looking for someone genuine to share memorable moments with.",
+    interests: ["Football", "Music", "Travel"],
+    online: false
+  },
 
-const heading = document.querySelector(".discover-heading");
+  {
+    id: "demo-05",
+    name: "Njeri",
+    age: 28,
+    location: "Kiambu",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    description: "Kind soul who enjoys quiet evenings and exciting adventures.",
+    interests: ["Cooking", "Travel", "Art"],
+    online: true
+  },
 
-if (heading) {
-  heading.appendChild(diagnostic);
-}
+  {
+    id: "demo-06",
+    name: "Daniel",
+    age: 31,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/46.jpg",
+    description: "Calm, respectful and always interested in learning something new.",
+    interests: ["Business", "Fitness", "Music"],
+    online: false
+  },
 
+  {
+    id: "demo-07",
+    name: "Zawadi",
+    age: 25,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/women/49.jpg",
+    description: "Beach lover with a soft spot for good music and laughter.",
+    interests: ["Beach", "Music", "Dance"],
+    online: true
+  },
 
-const diagnosticContent =
-  document.getElementById("diagnosticContent");
+  {
+    id: "demo-08",
+    name: "Mark",
+    age: 33,
+    location: "Kisumu",
+    image: "https://randomuser.me/api/portraits/men/52.jpg",
+    description: "Friendly, honest and hoping to meet someone special.",
+    interests: ["Fishing", "Travel", "Sports"],
+    online: false
+  },
 
+  {
+    id: "demo-09",
+    name: "Faith",
+    age: 27,
+    location: "Eldoret",
+    image: "https://randomuser.me/api/portraits/women/33.jpg",
+    description: "Love meaningful conversations, nature and spontaneous trips.",
+    interests: ["Nature", "Books", "Travel"],
+    online: true
+  },
 
-function showDiagnostic(html) {
+  {
+    id: "demo-10",
+    name: "Sam",
+    age: 30,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/61.jpg",
+    description: "Optimistic, social and always looking for new experiences.",
+    interests: ["Movies", "Football", "Travel"],
+    online: false
+  },
 
-  if (diagnosticContent) {
-    diagnosticContent.innerHTML = html;
+  {
+    id: "demo-11",
+    name: "Mercy",
+    age: 29,
+    location: "Thika",
+    image: "https://randomuser.me/api/portraits/women/52.jpg",
+    description: "Simple person who values honesty, kindness and laughter.",
+    interests: ["Food", "Music", "Travel"],
+    online: true
+  },
+
+  {
+    id: "demo-12",
+    name: "Alex",
+    age: 28,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/75.jpg",
+    description: "Adventurous and relaxed. Looking for genuine connection.",
+    interests: ["Adventure", "Fitness", "Music"],
+    online: false
+  },
+
+  {
+    id: "demo-13",
+    name: "Lydia",
+    age: 26,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/women/24.jpg",
+    description: "Creative mind who enjoys beautiful places and great company.",
+    interests: ["Art", "Travel", "Fashion"],
+    online: true
+  },
+
+  {
+    id: "demo-14",
+    name: "Joseph",
+    age: 32,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/men/22.jpg",
+    description: "Friendly, hardworking and always ready for a new adventure.",
+    interests: ["Beach", "Sports", "Travel"],
+    online: false
+  },
+
+  {
+    id: "demo-15",
+    name: "Sharon",
+    age: 27,
+    location: "Nakuru",
+    image: "https://randomuser.me/api/portraits/women/45.jpg",
+    description: "Enjoys good conversations, food and discovering new places.",
+    interests: ["Food", "Travel", "Music"],
+    online: true
+  },
+
+  {
+    id: "demo-16",
+    name: "Eric",
+    age: 30,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/64.jpg",
+    description: "Positive thinker with a passion for technology and travel.",
+    interests: ["Tech", "Travel", "Fitness"],
+    online: false
+  },
+
+  {
+    id: "demo-17",
+    name: "Anne",
+    age: 28,
+    location: "Kisumu",
+    image: "https://randomuser.me/api/portraits/women/57.jpg",
+    description: "Lover of sunsets, music and meaningful connections.",
+    interests: ["Music", "Nature", "Travel"],
+    online: true
+  },
+
+  {
+    id: "demo-18",
+    name: "Mike",
+    age: 34,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/35.jpg",
+    description: "Relaxed personality looking for someone genuine.",
+    interests: ["Business", "Movies", "Sports"],
+    online: false
+  },
+
+  {
+    id: "demo-19",
+    name: "Irene",
+    age: 25,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/women/29.jpg",
+    description: "Happy soul who enjoys the ocean and good conversations.",
+    interests: ["Beach", "Dance", "Music"],
+    online: true
+  },
+
+  {
+    id: "demo-20",
+    name: "Chris",
+    age: 29,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/68.jpg",
+    description: "Outgoing, respectful and interested in meeting new people.",
+    interests: ["Football", "Travel", "Music"],
+    online: false
+  },
+
+  {
+    id: "demo-21",
+    name: "Esther",
+    age: 30,
+    location: "Eldoret",
+    image: "https://randomuser.me/api/portraits/women/35.jpg",
+    description: "Enjoys family, travel and making beautiful memories.",
+    interests: ["Family", "Travel", "Food"],
+    online: true
+  },
+
+  {
+    id: "demo-22",
+    name: "James",
+    age: 31,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/72.jpg",
+    description: "Ambitious, friendly and always curious about life.",
+    interests: ["Business", "Fitness", "Travel"],
+    online: false
+  },
+
+  {
+    id: "demo-23",
+    name: "Carol",
+    age: 27,
+    location: "Kiambu",
+    image: "https://randomuser.me/api/portraits/women/41.jpg",
+    description: "Nature lover who enjoys peaceful places and good company.",
+    interests: ["Nature", "Books", "Cooking"],
+    online: true
+  },
+
+  {
+    id: "demo-24",
+    name: "Steve",
+    age: 33,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/men/49.jpg",
+    description: "Beach, good food and positive people are my kind of life.",
+    interests: ["Beach", "Food", "Sports"],
+    online: false
+  },
+
+  {
+    id: "demo-25",
+    name: "Brenda",
+    age: 26,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/women/63.jpg",
+    description: "Bright personality with a passion for music and adventure.",
+    interests: ["Music", "Adventure", "Dance"],
+    online: true
+  },
+
+  {
+    id: "demo-26",
+    name: "Peter",
+    age: 35,
+    location: "Kisumu",
+    image: "https://randomuser.me/api/portraits/men/58.jpg",
+    description: "Calm and genuine. Looking for a meaningful relationship.",
+    interests: ["Fishing", "Nature", "Travel"],
+    online: false
+  },
+
+  {
+    id: "demo-27",
+    name: "Grace",
+    age: 29,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/women/39.jpg",
+    description: "Loves laughter, beautiful conversations and weekend adventures.",
+    interests: ["Travel", "Movies", "Food"],
+    online: true
+  },
+
+  {
+    id: "demo-28",
+    name: "Andrew",
+    age: 30,
+    location: "Nakuru",
+    image: "https://randomuser.me/api/portraits/men/44.jpg",
+    description: "Easygoing and positive. Always happy to meet interesting people.",
+    interests: ["Music", "Sports", "Travel"],
+    online: false
+  },
+
+  {
+    id: "demo-29",
+    name: "Ruth",
+    age: 28,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/women/58.jpg",
+    description: "Independent, cheerful and always looking for a new adventure.",
+    interests: ["Fashion", "Travel", "Music"],
+    online: true
+  },
+
+  {
+    id: "demo-30",
+    name: "Martin",
+    age: 32,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/men/39.jpg",
+    description: "Simple guy who enjoys the beach, sports and good friends.",
+    interests: ["Beach", "Football", "Fitness"],
+    online: false
+  },
+
+  {
+    id: "demo-31",
+    name: "Susan",
+    age: 27,
+    location: "Thika",
+    image: "https://randomuser.me/api/portraits/women/48.jpg",
+    description: "Kind, friendly and looking for someone who values honesty.",
+    interests: ["Books", "Cooking", "Nature"],
+    online: true
+  },
+
+  {
+    id: "demo-32",
+    name: "David",
+    age: 31,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/33.jpg",
+    description: "Technology enthusiast with a love for travel and adventure.",
+    interests: ["Technology", "Travel", "Movies"],
+    online: false
+  },
+
+  {
+    id: "demo-33",
+    name: "Cynthia",
+    age: 26,
+    location: "Mombasa",
+    image: "https://randomuser.me/api/portraits/women/51.jpg",
+    description: "Beach lover, music fan and lover of spontaneous moments.",
+    interests: ["Beach", "Music", "Dance"],
+    online: true
+  },
+
+  {
+    id: "demo-34",
+    name: "George",
+    age: 34,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/57.jpg",
+    description: "Friendly and ambitious with a relaxed personality.",
+    interests: ["Business", "Travel", "Fitness"],
+    online: false
+  },
+
+  {
+    id: "demo-35",
+    name: "Alice",
+    age: 29,
+    location: "Nakuru",
+    image: "https://randomuser.me/api/portraits/women/67.jpg",
+    description: "Enjoys beautiful places, good food and genuine friendships.",
+    interests: ["Travel", "Food", "Art"],
+    online: true
+  },
+
+  {
+    id: "demo-36",
+    name: "Samuel",
+    age: 30,
+    location: "Nairobi",
+    image: "https://randomuser.me/api/portraits/men/27.jpg",
+    description: "Positive, respectful and always open to a great conversation.",
+    interests: ["Sports", "Music", "Travel"],
+    online: false
   }
+
+];
+
+
+/* ============================================================
+   BACKUP IMAGES
+   ============================================================ */
+
+const backupImages = permanentProfiles.map(
+  profile => profile.image
+);
+
+
+/* ============================================================
+   REAL FIREBASE PROFILE
+   ============================================================ */
+
+function getRealProfile(id, data) {
+
+  const name =
+    data.displayName ||
+    data.name ||
+    data.username ||
+    "";
+
+  if (!String(name).trim()) {
+    return null;
+  }
+
+
+  const photo =
+    data.photoURL ||
+    data.photoUrl ||
+    data.avatar ||
+    data.profilePhoto ||
+    data.profileImage ||
+    data.image ||
+    "";
+
+
+  const age =
+    data.age ||
+    data.userAge ||
+    "";
+
+
+  const location =
+    data.location ||
+    data.city ||
+    data.town ||
+    "Kenya";
+
+
+  const description =
+    data.bio ||
+    data.description ||
+    data.about ||
+    "Looking to meet someone special on Kmeet.";
+
+
+  let interests =
+    data.interests ||
+    [];
+
+
+  if (!Array.isArray(interests)) {
+    interests = [String(interests)];
+  }
+
+
+  const online =
+    data.online === true ||
+    data.isOnline === true;
+
+
+  return {
+
+    id,
+
+    name: String(name).trim(),
+
+    age,
+
+    location,
+
+    image: photo,
+
+    description,
+
+    interests: interests
+      .filter(Boolean)
+      .slice(0, 5),
+
+    online
+
+  };
 
 }
 
 
 /* ============================================================
-   FIREBASE PROJECT
+   SAFE IMAGE FALLBACK
    ============================================================ */
 
-let projectId = "Unknown";
+function applyImageFallback(img, fallback) {
 
-try {
+  let attemptedFallback = false;
 
-  projectId =
-    app?.options?.projectId ||
-    "Unknown";
 
-} catch (error) {
+  img.addEventListener(
+    "error",
+    () => {
 
-  console.error(
-    "Could not read Firebase project:",
-    error
+      if (!attemptedFallback && fallback) {
+
+        attemptedFallback = true;
+
+        img.src = fallback;
+
+      }
+
+    }
   );
 
 }
 
 
 /* ============================================================
-   AUTH STATE
+   RENDER PROFILE CARD
    ============================================================ */
 
-onAuthStateChanged(
-  auth,
-  user => {
+function renderProfileCard(profile, index) {
 
-    currentUser =
-      user || null;
+  const card =
+    document.createElement("article");
+
+  card.className =
+    "profile-card";
 
 
-    console.log(
-      "KMEET DIAGNOSTIC - CURRENT USER:",
-      currentUser
+  const photo =
+    profile.image ||
+    backupImages[index % backupImages.length];
+
+
+  const fallback =
+    backupImages[index % backupImages.length];
+
+
+  const safePhoto =
+    photo || fallback;
+
+
+  const interests =
+    Array.isArray(profile.interests)
+      ? profile.interests
+      : [];
+
+
+  const interestHTML =
+    interests
+      .slice(0, 4)
+      .map(
+        interest =>
+          `<span class="interest-tag">
+            ${escapeHTML(interest)}
+          </span>`
+      )
+      .join("");
+
+
+  const ageHTML =
+    profile.age
+      ? `<span class="profile-age">
+          ${escapeHTML(profile.age)}
+        </span>`
+      : "";
+
+
+  const onlineClass =
+    profile.online
+      ? ""
+      : "offline";
+
+
+  const onlineText =
+    profile.online
+      ? "Online"
+      : "Offline";
+
+
+  card.innerHTML = `
+
+    <div class="profile-photo-wrap">
+
+      <img
+        class="profile-photo"
+        src="${escapeAttribute(safePhoto)}"
+        alt="${escapeAttribute(profile.name)}"
+        loading="lazy"
+      >
+
+      <div class="online-badge ${onlineClass}">
+
+        <span class="status-dot"></span>
+
+        ${onlineText}
+
+      </div>
+
+    </div>
+
+
+    <div class="profile-content">
+
+      <div class="profile-name-row">
+
+        <h2 class="profile-name">
+          ${escapeHTML(profile.name)}
+        </h2>
+
+        ${ageHTML}
+
+      </div>
+
+
+      <p class="profile-location">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        ${escapeHTML(profile.location)}
+
+      </p>
+
+
+      <p class="profile-description">
+
+        ${escapeHTML(profile.description)}
+
+      </p>
+
+
+      ${
+        interestHTML
+          ? `
+            <div class="profile-interests">
+              ${interestHTML}
+            </div>
+          `
+          : ""
+      }
+
+
+      <div class="profile-actions">
+
+        <a
+          class="chat-btn"
+          href="chat.html?userId=${encodeURIComponent(profile.id)}"
+        >
+          <i class="fa-solid fa-comment"></i>
+          Chat
+        </a>
+
+
+        <button
+          class="like-btn"
+          type="button"
+          title="Like ${escapeAttribute(profile.name)}"
+          data-profile-id="${escapeAttribute(profile.id)}"
+        >
+          <i class="fa-regular fa-heart"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  const image =
+    card.querySelector(".profile-photo");
+
+
+  if (image) {
+
+    applyImageFallback(
+      image,
+      fallback
     );
 
+  }
 
-    listenToUsers();
+
+  const likeButton =
+    card.querySelector(".like-btn");
+
+
+  if (likeButton) {
+
+    likeButton.addEventListener(
+      "click",
+      () => {
+
+        likeButton.classList.toggle("liked");
+
+
+        const icon =
+          likeButton.querySelector("i");
+
+
+        if (icon) {
+
+          icon.className =
+            likeButton.classList.contains("liked")
+              ? "fa-solid fa-heart"
+              : "fa-regular fa-heart";
+
+        }
+
+      }
+    );
 
   }
-);
+
+
+  return card;
+
+}
 
 
 /* ============================================================
-   FIRESTORE USERS
+   RENDER ALL PROFILES
+   ============================================================ */
+
+function renderProfiles(realProfiles = []) {
+
+  grid.innerHTML = "";
+
+
+  const combinedProfiles = [
+    ...permanentProfiles,
+    ...realProfiles
+  ];
+
+
+  if (!combinedProfiles.length) {
+
+    grid.innerHTML = `
+
+      <div class="empty-state">
+
+        <i class="fa-solid fa-heart"></i>
+
+        No profiles available yet.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  combinedProfiles.forEach(
+    (profile, index) => {
+
+      grid.appendChild(
+        renderProfileCard(
+          profile,
+          index
+        )
+      );
+
+    }
+  );
+
+}
+
+
+/* ============================================================
+   FIRESTORE PROFILES
    ============================================================ */
 
 function listenToUsers() {
@@ -593,265 +1276,88 @@ function listenToUsers() {
 
     snapshot => {
 
-      const documents = [];
+      const realProfiles = [];
 
-      const validProfiles = [];
-
-
-      snapshot.forEach(userDoc => {
-
-        const data =
-          userDoc.data() || {};
+      const seenIds = new Set();
 
 
-        const name =
-          data.displayName ||
-          data.name ||
-          data.username ||
-          "";
+      snapshot.forEach(
+        userDoc => {
+
+          const id =
+            userDoc.id;
 
 
-        const valid =
-          String(name).trim().length > 0;
+          /*
+           * Never show the currently logged-in
+           * user's own profile.
+           */
+
+          if (
+            currentUser &&
+            id === currentUser.uid
+          ) {
+            return;
+          }
 
 
-        documents.push({
+          /*
+           * Prevent duplicate Firestore IDs.
+           */
 
-          id: userDoc.id,
-
-          name:
-            String(name || "(no name)").trim(),
-
-          valid,
-
-          photo:
-            data.photoURL ||
-            data.photoUrl ||
-            data.avatar ||
-            data.profilePhoto ||
-            data.profileImage ||
-            data.image ||
-            "(no photo)",
-
-          online:
-            data.online === true ||
-            data.isOnline === true
-
-        });
+          if (seenIds.has(id)) {
+            return;
+          }
 
 
-        if (valid) {
+          const profile =
+            getRealProfile(
+              id,
+              userDoc.data() || {}
+            );
 
-          validProfiles.push({
 
-            id: userDoc.id,
+          /*
+           * Ignore malformed/empty profiles.
+           */
 
-            name:
-              String(name).trim(),
+          if (!profile) {
+            return;
+          }
 
-            online:
-              data.online === true ||
-              data.isOnline === true
 
-          });
+          seenIds.add(id);
+
+          realProfiles.push(profile);
 
         }
-
-      });
-
-
-      console.log(
-        "KMEET DIAGNOSTIC - FIRESTORE SNAPSHOT SIZE:",
-        snapshot.size
-      );
-
-
-      console.log(
-        "KMEET DIAGNOSTIC - ALL FIRESTORE USERS:",
-        documents
-      );
-
-
-      console.table(documents);
-
-
-      /*
-       * Exclude logged-in user.
-       */
-
-      const discoverable =
-        validProfiles.filter(
-          profile =>
-            !currentUser ||
-            String(profile.id) !==
-            String(currentUser.uid)
-        );
-
-
-      console.log(
-        "KMEET DIAGNOSTIC - VALID PROFILES:",
-        validProfiles
-      );
-
-
-      console.log(
-        "KMEET DIAGNOSTIC - DISCOVERABLE PROFILES:",
-        discoverable
-      );
-
-
-      console.log(
-        "KMEET DIAGNOSTIC - CURRENT UID:",
-        currentUser?.uid || "GUEST"
       );
 
 
       /*
-       * Expected final count.
+       * Final count:
+       *
+       * 36 permanent profiles
+       * +
+       * real Firestore profiles
+       * -
+       * current user's profile
+       *
+       * (current user is already excluded above)
        */
 
-      const expectedCount =
+      const finalCount =
         BASE_MEMBER_COUNT +
-        discoverable.length;
+        realProfiles.length;
 
 
       memberCount.textContent =
-        `${expectedCount} people to discover`;
+        `${finalCount} people to discover`;
 
 
-      /*
-       * Diagnostic panel.
-       */
-
-      let userRows = "";
-
-
-      documents.forEach(
-        (user, index) => {
-
-          userRows += `
-
-            <div style="
-              padding:7px 0;
-              border-bottom:1px solid rgba(255,255,255,.08);
-            ">
-
-              <strong>${index + 1}.</strong>
-
-              ${escapeHTML(user.name)}
-
-              <span style="
-                color:${user.valid ? "#4ade80" : "#f87171"};
-                margin-left:8px;
-              ">
-                ${user.valid ? "VALID" : "INVALID"}
-              </span>
-
-              <span style="
-                color:${user.online ? "#4ade80" : "#9ca3af"};
-                margin-left:8px;
-              ">
-                ${user.online ? "ONLINE" : "OFFLINE"}
-              </span>
-
-              <br>
-
-              <small style="
-                color:rgba(255,255,255,.45);
-                word-break:break-all;
-              ">
-                UID: ${escapeHTML(user.id)}
-              </small>
-
-            </div>
-
-          `;
-
-        }
+      renderProfiles(
+        realProfiles
       );
-
-
-      showDiagnostic(`
-
-        <div>
-          <strong>Firebase project:</strong>
-          ${escapeHTML(projectId)}
-        </div>
-
-        <div>
-          <strong>Current login:</strong>
-          ${currentUser ? "LOGGED IN" : "GUEST"}
-        </div>
-
-        <div style="word-break:break-all;">
-          <strong>Current UID:</strong>
-          ${escapeHTML(currentUser?.uid || "None")}
-        </div>
-
-        <div>
-          <strong>Firestore users documents:</strong>
-          ${snapshot.size}
-        </div>
-
-        <div>
-          <strong>Valid profiles:</strong>
-          ${validProfiles.length}
-        </div>
-
-        <div>
-          <strong>Discoverable profiles:</strong>
-          ${discoverable.length}
-        </div>
-
-        <div>
-          <strong>Permanent profiles:</strong>
-          ${BASE_MEMBER_COUNT}
-        </div>
-
-        <div style="
-          margin-top:8px;
-          padding:9px;
-          border-radius:9px;
-          background:rgba(255,109,168,.10);
-          color:#ff9bc4;
-        ">
-          <strong>Expected Discover count:</strong>
-          ${expectedCount}
-        </div>
-
-        <div style="
-          margin-top:14px;
-          color:rgba(255,255,255,.75);
-        ">
-          <strong>Firestore documents:</strong>
-        </div>
-
-        ${userRows}
-
-      `);
-
-
-      /*
-       * We deliberately DO NOT render the normal cards
-       * during this diagnostic.
-       */
-
-      grid.innerHTML = `
-
-        <div class="empty-state">
-
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-
-          <strong>Diagnostic mode active</strong>
-
-          <p style="margin-top:8px;">
-            The normal Discover cards are temporarily hidden.
-            We are checking the Firebase connection first.
-          </p>
-
-        </div>
-
-      `;
 
     },
 
@@ -859,28 +1365,21 @@ function listenToUsers() {
     error => {
 
       console.error(
-        "KMEET DIAGNOSTIC - FIRESTORE ERROR:",
+        "Kmeet Firestore error:",
         error
       );
 
 
-      showDiagnostic(`
+      /*
+       * Even if Firestore fails,
+       * keep the 36 permanent profiles visible.
+       */
 
-        <div style="color:#f87171;">
+      memberCount.textContent =
+        `${BASE_MEMBER_COUNT} people to discover`;
 
-          <strong>Firestore error:</strong>
 
-          <pre style="
-            white-space:pre-wrap;
-            margin-top:8px;
-          ">${escapeHTML(
-            error?.message ||
-            String(error)
-          )}</pre>
-
-        </div>
-
-      `);
+      renderProfiles([]);
 
     }
 
@@ -890,7 +1389,25 @@ function listenToUsers() {
 
 
 /* ============================================================
-   ESCAPE HTML
+   AUTH
+   ============================================================ */
+
+onAuthStateChanged(
+  auth,
+  user => {
+
+    currentUser =
+      user || null;
+
+
+    listenToUsers();
+
+  }
+);
+
+
+/* ============================================================
+   HTML ESCAPING
    ============================================================ */
 
 function escapeHTML(value) {
@@ -904,4 +1421,14 @@ function escapeHTML(value) {
 
 }
 
+
+function escapeAttribute(value) {
+
+  return escapeHTML(value);
+
+}
+
 </script>
+
+</body>
+</html>
