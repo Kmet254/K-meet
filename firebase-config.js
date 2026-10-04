@@ -1,6 +1,4 @@
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
   getAuth,
@@ -10,7 +8,8 @@ import {
   signOut,
   updateProfile,
   signInAnonymously,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
@@ -18,6 +17,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  deleteDoc,
   collection,
   addDoc,
   query,
@@ -50,36 +50,25 @@ const firebaseConfig = {
   storageBucket: "kmeet-database.firebasestorage.app",
   messagingSenderId: "123313610325",
   appId: "1:123313610325:web:255c467996eff14d72bedc",
-
   databaseURL: "https://kmeet-database-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-
-// Authentication
 const auth = getAuth(app);
 
-
-// Firestore
 const db = getFirestore(app);
 
-
-// Cloud Storage
 const storage = getStorage(app);
 
-
-// Realtime Database
 const database = getDatabase(app);
 
 
 export {
-  // Firebase
   app,
 
-  // Authentication
+  // Firebase Authentication
   auth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -88,12 +77,14 @@ export {
   updateProfile,
   signInAnonymously,
   sendPasswordResetEmail,
+  deleteUser,
 
   // Firestore
   db,
   doc,
   getDoc,
   setDoc,
+  deleteDoc,
   collection,
   addDoc,
   query,
@@ -101,7 +92,7 @@ export {
   onSnapshot,
   serverTimestamp,
 
-  // Storage
+  // Firebase Storage
   storage,
   ref,
   uploadBytes,
