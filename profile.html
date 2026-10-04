@@ -255,6 +255,80 @@ body::before {
         );
 }
 
+
+/* =========================================
+   DELETE ACCOUNT
+========================================= */
+
+.delete-account {
+    display: none;
+
+    margin-top: 28px;
+    padding-top: 22px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
+    text-align: center;
+}
+
+.delete-account-button {
+    border:
+        1px solid rgba(255,100,120,.30);
+
+    background:
+        rgba(255,60,90,.07);
+
+    color:
+        rgba(255,160,175,.78);
+
+    padding:
+        9px 18px;
+
+    border-radius:
+        22px;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        500;
+
+    cursor:
+        pointer;
+
+    transition:
+        all .2s ease;
+}
+
+.delete-account-button:hover {
+    background:
+        rgba(255,60,90,.14);
+
+    border-color:
+        rgba(255,100,120,.48);
+
+    color:
+        #ffb2bf;
+}
+
+.delete-note {
+    margin-top: 9px;
+
+    color:
+        rgba(255,255,255,.32);
+
+    font-size:
+        10px;
+
+    line-height:
+        1.5;
+}
+
 .section {
     margin-top: 35px;
 
@@ -656,6 +730,27 @@ body::before {
     </div>
 
 
+    <div id="deleteAccountArea"
+         class="delete-account">
+
+        <button id="deleteAccountButton"
+                class="delete-account-button"
+                type="button">
+
+            Delete my Kmeet account
+
+        </button>
+
+        <div class="delete-note">
+
+            This permanently removes your Kmeet profile
+            and login account.
+
+        </div>
+
+    </div>
+
+
     <section class="section">
 
         <h2 class="section-title">
@@ -789,7 +884,11 @@ import {
     onAuthStateChanged,
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    deleteDoc,
+    deleteUser,
+    EmailAuthProvider,
+    reauthenticateWithCredential
 } from "./firebase-config.js";
 
 
@@ -852,6 +951,16 @@ const chatButton =
 
 const statusText =
     document.getElementById("statusText");
+
+const deleteAccountArea =
+    document.getElementById(
+        "deleteAccountArea"
+    );
+
+const deleteAccountButton =
+    document.getElementById(
+        "deleteAccountButton"
+    );
 
 
 /*
@@ -1332,6 +1441,267 @@ function showGallery(
 }
 
 
+/* =========================================
+   DELETE ACCOUNT
+========================================= */
+
+async function deleteMyAccount() {
+
+    const user =
+        auth.currentUser;
+
+
+    if (!user) {
+
+        alert(
+            "You must be logged in to delete your account."
+        );
+
+        return;
+
+    }
+
+
+    if (user.isAnonymous) {
+
+        alert(
+            "Anonymous accounts cannot use this account deletion option."
+        );
+
+        return;
+
+    }
+
+
+    const firstConfirmation =
+        confirm(
+            "Are you sure you want to permanently delete your Kmeet account?\n\n" +
+            "Your profile will be removed from Discover and your Kmeet login will be deleted.\n\n" +
+            "This action cannot be undone."
+        );
+
+
+    if (!firstConfirmation) {
+
+        return;
+
+    }
+
+
+    /*
+     * Because Firebase considers account deletion
+     * a security-sensitive operation, we request
+     * the current password and re-authenticate
+     * the user before continuing.
+     */
+
+    if (!user.email) {
+
+        alert(
+            "This account does not have an email/password login."
+        );
+
+        return;
+
+    }
+
+
+    const password =
+        prompt(
+            "For security, enter your current Kmeet password to continue:"
+        );
+
+
+    if (password === null) {
+
+        return;
+
+    }
+
+
+    if (!password.trim()) {
+
+        alert(
+            "Please enter your current password."
+        );
+
+        return;
+
+    }
+
+
+    const originalText =
+        deleteAccountButton.textContent;
+
+
+    deleteAccountButton.disabled =
+        true;
+
+    deleteAccountButton.textContent =
+        "Deleting account...";
+
+
+    try {
+
+        /*
+         * Step 1:
+         * Re-authenticate the current user.
+         */
+
+        const credential =
+            EmailAuthProvider.credential(
+                user.email,
+                password
+            );
+
+
+        await reauthenticateWithCredential(
+            user,
+            credential
+        );
+
+
+        /*
+         * Step 2:
+         * Remove the user's Kmeet profile
+         * from Firestore.
+         *
+         * Discover listens to this collection
+         * with onSnapshot(), so the member will
+         * disappear automatically.
+         */
+
+        await deleteDoc(
+            doc(
+                db,
+                "users",
+                user.uid
+            )
+        );
+
+
+        /*
+         * Step 3:
+         * Delete the Firebase Authentication
+         * account.
+         */
+
+        await deleteUser(user);
+
+
+        /*
+         * The account is now gone.
+         */
+
+        alert(
+            "Your Kmeet account has been deleted successfully."
+        );
+
+
+        window.location.href =
+            "index.html";
+
+
+    } catch (error) {
+
+        console.error(
+            "Kmeet account deletion error:",
+            error
+        );
+
+
+        deleteAccountButton.disabled =
+            false;
+
+        deleteAccountButton.textContent =
+            originalText;
+
+
+        if (
+            error.code ===
+            "auth/wrong-password"
+        ) {
+
+            alert(
+                "The password you entered is incorrect. Your account was not deleted."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            alert(
+                "The password could not be verified. Your account was not deleted."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/requires-recent-login"
+        ) {
+
+            alert(
+                "Firebase requires a recent login before deleting this account. Please log out, log in again, and try once more."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            alert(
+                "There have been too many attempts. Please wait a little while and try again."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            error.code ===
+            "permission-denied"
+        ) {
+
+            alert(
+                "Kmeet could not remove your profile from the database. Your account was not deleted."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "We could not complete the account deletion. Please try again."
+        );
+
+    }
+
+}
+
+
+deleteAccountButton.addEventListener(
+    "click",
+    deleteMyAccount
+);
+
+
 /*
  * Load a profile by Firebase UID.
  *
@@ -1510,10 +1880,11 @@ async function loadProfile(
 
         /*
          * OWNER:
-         * Show Edit Profile.
+         * Show Edit Profile and Delete Account.
          *
          * OTHER MEMBER:
-         * Hide Edit Profile and show Chat.
+         * Hide Edit Profile and Delete Account
+         * and show Chat.
          */
 
         if (isOwner) {
@@ -1523,6 +1894,9 @@ async function loadProfile(
 
             chatButton.style.display =
                 "none";
+
+            deleteAccountArea.style.display =
+                "block";
 
         } else {
 
@@ -1534,6 +1908,9 @@ async function loadProfile(
 
             chatButton.style.display =
                 "inline-flex";
+
+            deleteAccountArea.style.display =
+                "none";
 
         }
 
