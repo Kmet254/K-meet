@@ -286,27 +286,50 @@
       font-size: 0.67rem;
     }
 
+    /* ================================
+       PROFILE ACTIONS
+       ================================ */
+
     .profile-actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr 40px;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
       margin-top: 15px;
     }
 
+    .profile-btn,
     .chat-btn {
-      flex: 1;
+      min-width: 0;
       border: 0;
       border-radius: 10px;
-      padding: 10px 13px;
+      padding: 10px 8px;
       cursor: pointer;
       color: #fff;
-      background: linear-gradient(135deg, #e94f91, #ff6da8);
       font-family: "Poppins", sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 600;
       text-decoration: none;
       text-align: center;
       transition: 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .profile-btn {
+      background: rgba(255,255,255,0.065);
+      border: 1px solid rgba(255,255,255,0.13);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .profile-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,109,168,0.12);
+      border-color: rgba(255,109,168,0.35);
+      color: #ff9bc4;
+    }
+
+    .chat-btn {
+      background: linear-gradient(135deg, #e94f91, #ff6da8);
     }
 
     .chat-btn:hover {
@@ -368,6 +391,15 @@
       .discover-links a {
         font-size: 0.8rem;
       }
+
+      .profile-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .like-btn {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
     }
 
     @media (max-width: 520px) {
@@ -386,6 +418,20 @@
 
       .discover-brand {
         font-size: 1.45rem;
+      }
+
+      .profile-actions {
+        grid-template-columns: 1fr 1fr 40px;
+      }
+
+      .like-btn {
+        grid-column: auto;
+        width: 40px;
+      }
+
+      .profile-btn,
+      .chat-btn {
+        font-size: 0.75rem;
       }
     }
   </style>
@@ -1074,6 +1120,22 @@ function renderProfileCard(profile, index) {
       : "Offline";
 
 
+  /*
+   * IMPORTANT:
+   * View Profile uses the profile ID.
+   *
+   * For real Firebase members this is their
+   * Firebase UID.
+   */
+
+  const profileURL =
+    `profile.html?id=${encodeURIComponent(profile.id)}`;
+
+
+  const chatURL =
+    `chat.html?userId=${encodeURIComponent(profile.id)}`;
+
+
   card.innerHTML = `
 
     <div class="profile-photo-wrap">
@@ -1138,15 +1200,27 @@ function renderProfileCard(profile, index) {
 
       <div class="profile-actions">
 
+        <!-- VIEW PROFILE -->
+        <a
+          class="profile-btn"
+          href="${profileURL}"
+        >
+          <i class="fa-solid fa-user"></i>
+          Profile
+        </a>
+
+
+        <!-- CHAT -->
         <a
           class="chat-btn"
-          href="chat.html?userId=${encodeURIComponent(profile.id)}"
+          href="${chatURL}"
         >
           <i class="fa-solid fa-comment"></i>
           Chat
         </a>
 
 
+        <!-- LIKE -->
         <button
           class="like-btn"
           type="button"
@@ -1335,15 +1409,11 @@ function listenToUsers() {
 
 
       /*
-       * Final count:
+       * Keep the existing count system.
        *
        * 36 permanent profiles
        * +
-       * real Firestore profiles
-       * -
-       * current user's profile
-       *
-       * (current user is already excluded above)
+       * discoverable Firestore profiles.
        */
 
       const finalCount =
@@ -1371,7 +1441,7 @@ function listenToUsers() {
 
 
       /*
-       * Even if Firestore fails,
+       * If Firestore fails,
        * keep the 36 permanent profiles visible.
        */
 
