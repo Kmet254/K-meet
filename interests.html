@@ -1,12 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kmeet - Choose Interests</title>
+  <title>What Brings You Joy? - Kmeet</title>
 
-  <link rel="icon" type="image/jpeg" href="kmeet-logo.jfif.jfif">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <!-- Font Awesome -->
   <link
@@ -26,263 +33,529 @@
     body {
       margin: 0;
       min-height: 100vh;
+
       font-family: "Poppins", Arial, sans-serif;
       color: #fff;
+
       background:
         linear-gradient(
-          rgba(13, 11, 14, 0.82),
-          rgba(13, 11, 14, 0.92)
+          rgba(10, 5, 10, .45),
+          rgba(10, 5, 10, .70)
         ),
-        url("img/bg34.jpg") center/cover fixed no-repeat;
+        url("chat.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+
       background-color: #0d0b0e;
+
+      overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    /* Same soft lighting used on chat.html */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+
+      background:
+        radial-gradient(
+          circle at 18% 18%,
+          rgba(255,190,210,.10),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 82% 78%,
+          rgba(255,90,150,.10),
+          transparent 36%
+        );
     }
 
-    .nav {
+    /* ---------------- NAVBAR ---------------- */
+
+    .navbar {
       width: 100%;
-      min-height: 74px;
-      padding: 0 6%;
+      height: 76px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.10);
-      background: rgba(10, 8, 11, 0.72);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+
+      padding: 0 6%;
+
+      background: rgba(10, 5, 10, .35);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      position: relative;
+      z-index: 5;
     }
 
-    .logo {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 29px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
       color: #fff;
+      text-decoration: none;
+
+      font-family: "Playfair Display", serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: .3px;
     }
 
-    .logo::before {
-      content: "♥";
-      margin-right: 8px;
-      color: #ff4f91;
-      font-size: 23px;
+    .brand-heart {
+      width: 38px;
+      height: 38px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: linear-gradient(
+        135deg,
+        rgba(255,105,160,.95),
+        rgba(255,65,125,.75)
+      );
+
+      box-shadow:
+        0 8px 22px rgba(255,55,125,.22),
+        inset 0 1px 1px rgba(255,255,255,.25);
+
+      color: #fff;
+      font-size: 17px;
     }
 
-    .navlinks {
+    .brand span {
+      color: #ff8db7;
+    }
+
+    .nav-links {
       display: flex;
       align-items: center;
       gap: 28px;
     }
 
-    .navlinks a {
-      color: rgba(255,255,255,0.85);
+    .nav-links a {
+      color: rgba(255,255,255,.82);
+      text-decoration: none;
+
       font-size: 14px;
       font-weight: 500;
-      transition: 0.2s ease;
+
+      transition: .25s ease;
     }
 
-    .navlinks a:hover {
-      color: #ff6fa7;
+    .nav-links a:hover {
+      color: #fff;
     }
+
+    /* ---------------- MAIN ---------------- */
 
     .container {
-      width: min(760px, 92%);
-      margin: 70px auto;
-    }
+      position: relative;
+      z-index: 1;
 
-    .card {
-      border: 1px solid rgba(255,255,255,0.13);
-      border-radius: 24px;
-      background: rgba(24, 19, 25, 0.78);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+      width: min(760px, 92%);
+      margin: 55px auto 70px;
+
+      padding: 42px 42px 40px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.105),
+          rgba(255,255,255,.045)
+        );
+
+      border: 1px solid rgba(255,255,255,.13);
+
+      border-radius: 28px;
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.42),
+        inset 0 1px 0 rgba(255,255,255,.10);
+
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
 
-    .form {
-      padding: 42px;
+    .heading {
+      text-align: center;
+      margin-bottom: 32px;
     }
 
-    h2 {
+    .heading h1 {
       margin: 0 0 10px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 34px;
-      text-align: center;
+
+      font-family: "Playfair Display", serif;
+      font-size: clamp(29px, 5vw, 40px);
+      line-height: 1.2;
+
       color: #fff;
     }
 
-    .small {
-      margin: 0 auto 30px;
-      max-width: 560px;
-      text-align: center;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.68);
-      font-size: 14px;
+    .heading h1 span {
+      color: #ff8eb7;
     }
 
-    .interests {
+    .heading p {
+      margin: 0 auto;
+
+      max-width: 560px;
+
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ---------------- INTEREST GRID ---------------- */
+
+    .interests-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin-bottom: 26px;
     }
 
     .interest {
       position: relative;
+
       display: flex;
       align-items: center;
-      gap: 13px;
-      min-height: 66px;
-      padding: 12px 15px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.055);
-      color: rgba(255,255,255,0.92);
+      gap: 14px;
+
+      min-height: 76px;
+      padding: 13px 15px;
+
+      border-radius: 18px;
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.035)
+        );
+
       cursor: pointer;
-      transition: all 0.22s ease;
-      overflow: hidden;
+
+      transition:
+        transform .22s ease,
+        border-color .22s ease,
+        background .22s ease,
+        box-shadow .22s ease;
     }
 
     .interest:hover {
-      border-color: rgba(255,79,145,0.60);
-      background: rgba(255,79,145,0.10);
       transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+
+      border-color: rgba(255,140,180,.42);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.11),
+          rgba(255,255,255,.05)
+        );
+
+      box-shadow:
+        0 12px 28px rgba(0,0,0,.20);
     }
 
-    /* Hide the default checkbox */
+    /* Hide native checkbox */
     .interest input {
       position: absolute;
       opacity: 0;
       pointer-events: none;
     }
 
-    /* Icon circle */
+    /* ICON CIRCLE */
+
     .interest-icon {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
+      flex: 0 0 48px;
+
+      width: 48px;
+      height: 48px;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50%;
-      background: rgba(255,79,145,0.10);
-      border: 1px solid rgba(255,79,145,0.20);
-      color: #ff6fa7;
-      font-size: 17px;
-      transition: all 0.22s ease;
+
+      border-radius: 15px;
+
+      color: #ff9abd;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,145,185,.13),
+          rgba(255,255,255,.055)
+        );
+
+      border: 1px solid rgba(255,150,190,.18);
+
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.08);
+
+      font-size: 19px;
+
+      transition: .25s ease;
     }
+
+    .interest-icon i {
+      transition: transform .25s ease;
+    }
+
+    .interest:hover .interest-icon i {
+      transform: scale(1.08);
+    }
+
+    /* TEXT */
 
     .interest-name {
       flex: 1;
+
+      color: rgba(255,255,255,.92);
+
       font-size: 14px;
-      font-weight: 500;
-      line-height: 1.3;
+      font-weight: 600;
+
+      line-height: 1.35;
     }
 
-    /* Custom check indicator */
+    /* CHECK BOX */
+
     .interest-check {
-      width: 20px;
-      height: 20px;
-      min-width: 20px;
-      border-radius: 6px;
-      border: 1.5px solid rgba(255,255,255,0.28);
+      width: 22px;
+      height: 22px;
+
+      flex: 0 0 22px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
+      border-radius: 7px;
+
+      border: 1px solid rgba(255,255,255,.24);
+
+      background: rgba(255,255,255,.035);
+
       color: transparent;
+
       font-size: 11px;
-      transition: all 0.2s ease;
+
+      transition: .25s ease;
     }
 
-    .interest:has(input:checked) {
-      border-color: rgba(255,79,145,0.80);
+    /* SELECTED */
+
+    .interest.selected {
+      border-color: rgba(255,120,170,.60);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,105,160,.17),
+          rgba(255,255,255,.055)
+        );
+
+      box-shadow:
+        0 10px 30px rgba(255,60,130,.10),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .interest.selected .interest-icon {
+      color: #fff;
+
       background:
         linear-gradient(
           135deg,
-          rgba(255,79,145,0.15),
-          rgba(217,54,114,0.10)
+          #ff6fa5,
+          #e93f7b
         );
+
+      border-color: rgba(255,255,255,.18);
+
       box-shadow:
-        0 0 0 1px rgba(255,79,145,0.12),
-        0 8px 24px rgba(255,79,145,0.08);
+        0 8px 22px rgba(255,60,130,.25);
     }
 
-    .interest:has(input:checked) .interest-icon {
-      background: linear-gradient(135deg, #ff4f91, #d93672);
+    .interest.selected .interest-icon i {
+      transform: scale(1.06);
+    }
+
+    .interest.selected .interest-check {
+      color: #fff;
+
       border-color: transparent;
-      color: #fff;
-      box-shadow: 0 6px 16px rgba(255,79,145,0.25);
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff78aa,
+          #e83f78
+        );
+
+      box-shadow:
+        0 5px 15px rgba(255,60,130,.20);
     }
 
-    .interest:has(input:checked) .interest-check {
-      background: #ff4f91;
-      border-color: #ff4f91;
-      color: #fff;
-    }
+    /* ---------------- BUTTON ---------------- */
 
-    .interest:has(input:checked) .interest-check i {
-      display: block;
-    }
-
-    .btn {
-      width: 100%;
-      border: 0;
-      border-radius: 14px;
-      padding: 15px 20px;
-      background: linear-gradient(135deg, #ff4f91, #d93672);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 12px 30px rgba(255,79,145,0.22);
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 34px rgba(255,79,145,0.30);
-    }
-
-    .message {
-      margin-bottom: 18px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 14px;
+    .continue-area {
+      margin-top: 30px;
       text-align: center;
     }
 
-    .message.error {
-      color: #ffdce8;
-      background: rgba(220, 50, 90, 0.16);
-      border: 1px solid rgba(255,100,140,0.25);
+    .continue-button {
+      width: 100%;
+      max-width: 360px;
+
+      min-height: 54px;
+
+      border: 0;
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff76aa,
+          #e6427d
+        );
+
+      color: #fff;
+
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 14px 32px rgba(230,55,120,.25),
+        inset 0 1px 1px rgba(255,255,255,.22);
+
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        opacity .22s ease;
     }
 
-    @media (max-width: 600px) {
-      .nav {
+    .continue-button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 18px 38px rgba(230,55,120,.32),
+        inset 0 1px 1px rgba(255,255,255,.22);
+    }
+
+    .continue-button:active {
+      transform: translateY(0);
+    }
+
+    .continue-button:disabled {
+      opacity: .48;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .selection-note {
+      margin-top: 12px;
+
+      color: rgba(255,255,255,.55);
+
+      font-size: 12px;
+    }
+
+    /* ---------------- MOBILE ---------------- */
+
+    @media (max-width: 650px) {
+
+      .navbar {
+        height: 68px;
         padding: 0 5%;
       }
 
-      .navlinks {
+      .brand {
+        font-size: 23px;
+      }
+
+      .brand-heart {
+        width: 34px;
+        height: 34px;
+      }
+
+      .nav-links {
         gap: 16px;
       }
 
+      .nav-links a {
+        font-size: 13px;
+      }
+
       .container {
-        margin: 35px auto;
+        width: 92%;
+        margin: 30px auto 50px;
+
+        padding: 30px 18px 28px;
+
+        border-radius: 23px;
       }
 
-      .form {
-        padding: 28px 20px;
+      .heading {
+        margin-bottom: 25px;
       }
 
-      h2 {
-        font-size: 28px;
+      .heading h1 {
+        font-size: 30px;
       }
 
-      .interests {
+      .heading p {
+        font-size: 13px;
+      }
+
+      .interests-grid {
         grid-template-columns: 1fr;
+        gap: 11px;
+      }
+
+      .interest {
+        min-height: 70px;
+      }
+    }
+
+    @media (max-width: 390px) {
+
+      .nav-links {
+        gap: 11px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+      .container {
+        width: 94%;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .interest-icon {
+        width: 45px;
+        height: 45px;
+        flex-basis: 45px;
       }
     }
   </style>
@@ -290,220 +563,361 @@
 
 <body>
 
-  <nav class="nav">
-    <a class="logo" href="index.html">Kmeet</a>
+  <!-- NAVBAR -->
+  <nav class="navbar">
 
-    <div class="navlinks">
+    <a href="index.html" class="brand">
+      <span class="brand-heart">
+        <i class="fa-solid fa-heart"></i>
+      </span>
+      K<span>meet</span>
+    </a>
+
+    <div class="nav-links">
       <a href="discover.html">Discover</a>
       <a href="login.html">Log In</a>
     </div>
+
   </nav>
 
+
+  <!-- MAIN -->
   <main class="container">
 
-    <section class="card form">
+    <div class="heading">
+      <h1>What Brings You <span>Joy?</span></h1>
 
-      <h2>What are you interested in?</h2>
-
-      <p class="small">
-        Choose at least one. We'll save these with your new profile.
+      <p>
+        Choose the things you enjoy. We'll use your interests to help
+        you discover people who share what you love.
       </p>
-
-      <form id="interestForm">
-
-        <div class="interests">
-
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Music">
-
-            <span class="interest-icon">
-              <i class="fa-solid fa-music"></i>
-            </span>
-
-            <span class="interest-name">Music</span>
-
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+    </div>
 
 
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Sports">
+    <form id="interestsForm">
 
-            <span class="interest-icon">
-              <i class="fa-solid fa-futbol"></i>
-            </span>
+      <div class="interests-grid">
 
-            <span class="interest-name">Sports</span>
+        <!-- MUSIC -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Music">
 
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+          <span class="interest-icon">
+            <i class="fa-solid fa-music"></i>
+          </span>
 
+          <span class="interest-name">
+            Music
+          </span>
 
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Gaming">
-
-            <span class="interest-icon">
-              <i class="fa-solid fa-gamepad"></i>
-            </span>
-
-            <span class="interest-name">Gaming</span>
-
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
 
 
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Cooking">
+        <!-- SPORTS -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Sports">
 
-            <span class="interest-icon">
-              <i class="fa-solid fa-utensils"></i>
-            </span>
+          <span class="interest-icon">
+            <i class="fa-solid fa-futbol"></i>
+          </span>
 
-            <span class="interest-name">Cooking</span>
+          <span class="interest-name">
+            Sports
+          </span>
 
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
-
-
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Travel">
-
-            <span class="interest-icon">
-              <i class="fa-solid fa-plane"></i>
-            </span>
-
-            <span class="interest-name">Travel</span>
-
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
 
 
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Art & Design">
+        <!-- GAMING -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Gaming">
 
-            <span class="interest-icon">
-              <i class="fa-solid fa-palette"></i>
-            </span>
+          <span class="interest-icon">
+            <i class="fa-solid fa-gamepad"></i>
+          </span>
 
-            <span class="interest-name">Art &amp; Design</span>
+          <span class="interest-name">
+            Gaming
+          </span>
 
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
-
-
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Tech & Coding">
-
-            <span class="interest-icon">
-              <i class="fa-solid fa-code"></i>
-            </span>
-
-            <span class="interest-name">Tech &amp; Coding</span>
-
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
 
 
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Fitness">
+        <!-- COOKING -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Cooking">
 
-            <span class="interest-icon">
-              <i class="fa-solid fa-dumbbell"></i>
-            </span>
+          <span class="interest-icon">
+            <i class="fa-solid fa-utensils"></i>
+          </span>
 
-            <span class="interest-name">Fitness</span>
+          <span class="interest-name">
+            Cooking
+          </span>
 
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
-
-
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Movies">
-
-            <span class="interest-icon">
-              <i class="fa-solid fa-film"></i>
-            </span>
-
-            <span class="interest-name">Movies</span>
-
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
 
 
-          <label class="interest">
-            <input type="checkbox" name="interest" value="Reading">
+        <!-- TRAVEL -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Travel">
 
-            <span class="interest-icon">
-              <i class="fa-solid fa-book-open"></i>
-            </span>
+          <span class="interest-icon">
+            <i class="fa-solid fa-plane"></i>
+          </span>
 
-            <span class="interest-name">Reading</span>
+          <span class="interest-name">
+            Travel
+          </span>
 
-            <span class="interest-check">
-              <i class="fa-solid fa-check"></i>
-            </span>
-          </label>
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
 
-        </div>
 
-        <div id="msg"></div>
+        <!-- ART & DESIGN -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Art & Design">
 
-        <button class="btn" type="submit">
-          Continue to Sign Up
+          <span class="interest-icon">
+            <i class="fa-solid fa-palette"></i>
+          </span>
+
+          <span class="interest-name">
+            Art &amp; Design
+          </span>
+
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
+
+
+        <!-- TECH & CODING -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Tech & Coding">
+
+          <span class="interest-icon">
+            <i class="fa-solid fa-code"></i>
+          </span>
+
+          <span class="interest-name">
+            Tech &amp; Coding
+          </span>
+
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
+
+
+        <!-- FITNESS -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Fitness">
+
+          <span class="interest-icon">
+            <i class="fa-solid fa-dumbbell"></i>
+          </span>
+
+          <span class="interest-name">
+            Fitness
+          </span>
+
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
+
+
+        <!-- MOVIES -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Movies">
+
+          <span class="interest-icon">
+            <i class="fa-solid fa-film"></i>
+          </span>
+
+          <span class="interest-name">
+            Movies
+          </span>
+
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
+
+
+        <!-- READING -->
+        <label class="interest">
+          <input type="checkbox" name="interest" value="Reading">
+
+          <span class="interest-icon">
+            <i class="fa-solid fa-book-open"></i>
+          </span>
+
+          <span class="interest-name">
+            Reading
+          </span>
+
+          <span class="interest-check">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </label>
+
+      </div>
+
+
+      <div class="continue-area">
+
+        <button
+          type="submit"
+          class="continue-button"
+          id="continueButton"
+          disabled
+        >
+          Continue
         </button>
 
-      </form>
+        <div class="selection-note" id="selectionNote">
+          Select at least one interest
+        </div>
 
-    </section>
+      </div>
+
+    </form>
 
   </main>
 
+
   <script>
-    document
-      .getElementById("interestForm")
-      .addEventListener("submit", function (e) {
+    const form = document.getElementById("interestsForm");
+    const continueButton = document.getElementById("continueButton");
+    const selectionNote = document.getElementById("selectionNote");
 
-        e.preventDefault();
+    const interestCards = document.querySelectorAll(".interest");
+    const checkboxes = document.querySelectorAll(
+      'input[name="interest"]'
+    );
 
-        const selected = [
-          ...document.querySelectorAll(
-            'input[name="interest"]:checked'
-          )
-        ].map(input => input.value);
 
-        const msg = document.getElementById("msg");
+    function updateSelection() {
 
-        if (!selected.length) {
-          msg.innerHTML =
-            '<div class="message error">Please choose at least one interest.</div>';
-          return;
+      let selected = 0;
+
+      interestCards.forEach(card => {
+
+        const checkbox = card.querySelector("input");
+
+        if (checkbox.checked) {
+          card.classList.add("selected");
+          selected++;
+        } else {
+          card.classList.remove("selected");
         }
 
-        sessionStorage.setItem(
-          "pendingInterests",
-          JSON.stringify(selected)
+      });
+
+
+      if (selected > 0) {
+
+        continueButton.disabled = false;
+
+        selectionNote.textContent =
+          selected === 1
+            ? "1 interest selected"
+            : `${selected} interests selected`;
+
+      } else {
+
+        continueButton.disabled = true;
+
+        selectionNote.textContent =
+          "Select at least one interest";
+      }
+    }
+
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener("change", updateSelection);
+    });
+
+
+    form.addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      const selectedInterests = Array.from(
+        checkboxes
+      )
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+
+      if (selectedInterests.length === 0) {
+        return;
+      }
+
+
+      /*
+        Keep the selected interests temporarily while
+        the user continues to signup.html.
+      */
+      sessionStorage.setItem(
+        "pendingInterests",
+        JSON.stringify(selectedInterests)
+      );
+
+
+      window.location.href = "signup.html";
+    });
+
+
+    /*
+      Restore previously selected interests if the
+      visitor comes back to this page.
+    */
+    try {
+
+      const saved =
+        JSON.parse(
+          sessionStorage.getItem("pendingInterests") || "[]"
         );
 
-        window.location.href = "signup.html";
-      });
+      if (Array.isArray(saved)) {
+
+        checkboxes.forEach(checkbox => {
+
+          checkbox.checked =
+            saved.includes(checkbox.value);
+
+        });
+
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Could not restore saved interests.",
+        error
+      );
+
+    }
+
+
+    updateSelection();
   </script>
 
 </body>
