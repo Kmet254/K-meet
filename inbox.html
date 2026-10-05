@@ -1,1 +1,2206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kmeet - Messages</title>
+
+<link rel="icon"
+      type="image/jpeg"
+      href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: "Poppins", sans-serif;
+    color: white;
+
+    background:
+        linear-gradient(
+            rgba(10,5,12,.84),
+            rgba(20,5,16,.94)
+        ),
+        url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjSXwFU3KGIbZGdueTaSepls7G5L91FnNm9gFntHWF6sj2MvYXZtcJsHxo&s=10")
+        center center / cover fixed no-repeat;
+}
+
+
+/* =========================================
+   SOFT ROMANTIC LIGHT
+========================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(255,67,143,.16),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(255,0,102,.12),
+            transparent 35%
+        );
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+
+    padding:
+        17px 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        rgba(9,6,11,.70);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(16px);
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 27px;
+    font-weight: 700;
+}
+
+
+.logo-heart {
+    color: #ff4f9a;
+
+    font-size: 25px;
+}
+
+
+.nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 21px;
+}
+
+
+.nav-links a {
+    color:
+        rgba(255,255,255,.80);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition:
+        color .2s ease;
+}
+
+
+.nav-links a:hover {
+    color: #ff76ae;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.container {
+    position: relative;
+    z-index: 2;
+
+    width:
+        min(850px, 94%);
+
+    margin:
+        38px auto 70px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+    margin-bottom: 20px;
+
+    padding:
+        25px 27px;
+
+    border-radius: 25px;
+
+    background:
+        rgba(25,12,24,.78);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.35);
+}
+
+
+.page-title-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+.page-title {
+    margin: 0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 31px;
+}
+
+
+.page-subtitle {
+    margin:
+        6px 0 0;
+
+    color:
+        rgba(255,255,255,.52);
+
+    font-size: 12px;
+}
+
+
+.message-icon {
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,65,143,.13);
+
+    border:
+        1px solid rgba(255,89,156,.28);
+
+    color:
+        #ff79b0;
+
+    font-size: 21px;
+}
+
+
+/* =========================================
+   INBOX CARD
+========================================= */
+
+.inbox-card {
+    overflow: hidden;
+
+    border-radius: 27px;
+
+    background:
+        rgba(19,10,18,.80);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    backdrop-filter:
+        blur(19px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+}
+
+
+/* =========================================
+   TOOLBAR
+========================================= */
+
+.toolbar {
+    padding:
+        16px 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+}
+
+
+.conversation-count {
+    color:
+        rgba(255,255,255,.48);
+
+    font-size: 11px;
+}
+
+
+.refresh-button {
+    border: 0;
+
+    padding:
+        8px 13px;
+
+    border-radius: 18px;
+
+    color:
+        rgba(255,255,255,.75);
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        all .2s ease;
+}
+
+
+.refresh-button:hover {
+    background:
+        rgba(255,65,143,.13);
+
+    color:
+        #ff9bc3;
+}
+
+
+/* =========================================
+   CONVERSATION LIST
+========================================= */
+
+.conversation-list {
+    width: 100%;
+}
+
+
+.conversation {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    width: 100%;
+
+    padding:
+        17px 21px;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.055);
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+.conversation:last-child {
+    border-bottom: 0;
+}
+
+
+.conversation:hover {
+    background:
+        rgba(255,67,143,.075);
+}
+
+
+.conversation.unread {
+    background:
+        rgba(255,67,143,.075);
+}
+
+
+.conversation-photo {
+    position: relative;
+
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,67,143,.25),
+            rgba(255,255,255,.05)
+        );
+
+    border:
+        2px solid rgba(255,82,151,.35);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.conversation-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.conversation-initial {
+    font-family:
+        "Playfair Display",
+        serif;
+
+    color:
+        #ff72ad;
+
+    font-size: 25px;
+}
+
+
+.online-dot {
+    position: absolute;
+
+    right: 1px;
+    bottom: 1px;
+
+    width: 13px;
+    height: 13px;
+
+    border-radius: 50%;
+
+    background:
+        #555;
+
+    border:
+        2px solid #241321;
+}
+
+
+.online-dot.online {
+    background:
+        #55dc93;
+
+    box-shadow:
+        0 0 9px rgba(85,220,147,.75);
+}
+
+
+.conversation-content {
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.conversation-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+
+.conversation-name {
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color:
+        rgba(255,255,255,.94);
+}
+
+
+.conversation-time {
+    flex-shrink: 0;
+
+    color:
+        rgba(255,255,255,.36);
+
+    font-size: 9px;
+}
+
+
+.conversation-preview {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 5px;
+
+    min-width: 0;
+
+    color:
+        rgba(255,255,255,.50);
+
+    font-size: 11px;
+}
+
+
+.preview-direction {
+    flex-shrink: 0;
+
+    color:
+        #ff83b4;
+
+    font-size: 10px;
+}
+
+
+.preview-text {
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.unread .conversation-name {
+    color: white;
+}
+
+
+.unread .conversation-preview {
+    color:
+        rgba(255,255,255,.78);
+}
+
+
+.unread-badge {
+    flex-shrink: 0;
+
+    min-width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        #ff4f9a;
+
+    box-shadow:
+        0 0 9px rgba(255,79,154,.55);
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+    padding:
+        75px 25px;
+
+    text-align: center;
+}
+
+
+.empty-heart {
+    width: 75px;
+    height: 75px;
+
+    margin:
+        0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,65,143,.10);
+
+    border:
+        1px solid rgba(255,89,156,.22);
+
+    color:
+        #ff609f;
+
+    font-size: 30px;
+
+    box-shadow:
+        0 0 35px rgba(255,65,143,.10);
+}
+
+
+.empty-title {
+    margin: 0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 23px;
+}
+
+
+.empty-text {
+    max-width: 410px;
+
+    margin:
+        9px auto 22px;
+
+    color:
+        rgba(255,255,255,.45);
+
+    line-height: 1.6;
+
+    font-size: 12px;
+}
+
+
+.discover-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        11px 21px;
+
+    border-radius: 23px;
+
+    color: white;
+
+    text-decoration: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3f8e,
+            #ff6aab
+        );
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 10px 25px rgba(255,63,142,.18);
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loading-state {
+    padding:
+        65px 20px;
+
+    text-align: center;
+
+    color:
+        rgba(255,255,255,.52);
+
+    font-size: 12px;
+}
+
+
+.spinner {
+    width: 28px;
+    height: 28px;
+
+    margin:
+        0 auto 14px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid rgba(255,255,255,.12);
+
+    border-top-color:
+        #ff5b9f;
+
+    animation:
+        spin .8s linear infinite;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.error-state {
+    padding:
+        55px 25px;
+
+    text-align: center;
+
+    color:
+        #ff9cab;
+
+    font-size: 12px;
+}
+
+
+.error-icon {
+    margin-bottom: 12px;
+
+    font-size: 28px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px) {
+
+    .navbar {
+        padding:
+            15px 5%;
+    }
+
+
+    .logo {
+        font-size: 24px;
+    }
+
+
+    .nav-links {
+        gap: 13px;
+    }
+
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+
+    .container {
+        width: 94%;
+
+        margin-top: 23px;
+    }
+
+
+    .page-header {
+        padding:
+            21px 19px;
+
+        border-radius: 22px;
+    }
+
+
+    .page-title {
+        font-size: 27px;
+    }
+
+
+    .message-icon {
+        width: 44px;
+        height: 44px;
+
+        font-size: 18px;
+    }
+
+
+    .conversation {
+        padding:
+            15px 15px;
+
+        gap: 12px;
+    }
+
+
+    .conversation-photo {
+        width: 52px;
+        height: 52px;
+    }
+
+
+    .conversation-name {
+        font-size: 13px;
+    }
+
+
+    .conversation-preview {
+        font-size: 10px;
+    }
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <a class="logo"
+       href="index.html">
+
+        <span class="logo-heart">
+            ♥
+        </span>
+
+        <span>
+            Kmeet
+        </span>
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="discover.html">
+            Discover
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+
+    <section class="page-header">
+
+        <div class="page-title-row">
+
+            <div>
+
+                <h1 class="page-title">
+                    Messages
+                </h1>
+
+                <p class="page-subtitle">
+                    Your Kmeet conversations
+                </p>
+
+            </div>
+
+
+            <div class="message-icon">
+                💌
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="inbox-card">
+
+        <div class="toolbar">
+
+            <span id="conversationCount"
+                  class="conversation-count">
+                Loading conversations...
+            </span>
+
+
+            <button id="refreshButton"
+                    class="refresh-button"
+                    type="button">
+
+                ↻ Refresh
+
+            </button>
+
+        </div>
+
+
+        <div id="conversationList"
+             class="conversation-list">
+
+            <div class="loading-state">
+
+                <div class="spinner"></div>
+
+                Loading your messages...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script type="module">
+
+import {
+
+    auth,
+
+    db,
+
+    onAuthStateChanged,
+
+    doc,
+
+    getDoc,
+
+    collection,
+
+    query,
+
+    where,
+
+    getDocs
+
+} from "./firebase-config.js";
+
+
+import {
+
+    getDatabase,
+
+    ref,
+    onValue
+
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const conversationList =
+    document.getElementById(
+        "conversationList"
+    );
+
+
+const conversationCount =
+    document.getElementById(
+        "conversationCount"
+    );
+
+
+const refreshButton =
+    document.getElementById(
+        "refreshButton"
+    );
+
+
+/* =========================================
+   DATABASE
+========================================= */
+
+const realtimeDB =
+    getDatabase();
+
+
+let currentUser =
+    null;
+
+
+/* =========================================
+   CACHE
+========================================= */
+
+const profileCache =
+    new Map();
+
+
+const presenceCache =
+    new Map();
+
+
+/* =========================================
+   TIME
+========================================= */
+
+function timestampValue(value) {
+
+    if (!value) {
+        return 0;
+    }
+
+
+    if (
+        typeof value.toMillis ===
+        "function"
+    ) {
+
+        return value.toMillis();
+
+    }
+
+
+    if (
+        typeof value.seconds ===
+        "number"
+    ) {
+
+        return value.seconds * 1000;
+
+    }
+
+
+    if (value instanceof Date) {
+
+        return value.getTime();
+
+    }
+
+
+    const result =
+        new Date(value).getTime();
+
+
+    return Number.isNaN(result)
+        ? 0
+        : result;
+
+}
+
+
+function formatTime(value) {
+
+    const timestamp =
+        timestampValue(value);
+
+
+    if (!timestamp) {
+        return "";
+    }
+
+
+    const date =
+        new Date(timestamp);
+
+
+    const now =
+        new Date();
+
+
+    const difference =
+        now.getTime() -
+        timestamp;
+
+
+    if (
+        difference <
+        60 * 1000
+    ) {
+
+        return "Just now";
+
+    }
+
+
+    if (
+        difference <
+        60 * 60 * 1000
+    ) {
+
+        return (
+            Math.floor(
+                difference /
+                (60 * 1000)
+            ) +
+            "m"
+        );
+
+    }
+
+
+    if (
+        date.toDateString() ===
+        now.toDateString()
+    ) {
+
+        return date.toLocaleTimeString(
+            [],
+            {
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+
+    const yesterday =
+        new Date(now);
+
+    yesterday.setDate(
+        yesterday.getDate() - 1
+    );
+
+
+    if (
+        date.toDateString() ===
+        yesterday.toDateString()
+    ) {
+
+        return "Yesterday";
+
+    }
+
+
+    return date.toLocaleDateString(
+        [],
+        {
+            day: "numeric",
+            month: "short"
+        }
+    );
+
+}
+
+
+/* =========================================
+   PROFILE PHOTO
+========================================= */
+
+function getPhoto(data) {
+
+    return (
+
+        data.photoURL ||
+
+        data.profilePhoto ||
+
+        data.photo ||
+
+        data.avatar ||
+
+        data.profileImage ||
+
+        data.image ||
+
+        ""
+
+    );
+
+}
+
+
+function getName(data) {
+
+    return (
+
+        data.name ||
+
+        data.username ||
+
+        data.displayName ||
+
+        "Kmeet Member"
+
+    );
+
+}
+
+
+/* =========================================
+   LOAD USER PROFILE
+========================================= */
+
+async function loadUserProfile(uid) {
+
+    if (
+        profileCache.has(uid)
+    ) {
+
+        return profileCache.get(uid);
+
+    }
+
+
+    try {
+
+        const snapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    uid
+                )
+            );
+
+
+        if (
+            snapshot.exists()
+        ) {
+
+            const data =
+                snapshot.data();
+
+
+            profileCache.set(
+                uid,
+                data
+            );
+
+
+            return data;
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Could not load profile:",
+            uid,
+            error
+        );
+
+    }
+
+
+    const fallback = {
+
+        name:
+            "Kmeet Member",
+
+        photoURL:
+            ""
+
+    };
+
+
+    profileCache.set(
+        uid,
+        fallback
+    );
+
+
+    return fallback;
+
+}
+
+
+/* =========================================
+   PRESENCE
+========================================= */
+
+function watchPresence(uid) {
+
+    if (
+        presenceCache.has(uid)
+    ) {
+
+        return;
+
+    }
+
+
+    const presenceRef =
+        ref(
+            realtimeDB,
+            `status/${uid}`
+        );
+
+
+    onValue(
+        presenceRef,
+
+        snapshot => {
+
+            const value =
+                snapshot.val();
+
+
+            const online =
+                !!value &&
+                value.state ===
+                    "online";
+
+
+            presenceCache.set(
+                uid,
+                online
+            );
+
+
+            updatePresenceDots(
+                uid,
+                online
+            );
+
+        },
+
+        error => {
+
+            console.warn(
+                "Presence error:",
+                error
+            );
+
+        }
+    );
+
+}
+
+
+function updatePresenceDots(
+    uid,
+    online
+) {
+
+    document
+        .querySelectorAll(
+            `[data-presence-uid="${uid}"]`
+        )
+        .forEach(
+            dot => {
+
+                dot.classList.toggle(
+                    "online",
+                    online
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   CONVERSATION ID
+========================================= */
+
+function getOtherUserId(
+    conversationId
+) {
+
+    if (
+        !conversationId
+    ) {
+
+        return null;
+
+    }
+
+
+    const parts =
+        conversationId.split("_");
+
+
+    if (
+        parts.length !== 2
+    ) {
+
+        return null;
+
+    }
+
+
+    return parts[0] ===
+        currentUser.uid
+
+        ? parts[1]
+
+        : parts[0];
+
+}
+
+
+/* =========================================
+   GET LATEST MESSAGE
+========================================= */
+
+async function getLatestMessage(
+    conversationId
+) {
+
+    try {
+
+        const messagesRef =
+            collection(
+                db,
+                "conversations",
+                conversationId,
+                "messages"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                messagesRef
+            );
+
+
+        if (
+            snapshot.empty
+        ) {
+
+            return null;
+
+        }
+
+
+        let latest =
+            null;
+
+
+        snapshot.forEach(
+            item => {
+
+                const data =
+                    item.data();
+
+
+                if (
+                    !latest ||
+                    timestampValue(
+                        data.createdAt
+                    ) >
+                    timestampValue(
+                        latest.createdAt
+                    )
+                ) {
+
+                    latest = {
+
+                        id:
+                            item.id,
+
+                        ...data
+
+                    };
+
+                }
+
+            }
+        );
+
+
+        return latest;
+
+    } catch (error) {
+
+        console.warn(
+            "Could not read messages:",
+            conversationId,
+            error
+        );
+
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================
+   UNREAD SYSTEM
+========================================= */
+
+/*
+ * The current chat structure does not
+ * require a new Firestore field for this.
+ *
+ * We keep the last time the user opened
+ * each conversation in localStorage.
+ */
+
+function getSeenTime(
+    conversationId
+) {
+
+    const value =
+        localStorage.getItem(
+            `kmeet_seen_${conversationId}`
+        );
+
+
+    return value
+        ? Number(value)
+        : 0;
+
+}
+
+
+function markConversationSeen(
+    conversationId
+) {
+
+    localStorage.setItem(
+        `kmeet_seen_${conversationId}`,
+        String(Date.now())
+    );
+
+}
+
+
+/* =========================================
+   CREATE CONVERSATION ROW
+========================================= */
+
+async function createConversationRow(
+    conversation
+) {
+
+    const otherUid =
+        getOtherUserId(
+            conversation.id
+        );
+
+
+    if (!otherUid) {
+        return null;
+    }
+
+
+    const profile =
+        await loadUserProfile(
+            otherUid
+        );
+
+
+    watchPresence(
+        otherUid
+    );
+
+
+    const latest =
+        await getLatestMessage(
+            conversation.id
+        );
+
+
+    if (!latest) {
+
+        return null;
+
+    }
+
+
+    const latestTime =
+        timestampValue(
+            latest.createdAt
+        );
+
+
+    const seenTime =
+        getSeenTime(
+            conversation.id
+        );
+
+
+    const unread =
+        latest.senderId !==
+            currentUser.uid
+        &&
+        latestTime > seenTime;
+
+
+    const row =
+        document.createElement(
+            "a"
+        );
+
+
+    row.className =
+        "conversation";
+
+
+    if (unread) {
+
+        row.classList.add(
+            "unread"
+        );
+
+    }
+
+
+    row.href =
+        `chat.html?userId=${encodeURIComponent(otherUid)}`;
+
+
+    row.dataset.conversationId =
+        conversation.id;
+
+
+    const photo =
+        getPhoto(profile);
+
+
+    const name =
+        getName(profile);
+
+
+    const firstLetter =
+        name
+            .trim()
+            .charAt(0)
+            .toUpperCase() ||
+        "K";
+
+
+    const online =
+        presenceCache.get(
+            otherUid
+        ) === true;
+
+
+    const direction =
+        latest.senderId ===
+            currentUser.uid
+
+            ? "You:"
+
+            : "";
+
+
+    const preview =
+        latest.text ||
+        "New message";
+
+
+    row.innerHTML = `
+
+        <div class="conversation-photo">
+
+            ${
+                photo
+
+                    ? `
+                        <img
+                            src="${escapeHTML(photo)}"
+                            alt="${escapeHTML(name)}"
+                        >
+                      `
+
+                    : `
+                        <span class="conversation-initial">
+                            ${escapeHTML(firstLetter)}
+                        </span>
+                      `
+            }
+
+            <span
+                class="online-dot ${
+                    online
+                        ? "online"
+                        : ""
+                }"
+                data-presence-uid="${escapeHTML(otherUid)}">
+            </span>
+
+        </div>
+
+
+        <div class="conversation-content">
+
+            <div class="conversation-top">
+
+                <span class="conversation-name">
+                    ${escapeHTML(name)}
+                </span>
+
+                <span class="conversation-time">
+                    ${escapeHTML(
+                        formatTime(
+                            latest.createdAt
+                        )
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="conversation-preview">
+
+                <span class="preview-direction">
+                    ${escapeHTML(direction)}
+                </span>
+
+                <span class="preview-text">
+                    ${escapeHTML(preview)}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        ${
+            unread
+
+                ? `
+                    <span
+                        class="unread-badge"
+                        title="New message">
+                    </span>
+                  `
+
+                : ""
+        }
+
+    `;
+
+
+    row.addEventListener(
+        "click",
+        () => {
+
+            markConversationSeen(
+                conversation.id
+            );
+
+        }
+    );
+
+
+    const image =
+        row.querySelector(
+            ".conversation-photo img"
+        );
+
+
+    if (image) {
+
+        image.onerror =
+            () => {
+
+                image.style.display =
+                    "none";
+
+            };
+
+    }
+
+
+    return row;
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================
+   LOAD CONVERSATIONS
+========================================= */
+
+async function loadInbox() {
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    conversationList.innerHTML = `
+
+        <div class="loading-state">
+
+            <div class="spinner"></div>
+
+            Checking your messages...
+
+        </div>
+
+    `;
+
+
+    conversationCount.textContent =
+        "Loading conversations...";
+
+
+    try {
+
+        /*
+         * Conversations where the current
+         * user started the conversation.
+         */
+
+        const sentQuery =
+            query(
+                collection(
+                    db,
+                    "conversations"
+                ),
+                where(
+                    "initiatorId",
+                    "==",
+                    currentUser.uid
+                )
+            );
+
+
+        /*
+         * Conversations where the current
+         * user is the receiver.
+         */
+
+        const receivedQuery =
+            query(
+                collection(
+                    db,
+                    "conversations"
+                ),
+                where(
+                    "receiverId",
+                    "==",
+                    currentUser.uid
+                )
+            );
+
+
+        const [
+            sentSnapshot,
+            receivedSnapshot
+        ] = await Promise.all([
+
+            getDocs(
+                sentQuery
+            ),
+
+            getDocs(
+                receivedQuery
+            )
+
+        ]);
+
+
+        const conversationMap =
+            new Map();
+
+
+        sentSnapshot.forEach(
+            item => {
+
+                conversationMap.set(
+                    item.id,
+                    {
+                        id:
+                            item.id,
+
+                        ...item.data()
+
+                    }
+                );
+
+            }
+        );
+
+
+        receivedSnapshot.forEach(
+            item => {
+
+                conversationMap.set(
+                    item.id,
+                    {
+                        id:
+                            item.id,
+
+                        ...item.data()
+
+                    }
+                );
+
+            }
+        );
+
+
+        const conversations =
+            Array.from(
+                conversationMap.values()
+            );
+
+
+        if (
+            !conversations.length
+        ) {
+
+            showEmptyState();
+
+            return;
+
+        }
+
+
+        /*
+         * Newest conversation activity
+         * will be determined after the
+         * latest messages are loaded.
+         */
+
+        const rows = [];
+
+
+        for (
+            const conversation
+            of conversations
+        ) {
+
+            const row =
+                await createConversationRow(
+                    conversation
+                );
+
+
+            if (row) {
+
+                const latest =
+                    await getLatestMessage(
+                        conversation.id
+                    );
+
+
+                rows.push({
+
+                    row,
+
+                    time:
+                        timestampValue(
+                            latest &&
+                            latest.createdAt
+                        )
+
+                });
+
+            }
+
+        }
+
+
+        rows.sort(
+            (a, b) =>
+                b.time -
+                a.time
+        );
+
+
+        conversationList.innerHTML =
+            "";
+
+
+        rows.forEach(
+            item => {
+
+                conversationList.appendChild(
+                    item.row
+                );
+
+            }
+        );
+
+
+        if (!rows.length) {
+
+            showEmptyState();
+
+            return;
+
+        }
+
+
+        conversationCount.textContent =
+
+            `${rows.length} conversation` +
+
+            (
+                rows.length === 1
+                    ? ""
+                    : "s"
+            );
+
+    } catch (error) {
+
+        console.error(
+            "Kmeet inbox error:",
+            error
+        );
+
+
+        conversationCount.textContent =
+            "Messages unavailable";
+
+
+        conversationList.innerHTML = `
+
+            <div class="error-state">
+
+                <div class="error-icon">
+                    ⚠️
+                </div>
+
+                <div>
+                    Kmeet could not load your messages.
+                </div>
+
+                <div style="
+                    margin-top:8px;
+                    color:rgba(255,255,255,.38);
+                    font-size:10px;
+                ">
+
+                    Please check your Firestore rules
+                    and try again.
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+function showEmptyState() {
+
+    conversationCount.textContent =
+        "No conversations yet";
+
+
+    conversationList.innerHTML = `
+
+        <div class="empty-state">
+
+            <div class="empty-heart">
+                💌
+            </div>
+
+            <h2 class="empty-title">
+                Your inbox is waiting
+            </h2>
+
+            <p class="empty-text">
+
+                When you send or receive a message
+                on Kmeet, your conversations will
+                appear here.
+
+            </p>
+
+            <a
+                class="discover-button"
+                href="discover.html">
+
+                Discover People
+
+            </a>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   REFRESH
+========================================= */
+
+refreshButton.addEventListener(
+    "click",
+    async () => {
+
+        refreshButton.disabled =
+            true;
+
+        refreshButton.textContent =
+            "Refreshing...";
+
+
+        profileCache.clear();
+
+
+        try {
+
+            await loadInbox();
+
+        } finally {
+
+            refreshButton.disabled =
+                false;
+
+            refreshButton.textContent =
+                "↻ Refresh";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   AUTH
+========================================= */
+
+onAuthStateChanged(
+    auth,
+
+    async user => {
+
+        if (
+            !user ||
+            user.isAnonymous
+        ) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        await loadInbox();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
