@@ -96,6 +96,7 @@ body::before {
 .nav-links {
     display: flex;
     gap: 22px;
+    align-items: center;
 }
 
 .nav-links a {
@@ -108,6 +109,11 @@ body::before {
     color: #ff76ae;
 }
 
+
+/* =========================================
+   CONTAINER
+========================================= */
+
 .container {
     position: relative;
     z-index: 2;
@@ -115,6 +121,11 @@ body::before {
     width: min(850px, 92%);
     margin: 45px auto 70px;
 }
+
+
+/* =========================================
+   PROFILE CARD
+========================================= */
 
 .profile-card {
     background: rgba(25,13,23,.80);
@@ -214,6 +225,11 @@ body::before {
         0 0 10px rgba(85,220,147,.7);
 }
 
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
 .actions {
     display: flex;
     justify-content: center;
@@ -233,6 +249,13 @@ body::before {
 
     font-size: 13px;
     font-weight: 600;
+
+    transition:
+        all .2s ease;
+}
+
+.action:hover {
+    transform: translateY(-1px);
 }
 
 .edit {
@@ -244,6 +267,42 @@ body::before {
         1px solid rgba(255,89,156,.35);
 }
 
+
+/* =========================================
+   MESSAGES BUTTON
+========================================= */
+
+.inbox {
+    color: #ffd2e4;
+
+    background:
+        rgba(255,67,143,.13);
+
+    border:
+        1px solid rgba(255,89,156,.35);
+
+    box-shadow:
+        0 7px 22px rgba(255,65,143,.08);
+}
+
+.inbox:hover {
+    color: white;
+
+    background:
+        rgba(255,67,143,.22);
+
+    border-color:
+        rgba(255,110,170,.52);
+
+    box-shadow:
+        0 9px 27px rgba(255,65,143,.14);
+}
+
+
+/* =========================================
+   CHAT BUTTON
+========================================= */
+
 .chat {
     color: white;
 
@@ -253,6 +312,14 @@ body::before {
             #ff3f8e,
             #ff6aab
         );
+
+    box-shadow:
+        0 8px 22px rgba(255,63,142,.16);
+}
+
+.chat:hover {
+    box-shadow:
+        0 10px 28px rgba(255,63,142,.25);
 }
 
 
@@ -328,6 +395,11 @@ body::before {
     line-height:
         1.5;
 }
+
+
+/* =========================================
+   SECTIONS
+========================================= */
 
 .section {
     margin-top: 35px;
@@ -593,7 +665,28 @@ body::before {
 }
 
 
+/* =========================================
+   MOBILE
+========================================= */
+
 @media(max-width:650px) {
+
+    .navbar {
+        padding:
+            16px 5%;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-links {
+        gap: 13px;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
 
     .profile-card {
         padding: 23px 18px;
@@ -617,6 +710,13 @@ body::before {
             repeat(3,1fr);
     }
 
+    .action {
+        padding:
+            10px 15px;
+
+        font-size: 12px;
+    }
+
 }
 
 </style>
@@ -624,6 +724,7 @@ body::before {
 </head>
 
 <body>
+
 
 <header class="navbar">
 
@@ -639,10 +740,19 @@ body::before {
 
     </a>
 
+
     <nav class="nav-links">
 
         <a href="discover.html">
             Discover
+        </a>
+
+        <a id="navMessages"
+           href="inbox.html"
+           style="display:none;">
+
+            Messages
+
         </a>
 
         <a href="profile.html">
@@ -686,7 +796,9 @@ body::before {
 
         <div id="profileName"
              class="name">
+
             Kmeet Member
+
         </div>
 
 
@@ -698,7 +810,8 @@ body::before {
         <div class="status">
 
             <span id="statusDot"
-                  class="status-dot"></span>
+                  class="status-dot">
+            </span>
 
             <span id="statusText">
                 Checking status...
@@ -716,6 +829,17 @@ body::before {
                 ✏️ Edit Profile
 
             </a>
+
+
+            <a id="inboxButton"
+               class="action inbox"
+               href="inbox.html"
+               style="display:none;">
+
+                💌 Messages
+
+            </a>
+
 
             <a id="chatButton"
                class="action chat"
@@ -839,7 +963,9 @@ body::before {
 
             <span id="galleryCount"
                   class="gallery-count">
+
                 0 photos
+
             </span>
 
         </div>
@@ -982,8 +1108,14 @@ const closeLightbox =
 const editButton =
     document.getElementById("editButton");
 
+const inboxButton =
+    document.getElementById("inboxButton");
+
 const chatButton =
     document.getElementById("chatButton");
+
+const navMessages =
+    document.getElementById("navMessages");
 
 const statusText =
     document.getElementById("statusText");
@@ -1543,12 +1675,6 @@ async function startOwnPresence(
             );
 
 
-        /*
-         * Firebase will automatically
-         * change this member to offline
-         * when the connection disappears.
-         */
-
         await onDisconnect(
             presenceRef
         ).set({
@@ -1561,10 +1687,6 @@ async function startOwnPresence(
 
         });
 
-
-        /*
-         * Immediately mark the member online.
-         */
 
         await set(
             presenceRef,
@@ -1657,11 +1779,6 @@ function watchProfilePresence(
                 const presence =
                     snapshot.val();
 
-
-                /*
-                 * Realtime Database is now
-                 * the source of truth.
-                 */
 
                 const online =
                     !!presence &&
@@ -1849,11 +1966,6 @@ async function deleteMyAccount() {
         );
 
 
-        /*
-         * Mark presence offline before
-         * deleting the Firebase account.
-         */
-
         try {
 
             await set(
@@ -1885,10 +1997,6 @@ async function deleteMyAccount() {
         }
 
 
-        /*
-         * Remove Firestore profile.
-         */
-
         await deleteDoc(
 
             doc(
@@ -1899,10 +2007,6 @@ async function deleteMyAccount() {
 
         );
 
-
-        /*
-         * Delete Firebase Auth account.
-         */
 
         await deleteUser(
             user
@@ -2075,11 +2179,6 @@ async function loadProfile(
             );
 
 
-        /*
-         * Only the owner can rotate
-         * their own photos.
-         */
-
         if (isOwner) {
 
             currentPhoto =
@@ -2188,14 +2287,22 @@ async function loadProfile(
         );
 
 
-        /*
-         * Owner controls.
-         */
+        /* =========================================
+           OWNER / OTHER PROFILE CONTROLS
+        ========================================= */
 
         if (isOwner) {
 
             editButton.style.display =
                 "inline-flex";
+
+
+            inboxButton.style.display =
+                "inline-flex";
+
+
+            navMessages.style.display =
+                "inline-block";
 
 
             chatButton.style.display =
@@ -2208,6 +2315,14 @@ async function loadProfile(
         } else {
 
             editButton.style.display =
+                "none";
+
+
+            inboxButton.style.display =
+                "none";
+
+
+            navMessages.style.display =
                 "none";
 
 
@@ -2224,19 +2339,6 @@ async function loadProfile(
 
         }
 
-
-        /*
-         * IMPORTANT:
-         *
-         * Do NOT use:
-         *
-         * data.online
-         * data.status
-         * data.isOnline
-         *
-         * Realtime Database controls
-         * the online/offline status.
-         */
 
         watchProfilePresence(
             profileId
@@ -2357,11 +2459,6 @@ onAuthStateChanged(
 
         try {
 
-            /*
-             * Normal logged-in members
-             * establish their presence.
-             */
-
             if (
                 user &&
                 !user.isAnonymous
@@ -2374,11 +2471,6 @@ onAuthStateChanged(
             }
 
 
-            /*
-             * If Discover supplied a profile ID,
-             * load that profile.
-             */
-
             if (requestedProfileId) {
 
                 await loadProfile(
@@ -2390,13 +2482,6 @@ onAuthStateChanged(
 
             }
 
-
-            /*
-             * No profile ID means:
-             * "my profile".
-             *
-             * Anonymous visitors must log in.
-             */
 
             if (
                 !user ||
