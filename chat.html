@@ -988,6 +988,19 @@ let demoMessages = [];
 let conversationInitiatorId = null;
 
 
+/*
+  IMPORTANT:
+
+  This tracks whether the Firestore conversation
+  document already exists.
+
+  A brand-new conversation must create the parent
+  document BEFORE the message listener/message write.
+*/
+
+let conversationExists = false;
+
+
 /* =====================================================
    KMEET RULES
 ===================================================== */
@@ -1815,8 +1828,40 @@ async function getConversationData(){
     parentData =
       conversationSnap.data();
 
+    conversationExists =
+      true;
+
     conversationInitiatorId =
       parentData.initiatorId || null;
+
+  }else{
+
+    /*
+      VERY IMPORTANT:
+
+      Do NOT query the messages subcollection
+      when the parent conversation does not exist.
+
+      The Firestore rules for messages use the
+      parent conversation for authorization.
+
+      A brand-new conversation therefore starts
+      with an empty message list.
+    */
+
+    conversationExists =
+      false;
+
+    conversationInitiatorId =
+      null;
+
+    return {
+
+      parentData:null,
+
+      existingMessages:[]
+
+    };
 
   }
 
@@ -1855,23 +1900,12 @@ async function getConversationData(){
 
   }catch(error){
 
-    /*
-      A brand-new conversation has no parent/messages yet.
-      We allow the sender to create it.
-    */
+    console.error(
+      "Existing messages read failed:",
+      error
+    );
 
-    if(
-      !parentData &&
-      existingMessages.length === 0
-    ){
-
-      existingMessages = [];
-
-    }else{
-
-      throw error;
-
-    }
+    throw error;
 
   }
 
@@ -1879,8 +1913,6 @@ async function getConversationData(){
   /*
     If the parent does not have initiatorId,
     use the first actual message.
-
-    This is only a fallback for older conversations.
   */
 
   if(
@@ -1943,11 +1975,6 @@ function updateReceiverCounter(
 
   }
 
-
-  /*
-    Only the person who did NOT start
-    the conversation is the receiver.
-  */
 
   const initiatorId =
     conversationInitiatorId;
@@ -2013,21 +2040,6 @@ function updateReceiverCounter(
       "Your 3 free replies have been used. Pay KSh 11 to continue.";
 
   }
-
-}
-
-
-/* =====================================================
-   EXISTING MESSAGES
-===================================================== */
-
-async function getExistingMessages(){
-
-  const data =
-    await getConversationData();
-
-
-  return data.existingMessages;
 
 }
 
@@ -2121,6 +2133,28 @@ function startMessages(){
   }
 
 
+  /*
+    Do not start the listener until the
+    conversation parent actually exists.
+  */
+
+  if(!conversationExists){
+
+    return;
+
+  }
+
+
+  if(unsubscribeMessages){
+
+    unsubscribeMessages();
+
+    unsubscribeMessages =
+      null;
+
+  }
+
+
   conversationId =
     getConversationId();
 
@@ -2158,11 +2192,6 @@ function startMessages(){
           );
 
 
-        /*
-          Keep the conversation role based
-          on the actual first message.
-        */
-
         if(
           !conversationInitiatorId &&
           items.length
@@ -2194,11 +2223,6 @@ function startMessages(){
         );
 
 
-        /*
-          If current user is the original
-          sender, show sender information.
-        */
-
         if(
           conversationInitiatorId ===
           currentUser.uid
@@ -2220,12 +2244,214 @@ function startMessages(){
 
 
         showError(
-          "The chat interface is open, but messages could not be loaded. Please check your Firebase Firestore rules."
+          "Messages could not be loaded. Firebase rejected the message listener. Please check the Firestore rules."
         );
 
       }
 
     );
+
+}
+
+
+/* =====================================================
+   CREATE / UPDATE CONVERSATION
+===================================================== */
+
+async function ensureConversation(){
+
+  if(!currentUser){
+
+    throw new Error(
+      "No authenticated Kmeet user."
+    );
+
+  }
+
+
+  if(!conversationId){
+
+    conversationId =
+      getConversationId();
+
+  }
+
+
+  /*
+    If the conversation already exists,
+    simply return its data.
+  */
+
+  if(conversationExists){
+
+    const existing =
+      await getDoc(
+        doc(
+          db,
+          "conversations",
+          conversationId
+        )
+      );
+
+
+    if(existing.exists()){
+
+      const data =
+        existing.data() || {};
+
+
+      conversationInitiatorId =
+        data.initiatorId ||
+        conversationInitiatorId;
+
+
+      return data;
+
+    }
+
+
+    conversationExists =
+      false;
+
+  }
+
+
+  /*
+    For a new conversation the current user
+    becomes the initiator.
+  */
+
+  if(!conversationInitiatorId){
+
+    conversationInitiatorId =
+      currentUser.uid;
+
+  }
+
+
+  const receiverId =
+    conversationInitiatorId ===
+    currentUser.uid
+      ? targetId
+      : currentUser.uid;
+
+
+  /*
+    CREATE THE PARENT CONVERSATION FIRST.
+
+    This is the critical change that works with
+    the new Firestore rules.
+  */
+
+  try{
+
+    await setDoc(
+
+      doc(
+        db,
+        "conversations",
+        conversationId
+      ),
+
+      {
+
+        initiatorId:
+          conversationInitiatorId,
+
+        receiverId:
+          receiverId,
+
+        createdAt:
+          serverTimestamp(),
+
+        updatedAt:
+          serverTimestamp()
+
+      },
+
+      {
+        merge:true
+      }
+
+    );
+
+  }catch(error){
+
+    console.error(
+      "CONVERSATION CREATE FAILED:",
+      error
+    );
+
+
+    throw new Error(
+      "Conversation could not be created. Firebase error: " +
+      (
+        error.code ||
+        "permission-denied"
+      )
+    );
+
+  }
+
+
+  /*
+    Confirm the conversation exists before
+    allowing the message write.
+  */
+
+  try{
+
+    const confirmed =
+      await getDoc(
+        doc(
+          db,
+          "conversations",
+          conversationId
+        )
+      );
+
+
+    if(!confirmed.exists()){
+
+      throw new Error(
+        "Conversation was not created."
+      );
+
+    }
+
+
+    conversationExists =
+      true;
+
+
+    const confirmedData =
+      confirmed.data() || {};
+
+
+    conversationInitiatorId =
+      confirmedData.initiatorId ||
+      conversationInitiatorId;
+
+
+    return confirmedData;
+
+  }catch(error){
+
+    console.error(
+      "CONVERSATION CONFIRMATION FAILED:",
+      error
+    );
+
+
+    throw new Error(
+      "Kmeet created the conversation but could not verify it. Firebase error: " +
+      (
+        error.code ||
+        "permission-denied"
+      )
+    );
+
+  }
 
 }
 
@@ -2337,13 +2563,6 @@ async function initialiseAuth(){
         }
 
 
-        /*
-          Load the conversation parent now.
-
-          This establishes exactly who the
-          original sender is.
-        */
-
         try{
 
           const data =
@@ -2384,24 +2603,41 @@ async function initialiseAuth(){
               data.existingMessages
             );
 
+          }else{
+
+            infoBar.textContent =
+              "Your opening message is free — say hi or hey ❤️";
+
           }
 
         }catch(error){
 
-          /*
-            New conversation:
-            there is nothing to load yet.
-          */
-
-          console.log(
-            "No existing conversation yet."
+          console.error(
+            "Conversation loading failed:",
+            error
           );
 
-          infoBar.textContent =
-            "Your opening message is free — say hi or hey ❤️";
+
+          showError(
+            "Kmeet could not load this conversation. Firebase error: " +
+            (
+              error.message ||
+              error.code ||
+              "permission denied"
+            )
+          );
+
+          return;
 
         }
 
+
+        /*
+          Only existing conversations get a live
+          listener. New conversations will start
+          their listener immediately after their
+          first successful message.
+        */
 
         startMessages();
 
@@ -2507,9 +2743,6 @@ composer.addEventListener(
       let creditsBefore =
         0;
 
-      let anonymousCreditUsed =
-        false;
-
 
       if(
         currentUser.isAnonymous
@@ -2535,10 +2768,6 @@ composer.addEventListener(
         setSenderCredits(
           creditsBefore - 1
         );
-
-
-        anonymousCreditUsed =
-          true;
 
       }
 
@@ -2645,6 +2874,14 @@ composer.addEventListener(
 
     try{
 
+      /*
+        This reads only an existing conversation.
+
+        If this is a brand-new chat, it returns
+        empty data without touching the message
+        subcollection.
+      */
+
       conversationData =
         await getConversationData();
 
@@ -2657,7 +2894,11 @@ composer.addEventListener(
 
 
       showError(
-        "Kmeet could not check this conversation. Please check your Firestore rules and try again."
+        "Kmeet could not check this conversation. Firebase error: " +
+        (
+          error.code ||
+          "permission-denied"
+        )
       );
 
       return;
@@ -2665,13 +2906,9 @@ composer.addEventListener(
     }
 
 
-    const existingMessages =
-      conversationData.existingMessages;
+    let existingMessages =
+      conversationData.existingMessages || [];
 
-
-    /*
-      Establish the original sender.
-    */
 
     if(
       conversationData.parentData &&
@@ -2703,11 +2940,6 @@ composer.addEventListener(
       existingMessages.length === 0 &&
       !conversationInitiatorId
     ){
-
-      /*
-        Whoever sends the first message
-        becomes the initiator.
-      */
 
       conversationInitiatorId =
         currentUser.uid;
@@ -2765,11 +2997,6 @@ composer.addEventListener(
       )
     ){
 
-      /*
-        Receiver contact information:
-        BLOCK and require KSh 11.
-      */
-
       if(isReceiver){
 
         showGate(
@@ -2780,11 +3007,6 @@ composer.addEventListener(
 
       }
 
-
-      /*
-        Sender contact information:
-        preserve sender payment gate.
-      */
 
       showGate(
         "sender"
@@ -2797,8 +3019,6 @@ composer.addEventListener(
 
     /* ================================================
        RECEIVER FREE REPLIES
-       THIS CHECK MUST HAPPEN BEFORE
-       ANY SENDER CREDIT CHECK.
     ================================================ */
 
     if(isReceiver){
@@ -2816,12 +3036,6 @@ composer.addEventListener(
           receiverReplies
         );
 
-
-      /*
-        If the receiver has already
-        sent 3 replies and has NOT paid,
-        stop here.
-      */
 
       if(
         remaining <= 0 &&
@@ -2849,14 +3063,6 @@ composer.addEventListener(
     let creditsBefore =
       0;
 
-
-    /*
-      Only the ORIGINAL SENDER consumes
-      sender chat credits.
-
-      The receiver NEVER enters this
-      block.
-    */
 
     if(
       isOriginalSender &&
@@ -2901,68 +3107,74 @@ composer.addEventListener(
 
     try{
 
-      await setDoc(
+      /* =============================================
+         STEP 1 — CREATE/VERIFY PARENT
+      ============================================= */
 
-        doc(
-          db,
-          "conversations",
-          conversationId
-        ),
-
-        {
-
-          initiatorId:
-            conversationInitiatorId,
-
-          receiverId:
-            conversationInitiatorId === currentUser.uid
-              ? targetId
-              : currentUser.uid,
-
-          updatedAt:
-            serverTimestamp(),
-
-          createdAt:
-            conversationData.parentData?.createdAt ||
-            serverTimestamp()
-
-        },
-
-        {
-          merge:true
-        }
-
-      );
+      await ensureConversation();
 
 
-      await addDoc(
+      /* =============================================
+         STEP 2 — WRITE MESSAGE
+      ============================================= */
 
-        collection(
-          db,
-          "conversations",
-          conversationId,
-          "messages"
-        ),
+      const receiverId =
+        isOriginalSender
+          ? targetId
+          : conversationInitiatorId;
 
-        {
 
-          senderId:
-            currentUser.uid,
+      try{
 
-          receiverId:
-            isOriginalSender
-              ? targetId
-              : conversationInitiatorId,
+        await addDoc(
 
-          text:text,
+          collection(
+            db,
+            "conversations",
+            conversationId,
+            "messages"
+          ),
 
-          createdAt:
-            serverTimestamp()
+          {
 
-        }
+            senderId:
+              currentUser.uid,
 
-      );
+            receiverId:
+              receiverId,
 
+            text:
+              text,
+
+            createdAt:
+              serverTimestamp()
+
+          }
+
+        );
+
+      }catch(messageError){
+
+        console.error(
+          "MESSAGE WRITE FAILED:",
+          messageError
+        );
+
+
+        throw new Error(
+          "MESSAGE_WRITE_FAILED:" +
+          (
+            messageError.code ||
+            "permission-denied"
+          )
+        );
+
+      }
+
+
+      /* =============================================
+         MESSAGE SUCCESS
+      ============================================= */
 
       messageInput.value =
         "";
@@ -2971,14 +3183,16 @@ composer.addEventListener(
 
 
       /*
-        Immediately calculate the new
-        receiver count.
-
-        This means:
-        3 -> 2
-        2 -> 1
-        1 -> 0
+        The conversation definitely exists now.
+        Start/restart the live listener.
       */
+
+      conversationExists =
+        true;
+
+
+      startMessages();
+
 
       if(isReceiver){
 
@@ -3052,14 +3266,14 @@ composer.addEventListener(
     catch(error){
 
       console.error(
-        "Message send failed:",
+        "KMEET CHAT SEND FAILED:",
         error
       );
 
 
       /*
-        Restore sender credit if
-        Firebase failed.
+        Restore sender credit if the
+        Firebase operation failed.
       */
 
       if(creditConsumed){
@@ -3071,9 +3285,40 @@ composer.addEventListener(
       }
 
 
-      showError(
-        "Your message could not be sent. Please check your Firestore rules."
-      );
+      const message =
+        String(
+          error.message ||
+          ""
+        );
+
+
+      if(
+        message.startsWith(
+          "MESSAGE_WRITE_FAILED:"
+        )
+      ){
+
+        const code =
+          message.replace(
+            "MESSAGE_WRITE_FAILED:",
+            ""
+          );
+
+
+        showError(
+          "The conversation was created, but Firebase rejected the message. Error: " +
+          code +
+          ". Please check your Firestore message rules."
+        );
+
+      }else{
+
+        showError(
+          error.message ||
+          "Your message could not be sent."
+        );
+
+      }
 
     }
 
