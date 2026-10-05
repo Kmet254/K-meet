@@ -1021,12 +1021,22 @@
 
 
     /* =====================================================
+       DISCOVER STATE
+       ===================================================== */
+
+    let currentKmeetUser = null;
+    let latestUsersSnapshot = null;
+
+
+    /* =====================================================
        PROFILE LINK
        ===================================================== */
 
     onAuthStateChanged(
       auth,
       user => {
+
+        currentKmeetUser = user || null;
 
         const profileLink =
           document.getElementById("profileLink");
@@ -1049,6 +1059,7 @@
         updateActivity(user);
         refreshLikeButtons();
         startOwnPresence(user);
+        rebuildDiscoverProfiles();
 
       }
     );
@@ -1125,7 +1136,8 @@
       databaseOnValue(connectedRef, async snapshot => {
         if (snapshot.val() !== true) return;
 
-        const connectionId = databaseRef(database).key || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        const connectionId =
+          `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         const connectionRef = databaseRef(
           database,
           `status/${user.uid}/connections/${connectionId}`
@@ -2075,107 +2087,90 @@
       realProfiles
     ) {
 
-      /*
-       * Remove duplicate Firebase profiles.
-       */
+      const cleanReal = [];
+      const seen = new Set();
 
-      const usedIds =
-        new Set();
-
-
-      const cleanReal =
-        realProfiles.filter(
-          person => {
-
-            if (
-              usedIds.has(
-                person.id
-              )
-            ) {
-
-              return false;
-
-            }
-
-
-            usedIds.add(
-              person.id
-            );
-
-
-            return true;
-
-          }
-        );
-
+      realProfiles.forEach(person => {
+        if (!person || !person.id) return;
+        if (seen.has(person.id)) return;
+        seen.add(person.id);
+        cleanReal.push(person);
+      });
 
       /*
-       * Always keep at least 36
-       * visible profiles.
+       * The 36 demo profiles are permanent. Real Firebase
+       * members are appended after those 36.
        */
+      const demo = demoProfiles.slice(0, 36);
+      const allProfiles = [...demo, ...cleanReal];
 
-      const needed =
-        Math.max(
-          36 - cleanReal.length,
-          0
-        );
-
-
-      const demo =
-        demoProfiles.slice(
-          0,
-          needed
-        );
-
-
-      const allProfiles =
-        [
-          ...cleanReal,
-          ...demo
-        ];
-
-
-      if (
-        !allProfiles.length
-      ) {
-
+      if (!allProfiles.length) {
         grid.innerHTML = `
-
           <div class="empty-card">
-
             No profiles are available yet.
-
           </div>
-
         `;
 
         memberCount.textContent =
           "People are joining Kmeet";
-
         return;
-
       }
 
-
-      grid.innerHTML =
-        allProfiles
-          .map(
-            (person, index) =>
-              renderProfile(
-                person,
-                index
-              )
-          )
-          .join("");
-
+      grid.innerHTML = allProfiles
+        .map((person, index) => renderProfile(person, index))
+        .join("");
 
       memberCount.textContent =
-        `${allProfiles.length} people to discover`;
+        `${36 + cleanReal.length} people to discover`;
 
       refreshPresenceListeners();
-
     }
 
+
+    /* =====================================================
+       REBUILD DISCOVER RESULTS
+       ===================================================== */
+
+    function rebuildDiscoverProfiles() {
+
+      if (!latestUsersSnapshot) return;
+
+      const realProfiles = [];
+
+      latestUsersSnapshot.forEach(snap => {
+
+        const data = snap.data() || {};
+
+        /* Never show the signed-in member's own profile. */
+        if (
+          currentKmeetUser &&
+          !currentKmeetUser.isAnonymous &&
+          snap.id === currentKmeetUser.uid
+        ) {
+          return;
+        }
+
+        /* Ignore empty/stale Firestore documents. */
+        if (
+          data.name ||
+          data.username ||
+          data.displayName ||
+          data.photoURL ||
+          data.photoUrl ||
+          data.avatar ||
+          data.profilePhoto ||
+          data.profileImage ||
+          data.image
+        ) {
+          realProfiles.push(
+            getRealProfile(snap, realProfiles.length)
+          );
+        }
+      });
+
+      msg.innerHTML = "";
+      renderProfiles(realProfiles);
+    }
 
     /* =====================================================
        KMEET LIKES
@@ -2313,60 +2308,8 @@
         ),
 
         snapshot => {
-
-          const realProfiles = [];
-
-
-          snapshot.forEach(
-            snap => {
-
-              const data =
-                snap.data() || {};
-
-
-              /*
-               * Accept users that contain either a name
-               * or any supported photo/profile field.
-               */
-
-              if (
-
-                data.name ||
-                data.username ||
-                data.displayName ||
-                data.photoURL ||
-                data.photoUrl ||
-                data.avatar ||
-                data.profilePhoto ||
-                data.profileImage
-
-              ) {
-
-                realProfiles.push(
-                  getRealProfile(
-                    snap,
-                    realProfiles.length
-                  )
-                );
-
-              }
-
-            }
-          );
-
-
-          /*
-           * Successful Firebase load.
-           * Keep the page clean.
-           */
-
-          msg.innerHTML = "";
-
-
-          renderProfiles(
-            realProfiles
-          );
-
+          latestUsersSnapshot = snapshot;
+          rebuildDiscoverProfiles();
         },
 
 
