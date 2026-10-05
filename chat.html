@@ -694,11 +694,6 @@ body::before{
 
 <div class="page">
 
-
-<!-- =====================================================
-     TOP BAR
-===================================================== -->
-
 <header class="topbar">
 
   <a
@@ -730,10 +725,6 @@ body::before{
 </header>
 
 
-<!-- =====================================================
-     CHAT
-===================================================== -->
-
 <main class="chat-shell">
 
   <div
@@ -750,9 +741,6 @@ body::before{
       flex-direction:column;
     "
   >
-
-
-    <!-- CHAT HEADER -->
 
     <div class="chat-header">
 
@@ -794,8 +782,6 @@ body::before{
     </div>
 
 
-    <!-- INFO -->
-
     <div
       id="infoBar"
       class="info-bar"
@@ -803,8 +789,6 @@ body::before{
       Say hello and let the connection grow ❤️
     </div>
 
-
-    <!-- MESSAGES -->
 
     <div
       id="messages"
@@ -820,8 +804,6 @@ body::before{
 
     </div>
 
-
-    <!-- COMPOSER -->
 
     <form
       id="composer"
@@ -848,10 +830,6 @@ body::before{
 
   </section>
 
-
-  <!-- =================================================
-       PAYMENT GATE
-  ================================================== -->
 
   <section
     id="gate"
@@ -893,7 +871,6 @@ body::before{
 </div>
 
 
-
 <script type="module">
 
 /* =====================================================
@@ -903,43 +880,25 @@ body::before{
 import {
 
   auth,
-
   db,
-
   onAuthStateChanged,
-
   signInAnonymously,
-
   doc,
-
   getDoc,
-
   collection,
-
   addDoc,
-
   setDoc,
-
   query,
-
   orderBy,
-
   onSnapshot,
-
   serverTimestamp
 
 } from "./firebase-config.js";
 
-/*
-  getDocs is imported directly here because the current
-  firebase-config.js does not export getDocs. If a module
-  import fails, the browser never attaches the submit handler
-  and the HTML form performs a normal page reload.
-*/
+
 import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
 
 
 /* =====================================================
@@ -957,91 +916,57 @@ const targetId =
   params.get("user");
 
 
-
 /* =====================================================
    DOM
 ===================================================== */
 
 const chatArea =
-  document.getElementById(
-    "chatArea"
-  );
+  document.getElementById("chatArea");
 
 const gate =
-  document.getElementById(
-    "gate"
-  );
+  document.getElementById("gate");
 
 const gateTitle =
-  document.getElementById(
-    "gateTitle"
-  );
+  document.getElementById("gateTitle");
 
 const gateText =
-  document.getElementById(
-    "gateText"
-  );
+  document.getElementById("gateText");
 
 const gateButtons =
-  document.getElementById(
-    "gateButtons"
-  );
+  document.getElementById("gateButtons");
 
 const gateIcon =
-  document.getElementById(
-    "gateIcon"
-  );
+  document.getElementById("gateIcon");
 
 const errorBox =
-  document.getElementById(
-    "errorBox"
-  );
+  document.getElementById("errorBox");
 
 const personName =
-  document.getElementById(
-    "personName"
-  );
+  document.getElementById("personName");
 
 const personStatus =
-  document.getElementById(
-    "personStatus"
-  );
+  document.getElementById("personStatus");
 
 const avatar =
-  document.getElementById(
-    "avatar"
-  );
+  document.getElementById("avatar");
 
 const avatarFallback =
-  document.getElementById(
-    "avatarFallback"
-  );
+  document.getElementById("avatarFallback");
 
 const messages =
-  document.getElementById(
-    "messages"
-  );
+  document.getElementById("messages");
 
 const composer =
-  document.getElementById(
-    "composer"
-  );
+  document.getElementById("composer");
 
 const messageInput =
-  document.getElementById(
-    "messageInput"
-  );
+  document.getElementById("messageInput");
 
 const sendBtn =
-  document.getElementById(
-    "sendBtn"
-  );
+  document.getElementById("sendBtn");
 
 const infoBar =
-  document.getElementById(
-    "infoBar"
-  );
-
+  document.getElementById("infoBar");
 
 
 /* =====================================================
@@ -1058,24 +983,13 @@ let authStarted = false;
 
 let targetIsDemo = false;
 
-
-/*
-  Demo messages are stored locally.
-
-  IMPORTANT:
-  This key is NOT tied to the Firebase
-  anonymous UID.
-
-  Therefore a new anonymous Firebase
-  session will not erase the demo chat.
-*/
-
 let demoMessages = [];
 
+let conversationInitiatorId = null;
 
 
 /* =====================================================
-   KMEET CHAT RULES
+   KMEET RULES
 ===================================================== */
 
 const FREE_OPENING_MESSAGES = [
@@ -1090,7 +1004,6 @@ const RECEIVER_FEE = 11;
 const SENDER_PACK_3_PRICE = 49;
 
 const SENDER_PACK_8_PRICE = 100;
-
 
 
 /* =====================================================
@@ -1282,7 +1195,6 @@ const demoProfiles = {
 };
 
 
-
 /* =====================================================
    ERROR
 ===================================================== */
@@ -1309,9 +1221,8 @@ function clearError(){
 }
 
 
-
 /* =====================================================
-   SENDER CREDIT STORAGE
+   STORAGE
 ===================================================== */
 
 function senderCreditKey(){
@@ -1355,16 +1266,13 @@ function getSenderCredits(){
 function setSenderCredits(value){
 
   localStorage.setItem(
-
     senderCreditKey(),
-
     String(
       Math.max(
         0,
         value
       )
     )
-
   );
 
 }
@@ -1379,7 +1287,6 @@ function receiverHasPaid(){
   );
 
 }
-
 
 
 /* =====================================================
@@ -1399,24 +1306,11 @@ function getConversationId(){
 }
 
 
-
 /* =====================================================
-   DEMO MESSAGE STORAGE
+   DEMO STORAGE
 ===================================================== */
 
 function demoMessageKey(){
-
-  /*
-    IMPORTANT:
-
-    Do NOT include currentUser.uid.
-
-    Anonymous Firebase users can receive
-    a different UID after a new session.
-
-    The demo conversation therefore uses
-    the profile ID only.
-  */
 
   return (
     "kmeet_demo_chat_" +
@@ -1432,26 +1326,16 @@ function getDemoMessages(){
 
     const saved =
       JSON.parse(
-
         localStorage.getItem(
           demoMessageKey()
         ) || "[]"
-
       );
-
 
     return Array.isArray(saved)
       ? saved
       : [];
 
-  }
-
-  catch(error){
-
-    console.warn(
-      "Could not read saved demo messages:",
-      error
-    );
+  }catch(error){
 
     return [];
 
@@ -1465,19 +1349,14 @@ function saveDemoMessages(items){
   try{
 
     localStorage.setItem(
-
       demoMessageKey(),
-
       JSON.stringify(items)
-
     );
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.warn(
-      "Could not save demo messages:",
+      "Demo messages could not be saved:",
       error
     );
 
@@ -1486,9 +1365,8 @@ function saveDemoMessages(items){
 }
 
 
-
 /* =====================================================
-   DEMO MESSAGE RENDERING
+   DEMO RENDER
 ===================================================== */
 
 function renderDemoMessages(
@@ -1497,16 +1375,13 @@ function renderDemoMessages(
 
   messages.innerHTML = "";
 
-
   if(!items.length){
 
     messages.innerHTML = `
 
       <div class="empty">
-
         Start the conversation
         and let the connection grow. ❤️
-
       </div>
 
     `;
@@ -1516,54 +1391,52 @@ function renderDemoMessages(
   }
 
 
-  items.forEach(
-    data => {
+  items.forEach(data => {
 
-      const wrapper =
-        document.createElement(
-          "div"
-        );
-
-      wrapper.className =
-        "message mine";
-
-
-      const text =
-        document.createElement(
-          "div"
-        );
-
-      text.textContent =
-        data.text || "";
-
-
-      const status =
-        document.createElement(
-          "div"
-        );
-
-      status.className =
-        "message-status";
-
-      status.textContent =
-        "Sent ✓";
-
-
-      wrapper.appendChild(
-        text
+    const wrapper =
+      document.createElement(
+        "div"
       );
 
-      wrapper.appendChild(
-        status
+    wrapper.className =
+      "message mine";
+
+
+    const text =
+      document.createElement(
+        "div"
       );
 
+    text.textContent =
+      data.text || "";
 
-      messages.appendChild(
-        wrapper
+
+    const status =
+      document.createElement(
+        "div"
       );
 
-    }
-  );
+    status.className =
+      "message-status";
+
+    status.textContent =
+      "Sent ✓";
+
+
+    wrapper.appendChild(
+      text
+    );
+
+    wrapper.appendChild(
+      status
+    );
+
+
+    messages.appendChild(
+      wrapper
+    );
+
+  });
 
 
   messages.scrollTop =
@@ -1572,14 +1445,11 @@ function renderDemoMessages(
 }
 
 
-
 /* =====================================================
-   CONTACT INFORMATION DETECTION
+   CONTACT DETECTION
 ===================================================== */
 
-function containsContactInformation(
-  text
-){
+function containsContactInformation(text){
 
   const value =
     String(text)
@@ -1632,7 +1502,6 @@ function containsContactInformation(
 }
 
 
-
 /* =====================================================
    LOAD TARGET PROFILE
 ===================================================== */
@@ -1654,10 +1523,6 @@ async function loadTargetProfile(){
       targetId
     );
 
-
-  /* ===================================================
-     DEMO PROFILE
-  =================================================== */
 
   if(targetIsDemo){
 
@@ -1691,11 +1556,6 @@ async function loadTargetProfile(){
       "none";
 
 
-    /*
-      IMPORTANT:
-      Load previously sent demo messages.
-    */
-
     demoMessages =
       getDemoMessages();
 
@@ -1709,11 +1569,6 @@ async function loadTargetProfile(){
 
   }
 
-
-
-  /* ===================================================
-     REAL FIREBASE PROFILE
-  =================================================== */
 
   const snap =
     await getDoc(
@@ -1781,7 +1636,6 @@ async function loadTargetProfile(){
 }
 
 
-
 /* =====================================================
    SHOW CHAT
 ===================================================== */
@@ -1795,7 +1649,6 @@ function showChat(){
     "flex";
 
 }
-
 
 
 /* =====================================================
@@ -1814,23 +1667,16 @@ function showGate(type){
     "";
 
 
-  /* ===================================================
-     ANONYMOUS
-  =================================================== */
-
   if(type === "anonymous"){
 
     gateIcon.textContent =
       "🔒";
 
-
     gateTitle.textContent =
       "Start chatting";
 
-
     gateText.textContent =
       "Choose a Kmeet chat package to start this conversation.";
-
 
     gateButtons.innerHTML = `
 
@@ -1841,14 +1687,12 @@ function showGate(type){
         3 Chats — KSh 49
       </a>
 
-
       <a
         class="pay-btn"
         href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100&anonymous=true"
       >
         8 Chats — KSh 100
       </a>
-
 
       <a
         class="pay-btn secondary-btn"
@@ -1864,24 +1708,16 @@ function showGate(type){
   }
 
 
-
-  /* ===================================================
-     SENDER
-  =================================================== */
-
   if(type === "sender"){
 
     gateIcon.textContent =
       "💎";
 
-
     gateTitle.textContent =
       "Continue chatting";
 
-
     gateText.textContent =
       "Your free opening message has been used, or this message requires a paid chat. Choose a Kmeet chat package to continue.";
-
 
     gateButtons.innerHTML = `
 
@@ -1892,14 +1728,12 @@ function showGate(type){
         3 Chats — KSh 49
       </a>
 
-
       <a
         class="pay-btn"
         href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100"
       >
         8 Chats — KSh 100
       </a>
-
 
       <a
         class="pay-btn secondary-btn"
@@ -1915,24 +1749,16 @@ function showGate(type){
   }
 
 
-
-  /* ===================================================
-     RECEIVER
-  =================================================== */
-
   if(type === "receiver"){
 
     gateIcon.textContent =
       "💗";
 
-
     gateTitle.textContent =
       "Continue the conversation";
 
-
     gateText.textContent =
-      "You have used your free replies or attempted to share contact information. Pay KSh 11 to continue.";
-
+      "You have used your 3 free replies, or attempted to share contact information. Pay KSh 11 to continue.";
 
     gateButtons.innerHTML = `
 
@@ -1942,7 +1768,6 @@ function showGate(type){
       >
         Continue — KSh 11
       </a>
-
 
       <a
         class="pay-btn secondary-btn"
@@ -1958,12 +1783,11 @@ function showGate(type){
 }
 
 
-
 /* =====================================================
-   REAL CONVERSATION MESSAGES
+   GET CONVERSATION DATA
 ===================================================== */
 
-async function getExistingMessages(){
+async function getConversationData(){
 
   if(!conversationId){
 
@@ -1973,35 +1797,239 @@ async function getExistingMessages(){
   }
 
 
-  const snap =
-    await getDocs(
-
-      query(
-
-        collection(
-          db,
-          "conversations",
-          conversationId,
-          "messages"
-        ),
-
-        orderBy(
-          "createdAt",
-          "asc"
-        )
-
+  const conversationSnap =
+    await getDoc(
+      doc(
+        db,
+        "conversations",
+        conversationId
       )
-
     );
 
 
-  return snap.docs.map(
-    item =>
-      item.data()
-  );
+  let parentData = null;
+
+
+  if(conversationSnap.exists()){
+
+    parentData =
+      conversationSnap.data();
+
+    conversationInitiatorId =
+      parentData.initiatorId || null;
+
+  }
+
+
+  let existingMessages = [];
+
+
+  try{
+
+    const messageSnap =
+      await getDocs(
+
+        query(
+
+          collection(
+            db,
+            "conversations",
+            conversationId,
+            "messages"
+          ),
+
+          orderBy(
+            "createdAt",
+            "asc"
+          )
+
+        )
+
+      );
+
+
+    existingMessages =
+      messageSnap.docs.map(
+        item => item.data()
+      );
+
+  }catch(error){
+
+    /*
+      A brand-new conversation has no parent/messages yet.
+      We allow the sender to create it.
+    */
+
+    if(
+      !parentData &&
+      existingMessages.length === 0
+    ){
+
+      existingMessages = [];
+
+    }else{
+
+      throw error;
+
+    }
+
+  }
+
+
+  /*
+    If the parent does not have initiatorId,
+    use the first actual message.
+
+    This is only a fallback for older conversations.
+  */
+
+  if(
+    !conversationInitiatorId &&
+    existingMessages.length > 0
+  ){
+
+    conversationInitiatorId =
+      existingMessages[0].senderId;
+
+  }
+
+
+  return {
+
+    parentData,
+
+    existingMessages
+
+  };
 
 }
 
+
+/* =====================================================
+   RECEIVER COUNT
+===================================================== */
+
+function countReceiverReplies(
+  existingMessages
+){
+
+  if(!currentUser){
+
+    return 0;
+
+  }
+
+
+  return existingMessages.filter(
+    message =>
+      message.senderId ===
+      currentUser.uid
+  ).length;
+
+}
+
+
+/* =====================================================
+   UPDATE RECEIVER COUNTER
+===================================================== */
+
+function updateReceiverCounter(
+  existingMessages
+){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  /*
+    Only the person who did NOT start
+    the conversation is the receiver.
+  */
+
+  const initiatorId =
+    conversationInitiatorId;
+
+
+  if(!initiatorId){
+
+    return;
+
+  }
+
+
+  const isReceiver =
+    currentUser.uid !==
+    initiatorId;
+
+
+  if(!isReceiver){
+
+    return;
+
+  }
+
+
+  const used =
+    countReceiverReplies(
+      existingMessages
+    );
+
+
+  const remaining =
+    Math.max(
+      0,
+      FREE_RECEIVER_REPLIES -
+      used
+    );
+
+
+  if(
+    receiverHasPaid()
+  ){
+
+    infoBar.textContent =
+      "You have paid to continue this conversation ❤️";
+
+    return;
+
+  }
+
+
+  if(remaining > 0){
+
+    infoBar.textContent =
+      `You have ${remaining} free repl${
+        remaining === 1
+          ? "y"
+          : "ies"
+      } remaining.`;
+
+  }else{
+
+    infoBar.textContent =
+      "Your 3 free replies have been used. Pay KSh 11 to continue.";
+
+  }
+
+}
+
+
+/* =====================================================
+   EXISTING MESSAGES
+===================================================== */
+
+async function getExistingMessages(){
+
+  const data =
+    await getConversationData();
+
+
+  return data.existingMessages;
+
+}
 
 
 /* =====================================================
@@ -2019,10 +2047,8 @@ function renderMessages(items){
     messages.innerHTML = `
 
       <div class="empty">
-
         Start the conversation
         and let the connection grow. ❤️
-
       </div>
 
     `;
@@ -2032,44 +2058,44 @@ function renderMessages(items){
   }
 
 
-  items.forEach(
-    data => {
+  items.forEach(data => {
 
-      const wrapper =
-        document.createElement(
-          "div"
-        );
-
-      wrapper.className =
-        "message " +
-        (
-          data.senderId ===
-          currentUser.uid
-            ? "mine"
-            : "theirs"
-        );
-
-
-      const text =
-        document.createElement(
-          "div"
-        );
-
-      text.textContent =
-        data.text || "";
-
-
-      wrapper.appendChild(
-        text
+    const wrapper =
+      document.createElement(
+        "div"
       );
 
 
-      messages.appendChild(
-        wrapper
+    wrapper.className =
+      "message " +
+      (
+        data.senderId ===
+        currentUser.uid
+          ? "mine"
+          : "theirs"
       );
 
-    }
-  );
+
+    const text =
+      document.createElement(
+        "div"
+      );
+
+
+    text.textContent =
+      data.text || "";
+
+
+    wrapper.appendChild(
+      text
+    );
+
+
+    messages.appendChild(
+      wrapper
+    );
+
+  });
 
 
   messages.scrollTop =
@@ -2078,9 +2104,8 @@ function renderMessages(items){
 }
 
 
-
 /* =====================================================
-   FIREBASE REAL CHAT LISTENER
+   REAL-TIME MESSAGE LISTENER
 ===================================================== */
 
 function startMessages(){
@@ -2133,6 +2158,22 @@ function startMessages(){
           );
 
 
+        /*
+          Keep the conversation role based
+          on the actual first message.
+        */
+
+        if(
+          !conversationInitiatorId &&
+          items.length
+        ){
+
+          conversationInitiatorId =
+            items[0].senderId;
+
+        }
+
+
         renderMessages(
           items
         );
@@ -2148,38 +2189,23 @@ function startMessages(){
         }
 
 
-        const firstSenderId =
-          items[0].senderId;
+        updateReceiverCounter(
+          items
+        );
 
 
-        const myReplies =
-          items.filter(
-            item =>
-              item.senderId ===
-              currentUser.uid
-          ).length;
-
+        /*
+          If current user is the original
+          sender, show sender information.
+        */
 
         if(
-          firstSenderId ===
+          conversationInitiatorId ===
           currentUser.uid
         ){
 
           infoBar.textContent =
             "Your opening message is free. Further messages use chat credits.";
-
-        }
-
-        else{
-
-          infoBar.textContent =
-            `You have ${
-              Math.max(
-                0,
-                FREE_RECEIVER_REPLIES -
-                myReplies
-              )
-            } free replies remaining.`;
 
         }
 
@@ -2204,9 +2230,8 @@ function startMessages(){
 }
 
 
-
 /* =====================================================
-   FIREBASE AUTHENTICATION
+   AUTHENTICATION
 ===================================================== */
 
 async function initialiseAuth(){
@@ -2253,7 +2278,7 @@ async function initialiseAuth(){
 
 
         /* =============================================
-           ANONYMOUS USER
+           ANONYMOUS
         ============================================= */
 
         if(user.isAnonymous){
@@ -2261,20 +2286,6 @@ async function initialiseAuth(){
           const credits =
             getSenderCredits();
 
-
-          /*
-            Anonymous users can explore
-            and open demo chat.
-
-            But they must have paid
-            chat credits before sending.
-          */
-
-          /*
-            Anonymous visitors may explore profiles, but they must
-            purchase chat credits BEFORE the chat composer is opened.
-            This keeps the flow: Discover → Profile → Payment → Chat.
-          */
 
           if(credits > 0){
 
@@ -2287,76 +2298,112 @@ async function initialiseAuth(){
 
             showChat();
 
+          }else{
+
+            showGate(
+              "anonymous"
+            );
+
           }
-          else{
 
-            showGate("anonymous");
-
-          }
-
-
-          /*
-            Important:
-            Do NOT erase demoMessages here.
-
-            loadTargetProfile() already
-            loaded them from localStorage.
-          */
-
-          /*
-            DEMO CHAT FIX
-
-            The demo conversation is stored in localStorage and was
-            already loaded by loadTargetProfile(). Do not re-render it
-            from the Firebase auth callback, because authentication can
-            fire after the message is displayed.
-          */
 
           if(targetIsDemo){
-            demoMessages = getDemoMessages();
+
+            demoMessages =
+              getDemoMessages();
+
           }
+
 
           return;
 
         }
 
 
-
         /* =============================================
            REGISTERED USER
         ============================================= */
 
-        infoBar.textContent =
-          "Your opening message is free — say hi or hey ❤️";
-
-
         showChat();
 
 
-        if(!targetIsDemo){
-
-          startMessages();
-
-        }
-
-
-        /*
-          For demo profiles, reload the
-          locally saved conversation without
-          replacing it with an empty array.
-        */
-
-        /*
-          DEMO CHAT FIX
-
-          Do not re-render the demo message area from the Firebase
-          auth callback. The demo chat is localStorage-based and was
-          already loaded by loadTargetProfile().
-        */
-
         if(targetIsDemo){
-          demoMessages = getDemoMessages();
+
+          demoMessages =
+            getDemoMessages();
+
+          return;
+
         }
+
+
+        /*
+          Load the conversation parent now.
+
+          This establishes exactly who the
+          original sender is.
+        */
+
+        try{
+
+          const data =
+            await getConversationData();
+
+
+          if(
+            data.parentData &&
+            data.parentData.initiatorId
+          ){
+
+            conversationInitiatorId =
+              data.parentData.initiatorId;
+
+          }
+
+
+          if(
+            data.existingMessages.length
+          ){
+
+            if(
+              !conversationInitiatorId
+            ){
+
+              conversationInitiatorId =
+                data.existingMessages[0].senderId;
+
+            }
+
+
+            renderMessages(
+              data.existingMessages
+            );
+
+
+            updateReceiverCounter(
+              data.existingMessages
+            );
+
+          }
+
+        }catch(error){
+
+          /*
+            New conversation:
+            there is nothing to load yet.
+          */
+
+          console.log(
+            "No existing conversation yet."
+          );
+
+          infoBar.textContent =
+            "Your opening message is free — say hi or hey ❤️";
+
+        }
+
+
+        startMessages();
 
       }
 
@@ -2377,9 +2424,7 @@ async function initialiseAuth(){
             "Anonymous Authentication is not enabled in Firebase. Enable Authentication → Sign-in method → Anonymous."
           );
 
-        }
-
-        else{
+        }else{
 
           showError(
             "Kmeet could not start the chat session (" +
@@ -2399,7 +2444,6 @@ async function initialiseAuth(){
   );
 
 }
-
 
 
 /* =====================================================
@@ -2440,17 +2484,11 @@ composer.addEventListener(
     }
 
 
-
     /* ================================================
        DEMO PROFILE
     ================================================ */
 
     if(targetIsDemo){
-
-      /*
-        Anonymous visitors still need
-        paid chat credits.
-      */
 
       if(
         currentUser.isAnonymous &&
@@ -2466,16 +2504,11 @@ composer.addEventListener(
       }
 
 
-      /*
-        If an anonymous user has paid
-        credits, consume one credit.
-      */
+      let creditsBefore =
+        0;
 
       let anonymousCreditUsed =
         false;
-
-      let creditsBefore =
-        0;
 
 
       if(
@@ -2510,57 +2543,24 @@ composer.addEventListener(
       }
 
 
-      /*
-        CREATE THE MESSAGE FIRST.
-
-        It appears immediately in the
-        chat window as the user's own
-        message.
-      */
-
-      /*
-        Always start from the latest saved demo conversation.
-        This prevents an older in-memory array from overwriting a
-        message that was already stored in localStorage.
-      */
-
       demoMessages =
         getDemoMessages();
 
 
-      const newMessage = {
+      demoMessages.push({
 
         text:text,
 
         createdAt:
           new Date().toISOString()
 
-      };
+      });
 
-
-      demoMessages.push(
-        newMessage
-      );
-
-
-      /*
-        Save BEFORE clearing the
-        composer.
-
-        This prevents the message
-        from disappearing.
-      */
 
       saveDemoMessages(
         demoMessages
       );
 
-
-      /*
-        Read the saved list back before rendering.
-        This guarantees that what appears on screen is exactly what
-        was persisted.
-      */
 
       demoMessages =
         getDemoMessages();
@@ -2571,20 +2571,11 @@ composer.addEventListener(
       );
 
 
-      /*
-        Clear the composer.
-      */
-
       messageInput.value =
         "";
 
       messageInput.focus();
 
-
-      /*
-        Natural confirmation.
-        No fake reply.
-      */
 
       if(
         currentUser.isAnonymous
@@ -2605,9 +2596,7 @@ composer.addEventListener(
               : ""
           }`;
 
-      }
-
-      else{
+      }else{
 
         infoBar.textContent =
           "Your message has been sent ❤️";
@@ -2620,21 +2609,25 @@ composer.addEventListener(
     }
 
 
-
     /* ================================================
        REAL MEMBER CHAT
     ================================================ */
 
     if(
-      currentUser.isAnonymous &&
-      getSenderCredits() <= 0
+      currentUser.isAnonymous
     ){
 
-      showGate(
-        "anonymous"
-      );
+      if(
+        getSenderCredits() <= 0
+      ){
 
-      return;
+        showGate(
+          "anonymous"
+        );
+
+        return;
+
+      }
 
     }
 
@@ -2647,17 +2640,15 @@ composer.addEventListener(
     }
 
 
-    let existingMessages = [];
+    let conversationData;
 
 
     try{
 
-      existingMessages =
-        await getExistingMessages();
+      conversationData =
+        await getConversationData();
 
-    }
-
-    catch(error){
+    }catch(error){
 
       console.error(
         "Conversation read failed:",
@@ -2674,14 +2665,73 @@ composer.addEventListener(
     }
 
 
+    const existingMessages =
+      conversationData.existingMessages;
+
+
+    /*
+      Establish the original sender.
+    */
+
+    if(
+      conversationData.parentData &&
+      conversationData.parentData.initiatorId
+    ){
+
+      conversationInitiatorId =
+        conversationData.parentData.initiatorId;
+
+    }
+
+
+    if(
+      !conversationInitiatorId &&
+      existingMessages.length
+    ){
+
+      conversationInitiatorId =
+        existingMessages[0].senderId;
+
+    }
+
+
+    /* ================================================
+       BRAND NEW CONVERSATION
+    ================================================ */
+
+    if(
+      existingMessages.length === 0 &&
+      !conversationInitiatorId
+    ){
+
+      /*
+        Whoever sends the first message
+        becomes the initiator.
+      */
+
+      conversationInitiatorId =
+        currentUser.uid;
+
+    }
+
+
+    const isOriginalSender =
+      conversationInitiatorId ===
+      currentUser.uid;
+
+
+    const isReceiver =
+      !isOriginalSender;
+
 
     /* ================================================
        FIRST OPENING MESSAGE
     ================================================ */
 
     if(
-      !currentUser.isAnonymous &&
-      existingMessages.length === 0
+      isOriginalSender &&
+      existingMessages.length === 0 &&
+      !currentUser.isAnonymous
     ){
 
       const opening =
@@ -2705,25 +2755,6 @@ composer.addEventListener(
     }
 
 
-
-    /* ================================================
-       WHO STARTED THE CONVERSATION?
-    ================================================ */
-
-    const originalSenderId =
-      existingMessages.length
-
-        ? existingMessages[0].senderId
-
-        : currentUser.uid;
-
-
-    const isSender =
-      originalSenderId ===
-      currentUser.uid;
-
-
-
     /* ================================================
        CONTACT INFORMATION
     ================================================ */
@@ -2734,7 +2765,12 @@ composer.addEventListener(
       )
     ){
 
-      if(!isSender){
+      /*
+        Receiver contact information:
+        BLOCK and require KSh 11.
+      */
+
+      if(isReceiver){
 
         showGate(
           "receiver"
@@ -2745,6 +2781,11 @@ composer.addEventListener(
       }
 
 
+      /*
+        Sender contact information:
+        preserve sender payment gate.
+      */
+
       showGate(
         "sender"
       );
@@ -2754,9 +2795,52 @@ composer.addEventListener(
     }
 
 
+    /* ================================================
+       RECEIVER FREE REPLIES
+       THIS CHECK MUST HAPPEN BEFORE
+       ANY SENDER CREDIT CHECK.
+    ================================================ */
+
+    if(isReceiver){
+
+      const receiverReplies =
+        countReceiverReplies(
+          existingMessages
+        );
+
+
+      const remaining =
+        Math.max(
+          0,
+          FREE_RECEIVER_REPLIES -
+          receiverReplies
+        );
+
+
+      /*
+        If the receiver has already
+        sent 3 replies and has NOT paid,
+        stop here.
+      */
+
+      if(
+        remaining <= 0 &&
+        !receiverHasPaid()
+      ){
+
+        showGate(
+          "receiver"
+        );
+
+        return;
+
+      }
+
+    }
+
 
     /* ================================================
-       SENDER CREDITS
+       SENDER CREDIT
     ================================================ */
 
     let creditConsumed =
@@ -2766,12 +2850,17 @@ composer.addEventListener(
       0;
 
 
+    /*
+      Only the ORIGINAL SENDER consumes
+      sender chat credits.
+
+      The receiver NEVER enters this
+      block.
+    */
+
     if(
-      isSender &&
-      (
-        existingMessages.length > 0 ||
-        currentUser.isAnonymous
-      )
+      isOriginalSender &&
+      existingMessages.length > 0
     ){
 
       creditsBefore =
@@ -2802,41 +2891,8 @@ composer.addEventListener(
     }
 
 
-
     /* ================================================
-       RECEIVER FREE REPLIES
-    ================================================ */
-
-    if(!isSender){
-
-      const receiverReplies =
-        existingMessages.filter(
-          item =>
-            item.senderId ===
-            currentUser.uid
-        ).length;
-
-
-      if(
-        receiverReplies >=
-          FREE_RECEIVER_REPLIES &&
-        !receiverHasPaid()
-      ){
-
-        showGate(
-          "receiver"
-        );
-
-        return;
-
-      }
-
-    }
-
-
-
-    /* ================================================
-       SEND
+       DISABLE SEND
     ================================================ */
 
     sendBtn.disabled =
@@ -2856,15 +2912,18 @@ composer.addEventListener(
         {
 
           initiatorId:
-            originalSenderId,
+            conversationInitiatorId,
 
           receiverId:
-            targetId,
+            conversationInitiatorId === currentUser.uid
+              ? targetId
+              : currentUser.uid,
 
           updatedAt:
             serverTimestamp(),
 
           createdAt:
+            conversationData.parentData?.createdAt ||
             serverTimestamp()
 
         },
@@ -2891,7 +2950,9 @@ composer.addEventListener(
             currentUser.uid,
 
           receiverId:
-            targetId,
+            isOriginalSender
+              ? targetId
+              : conversationInitiatorId,
 
           text:text,
 
@@ -2909,20 +2970,80 @@ composer.addEventListener(
       messageInput.focus();
 
 
-      if(
-        currentUser.isAnonymous
-      ){
+      /*
+        Immediately calculate the new
+        receiver count.
+
+        This means:
+        3 -> 2
+        2 -> 1
+        1 -> 0
+      */
+
+      if(isReceiver){
+
+        const newReplyCount =
+          countReceiverReplies(
+            existingMessages
+          ) + 1;
+
+
+        const newRemaining =
+          Math.max(
+            0,
+            FREE_RECEIVER_REPLIES -
+            newReplyCount
+          );
+
+
+        if(
+          receiverHasPaid()
+        ){
+
+          infoBar.textContent =
+            "You have paid to continue this conversation ❤️";
+
+        }else if(
+          newRemaining > 0
+        ){
+
+          infoBar.textContent =
+            `You have ${newRemaining} free repl${
+              newRemaining === 1
+                ? "y"
+                : "ies"
+            } remaining.`;
+
+        }else{
+
+          infoBar.textContent =
+            "You have used your 3 free replies. Pay KSh 11 to continue.";
+
+        }
+
+      }else{
 
         const remaining =
           getSenderCredits();
 
 
-        infoBar.textContent =
-          `Anonymous chat: ${remaining} paid chat credit${
-            remaining === 1
-              ? ""
-              : "s"
-          } remaining.`;
+        if(
+          currentUser.isAnonymous
+        ){
+
+          infoBar.textContent =
+            `Anonymous chat: ${remaining} paid chat credit${
+              remaining === 1
+                ? ""
+                : "s"
+            } remaining.`;
+
+        }else{
+
+          infoBar.textContent =
+            "Message sent ❤️";
+
+        }
 
       }
 
@@ -2937,8 +3058,8 @@ composer.addEventListener(
 
 
       /*
-        Restore the credit if
-        Firebase sending failed.
+        Restore sender credit if
+        Firebase failed.
       */
 
       if(creditConsumed){
@@ -2968,7 +3089,6 @@ composer.addEventListener(
 );
 
 
-
 /* =====================================================
    ENTER TO SEND
 ===================================================== */
@@ -2995,9 +3115,8 @@ messageInput.addEventListener(
 );
 
 
-
 /* =====================================================
-   START CHAT
+   START
 ===================================================== */
 
 async function start(){
@@ -3018,22 +3137,11 @@ async function start(){
 
   try{
 
-    /*
-      Load the selected profile first.
-    */
-
     await loadTargetProfile();
-
-
-    /*
-      Then start Firebase authentication.
-    */
 
     initialiseAuth();
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(
       error
@@ -3050,13 +3158,7 @@ async function start(){
 }
 
 
-
-/* =====================================================
-   START
-===================================================== */
-
 start();
-
 
 
 /* =====================================================
