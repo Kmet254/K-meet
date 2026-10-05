@@ -697,10 +697,11 @@ body::before {
 
         <div class="status">
 
-            <span class="status-dot"></span>
+            <span id="statusDot"
+                  class="status-dot"></span>
 
             <span id="statusText">
-                Online
+                Checking status...
             </span>
 
         </div>
@@ -892,6 +893,41 @@ import {
 } from "./firebase-config.js";
 
 
+import {
+    getApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    onDisconnect,
+    set,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+
+/* =========================================
+   REALTIME DATABASE
+========================================= */
+
+const firebaseApp =
+    getApp();
+
+
+const realtimeDB =
+    getDatabase(firebaseApp);
+
+
+let presenceUnsubscribe =
+    null;
+
+
+/* =========================================
+   PAGE ELEMENTS
+========================================= */
+
 const loading =
     document.getElementById("loading");
 
@@ -952,6 +988,9 @@ const chatButton =
 const statusText =
     document.getElementById("statusText");
 
+const statusDot =
+    document.getElementById("statusDot");
+
 const deleteAccountArea =
     document.getElementById(
         "deleteAccountArea"
@@ -963,28 +1002,23 @@ const deleteAccountButton =
     );
 
 
-/*
- * IMPORTANT:
- *
- * Discover sends:
- *
- * profile.html?id=FIREBASE_UID
- *
- * We must read that ID.
- */
+/* =========================================
+   PROFILE ID
+========================================= */
 
 const urlParams =
     new URLSearchParams(
         window.location.search
     );
 
+
 const requestedProfileId =
     urlParams.get("id");
 
 
-/*
- * 24 hours.
- */
+/* =========================================
+   PHOTO ROTATION
+========================================= */
 
 const ROTATION_TIME =
     24 * 60 * 60 * 1000;
@@ -1013,11 +1047,16 @@ function getPhotoURL(data) {
 }
 
 
-function getGallery(data, currentPhoto) {
+function getGallery(
+    data,
+    currentPhoto
+) {
 
     let photos =
 
-        Array.isArray(data.photoGallery)
+        Array.isArray(
+            data.photoGallery
+        )
 
             ? [...data.photoGallery]
 
@@ -1045,7 +1084,9 @@ function getGallery(data, currentPhoto) {
         !photos.includes(currentPhoto)
     ) {
 
-        photos.unshift(currentPhoto);
+        photos.unshift(
+            currentPhoto
+        );
 
     }
 
@@ -1061,7 +1102,8 @@ function timestampValue(value) {
 
 
     if (
-        typeof value.toMillis === "function"
+        typeof value.toMillis ===
+        "function"
     ) {
 
         return value.toMillis();
@@ -1077,7 +1119,8 @@ function timestampValue(value) {
 
 
     if (
-        typeof value.seconds === "number"
+        typeof value.seconds ===
+        "number"
     ) {
 
         return value.seconds * 1000;
@@ -1095,14 +1138,6 @@ function timestampValue(value) {
 
 }
 
-
-/*
- * Only the OWNER's profile is allowed
- * to perform the automatic photo rotation.
- *
- * We never modify another member's profile
- * simply because somebody viewed it.
- */
 
 async function rotatePhotoIfNeeded(
     uid,
@@ -1160,7 +1195,8 @@ async function rotatePhotoIfNeeded(
 
 
     if (
-        Date.now() - lastRotation <
+        Date.now() -
+        lastRotation <
         ROTATION_TIME
     ) {
 
@@ -1183,7 +1219,9 @@ async function rotatePhotoIfNeeded(
 
 
     const nextIndex =
-        (currentIndex + 1) %
+        (
+            currentIndex + 1
+        ) %
         photos.length;
 
 
@@ -1225,7 +1263,14 @@ async function rotatePhotoIfNeeded(
 }
 
 
-function showPhoto(url, name) {
+/* =========================================
+   PHOTO DISPLAY
+========================================= */
+
+function showPhoto(
+    url,
+    name
+) {
 
     if (url) {
 
@@ -1261,6 +1306,10 @@ function showPhoto(url, name) {
 }
 
 
+/* =========================================
+   INTERESTS
+========================================= */
+
 function showInterests(list) {
 
     interests.innerHTML =
@@ -1273,38 +1322,59 @@ function showInterests(list) {
     ) {
 
         const tag =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
+
 
         tag.className =
             "tag";
 
+
         tag.textContent =
             "Still discovering interests";
 
-        interests.appendChild(tag);
+
+        interests.appendChild(
+            tag
+        );
+
 
         return;
 
     }
 
 
-    list.forEach(item => {
+    list.forEach(
+        item => {
 
-        const tag =
-            document.createElement("span");
+            const tag =
+                document.createElement(
+                    "span"
+                );
 
-        tag.className =
-            "tag";
 
-        tag.textContent =
-            item;
+            tag.className =
+                "tag";
 
-        interests.appendChild(tag);
 
-    });
+            tag.textContent =
+                item;
+
+
+            interests.appendChild(
+                tag
+            );
+
+        }
+    );
 
 }
 
+
+/* =========================================
+   GALLERY
+========================================= */
 
 function showGallery(
     photos,
@@ -1343,6 +1413,7 @@ function showGallery(
 
         `;
 
+
         return;
 
     }
@@ -1356,6 +1427,7 @@ function showGallery(
                     "div"
                 );
 
+
             item.className =
                 "gallery-item";
 
@@ -1365,33 +1437,32 @@ function showGallery(
                     "img"
                 );
 
+
             image.src =
                 photo;
 
+
             image.alt =
                 `Gallery photo ${index + 1}`;
+
 
             image.loading =
                 "lazy";
 
 
-            image.onerror = () => {
+            image.onerror =
+                () => {
 
-                item.style.display =
-                    "none";
+                    item.style.display =
+                        "none";
 
-            };
+                };
 
 
             item.appendChild(
                 image
             );
 
-
-            /*
-             * Only show "Current" to the
-             * owner viewing their own profile.
-             */
 
             if (
                 isOwner &&
@@ -1403,11 +1474,14 @@ function showGallery(
                         "div"
                     );
 
+
                 current.className =
                     "gallery-current";
 
+
                 current.textContent =
                     "Current";
+
 
                 item.appendChild(
                     current
@@ -1423,6 +1497,7 @@ function showGallery(
                     lightboxImage.src =
                         photo;
 
+
                     lightbox.classList.add(
                         "show"
                     );
@@ -1437,6 +1512,226 @@ function showGallery(
 
         }
     );
+
+}
+
+
+/* =========================================
+   REALTIME PRESENCE
+========================================= */
+
+async function startOwnPresence(
+    user
+) {
+
+    if (
+        !user ||
+        user.isAnonymous
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const presenceRef =
+            ref(
+                realtimeDB,
+                `status/${user.uid}`
+            );
+
+
+        /*
+         * Firebase will automatically
+         * change this member to offline
+         * when the connection disappears.
+         */
+
+        await onDisconnect(
+            presenceRef
+        ).set({
+
+            state:
+                "offline",
+
+            lastChanged:
+                serverTimestamp()
+
+        });
+
+
+        /*
+         * Immediately mark the member online.
+         */
+
+        await set(
+            presenceRef,
+            {
+
+                state:
+                    "online",
+
+                lastChanged:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        console.log(
+            "Kmeet presence ONLINE:",
+            user.uid
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Kmeet presence error:",
+            error
+        );
+
+    }
+
+}
+
+
+function stopPresenceListener() {
+
+    if (
+        typeof presenceUnsubscribe ===
+        "function"
+    ) {
+
+        presenceUnsubscribe();
+
+        presenceUnsubscribe =
+            null;
+
+    }
+
+}
+
+
+function watchProfilePresence(
+    profileId
+) {
+
+    stopPresenceListener();
+
+
+    if (!profileId) {
+
+        statusText.textContent =
+            "Offline";
+
+
+        statusDot.style.background =
+            "#777";
+
+
+        statusDot.style.boxShadow =
+            "none";
+
+
+        return;
+
+    }
+
+
+    const profilePresenceRef =
+        ref(
+            realtimeDB,
+            `status/${profileId}`
+        );
+
+
+    presenceUnsubscribe =
+        onValue(
+            profilePresenceRef,
+
+            snapshot => {
+
+                const presence =
+                    snapshot.val();
+
+
+                /*
+                 * Realtime Database is now
+                 * the source of truth.
+                 */
+
+                const online =
+                    !!presence &&
+                    presence.state ===
+                    "online";
+
+
+                if (online) {
+
+                    statusText.textContent =
+                        "Online";
+
+
+                    statusText.style.color =
+                        "#9df0c4";
+
+
+                    statusDot.style.background =
+                        "#55dc93";
+
+
+                    statusDot.style.boxShadow =
+                        "0 0 10px rgba(85,220,147,.7)";
+
+                } else {
+
+                    statusText.textContent =
+                        "Offline";
+
+
+                    statusText.style.color =
+                        "rgba(255,255,255,.48)";
+
+
+                    statusDot.style.background =
+                        "#777";
+
+
+                    statusDot.style.boxShadow =
+                        "none";
+
+                }
+
+            },
+
+            error => {
+
+                console.error(
+                    "Presence listener error:",
+                    error
+                );
+
+
+                statusText.textContent =
+                    "Offline";
+
+
+                statusText.style.color =
+                    "rgba(255,255,255,.48)";
+
+
+                statusDot.style.background =
+                    "#777";
+
+
+                statusDot.style.boxShadow =
+                    "none";
+
+            }
+        );
 
 }
 
@@ -1475,9 +1770,13 @@ async function deleteMyAccount() {
 
     const firstConfirmation =
         confirm(
+
             "Are you sure you want to permanently delete your Kmeet account?\n\n" +
+
             "Your profile will be removed from Discover and your Kmeet login will be deleted.\n\n" +
+
             "This action cannot be undone."
+
         );
 
 
@@ -1487,13 +1786,6 @@ async function deleteMyAccount() {
 
     }
 
-
-    /*
-     * Because Firebase considers account deletion
-     * a security-sensitive operation, we request
-     * the current password and re-authenticate
-     * the user before continuing.
-     */
 
     if (!user.email) {
 
@@ -1537,16 +1829,12 @@ async function deleteMyAccount() {
     deleteAccountButton.disabled =
         true;
 
+
     deleteAccountButton.textContent =
         "Deleting account...";
 
 
     try {
-
-        /*
-         * Step 1:
-         * Re-authenticate the current user.
-         */
 
         const credential =
             EmailAuthProvider.credential(
@@ -1562,36 +1850,64 @@ async function deleteMyAccount() {
 
 
         /*
-         * Step 2:
-         * Remove the user's Kmeet profile
-         * from Firestore.
-         *
-         * Discover listens to this collection
-         * with onSnapshot(), so the member will
-         * disappear automatically.
+         * Mark presence offline before
+         * deleting the Firebase account.
+         */
+
+        try {
+
+            await set(
+
+                ref(
+                    realtimeDB,
+                    `status/${user.uid}`
+                ),
+
+                {
+                    state:
+                        "offline",
+
+                    lastChanged:
+                        serverTimestamp()
+                }
+
+            );
+
+        } catch (
+            presenceError
+        ) {
+
+            console.warn(
+                "Could not update presence:",
+                presenceError
+            );
+
+        }
+
+
+        /*
+         * Remove Firestore profile.
          */
 
         await deleteDoc(
+
             doc(
                 db,
                 "users",
                 user.uid
             )
+
         );
 
 
         /*
-         * Step 3:
-         * Delete the Firebase Authentication
-         * account.
+         * Delete Firebase Auth account.
          */
 
-        await deleteUser(user);
+        await deleteUser(
+            user
+        );
 
-
-        /*
-         * The account is now gone.
-         */
 
         alert(
             "Your Kmeet account has been deleted successfully."
@@ -1612,6 +1928,7 @@ async function deleteMyAccount() {
 
         deleteAccountButton.disabled =
             false;
+
 
         deleteAccountButton.textContent =
             originalText;
@@ -1702,18 +2019,9 @@ deleteAccountButton.addEventListener(
 );
 
 
-/*
- * Load a profile by Firebase UID.
- *
- * This is the main fix.
- *
- * If profile.html?id=OTHER_UID
- * then OTHER_UID is loaded.
- *
- * If there is no id parameter,
- * the logged-in user's own profile
- * is loaded.
- */
+/* =========================================
+   LOAD PROFILE
+========================================= */
 
 async function loadProfile(
     profileId,
@@ -1749,15 +2057,11 @@ async function loadProfile(
             snapshot.data();
 
 
-        /*
-         * Determine whether this is
-         * the logged-in user's profile.
-         */
-
         const isOwner =
             !!loggedInUser &&
             !loggedInUser.isAnonymous &&
-            profileId === loggedInUser.uid;
+            profileId ===
+                loggedInUser.uid;
 
 
         let currentPhoto =
@@ -1772,19 +2076,23 @@ async function loadProfile(
 
 
         /*
-         * ONLY rotate photos when the
-         * logged-in user is viewing
-         * their own profile.
+         * Only the owner can rotate
+         * their own photos.
          */
 
         if (isOwner) {
 
             currentPhoto =
                 await rotatePhotoIfNeeded(
+
                     profileId,
+
                     data,
+
                     currentPhoto,
+
                     photos
+
                 );
 
         }
@@ -1792,7 +2100,9 @@ async function loadProfile(
 
         if (
             currentPhoto &&
-            !photos.includes(currentPhoto)
+            !photos.includes(
+                currentPhoto
+            )
         ) {
 
             photos.unshift(
@@ -1879,12 +2189,7 @@ async function loadProfile(
 
 
         /*
-         * OWNER:
-         * Show Edit Profile and Delete Account.
-         *
-         * OTHER MEMBER:
-         * Hide Edit Profile and Delete Account
-         * and show Chat.
+         * Owner controls.
          */
 
         if (isOwner) {
@@ -1892,8 +2197,10 @@ async function loadProfile(
             editButton.style.display =
                 "inline-flex";
 
+
             chatButton.style.display =
                 "none";
+
 
             deleteAccountArea.style.display =
                 "block";
@@ -1903,11 +2210,14 @@ async function loadProfile(
             editButton.style.display =
                 "none";
 
+
             chatButton.href =
                 `chat.html?userId=${encodeURIComponent(profileId)}`;
 
+
             chatButton.style.display =
                 "inline-flex";
+
 
             deleteAccountArea.style.display =
                 "none";
@@ -1916,26 +2226,21 @@ async function loadProfile(
 
 
         /*
-         * Online status.
+         * IMPORTANT:
+         *
+         * Do NOT use:
+         *
+         * data.online
+         * data.status
+         * data.isOnline
+         *
+         * Realtime Database controls
+         * the online/offline status.
          */
 
-        const isOnline =
-            data.online === true ||
-            data.status === "online" ||
-            data.isOnline === true;
-
-
-        if (isOnline) {
-
-            statusText.textContent =
-                "Online";
-
-        } else {
-
-            statusText.textContent =
-                "Offline";
-
-        }
+        watchProfilePresence(
+            profileId
+        );
 
 
         loading.style.display =
@@ -1977,6 +2282,10 @@ async function loadProfile(
 }
 
 
+/* =========================================
+   LIGHTBOX
+========================================= */
+
 closeLightbox.addEventListener(
     "click",
     () => {
@@ -1984,6 +2293,7 @@ closeLightbox.addEventListener(
         lightbox.classList.remove(
             "show"
         );
+
 
         lightboxImage.removeAttribute(
             "src"
@@ -2005,6 +2315,7 @@ lightbox.addEventListener(
             lightbox.classList.remove(
                 "show"
             );
+
 
             lightboxImage.removeAttribute(
                 "src"
@@ -2035,23 +2346,37 @@ document.addEventListener(
 );
 
 
-/*
- * Authentication is still used to determine
- * whether the visitor owns the profile.
- *
- * BUT we do NOT require login to view a
- * specific public Firebase profile.
- */
+/* =========================================
+   AUTHENTICATION
+========================================= */
 
 onAuthStateChanged(
     auth,
+
     async user => {
 
         try {
 
             /*
-             * If Discover supplied an ID,
-             * use that person's ID.
+             * Normal logged-in members
+             * establish their presence.
+             */
+
+            if (
+                user &&
+                !user.isAnonymous
+            ) {
+
+                await startOwnPresence(
+                    user
+                );
+
+            }
+
+
+            /*
+             * If Discover supplied a profile ID,
+             * load that profile.
              */
 
             if (requestedProfileId) {
@@ -2067,13 +2392,16 @@ onAuthStateChanged(
 
 
             /*
-             * No ?id= was supplied.
+             * No profile ID means:
+             * "my profile".
              *
-             * In this case the page means
-             * "my profile", so login is required.
+             * Anonymous visitors must log in.
              */
 
-            if (!user || user.isAnonymous) {
+            if (
+                !user ||
+                user.isAnonymous
+            ) {
 
                 window.location.href =
                     "login.html";
@@ -2088,6 +2416,7 @@ onAuthStateChanged(
                 user
             );
 
+
         } catch (error) {
 
             console.error(
@@ -2096,6 +2425,20 @@ onAuthStateChanged(
             );
 
         }
+
+    }
+);
+
+
+/* =========================================
+   CLEANUP
+========================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        stopPresenceListener();
 
     }
 );
