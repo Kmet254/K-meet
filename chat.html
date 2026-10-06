@@ -787,7 +787,6 @@ import {
     setDoc,
     collection,
     addDoc,
-    getDocs,
     query,
     onSnapshot,
     serverTimestamp,
@@ -877,6 +876,15 @@ let messagesLoaded = false;
 let sending = false;
 
 let currentConversationData = null;
+
+/*
+   IMPORTANT:
+   We keep the messages received by the existing
+   Firestore listener here.
+
+   This replaces the need for getDocs().
+*/
+let currentMessages = [];
 
 let toastTimer = null;
 
@@ -1646,11 +1654,6 @@ async function ensureConversation(){
         currentConversationData =
             existing.data;
 
-        console.log(
-            "USING EXISTING CHAT:",
-            conversationId
-        );
-
         return conversationId;
     }
 
@@ -1719,13 +1722,6 @@ async function ensureConversation(){
 
         senderCredits:0,
 
-        /*
-           IMPORTANT:
-           The sender's free opening has NOT
-           been used when the conversation is
-           first created.
-        */
-
         senderFreeOpeningUsed:false,
 
         receiverFreeReplies:
@@ -1749,12 +1745,6 @@ async function ensureConversation(){
 
     currentConversationData =
         conversationData;
-
-
-    console.log(
-        "NEW CHAT CREATED:",
-        conversationId
-    );
 
 
     return newId;
@@ -1788,11 +1778,6 @@ async function prepareRealChat(){
         currentConversationData =
             existing.data;
 
-        console.log(
-            "PREPARED EXISTING CHAT:",
-            conversationId
-        );
-
         startFirestoreListener();
 
         return;
@@ -1805,11 +1790,6 @@ async function prepareRealChat(){
     currentConversationData =
         null;
 
-
-    console.log(
-        "NO EXISTING CHAT. FUTURE CHAT ID:",
-        conversationId
-    );
 }
 
 
@@ -1912,6 +1892,16 @@ function startFirestoreListener(){
     }
 
 
+    /*
+       Reset local message cache before
+       listening to the conversation.
+    */
+
+    currentMessages = [];
+
+    messagesLoaded = false;
+
+
     console.log(
         "STARTING REAL MESSAGE LISTENER:",
         conversationId
@@ -1949,7 +1939,14 @@ function startFirestoreListener(){
                 );
 
 
-                const messages =
+                /*
+                   Store messages locally.
+
+                   This is now used by the free-chat
+                   permission system instead of getDocs().
+                */
+
+                currentMessages =
                     snapshot.docs.map(
                         messageDoc => ({
 
@@ -1962,7 +1959,7 @@ function startFirestoreListener(){
                     );
 
 
-                messages.sort(
+                currentMessages.sort(
                     (a,b) => {
 
                         const aTime =
@@ -1987,7 +1984,7 @@ function startFirestoreListener(){
 
 
                 renderMessages(
-                    messages
+                    currentMessages
                 );
 
 
@@ -2004,6 +2001,8 @@ function startFirestoreListener(){
 
 
                 messagesLoaded = false;
+
+                currentMessages = [];
 
 
                 showMessageError(
@@ -2245,66 +2244,34 @@ function normalizeMessage(text){
 
 
 /* =========================================================
-   CHECK IF SENDER HAS ALREADY SENT
+   CHECK OLD SENDER MESSAGES
 ========================================================= */
 
-async function hasSenderAlreadySentMessage(){
+function hasSenderAlreadySentMessage(){
 
     if(
-        !currentUser ||
-        !conversationId
+        !currentUser
     ){
         return false;
     }
 
 
-    try{
+    /*
+       We use the messages already loaded by
+       onSnapshot.
 
-        const messagesRef =
-            collection(
-                db,
-                "conversations",
-                conversationId,
-                "messages"
+       No getDocs().
+    */
+
+    return currentMessages.some(
+        message => {
+
+            return (
+                message.senderId ===
+                currentUser.uid
             );
-
-
-        const snapshot =
-            await getDocs(
-                messagesRef
-            );
-
-
-        return snapshot.docs.some(
-            messageDoc => {
-
-                const data =
-                    messageDoc.data();
-
-                return (
-                    data.senderId ===
-                    currentUser.uid
-                );
-            }
-        );
-
-    }catch(error){
-
-        console.warn(
-            "Could not inspect previous sender messages:",
-            error
-        );
-
-        /*
-           Fail safely.
-
-           If Firestore cannot verify the old
-           conversation, do not accidentally
-           grant another free message.
-        */
-
-        return true;
-    }
+        }
+    );
 }
 
 
@@ -2312,55 +2279,28 @@ async function hasSenderAlreadySentMessage(){
    COUNT RECEIVER REPLIES
 ========================================================= */
 
-async function countReceiverReplies(){
+function countReceiverReplies(){
 
     if(
-        !currentUser ||
-        !conversationId
+        !currentUser
     ){
         return 0;
     }
 
 
-    try{
+    /*
+       We use the existing message cache.
+    */
 
-        const messagesRef =
-            collection(
-                db,
-                "conversations",
-                conversationId,
-                "messages"
+    return currentMessages.filter(
+        message => {
+
+            return (
+                message.senderId ===
+                currentUser.uid
             );
-
-
-        const snapshot =
-            await getDocs(
-                messagesRef
-            );
-
-
-        return snapshot.docs.filter(
-            messageDoc => {
-
-                const data =
-                    messageDoc.data();
-
-                return (
-                    data.senderId ===
-                    currentUser.uid
-                );
-            }
-        ).length;
-
-    }catch(error){
-
-        console.warn(
-            "Could not count receiver replies:",
-            error
-        );
-
-        return FREE_RECEIVER_REPLIES;
-    }
+        }
+    ).length;
 }
 
 
@@ -2580,18 +2520,6 @@ async function checkSendPermission(text){
        =====================================================
        SENDER
        =====================================================
-
-       IMPORTANT FIX:
-
-       An existing conversation does NOT
-       automatically mean the free opening
-       was already used.
-
-       We first check the explicit
-       senderFreeOpeningUsed field.
-
-       For older conversations that do not
-       have the field, we inspect messages.
     */
 
     if(role === "sender"){
@@ -2602,7 +2530,9 @@ async function checkSendPermission(text){
 
 
         /*
-           New field exists.
+           NEW CONVERSATIONS
+
+           Explicit boolean state is trusted.
         */
 
         if(
@@ -2634,12 +2564,14 @@ async function checkSendPermission(text){
         }else{
 
             /*
-               Older conversation:
-               inspect actual messages.
+               OLD CONVERSATION
+
+               We inspect the messages already
+               loaded by the Firestore listener.
             */
 
             const alreadySent =
-                await hasSenderAlreadySentMessage();
+                hasSenderAlreadySentMessage();
 
 
             if(!alreadySent){
@@ -2667,8 +2599,7 @@ async function checkSendPermission(text){
 
         /*
            Free opening has already been used.
-
-           Check paid sender credits.
+           Now check paid sender credits.
         */
 
         const credits =
@@ -2722,9 +2653,22 @@ async function checkSendPermission(text){
 
 
         /*
-           Older conversations may not have
-           receiverRepliesUsed.
+           If the old conversation does not
+           have receiverRepliesUsed, calculate
+           it from the loaded messages.
         */
+
+        if(
+            currentConversationData
+                .receiverRepliesUsed === undefined ||
+            currentConversationData
+                .receiverRepliesUsed === null
+        ){
+
+            used =
+                countReceiverReplies();
+        }
+
 
         if(
             !Number.isFinite(used) ||
@@ -2732,21 +2676,6 @@ async function checkSendPermission(text){
         ){
 
             used = 0;
-        }
-
-
-        /*
-           If the field doesn't exist, count
-           actual messages from this receiver.
-        */
-
-        if(
-            typeof currentConversationData.receiverRepliesUsed
-            === "undefined"
-        ){
-
-            used =
-                await countReceiverReplies();
         }
 
 
@@ -3020,7 +2949,23 @@ async function sendRealMessage(
                     serverTimestamp(),
 
                 clientCreatedAt:
-                    clientCreatedAt
+                    clientCreatedAt,
+
+                /*
+                   These flags provide additional
+                   protection if conversation metadata
+                   is ever missing.
+                */
+
+                freeOpening:
+                    Boolean(
+                        permission.freeOpening
+                    ),
+
+                receiverFreeReply:
+                    Boolean(
+                        permission.receiverFree
+                    )
 
             }
         );
@@ -3035,8 +2980,9 @@ async function sendRealMessage(
     /*
        Update metadata.
 
-       Failure here must NOT make the user
-       think the message failed.
+       The message has already been successfully
+       written, so a metadata failure does not
+       make the message appear failed.
     */
 
     try{
@@ -3150,11 +3096,60 @@ async function sendRealMessage(
         );
 
         /*
-           Do NOT throw.
+           Do not throw here.
 
-           The message itself already exists.
+           The actual message was already
+           successfully saved.
         */
     }
+
+
+    /*
+       Update local message cache immediately.
+       The Firestore listener will also update it.
+    */
+
+    currentMessages.push({
+
+        id:messageDoc.id,
+
+        senderId:
+            currentUser.uid,
+
+        receiverId:
+            targetUserId,
+
+        text:text,
+
+        clientCreatedAt:
+            clientCreatedAt,
+
+        freeOpening:
+            Boolean(
+                permission.freeOpening
+            ),
+
+        receiverFreeReply:
+            Boolean(
+                permission.receiverFree
+            )
+
+    });
+
+
+    currentMessages.sort(
+        (a,b) => {
+
+            return (
+                Number(
+                    a.clientCreatedAt || 0
+                ) -
+                Number(
+                    b.clientCreatedAt || 0
+                )
+            );
+        }
+    );
 
 
     /*
