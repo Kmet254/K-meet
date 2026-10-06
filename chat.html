@@ -781,13 +781,13 @@ body::before{
 import {
     auth,
     onAuthStateChanged,
-    signInAnonymously,
     db,
     doc,
     getDoc,
     setDoc,
     collection,
     addDoc,
+    getDocs,
     query,
     onSnapshot,
     serverTimestamp,
@@ -1363,17 +1363,6 @@ function startPresenceListener(){
    CONVERSATION IDS
 ========================================================= */
 
-/*
-    OLD KMEET ID:
-    uidA_uidB
-
-    NEW SAFE ID:
-    kmeet_v2_uidA_uidB
-
-    Sorting guarantees both accounts produce
-    exactly the same ID.
-*/
-
 function getSortedPair(){
 
     if(
@@ -1451,21 +1440,12 @@ function isValidConversation(data){
     }
 
 
-    /*
-       A conversation cannot have the
-       same person as both participants.
-    */
-
     if(
         initiator === receiver
     ){
         return false;
     }
 
-
-    /*
-       It must contain BOTH people.
-    */
 
     const isOurPair =
         (
@@ -1513,10 +1493,6 @@ async function findExistingConversation(){
         newId
     );
 
-
-    /*
-       1. Check the old conversation first.
-    */
 
     if(oldId){
 
@@ -1574,10 +1550,6 @@ async function findExistingConversation(){
         }
     }
 
-
-    /*
-       2. Check the new v2 conversation.
-    */
 
     if(newId){
 
@@ -1662,14 +1634,6 @@ async function ensureConversation(){
     }
 
 
-    /*
-       ALWAYS search first.
-
-       This prevents Account A from creating
-       a second conversation when Account B
-       already has one.
-    */
-
     const existing =
         await findExistingConversation();
 
@@ -1691,13 +1655,6 @@ async function ensureConversation(){
     }
 
 
-    /*
-       No valid conversation exists.
-
-       Both accounts will use this exact same
-       deterministic ID.
-    */
-
     const newId =
         getNewConversationId();
 
@@ -1716,12 +1673,6 @@ async function ensureConversation(){
             newId
         );
 
-
-    /*
-       Check once more immediately before create.
-       This prevents duplicate creation when
-       two clients act almost simultaneously.
-    */
 
     const currentSnap =
         await getDoc(conversationRef);
@@ -1768,8 +1719,19 @@ async function ensureConversation(){
 
         senderCredits:0,
 
+        /*
+           IMPORTANT:
+           The sender's free opening has NOT
+           been used when the conversation is
+           first created.
+        */
+
+        senderFreeOpeningUsed:false,
+
         receiverFreeReplies:
             FREE_RECEIVER_REPLIES,
+
+        receiverRepliesUsed:0,
 
         receiverPaid:false
 
@@ -1836,15 +1798,6 @@ async function prepareRealChat(){
         return;
     }
 
-
-    /*
-       Important:
-       Do NOT create the conversation simply
-       because the user opened the chat.
-
-       It will be created when the first actual
-       message is sent.
-    */
 
     conversationId =
         getNewConversationId();
@@ -1973,17 +1926,6 @@ function startFirestoreListener(){
         );
 
 
-    /*
-       We deliberately do NOT use:
-           orderBy("createdAt")
-
-       This makes the listener more tolerant
-       of older messages and pending server
-       timestamps.
-
-       Messages are sorted in JavaScript instead.
-    */
-
     const messagesRef =
         collection(
             conversationRef,
@@ -2019,12 +1961,6 @@ function startFirestoreListener(){
                         })
                     );
 
-
-                /*
-                   Sort by server createdAt where
-                   available, otherwise use
-                   clientCreatedAt.
-                */
 
                 messages.sort(
                     (a,b) => {
@@ -2140,11 +2076,6 @@ function renderMessages(messages){
             "message-bubble";
 
 
-        /*
-           textContent is intentional.
-           It prevents HTML injection.
-        */
-
         const text =
             document.createElement("div");
 
@@ -2227,10 +2158,6 @@ function containsContactInfo(text){
             .trim();
 
 
-    /*
-       Phone numbers
-    */
-
     const phonePattern =
         /(?:\+?254|0)\s*\d[\d\s-]{7,}/;
 
@@ -2241,10 +2168,6 @@ function containsContactInfo(text){
     }
 
 
-    /*
-       Email addresses
-    */
-
     const emailPattern =
         /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
 
@@ -2254,10 +2177,6 @@ function containsContactInfo(text){
         return true;
     }
 
-
-    /*
-       Common social/contact handles.
-    */
 
     const socialPattern =
         /(?:whatsapp|telegram|instagram|facebook|snapchat|tiktok)\s*[:@]?\s*[a-z0-9_.-]+/i;
@@ -2274,7 +2193,7 @@ function containsContactInfo(text){
 
 
 /* =========================================================
-   GET CONVERSATION PARTICIPANT DATA
+   GET CONVERSATION ROLE
 ========================================================= */
 
 function getConversationRole(){
@@ -2309,6 +2228,139 @@ function getConversationRole(){
 
 
     return null;
+}
+
+
+/* =========================================================
+   NORMALIZE MESSAGE
+========================================================= */
+
+function normalizeMessage(text){
+
+    return String(text || "")
+        .toLowerCase()
+        .replace(/\s+/g," ")
+        .trim();
+}
+
+
+/* =========================================================
+   CHECK IF SENDER HAS ALREADY SENT
+========================================================= */
+
+async function hasSenderAlreadySentMessage(){
+
+    if(
+        !currentUser ||
+        !conversationId
+    ){
+        return false;
+    }
+
+
+    try{
+
+        const messagesRef =
+            collection(
+                db,
+                "conversations",
+                conversationId,
+                "messages"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                messagesRef
+            );
+
+
+        return snapshot.docs.some(
+            messageDoc => {
+
+                const data =
+                    messageDoc.data();
+
+                return (
+                    data.senderId ===
+                    currentUser.uid
+                );
+            }
+        );
+
+    }catch(error){
+
+        console.warn(
+            "Could not inspect previous sender messages:",
+            error
+        );
+
+        /*
+           Fail safely.
+
+           If Firestore cannot verify the old
+           conversation, do not accidentally
+           grant another free message.
+        */
+
+        return true;
+    }
+}
+
+
+/* =========================================================
+   COUNT RECEIVER REPLIES
+========================================================= */
+
+async function countReceiverReplies(){
+
+    if(
+        !currentUser ||
+        !conversationId
+    ){
+        return 0;
+    }
+
+
+    try{
+
+        const messagesRef =
+            collection(
+                db,
+                "conversations",
+                conversationId,
+                "messages"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                messagesRef
+            );
+
+
+        return snapshot.docs.filter(
+            messageDoc => {
+
+                const data =
+                    messageDoc.data();
+
+                return (
+                    data.senderId ===
+                    currentUser.uid
+                );
+            }
+        ).length;
+
+    }catch(error){
+
+        console.warn(
+            "Could not count receiver replies:",
+            error
+        );
+
+        return FREE_RECEIVER_REPLIES;
+    }
 }
 
 
@@ -2441,8 +2493,6 @@ async function checkSendPermission(text){
 
     /*
        DEMO PROFILE
-
-       Demo chats are intentionally local-only.
     */
 
     if(isDemoUser()){
@@ -2455,8 +2505,8 @@ async function checkSendPermission(text){
 
 
     /*
-       Anonymous users cannot use the free
-       opening-message loophole.
+       Anonymous users never receive the
+       free opening message.
     */
 
     if(
@@ -2472,8 +2522,8 @@ async function checkSendPermission(text){
 
 
     /*
-       Contact information is not allowed
-       before unlocking.
+       Contact information is blocked before
+       unlocking.
     */
 
     if(
@@ -2487,19 +2537,20 @@ async function checkSendPermission(text){
     }
 
 
+    const normalized =
+        normalizeMessage(clean);
+
+
     /*
-       If no conversation exists yet, this
-       is the first opening message.
+       =====================================================
+       NO CONVERSATION YET
+       =====================================================
+
+       Registered user can send exactly one
+       free "hi" or "hey".
     */
 
     if(!currentConversationData){
-
-        const normalized =
-            clean
-                .toLowerCase()
-                .replace(/\s+/g," ")
-                .trim();
-
 
         if(
             FREE_OPENING_MESSAGES.includes(
@@ -2526,61 +2577,99 @@ async function checkSendPermission(text){
 
 
     /*
-       If this user is the receiver,
-       allow only the first three replies
-       before the KSh 11 gate.
-    */
+       =====================================================
+       SENDER
+       =====================================================
 
-    if(role === "receiver"){
+       IMPORTANT FIX:
 
-        const used =
-            Number(
-                currentConversationData.receiverRepliesUsed || 0
-            );
+       An existing conversation does NOT
+       automatically mean the free opening
+       was already used.
 
-        const paid =
-            Boolean(
-                currentConversationData.receiverPaid
-            );
+       We first check the explicit
+       senderFreeOpeningUsed field.
 
-
-        if(!paid){
-
-            if(
-                used >= FREE_RECEIVER_REPLIES
-            ){
-
-                return {
-                    allowed:false,
-                    reason:"receiver"
-                };
-            }
-
-            return {
-                allowed:true,
-                receiverFree:true
-            };
-        }
-
-
-        return {
-            allowed:true
-        };
-    }
-
-
-    /*
-       Sender after conversation exists.
-
-       If senderCredits > 0, use one.
-       Otherwise require payment.
-
-       The first free opening message is
-       handled above before the conversation
-       exists.
+       For older conversations that do not
+       have the field, we inspect messages.
     */
 
     if(role === "sender"){
+
+        let freeOpeningUsed =
+            currentConversationData
+                .senderFreeOpeningUsed;
+
+
+        /*
+           New field exists.
+        */
+
+        if(
+            typeof freeOpeningUsed ===
+            "boolean"
+        ){
+
+            if(!freeOpeningUsed){
+
+                if(
+                    FREE_OPENING_MESSAGES.includes(
+                        normalized
+                    )
+                ){
+
+                    return {
+                        allowed:true,
+                        freeOpening:true
+                    };
+                }
+
+
+                return {
+                    allowed:false,
+                    reason:"sender"
+                };
+            }
+
+        }else{
+
+            /*
+               Older conversation:
+               inspect actual messages.
+            */
+
+            const alreadySent =
+                await hasSenderAlreadySentMessage();
+
+
+            if(!alreadySent){
+
+                if(
+                    FREE_OPENING_MESSAGES.includes(
+                        normalized
+                    )
+                ){
+
+                    return {
+                        allowed:true,
+                        freeOpening:true
+                    };
+                }
+
+
+                return {
+                    allowed:false,
+                    reason:"sender"
+                };
+            }
+        }
+
+
+        /*
+           Free opening has already been used.
+
+           Check paid sender credits.
+        */
 
         const credits =
             Number(
@@ -2597,12 +2686,6 @@ async function checkSendPermission(text){
         }
 
 
-        /*
-           If the sender has already used the
-           free opening message and has no
-           paid credits, payment is required.
-        */
-
         return {
             allowed:false,
             reason:"sender"
@@ -2611,8 +2694,79 @@ async function checkSendPermission(text){
 
 
     /*
-       Fallback
+       =====================================================
+       RECEIVER
+       =====================================================
     */
+
+    if(role === "receiver"){
+
+        const paid =
+            Boolean(
+                currentConversationData.receiverPaid
+            );
+
+
+        if(paid){
+
+            return {
+                allowed:true
+            };
+        }
+
+
+        let used =
+            Number(
+                currentConversationData.receiverRepliesUsed
+            );
+
+
+        /*
+           Older conversations may not have
+           receiverRepliesUsed.
+        */
+
+        if(
+            !Number.isFinite(used) ||
+            used < 0
+        ){
+
+            used = 0;
+        }
+
+
+        /*
+           If the field doesn't exist, count
+           actual messages from this receiver.
+        */
+
+        if(
+            typeof currentConversationData.receiverRepliesUsed
+            === "undefined"
+        ){
+
+            used =
+                await countReceiverReplies();
+        }
+
+
+        if(
+            used >= FREE_RECEIVER_REPLIES
+        ){
+
+            return {
+                allowed:false,
+                reason:"receiver"
+            };
+        }
+
+
+        return {
+            allowed:true,
+            receiverFree:true
+        };
+    }
+
 
     return {
         allowed:false,
@@ -2757,7 +2911,10 @@ async function sendDemoMessage(text){
    SEND REAL MESSAGE
 ========================================================= */
 
-async function sendRealMessage(text){
+async function sendRealMessage(
+    text,
+    permission = {}
+){
 
     if(
         !currentUser ||
@@ -2780,11 +2937,6 @@ async function sendRealMessage(text){
         await ensureConversation();
 
     }else{
-
-        /*
-           Verify the selected conversation is
-           still valid before writing.
-        */
 
         const conversationRef =
             doc(
@@ -2843,21 +2995,12 @@ async function sendRealMessage(text){
         );
 
 
-    /*
-       clientCreatedAt provides an immediate
-       local ordering value while
-       serverTimestamp is being resolved.
-    */
-
     const clientCreatedAt =
         Date.now();
 
 
     /*
-       THIS is the actual Firestore send.
-
-       Only this operation determines whether
-       the message was successfully sent.
+       ACTUAL MESSAGE WRITE
     */
 
     const messageDoc =
@@ -2890,10 +3033,10 @@ async function sendRealMessage(text){
 
 
     /*
-       Update conversation metadata separately.
+       Update metadata.
 
-       If this optional metadata update fails,
-       the actual message has STILL been sent.
+       Failure here must NOT make the user
+       think the message failed.
     */
 
     try{
@@ -2918,32 +3061,28 @@ async function sendRealMessage(text){
         };
 
 
-        if(role === "receiver"){
+        /*
+           The sender's first free opening
+           has now been consumed.
+        */
 
-            const oldUsed =
-                Number(
-                    currentConversationData?.receiverRepliesUsed || 0
-                );
+        if(
+            permission.freeOpening
+        ){
 
-
-            /*
-               Only increment free replies if
-               the receiver was actually using
-               their free allowance.
-            */
-
-            if(
-                !currentConversationData?.receiverPaid &&
-                oldUsed < FREE_RECEIVER_REPLIES
-            ){
-
-                updateData.receiverRepliesUsed =
-                    oldUsed + 1;
-            }
+            updateData.senderFreeOpeningUsed =
+                true;
         }
 
 
-        if(role === "sender"){
+        /*
+           Sender paid credit.
+        */
+
+        if(
+            permission.senderCredit &&
+            role === "sender"
+        ){
 
             const oldCredits =
                 Number(
@@ -2951,14 +3090,31 @@ async function sendRealMessage(text){
                 );
 
 
-            if(oldCredits > 0){
+            updateData.senderCredits =
+                Math.max(
+                    0,
+                    oldCredits - 1
+                );
+        }
 
-                updateData.senderCredits =
-                    Math.max(
-                        0,
-                        oldCredits - 1
-                    );
-            }
+
+        /*
+           Receiver free reply.
+        */
+
+        if(
+            permission.receiverFree &&
+            role === "receiver"
+        ){
+
+            const oldUsed =
+                Number(
+                    currentConversationData?.receiverRepliesUsed || 0
+                );
+
+
+            updateData.receiverRepliesUsed =
+                oldUsed + 1;
         }
 
 
@@ -2980,6 +3136,12 @@ async function sendRealMessage(text){
         };
 
 
+        console.log(
+            "CHAT METADATA UPDATED:",
+            updateData
+        );
+
+
     }catch(metadataError){
 
         console.warn(
@@ -2988,24 +3150,18 @@ async function sendRealMessage(text){
         );
 
         /*
-           DO NOT throw here.
+           Do NOT throw.
 
-           The message already exists in Firestore.
+           The message itself already exists.
         */
     }
 
 
     /*
-       Clear the input ONLY after the actual
-       message write succeeded.
+       Only now clear the composer.
     */
 
     messageInput.value = "";
-
-    /*
-       This function now EXISTS and cannot
-       produce the old ReferenceError.
-    */
 
     hideGate();
 
@@ -3048,8 +3204,7 @@ async function handleSend(){
     try{
 
         /*
-           Check the gate BEFORE modifying
-           Firestore.
+           Check permission BEFORE writing.
         */
 
         const permission =
@@ -3069,7 +3224,7 @@ async function handleSend(){
 
 
         /*
-           Demo chat
+           Demo
         */
 
         if(permission.demo){
@@ -3087,7 +3242,8 @@ async function handleSend(){
         */
 
         await sendRealMessage(
-            text
+            text,
+            permission
         );
 
 
@@ -3098,16 +3254,6 @@ async function handleSend(){
             error
         );
 
-
-        /*
-           IMPORTANT:
-
-           This catch now only handles errors
-           from the actual sending process.
-
-           hideGate() and input clearing are
-           outside the Firestore failure point.
-        */
 
         showToast(
             "Message could not be sent. Please try again.",
@@ -3190,15 +3336,11 @@ async function initialiseChat(){
     }
 
 
-    /*
-       Load target profile first.
-    */
-
     await loadTargetProfile();
 
 
     /*
-       Demo chats use localStorage.
+       Demo chat
     */
 
     if(isDemoUser()){
@@ -3242,8 +3384,7 @@ async function initialiseChat(){
 
 
     /*
-       Anonymous visitors may browse but
-       cannot use the free chat.
+       Anonymous users cannot use free chat.
     */
 
     if(
@@ -3272,20 +3413,11 @@ async function initialiseChat(){
 
 
     /*
-       Prepare the existing conversation.
-
-       If none exists, no empty conversation
-       document is created yet.
+       Prepare existing conversation.
     */
 
     await prepareRealChat();
 
-
-    /*
-       If prepareRealChat() did not find an
-       existing conversation, show normal
-       empty state.
-    */
 
     if(
         !conversationId ||
@@ -3336,11 +3468,6 @@ onAuthStateChanged(
                 : null
         );
 
-
-        /*
-           If auth changes after page startup,
-           initialise once the user is known.
-        */
 
         if(
             user &&
