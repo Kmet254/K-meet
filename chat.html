@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -400,6 +399,7 @@ body{
 
 .send-btn:hover{
   transform:translateY(-1px);
+
   box-shadow:
     0 10px 25px rgba(220,42,119,.36);
 }
@@ -620,10 +620,8 @@ body{
 
 
   <div class="info-bar">
-
     <strong>Kmeet</strong> keeps conversations simple and respectful.
     Please don't share personal contact details before unlocking the chat.
-
   </div>
 
 
@@ -692,51 +690,41 @@ import {
 
 
 /* =========================================================
-   ELEMENTS
+   BASIC ELEMENTS
 ========================================================= */
 
-const messagesEl = document.getElementById("messages");
-const messageInput = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
+const messagesEl =
+  document.getElementById("messages");
 
-const personName = document.getElementById("personName");
-const personStatus = document.getElementById("personStatus");
+const messageInput =
+  document.getElementById("messageInput");
 
-const avatar = document.getElementById("avatar");
-const avatarFallback = document.getElementById("avatarFallback");
+const sendBtn =
+  document.getElementById("sendBtn");
 
-const gate = document.getElementById("gate");
-const gateTitle = document.getElementById("gateTitle");
-const gateText = document.getElementById("gateText");
-const gateButtons = document.getElementById("gateButtons");
+const personName =
+  document.getElementById("personName");
 
+const personStatus =
+  document.getElementById("personStatus");
 
-/* =========================================================
-   DOM SAFETY CHECK
-========================================================= */
+const avatar =
+  document.getElementById("avatar");
 
-const missingElements = [];
+const avatarFallback =
+  document.getElementById("avatarFallback");
 
-if(!messagesEl) missingElements.push("messages");
-if(!messageInput) missingElements.push("messageInput");
-if(!sendBtn) missingElements.push("sendBtn");
-if(!personName) missingElements.push("personName");
-if(!personStatus) missingElements.push("personStatus");
-if(!avatar) missingElements.push("avatar");
-if(!avatarFallback) missingElements.push("avatarFallback");
-if(!gate) missingElements.push("gate");
-if(!gateTitle) missingElements.push("gateTitle");
-if(!gateText) missingElements.push("gateText");
-if(!gateButtons) missingElements.push("gateButtons");
+const gate =
+  document.getElementById("gate");
 
-if(missingElements.length){
+const gateTitle =
+  document.getElementById("gateTitle");
 
-  console.error(
-    "Kmeet missing HTML elements:",
-    missingElements
-  );
+const gateText =
+  document.getElementById("gateText");
 
-}
+const gateButtons =
+  document.getElementById("gateButtons");
 
 
 /* =========================================================
@@ -758,15 +746,20 @@ const targetId =
 ========================================================= */
 
 let currentUser = null;
+
 let conversationId = null;
+
 let unsubscribeMessages = null;
 
 let authStarted = false;
+
 let targetIsDemo = false;
 
 let targetProfile = null;
 
 let localMessages = [];
+
+let hasReceivedFirstSnapshot = false;
 
 let sendingMessage = false;
 
@@ -881,7 +874,7 @@ const demoProfiles = {
 
 
 /* =========================================================
-   DEMO STORAGE
+   DEMO CHAT STORAGE
 ========================================================= */
 
 function demoStorageKey(){
@@ -902,7 +895,8 @@ function demoStorageKey(){
 
 function getDemoMessages(){
 
-  const key = demoStorageKey();
+  const key =
+    demoStorageKey();
 
   if(!key){
     return [];
@@ -917,7 +911,7 @@ function getDemoMessages(){
   }catch(error){
 
     console.error(
-      "Demo storage read error:",
+      "Demo chat storage error:",
       error
     );
 
@@ -930,16 +924,28 @@ function getDemoMessages(){
 
 function saveDemoMessages(items){
 
-  const key = demoStorageKey();
+  const key =
+    demoStorageKey();
 
   if(!key){
     return;
   }
 
-  localStorage.setItem(
-    key,
-    JSON.stringify(items)
-  );
+  try{
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(items)
+    );
+
+  }catch(error){
+
+    console.error(
+      "Could not save demo messages:",
+      error
+    );
+
+  }
 
 }
 
@@ -948,24 +954,63 @@ function saveDemoMessages(items){
    CONVERSATION ID
 ========================================================= */
 
+/*
+   IMPORTANT FIX
+
+   The old conversation ID was:
+
+   uid1_uid2
+
+   One of the old records was corrupted and contained:
+
+   initiatorId = currentUser.uid
+   receiverId  = currentUser.uid
+
+   We are therefore moving Kmeet chat conversations to
+   a NEW versioned ID.
+
+   This means the broken old conversation is ignored.
+
+   Both participants still generate exactly the same ID
+   because both UIDs are sorted first.
+*/
+
 function getConversationId(){
 
   if(!currentUser || !targetId){
     return null;
   }
 
+
+  if(currentUser.uid === targetId){
+
+    console.error(
+      "Kmeet prevented a self-conversation."
+    );
+
+    return null;
+
+  }
+
+
   const ids = [
     currentUser.uid,
     targetId
   ].sort();
 
-  return ids[0] + "_" + ids[1];
+
+  return (
+    "kmeet_v2_" +
+    ids[0] +
+    "_" +
+    ids[1]
+  );
 
 }
 
 
 /* =========================================================
-   CONTACT PROTECTION
+   CONTACT INFORMATION PROTECTION
 ========================================================= */
 
 function containsContactInformation(text){
@@ -975,49 +1020,80 @@ function containsContactInformation(text){
       .toLowerCase()
       .trim();
 
+
   const patterns = [
 
     /\b\d{9,13}\b/,
+
     /\b07\d{8}\b/,
+
     /\b01\d{8}\b/,
+
     /\b\d{3}[\s-]\d{3}[\s-]\d{3,4}\b/,
 
     /whatsapp/,
+
     /telegram/,
+
     /instagram/,
+
     /facebook/,
+
     /tiktok/,
+
     /snapchat/,
 
     /email me/,
+
     /call me/,
+
     /text me/,
+
     /contact me/,
+
     /my number/,
+
     /my phone/,
+
     /my email/,
 
     /@gmail\.com/,
+
     /@yahoo\.com/,
+
     /@outlook\.com/
 
   ];
 
+
   return patterns.some(
-    pattern => pattern.test(value)
+    pattern =>
+      pattern.test(value)
   );
 
 }
 
 
 /* =========================================================
-   PAYMENT STATE
+   LOCAL PAYMENT STATE
 ========================================================= */
 
 function freeOpeningKey(){
 
   return (
     "kmeet_free_opening_used_" +
+    currentUser.uid +
+    "_" +
+    targetId
+  );
+
+}
+
+
+function senderCreditsKey(){
+
+  return (
+    "kmeet_sender_credits_" +
     currentUser.uid +
     "_" +
     targetId
@@ -1060,6 +1136,30 @@ function hasReceiverPaid(){
 }
 
 
+function getSenderCredits(){
+
+  return parseInt(
+    localStorage.getItem(
+      senderCreditsKey()
+    ) || "0",
+    10
+  );
+
+}
+
+
+function setSenderCredits(value){
+
+  localStorage.setItem(
+    senderCreditsKey(),
+    String(
+      Math.max(0,value)
+    )
+  );
+
+}
+
+
 /* =========================================================
    PROFILE DISPLAY
 ========================================================= */
@@ -1069,18 +1169,22 @@ function showTargetProfile(profile){
   targetProfile =
     profile || {};
 
+
   const name =
     profile?.displayName ||
     profile?.name ||
     "Kmeet Member";
 
+
   personName.textContent =
     name;
+
 
   personStatus.textContent =
     profile?.online === true
       ? "Online now"
       : "Your Kmeet conversation";
+
 
   const photo =
     profile?.photoURL ||
@@ -1088,6 +1192,7 @@ function showTargetProfile(profile){
     profile?.profilePhoto ||
     profile?.image ||
     "";
+
 
   if(photo){
 
@@ -1100,6 +1205,7 @@ function showTargetProfile(profile){
     avatarFallback.style.display =
       "none";
 
+
     avatar.onerror =
       () => {
 
@@ -1110,7 +1216,9 @@ function showTargetProfile(profile){
           "flex";
 
         avatarFallback.textContent =
-          name.charAt(0).toUpperCase();
+          name
+            .charAt(0)
+            .toUpperCase();
 
       };
 
@@ -1123,7 +1231,9 @@ function showTargetProfile(profile){
       "flex";
 
     avatarFallback.textContent =
-      name.charAt(0).toUpperCase();
+      name
+        .charAt(0)
+        .toUpperCase();
 
   }
 
@@ -1147,7 +1257,9 @@ async function loadTarget(){
   }
 
 
-  if(demoProfiles[targetId]){
+  if(
+    demoProfiles[targetId]
+  ){
 
     targetIsDemo =
       true;
@@ -1176,6 +1288,7 @@ async function loadTarget(){
         )
       );
 
+
     if(snap.exists()){
 
       showTargetProfile(
@@ -1197,6 +1310,7 @@ async function loadTarget(){
       error
     );
 
+
     showTargetProfile({
       displayName:"Kmeet Member"
     });
@@ -1207,7 +1321,7 @@ async function loadTarget(){
 
 
 /* =========================================================
-   TIME
+   FORMAT MESSAGE TIME
 ========================================================= */
 
 function formatMessageTime(timestamp){
@@ -1216,9 +1330,11 @@ function formatMessageTime(timestamp){
     return "";
   }
 
+
   try{
 
     let date;
+
 
     if(
       typeof timestamp.toDate ===
@@ -1236,7 +1352,8 @@ function formatMessageTime(timestamp){
         timestamp;
 
     }else if(
-      typeof timestamp === "number"
+      typeof timestamp ===
+      "number"
     ){
 
       date =
@@ -1247,6 +1364,7 @@ function formatMessageTime(timestamp){
       return "";
 
     }
+
 
     return date.toLocaleTimeString(
       [],
@@ -1266,17 +1384,16 @@ function formatMessageTime(timestamp){
 
 
 /* =========================================================
-   RENDER
+   RENDER MESSAGES
 ========================================================= */
 
 function renderMessages(items){
 
-  if(!messagesEl){
-    return;
-  }
-
   if(!Array.isArray(items)){
-    items = [];
+
+    items =
+      [];
+
   }
 
 
@@ -1308,35 +1425,67 @@ function renderMessages(items){
       return;
     }
 
+
+    const senderId =
+      item.senderId || "";
+
+
     const mine =
-      item.senderId ===
+      senderId ===
       currentUser?.uid;
 
 
     const row =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     row.className =
       "message-row " +
-      (mine ? "mine" : "theirs");
+      (
+        mine
+          ? "mine"
+          : "theirs"
+      );
 
 
     const bubble =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     bubble.className =
       "message " +
-      (mine ? "mine" : "theirs");
+      (
+        mine
+          ? "mine"
+          : "theirs"
+      );
 
 
     const text =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     text.textContent =
       item.text || "";
 
 
     const time =
+      document.createElement(
+        "div"
+      );
+
+
+    time.className =
+      "message-time";
+
+
+    time.textContent =
       formatMessageTime(
         item.createdAt ||
         item.clientCreatedAt
@@ -1348,19 +1497,10 @@ function renderMessages(items){
     );
 
 
-    if(time){
-
-      const timeEl =
-        document.createElement("div");
-
-      timeEl.className =
-        "message-time";
-
-      timeEl.textContent =
-        time;
+    if(time.textContent){
 
       bubble.appendChild(
-        timeEl
+        time
       );
 
     }
@@ -1369,6 +1509,7 @@ function renderMessages(items){
     row.appendChild(
       bubble
     );
+
 
     messagesEl.appendChild(
       row
@@ -1390,10 +1531,157 @@ function renderMessages(items){
 
 
 /* =========================================================
-   START FIRESTORE LISTENER
+   VALIDATE CONVERSATION
 ========================================================= */
 
-function startMessages(){
+function isValidConversation(data){
+
+  if(!data){
+    return false;
+  }
+
+
+  const initiator =
+    data.initiatorId;
+
+
+  const receiver =
+    data.receiverId;
+
+
+  /*
+    A conversation must contain two different users.
+  */
+
+  if(
+    typeof initiator !== "string" ||
+    typeof receiver !== "string"
+  ){
+
+    return false;
+
+  }
+
+
+  if(
+    initiator === receiver
+  ){
+
+    return false;
+
+  }
+
+
+  /*
+    Current user and target must be the two
+    participants.
+  */
+
+  const validParticipants =
+    (
+      initiator === currentUser.uid &&
+      receiver === targetId
+    ) ||
+    (
+      initiator === targetId &&
+      receiver === currentUser.uid
+    );
+
+
+  return validParticipants;
+
+}
+
+
+/* =========================================================
+   CHECK EXISTING VALID CONVERSATION
+========================================================= */
+
+async function getExistingValidConversation(){
+
+  conversationId =
+    getConversationId();
+
+
+  if(!conversationId){
+
+    return null;
+
+  }
+
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(
+          db,
+          "conversations",
+          conversationId
+        )
+      );
+
+
+    if(!snap.exists()){
+
+      console.log(
+        "No Kmeet v2 conversation exists yet."
+      );
+
+      return null;
+
+    }
+
+
+    const data =
+      snap.data();
+
+
+    console.log(
+      "Kmeet v2 conversation found:",
+      data
+    );
+
+
+    if(
+      !isValidConversation(data)
+    ){
+
+      console.warn(
+        "Invalid Kmeet v2 conversation found. It will not be used.",
+        data
+      );
+
+      return null;
+
+    }
+
+
+    return data;
+
+  }catch(error){
+
+    console.error(
+      "Conversation check failed:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   START REAL FIRESTORE MESSAGES
+========================================================= */
+
+async function startMessages(){
+
+  /*
+    Demo chats never use Firestore.
+  */
 
   if(targetIsDemo){
 
@@ -1404,13 +1692,29 @@ function startMessages(){
   }
 
 
-  conversationId =
-    getConversationId();
+  /*
+    Do not start a Firestore listener until the parent
+    conversation has been checked.
+
+    This removes the permission error that happened when
+    the listener tried to watch a conversation that did
+    not exist or was corrupted.
+  */
+
+  const existingConversation =
+    await getExistingValidConversation();
 
 
-  if(!conversationId){
+  if(!existingConversation){
+
+    localMessages =
+      [];
 
     renderMessages([]);
+
+    console.log(
+      "No valid conversation yet. Listener will start after the first successful message."
+    );
 
     return;
 
@@ -1425,6 +1729,10 @@ function startMessages(){
       null;
 
   }
+
+
+  hasReceivedFirstSnapshot =
+    false;
 
 
   const messagesRef =
@@ -1469,12 +1777,36 @@ function startMessages(){
 
 
         console.log(
-          "Firestore messages received:",
+          "Messages received:",
           serverMessages.length
         );
 
 
-        if(serverMessages.length > 0){
+        /*
+          Never wipe an optimistic message with
+          an empty Firestore snapshot.
+        */
+
+        if(
+          serverMessages.length === 0 &&
+          localMessages.length > 0
+        ){
+
+          renderMessages(
+            localMessages
+          );
+
+          hasReceivedFirstSnapshot =
+            true;
+
+          return;
+
+        }
+
+
+        if(
+          serverMessages.length > 0
+        ){
 
           localMessages =
             serverMessages;
@@ -1483,28 +1815,15 @@ function startMessages(){
             serverMessages
           );
 
-          return;
+        }else{
+
+          renderMessages([]);
 
         }
 
 
-        /*
-          Do not erase an optimistic message if
-          Firestore temporarily reports zero messages.
-        */
-
-        if(localMessages.length > 0){
-
-          renderMessages(
-            localMessages
-          );
-
-          return;
-
-        }
-
-
-        renderMessages([]);
+        hasReceivedFirstSnapshot =
+          true;
 
       },
 
@@ -1515,9 +1834,28 @@ function startMessages(){
           error
         );
 
+
         /*
-          Do not erase visible messages.
+          Never erase visible messages because
+          the listener encountered an error.
         */
+
+        if(
+          localMessages.length === 0
+        ){
+
+          messagesEl.innerHTML = `
+
+            <div class="empty-state">
+
+              Your conversation is ready.<br>
+              Send a message to begin.
+
+            </div>
+
+          `;
+
+        }
 
       }
 
@@ -1535,6 +1873,7 @@ function loadDemoChat(){
   localMessages =
     getDemoMessages();
 
+
   renderMessages(
     localMessages
   );
@@ -1548,8 +1887,14 @@ function loadDemoChat(){
 
 async function ensureConversation(){
 
+  /*
+    Always use the NEW Kmeet v2 conversation ID.
+
+    This intentionally avoids the corrupted old
+    conversation document.
+  */
+
   conversationId =
-    conversationId ||
     getConversationId();
 
 
@@ -1557,6 +1902,29 @@ async function ensureConversation(){
 
     throw new Error(
       "Conversation ID could not be created."
+    );
+
+  }
+
+
+  if(
+    !currentUser ||
+    !targetId
+  ){
+
+    throw new Error(
+      "Chat participants are missing."
+    );
+
+  }
+
+
+  if(
+    currentUser.uid === targetId
+  ){
+
+    throw new Error(
+      "You cannot start a conversation with yourself."
     );
 
   }
@@ -1581,33 +1949,23 @@ async function ensureConversation(){
     const data =
       existing.data();
 
+
     console.log(
-      "EXISTING CONVERSATION:",
+      "EXISTING KMEET V2 CONVERSATION:",
       data
     );
 
-    /*
-      Make sure this conversation actually belongs
-      to the current two users.
 
-      This protects against an old malformed conversation.
+    /*
+      Never use a corrupted conversation.
     */
 
-    const validParticipants =
-      (
-        data.initiatorId === currentUser.uid &&
-        data.receiverId === targetId
-      ) ||
-      (
-        data.initiatorId === targetId &&
-        data.receiverId === currentUser.uid
-      );
-
-
-    if(!validParticipants){
+    if(
+      !isValidConversation(data)
+    ){
 
       throw new Error(
-        "This conversation belongs to different users. Please start a new chat."
+        "The Kmeet conversation is invalid. Please refresh and start the chat again."
       );
 
     }
@@ -1617,6 +1975,13 @@ async function ensureConversation(){
 
   }
 
+
+  /*
+    Brand-new conversation.
+
+    The two IDs are explicitly different because
+    self-conversations were already rejected above.
+  */
 
   const conversationData = {
 
@@ -1636,7 +2001,8 @@ async function ensureConversation(){
 
 
   console.log(
-    "CREATING CONVERSATION:",
+    "CREATING NEW KMEET V2 CONVERSATION:",
+    conversationId,
     conversationData
   );
 
@@ -1644,12 +2010,6 @@ async function ensureConversation(){
   await setDoc(
     conversationRef,
     conversationData
-  );
-
-
-  console.log(
-    "CONVERSATION CREATED:",
-    conversationId
   );
 
 
@@ -1664,13 +2024,10 @@ async function ensureConversation(){
 
 function showGate(type){
 
-  if(!gate){
-    return;
-  }
-
   gate.classList.add(
     "show"
   );
+
 
   gateButtons.innerHTML =
     "";
@@ -1681,8 +2038,10 @@ function showGate(type){
     gateTitle.textContent =
       "Chat requires an account";
 
+
     gateText.textContent =
       "Guest visitors can explore Kmeet, but messaging requires a paid chat package.";
+
 
     gateButtons.innerHTML = `
 
@@ -1704,6 +2063,7 @@ function showGate(type){
 
     `;
 
+
     return;
 
   }
@@ -1714,8 +2074,10 @@ function showGate(type){
     gateTitle.textContent =
       "You've used your free opening";
 
+
     gateText.textContent =
       "Choose a chat package to continue the conversation.";
+
 
     gateButtons.innerHTML = `
 
@@ -1737,6 +2099,7 @@ function showGate(type){
 
     `;
 
+
     return;
 
   }
@@ -1747,8 +2110,10 @@ function showGate(type){
     gateTitle.textContent =
       "Continue this conversation";
 
+
     gateText.textContent =
       "Your free replies have been used. Pay KSh 11 to continue replying.";
+
 
     gateButtons.innerHTML = `
 
@@ -1773,13 +2138,9 @@ function showGate(type){
 
 function hideGate(){
 
-  if(gate){
-
-    gate.classList.remove(
-      "show"
-    );
-
-  }
+  gate.classList.remove(
+    "show"
+  );
 
 }
 
@@ -1829,6 +2190,10 @@ async function sendDemoMessage(text){
   messageInput.value =
     "";
 
+
+  messageInput.style.height =
+    "auto";
+
 }
 
 
@@ -1844,55 +2209,49 @@ async function sendRealMessage(text){
 
 
   /*
-    First make absolutely sure the parent conversation
-    exists and belongs to the correct users.
+    Make sure the NEW v2 conversation exists.
   */
 
   const conversation =
     await ensureConversation();
 
 
+  console.log(
+    "VALID CONVERSATION:",
+    conversation
+  );
+
+
+  /*
+    Determine the other participant.
+
+    This can never be the current user because
+    ensureConversation() validates both participants.
+  */
+
   let receiverId;
 
 
   if(
-    conversation &&
-    typeof conversation.initiatorId === "string" &&
-    typeof conversation.receiverId === "string"
+    conversation.initiatorId ===
+    currentUser.uid
   ){
 
     receiverId =
-      conversation.initiatorId === currentUser.uid
-        ? conversation.receiverId
-        : conversation.initiatorId;
+      conversation.receiverId;
 
   }else{
 
     receiverId =
-      targetId;
+      conversation.initiatorId;
 
   }
 
 
-  console.log(
-    "CURRENT USER:",
-    currentUser.uid
-  );
-
-  console.log(
-    "TARGET:",
-    targetId
-  );
-
-  console.log(
-    "RECEIVER:",
-    receiverId
-  );
-
-
   if(
     !receiverId ||
-    receiverId === currentUser.uid
+    receiverId === currentUser.uid ||
+    receiverId !== targetId
   ){
 
     throw new Error(
@@ -1903,7 +2262,10 @@ async function sendRealMessage(text){
 
 
   /*
-    Show message immediately.
+    Optimistic message.
+
+    It is displayed immediately and is NOT removed
+    unless the actual Firestore write fails.
   */
 
   const optimisticMessage = {
@@ -1941,14 +2303,7 @@ async function sendRealMessage(text){
 
 
   /*
-    Save ONLY the message.
-
-    IMPORTANT:
-    We deliberately do NOT update the conversation
-    document after addDoc.
-
-    That extra operation was capable of making a
-    successful message appear to have failed.
+    Save the actual message.
   */
 
   const messagesRef =
@@ -1968,62 +2323,99 @@ async function sendRealMessage(text){
   );
 
 
+  const messageRef =
+    await addDoc(
+      messagesRef,
+      {
+
+        senderId:
+          currentUser.uid,
+
+        receiverId:
+          receiverId,
+
+        text:
+          text,
+
+        createdAt:
+          serverTimestamp(),
+
+        clientCreatedAt:
+          Date.now()
+
+      }
+    );
+
+
+  console.log(
+    "MESSAGE SUCCESSFULLY SAVED:",
+    messageRef.id
+  );
+
+
+  /*
+    Update the parent only after the message succeeds.
+
+    The rules already allow the participant to update
+    the conversation.
+  */
+
   try{
 
-    const messageRef =
-      await addDoc(
-        messagesRef,
-        {
+    await setDoc(
 
-          senderId:
-            currentUser.uid,
+      doc(
+        db,
+        "conversations",
+        conversationId
+      ),
 
-          receiverId:
-            receiverId,
+      {
 
-          text:
-            text,
+        updatedAt:
+          serverTimestamp(),
 
-          createdAt:
-            serverTimestamp(),
+        lastMessage:
+          text,
 
-          clientCreatedAt:
-            Date.now()
+        lastSenderId:
+          currentUser.uid
 
-        }
-      );
+      },
 
+      {
+        merge:true
+      }
 
-    console.log(
-      "MESSAGE SUCCESSFULLY SAVED:",
-      messageRef.id
     );
 
+  }catch(updateError){
 
     /*
-      The parent conversation exists, so now start/
-      restart the listener.
-
-      This prevents the listener from querying a
-      conversation that does not exist yet.
+      Do not treat a successful message as a failed
+      message merely because the optional conversation
+      metadata update failed.
     */
 
-    startMessages();
-
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "FIRESTORE MESSAGE WRITE FAILED:",
-      error
+    console.warn(
+      "Conversation metadata update failed:",
+      updateError
     );
 
-
-    throw error;
-
   }
+
+
+  /*
+    Now start the listener.
+
+    The parent and message both exist, so the listener
+    will no longer be started against a missing parent.
+  */
+
+  await startMessages();
+
+
+  return true;
 
 }
 
@@ -2035,7 +2427,9 @@ async function sendRealMessage(text){
 async function sendMessage(){
 
   if(sendingMessage){
+
     return;
+
   }
 
 
@@ -2050,28 +2444,20 @@ async function sendMessage(){
   }
 
 
-  if(!messageInput){
-
-    console.error(
-      "Kmeet: messageInput is missing."
-    );
-
-    return;
-
-  }
-
-
   const text =
-    messageInput.value.trim();
+    messageInput.value
+      .trim();
 
 
   if(!text){
+
     return;
+
   }
 
 
   /*
-    Demo profiles.
+    Demo profiles use local chat.
   */
 
   if(targetIsDemo){
@@ -2079,10 +2465,9 @@ async function sendMessage(){
     sendingMessage =
       true;
 
-    if(sendBtn){
-      sendBtn.disabled =
-        true;
-    }
+    sendBtn.disabled =
+      true;
+
 
     try{
 
@@ -2095,12 +2480,11 @@ async function sendMessage(){
       sendingMessage =
         false;
 
-      if(sendBtn){
-        sendBtn.disabled =
-          false;
-      }
+      sendBtn.disabled =
+        false;
 
     }
+
 
     return;
 
@@ -2111,7 +2495,9 @@ async function sendMessage(){
     Anonymous users cannot use the free opening.
   */
 
-  if(currentUser.isAnonymous){
+  if(
+    currentUser.isAnonymous
+  ){
 
     showGate(
       "anonymous"
@@ -2123,7 +2509,8 @@ async function sendMessage(){
 
 
   /*
-    Contact protection.
+    Protect users from sharing contact information
+    before payment.
   */
 
   if(
@@ -2141,6 +2528,14 @@ async function sendMessage(){
   }
 
 
+  /*
+    Determine whether the NEW v2 conversation already
+    exists.
+
+    We intentionally do NOT inspect the corrupted old
+    conversation ID.
+  */
+
   conversationId =
     getConversationId();
 
@@ -2148,17 +2543,13 @@ async function sendMessage(){
   if(!conversationId){
 
     alert(
-      "Kmeet could not create this conversation."
+      "This chat could not be opened because the two users are invalid."
     );
 
     return;
 
   }
 
-
-  /*
-    Check whether conversation already exists.
-  */
 
   let existingConversation =
     null;
@@ -2180,15 +2571,39 @@ async function sendMessage(){
       conversationSnap.exists()
     ){
 
-      existingConversation =
+      const data =
         conversationSnap.data();
+
+
+      /*
+        If the v2 record itself is invalid,
+        do not use it.
+      */
+
+      if(
+        isValidConversation(
+          data
+        )
+      ){
+
+        existingConversation =
+          data;
+
+      }else{
+
+        console.warn(
+          "Invalid v2 conversation ignored:",
+          data
+        );
+
+      }
 
     }
 
   }catch(error){
 
     console.error(
-      "CONVERSATION CHECK ERROR:",
+      "Conversation check failed:",
       error
     );
 
@@ -2196,7 +2611,10 @@ async function sendMessage(){
 
 
   /*
-    Brand-new conversation.
+    BRAND NEW CONVERSATION
+
+    Registered users get one free opening message,
+    and it must be exactly "hi" or "hey".
   */
 
   if(!existingConversation){
@@ -2216,9 +2634,11 @@ async function sendMessage(){
         "sender"
       );
 
+
       alert(
         'Your first free message must be "hi" or "hey".'
       );
+
 
       return;
 
@@ -2233,6 +2653,7 @@ async function sendMessage(){
         "sender"
       );
 
+
       return;
 
     }
@@ -2241,7 +2662,9 @@ async function sendMessage(){
 
 
   /*
-    Existing conversation.
+    EXISTING CONVERSATION
+
+    Determine whether current user is the receiver.
   */
 
   if(existingConversation){
@@ -2278,6 +2701,7 @@ async function sendMessage(){
           "receiver"
         );
 
+
         return;
 
       }
@@ -2290,13 +2714,8 @@ async function sendMessage(){
   sendingMessage =
     true;
 
-
-  if(sendBtn){
-
-    sendBtn.disabled =
-      true;
-
-  }
+  sendBtn.disabled =
+    true;
 
 
   try{
@@ -2307,7 +2726,8 @@ async function sendMessage(){
 
 
     /*
-      Clear the input ONLY after addDoc succeeds.
+      Only clear the input after the message has
+      successfully reached Firestore.
     */
 
     messageInput.value =
@@ -2318,11 +2738,13 @@ async function sendMessage(){
 
 
     /*
-      Free opening is consumed only after
-      successful Firestore write.
+      First free opening is marked used only after
+      successful Firestore delivery.
     */
 
-    if(!existingConversation){
+    if(
+      !existingConversation
+    ){
 
       localStorage.setItem(
         freeOpeningKey(),
@@ -2333,10 +2755,12 @@ async function sendMessage(){
 
 
     /*
-      Receiver free replies.
+      Receiver free reply count.
     */
 
-    if(existingConversation){
+    if(
+      existingConversation
+    ){
 
       const isReceiver =
         existingConversation.receiverId ===
@@ -2367,9 +2791,12 @@ async function sendMessage(){
 
           receiverReplies++;
 
+
           localStorage.setItem(
             receiverReplyKey,
-            String(receiverReplies)
+            String(
+              receiverReplies
+            )
           );
 
         }
@@ -2380,43 +2807,60 @@ async function sendMessage(){
 
 
     console.log(
-      "KMEET MESSAGE SEND COMPLETE"
+      "SEND COMPLETE"
     );
 
 
   }catch(error){
 
     console.error(
-      "COMPLETE SEND ERROR:",
+      "MESSAGE SEND ERROR:",
       error
     );
 
 
     /*
-      IMPORTANT:
+      Remove only the optimistic copy belonging to
+      this failed message.
 
-      Do NOT remove the optimistic message here.
-
-      If Firestore rejected the write, the exact error
-      remains visible in the console instead of silently
-      destroying the message.
+      We identify it using its exact text and the
+      optimistic flag, rather than deleting every
+      message with the same text.
     */
 
-    const code =
+    localMessages =
+      localMessages.filter(
+        item =>
+          !(
+            item.optimistic === true &&
+            item.senderId ===
+              currentUser.uid &&
+            item.text ===
+              text
+          )
+      );
+
+
+    renderMessages(
+      localMessages
+    );
+
+
+    const errorCode =
       error?.code ||
       "unknown";
 
 
-    const message =
+    const errorMessage =
       error?.message ||
       String(error);
 
 
     alert(
-      "Kmeet message error:\n\n" +
-      code +
+      "The message could not be sent.\n\n" +
+      errorCode +
       "\n\n" +
-      message
+      errorMessage
     );
 
 
@@ -2425,20 +2869,10 @@ async function sendMessage(){
     sendingMessage =
       false;
 
+    sendBtn.disabled =
+      false;
 
-    if(sendBtn){
-
-      sendBtn.disabled =
-        false;
-
-    }
-
-
-    if(messageInput){
-
-      messageInput.focus();
-
-    }
+    messageInput.focus();
 
   }
 
@@ -2449,66 +2883,56 @@ async function sendMessage(){
    ENTER TO SEND
 ========================================================= */
 
-if(messageInput){
+messageInput.addEventListener(
+  "keydown",
+  event => {
 
-  messageInput.addEventListener(
-    "keydown",
-    event => {
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
 
-      if(
-        event.key === "Enter" &&
-        !event.shiftKey
-      ){
+      event.preventDefault();
 
-        event.preventDefault();
-
-        sendMessage();
-
-      }
+      sendMessage();
 
     }
-  );
 
-}
+  }
+);
 
 
 /* =========================================================
-   AUTO RESIZE
+   AUTO RESIZE TEXTAREA
 ========================================================= */
 
-if(messageInput){
+messageInput.addEventListener(
+  "input",
+  () => {
 
-  messageInput.addEventListener(
-    "input",
-    () => {
+    messageInput.style.height =
+      "auto";
 
-      messageInput.style.height =
-        "auto";
 
-      messageInput.style.height =
-        Math.min(
-          messageInput.scrollHeight,
-          130
-        ) + "px";
+    messageInput.style.height =
+      Math.min(
+        messageInput.scrollHeight,
+        130
+      ) +
+      "px";
 
-    }
-  );
-
-}
+  }
+);
 
 
 /* =========================================================
    SEND BUTTON
 ========================================================= */
 
-if(sendBtn){
-
-  sendBtn.addEventListener(
-    "click",
-    sendMessage
-  );
-
-}
+sendBtn.addEventListener(
+  "click",
+  sendMessage
+);
 
 
 /* =========================================================
@@ -2538,6 +2962,13 @@ onAuthStateChanged(
 
     }else{
 
+      /*
+        Visitors can browse Kmeet.
+
+        Anonymous authentication is used only so Firebase
+        can identify the temporary visitor.
+      */
+
       try{
 
         const result =
@@ -2549,30 +2980,29 @@ onAuthStateChanged(
         currentUser =
           result.user;
 
+
         authStarted =
           true;
 
       }catch(error){
 
         console.error(
-          "ANONYMOUS AUTH ERROR:",
+          "Anonymous authentication failed:",
           error
         );
 
-        if(messagesEl){
 
-          messagesEl.innerHTML = `
+        messagesEl.innerHTML = `
 
-            <div class="empty-state">
+          <div class="empty-state">
 
-              Kmeet could not start the chat session.<br>
-              Please refresh the page and try again.
+            Kmeet could not start the chat session.<br>
+            Please refresh the page and try again.
 
-            </div>
+          </div>
 
-          `;
+        `;
 
-        }
 
         return;
 
@@ -2581,7 +3011,13 @@ onAuthStateChanged(
     }
 
 
-    if(currentUser.isAnonymous){
+    /*
+      Anonymous users must pay before messaging.
+    */
+
+    if(
+      currentUser.isAnonymous
+    ){
 
       personStatus.textContent =
         "Guest chat — payment required";
@@ -2606,66 +3042,20 @@ onAuthStateChanged(
     /*
       IMPORTANT:
 
-      We do NOT force a Firestore messages listener
-      before a conversation exists.
+      startMessages() first checks whether the NEW v2
+      conversation exists.
 
-      This avoids permission errors on brand-new chats.
+      It does NOT listen to the old corrupted conversation.
     */
 
-    conversationId =
-      getConversationId();
-
-
-    if(!conversationId){
-
-      renderMessages([]);
-
-      return;
-
-    }
-
-
-    try{
-
-      const conversationSnap =
-        await getDoc(
-          doc(
-            db,
-            "conversations",
-            conversationId
-          )
-        );
-
-
-      if(
-        conversationSnap.exists()
-      ){
-
-        startMessages();
-
-      }else{
-
-        renderMessages([]);
-
-      }
-
-    }catch(error){
-
-      console.error(
-        "INITIAL CONVERSATION CHECK ERROR:",
-        error
-      );
-
-      renderMessages([]);
-
-    }
+    await startMessages();
 
   },
 
   error => {
 
     console.error(
-      "AUTHENTICATION STATE ERROR:",
+      "Authentication state error:",
       error
     );
 
