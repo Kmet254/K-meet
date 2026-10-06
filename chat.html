@@ -930,6 +930,17 @@ import {
 
 } from "./firebase-config.js";
 
+/*
+  getDocs is imported directly here because the current
+  firebase-config.js does not export getDocs. If a module
+  import fails, the browser never attaches the submit handler
+  and the HTML form performs a normal page reload.
+*/
+import {
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
 
 /* =====================================================
    URL
@@ -1046,12 +1057,6 @@ let unsubscribeMessages = null;
 let authStarted = false;
 
 let targetIsDemo = false;
-
-let currentMessages = [];
-
-let messagesLoaded = false;
-
-let conversationReady = false;
 
 
 /*
@@ -1391,6 +1396,11 @@ function getConversationId(){
 
   ].sort().join("_");
 
+}
+
+
+function getConversationIdV2(){
+  return "kmeet_v2_" + [currentUser.uid,targetId].sort().join("_");
 }
 
 
@@ -1958,188 +1968,182 @@ function showGate(type){
    REAL CONVERSATION MESSAGES
 ===================================================== */
 
-function getV2ConversationId(){
-
-  return "kmeet_v2_" + [
-    currentUser.uid,
-    targetId
-  ].sort().join("_");
-
-}
-
-
-async function findValidConversation(){
-
-  if(!currentUser || currentUser.isAnonymous || targetIsDemo){
-    return null;
-  }
-
-  const candidates = [];
-
-  const oldId = getConversationId();
-  const v2Id = getV2ConversationId();
-
-  candidates.push(oldId);
-  if(v2Id !== oldId) candidates.push(v2Id);
-
-  for(const id of candidates){
-
-    try{
-      const snap = await getDoc(doc(db,"conversations",id));
-
-      if(!snap.exists()) continue;
-
-      const data = snap.data() || {};
-
-      const validParticipants =
-        typeof data.initiatorId === "string" &&
-        typeof data.receiverId === "string" &&
-        data.initiatorId !== data.receiverId &&
-        ((data.initiatorId === currentUser.uid && data.receiverId === targetId) ||
-         (data.receiverId === currentUser.uid && data.initiatorId === targetId));
-
-      if(validParticipants){
-        conversationId = id;
-        conversationReady = true;
-        return data;
-      }
-    }
-    catch(error){
-      console.warn("Conversation check failed for", id, error);
-    }
-  }
-
-  conversationId = v2Id;
-  conversationReady = false;
-  return null;
-}
-
-
 async function getExistingMessages(){
 
-  const conversation = await findValidConversation();
+  if(!conversationId){
+    conversationId = getConversationId();
+  }
 
-  if(!conversation){
-    currentMessages = [];
-    messagesLoaded = true;
+  const parentRef = doc(db,"conversations",conversationId);
+  const parentSnap = await getDoc(parentRef);
+
+  if(!parentSnap.exists()){
     return [];
   }
 
-  const snap = await new Promise((resolve,reject)=>{
+  const data = parentSnap.data() || {};
 
-    const ref = collection(db,"conversations",conversationId,"messages");
-    const q = query(ref,orderBy("createdAt","asc"));
+  /* Ignore old corrupted conversations where both sides are the same user. */
+  if(!data.initiatorId || !data.receiverId ||
+     data.initiatorId === data.receiverId ||
+     (data.initiatorId !== currentUser.uid && data.receiverId !== currentUser.uid)){
 
-    let unsubscribe = null;
-    let done = false;
+    conversationId = getConversationIdV2();
+    return [];
+  }
 
-    unsubscribe = onSnapshot(q, snapshot=>{
-      if(done) return;
-      done = true;
-      if(unsubscribe) unsubscribe();
-      resolve(snapshot);
-    }, error=>{
-      if(done) return;
-      done = true;
-      if(unsubscribe) unsubscribe();
-      reject(error);
-    });
-  });
+  const snap = await getDocs(
+    query(
+      collection(db,"conversations",conversationId,"messages"),
+      orderBy("createdAt","asc")
+    )
+  );
 
-  currentMessages = snap.docs.map(item=>({id:item.id,...item.data()}));
-  messagesLoaded = true;
-  return currentMessages;
+  return snap.docs.map(item => item.data());
 }
 
+
+
+/* =====================================================
+   RENDER REAL MESSAGES
+===================================================== */
 
 function renderMessages(items){
 
-  messages.innerHTML = "";
+  messages.innerHTML =
+    "";
+
 
   if(!items.length){
-    messages.innerHTML = `<div class="empty">Start the conversation and let the connection grow. ❤️</div>`;
+
+    messages.innerHTML = `
+
+      <div class="empty">
+
+        Start the conversation
+        and let the connection grow. ❤️
+
+      </div>
+
+    `;
+
     return;
+
   }
 
-  items.forEach(data=>{
-    const wrapper = document.createElement("div");
-    wrapper.className = "message " + (data.senderId === currentUser.uid ? "mine" : "theirs");
 
-    const text = document.createElement("div");
-    text.textContent = data.text || "";
+  items.forEach(
+    data => {
 
-    wrapper.appendChild(text);
-    messages.appendChild(wrapper);
-  });
+      const wrapper =
+        document.createElement(
+          "div"
+        );
 
-  messages.scrollTop = messages.scrollHeight;
+      wrapper.className =
+        "message " +
+        (
+          data.senderId ===
+          currentUser.uid
+            ? "mine"
+            : "theirs"
+        );
+
+
+      const text =
+        document.createElement(
+          "div"
+        );
+
+      text.textContent =
+        data.text || "";
+
+
+      wrapper.appendChild(
+        text
+      );
+
+
+      messages.appendChild(
+        wrapper
+      );
+
+    }
+  );
+
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
 }
 
 
-function updateRealChatInfo(items){
 
-  if(!items.length){
-    infoBar.textContent = "Your opening message is free — say hi or hey ❤️";
+/* =====================================================
+   FIREBASE REAL CHAT LISTENER
+===================================================== */
+
+async function startMessages(){
+
+  if(!currentUser || currentUser.isAnonymous || targetIsDemo){
     return;
   }
-
-  const firstSenderId = items[0].senderId;
-  const myMessages = items.filter(item=>item.senderId === currentUser.uid).length;
-
-  if(firstSenderId === currentUser.uid){
-    infoBar.textContent = "Your opening message is free. Further messages use chat credits.";
-  }else{
-    infoBar.textContent = `You have ${Math.max(0,FREE_RECEIVER_REPLIES-myMessages)} free replies remaining.`;
-  }
-}
-
-
-function startMessages(){
-
-  if(!currentUser || currentUser.isAnonymous || targetIsDemo) return;
 
   if(unsubscribeMessages){
     unsubscribeMessages();
     unsubscribeMessages = null;
   }
 
-  if(!conversationReady || !conversationId) return;
+  if(!conversationId){
+    conversationId = getConversationId();
+  }
 
-  currentMessages = [];
-  messagesLoaded = false;
+  let parentSnap = await getDoc(doc(db,"conversations",conversationId));
+
+  if(!parentSnap.exists()){
+    /* No conversation yet. This is normal. Wait for the first message. */
+    renderMessages([]);
+    infoBar.textContent = "Your opening message is free — say hi or hey ❤️";
+    return;
+  }
+
+  const data = parentSnap.data() || {};
+
+  if(!data.initiatorId || !data.receiverId ||
+     data.initiatorId === data.receiverId ||
+     (data.initiatorId !== currentUser.uid && data.receiverId !== currentUser.uid)){
+    conversationId = getConversationIdV2();
+    renderMessages([]);
+    infoBar.textContent = "Your opening message is free — say hi or hey ❤️";
+    return;
+  }
 
   const ref = collection(db,"conversations",conversationId,"messages");
   const q = query(ref,orderBy("createdAt","asc"));
 
-  unsubscribeMessages = onSnapshot(q, snapshot=>{
+  unsubscribeMessages = onSnapshot(q,snapshot=>{
+    const items = snapshot.docs.map(item=>item.data());
+    renderMessages(items);
 
-    currentMessages = snapshot.docs.map(item=>({id:item.id,...item.data()}));
-    messagesLoaded = true;
+    if(!items.length){
+      infoBar.textContent = "Your opening message is free — say hi or hey ❤️";
+      return;
+    }
 
-    renderMessages(currentMessages);
-    updateRealChatInfo(currentMessages);
+    const firstSenderId = items[0].senderId;
+    const myMessages = items.filter(item=>item.senderId===currentUser.uid).length;
 
-  }, error=>{
-
+    if(firstSenderId === currentUser.uid){
+      infoBar.textContent = "Your opening message was free. Further messages use chat credits.";
+    }else{
+      infoBar.textContent = `You have ${Math.max(0,FREE_RECEIVER_REPLIES-myMessages)} free replies remaining.`;
+    }
+  },error=>{
     console.error("Message listener error:",error);
-    currentMessages = [];
-    messagesLoaded = false;
-
-    showError("The conversation is not available yet. Your chat will start when the first message is sent.");
+    showError("Kmeet could not load this conversation. Please try again.");
   });
 }
 
-
-async function waitForMessagesLoaded(timeout=3000){
-
-  if(messagesLoaded) return;
-
-  const started = Date.now();
-
-  while(!messagesLoaded && Date.now()-started < timeout){
-    await new Promise(resolve=>setTimeout(resolve,100));
-  }
-}
 
 
 /* =====================================================
@@ -2262,16 +2266,7 @@ async function initialiseAuth(){
 
         if(!targetIsDemo){
 
-          const existingConversation = await findValidConversation();
-
-          if(existingConversation){
-            startMessages();
-          }else{
-            currentMessages = [];
-            messagesLoaded = true;
-            conversationReady = false;
-            renderMessages([]);
-          }
+          startMessages();
 
         }
 
@@ -2585,76 +2580,126 @@ composer.addEventListener(
 
     let existingMessages = [];
 
+
     try{
-      existingMessages = await getExistingMessages();
+
+      existingMessages =
+        await getExistingMessages();
+
     }
+
     catch(error){
-      console.error("Conversation read failed:",error);
-      showError("Kmeet could not read this conversation yet. Please try again.");
+
+      console.error(
+        "Conversation read failed:",
+        error
+      );
+
+
+      showError(
+        "Kmeet could not check this conversation. Please check your Firestore rules and try again."
+      );
+
       return;
+
     }
-
-    await waitForMessagesLoaded();
-
-    existingMessages = currentMessages.slice();
 
 
 
     /* ================================================
-       DETERMINE ROLE AND FREE MESSAGE
+       FREE OPENING MESSAGE
     ================================================ */
 
-    const originalSenderId = existingMessages.length
-      ? (await findValidConversation())?.initiatorId
-      : currentUser.uid;
+    const opening = text.toLowerCase();
+    const hasMessages = existingMessages.length > 0;
 
-    const isSender = originalSenderId === currentUser.uid;
+    /* A registered user gets ONE free opening message per conversation.
+       It must be exactly "hi" or "hey". */
+    if(!currentUser.isAnonymous && !hasMessages){
+      if(!FREE_OPENING_MESSAGES.includes(opening)){
+        showGate("sender");
+        return;
+      }
+    }
 
-    const myPreviousMessages = existingMessages.filter(item => item.senderId === currentUser.uid);
-    const senderHasUsedFreeOpening = myPreviousMessages.length > 0;
 
-    const isFreeOpening =
-      !currentUser.isAnonymous &&
-      isSender &&
-      !senderHasUsedFreeOpening &&
-      FREE_OPENING_MESSAGES.includes(text.toLowerCase());
+
+    /* ================================================
+       WHO STARTED THE CONVERSATION?
+    ================================================ */
+
+    const originalSenderId =
+      existingMessages.length
+
+        ? existingMessages[0].senderId
+
+        : currentUser.uid;
+
+
+    const isSender =
+      originalSenderId ===
+      currentUser.uid;
+
+
 
     /* ================================================
        CONTACT INFORMATION
     ================================================ */
 
-    if(containsContactInformation(text)){
+    if(
+      containsContactInformation(
+        text
+      )
+    ){
 
       if(!isSender){
-        showGate("receiver");
-      }else{
-        showGate("sender");
+
+        showGate(
+          "receiver"
+        );
+
+        return;
+
       }
+
+
+      showGate(
+        "sender"
+      );
+
       return;
+
     }
 
-    /* ================================================
-       FIRST OPENING MESSAGE MUST BE HI / HEY
-    ================================================ */
 
-    if(!currentUser.isAnonymous && isSender && !senderHasUsedFreeOpening && !isFreeOpening){
-      showGate("sender");
-      return;
-    }
 
     /* ================================================
        SENDER CREDITS
     ================================================ */
 
-    let creditConsumed = false;
-    let creditsBefore = 0;
+    let creditConsumed =
+      false;
 
-    if(isSender && !isFreeOpening){
+    let creditsBefore =
+      0;
+
+
+    /*
+      The very first "hi"/"hey" from a registered user is free.
+      Only later sender messages consume paid credits.
+    */
+    const freeOpening =
+      !currentUser.isAnonymous &&
+      !hasMessages &&
+      isSender &&
+      FREE_OPENING_MESSAGES.includes(opening);
+
+    if(isSender && !freeOpening){
 
       creditsBefore = getSenderCredits();
 
       if(creditsBefore <= 0){
-        showGate(currentUser.isAnonymous ? "anonymous" : "sender");
+        showGate("sender");
         return;
       }
 
@@ -2662,78 +2707,127 @@ composer.addEventListener(
       creditConsumed = true;
     }
 
+
+
     /* ================================================
        RECEIVER FREE REPLIES
     ================================================ */
 
     if(!isSender){
 
-      const receiverReplies = myPreviousMessages.length;
+      const receiverReplies =
+        existingMessages.filter(
+          item =>
+            item.senderId ===
+            currentUser.uid
+        ).length;
 
-      if(receiverReplies >= FREE_RECEIVER_REPLIES && !receiverHasPaid()){
-        showGate("receiver");
+
+      if(
+        receiverReplies >=
+          FREE_RECEIVER_REPLIES &&
+        !receiverHasPaid()
+      ){
+
+        showGate(
+          "receiver"
+        );
+
         return;
+
       }
+
     }
+
+
 
     /* ================================================
        SEND
     ================================================ */
 
-    sendBtn.disabled = true;
+    sendBtn.disabled =
+      true;
+
 
     try{
 
-      const finalConversationId = conversationId || getV2ConversationId();
-      conversationId = finalConversationId;
-
-      if(!conversationReady){
-
-        await setDoc(
-          doc(db,"conversations",conversationId),
-          {
-            initiatorId: currentUser.uid,
-            receiverId: targetId,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          },
-          {merge:false}
-        );
-
-        conversationReady = true;
-      }else{
-        await setDoc(
-          doc(db,"conversations",conversationId),
-          {updatedAt: serverTimestamp()},
-          {merge:true}
-        );
+      /*
+        If this is a brand-new conversation, use the v2 ID so old
+        corrupted conversations cannot interfere with the new chat.
+      */
+      if(!hasMessages && conversationId === getConversationId()){
+        const oldParent = await getDoc(doc(db,"conversations",conversationId));
+        if(!oldParent.exists() || !oldParent.data()?.initiatorId ||
+           oldParent.data()?.initiatorId === oldParent.data()?.receiverId){
+          conversationId = getConversationIdV2();
+        }
       }
 
-      await addDoc(
-        collection(db,"conversations",conversationId,"messages"),
+      await setDoc(
+        doc(db,"conversations",conversationId),
         {
-          senderId: currentUser.uid,
+          initiatorId: originalSenderId,
           receiverId: targetId,
-          text: text,
-          freeOpening: isFreeOpening,
-          receiverFreeReply: !isSender && existingMessages.filter(item=>item.senderId===currentUser.uid).length < FREE_RECEIVER_REPLIES,
+          updatedAt: serverTimestamp(),
           createdAt: serverTimestamp()
-        }
+        },
+        {merge:true}
       );
 
-      messageInput.value = "";
+
+      await addDoc(
+
+        collection(
+          db,
+          "conversations",
+          conversationId,
+          "messages"
+        ),
+
+        {
+
+          senderId:
+            currentUser.uid,
+
+          receiverId:
+            targetId,
+
+          text:text,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+
+      );
+
+      /* Start listening only after the parent conversation exists. */
+      if(!unsubscribeMessages){
+        await startMessages();
+      }
+
+
+      messageInput.value =
+        "";
+
       messageInput.focus();
 
-      currentMessages = [];
-      messagesLoaded = false;
 
-      startMessages();
+      if(
+        currentUser.isAnonymous
+      ){
 
-      if(currentUser.isAnonymous){
-        const remaining = getSenderCredits();
-        infoBar.textContent = `Anonymous chat: ${remaining} paid chat credit${remaining===1?"":"s"} remaining.`;
-      }else{
-        infoBar.textContent = "Your message has been sent ❤️";
+        const remaining =
+          getSenderCredits();
+
+
+        infoBar.textContent =
+          `Anonymous chat: ${remaining} paid chat credit${
+            remaining === 1
+              ? ""
+              : "s"
+          } remaining.`;
+
       }
 
     }
