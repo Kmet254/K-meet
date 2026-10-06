@@ -17,6 +17,7 @@
       rel="stylesheet">
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -25,7 +26,6 @@ html,
 body{
   margin:0;
   padding:0;
-  width:100%;
   min-height:100%;
   font-family:"Poppins",sans-serif;
   color:#fff;
@@ -34,80 +34,103 @@ body{
 body{
   min-height:100vh;
   background:
-    linear-gradient(rgba(18,5,16,.76),rgba(18,5,16,.88)),
+    linear-gradient(
+      135deg,
+      rgba(20,0,15,.78),
+      rgba(65,0,40,.72)
+    ),
     url("./chat.jpg") center/cover fixed no-repeat;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
-}
+/* =========================
+   TOP BAR
+========================= */
 
 .topbar{
   height:70px;
-  width:100%;
-  padding:0 22px;
+  padding:0 24px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:rgba(18,7,17,.82);
-  border-bottom:1px solid rgba(255,255,255,.09);
-  backdrop-filter:blur(14px);
+
+  background:rgba(10,5,15,.72);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 }
 
 .brand-link{
   display:flex;
   align-items:center;
   gap:10px;
+  color:#fff;
+  text-decoration:none;
 }
 
 .brand-logo{
-  width:39px;
-  height:39px;
+  width:40px;
+  height:40px;
   border-radius:50%;
   object-fit:cover;
-  border:2px solid rgba(255,105,180,.55);
+  border:2px solid rgba(255,255,255,.65);
+  box-shadow:0 0 15px rgba(255,80,160,.35);
 }
 
 .brand{
   font-family:"Playfair Display",serif;
-  font-size:25px;
+  font-size:27px;
   font-weight:700;
   letter-spacing:.3px;
 }
 
 .brand span{
-  color:#ff79bd;
+  color:#ff6cae;
 }
 
 .back-btn{
-  padding:9px 15px;
-  border-radius:22px;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.07);
   color:#fff;
-  font-size:13px;
-  transition:.2s;
+  text-decoration:none;
+  padding:9px 17px;
+  border-radius:20px;
+
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.16);
+
+  transition:.2s ease;
 }
 
 .back-btn:hover{
-  background:rgba(255,105,180,.18);
-  border-color:rgba(255,105,180,.4);
+  background:rgba(255,91,161,.20);
+  transform:translateY(-1px);
 }
 
+/* =========================
+   CHAT SHELL
+========================= */
+
 .chat-shell{
-  width:min(900px,calc(100% - 24px));
+  width:min(900px,calc(100% - 28px));
   height:calc(100vh - 105px);
   min-height:560px;
+
   margin:18px auto;
+
   display:flex;
   flex-direction:column;
+
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:22px;
-  background:rgba(28,10,26,.72);
-  box-shadow:0 25px 70px rgba(0,0,0,.45);
+
+  background:rgba(15,8,18,.76);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.45),
+    0 0 35px rgba(255,55,145,.08);
+
   backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
 }
 
 /* =========================
@@ -115,78 +138,58 @@ a{
 ========================= */
 
 .chat-header{
-  min-height:82px;
   display:flex;
   align-items:center;
-  gap:14px;
-  padding:14px 18px;
+  gap:13px;
+
+  padding:17px 20px;
+
+  background:rgba(255,255,255,.055);
   border-bottom:1px solid rgba(255,255,255,.09);
-  background:rgba(255,255,255,.035);
 }
 
 .avatar,
 .avatar-fallback{
-  width:52px;
-  height:52px;
-  flex:0 0 52px;
+  width:54px;
+  height:54px;
+
+  flex-shrink:0;
+
   border-radius:50%;
+
   object-fit:cover;
-  border:2px solid rgba(255,105,180,.55);
+
+  border:2px solid rgba(255,255,255,.45);
+
+  box-shadow:
+    0 0 16px rgba(255,76,155,.22);
 }
 
 .avatar-fallback{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#8f285d,#e75599);
-  font-size:20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4d9a,
+      #8f2864
+    );
+
+  font-size:21px;
   font-weight:700;
 }
 
 .person-name{
-  font-family:"Playfair Display",serif;
-  font-size:20px;
-  font-weight:700;
+  font-size:18px;
+  font-weight:600;
 }
 
 .status{
-  margin-top:3px;
-  font-size:11px;
-  color:#d6c5d0;
-}
-
-.header-actions{
-  margin-left:auto;
-  display:flex;
-  align-items:center;
-  gap:7px;
-}
-
-.call-btn{
-  width:39px;
-  height:39px;
-  border:none;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  color:#fff;
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.12);
-  transition:.2s;
-  font-size:17px;
-}
-
-.call-btn:hover:not(:disabled){
-  transform:translateY(-1px);
-  background:rgba(255,105,180,.22);
-  border-color:rgba(255,105,180,.5);
-}
-
-.call-btn:disabled{
-  opacity:.35;
-  cursor:not-allowed;
+  margin-top:2px;
+  color:rgba(255,255,255,.63);
+  font-size:12px;
 }
 
 /* =========================
@@ -194,15 +197,21 @@ a{
 ========================= */
 
 .info-bar{
-  padding:10px 17px;
-  font-size:11px;
-  color:#d9c8d3;
-  background:rgba(255,255,255,.025);
+  padding:10px 18px;
+
+  font-size:12px;
+  line-height:1.5;
+
+  color:rgba(255,255,255,.70);
+
+  background:rgba(255,77,153,.055);
   border-bottom:1px solid rgba(255,255,255,.07);
+
+  text-align:center;
 }
 
 .info-bar strong{
-  color:#ff83c2;
+  color:#ff7ab5;
 }
 
 /* =========================
@@ -211,9 +220,15 @@ a{
 
 .messages{
   flex:1;
-  min-height:0;
+
   overflow-y:auto;
-  padding:18px;
+
+  padding:22px 18px;
+
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+
   scroll-behavior:smooth;
 }
 
@@ -221,58 +236,86 @@ a{
   width:6px;
 }
 
+.messages::-webkit-scrollbar-track{
+  background:transparent;
+}
+
 .messages::-webkit-scrollbar-thumb{
-  background:rgba(255,105,180,.28);
+  background:rgba(255,255,255,.16);
   border-radius:10px;
 }
 
 .empty-state{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  margin:auto;
+
+  max-width:390px;
+
   text-align:center;
-  color:#cdbbc6;
-  font-size:13px;
-  padding:30px;
+
+  color:rgba(255,255,255,.52);
+  font-size:14px;
+  line-height:1.7;
 }
 
 .message-row{
-  width:100%;
   display:flex;
-  margin:8px 0;
+  width:100%;
 }
 
 .message-row.mine{
   justify-content:flex-end;
 }
 
-.message{
-  max-width:min(75%,520px);
-  padding:10px 13px;
-  border-radius:17px;
-  font-size:13px;
-  line-height:1.45;
-  word-break:break-word;
-  white-space:pre-wrap;
+.message-row.theirs{
+  justify-content:flex-start;
 }
 
-.message.theirs{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.08);
-  border-bottom-left-radius:5px;
+.message{
+  max-width:min(72%,520px);
+
+  padding:10px 14px;
+
+  border-radius:18px;
+
+  font-size:14px;
+  line-height:1.5;
+
+  word-wrap:break-word;
+  overflow-wrap:anywhere;
+
+  box-shadow:0 5px 18px rgba(0,0,0,.13);
 }
 
 .message.mine{
-  background:linear-gradient(135deg,#9d2e67,#d34c91);
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(238,62,139,.95),
+      rgba(151,37,101,.95)
+    );
+
   border-bottom-right-radius:5px;
-  box-shadow:0 6px 20px rgba(0,0,0,.18);
+}
+
+.message.theirs{
+  color:#fff;
+
+  background:rgba(255,255,255,.105);
+
+  border:1px solid rgba(255,255,255,.09);
+
+  border-bottom-left-radius:5px;
 }
 
 .message-time{
   margin-top:4px;
+
   font-size:9px;
-  opacity:.62;
+
+  opacity:.55;
+
   text-align:right;
 }
 
@@ -281,50 +324,89 @@ a{
 ========================= */
 
 .composer{
-  padding:12px;
+  padding:13px 14px;
+
   display:flex;
-  gap:8px;
-  border-top:1px solid rgba(255,255,255,.09);
-  background:rgba(18,7,17,.62);
+  align-items:flex-end;
+  gap:9px;
+
+  background:rgba(5,2,8,.54);
+  border-top:1px solid rgba(255,255,255,.08);
 }
 
-.composer input{
+.message-input{
   flex:1;
-  min-width:0;
-  height:44px;
-  padding:0 15px;
-  border-radius:23px;
-  border:1px solid rgba(255,255,255,.13);
+
+  min-height:46px;
+  max-height:130px;
+
+  resize:none;
+
+  border:none;
   outline:none;
-  background:rgba(255,255,255,.07);
+
+  border-radius:23px;
+
+  padding:13px 17px;
+
   color:#fff;
+
   font-family:"Poppins",sans-serif;
-  font-size:13px;
+  font-size:14px;
+
+  background:rgba(255,255,255,.09);
+
+  border:1px solid rgba(255,255,255,.10);
 }
 
-.composer input::placeholder{
-  color:#ad9ca7;
+.message-input::placeholder{
+  color:rgba(255,255,255,.43);
 }
 
-.composer input:focus{
-  border-color:rgba(255,105,180,.45);
+.message-input:focus{
+  border-color:rgba(255,100,170,.45);
+  background:rgba(255,255,255,.105);
 }
 
 .send-btn{
-  height:44px;
-  padding:0 19px;
+  min-width:50px;
+  height:46px;
+
   border:none;
   border-radius:23px;
-  cursor:pointer;
+
+  padding:0 17px;
+
   color:#fff;
-  font-weight:600;
-  background:linear-gradient(135deg,#a52f6d,#dc5798);
+
   font-family:"Poppins",sans-serif;
+  font-weight:600;
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4e9a,
+      #c22b79
+    );
+
+  box-shadow:
+    0 8px 22px rgba(220,42,119,.25);
+
+  transition:.2s ease;
+}
+
+.send-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:
+    0 10px 25px rgba(220,42,119,.36);
 }
 
 .send-btn:disabled{
-  opacity:.4;
+  opacity:.5;
   cursor:not-allowed;
+  transform:none;
 }
 
 /* =========================
@@ -333,9 +415,19 @@ a{
 
 .gate{
   display:none;
-  padding:16px;
+
+  padding:22px 18px;
+
+  text-align:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,54,145,.10),
+      rgba(255,255,255,.035)
+    );
+
   border-top:1px solid rgba(255,255,255,.08);
-  background:rgba(35,10,28,.85);
 }
 
 .gate.show{
@@ -344,393 +436,132 @@ a{
 
 .gate-title{
   font-family:"Playfair Display",serif;
-  font-size:18px;
-  margin-bottom:5px;
+  font-size:22px;
+  margin-bottom:7px;
 }
 
 .gate-text{
-  color:#cbbbc5;
-  font-size:11px;
-  line-height:1.55;
-  margin-bottom:11px;
+  color:rgba(255,255,255,.66);
+  font-size:13px;
+  line-height:1.6;
+  max-width:570px;
+  margin:0 auto 15px;
 }
 
-.gate-actions{
+.gate-buttons{
   display:flex;
+  justify-content:center;
   flex-wrap:wrap;
-  gap:8px;
+  gap:9px;
 }
 
 .gate-btn{
-  border:none;
-  border-radius:20px;
-  padding:9px 14px;
-  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-width:145px;
+
+  padding:10px 15px;
+
+  border-radius:22px;
+
   color:#fff;
-  background:linear-gradient(135deg,#a32e6c,#d95296);
-  font-family:"Poppins",sans-serif;
-  font-size:11px;
+  text-decoration:none;
+
+  font-size:13px;
   font-weight:600;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4f9c,
+      #bb2b74
+    );
+
+  box-shadow:0 7px 20px rgba(210,40,115,.22);
 }
 
 .gate-btn.secondary{
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.09);
   border:1px solid rgba(255,255,255,.12);
 }
 
 /* =========================
-   CALL MENU
+   MOBILE
 ========================= */
-
-.call-menu{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(7,3,8,.72);
-  backdrop-filter:blur(10px);
-}
-
-.call-menu.show{
-  display:flex;
-}
-
-.call-menu-card{
-  width:min(420px,100%);
-  padding:24px;
-  border-radius:22px;
-  background:rgba(36,11,31,.96);
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:0 25px 70px rgba(0,0,0,.55);
-}
-
-.call-menu-card h2{
-  margin:0 0 5px;
-  font-family:"Playfair Display",serif;
-}
-
-.call-menu-card p{
-  margin:0 0 18px;
-  color:#cbbac6;
-  font-size:12px;
-}
-
-.call-options{
-  display:grid;
-  gap:10px;
-}
-
-.call-option{
-  width:100%;
-  padding:14px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-align:left;
-  border-radius:15px;
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.055);
-  color:#fff;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.call-option:hover{
-  background:rgba(255,105,180,.14);
-  border-color:rgba(255,105,180,.35);
-}
-
-.call-option-icon{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,105,180,.15);
-  font-size:18px;
-}
-
-.call-option-info{
-  flex:1;
-}
-
-.call-option-title{
-  font-weight:600;
-  font-size:13px;
-}
-
-.call-option-price{
-  margin-top:2px;
-  color:#ff87c3;
-  font-size:11px;
-}
-
-.close-call-menu{
-  width:100%;
-  margin-top:13px;
-  padding:10px;
-  border:none;
-  border-radius:20px;
-  background:rgba(255,255,255,.07);
-  color:#fff;
-  cursor:pointer;
-}
-
-/* =========================
-   CALL SCREEN
-========================= */
-
-.call-overlay{
-  position:fixed;
-  inset:0;
-  z-index:2000;
-  display:none;
-  flex-direction:column;
-  background:#090509;
-}
-
-.call-overlay.show{
-  display:flex;
-}
-
-.call-stage{
-  position:relative;
-  flex:1;
-  min-height:0;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at center,rgba(117,30,77,.28),transparent 55%),
-    #090509;
-}
-
-.remote-video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-  background:#090509;
-}
-
-.local-video{
-  position:absolute;
-  right:18px;
-  top:18px;
-  width:180px;
-  height:130px;
-  object-fit:cover;
-  border-radius:15px;
-  border:1px solid rgba(255,255,255,.2);
-  display:none;
-  background:#170b14;
-  z-index:5;
-}
-
-.call-avatar{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid rgba(255,105,180,.65);
-  display:none;
-}
-
-.call-avatar-fallback{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#8d285d,#dc4f96);
-  font-size:40px;
-  font-weight:700;
-}
-
-.call-info{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:105px;
-  z-index:6;
-  text-align:center;
-  pointer-events:none;
-}
-
-.call-person{
-  margin-top:13px;
-  font-family:"Playfair Display",serif;
-  font-size:25px;
-}
-
-.call-status{
-  margin-top:4px;
-  color:#d0c0ca;
-  font-size:12px;
-}
-
-.call-controls{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:10;
-  min-height:88px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  padding:15px;
-  background:linear-gradient(transparent,rgba(0,0,0,.78));
-}
-
-.control-btn{
-  width:49px;
-  height:49px;
-  border:none;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.12);
-  cursor:pointer;
-  font-size:18px;
-}
-
-.control-btn.active{
-  background:rgba(255,255,255,.22);
-}
-
-.control-btn.end{
-  width:57px;
-  height:57px;
-  background:#c8325f;
-}
-
-.incoming-call{
-  position:absolute;
-  inset:0;
-  z-index:30;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(5,2,6,.8);
-  backdrop-filter:blur(15px);
-}
-
-.incoming-call.show{
-  display:flex;
-}
-
-.incoming-card{
-  width:min(370px,100%);
-  text-align:center;
-  padding:28px 22px;
-  border-radius:24px;
-  background:rgba(35,10,30,.97);
-  border:1px solid rgba(255,255,255,.13);
-}
-
-.incoming-card h2{
-  margin:14px 0 4px;
-  font-family:"Playfair Display",serif;
-}
-
-.incoming-type{
-  color:#cdbac6;
-  font-size:12px;
-}
-
-.incoming-actions{
-  display:flex;
-  justify-content:center;
-  gap:13px;
-  margin-top:23px;
-}
-
-.accept-btn,
-.decline-btn{
-  width:54px;
-  height:54px;
-  border:none;
-  border-radius:50%;
-  color:#fff;
-  cursor:pointer;
-  font-size:19px;
-}
-
-.accept-btn{
-  background:#2fa96d;
-}
-
-.decline-btn{
-  background:#c8325f;
-}
 
 @media(max-width:600px){
 
   .topbar{
+    height:62px;
     padding:0 14px;
   }
 
+  .brand{
+    font-size:24px;
+  }
+
+  .brand-logo{
+    width:36px;
+    height:36px;
+  }
+
+  .back-btn{
+    padding:8px 13px;
+    font-size:12px;
+  }
+
   .chat-shell{
-    width:calc(100% - 12px);
-    margin:6px auto;
-    height:calc(100vh - 82px);
-    min-height:500px;
-    border-radius:18px;
+    width:100%;
+    height:calc(100vh - 62px);
+    min-height:0;
+
+    margin:0;
+
+    border-radius:0;
+    border-left:0;
+    border-right:0;
   }
 
   .chat-header{
-    min-height:72px;
-    padding:11px;
+    padding:14px;
   }
 
   .avatar,
   .avatar-fallback{
-    width:45px;
-    height:45px;
-    flex-basis:45px;
+    width:48px;
+    height:48px;
   }
 
-  .person-name{
-    font-size:18px;
-  }
-
-  .header-actions{
-    gap:4px;
-  }
-
-  .call-btn{
-    width:35px;
-    height:35px;
-    font-size:15px;
+  .messages{
+    padding:17px 12px;
   }
 
   .message{
-    max-width:84%;
+    max-width:82%;
   }
 
-  .local-video{
-    width:120px;
-    height:90px;
-    right:10px;
-    top:10px;
+  .composer{
+    padding:10px;
   }
 
-  .call-info{
-    bottom:105px;
+  .send-btn{
+    padding:0 14px;
   }
+
 }
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  margin:auto;
+  color:rgba(255,255,255,.55);
+  font-size:13px;
+}
+
 </style>
 </head>
 
@@ -739,13 +570,16 @@ a{
 <header class="topbar">
 
   <a class="brand-link" href="index.html">
-    <img class="brand-logo"
-         src="./kmeet-logo.jfif.jfif"
-         alt="Kmeet">
+
+    <img
+      class="brand-logo"
+      src="./kmeet-logo.jfif.jfif"
+      alt="Kmeet">
 
     <div class="brand">
       K<span>meet</span>
     </div>
+
   </a>
 
   <a class="back-btn" href="discover.html">
@@ -763,12 +597,14 @@ a{
       K
     </div>
 
-    <img id="avatar"
-         class="avatar"
-         alt=""
-         style="display:none">
+    <img
+      id="avatar"
+      class="avatar"
+      alt=""
+      style="display:none">
 
     <div>
+
       <div id="personName" class="person-name">
         Kmeet Member
       </div>
@@ -776,294 +612,61 @@ a{
       <div id="personStatus" class="status">
         Your Kmeet conversation
       </div>
-    </div>
-
-    <div class="header-actions">
-
-      <button id="voiceCallBtn"
-              class="call-btn"
-              title="Voice call"
-              disabled>
-        📞
-      </button>
-
-      <button id="videoCallBtn"
-              class="call-btn"
-              title="Video call"
-              disabled>
-        🎥
-      </button>
 
     </div>
 
   </div>
 
 
-  <div class="info-bar" id="infoBar">
-    Start your Kmeet conversation.
+  <div class="info-bar">
+    <strong>Kmeet</strong> keeps conversations simple and respectful.
+    Please don't share personal contact details before unlocking the chat.
   </div>
 
 
-  <section id="messages"
-           class="messages">
+  <div id="messages" class="messages">
 
-    <div class="empty-state">
+    <div class="loading">
       Loading conversation...
     </div>
 
-  </section>
+  </div>
 
 
-  <div id="gate"
-       class="gate">
+  <div id="gate" class="gate">
 
-    <div id="gateTitle"
-         class="gate-title">
-      Chat access
+    <div id="gateTitle" class="gate-title">
+      Unlock your chat
     </div>
 
-    <div id="gateText"
-         class="gate-text">
-      Choose an option below to continue.
+    <div id="gateText" class="gate-text">
+      Choose an option below to continue your Kmeet conversation.
     </div>
 
-    <div id="gateActions"
-         class="gate-actions">
-    </div>
+    <div id="gateButtons" class="gate-buttons"></div>
 
   </div>
 
 
-  <form id="composer"
-        class="composer">
+  <div class="composer">
 
-    <input id="messageInput"
-           type="text"
-           maxlength="2000"
-           autocomplete="off"
-           placeholder="Type a message...">
+    <textarea
+      id="messageInput"
+      class="message-input"
+      rows="1"
+      maxlength="2000"
+      placeholder="Type a message..."></textarea>
 
-    <button id="sendBtn"
-            class="send-btn"
-            type="submit">
+    <button
+      id="sendBtn"
+      class="send-btn"
+      type="button">
       Send
     </button>
 
-  </form>
+  </div>
 
 </main>
-
-
-<!-- =========================
-     CALL PAYMENT MENU
-========================= -->
-
-<div id="callMenu"
-     class="call-menu">
-
-  <div class="call-menu-card">
-
-    <h2>Call this member</h2>
-
-    <p>
-      Choose the type of call you want to unlock.
-    </p>
-
-    <div class="call-options">
-
-      <button id="chooseVoice"
-              class="call-option">
-
-        <div class="call-option-icon">
-          📞
-        </div>
-
-        <div class="call-option-info">
-          <div class="call-option-title">
-            Voice Call
-          </div>
-
-          <div class="call-option-price">
-            KSh 20
-          </div>
-        </div>
-
-      </button>
-
-
-      <button id="chooseVideo"
-              class="call-option">
-
-        <div class="call-option-icon">
-          🎥
-        </div>
-
-        <div class="call-option-info">
-          <div class="call-option-title">
-            Video Call
-          </div>
-
-          <div class="call-option-price">
-            KSh 30
-          </div>
-        </div>
-
-      </button>
-
-
-      <button id="chooseBundle"
-              class="call-option">
-
-        <div class="call-option-icon">
-          💕
-        </div>
-
-        <div class="call-option-info">
-          <div class="call-option-title">
-            Voice + Video Bundle
-          </div>
-
-          <div class="call-option-price">
-            KSh 40
-          </div>
-        </div>
-
-      </button>
-
-    </div>
-
-    <button id="closeCallMenu"
-            class="close-call-menu">
-      Cancel
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     REAL WEBRTC CALL SCREEN
-========================= -->
-
-<div id="callOverlay"
-     class="call-overlay">
-
-  <div class="call-stage">
-
-    <video id="remoteVideo"
-           class="remote-video"
-           autoplay
-           playsinline>
-    </video>
-
-    <video id="localVideo"
-           class="local-video"
-           autoplay
-           muted
-           playsinline>
-    </video>
-
-
-    <div id="callAvatarFallback"
-         class="call-avatar-fallback">
-      K
-    </div>
-
-    <img id="callAvatar"
-         class="call-avatar"
-         alt="">
-
-
-    <div class="call-info">
-
-      <div id="callPerson"
-           class="call-person">
-        Kmeet Member
-      </div>
-
-      <div id="callStatus"
-           class="call-status">
-        Connecting...
-      </div>
-
-    </div>
-
-
-    <div class="call-controls">
-
-      <button id="muteBtn"
-              class="control-btn"
-              title="Mute">
-        🎙️
-      </button>
-
-      <button id="cameraBtn"
-              class="control-btn"
-              title="Camera"
-              style="display:none">
-        📷
-      </button>
-
-      <button id="endCallBtn"
-              class="control-btn end"
-              title="End call">
-        ☎
-      </button>
-
-    </div>
-
-
-    <!-- INCOMING CALL -->
-
-    <div id="incomingCall"
-         class="incoming-call">
-
-      <div class="incoming-card">
-
-        <div id="incomingAvatarFallback"
-             class="call-avatar-fallback"
-             style="margin:auto">
-          K
-        </div>
-
-        <img id="incomingAvatar"
-             class="call-avatar"
-             alt=""
-             style="margin:auto">
-
-        <h2 id="incomingName">
-          Kmeet Member
-        </h2>
-
-        <div id="incomingType"
-             class="incoming-type">
-          Incoming call
-        </div>
-
-        <div class="incoming-actions">
-
-          <button id="declineIncoming"
-                  class="decline-btn"
-                  title="Decline">
-            ✕
-          </button>
-
-          <button id="acceptIncoming"
-                  class="accept-btn"
-                  title="Accept">
-            ✓
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
 
 
 <script type="module">
@@ -1071,7 +674,6 @@ a{
 import {
   auth,
   db,
-  database,
   onAuthStateChanged,
   signInAnonymously,
   doc,
@@ -1079,70 +681,15 @@ import {
   setDoc,
   collection,
   addDoc,
-  getDocs,
   query,
   orderBy,
   onSnapshot,
-  serverTimestamp,
-  databaseRef,
-  databaseSet,
-  databaseOnValue,
-  databaseRemove
+  serverTimestamp
 } from "./firebase-config.js";
 
 
 /* =========================================================
-   BASIC STATE
-========================================================= */
-
-let currentUser = null;
-
-let conversationId = null;
-
-let unsubscribeMessages = null;
-
-let unsubscribeIncomingCall = null;
-
-let unsubscribeIncomingCandidates = null;
-
-let currentCallId = null;
-
-let pendingCallId = null;
-
-let peerConnection = null;
-
-let localStream = null;
-
-let remoteStream = null;
-
-let currentCallType = null;
-
-let isCallActive = false;
-
-let isMuted = false;
-
-let cameraEnabled = true;
-
-let targetProfile = null;
-
-let targetIsDemo = false;
-
-let authStarted = false;
-
-
-/* =========================================================
-   CALL PRICES
-========================================================= */
-
-const VOICE_PRICE = 20;
-
-const VIDEO_PRICE = 30;
-
-const BUNDLE_PRICE = 40;
-
-
-/* =========================================================
-   DOM
+   BASIC ELEMENTS
 ========================================================= */
 
 const messagesEl =
@@ -1153,9 +700,6 @@ const messageInput =
 
 const sendBtn =
   document.getElementById("sendBtn");
-
-const composer =
-  document.getElementById("composer");
 
 const personName =
   document.getElementById("personName");
@@ -1169,9 +713,6 @@ const avatar =
 const avatarFallback =
   document.getElementById("avatarFallback");
 
-const infoBar =
-  document.getElementById("infoBar");
-
 const gate =
   document.getElementById("gate");
 
@@ -1181,80 +722,8 @@ const gateTitle =
 const gateText =
   document.getElementById("gateText");
 
-const gateActions =
-  document.getElementById("gateActions");
-
-const voiceCallBtn =
-  document.getElementById("voiceCallBtn");
-
-const videoCallBtn =
-  document.getElementById("videoCallBtn");
-
-const callMenu =
-  document.getElementById("callMenu");
-
-const chooseVoice =
-  document.getElementById("chooseVoice");
-
-const chooseVideo =
-  document.getElementById("chooseVideo");
-
-const chooseBundle =
-  document.getElementById("chooseBundle");
-
-const closeCallMenu =
-  document.getElementById("closeCallMenu");
-
-const callOverlay =
-  document.getElementById("callOverlay");
-
-const remoteVideo =
-  document.getElementById("remoteVideo");
-
-const localVideo =
-  document.getElementById("localVideo");
-
-const callPerson =
-  document.getElementById("callPerson");
-
-const callStatus =
-  document.getElementById("callStatus");
-
-const callAvatar =
-  document.getElementById("callAvatar");
-
-const callAvatarFallback =
-  document.getElementById("callAvatarFallback");
-
-const muteBtn =
-  document.getElementById("muteBtn");
-
-const cameraBtn =
-  document.getElementById("cameraBtn");
-
-const endCallBtn =
-  document.getElementById("endCallBtn");
-
-const incomingCall =
-  document.getElementById("incomingCall");
-
-const incomingName =
-  document.getElementById("incomingName");
-
-const incomingType =
-  document.getElementById("incomingType");
-
-const incomingAvatar =
-  document.getElementById("incomingAvatar");
-
-const incomingAvatarFallback =
-  document.getElementById("incomingAvatarFallback");
-
-const acceptIncoming =
-  document.getElementById("acceptIncoming");
-
-const declineIncoming =
-  document.getElementById("declineIncoming");
+const gateButtons =
+  document.getElementById("gateButtons");
 
 
 /* =========================================================
@@ -1270,672 +739,180 @@ const targetId =
 
 
 /* =========================================================
+   STATE
+========================================================= */
+
+let currentUser = null;
+
+let conversationId = null;
+
+let unsubscribeMessages = null;
+
+let authStarted = false;
+
+let targetIsDemo = false;
+
+let targetProfile = null;
+
+
+/*
+  This is important.
+
+  Messages written locally are kept here until Firestore
+  confirms them. This prevents the message from disappearing
+  when Firestore briefly returns an empty snapshot.
+*/
+let localMessages = [];
+
+let hasReceivedFirstSnapshot = false;
+
+let sendingMessage = false;
+
+
+/* =========================================================
    DEMO PROFILES
 ========================================================= */
 
-const demoProfiles = [
+const demoProfiles = {
 
-  {
-    id:"demo-01",
+  "demo-01": {
     name:"Amara",
-    photo:"https://randomuser.me/api/portraits/women/44.jpg",
-    location:"Nairobi, Kenya"
+    photo:"https://randomuser.me/api/portraits/women/44.jpg"
   },
 
-  {
-    id:"demo-02",
+  "demo-02": {
     name:"Aisha",
-    photo:"https://randomuser.me/api/portraits/women/65.jpg",
-    location:"Mombasa, Kenya"
+    photo:"https://randomuser.me/api/portraits/women/65.jpg"
   },
 
-  {
-    id:"demo-03",
-    name:"Brian",
-    photo:"https://randomuser.me/api/portraits/men/32.jpg",
-    location:"Nairobi, Kenya"
+  "demo-03": {
+    name:"Zuri",
+    photo:"https://randomuser.me/api/portraits/women/32.jpg"
   },
 
-  {
-    id:"demo-04",
-    name:"Chantal",
-    photo:"https://randomuser.me/api/portraits/women/68.jpg",
-    location:"Kisumu, Kenya"
-  },
-
-  {
-    id:"demo-05",
-    name:"Daniel",
-    photo:"https://randomuser.me/api/portraits/men/52.jpg",
-    location:"Nakuru, Kenya"
-  },
-
-  {
-    id:"demo-06",
-    name:"Esther",
-    photo:"https://randomuser.me/api/portraits/women/49.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-07",
-    name:"Felix",
-    photo:"https://randomuser.me/api/portraits/men/75.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-08",
-    name:"Grace",
-    photo:"https://randomuser.me/api/portraits/women/43.jpg",
-    location:"Eldoret, Kenya"
-  },
-
-  {
-    id:"demo-09",
-    name:"Hassan",
-    photo:"https://randomuser.me/api/portraits/men/46.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-10",
-    name:"Irene",
-    photo:"https://randomuser.me/api/portraits/women/51.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-11",
-    name:"James",
-    photo:"https://randomuser.me/api/portraits/men/61.jpg",
-    location:"Kisumu, Kenya"
-  },
-
-  {
-    id:"demo-12",
-    name:"Joy",
-    photo:"https://randomuser.me/api/portraits/women/26.jpg",
-    location:"Nakuru, Kenya"
-  },
-
-  {
-    id:"demo-13",
-    name:"Kevin",
-    photo:"https://randomuser.me/api/portraits/men/41.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-14",
-    name:"Linda",
-    photo:"https://randomuser.me/api/portraits/women/24.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-15",
-    name:"Martin",
-    photo:"https://randomuser.me/api/portraits/men/35.jpg",
-    location:"Kisumu, Kenya"
-  },
-
-  {
-    id:"demo-16",
-    name:"Mercy",
-    photo:"https://randomuser.me/api/portraits/women/47.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-17",
-    name:"Nathan",
-    photo:"https://randomuser.me/api/portraits/men/22.jpg",
-    location:"Nakuru, Kenya"
-  },
-
-  {
-    id:"demo-18",
-    name:"Naomi",
-    photo:"https://randomuser.me/api/portraits/women/50.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-19",
-    name:"Oscar",
-    photo:"https://randomuser.me/api/portraits/men/70.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-20",
-    name:"Patricia",
-    photo:"https://randomuser.me/api/portraits/women/62.jpg",
-    location:"Kisumu, Kenya"
-  },
-
-  {
-    id:"demo-21",
-    name:"Peter",
-    photo:"https://randomuser.me/api/portraits/men/54.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-22",
-    name:"Queen",
-    photo:"https://randomuser.me/api/portraits/women/58.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-23",
-    name:"Robert",
-    photo:"https://randomuser.me/api/portraits/men/76.jpg",
-    location:"Nakuru, Kenya"
-  },
-
-  {
-    id:"demo-24",
-    name:"Ruth",
-    photo:"https://randomuser.me/api/portraits/women/45.jpg",
-    location:"Eldoret, Kenya"
-  },
-
-  {
-    id:"demo-25",
-    name:"Samuel",
-    photo:"https://randomuser.me/api/portraits/men/39.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-26",
-    name:"Sharon",
-    photo:"https://randomuser.me/api/portraits/women/64.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-27",
-    name:"Simon",
-    photo:"https://randomuser.me/api/portraits/men/29.jpg",
-    location:"Kisumu, Kenya"
-  },
-
-  {
-    id:"demo-28",
-    name:"Stella",
-    photo:"https://randomuser.me/api/portraits/women/57.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-29",
-    name:"Thomas",
-    photo:"https://randomuser.me/api/portraits/men/49.jpg",
-    location:"Nakuru, Kenya"
-  },
-
-  {
-    id:"demo-30",
-    name:"Vanessa",
-    photo:"https://randomuser.me/api/portraits/women/55.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-31",
-    name:"Victor",
-    photo:"https://randomuser.me/api/portraits/men/45.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-32",
-    name:"Wanjiku",
-    photo:"https://randomuser.me/api/portraits/women/21.jpg",
-    location:"Nyeri, Kenya"
-  },
-
-  {
-    id:"demo-33",
-    name:"William",
-    photo:"https://randomuser.me/api/portraits/men/73.jpg",
-    location:"Nairobi, Kenya"
-  },
-
-  {
-    id:"demo-34",
-    name:"Zawadi",
-    photo:"https://randomuser.me/api/portraits/women/72.jpg",
-    location:"Mombasa, Kenya"
-  },
-
-  {
-    id:"demo-35",
-    name:"Alex",
-    photo:"https://randomuser.me/api/portraits/men/31.jpg",
-    location:"Kisumu, Kenya"
-  },
-
-  {
-    id:"demo-36",
+  "demo-04": {
     name:"Nia",
-    photo:"https://randomuser.me/api/portraits/women/74.jpg",
-    location:"Nairobi, Kenya"
+    photo:"https://randomuser.me/api/portraits/women/68.jpg"
+  },
+
+  "demo-05": {
+    name:"Wanjiku",
+    photo:"https://randomuser.me/api/portraits/women/25.jpg"
+  },
+
+  "demo-06": {
+    name:"Amina",
+    photo:"https://randomuser.me/api/portraits/women/49.jpg"
+  },
+
+  "demo-07": {
+    name:"Imani",
+    photo:"https://randomuser.me/api/portraits/women/71.jpg"
+  },
+
+  "demo-08": {
+    name:"Zawadi",
+    photo:"https://randomuser.me/api/portraits/women/12.jpg"
+  },
+
+  "demo-09": {
+    name:"Makena",
+    photo:"https://randomuser.me/api/portraits/women/50.jpg"
+  },
+
+  "demo-10": {
+    name:"Neema",
+    photo:"https://randomuser.me/api/portraits/women/43.jpg"
+  },
+
+  "demo-11": {
+    name:"Brian",
+    photo:"https://randomuser.me/api/portraits/men/32.jpg"
+  },
+
+  "demo-12": {
+    name:"Kevin",
+    photo:"https://randomuser.me/api/portraits/men/46.jpg"
+  },
+
+  "demo-13": {
+    name:"Daniel",
+    photo:"https://randomuser.me/api/portraits/men/52.jpg"
+  },
+
+  "demo-14": {
+    name:"Sam",
+    photo:"https://randomuser.me/api/portraits/men/18.jpg"
+  },
+
+  "demo-15": {
+    name:"Mike",
+    photo:"https://randomuser.me/api/portraits/men/75.jpg"
+  },
+
+  "demo-16": {
+    name:"Eric",
+    photo:"https://randomuser.me/api/portraits/men/11.jpg"
+  },
+
+  "demo-17": {
+    name:"David",
+    photo:"https://randomuser.me/api/portraits/men/64.jpg"
+  },
+
+  "demo-18": {
+    name:"Joseph",
+    photo:"https://randomuser.me/api/portraits/men/36.jpg"
+  },
+
+  "demo-19": {
+    name:"Victor",
+    photo:"https://randomuser.me/api/portraits/men/41.jpg"
+  },
+
+  "demo-20": {
+    name:"William",
+    photo:"https://randomuser.me/api/portraits/men/70.jpg"
   }
 
-];
+};
 
 
 /* =========================================================
-   HELPERS
-========================================================= */
-
-function isDemoId(id){
-
-  return String(id || "")
-    .startsWith("demo-");
-
-}
-
-
-function getConversationId(){
-
-  if(!currentUser || !targetId){
-
-    return null;
-
-  }
-
-  return [
-    currentUser.uid,
-    targetId
-  ].sort().join("_");
-
-}
-
-
-function escapeHtml(value){
-
-  return String(value || "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-function formatTime(timestamp){
-
-  try{
-
-    if(!timestamp) return "";
-
-    let date;
-
-    if(typeof timestamp.toDate === "function"){
-
-      date=timestamp.toDate();
-
-    }else{
-
-      date=new Date(timestamp);
-
-    }
-
-    if(Number.isNaN(date.getTime())) return "";
-
-    return date.toLocaleTimeString([],{
-      hour:"2-digit",
-      minute:"2-digit"
-    });
-
-  }catch{
-
-    return "";
-
-  }
-
-}
-
-
-function showGate(type){
-
-  gate.classList.add("show");
-
-  gateActions.innerHTML="";
-
-  if(type==="anonymous"){
-
-    gateTitle.textContent="Chat requires a Kmeet account";
-
-    gateText.textContent=
-      "You can browse Kmeet as a guest, but free chat access is reserved for registered members.";
-
-    gateActions.innerHTML=`
-
-      <button class="gate-btn"
-              onclick="window.location.href='login.html'">
-        Log In
-      </button>
-
-      <button class="gate-btn secondary"
-              onclick="window.location.href='signup.html'">
-        Create Account
-      </button>
-
-    `;
-
-    return;
-
-  }
-
-
-  if(type==="sender"){
-
-    gateTitle.textContent="Unlock more chats";
-
-    gateText.textContent=
-      "Your free opening message has been used. Choose a chat package to continue.";
-
-    gateActions.innerHTML=`
-
-      <button class="gate-btn"
-              onclick="window.location.href='payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49'">
-        3 Chats · KSh 49
-      </button>
-
-      <button class="gate-btn"
-              onclick="window.location.href='payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100'">
-        8 Chats · KSh 100
-      </button>
-
-    `;
-
-    return;
-
-  }
-
-
-  if(type==="receiver"){
-
-    gateTitle.textContent="Continue the conversation";
-
-    gateText.textContent=
-      "Your free receiver replies have been used. Continue for KSh 11.";
-
-    gateActions.innerHTML=`
-
-      <button class="gate-btn"
-              onclick="window.location.href='payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=11'">
-        Continue · KSh 11
-      </button>
-
-    `;
-
-  }
-
-}
-
-
-function hideGate(){
-
-  gate.classList.remove("show");
-
-}
-
-
-function renderMessages(items){
-
-  if(!items.length){
-
-    messagesEl.innerHTML=`
-
-      <div class="empty-state">
-        Start your conversation with this Kmeet member.
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-  messagesEl.innerHTML="";
-
-  items.forEach(item=>{
-
-    const mine =
-      item.senderId===currentUser.uid;
-
-    const row =
-      document.createElement("div");
-
-    row.className =
-      "message-row " +
-      (mine ? "mine" : "theirs");
-
-    const bubble =
-      document.createElement("div");
-
-    bubble.className =
-      "message " +
-      (mine ? "mine" : "theirs");
-
-    bubble.innerHTML=
-      escapeHtml(item.text) +
-      `<div class="message-time">${formatTime(item.createdAt)}</div>`;
-
-    row.appendChild(bubble);
-
-    messagesEl.appendChild(row);
-
-  });
-
-  messagesEl.scrollTop =
-    messagesEl.scrollHeight;
-
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-async function loadTargetProfile(){
-
-  if(!targetId){
-
-    personName.textContent="Kmeet Member";
-
-    personStatus.textContent=
-      "No member selected.";
-
-    infoBar.textContent=
-      "Return to Discover and select a member.";
-
-    disableCallButtons();
-
-    return;
-
-  }
-
-
-  targetIsDemo =
-    isDemoId(targetId);
-
-
-  if(targetIsDemo){
-
-    targetProfile =
-      demoProfiles.find(
-        profile=>profile.id===targetId
-      );
-
-    if(!targetProfile){
-
-      personName.textContent=
-        "Kmeet Member";
-
-      return;
-
-    }
-
-    personName.textContent =
-      targetProfile.name;
-
-    personStatus.textContent =
-      targetProfile.location || "Kmeet member";
-
-    setAvatar(
-      targetProfile.photo,
-      targetProfile.name
-    );
-
-    infoBar.innerHTML=
-      "You are chatting with <strong>" +
-      escapeHtml(targetProfile.name) +
-      "</strong>.";
-
-    disableCallButtons();
-
-    return;
-
-  }
-
-
-  try{
-
-    const snap =
-      await getDoc(
-        doc(db,"users",targetId)
-      );
-
-    if(snap.exists()){
-
-      targetProfile =
-        {
-          id:targetId,
-          ...snap.data()
-        };
-
-      personName.textContent =
-        targetProfile.displayName ||
-        targetProfile.name ||
-        "Kmeet Member";
-
-      personStatus.textContent =
-        targetProfile.location ||
-        targetProfile.status ||
-        "Kmeet member";
-
-      setAvatar(
-        targetProfile.photoURL ||
-        targetProfile.photo ||
-        "",
-        personName.textContent
-      );
-
-      infoBar.innerHTML=
-        "You are chatting with <strong>" +
-        escapeHtml(personName.textContent) +
-        "</strong>.";
-
-    }else{
-
-      personName.textContent=
-        "Kmeet Member";
-
-      personStatus.textContent=
-        "Member profile unavailable.";
-
-      setAvatar("", "K");
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Profile error:",
-      error
-    );
-
-  }
-
-}
-
-
-function setAvatar(url,name){
-
-  if(url){
-
-    avatar.src=url;
-
-    avatar.style.display="block";
-
-    avatarFallback.style.display="none";
-
-    avatar.onerror=()=>{
-
-      avatar.style.display="none";
-
-      avatarFallback.style.display="flex";
-
-      avatarFallback.textContent =
-        String(name || "K")
-          .trim()
-          .charAt(0)
-          .toUpperCase();
-
-    };
-
-  }else{
-
-    avatar.style.display="none";
-
-    avatarFallback.style.display="flex";
-
-    avatarFallback.textContent =
-      String(name || "K")
-        .trim()
-        .charAt(0)
-        .toUpperCase();
-
-  }
-
-}
-
-
-/* =========================================================
-   DEMO CHAT
+   DEMO CHAT STORAGE
 ========================================================= */
 
 function demoStorageKey(){
 
-  return "kmeet_demo_messages_" +
+  if(!currentUser || !targetId){
+    return null;
+  }
+
+  return (
+    "kmeet_demo_chat_" +
     currentUser.uid +
     "_" +
-    targetId;
+    targetId
+  );
 
 }
 
 
 function getDemoMessages(){
 
+  const key = demoStorageKey();
+
+  if(!key){
+    return [];
+  }
+
   try{
 
     return JSON.parse(
-      localStorage.getItem(
-        demoStorageKey()
-      ) || "[]"
+      localStorage.getItem(key) || "[]"
     );
 
-  }catch{
+  }catch(error){
 
     return [];
 
@@ -1946,93 +923,475 @@ function getDemoMessages(){
 
 function saveDemoMessages(items){
 
+  const key = demoStorageKey();
+
+  if(!key){
+    return;
+  }
+
   localStorage.setItem(
-    demoStorageKey(),
+    key,
     JSON.stringify(items)
   );
 
 }
 
 
-function loadDemoChat(){
+/* =========================================================
+   CONVERSATION ID
+========================================================= */
 
-  const items =
-    getDemoMessages();
+function getConversationId(){
 
-  renderMessages(items);
+  if(!currentUser || !targetId){
+    return null;
+  }
+
+  const ids = [
+    currentUser.uid,
+    targetId
+  ].sort();
+
+  return ids[0] + "_" + ids[1];
 
 }
 
 
 /* =========================================================
-   FIRESTORE CHAT
+   CONTACT INFO PROTECTION
 ========================================================= */
 
-async function getExistingMessages(){
+function containsContactInformation(text){
 
-  if(!conversationId){
+  const value =
+    text
+      .toLowerCase()
+      .trim();
 
-    conversationId =
-      getConversationId();
+  const patterns = [
 
-  }
+    /\b\d{9,13}\b/,
 
-  if(!conversationId){
+    /\b07\d{8}\b/,
 
-    return [];
+    /\b01\d{8}\b/,
 
-  }
+    /\b\d{3}[\s-]\d{3}[\s-]\d{3,4}\b/,
 
-  try{
+    /whatsapp/,
 
-    const parentSnap =
-      await getDoc(
-        doc(
-          db,
-          "conversations",
-          conversationId
-        )
-      );
+    /telegram/,
 
-    if(!parentSnap.exists()){
+    /instagram/,
 
-      return [];
+    /facebook/,
 
-    }
+    /tiktok/,
 
-    const snap =
-      await getDocs(
-        query(
-          collection(
-            db,
-            "conversations",
-            conversationId,
-            "messages"
-          ),
-          orderBy(
-            "createdAt",
-            "asc"
-          )
-        )
-      );
+    /snapchat/,
 
-    return snap.docs.map(
-      item=>item.data()
-    );
+    /email me/,
 
-  }catch(error){
+    /call me/,
 
-    console.error(
-      "Message loading error:",
-      error
-    );
+    /text me/,
 
-    return [];
+    /contact me/,
+
+    /my number/,
+
+    /my phone/,
+
+    /my email/,
+
+    /@gmail\.com/,
+
+    /@yahoo\.com/,
+
+    /@outlook\.com/
+
+  ];
+
+  return patterns.some(
+    pattern => pattern.test(value)
+  );
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE PAYMENT STATE
+========================================================= */
+
+function freeOpeningKey(){
+
+  return (
+    "kmeet_free_opening_used_" +
+    currentUser.uid +
+    "_" +
+    targetId
+  );
+
+}
+
+
+function senderCreditsKey(){
+
+  return (
+    "kmeet_sender_credits_" +
+    currentUser.uid +
+    "_" +
+    targetId
+  );
+
+}
+
+
+function receiverPaidKey(){
+
+  return (
+    "kmeet_receiver_paid_" +
+    currentUser.uid +
+    "_" +
+    targetId
+  );
+
+}
+
+
+function hasUsedFreeOpening(){
+
+  return (
+    localStorage.getItem(
+      freeOpeningKey()
+    ) === "true"
+  );
+
+}
+
+
+function hasReceiverPaid(){
+
+  return (
+    localStorage.getItem(
+      receiverPaidKey()
+    ) === "true"
+  );
+
+}
+
+
+function getSenderCredits(){
+
+  return parseInt(
+    localStorage.getItem(
+      senderCreditsKey()
+    ) || "0",
+    10
+  );
+
+}
+
+
+function setSenderCredits(value){
+
+  localStorage.setItem(
+    senderCreditsKey(),
+    String(Math.max(0,value))
+  );
+
+}
+
+
+/* =========================================================
+   PROFILE DISPLAY
+========================================================= */
+
+function showTargetProfile(profile){
+
+  targetProfile = profile || {};
+
+  const name =
+    profile?.displayName ||
+    profile?.name ||
+    "Kmeet Member";
+
+  personName.textContent = name;
+
+  personStatus.textContent =
+    profile?.online === true
+      ? "Online now"
+      : "Your Kmeet conversation";
+
+  const photo =
+    profile?.photoURL ||
+    profile?.photo ||
+    profile?.profilePhoto ||
+    profile?.image ||
+    "";
+
+  if(photo){
+
+    avatar.src = photo;
+
+    avatar.style.display = "block";
+
+    avatarFallback.style.display = "none";
+
+    avatar.onerror = () => {
+
+      avatar.style.display = "none";
+
+      avatarFallback.style.display = "flex";
+
+    };
+
+  }else{
+
+    avatar.style.display = "none";
+
+    avatarFallback.style.display = "flex";
+
+    avatarFallback.textContent =
+      name
+        .charAt(0)
+        .toUpperCase();
 
   }
 
 }
 
+
+/* =========================================================
+   LOAD TARGET
+========================================================= */
+
+async function loadTarget(){
+
+  if(!targetId){
+
+    showTargetProfile({
+      displayName:"Kmeet Member"
+    });
+
+    return;
+
+  }
+
+
+  if(demoProfiles[targetId]){
+
+    targetIsDemo = true;
+
+    showTargetProfile(
+      demoProfiles[targetId]
+    );
+
+    return;
+
+  }
+
+
+  targetIsDemo = false;
+
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(
+          db,
+          "users",
+          targetId
+        )
+      );
+
+    if(snap.exists()){
+
+      showTargetProfile(
+        snap.data()
+      );
+
+    }else{
+
+      showTargetProfile({
+        displayName:"Kmeet Member"
+      });
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Could not load target profile:",
+      error
+    );
+
+    showTargetProfile({
+      displayName:"Kmeet Member"
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   FORMAT MESSAGE TIME
+========================================================= */
+
+function formatMessageTime(timestamp){
+
+  if(!timestamp){
+    return "";
+  }
+
+  try{
+
+    let date;
+
+    if(
+      typeof timestamp.toDate === "function"
+    ){
+
+      date = timestamp.toDate();
+
+    }else if(timestamp instanceof Date){
+
+      date = timestamp;
+
+    }else if(
+      typeof timestamp === "number"
+    ){
+
+      date = new Date(timestamp);
+
+    }else{
+
+      return "";
+
+    }
+
+    return date.toLocaleTimeString(
+      [],
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+  }catch(error){
+
+    return "";
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER MESSAGES
+========================================================= */
+
+function renderMessages(items){
+
+  if(!Array.isArray(items)){
+    items = [];
+  }
+
+
+  if(items.length === 0){
+
+    messagesEl.innerHTML = `
+      <div class="empty-state">
+        Your conversation will appear here.<br>
+        Start with a friendly message.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  messagesEl.innerHTML = "";
+
+
+  items.forEach(item => {
+
+    if(!item){
+      return;
+    }
+
+    const senderId =
+      item.senderId || "";
+
+    const mine =
+      senderId === currentUser?.uid;
+
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "message-row " +
+      (mine ? "mine" : "theirs");
+
+
+    const bubble =
+      document.createElement("div");
+
+    bubble.className =
+      "message " +
+      (mine ? "mine" : "theirs");
+
+
+    const text =
+      document.createElement("div");
+
+    text.textContent =
+      item.text || "";
+
+
+    const time =
+      document.createElement("div");
+
+    time.className =
+      "message-time";
+
+    time.textContent =
+      formatMessageTime(
+        item.createdAt ||
+        item.clientCreatedAt
+      );
+
+
+    bubble.appendChild(text);
+
+    if(time.textContent){
+      bubble.appendChild(time);
+    }
+
+    row.appendChild(bubble);
+
+    messagesEl.appendChild(row);
+
+  });
+
+
+  requestAnimationFrame(() => {
+
+    messagesEl.scrollTop =
+      messagesEl.scrollHeight;
+
+  });
+
+}
+
+
+/* =========================================================
+   START REAL FIRESTORE MESSAGES
+========================================================= */
 
 function startMessages(){
 
@@ -2044,8 +1403,10 @@ function startMessages(){
 
   }
 
+
   conversationId =
     getConversationId();
+
 
   if(!conversationId){
 
@@ -2055,16 +1416,20 @@ function startMessages(){
 
   }
 
+
   if(unsubscribeMessages){
 
     unsubscribeMessages();
 
-    unsubscribeMessages=null;
+    unsubscribeMessages = null;
 
   }
 
 
-  const ref =
+  hasReceivedFirstSnapshot = false;
+
+
+  const messagesRef =
     collection(
       db,
       "conversations",
@@ -2072,9 +1437,10 @@ function startMessages(){
       "messages"
     );
 
-  const q =
+
+  const messagesQuery =
     query(
-      ref,
+      messagesRef,
       orderBy(
         "createdAt",
         "asc"
@@ -2084,32 +1450,511 @@ function startMessages(){
 
   unsubscribeMessages =
     onSnapshot(
-      q,
-      snapshot=>{
 
-        const items =
+      messagesQuery,
+
+      snapshot => {
+
+        const serverMessages =
           snapshot.docs.map(
-            item=>item.data()
+            item => ({
+              id:item.id,
+              ...item.data()
+            })
           );
 
-        renderMessages(items);
 
-        if(items.length){
+        /*
+          IMPORTANT FIX:
 
-          hideGate();
+          Firestore can briefly give us an empty snapshot
+          while the conversation is being created.
+
+          Never wipe a message that we have already displayed
+          locally just because an empty snapshot arrived.
+        */
+
+        if(
+          serverMessages.length === 0 &&
+          localMessages.length > 0
+        ){
+
+          if(!hasReceivedFirstSnapshot){
+
+            renderMessages(
+              localMessages
+            );
+
+          }
+
+          hasReceivedFirstSnapshot = true;
+
+          return;
 
         }
 
+
+        if(serverMessages.length > 0){
+
+          localMessages =
+            serverMessages;
+
+          renderMessages(
+            serverMessages
+          );
+
+        }else{
+
+          if(
+            !hasReceivedFirstSnapshot &&
+            localMessages.length === 0
+          ){
+
+            renderMessages([]);
+
+          }
+
+        }
+
+
+        hasReceivedFirstSnapshot = true;
+
       },
-      error=>{
+
+      error => {
 
         console.error(
           "Message listener error:",
           error
         );
 
+        /*
+          Do NOT clear the existing message screen
+          when the listener encounters an error.
+        */
+
+        if(
+          localMessages.length === 0
+        ){
+
+          messagesEl.innerHTML = `
+            <div class="empty-state">
+              Your conversation is ready.<br>
+              Send a message to begin.
+            </div>
+          `;
+
+        }
+
       }
+
     );
+
+}
+
+
+/* =========================================================
+   DEMO CHAT
+========================================================= */
+
+function loadDemoChat(){
+
+  localMessages =
+    getDemoMessages();
+
+  renderMessages(
+    localMessages
+  );
+
+}
+
+
+ /* =========================================================
+    ENSURE CONVERSATION EXISTS
+ ========================================================= */
+
+async function ensureConversation(){
+
+  if(!conversationId){
+
+    conversationId =
+      getConversationId();
+
+  }
+
+
+  if(!conversationId){
+
+    throw new Error(
+      "Conversation ID could not be created."
+    );
+
+  }
+
+
+  const conversationRef =
+    doc(
+      db,
+      "conversations",
+      conversationId
+    );
+
+
+  const existing =
+    await getDoc(
+      conversationRef
+    );
+
+
+  if(existing.exists()){
+
+    return existing.data();
+
+  }
+
+
+  /*
+    The current user becomes the initiator
+    when this is a brand-new conversation.
+  */
+
+  const conversationData = {
+
+    initiatorId:
+      currentUser.uid,
+
+    receiverId:
+      targetId,
+
+    createdAt:
+      serverTimestamp(),
+
+    updatedAt:
+      serverTimestamp()
+
+  };
+
+
+  await setDoc(
+    conversationRef,
+    conversationData
+  );
+
+
+  return conversationData;
+
+}
+
+
+/* =========================================================
+   PAYMENT GATE
+========================================================= */
+
+function showGate(type){
+
+  gate.classList.add("show");
+
+  gateButtons.innerHTML = "";
+
+
+  if(type === "anonymous"){
+
+    gateTitle.textContent =
+      "Chat requires an account";
+
+    gateText.textContent =
+      "Guest visitors can explore Kmeet, but messaging requires a paid chat package.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="gate-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49&anonymous=true">
+        3 Chats · KSh 49
+      </a>
+
+      <a
+        class="gate-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100&anonymous=true">
+        8 Chats · KSh 100
+      </a>
+
+    `;
+
+    return;
+
+  }
+
+
+  if(type === "sender"){
+
+    gateTitle.textContent =
+      "You've used your free opening";
+
+    gateText.textContent =
+      "Choose a chat package to continue the conversation.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="gate-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=3&amount=49">
+        3 Chats · KSh 49
+      </a>
+
+      <a
+        class="gate-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=sender&package=8&amount=100">
+        8 Chats · KSh 100
+      </a>
+
+    `;
+
+    return;
+
+  }
+
+
+  if(type === "receiver"){
+
+    gateTitle.textContent =
+      "Continue this conversation";
+
+    gateText.textContent =
+      "Your free replies have been used. Pay KSh 11 to continue replying.";
+
+    gateButtons.innerHTML = `
+
+      <a
+        class="gate-btn"
+        href="payment.html?userId=${encodeURIComponent(targetId)}&role=receiver&amount=11">
+        Continue · KSh 11
+      </a>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   HIDE GATE
+========================================================= */
+
+function hideGate(){
+
+  gate.classList.remove("show");
+
+}
+
+
+/* =========================================================
+   DEMO SEND
+========================================================= */
+
+async function sendDemoMessage(text){
+
+  const message = {
+
+    senderId:
+      currentUser.uid,
+
+    receiverId:
+      targetId,
+
+    text:text,
+
+    clientCreatedAt:
+      Date.now()
+
+  };
+
+
+  localMessages = [
+    ...getDemoMessages(),
+    message
+  ];
+
+
+  saveDemoMessages(
+    localMessages
+  );
+
+
+  renderMessages(
+    localMessages
+  );
+
+
+  messageInput.value = "";
+
+}
+
+
+/* =========================================================
+   REAL MESSAGE SEND
+========================================================= */
+
+async function sendRealMessage(text){
+
+  /*
+    STEP 1:
+    Create the parent conversation FIRST.
+
+    This is the most important part of the fix because
+    Firestore rules require the conversation to exist
+    before a message can be created.
+  */
+
+  const conversation =
+    await ensureConversation();
+
+
+  /*
+    Determine who is actually receiving the message.
+  */
+
+  let receiverId;
+
+
+  if(
+    conversation &&
+    typeof conversation.receiverId === "string" &&
+    typeof conversation.initiatorId === "string"
+  ){
+
+    receiverId =
+      conversation.initiatorId === currentUser.uid
+        ? conversation.receiverId
+        : conversation.initiatorId;
+
+  }else{
+
+    receiverId =
+      targetId;
+
+  }
+
+
+  if(
+    !receiverId ||
+    receiverId === currentUser.uid
+  ){
+
+    throw new Error(
+      "Invalid receiver for this conversation."
+    );
+
+  }
+
+
+  /*
+    Create a local message immediately.
+
+    This makes the message stay visible even if the
+    Firestore snapshot arrives a moment later.
+  */
+
+  const optimisticMessage = {
+
+    senderId:
+      currentUser.uid,
+
+    receiverId:
+      receiverId,
+
+    text:
+      text,
+
+    clientCreatedAt:
+      Date.now()
+
+  };
+
+
+  localMessages = [
+    ...localMessages,
+    optimisticMessage
+  ];
+
+
+  renderMessages(
+    localMessages
+  );
+
+
+  /*
+    STEP 2:
+    Actually save the message in Firestore.
+  */
+
+  const messagesRef =
+    collection(
+      db,
+      "conversations",
+      conversationId,
+      "messages"
+    );
+
+
+  await addDoc(
+    messagesRef,
+    {
+
+      senderId:
+        currentUser.uid,
+
+      receiverId:
+        receiverId,
+
+      text:
+        text,
+
+      createdAt:
+        serverTimestamp(),
+
+      clientCreatedAt:
+        Date.now()
+
+    }
+  );
+
+
+  /*
+    STEP 3:
+    Update the conversation.
+
+    We intentionally do this AFTER the message has been
+    successfully written.
+  */
+
+  await setDoc(
+
+    doc(
+      db,
+      "conversations",
+      conversationId
+    ),
+
+    {
+
+      updatedAt:
+        serverTimestamp(),
+
+      lastMessage:
+        text,
+
+      lastSenderId:
+        currentUser.uid
+
+    },
+
+    {
+      merge:true
+    }
+
+  );
 
 }
 
@@ -2118,100 +1963,28 @@ function startMessages(){
    SEND MESSAGE
 ========================================================= */
 
-const CONTACT_PATTERN =
-  /(\+?\d[\d\s\-]{6,}|@[\w.-]+|www\.|https?:\/\/|instagram|facebook|telegram|whatsapp|gmail|\.com\b)/i;
+async function sendMessage(){
+
+  if(sendingMessage){
+    return;
+  }
 
 
-const FREE_OPENING_MESSAGES =
-  ["hi","hey"];
+  if(!currentUser){
 
-const FREE_RECEIVER_REPLIES =
-  3;
+    alert(
+      "Please wait for Kmeet to finish loading."
+    );
 
+    return;
 
-function freeOpeningKey(){
-
-  return "kmeet_free_opening_used_" +
-    currentUser.uid +
-    "_" +
-    targetId;
-
-}
+  }
 
 
-function senderCreditsKey(){
+  const text =
+    messageInput.value
+      .trim();
 
-  return "kmeet_sender_credits_" +
-    currentUser.uid +
-    "_" +
-    targetId;
-
-}
-
-
-function receiverPaidKey(){
-
-  return "kmeet_receiver_paid_" +
-    currentUser.uid +
-    "_" +
-    targetId;
-
-}
-
-
-function receiverReplyKey(){
-
-  return "kmeet_receiver_replies_" +
-    currentUser.uid +
-    "_" +
-    targetId;
-
-}
-
-
-function hasFreeOpeningUsed(){
-
-  return localStorage.getItem(
-    freeOpeningKey()
-  )==="1";
-
-}
-
-
-function getSenderCredits(){
-
-  return Number(
-    localStorage.getItem(
-      senderCreditsKey()
-    ) || "0"
-  );
-
-}
-
-
-function getReceiverReplies(){
-
-  return Number(
-    localStorage.getItem(
-      receiverReplyKey()
-    ) || "0"
-  );
-
-}
-
-
-function isReceiverPaid(){
-
-  return localStorage.getItem(
-    receiverPaidKey()
-  )==="1";
-
-}
-
-
-async function sendMessage(text){
-
-  text=text.trim();
 
   if(!text){
 
@@ -2220,12 +1993,38 @@ async function sendMessage(text){
   }
 
 
-  if(!currentUser){
+  /*
+    Demo profiles use local demo chat.
+  */
+
+  if(targetIsDemo){
+
+    sendingMessage = true;
+
+    sendBtn.disabled = true;
+
+    try{
+
+      await sendDemoMessage(
+        text
+      );
+
+    }finally{
+
+      sendingMessage = false;
+
+      sendBtn.disabled = false;
+
+    }
 
     return;
 
   }
 
+
+  /*
+    Anonymous users cannot use the free opening.
+  */
 
   if(currentUser.isAnonymous){
 
@@ -2236,110 +2035,101 @@ async function sendMessage(text){
   }
 
 
-  if(targetIsDemo){
+  /*
+    Protect users from sending contact information
+    before payment.
+  */
 
-    const items =
-      getDemoMessages();
+  if(
+    containsContactInformation(text)
+  ){
 
-    items.push({
-
-      senderId:currentUser.uid,
-
-      receiverId:targetId,
-
-      text,
-
-      createdAt:
-        new Date().toISOString()
-
-    });
-
-    saveDemoMessages(items);
-
-    renderMessages(items);
-
-    messageInput.value="";
+    alert(
+      "For your safety, contact details cannot be shared before the chat is unlocked."
+    );
 
     return;
 
   }
 
 
-  const normalized =
-    text.toLowerCase();
+  /*
+    Determine whether the conversation already exists.
+
+    We read ONLY the parent conversation here.
+
+    We do NOT read the messages collection before sending.
+    This avoids the permission/race problem that caused
+    messages to disappear.
+  */
+
+  conversationId =
+    getConversationId();
 
 
-  if(CONTACT_PATTERN.test(text)){
+  let existingConversation = null;
 
-    if(
-      !hasFreeOpeningUsed() &&
-      !FREE_OPENING_MESSAGES.includes(normalized)
-    ){
 
-      infoBar.textContent =
-        "For your first free message, use only hi or hey.";
+  try{
 
-      return;
+    const conversationSnap =
+      await getDoc(
+        doc(
+          db,
+          "conversations",
+          conversationId
+        )
+      );
 
-    }
 
-    if(
-      currentUser.uid !== targetId &&
-      !isReceiverPaid()
-    ){
+    if(conversationSnap.exists()){
 
-      const replies =
-        getReceiverReplies();
-
-      if(replies>=FREE_RECEIVER_REPLIES){
-
-        showGate("receiver");
-
-        return;
-
-      }
-
-      infoBar.textContent =
-        "Contact information cannot be shared before payment.";
-
-      return;
+      existingConversation =
+        conversationSnap.data();
 
     }
+
+  }catch(error){
+
+    console.error(
+      "Conversation check failed:",
+      error
+    );
 
   }
 
 
-  const existing =
-    await getExistingMessages();
+  /*
+    Brand-new conversation.
 
+    Registered users get one free opening message,
+    but it must be exactly "hi" or "hey".
+  */
 
-  const originalSenderId =
-    existing.length
-      ? existing[0].senderId
-      : currentUser.uid;
+  if(!existingConversation){
 
+    const normalized =
+      text.toLowerCase().trim();
 
-  const amOriginalSender =
-    originalSenderId===currentUser.uid;
-
-
-  if(!existing.length){
 
     if(
-      !hasFreeOpeningUsed() &&
-      !FREE_OPENING_MESSAGES.includes(normalized)
+      normalized !== "hi" &&
+      normalized !== "hey"
     ){
 
-      infoBar.textContent =
-        "Your first free message must be exactly hi or hey.";
+      showGate("sender");
+
+      alert(
+        'Your first free message must be "hi" or "hey".'
+      );
 
       return;
 
     }
 
+
     if(
-      hasFreeOpeningUsed() &&
-      getSenderCredits()<=0
+      hasUsedFreeOpening()
     ){
 
       showGate("sender");
@@ -2348,26 +2138,47 @@ async function sendMessage(text){
 
     }
 
-  }else{
+  }
 
-    if(amOriginalSender){
 
-      if(getSenderCredits()<=0){
+  /*
+    Existing conversation.
 
-        showGate("sender");
+    Determine whether current user is the receiver.
+  */
 
-        return;
+  if(existingConversation){
 
-      }
+    const isReceiver =
+      existingConversation.receiverId ===
+        currentUser.uid;
 
-    }else{
 
-      const replies =
-        getReceiverReplies();
+    if(isReceiver){
+
+      /*
+        Receiver free-reply tracking.
+      */
+
+      const receiverReplyKey =
+        "kmeet_receiver_replies_" +
+        currentUser.uid +
+        "_" +
+        targetId;
+
+
+      let receiverReplies =
+        parseInt(
+          localStorage.getItem(
+            receiverReplyKey
+          ) || "0",
+          10
+        );
+
 
       if(
-        replies>=FREE_RECEIVER_REPLIES &&
-        !isReceiverPaid()
+        !hasReceiverPaid() &&
+        receiverReplies >= 3
       ){
 
         showGate("receiver");
@@ -2381,710 +2192,132 @@ async function sendMessage(text){
   }
 
 
+  sendingMessage = true;
+
+  sendBtn.disabled = true;
+
+
   try{
 
-    if(!conversationId){
+    await sendRealMessage(
+      text
+    );
 
-      conversationId =
-        getConversationId();
+
+    /*
+      Only clear the input AFTER Firestore has accepted
+      the message.
+    */
+
+    messageInput.value = "";
+
+    messageInput.style.height = "auto";
+
+
+    /*
+      If this was the free first opening, mark it used
+      only after successful Firestore write.
+    */
+
+    if(!existingConversation){
+
+      localStorage.setItem(
+        freeOpeningKey(),
+        "true"
+      );
 
     }
 
 
     /*
-      IMPORTANT:
-      The receiver is always the other person.
-      This prevents the current user from being
-      accidentally saved as their own receiver.
+      If current user is the receiver, count the free reply
+      only after the message successfully reaches Firestore.
     */
 
-    const actualReceiverId =
-      originalSenderId===currentUser.uid
-        ? targetId
-        : currentUser.uid;
+    if(existingConversation){
+
+      const isReceiver =
+        existingConversation.receiverId ===
+          currentUser.uid;
 
 
-    await setDoc(
-      doc(
-        db,
-        "conversations",
-        conversationId
-      ),
-      {
-        initiatorId:originalSenderId,
-        receiverId:
-          actualReceiverId,
-        updatedAt:
-          serverTimestamp()
-      },
-      {
-        merge:true
+      if(isReceiver){
+
+        const receiverReplyKey =
+          "kmeet_receiver_replies_" +
+          currentUser.uid +
+          "_" +
+          targetId;
+
+
+        let receiverReplies =
+          parseInt(
+            localStorage.getItem(
+              receiverReplyKey
+            ) || "0",
+            10
+          );
+
+
+        if(
+          !hasReceiverPaid()
+        ){
+
+          receiverReplies++;
+
+          localStorage.setItem(
+            receiverReplyKey,
+            String(receiverReplies)
+          );
+
+        }
+
       }
-    );
-
-
-    await addDoc(
-      collection(
-        db,
-        "conversations",
-        conversationId,
-        "messages"
-      ),
-      {
-        senderId:currentUser.uid,
-        receiverId:actualReceiverId,
-        text,
-        createdAt:
-          serverTimestamp()
-      }
-    );
-
-
-    if(!hasFreeOpeningUsed()){
-
-      localStorage.setItem(
-        freeOpeningKey(),
-        "1"
-      );
-
-    }else if(amOriginalSender){
-
-      const credits =
-        getSenderCredits();
-
-      localStorage.setItem(
-        senderCreditsKey(),
-        String(
-          Math.max(0,credits-1)
-        )
-      );
-
-    }else{
-
-      const replies =
-        getReceiverReplies();
-
-      localStorage.setItem(
-        receiverReplyKey(),
-        String(replies+1)
-      );
 
     }
 
-
-    messageInput.value="";
-
-    hideGate();
 
   }catch(error){
 
     console.error(
-      "Send error:",
+      "MESSAGE SEND ERROR:",
       error
     );
 
-    infoBar.textContent =
-      "Message could not be sent. Please try again.";
 
-  }
-
-}
-
-
-composer.addEventListener(
-  "submit",
-  async event=>{
-
-    event.preventDefault();
-
-    const text =
-      messageInput.value.trim();
-
-    if(!text){
-
-      return;
-
-    }
-
-    sendBtn.disabled=true;
-
-    try{
-
-      await sendMessage(text);
-
-    }finally{
-
-      sendBtn.disabled=false;
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   CALL BUTTONS
-========================================================= */
-
-function disableCallButtons(){
-
-  voiceCallBtn.disabled=true;
-
-  videoCallBtn.disabled=true;
-
-}
-
-
-function enableCallButtons(){
-
-  if(
-    !currentUser ||
-    currentUser.isAnonymous ||
-    targetIsDemo ||
-    !targetId
-  ){
-
-    disableCallButtons();
-
-    return;
-
-  }
-
-  voiceCallBtn.disabled=false;
-
-  videoCallBtn.disabled=false;
-
-}
-
-
-voiceCallBtn.addEventListener(
-  "click",
-  ()=>{
-
-    if(
-      !currentUser ||
-      currentUser.isAnonymous
-    ){
-
-      showGate("anonymous");
-
-      return;
-
-    }
-
-    if(targetIsDemo){
-
-      infoBar.textContent =
-        "Voice and video calls are available between registered Kmeet members.";
-
-      return;
-
-    }
-
-    openCallMenu();
-
-  }
-);
-
-
-videoCallBtn.addEventListener(
-  "click",
-  ()=>{
-
-    if(
-      !currentUser ||
-      currentUser.isAnonymous
-    ){
-
-      showGate("anonymous");
-
-      return;
-
-    }
-
-    if(targetIsDemo){
-
-      infoBar.textContent =
-        "Voice and video calls are available between registered Kmeet members.";
-
-      return;
-
-    }
-
-    openCallMenu();
-
-  }
-);
-
-
-function openCallMenu(){
-
-  callMenu.classList.add("show");
-
-}
-
-
-function closeCallMenuWindow(){
-
-  callMenu.classList.remove("show");
-
-}
-
-
-closeCallMenu.addEventListener(
-  "click",
-  closeCallMenuWindow
-);
-
-
-/* =========================================================
-   PAYMENT REDIRECT
-========================================================= */
-
-function goToCallPayment(
-  callType,
-  amount,
-  label
-){
-
-  const url =
-    "payment.html?" +
-    "userId=" +
-    encodeURIComponent(targetId) +
-    "&role=call" +
-    "&callType=" +
-    encodeURIComponent(callType) +
-    "&amount=" +
-    encodeURIComponent(amount) +
-    "&label=" +
-    encodeURIComponent(label);
-
-  window.location.href=url;
-
-}
-
-
-chooseVoice.addEventListener(
-  "click",
-  ()=>{
-
-    closeCallMenuWindow();
-
-    startCallAfterEntitlement(
-      "voice",
-      VOICE_PRICE
-    );
-
-  }
-);
-
-
-chooseVideo.addEventListener(
-  "click",
-  ()=>{
-
-    closeCallMenuWindow();
-
-    startCallAfterEntitlement(
-      "video",
-      VIDEO_PRICE
-    );
-
-  }
-);
-
-
-chooseBundle.addEventListener(
-  "click",
-  ()=>{
-
-    closeCallMenuWindow();
-
-    startCallAfterEntitlement(
-      "bundle",
-      BUNDLE_PRICE
-    );
-
-  }
-);
-
-
-/* =========================================================
-   CALL ENTITLEMENTS
-========================================================= */
-
-async function getCallEntitlement(){
-
-  if(
-    !currentUser ||
-    currentUser.isAnonymous ||
-    !targetId ||
-    targetIsDemo
-  ){
-
-    return null;
-
-  }
-
-
-  const entitlementId =
-    [
-      currentUser.uid,
-      targetId
-    ].sort().join("_");
-
-
-  try{
-
-    const snap =
-      await getDoc(
-        doc(
-          db,
-          "callEntitlements",
-          entitlementId
-        )
-      );
-
-
-    if(!snap.exists()){
-
-      return null;
-
-    }
-
-
-    const data =
-      snap.data();
-
-
-    if(data.status!=="paid"){
-
-      return null;
-
-    }
-
-
-    return data;
-
-  }catch(error){
-
-    console.error(
-      "Call entitlement error:",
-      error
-    );
-
-    return null;
-
-  }
-
-}
-
-
-function entitlementAllows(
-  entitlement,
-  requestedType
-){
-
-  if(!entitlement){
-
-    return false;
-
-  }
-
-
-  if(entitlement.callType==="bundle"){
-
-    return true;
-
-  }
-
-
-  return entitlement.callType===requestedType;
-
-}
-
-
-async function startCallAfterEntitlement(
-  callType,
-  amount
-){
-
-  if(
-    !currentUser ||
-    currentUser.isAnonymous
-  ){
-
-    showGate("anonymous");
-
-    return;
-
-  }
-
-
-  if(targetIsDemo){
-
-    infoBar.textContent =
-      "Calls are available between registered Kmeet members only.";
-
-    return;
-
-  }
-
-
-  callStatus.textContent =
-    "Checking call access...";
-
-
-  const entitlement =
-    await getCallEntitlement();
-
-
-  if(
-    entitlementAllows(
-      entitlement,
-      callType
-    )
-  ){
-
-    await startOutgoingCall(
-      callType
-    );
-
-    return;
-
-  }
-
-
-  goToCallPayment(
-    callType,
-    amount,
-    callType==="voice"
-      ? "Voice Call"
-      : callType==="video"
-        ? "Video Call"
-        : "Voice + Video Bundle"
-  );
-
-}
-
-
-/* =========================================================
-   WEBRTC
-========================================================= */
-
-const rtcConfiguration = {
-
-  iceServers:[
-
-    {
-      urls:[
-        "stun:stun.l.google.com:19302",
-        "stun:stun1.l.google.com:19302"
-      ]
-    }
-
-  ]
-
-};
-
-
-function callPath(){
-
-  return databaseRef(
-    database,
-    "kmeetCalls/" +
-    [
-      currentUser.uid,
-      targetId
-    ].sort().join("_")
-  );
-
-}
-
-
-function currentCallPath(){
-
-  return databaseRef(
-    database,
-    "kmeetCalls/" +
-    [
-      currentUser.uid,
-      targetId
-    ].sort().join("_") +
-    "/calls/" +
-    currentCallId
-  );
-
-}
-
-
-async function createPeerConnection(
-  callType,
-  caller
-){
-
-  peerConnection =
-    new RTCPeerConnection(
-      rtcConfiguration
-    );
-
-
-  remoteStream =
-    new MediaStream();
-
-  remoteVideo.srcObject =
-    remoteStream;
-
-
-  peerConnection.ontrack =
-    event=>{
-
-      event.streams[0]
-        .getTracks()
-        .forEach(track=>{
-
-          remoteStream.addTrack(track);
-
-        });
-
-      remoteVideo.style.display =
-        callType==="video"
-          ? "block"
-          : "none";
-
-    };
-
-
-  peerConnection.onicecandidate =
-    async event=>{
-
-      if(!event.candidate){
-
-        return;
-
-      }
-
-
-      if(!currentCallId){
-
-        return;
-
-      }
-
-
-      const candidatesRef =
-        databaseRef(
-          database,
-          "kmeetCalls/" +
-          [
-            currentUser.uid,
-            targetId
-          ].sort().join("_") +
-          "/calls/" +
-          currentCallId +
-          "/candidates/" +
-          (
-            caller
-              ? "caller"
-              : "receiver"
+    /*
+      Remove only the optimistic message that failed.
+
+      Do not wipe the whole conversation.
+    */
+
+    localMessages =
+      localMessages.filter(
+        item =>
+          !(
+            item.senderId === currentUser.uid &&
+            item.text === text &&
+            item.clientCreatedAt
           )
-        );
-
-
-      await databaseSet(
-        databaseRef(
-          candidatesRef,
-          event.candidate.sdpMid +
-          "_" +
-          event.candidate.sdpMLineIndex +
-          "_" +
-          Date.now()
-        ),
-        event.candidate.toJSON()
       );
 
-    };
 
-
-  if(localStream){
-
-    localStream
-      .getTracks()
-      .forEach(track=>{
-
-        peerConnection.addTrack(
-          track,
-          localStream
-        );
-
-      });
-
-  }
-
-}
-
-
-async function getLocalMedia(
-  callType
-){
-
-  const video =
-    callType==="video" ||
-    callType==="bundle";
-
-
-  try{
-
-    localStream =
-      await navigator.mediaDevices.getUserMedia({
-
-        audio:true,
-
-        video
-
-      });
-
-
-    localVideo.srcObject =
-      localStream;
-
-
-    localVideo.style.display =
-      video
-        ? "block"
-        : "none";
-
-    cameraBtn.style.display =
-      video
-        ? "flex"
-        : "none";
-
-
-    cameraEnabled =
-      video;
-
-
-    isMuted=false;
-
-    muteBtn.textContent="🎙️";
-
-    cameraBtn.textContent="📷";
-
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "Media permission error:",
-      error
+    renderMessages(
+      localMessages
     );
 
 
-    callStatus.textContent =
-      "Camera or microphone permission was not granted.";
+    alert(
+      "The message could not be sent. Please try again."
+    );
 
-    return false;
+  }finally{
+
+    sendingMessage = false;
+
+    sendBtn.disabled = false;
+
+    messageInput.focus();
 
   }
 
@@ -3092,1139 +2325,181 @@ async function getLocalMedia(
 
 
 /* =========================================================
-   OUTGOING CALL
+   ENTER TO SEND
 ========================================================= */
 
-async function startOutgoingCall(
-  callType
-){
+messageInput.addEventListener(
+  "keydown",
+  event => {
 
-  if(
-    !currentUser ||
-    currentUser.isAnonymous
-  ){
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
 
-    return;
+      event.preventDefault();
 
-  }
-
-
-  if(targetIsDemo){
-
-    return;
-
-  }
-
-
-  const mediaType =
-    callType==="voice"
-      ? "voice"
-      : "video";
-
-
-  const mediaReady =
-    await getLocalMedia(
-      mediaType
-    );
-
-
-  if(!mediaReady){
-
-    return;
-
-  }
-
-
-  currentCallId =
-    crypto.randomUUID();
-
-
-  pendingCallId=null;
-
-  currentCallType =
-    mediaType;
-
-  isCallActive=true;
-
-
-  showCallOverlay(
-    mediaType
-  );
-
-
-  await createPeerConnection(
-    mediaType,
-    true
-  );
-
-
-  const base =
-    callPath();
-
-
-  const callRef =
-    databaseRef(
-      base,
-      "calls/" +
-      currentCallId
-    );
-
-
-  const offer =
-    await peerConnection.createOffer();
-
-
-  await peerConnection.setLocalDescription(
-    offer
-  );
-
-
-  await databaseSet(
-    callRef,
-    {
-      callerId:currentUser.uid,
-      receiverId:targetId,
-      callType:mediaType,
-      status:"ringing",
-      offer:{
-        type:offer.type,
-        sdp:offer.sdp
-      },
-      createdAt:
-        Date.now()
-    }
-  );
-
-
-  callStatus.textContent =
-    "Calling " +
-    (
-      targetProfile?.displayName ||
-      targetProfile?.name ||
-      "Kmeet member"
-    ) +
-    "...";
-
-
-  listenForCallAnswer();
-
-  listenForRemoteCandidates(false);
-
-  listenForCallStatus();
-
-}
-
-
-/* =========================================================
-   ANSWER LISTENER
-========================================================= */
-
-function listenForCallAnswer(){
-
-  if(!currentCallId){
-
-    return;
-
-  }
-
-
-  const ref =
-    databaseRef(
-      database,
-      "kmeetCalls/" +
-      [
-        currentUser.uid,
-        targetId
-      ].sort().join("_") +
-      "/calls/" +
-      currentCallId +
-      "/answer"
-    );
-
-
-  databaseOnValue(
-    ref,
-    async snapshot=>{
-
-      const answer =
-        snapshot.val();
-
-
-      if(
-        !answer ||
-        !peerConnection ||
-        peerConnection.currentRemoteDescription
-      ){
-
-        return;
-
-      }
-
-
-      try{
-
-        await peerConnection.setRemoteDescription(
-          new RTCSessionDescription(answer)
-        );
-
-        callStatus.textContent =
-          "Connected";
-
-      }catch(error){
-
-        console.error(
-          "Answer error:",
-          error
-        );
-
-      }
+      sendMessage();
 
     }
-  );
-
-}
-
-
-/* =========================================================
-   INCOMING CALL LISTENER
-========================================================= */
-
-function listenForIncomingCalls(){
-
-  if(
-    !currentUser ||
-    currentUser.isAnonymous ||
-    targetIsDemo
-  ){
-
-    return;
-
-  }
-
-
-  if(unsubscribeIncomingCall){
-
-    unsubscribeIncomingCall();
-
-    unsubscribeIncomingCall=null;
-
-  }
-
-
-  const callsRef =
-    databaseRef(
-      database,
-      "kmeetCalls/" +
-      [
-        currentUser.uid,
-        targetId
-      ].sort().join("_") +
-      "/calls"
-    );
-
-
-  unsubscribeIncomingCall =
-    databaseOnValue(
-      callsRef,
-      snapshot=>{
-
-        const calls =
-          snapshot.val();
-
-
-        if(!calls){
-
-          return;
-
-        }
-
-
-        const entries =
-          Object.entries(calls);
-
-
-        for(
-          const [id,call]
-          of entries
-        ){
-
-          if(
-            call &&
-            call.receiverId===currentUser.uid &&
-            call.callerId===targetId &&
-            call.status==="ringing"
-          ){
-
-            if(
-              currentCallId===id ||
-              pendingCallId===id
-            ){
-
-              continue;
-
-            }
-
-
-            pendingCallId=id;
-
-            showIncomingCall(
-              call
-            );
-
-            break;
-
-          }
-
-        }
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   INCOMING CALL UI
-========================================================= */
-
-function showIncomingCall(call){
-
-  const name =
-    targetProfile?.displayName ||
-    targetProfile?.name ||
-    "Kmeet Member";
-
-
-  incomingName.textContent =
-    name;
-
-
-  incomingType.textContent =
-    call.callType==="video"
-      ? "Incoming video call"
-      : "Incoming voice call";
-
-
-  if(
-    targetProfile?.photoURL ||
-    targetProfile?.photo
-  ){
-
-    incomingAvatar.src =
-      targetProfile.photoURL ||
-      targetProfile.photo;
-
-    incomingAvatar.style.display =
-      "block";
-
-    incomingAvatarFallback.style.display =
-      "none";
-
-  }else{
-
-    incomingAvatar.style.display =
-      "none";
-
-    incomingAvatarFallback.style.display =
-      "flex";
-
-    incomingAvatarFallback.textContent =
-      name.charAt(0).toUpperCase();
-
-  }
-
-
-  callOverlay.classList.add("show");
-
-  incomingCall.classList.add("show");
-
-  callPerson.textContent=name;
-
-  callStatus.textContent =
-    "Incoming call...";
-
-}
-
-
-acceptIncoming.addEventListener(
-  "click",
-  async ()=>{
-
-    if(!pendingCallId){
-
-      return;
-
-    }
-
-
-    const callId =
-      pendingCallId;
-
-
-    pendingCallId=null;
-
-    incomingCall.classList.remove(
-      "show"
-    );
-
-
-    currentCallId=callId;
-
-
-    const callRef =
-      databaseRef(
-        database,
-        "kmeetCalls/" +
-        [
-          currentUser.uid,
-          targetId
-        ].sort().join("_") +
-        "/calls/" +
-        callId
-      );
-
-
-    const snap =
-      await new Promise(resolve=>{
-
-        databaseOnValue(
-          callRef,
-          value=>{
-            resolve(value);
-          },
-          {
-            onlyOnce:true
-          }
-        );
-
-      });
-
-
-    const call =
-      snap.val();
-
-
-    if(!call){
-
-      endCall();
-
-      return;
-
-    }
-
-
-    currentCallType =
-      call.callType;
-
-
-    const mediaReady =
-      await getLocalMedia(
-        currentCallType
-      );
-
-
-    if(!mediaReady){
-
-      await databaseSet(
-        databaseRef(
-          callRef,
-          "status"
-        ),
-        "declined"
-      );
-
-      endCall();
-
-      return;
-
-    }
-
-
-    await createPeerConnection(
-      currentCallType,
-      false
-    );
-
-
-    await peerConnection.setRemoteDescription(
-      new RTCSessionDescription(
-        call.offer
-      )
-    );
-
-
-    const answer =
-      await peerConnection.createAnswer();
-
-
-    await peerConnection.setLocalDescription(
-      answer
-    );
-
-
-    await databaseSet(
-      databaseRef(
-        callRef,
-        "answer"
-      ),
-      {
-        type:answer.type,
-        sdp:answer.sdp
-      }
-    );
-
-
-    await databaseSet(
-      databaseRef(
-        callRef,
-        "status"
-      ),
-      "connected"
-    );
-
-
-    isCallActive=true;
-
-    callStatus.textContent=
-      "Connected";
-
-
-    listenForRemoteCandidates(true);
-
-    listenForCallStatus();
-
-  }
-);
-
-
-declineIncoming.addEventListener(
-  "click",
-  async ()=>{
-
-    if(!pendingCallId){
-
-      incomingCall.classList.remove(
-        "show"
-      );
-
-      return;
-
-    }
-
-
-    const id =
-      pendingCallId;
-
-    pendingCallId=null;
-
-
-    await databaseSet(
-      databaseRef(
-        database,
-        "kmeetCalls/" +
-        [
-          currentUser.uid,
-          targetId
-        ].sort().join("_") +
-        "/calls/" +
-        id +
-        "/status"
-      ),
-      "declined"
-    );
-
-
-    incomingCall.classList.remove(
-      "show"
-    );
-
-
-    closeCallOverlay();
 
   }
 );
 
 
 /* =========================================================
-   REMOTE ICE CANDIDATES
+   AUTO RESIZE TEXTAREA
 ========================================================= */
 
-function listenForRemoteCandidates(
-  receiver
-){
-
-  if(
-    !currentCallId
-  ){
-
-    return;
-
-  }
-
-
-  if(unsubscribeIncomingCandidates){
-
-    unsubscribeIncomingCandidates();
-
-    unsubscribeIncomingCandidates=null;
-
-  }
-
-
-  const otherSide =
-    receiver
-      ? "caller"
-      : "receiver";
-
-
-  const ref =
-    databaseRef(
-      database,
-      "kmeetCalls/" +
-      [
-        currentUser.uid,
-        targetId
-      ].sort().join("_") +
-      "/calls/" +
-      currentCallId +
-      "/candidates/" +
-      otherSide
-    );
-
-
-  unsubscribeIncomingCandidates =
-    databaseOnValue(
-      ref,
-      async snapshot=>{
-
-        const candidates =
-          snapshot.val();
-
-
-        if(!candidates){
-
-          return;
-
-        }
-
-
-        for(
-          const candidate
-          of Object.values(candidates)
-        ){
-
-          try{
-
-            await peerConnection.addIceCandidate(
-              new RTCIceCandidate(
-                candidate
-              )
-            );
-
-          }catch(error){
-
-            console.warn(
-              "ICE candidate error:",
-              error
-            );
-
-          }
-
-        }
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   CALL STATUS
-========================================================= */
-
-function listenForCallStatus(){
-
-  if(!currentCallId){
-
-    return;
-
-  }
-
-
-  const ref =
-    databaseRef(
-      database,
-      "kmeetCalls/" +
-      [
-        currentUser.uid,
-        targetId
-      ].sort().join("_") +
-      "/calls/" +
-      currentCallId +
-      "/status"
-    );
-
-
-  databaseOnValue(
-    ref,
-    snapshot=>{
-
-      const status =
-        snapshot.val();
-
-
-      if(
-        status==="connected"
-      ){
-
-        callStatus.textContent =
-          "Connected";
-
-      }
-
-
-      if(
-        status==="declined"
-      ){
-
-        callStatus.textContent =
-          "Call declined";
-
-        setTimeout(
-          closeCallOverlay,
-          1200
-        );
-
-      }
-
-
-      if(
-        status==="ended"
-      ){
-
-        callStatus.textContent =
-          "Call ended";
-
-        setTimeout(
-          closeCallOverlay,
-          700
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   CALL UI
-========================================================= */
-
-function showCallOverlay(type){
-
-  callOverlay.classList.add(
-    "show"
-  );
-
-  incomingCall.classList.remove(
-    "show"
-  );
-
-
-  const name =
-    targetProfile?.displayName ||
-    targetProfile?.name ||
-    "Kmeet Member";
-
-
-  callPerson.textContent=name;
-
-
-  if(
-    targetProfile?.photoURL ||
-    targetProfile?.photo
-  ){
-
-    callAvatar.src =
-      targetProfile.photoURL ||
-      targetProfile.photo;
-
-    callAvatar.style.display =
-      "block";
-
-    callAvatarFallback.style.display =
-      "none";
-
-  }else{
-
-    callAvatar.style.display =
-      "none";
-
-    callAvatarFallback.style.display =
-      "flex";
-
-    callAvatarFallback.textContent =
-      name.charAt(0).toUpperCase();
-
-  }
-
-
-  remoteVideo.style.display =
-    type==="video"
-      ? "block"
-      : "none";
-
-
-  cameraBtn.style.display =
-    type==="video"
-      ? "flex"
-      : "none";
-
-}
-
-
-function closeCallOverlay(){
-
-  callOverlay.classList.remove(
-    "show"
-  );
-
-  incomingCall.classList.remove(
-    "show"
-  );
-
-
-  if(localStream){
-
-    localStream
-      .getTracks()
-      .forEach(
-        track=>track.stop()
-      );
-
-  }
-
-
-  if(peerConnection){
-
-    peerConnection.close();
-
-  }
-
-
-  localStream=null;
-
-  remoteStream=null;
-
-  peerConnection=null;
-
-  currentCallId=null;
-
-  pendingCallId=null;
-
-  currentCallType=null;
-
-  isCallActive=false;
-
-  remoteVideo.srcObject=null;
-
-  localVideo.srcObject=null;
-
-  remoteVideo.style.display="none";
-
-  localVideo.style.display="none";
-
-  cameraBtn.style.display="none";
-
-}
-
-
-async function endCall(){
-
-  if(currentCallId){
-
-    try{
-
-      await databaseSet(
-        databaseRef(
-          database,
-          "kmeetCalls/" +
-          [
-            currentUser.uid,
-            targetId
-          ].sort().join("_") +
-          "/calls/" +
-          currentCallId +
-          "/status"
-        ),
-        "ended"
-      );
-
-    }catch(error){
-
-      console.warn(
-        "Could not update call status:",
-        error
-      );
-
-    }
-
-  }
-
-
-  closeCallOverlay();
-
-}
-
-
-endCallBtn.addEventListener(
-  "click",
-  endCall
-);
-
-
-/* =========================================================
-   MUTE
-========================================================= */
-
-muteBtn.addEventListener(
-  "click",
-  ()=>{
-
-    if(!localStream){
-
-      return;
-
-    }
-
-
-    const tracks =
-      localStream.getAudioTracks();
-
-
-    if(!tracks.length){
-
-      return;
-
-    }
-
-
-    isMuted=!isMuted;
-
-
-    tracks.forEach(
-      track=>{
-        track.enabled=!isMuted;
-      }
-    );
-
-
-    muteBtn.textContent =
-      isMuted
-        ? "🔇"
-        : "🎙️";
-
-
-    muteBtn.classList.toggle(
-      "active",
-      isMuted
-    );
+messageInput.addEventListener(
+  "input",
+  () => {
+
+    messageInput.style.height =
+      "auto";
+
+    messageInput.style.height =
+      Math.min(
+        messageInput.scrollHeight,
+        130
+      ) + "px";
 
   }
 );
 
 
 /* =========================================================
-   CAMERA
+   SEND BUTTON
 ========================================================= */
 
-cameraBtn.addEventListener(
+sendBtn.addEventListener(
   "click",
-  ()=>{
-
-    if(!localStream){
-
-      return;
-
-    }
-
-
-    const tracks =
-      localStream.getVideoTracks();
-
-
-    if(!tracks.length){
-
-      return;
-
-    }
-
-
-    cameraEnabled =
-      !cameraEnabled;
-
-
-    tracks.forEach(
-      track=>{
-        track.enabled=
-          cameraEnabled;
-      }
-    );
-
-
-    cameraBtn.textContent =
-      cameraEnabled
-        ? "📷"
-        : "🚫";
-
-
-    cameraBtn.classList.toggle(
-      "active",
-      !cameraEnabled
-    );
-
-  }
+  sendMessage
 );
 
 
 /* =========================================================
-   AUTH
+   AUTHENTICATION
 ========================================================= */
 
 onAuthStateChanged(
   auth,
-  async user=>{
+  async user => {
 
-    currentUser=user;
+    if(authStarted){
+      return;
+    }
 
-    if(!user){
+    /*
+      Only mark auth as started once we actually receive
+      the first auth state.
+    */
 
-      if(authStarted){
+    if(user){
+
+      authStarted = true;
+
+      currentUser = user;
+
+    }else{
+
+      /*
+        Visitors are allowed to browse Discover.
+
+        For chat we use anonymous authentication only so
+        Firestore can safely identify the temporary visitor.
+      */
+
+      try{
+
+        const result =
+          await signInAnonymously(auth);
+
+        currentUser =
+          result.user;
+
+        authStarted = true;
+
+      }catch(error){
+
+        console.error(
+          "Anonymous authentication failed:",
+          error
+        );
+
+        messagesEl.innerHTML = `
+          <div class="empty-state">
+            Kmeet could not start the chat session.<br>
+            Please refresh the page and try again.
+          </div>
+        `;
 
         return;
 
       }
 
-      authStarted=true;
+    }
 
-      try{
 
-        await signInAnonymously(auth);
+    /*
+      Do not allow an anonymous user to use the free
+      opening message.
+    */
 
-      }catch(error){
+    if(currentUser.isAnonymous){
 
-        console.error(
-          "Anonymous auth error:",
-          error
-        );
+      personStatus.textContent =
+        "Guest chat — payment required";
 
-      }
+    }
+
+
+    await loadTarget();
+
+
+    if(targetIsDemo){
+
+      hideGate();
+
+      startMessages();
 
       return;
 
     }
 
 
-    authStarted=true;
-
-
-    await loadTargetProfile();
-
-
-    enableCallButtons();
-
-
-    if(targetIsDemo){
-
-      loadDemoChat();
-
-    }else{
-
-      startMessages();
-
-    }
-
-
     /*
-      Incoming calls are only monitored for
-      registered members.
+      Start the Firestore listener.
+
+      It is safe now because sendRealMessage creates the
+      conversation parent before writing the first message.
     */
 
-    listenForIncomingCalls();
+    startMessages();
 
+  },
+  error => {
 
-    if(user.isAnonymous){
-
-      infoBar.textContent =
-        "You are browsing Kmeet as a guest. Create an account to chat and call.";
-
-    }
+    console.error(
+      "Authentication state error:",
+      error
+    );
 
   }
 );
 
 
 /* =========================================================
-   PAGE CLEANUP
+   CLEANUP
 ========================================================= */
 
 window.addEventListener(
   "beforeunload",
-  ()=>{
+  () => {
 
     if(unsubscribeMessages){
 
       unsubscribeMessages();
-
-    }
-
-    if(unsubscribeIncomingCall){
-
-      unsubscribeIncomingCall();
-
-    }
-
-    if(unsubscribeIncomingCandidates){
-
-      unsubscribeIncomingCandidates();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   SAFETY
-========================================================= */
-
-window.addEventListener(
-  "pagehide",
-  ()=>{
-
-    if(
-      currentCallId &&
-      currentUser
-    ){
-
-      databaseSet(
-        databaseRef(
-          database,
-          "kmeetCalls/" +
-          [
-            currentUser.uid,
-            targetId
-          ].sort().join("_") +
-          "/calls/" +
-          currentCallId +
-          "/status"
-        ),
-        "ended"
-      ).catch(
-        ()=>{}
-      );
 
     }
 
