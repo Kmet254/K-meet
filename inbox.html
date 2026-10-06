@@ -1,24 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kmeet - Inbox</title>
+
+<link rel="icon"
+      type="image/jpeg"
+      href="kmeet-logo.jfif.jfif">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    font-family: "Poppins", sans-serif;
+
+    color: #ffffff;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18, 4, 17, 0.96),
+            rgba(48, 7, 37, 0.94)
+        ),
+        url("kmeet-background.jpg.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar {
+
+    width: 100%;
+
+    padding: 15px 6%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background:
+        rgba(12, 4, 13, 0.82);
+
+    border-bottom:
+        1px solid
+        rgba(255, 143, 195, 0.16);
+
+    backdrop-filter: blur(18px);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+
+.logo img {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        2px solid
+        rgba(255, 143, 195, 0.65);
+
+    box-shadow:
+        0 0 18px
+        rgba(255, 92, 160, 0.25);
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+}
+
+
+.nav-links a {
+
+    color: #f3d8e5;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition: 0.25s ease;
+}
+
+
+.nav-links a:hover {
+
+    color: #ff8fc3;
+}
+
+
+.nav-links .active {
+
+    color: #ff8fc3;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.page {
+
+    width: 100%;
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding:
+        45px 20px
+        70px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header {
+
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+
+.page-header h1 {
+
+    margin: 0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 42px;
+
+    line-height: 1.2;
+}
+
+
+.page-header h1 span {
+
+    color: #ff8fc3;
+}
+
+
+.page-header p {
+
+    margin:
+        10px 0 0;
+
+    color: #cfaebe;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    text-align: center;
+
+    min-height: 22px;
+
+    margin-bottom: 18px;
+
+    color: #d9b7c8;
+
+    font-size: 13px;
+}
+
+
+.status.error {
+
+    color: #ff91b8;
+}
+
+
+/* =========================================================
+   INBOX CARD
+========================================================= */
+
+.inbox-card {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background:
+        rgba(31, 9, 28, 0.76);
+
+    border:
+        1px solid
+        rgba(255, 143, 195, 0.18);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.42);
+
+    backdrop-filter: blur(18px);
+}
+
+
+#conversationList {
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   CONVERSATION
+========================================================= */
+
+.conversation-row {
+
+    width: 100%;
+
+    min-height: 92px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        15px 20px;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.07);
+
+    transition:
+        background 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+.conversation-row:last-child {
+
+    border-bottom: none;
+}
+
+
+.conversation-row:hover {
+
+    background:
+        rgba(255,143,195,0.08);
+
+    transform:
+        translateX(2px);
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.conversation-avatar {
+
+    width: 62px;
+
+    height: 62px;
+
+    min-width: 62px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background: #241020;
+
+    border:
+        2px solid
+        rgba(255,143,195,0.55);
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,0.28);
+}
+
+
+/* =========================================================
+   CONVERSATION INFORMATION
+========================================================= */
+
+.conversation-info {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.conversation-name {
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    color: white;
+
+    margin-bottom: 5px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.conversation-preview {
+
+    font-size: 13px;
+
+    color: #c7a7b7;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.conversation-time {
+
+    flex-shrink: 0;
+
+    align-self: flex-start;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: #9e7f8e;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+
+    text-align: center;
+
+    padding:
+        65px 25px
+        70px;
+}
+
+
+.empty-icon {
+
+    width: 72px;
+
+    height: 72px;
+
+    margin:
+        0 auto
+        18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,143,195,0.09);
+
+    border:
+        1px solid
+        rgba(255,143,195,0.18);
+
+    font-size: 30px;
+}
+
+
+.empty-state h3 {
+
+    margin:
+        0 0 10px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 24px;
+}
+
+
+.empty-state p {
+
+    max-width: 470px;
+
+    margin: 0 auto;
+
+    color: #c7a7b7;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-link {
+
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding:
+        11px 25px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff5c9a,
+            #d83d80
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 8px 25px
+        rgba(255,92,154,0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.login-link:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(255,92,154,0.32);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    text-align: center;
+
+    margin-top: 28px;
+
+    color: #806574;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .navbar {
+
+        padding:
+            13px 18px;
+    }
+
+
+    .logo {
+
+        font-size: 21px;
+    }
+
+
+    .logo img {
+
+        width: 36px;
+
+        height: 36px;
+    }
+
+
+    .nav-links {
+
+        gap: 13px;
+    }
+
+
+    .nav-links a {
+
+        font-size: 12px;
+    }
+
+
+    .page {
+
+        padding:
+            32px 12px
+            50px;
+    }
+
+
+    .page-header h1 {
+
+        font-size: 34px;
+    }
+
+
+    .inbox-card {
+
+        border-radius: 18px;
+    }
+
+
+    .conversation-row {
+
+        padding:
+            14px 13px;
+
+        gap: 12px;
+    }
+
+
+    .conversation-avatar {
+
+        width: 54px;
+
+        height: 54px;
+
+        min-width: 54px;
+    }
+
+
+    .conversation-name {
+
+        font-size: 14px;
+    }
+
+
+    .conversation-preview {
+
+        font-size: 12px;
+    }
+
+
+    .conversation-time {
+
+        font-size: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .nav-links {
+
+        gap: 8px;
+    }
+
+
+    .nav-links a {
+
+        font-size: 11px;
+    }
+
+
+    .page-header h1 {
+
+        font-size: 30px;
+    }
+
+
+    .conversation-avatar {
+
+        width: 50px;
+
+        height: 50px;
+
+        min-width: 50px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav class="navbar">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+
+        <img
+            src="kmeet-logo.jfif.jfif"
+            alt="Kmeet"
+            onerror="
+                this.onerror=null;
+                this.style.display='none';
+            "
+        >
+
+        <span>Kmeet</span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="discover.html">
+            Discover
+        </a>
+
+        <a
+            href="inbox.html"
+            class="active"
+        >
+            Inbox
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main class="page">
+
+
+    <header class="page-header">
+
+        <h1>
+            Your <span>Inbox</span>
+        </h1>
+
+        <p>
+            Your conversations and connections
+        </p>
+
+    </header>
+
+
+    <div
+        id="status"
+        class="status"
+    >
+        Checking your account...
+    </div>
+
+
+    <section class="inbox-card">
+
+        <div id="conversationList">
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    💌
+                </div>
+
+                <h3>
+                    Loading Inbox
+                </h3>
+
+                <p>
+                    Please wait while we load
+                    your conversations.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+
+        Kmeet &nbsp;•&nbsp;
+        Find your connection
+
+    </div>
+
+
+</main>
+
+
+<!-- =======================================================
+     FIREBASE INBOX SCRIPT
+======================================================= -->
+
 <script type="module">
+
 import {
+
     auth,
     db,
     onAuthStateChanged,
     doc,
     getDoc,
     collection
+
 } from "./firebase-config.js";
 
+
 import {
+
     query,
     where,
     getDocs
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-import {
-    getDatabase,
-    ref,
-    onValue
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 /* =========================================================
@@ -26,30 +851,39 @@ import {
 ========================================================= */
 
 const statusEl =
-    document.getElementById("status");
+    document.getElementById(
+        "status"
+    );
+
 
 const listEl =
-    document.getElementById("conversationList");
+    document.getElementById(
+        "conversationList"
+    );
 
 
 /* =========================================================
-   GLOBAL STATE
+   CURRENT USER
 ========================================================= */
 
 let currentUser = null;
-let presenceDb = null;
-let presenceListener = null;
 
 
 /* =========================================================
    STATUS
 ========================================================= */
 
-function setStatus(message, isError = false) {
+function setStatus(
+    message,
+    isError = false
+) {
 
-    if (!statusEl) return;
+    if (!statusEl) {
+        return;
+    }
 
-    statusEl.textContent = message;
+    statusEl.textContent =
+        message;
 
     statusEl.classList.toggle(
         "error",
@@ -64,30 +898,49 @@ function setStatus(message, isError = false) {
 
 function escapeHtml(value) {
 
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(
+        value ?? ""
+    )
+
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
 }
 
 
 /* =========================================================
-   GET OTHER USER
-   IMPORTANT:
-   DO NOT split conversation IDs.
-
-   New IDs look like:
-
-   kmeet_v2_UID1_UID2
-
-   We use Firestore participant fields instead.
+   FIND OTHER USER
 ========================================================= */
 
-function getOtherUserId(conversation) {
+function getOtherUserId(
+    conversation
+) {
 
-    if (!conversation || !currentUser) {
+    if (
+        !conversation ||
+        !currentUser
+    ) {
         return null;
     }
 
@@ -97,7 +950,10 @@ function getOtherUserId(conversation) {
         currentUser.uid
     ) {
 
-        return conversation.receiverId || null;
+        return (
+            conversation.receiverId ||
+            null
+        );
     }
 
 
@@ -106,7 +962,10 @@ function getOtherUserId(conversation) {
         currentUser.uid
     ) {
 
-        return conversation.initiatorId || null;
+        return (
+            conversation.initiatorId ||
+            null
+        );
     }
 
 
@@ -115,18 +974,24 @@ function getOtherUserId(conversation) {
 
 
 /* =========================================================
-   VALIDATE CONVERSATION
+   VALID CONVERSATION
 ========================================================= */
 
-function isValidConversation(conversation) {
+function isValidConversation(
+    conversation
+) {
 
-    if (!conversation || !currentUser) {
+    if (
+        !conversation ||
+        !currentUser
+    ) {
         return false;
     }
 
 
     const initiator =
         conversation.initiatorId;
+
 
     const receiver =
         conversation.receiverId;
@@ -143,7 +1008,19 @@ function isValidConversation(conversation) {
 
     if (
         !initiator ||
-        !receiver ||
+        !receiver
+    ) {
+
+        return false;
+    }
+
+
+    /*
+     * Reject corrupted conversations
+     * where both users are the same.
+     */
+
+    if (
         initiator === receiver
     ) {
 
@@ -159,10 +1036,12 @@ function isValidConversation(conversation) {
 
 
 /* =========================================================
-   FORMAT DATE / TIME
+   FORMAT TIME
 ========================================================= */
 
-function formatTime(timestamp) {
+function formatTime(
+    timestamp
+) {
 
     if (!timestamp) {
         return "";
@@ -173,45 +1052,61 @@ function formatTime(timestamp) {
 
 
     if (
-        timestamp &&
-        typeof timestamp.toDate === "function"
+        typeof timestamp.toDate ===
+        "function"
     ) {
 
-        date = timestamp.toDate();
+        date =
+            timestamp.toDate();
 
-    } else if (
+    }
+
+    else if (
         timestamp instanceof Date
     ) {
 
-        date = timestamp;
+        date =
+            timestamp;
+    }
 
-    } else if (
-        typeof timestamp.seconds === "number"
+    else if (
+        typeof timestamp.seconds ===
+        "number"
     ) {
 
         date =
             new Date(
-                timestamp.seconds * 1000
+                timestamp.seconds *
+                1000
             );
     }
 
 
     if (
         !date ||
-        Number.isNaN(date.getTime())
+        Number.isNaN(
+            date.getTime()
+        )
     ) {
 
         return "";
     }
 
 
-    const now = new Date();
+    const now =
+        new Date();
 
 
     const sameDay =
-        date.getFullYear() === now.getFullYear() &&
-        date.getMonth() === now.getMonth() &&
-        date.getDate() === now.getDate();
+
+        date.getFullYear() ===
+            now.getFullYear() &&
+
+        date.getMonth() ===
+            now.getMonth() &&
+
+        date.getDate() ===
+            now.getDate();
 
 
     if (sameDay) {
@@ -237,10 +1132,12 @@ function formatTime(timestamp) {
 
 
 /* =========================================================
-   LOAD USER PROFILE
+   GET USER PROFILE
 ========================================================= */
 
-async function getUserProfile(uid) {
+async function getUserProfile(
+    uid
+) {
 
     if (!uid) {
         return null;
@@ -249,41 +1146,61 @@ async function getUserProfile(uid) {
 
     try {
 
-        const snap =
+        const snapshot =
             await getDoc(
-                doc(db, "users", uid)
+                doc(
+                    db,
+                    "users",
+                    uid
+                )
             );
 
 
-        if (!snap.exists()) {
+        if (!snapshot.exists()) {
 
             return {
+
                 uid,
-                displayName: "Kmeet member",
-                photoURL: ""
+
+                displayName:
+                    "Kmeet member",
+
+                photoURL:
+                    ""
+
             };
         }
 
 
         return {
+
             uid,
-            ...snap.data()
+
+            ...snapshot.data()
+
         };
 
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.warn(
-            "Could not load user profile:",
-            uid,
+            "Could not load profile:",
             error
         );
 
 
         return {
+
             uid,
-            displayName: "Kmeet member",
-            photoURL: ""
+
+            displayName:
+                "Kmeet member",
+
+            photoURL:
+                ""
+
         };
     }
 }
@@ -309,48 +1226,69 @@ async function getLatestMessage(
 
 
         const snapshot =
-            await getDocs(messagesRef);
+            await getDocs(
+                messagesRef
+            );
 
 
-        if (snapshot.empty) {
+        if (
+            snapshot.empty
+        ) {
+
             return null;
         }
 
 
         const messages =
-            snapshot.docs.map(item => ({
-                id: item.id,
-                ...item.data()
-            }));
+            snapshot.docs.map(
+                item => ({
+
+                    id:
+                        item.id,
+
+                    ...item.data()
+
+                })
+            );
 
 
-        messages.sort((a, b) => {
+        messages.sort(
+            (a, b) => {
 
-            const aTime =
-                a.createdAt?.seconds || 0;
-
-            const bTime =
-                b.createdAt?.seconds || 0;
-
-            return bTime - aTime;
-        });
+                const aSeconds =
+                    a.createdAt
+                        ?.seconds || 0;
 
 
-        return messages[0] || null;
+                const bSeconds =
+                    b.createdAt
+                        ?.seconds || 0;
 
 
-    } catch (error) {
+                return (
+                    bSeconds -
+                    aSeconds
+                );
+            }
+        );
 
-        /*
-         * Do not allow one corrupted/old
-         * conversation to destroy the entire Inbox.
-         */
+
+        return (
+            messages[0] ||
+            null
+        );
+
+
+    }
+
+    catch (error) {
 
         console.warn(
-            "Could not read messages:",
+            "Could not load messages:",
             conversationId,
             error
         );
+
 
         return null;
     }
@@ -363,7 +1301,9 @@ async function getLatestMessage(
 
 function renderEmpty() {
 
-    if (!listEl) return;
+    if (!listEl) {
+        return;
+    }
 
 
     listEl.innerHTML = `
@@ -390,6 +1330,89 @@ function renderEmpty() {
 
 
 /* =========================================================
+   LOGIN REQUIRED
+========================================================= */
+
+function renderLoginRequired() {
+
+    if (!listEl) {
+        return;
+    }
+
+
+    listEl.innerHTML = `
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🔐
+            </div>
+
+            <h3>
+                Please log in
+            </h3>
+
+            <p>
+                You need a registered Kmeet
+                account to use your Inbox.
+            </p>
+
+            <a
+                href="login.html"
+                class="login-link"
+            >
+                Log in
+            </a>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ANONYMOUS USER
+========================================================= */
+
+function renderRegisteredOnly() {
+
+    if (!listEl) {
+        return;
+    }
+
+
+    listEl.innerHTML = `
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                💗
+            </div>
+
+            <h3>
+                Registered members only
+            </h3>
+
+            <p>
+                You can explore Discover as a guest,
+                but you need a registered account
+                to use Inbox.
+            </p>
+
+            <a
+                href="login.html"
+                class="login-link"
+            >
+                Log in
+            </a>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
    CREATE CONVERSATION ROW
 ========================================================= */
 
@@ -399,7 +1422,9 @@ async function createConversationRow(
 ) {
 
     const otherUid =
-        getOtherUserId(conversation);
+        getOtherUserId(
+            conversation
+        );
 
 
     if (!otherUid) {
@@ -408,7 +1433,9 @@ async function createConversationRow(
 
 
     const profile =
-        await getUserProfile(otherUid);
+        await getUserProfile(
+            otherUid
+        );
 
 
     const displayName =
@@ -443,9 +1470,12 @@ async function createConversationRow(
         ) {
 
             preview =
-                "You: " + messageText;
+                "You: " +
+                messageText;
 
-        } else {
+        }
+
+        else {
 
             preview =
                 messageText;
@@ -463,23 +1493,23 @@ async function createConversationRow(
 
     const href =
         "chat.html?userId=" +
-        encodeURIComponent(otherUid);
+        encodeURIComponent(
+            otherUid
+        );
 
 
     const row =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
-
-    /*
-     * Keep compatibility with the
-     * existing Inbox design.
-     */
 
     row.className =
         "conversation-row";
 
 
-    row.href = href;
+    row.href =
+        href;
 
 
     row.innerHTML = `
@@ -489,37 +1519,48 @@ async function createConversationRow(
             src="${escapeHtml(photo)}"
             alt="${escapeHtml(displayName)}"
             loading="lazy"
-            onerror="
-                this.onerror=null;
-                this.src='kmeet-logo.jfif.jfif';
-            "
         >
 
         <div class="conversation-info">
 
             <div class="conversation-name">
-
                 ${escapeHtml(displayName)}
-
             </div>
 
-
             <div class="conversation-preview">
-
                 ${escapeHtml(preview)}
-
             </div>
 
         </div>
 
-
         <div class="conversation-time">
-
             ${escapeHtml(time)}
-
         </div>
 
     `;
+
+
+    const image =
+        row.querySelector(
+            ".conversation-avatar"
+        );
+
+
+    if (image) {
+
+        image.addEventListener(
+            "error",
+            () => {
+
+                image.onerror =
+                    null;
+
+                image.src =
+                    "kmeet-logo.jfif.jfif";
+
+            }
+        );
+    }
 
 
     return row;
@@ -543,7 +1584,26 @@ async function loadInbox() {
 
 
     if (listEl) {
-        listEl.innerHTML = "";
+
+        listEl.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    💌
+                </div>
+
+                <h3>
+                    Loading conversations
+                </h3>
+
+                <p>
+                    Please wait...
+                </p>
+
+            </div>
+
+        `;
     }
 
 
@@ -552,13 +1612,14 @@ async function loadInbox() {
 
 
     /* =====================================================
-       SENT CONVERSATIONS
+       CONVERSATIONS STARTED BY CURRENT USER
     ===================================================== */
 
     try {
 
         const sentQuery =
             query(
+
                 collection(
                     db,
                     "conversations"
@@ -569,36 +1630,49 @@ async function loadInbox() {
                     "==",
                     currentUser.uid
                 )
+
             );
 
 
         const sentSnapshot =
-            await getDocs(sentQuery);
-
-
-        sentSnapshot.forEach(item => {
-
-            conversationMap.set(
-                item.id,
-                {
-                    id: item.id,
-                    ...item.data()
-                }
+            await getDocs(
+                sentQuery
             );
 
-        });
 
+        sentSnapshot.forEach(
+            item => {
 
-    } catch (error) {
+                conversationMap.set(
+
+                    item.id,
+
+                    {
+
+                        id:
+                            item.id,
+
+                        ...item.data()
+
+                    }
+
+                );
+
+            }
+        );
+
+    }
+
+    catch (error) {
 
         console.error(
-            "Inbox sent query failed:",
+            "Sent conversation query failed:",
             error
         );
 
 
         setStatus(
-            "Inbox permission error while loading sent conversations.",
+            "Unable to load your conversations.",
             true
         );
 
@@ -608,13 +1682,14 @@ async function loadInbox() {
 
 
     /* =====================================================
-       RECEIVED CONVERSATIONS
+       CONVERSATIONS RECEIVED BY CURRENT USER
     ===================================================== */
 
     try {
 
         const receivedQuery =
             query(
+
                 collection(
                     db,
                     "conversations"
@@ -625,6 +1700,7 @@ async function loadInbox() {
                     "==",
                     currentUser.uid
                 )
+
             );
 
 
@@ -634,29 +1710,39 @@ async function loadInbox() {
             );
 
 
-        receivedSnapshot.forEach(item => {
+        receivedSnapshot.forEach(
+            item => {
 
-            conversationMap.set(
-                item.id,
-                {
-                    id: item.id,
-                    ...item.data()
-                }
-            );
+                conversationMap.set(
 
-        });
+                    item.id,
 
+                    {
 
-    } catch (error) {
+                        id:
+                            item.id,
+
+                        ...item.data()
+
+                    }
+
+                );
+
+            }
+        );
+
+    }
+
+    catch (error) {
 
         console.error(
-            "Inbox received query failed:",
+            "Received conversation query failed:",
             error
         );
 
 
         setStatus(
-            "Inbox permission error while loading received conversations.",
+            "Unable to load received conversations.",
             true
         );
 
@@ -666,7 +1752,7 @@ async function loadInbox() {
 
 
     /* =====================================================
-       VALIDATE CONVERSATIONS
+       FILTER VALID CONVERSATIONS
     ===================================================== */
 
     const conversations =
@@ -679,7 +1765,7 @@ async function loadInbox() {
 
 
     /* =====================================================
-       EMPTY
+       NO CONVERSATIONS
     ===================================================== */
 
     if (
@@ -698,7 +1784,7 @@ async function loadInbox() {
 
 
     /* =====================================================
-       LOAD MESSAGES
+       LOAD LATEST MESSAGE FOR EACH
     ===================================================== */
 
     const prepared =
@@ -714,32 +1800,43 @@ async function loadInbox() {
 
 
                     return {
+
                         conversation,
+
                         latestMessage
+
                     };
+
                 }
             )
         );
 
 
     /* =====================================================
-       SORT BY LATEST MESSAGE
+       SORT NEWEST FIRST
     ===================================================== */
 
-    prepared.sort((a, b) => {
+    prepared.sort(
+        (a, b) => {
 
-        const aTime =
-            a.latestMessage?.createdAt?.seconds ||
-            0;
-
-
-        const bTime =
-            b.latestMessage?.createdAt?.seconds ||
-            0;
+            const aTime =
+                a.latestMessage
+                    ?.createdAt
+                    ?.seconds || 0;
 
 
-        return bTime - aTime;
-    });
+            const bTime =
+                b.latestMessage
+                    ?.createdAt
+                    ?.seconds || 0;
+
+
+            return (
+                bTime -
+                aTime
+            );
+        }
+    );
 
 
     /* =====================================================
@@ -749,110 +1846,80 @@ async function loadInbox() {
     const rows =
         await Promise.all(
 
-            prepared.map(item =>
-                createConversationRow(
-                    item.conversation,
-                    item.latestMessage
-                )
+            prepared.map(
+                item =>
+
+                    createConversationRow(
+
+                        item.conversation,
+
+                        item.latestMessage
+
+                    )
             )
         );
 
 
     if (listEl) {
+
         listEl.innerHTML = "";
     }
 
 
     rows
         .filter(Boolean)
-        .forEach(row => {
+        .forEach(
+            row => {
 
-            listEl.appendChild(row);
+                if (
+                    listEl &&
+                    row
+                ) {
 
-        });
+                    listEl.appendChild(
+                        row
+                    );
+                }
+
+            }
+        );
 
 
-    const visibleCount =
+    const count =
         rows.filter(Boolean).length;
 
 
     setStatus(
 
-        visibleCount === 1
+        count === 1
 
             ? "1 conversation"
 
-            : `${visibleCount} conversations`
+            : `${count} conversations`
 
     );
 }
 
 
 /* =========================================================
-   OPTIONAL PRESENCE
-========================================================= */
-
-function setupPresence() {
-
-    try {
-
-        presenceDb =
-            getDatabase();
-
-
-        if (!currentUser) {
-            return;
-        }
-
-
-        const userPresenceRef =
-            ref(
-                presenceDb,
-                "status/" +
-                currentUser.uid
-            );
-
-
-        presenceListener =
-            onValue(
-                userPresenceRef,
-                () => {},
-                error => {
-
-                    console.warn(
-                        "Presence unavailable:",
-                        error
-                    );
-
-                }
-            );
-
-
-    } catch (error) {
-
-        console.warn(
-            "Presence setup skipped:",
-            error
-        );
-    }
-}
-
-
-/* =========================================================
-   AUTHENTICATION
+   FIREBASE AUTH
 ========================================================= */
 
 onAuthStateChanged(
+
     auth,
+
     async user => {
 
+
         /* ================================================
-           NOT LOGGED IN
+           LOGGED OUT
         ================================================ */
 
         if (!user) {
 
-            currentUser = null;
+            currentUser =
+                null;
 
 
             setStatus(
@@ -861,42 +1928,7 @@ onAuthStateChanged(
             );
 
 
-            if (listEl) {
-
-                listEl.innerHTML = `
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            🔐
-                        </div>
-
-                        <h3>
-                            Please log in
-                        </h3>
-
-                        <p>
-                            You need an account to
-                            use Inbox.
-                        </p>
-
-                        <br>
-
-                        <a
-                            href="login.html"
-                            style="
-                                color:#ff8fc3;
-                                text-decoration:none;
-                                font-weight:600;
-                            "
-                        >
-                            Log in
-                        </a>
-
-                    </div>
-
-                `;
-            }
+            renderLoginRequired();
 
 
             return;
@@ -907,9 +1939,12 @@ onAuthStateChanged(
            ANONYMOUS USER
         ================================================ */
 
-        if (user.isAnonymous) {
+        if (
+            user.isAnonymous
+        ) {
 
-            currentUser = null;
+            currentUser =
+                null;
 
 
             setStatus(
@@ -918,42 +1953,7 @@ onAuthStateChanged(
             );
 
 
-            if (listEl) {
-
-                listEl.innerHTML = `
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            💗
-                        </div>
-
-                        <h3>
-                            Registered members only
-                        </h3>
-
-                        <p>
-                            Create an account or
-                            log in to use Inbox.
-                        </p>
-
-                        <br>
-
-                        <a
-                            href="login.html"
-                            style="
-                                color:#ff8fc3;
-                                text-decoration:none;
-                                font-weight:600;
-                            "
-                        >
-                            Log in
-                        </a>
-
-                    </div>
-
-                `;
-            }
+            renderRegisteredOnly();
 
 
             return;
@@ -964,14 +1964,18 @@ onAuthStateChanged(
            REGISTERED USER
         ================================================ */
 
-        currentUser = user;
-
-
-        setupPresence();
+        currentUser =
+            user;
 
 
         await loadInbox();
 
     }
+
 );
+
 </script>
+
+
+</body>
+</html>
