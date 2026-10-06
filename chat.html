@@ -817,21 +817,8 @@ function containsContactInformation(text){
   }
 
   if(
-    /\b(
-      whatsapp|
-      whats\s*app|
-      call me|
-      text me|
-      message me|
-      contact me|
-      my number|
-      phone number|
-      email me|
-      dm me|
-      instagram|
-      telegram|
-      facebook
-    )\b/ix.test(value)
+    /\b(whatsapp|whats\s*app|call me|text me|message me|contact me|my number|phone number|email me|dm me|instagram|telegram|facebook)\b/i
+      .test(value)
   ){
     return true;
   }
@@ -1132,7 +1119,10 @@ function renderMessages(items){
 
     wrapper.appendChild(text);
 
-    if(data.senderId === currentUser.uid){
+    if(
+      data.senderId ===
+      currentUser.uid
+    ){
 
       const status =
         document.createElement("div");
@@ -1207,7 +1197,9 @@ async function findValidConversation(){
   const legacyId =
     getLegacyConversationId();
 
-  if(legacyId !== conversationId){
+  if(
+    legacyId !== conversationId
+  ){
 
     snap =
       await getDoc(
@@ -1274,9 +1266,13 @@ function startFirestoreListener(){
     return;
   }
 
-  if(unsubscribeMessages){
+  /*
+   * IMPORTANT:
+   * Do not create multiple listeners.
+   */
 
-    unsubscribeMessages();
+  if(unsubscribeMessages){
+    return;
   }
 
   currentMessages =
@@ -1341,142 +1337,88 @@ function startFirestoreListener(){
 
 
 /* =====================================================
-   WAIT FOR MESSAGE DATA
-===================================================== */
-
-function waitForMessagesLoaded(){
-
-  if(messagesLoaded){
-
-    return Promise.resolve();
-  }
-
-  return new Promise(
-    resolve => {
-
-      const started =
-        Date.now();
-
-      const timer =
-        setInterval(
-          () => {
-
-            if(
-              messagesLoaded ||
-              Date.now() - started > 2500
-            ){
-
-              clearInterval(timer);
-
-              resolve();
-            }
-
-          },
-          50
-        );
-    }
-  );
-}
-
-
-/* =====================================================
-   IMPORTANT ENTITLEMENT FUNCTIONS
+   IMPORTANT:
+   FREE OPENING
 ===================================================== */
 
 /*
- * This is the important fix.
+ * DO NOT count old messages here.
  *
- * The sender's free opening belongs to the
- * CURRENT USER, not to the age of the conversation.
+ * If senderFreeOpeningUsed is missing,
+ * it means this is an old conversation and
+ * the new entitlement has never been recorded.
  *
- * Therefore old messages do not automatically
- * remove the current user's free opening.
+ * Therefore the free opening is available.
  */
 
 function senderFreeOpeningAvailable(){
 
   if(!conversationData){
-
     return true;
   }
 
   if(
-    conversationData.senderFreeOpeningUsed === true
-  ){
-
-    /*
-     * Only trust this flag if the current user
-     * is the initiator.
-     */
-    if(
-      conversationData.initiatorId ===
-      currentUser.uid
-    ){
-
-      return false;
-    }
-  }
-
-  /*
-   * For old conversations that do not have
-   * senderFreeOpeningUsed, inspect the messages.
-   */
-  if(
-    conversationData.initiatorId ===
+    conversationData.initiatorId !==
     currentUser.uid
   ){
-
-    const alreadySent =
-      currentMessages.some(
-        message =>
-          message.senderId ===
-          currentUser.uid
-      );
-
-    return !alreadySent;
+    return false;
   }
 
-  /*
-   * If the current user is receiver,
-   * their first 3 replies are handled separately.
-   */
-
-  return true;
+  return (
+    conversationData.senderFreeOpeningUsed !== true
+  );
 }
 
 
+/* =====================================================
+   IMPORTANT:
+   RECEIVER FREE REPLIES
+===================================================== */
+
+/*
+ * DO NOT count old messages here.
+ *
+ * If receiverRepliesUsed does not exist,
+ * start at zero.
+ */
+
 function getReceiverReplyCount(){
 
-  if(!currentUser){
-
+  if(!conversationData){
     return 0;
   }
 
   if(
-    conversationData &&
-    conversationData.receiverId ===
+    conversationData.receiverId !==
     currentUser.uid
   ){
-
-    const stored =
-      Number(
-        conversationData.receiverRepliesUsed
-      );
-
-    if(
-      Number.isFinite(stored) &&
-      stored > 0
-    ){
-
-      return stored;
-    }
+    return 0;
   }
 
-  return currentMessages.filter(
-    message =>
-      message.senderId ===
-      currentUser.uid
-  ).length;
+  if(
+    conversationData.receiverRepliesUsed ===
+    undefined ||
+    conversationData.receiverRepliesUsed ===
+    null
+  ){
+    return 0;
+  }
+
+  const value =
+    Number(
+      conversationData.receiverRepliesUsed
+    );
+
+  if(
+    !Number.isFinite(value)
+  ){
+    return 0;
+  }
+
+  return Math.max(
+    0,
+    value
+  );
 }
 
 
@@ -1487,7 +1429,6 @@ function getReceiverReplyCount(){
 function updateInfoBar(){
 
   if(!currentUser){
-
     return;
   }
 
@@ -1504,9 +1445,11 @@ function updateInfoBar(){
     return;
   }
 
+
   /*
-   * NO CONVERSATION YET
+   * NO CONVERSATION
    */
+
   if(!conversationData){
 
     infoBar.textContent =
@@ -1515,9 +1458,11 @@ function updateInfoBar(){
     return;
   }
 
+
   /*
-   * CURRENT USER IS SENDER
+   * SENDER
    */
+
   if(
     conversationData.initiatorId ===
     currentUser.uid
@@ -1544,8 +1489,9 @@ function updateInfoBar(){
     return;
   }
 
+
   /*
-   * CURRENT USER IS RECEIVER
+   * RECEIVER
    */
 
   if(
@@ -1577,7 +1523,7 @@ function updateInfoBar(){
 
 
 /* =====================================================
-   PREPARE CHAT
+   PREPARE REAL CHAT
 ===================================================== */
 
 async function prepareRealConversation(){
@@ -1586,7 +1532,6 @@ async function prepareRealConversation(){
     currentUser.isAnonymous ||
     targetIsDemo
   ){
-
     return;
   }
 
@@ -1596,11 +1541,20 @@ async function prepareRealConversation(){
 
     showChat();
 
+    /*
+     * Existing messages are initially empty
+     * until Firestore sends the snapshot.
+     */
+
     renderMessages(
       currentMessages
     );
 
     updateInfoBar();
+
+    /*
+     * Start ONE listener only.
+     */
 
     if(conversationData){
 
@@ -1645,9 +1599,11 @@ onAuthStateChanged(
 
       clearError();
 
+
       /*
        * ANONYMOUS
        */
+
       if(user.isAnonymous){
 
         showChat();
@@ -1657,9 +1613,11 @@ onAuthStateChanged(
         return;
       }
 
+
       /*
-       * REGISTERED
+       * REGISTERED USER
        */
+
       await prepareRealConversation();
 
     }catch(error){
@@ -1694,7 +1652,6 @@ composer.addEventListener(
       messageInput.value.trim();
 
     if(!text){
-
       return;
     }
 
@@ -1708,8 +1665,8 @@ composer.addEventListener(
     }
 
 
-    /* =================================================
-       ANONYMOUS
+    /* ================================================
+       ANONYMOUS USERS
     ================================================= */
 
     if(currentUser.isAnonymous){
@@ -1731,30 +1688,49 @@ composer.addEventListener(
     let creditsBefore =
       0;
 
+    let freeAvailable =
+      false;
 
     try{
 
       /*
-       * Refresh conversation state.
+       * IMPORTANT:
+       *
+       * Do NOT call startFirestoreListener()
+       * here.
+       *
+       * Do NOT restart the listener after
+       * every message.
+       *
+       * The existing listener is already watching
+       * the conversation.
        */
-      await findValidConversation();
 
-      if(conversationData){
 
-        startFirestoreListener();
+      /*
+       * If conversationData somehow isn't loaded,
+       * load it once.
+       */
 
-        await waitForMessagesLoaded();
+      if(!conversationData){
+
+        await findValidConversation();
+
+        if(conversationData){
+
+          startFirestoreListener();
+        }
       }
 
 
-      /* =================================================
+      /* ================================================
          NEW CONVERSATION
       ================================================= */
 
       if(!conversationData){
 
         /*
-         * Only HI or HEY gets the free opening.
+         * Only HI or HEY is free.
          */
 
         if(
@@ -1770,8 +1746,9 @@ composer.addEventListener(
           return;
         }
 
+
         /*
-         * Never allow contact details
+         * No contact information
          * in the free opening.
          */
 
@@ -1799,12 +1776,6 @@ composer.addEventListener(
           receiverId:
             targetId,
 
-          /*
-           * IMPORTANT:
-           * The current user has now used
-           * their free opening.
-           */
-
           senderFreeOpeningUsed:
             true,
 
@@ -1825,6 +1796,10 @@ composer.addEventListener(
         };
 
 
+        /*
+         * Create conversation.
+         */
+
         await setDoc(
           doc(
             db,
@@ -1834,6 +1809,10 @@ composer.addEventListener(
           newConversation
         );
 
+
+        /*
+         * Create first message.
+         */
 
         await addDoc(
           collection(
@@ -1850,7 +1829,9 @@ composer.addEventListener(
             receiverId:
               targetId,
 
-            text,
+            text:
+
+              text,
 
             freeOpening:
               true,
@@ -1864,24 +1845,36 @@ composer.addEventListener(
         );
 
 
+        /*
+         * Keep local state.
+         */
+
         conversationData =
-          newConversation;
+          {
+            ...newConversation
+          };
 
 
         messageInput.value =
           "";
 
+
+        /*
+         * Start listener only now.
+         */
+
+        startFirestoreListener();
+
+
         infoBar.textContent =
           "Your free opening message has been sent ❤️";
 
-
-        startFirestoreListener();
 
         return;
       }
 
 
-      /* =================================================
+      /* ================================================
          EXISTING CONVERSATION
       ================================================= */
 
@@ -1907,7 +1900,7 @@ composer.addEventListener(
       }
 
 
-      /* =================================================
+      /* ================================================
          CONTACT INFORMATION
       ================================================= */
 
@@ -1925,18 +1918,18 @@ composer.addEventListener(
       }
 
 
-      /* =================================================
-         SENDER
+      /* ================================================
+         SENDER RULE
       ================================================= */
 
       if(isInitiator){
 
-        const freeAvailable =
+        freeAvailable =
           senderFreeOpeningAvailable();
 
 
         /*
-         * FREE OPENING
+         * Free opening.
          */
 
         if(freeAvailable){
@@ -1957,8 +1950,8 @@ composer.addEventListener(
         }else{
 
           /*
-           * FREE OPENING ALREADY USED.
-           * NOW USE PAID CREDIT.
+           * Free opening has actually been used.
+           * Paid credits are now required.
            */
 
           creditsBefore =
@@ -1975,6 +1968,11 @@ composer.addEventListener(
             return;
           }
 
+
+          /*
+           * Reserve one credit.
+           */
+
           setSenderCredits(
             creditsBefore - 1
           );
@@ -1985,18 +1983,18 @@ composer.addEventListener(
       }
 
 
-      /* =================================================
-         RECEIVER
+      /* ================================================
+         RECEIVER RULE
       ================================================= */
+
+      let receiverUsed =
+        getReceiverReplyCount();
+
 
       if(isReceiver){
 
-        const used =
-          getReceiverReplyCount();
-
-
         if(
-          used >=
+          receiverUsed >=
           FREE_RECEIVER_REPLIES &&
           !receiverHasPaid()
         ){
@@ -2010,13 +2008,9 @@ composer.addEventListener(
       }
 
 
-      /* =================================================
+      /* ================================================
          WRITE MESSAGE
       ================================================= */
-
-      const usedReplies =
-        getReceiverReplyCount();
-
 
       const messageData = {
 
@@ -2026,14 +2020,17 @@ composer.addEventListener(
         receiverId:
           targetId,
 
-        text,
+        text:
+
+          text,
 
         freeOpening:
-          false,
+          isInitiator &&
+          freeAvailable,
 
         receiverFreeReply:
           isReceiver &&
-          usedReplies <
+          receiverUsed <
             FREE_RECEIVER_REPLIES &&
           !receiverHasPaid(),
 
@@ -2041,6 +2038,15 @@ composer.addEventListener(
           serverTimestamp()
       };
 
+
+      /*
+       * WRITE THE MESSAGE.
+       *
+       * The existing Firestore listener will
+       * automatically display it.
+       *
+       * We do NOT restart the listener.
+       */
 
       await addDoc(
         collection(
@@ -2053,8 +2059,8 @@ composer.addEventListener(
       );
 
 
-      /* =================================================
-         UPDATE ENTITLEMENT
+      /* ================================================
+         UPDATE ENTITLEMENTS
       ================================================= */
 
       const patch = {
@@ -2068,27 +2074,30 @@ composer.addEventListener(
        * Sender used free opening.
        */
 
-      if(isInitiator){
+      if(
+        isInitiator &&
+        freeAvailable
+      ){
 
-        if(
-          freeAvailable
-        ){
+        patch.senderFreeOpeningUsed =
+          true;
+      }
 
-          patch.senderFreeOpeningUsed =
-            true;
 
-        }
+      /*
+       * Sender used paid credit.
+       */
 
-        if(
-          creditConsumed
-        ){
+      if(
+        isInitiator &&
+        creditConsumed
+      ){
 
-          patch.senderCreditsUsed =
-            Number(
-              conversationData.senderCreditsUsed ||
-              0
-            ) + 1;
-        }
+        patch.senderCreditsUsed =
+          Number(
+            conversationData.senderCreditsUsed ||
+            0
+          ) + 1;
       }
 
 
@@ -2096,19 +2105,21 @@ composer.addEventListener(
        * Receiver used one free reply.
        */
 
-      if(isReceiver){
+      if(
+        isReceiver &&
+        receiverUsed <
+          FREE_RECEIVER_REPLIES &&
+        !receiverHasPaid()
+      ){
 
-        if(
-          usedReplies <
-            FREE_RECEIVER_REPLIES &&
-          !receiverHasPaid()
-        ){
-
-          patch.receiverRepliesUsed =
-            usedReplies + 1;
-        }
+        patch.receiverRepliesUsed =
+          receiverUsed + 1;
       }
 
+
+      /*
+       * Update conversation.
+       */
 
       await setDoc(
         doc(
@@ -2123,11 +2134,18 @@ composer.addEventListener(
       );
 
 
-      conversationData =
-        {
-          ...conversationData,
-          ...patch
-        };
+      /*
+       * Update local conversation state.
+       *
+       * Do not touch currentMessages here.
+       */
+
+      conversationData = {
+
+        ...conversationData,
+
+        ...patch
+      };
 
 
       messageInput.value =
@@ -2145,8 +2163,8 @@ composer.addEventListener(
 
 
       /*
-       * Return the credit if Firestore
-       * rejected the message.
+       * Restore paid credit if the
+       * message failed.
        */
 
       if(
