@@ -811,7 +811,6 @@ body::before {
 
 
 <script type="module">
-
 import {
     auth,
     db,
@@ -821,20 +820,11 @@ import {
     collection
 } from "./firebase-config.js";
 
-
-/*
- * IMPORTANT:
- * getDocs, query and where are imported
- * directly from Firebase because they are
- * not exported by firebase-config.js.
- */
-
 import {
     query,
     where,
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
 
 import {
     getDatabase,
@@ -843,143 +833,200 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
-/* =========================================
+/* =========================================================
    ELEMENTS
-========================================= */
+========================================================= */
 
-const conversationList =
-    document.getElementById(
-        "conversationList"
-    );
+const statusEl =
+    document.getElementById("status");
 
-const conversationCount =
-    document.getElementById(
-        "conversationCount"
-    );
-
-const refreshButton =
-    document.getElementById(
-        "refreshButton"
-    );
+const listEl =
+    document.getElementById("conversationList");
 
 
-/* =========================================
-   DATABASE
-========================================= */
-
-const realtimeDB =
-    getDatabase();
-
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
 let currentUser = null;
+let presenceDb = null;
+let presenceListener = null;
 
 
-/* =========================================
-   CACHE
-========================================= */
+/* =========================================================
+   STATUS
+========================================================= */
 
-const profileCache =
-    new Map();
+function setStatus(message, isError = false) {
 
-const presenceCache =
-    new Map();
+    if (!statusEl) return;
 
+    statusEl.textContent = message;
 
-/* =========================================
-   TIMESTAMP
-========================================= */
-
-function timestampValue(value) {
-
-    if (!value) {
-        return 0;
-    }
-
-    if (
-        typeof value.toMillis ===
-        "function"
-    ) {
-
-        return value.toMillis();
-
-    }
-
-    if (
-        typeof value.seconds ===
-        "number"
-    ) {
-
-        return value.seconds * 1000;
-
-    }
-
-    if (value instanceof Date) {
-
-        return value.getTime();
-
-    }
-
-    const result =
-        new Date(value).getTime();
-
-    return Number.isNaN(result)
-        ? 0
-        : result;
-
+    statusEl.classList.toggle(
+        "error",
+        isError
+    );
 }
 
 
-/* =========================================
-   FORMAT TIME
-========================================= */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-function formatTime(value) {
+function escapeHtml(value) {
 
-    const timestamp =
-        timestampValue(value);
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =========================================================
+   GET OTHER USER
+   IMPORTANT:
+   DO NOT split conversation IDs.
+
+   New IDs look like:
+
+   kmeet_v2_UID1_UID2
+
+   We use Firestore participant fields instead.
+========================================================= */
+
+function getOtherUserId(conversation) {
+
+    if (!conversation || !currentUser) {
+        return null;
+    }
+
+
+    if (
+        conversation.initiatorId ===
+        currentUser.uid
+    ) {
+
+        return conversation.receiverId || null;
+    }
+
+
+    if (
+        conversation.receiverId ===
+        currentUser.uid
+    ) {
+
+        return conversation.initiatorId || null;
+    }
+
+
+    return null;
+}
+
+
+/* =========================================================
+   VALIDATE CONVERSATION
+========================================================= */
+
+function isValidConversation(conversation) {
+
+    if (!conversation || !currentUser) {
+        return false;
+    }
+
+
+    const initiator =
+        conversation.initiatorId;
+
+    const receiver =
+        conversation.receiverId;
+
+
+    if (
+        typeof initiator !== "string" ||
+        typeof receiver !== "string"
+    ) {
+
+        return false;
+    }
+
+
+    if (
+        !initiator ||
+        !receiver ||
+        initiator === receiver
+    ) {
+
+        return false;
+    }
+
+
+    return (
+        initiator === currentUser.uid ||
+        receiver === currentUser.uid
+    );
+}
+
+
+/* =========================================================
+   FORMAT DATE / TIME
+========================================================= */
+
+function formatTime(timestamp) {
 
     if (!timestamp) {
         return "";
     }
 
-    const date =
-        new Date(timestamp);
 
-    const now =
-        new Date();
-
-    const difference =
-        now.getTime() -
-        timestamp;
+    let date = null;
 
 
     if (
-        difference < 60 * 1000
+        timestamp &&
+        typeof timestamp.toDate === "function"
     ) {
 
-        return "Just now";
+        date = timestamp.toDate();
 
+    } else if (
+        timestamp instanceof Date
+    ) {
+
+        date = timestamp;
+
+    } else if (
+        typeof timestamp.seconds === "number"
+    ) {
+
+        date =
+            new Date(
+                timestamp.seconds * 1000
+            );
     }
 
 
     if (
-        difference < 60 * 60 * 1000
+        !date ||
+        Number.isNaN(date.getTime())
     ) {
 
-        return (
-            Math.floor(
-                difference /
-                (60 * 1000)
-            ) + "m"
-        );
-
+        return "";
     }
 
 
-    if (
-        date.toDateString() ===
-        now.toDateString()
-    ) {
+    const now = new Date();
+
+
+    const sameDay =
+        date.getFullYear() === now.getFullYear() &&
+        date.getMonth() === now.getMonth() &&
+        date.getDate() === now.getDate();
+
+
+    if (sameDay) {
 
         return date.toLocaleTimeString(
             [],
@@ -988,25 +1035,6 @@ function formatTime(value) {
                 minute: "2-digit"
             }
         );
-
-    }
-
-
-    const yesterday =
-        new Date(now);
-
-    yesterday.setDate(
-        yesterday.getDate() - 1
-    );
-
-
-    if (
-        date.toDateString() ===
-        yesterday.toDateString()
-    ) {
-
-        return "Yesterday";
-
     }
 
 
@@ -1017,231 +1045,65 @@ function formatTime(value) {
             month: "short"
         }
     );
-
 }
 
 
-/* =========================================
-   PROFILE
-========================================= */
+/* =========================================================
+   LOAD USER PROFILE
+========================================================= */
 
-function getPhoto(data) {
+async function getUserProfile(uid) {
 
-    return (
-        data.photoURL ||
-        data.profilePhoto ||
-        data.photo ||
-        data.avatar ||
-        data.profileImage ||
-        data.image ||
-        ""
-    );
-
-}
-
-
-function getName(data) {
-
-    return (
-        data.name ||
-        data.username ||
-        data.displayName ||
-        "Kmeet Member"
-    );
-
-}
-
-
-async function loadUserProfile(uid) {
-
-    if (
-        profileCache.has(uid)
-    ) {
-
-        return profileCache.get(uid);
-
+    if (!uid) {
+        return null;
     }
 
 
     try {
 
-        const snapshot =
+        const snap =
             await getDoc(
-                doc(
-                    db,
-                    "users",
-                    uid
-                )
+                doc(db, "users", uid)
             );
 
 
-        if (
-            snapshot.exists()
-        ) {
+        if (!snap.exists()) {
 
-            const data =
-                snapshot.data();
-
-            profileCache.set(
+            return {
                 uid,
-                data
-            );
-
-            return data;
-
+                displayName: "Kmeet member",
+                photoURL: ""
+            };
         }
+
+
+        return {
+            uid,
+            ...snap.data()
+        };
+
 
     } catch (error) {
 
         console.warn(
-            "Profile could not be loaded:",
+            "Could not load user profile:",
             uid,
             error
         );
 
+
+        return {
+            uid,
+            displayName: "Kmeet member",
+            photoURL: ""
+        };
     }
-
-
-    const fallback = {
-        name: "Kmeet Member",
-        photoURL: ""
-    };
-
-
-    profileCache.set(
-        uid,
-        fallback
-    );
-
-
-    return fallback;
-
 }
 
 
-/* =========================================
-   PRESENCE
-========================================= */
-
-function watchPresence(uid) {
-
-    if (
-        presenceCache.has(uid)
-    ) {
-
-        return;
-
-    }
-
-
-    const presenceRef =
-        ref(
-            realtimeDB,
-            `status/${uid}`
-        );
-
-
-    onValue(
-        presenceRef,
-
-        snapshot => {
-
-            const value =
-                snapshot.val();
-
-            const online =
-                !!value &&
-                value.state ===
-                    "online";
-
-
-            presenceCache.set(
-                uid,
-                online
-            );
-
-
-            updatePresenceDots(
-                uid,
-                online
-            );
-
-        },
-
-        error => {
-
-            console.warn(
-                "Presence error:",
-                error
-            );
-
-        }
-    );
-
-}
-
-
-function updatePresenceDots(
-    uid,
-    online
-) {
-
-    document
-        .querySelectorAll(
-            `[data-presence-uid="${uid}"]`
-        )
-        .forEach(
-            dot => {
-
-                dot.classList.toggle(
-                    "online",
-                    online
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================================
-   OTHER USER
-========================================= */
-
-function getOtherUserId(
-    conversationId
-) {
-
-    if (!conversationId) {
-        return null;
-    }
-
-
-    const parts =
-        conversationId.split("_");
-
-
-    if (
-        parts.length !== 2
-    ) {
-
-        return null;
-
-    }
-
-
-    return (
-        parts[0] === currentUser.uid
-            ? parts[1]
-            : parts[0]
-    );
-
-}
-
-
-/* =========================================
-   LATEST MESSAGE
-========================================= */
+/* =========================================================
+   GET LATEST MESSAGE
+========================================================= */
 
 async function getLatestMessage(
     conversationId
@@ -1259,54 +1121,42 @@ async function getLatestMessage(
 
 
         const snapshot =
-            await getDocs(
-                messagesRef
-            );
+            await getDocs(messagesRef);
 
 
-        if (
-            snapshot.empty
-        ) {
-
+        if (snapshot.empty) {
             return null;
-
         }
 
 
-        let latest = null;
+        const messages =
+            snapshot.docs.map(item => ({
+                id: item.id,
+                ...item.data()
+            }));
 
 
-        snapshot.forEach(
-            item => {
+        messages.sort((a, b) => {
 
-                const data =
-                    item.data();
+            const aTime =
+                a.createdAt?.seconds || 0;
 
+            const bTime =
+                b.createdAt?.seconds || 0;
 
-                if (
-                    !latest ||
-                    timestampValue(
-                        data.createdAt
-                    ) >
-                    timestampValue(
-                        latest.createdAt
-                    )
-                ) {
-
-                    latest = {
-                        id: item.id,
-                        ...data
-                    };
-
-                }
-
-            }
-        );
+            return bTime - aTime;
+        });
 
 
-        return latest;
+        return messages[0] || null;
+
 
     } catch (error) {
+
+        /*
+         * Do not allow one corrupted/old
+         * conversation to destroy the entire Inbox.
+         */
 
         console.warn(
             "Could not read messages:",
@@ -1315,91 +1165,53 @@ async function getLatestMessage(
         );
 
         return null;
-
     }
-
 }
 
 
-/* =========================================
-   UNREAD
-========================================= */
+/* =========================================================
+   EMPTY INBOX
+========================================================= */
 
-function getSeenTime(
-    conversationId
-) {
+function renderEmpty() {
 
-    const value =
-        localStorage.getItem(
-            `kmeet_seen_${conversationId}`
-        );
+    if (!listEl) return;
 
 
-    return value
-        ? Number(value)
-        : 0;
+    listEl.innerHTML = `
 
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                💌
+            </div>
+
+            <h3>
+                No conversations yet
+            </h3>
+
+            <p>
+                Start a conversation from
+                Discover and it will appear here.
+            </p>
+
+        </div>
+
+    `;
 }
 
 
-function markConversationSeen(
-    conversationId
-) {
-
-    localStorage.setItem(
-        `kmeet_seen_${conversationId}`,
-        String(Date.now())
-    );
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHTML(value) {
-
-    return String(
-        value ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-/* =========================================
-   CREATE ROW
-========================================= */
+/* =========================================================
+   CREATE CONVERSATION ROW
+========================================================= */
 
 async function createConversationRow(
     conversation,
-    latest
+    latestMessage
 ) {
 
     const otherUid =
-        getOtherUserId(
-            conversation.id
-        );
+        getOtherUserId(conversation);
 
 
     if (!otherUid) {
@@ -1407,261 +1219,128 @@ async function createConversationRow(
     }
 
 
-    if (!latest) {
-        return null;
+    const profile =
+        await getUserProfile(otherUid);
+
+
+    const displayName =
+        profile?.displayName ||
+        profile?.name ||
+        profile?.username ||
+        "Kmeet member";
+
+
+    const photo =
+        profile?.photoURL ||
+        profile?.profilePhoto ||
+        profile?.photo ||
+        "kmeet-logo.jfif.jfif";
+
+
+    let preview =
+        "No messages yet.";
+
+
+    if (latestMessage) {
+
+        const messageText =
+            latestMessage.text ||
+            latestMessage.message ||
+            "Message";
+
+
+        if (
+            latestMessage.senderId ===
+            currentUser.uid
+        ) {
+
+            preview =
+                "You: " + messageText;
+
+        } else {
+
+            preview =
+                messageText;
+        }
     }
 
 
-    const profile =
-        await loadUserProfile(
-            otherUid
-        );
+    const time =
+        latestMessage
+            ? formatTime(
+                latestMessage.createdAt
+            )
+            : "";
 
 
-    watchPresence(
-        otherUid
-    );
-
-
-    const latestTime =
-        timestampValue(
-            latest.createdAt
-        );
-
-
-    const seenTime =
-        getSeenTime(
-            conversation.id
-        );
-
-
-    const unread =
-        latest.senderId !==
-            currentUser.uid
-        &&
-        latestTime > seenTime;
+    const href =
+        "chat.html?userId=" +
+        encodeURIComponent(otherUid);
 
 
     const row =
         document.createElement("a");
 
 
+    /*
+     * Keep compatibility with the
+     * existing Inbox design.
+     */
+
     row.className =
-        "conversation";
+        "conversation-row";
 
 
-    if (unread) {
-
-        row.classList.add(
-            "unread"
-        );
-
-    }
-
-
-    row.href =
-        `chat.html?userId=${encodeURIComponent(otherUid)}`;
-
-
-    row.dataset.conversationId =
-        conversation.id;
-
-
-    const photo =
-        getPhoto(profile);
-
-
-    const name =
-        getName(profile);
-
-
-    const firstLetter =
-        name
-            .trim()
-            .charAt(0)
-            .toUpperCase() ||
-        "K";
-
-
-    const online =
-        presenceCache.get(
-            otherUid
-        ) === true;
-
-
-    const direction =
-        latest.senderId ===
-            currentUser.uid
-        ? "You:"
-        : "";
-
-
-    const preview =
-        latest.text ||
-        "New message";
+    row.href = href;
 
 
     row.innerHTML = `
 
-        <div class="conversation-photo">
+        <img
+            class="conversation-avatar"
+            src="${escapeHtml(photo)}"
+            alt="${escapeHtml(displayName)}"
+            loading="lazy"
+            onerror="
+                this.onerror=null;
+                this.src='kmeet-logo.jfif.jfif';
+            "
+        >
 
-            ${
-                photo
-                    ? `
-                        <img
-                            src="${escapeHTML(photo)}"
-                            alt="${escapeHTML(name)}"
-                        >
-                      `
-                    : `
-                        <span class="conversation-initial">
-                            ${escapeHTML(firstLetter)}
-                        </span>
-                      `
-            }
+        <div class="conversation-info">
 
-            <span
-                class="online-dot ${
-                    online ? "online" : ""
-                }"
-                data-presence-uid="${escapeHTML(otherUid)}">
-            </span>
+            <div class="conversation-name">
 
-        </div>
-
-
-        <div class="conversation-content">
-
-            <div class="conversation-top">
-
-                <span class="conversation-name">
-                    ${escapeHTML(name)}
-                </span>
-
-                <span class="conversation-time">
-                    ${escapeHTML(
-                        formatTime(
-                            latest.createdAt
-                        )
-                    )}
-                </span>
+                ${escapeHtml(displayName)}
 
             </div>
 
 
             <div class="conversation-preview">
 
-                <span class="preview-direction">
-                    ${escapeHTML(direction)}
-                </span>
-
-                <span class="preview-text">
-                    ${escapeHTML(preview)}
-                </span>
+                ${escapeHtml(preview)}
 
             </div>
 
         </div>
 
 
-        ${
-            unread
-                ? `
-                    <span
-                        class="unread-badge"
-                        title="New message">
-                    </span>
-                  `
-                : ""
-        }
+        <div class="conversation-time">
+
+            ${escapeHtml(time)}
+
+        </div>
 
     `;
-
-
-    row.addEventListener(
-        "click",
-        () => {
-
-            markConversationSeen(
-                conversation.id
-            );
-
-        }
-    );
-
-
-    const image =
-        row.querySelector(
-            ".conversation-photo img"
-        );
-
-
-    if (image) {
-
-        image.onerror =
-            () => {
-
-                image.style.display =
-                    "none";
-
-            };
-
-    }
 
 
     return row;
-
 }
 
 
-/* =========================================
-   EMPTY STATE
-========================================= */
-
-function showEmptyState() {
-
-    conversationCount.textContent =
-        "No conversations yet";
-
-
-    conversationList.innerHTML = `
-
-        <div class="empty-state">
-
-            <div class="empty-heart">
-                💌
-            </div>
-
-            <h2 class="empty-title">
-                Your inbox is waiting
-            </h2>
-
-            <p class="empty-text">
-
-                When you send or receive a message
-                on Kmeet, your conversations will
-                appear here.
-
-            </p>
-
-            <a
-                class="discover-button"
-                href="discover.html">
-
-                Discover People
-
-            </a>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================
+/* =========================================================
    LOAD INBOX
-========================================= */
+========================================================= */
 
 async function loadInbox() {
 
@@ -1670,22 +1349,23 @@ async function loadInbox() {
     }
 
 
-    conversationList.innerHTML = `
-
-        <div class="loading-state">
-
-            <div class="spinner"></div>
-
-            Checking your messages...
-
-        </div>
-
-    `;
+    setStatus(
+        "Loading your conversations..."
+    );
 
 
-    conversationCount.textContent =
-        "Loading conversations...";
+    if (listEl) {
+        listEl.innerHTML = "";
+    }
 
+
+    const conversationMap =
+        new Map();
+
+
+    /* =====================================================
+       SENT CONVERSATIONS
+    ===================================================== */
 
     try {
 
@@ -1695,6 +1375,7 @@ async function loadInbox() {
                     db,
                     "conversations"
                 ),
+
                 where(
                     "initiatorId",
                     "==",
@@ -1703,12 +1384,54 @@ async function loadInbox() {
             );
 
 
+        const sentSnapshot =
+            await getDocs(sentQuery);
+
+
+        sentSnapshot.forEach(item => {
+
+            conversationMap.set(
+                item.id,
+                {
+                    id: item.id,
+                    ...item.data()
+                }
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Inbox sent query failed:",
+            error
+        );
+
+
+        setStatus(
+            "Inbox permission error while loading sent conversations.",
+            true
+        );
+
+
+        return;
+    }
+
+
+    /* =====================================================
+       RECEIVED CONVERSATIONS
+    ===================================================== */
+
+    try {
+
         const receivedQuery =
             query(
                 collection(
                     db,
                     "conversations"
                 ),
+
                 where(
                     "receiverId",
                     "==",
@@ -1717,322 +1440,352 @@ async function loadInbox() {
             );
 
 
-        const [
-            sentSnapshot,
-            receivedSnapshot
-        ] = await Promise.all([
-
-            getDocs(
-                sentQuery
-            ),
-
-            getDocs(
+        const receivedSnapshot =
+            await getDocs(
                 receivedQuery
-            )
-
-        ]);
-
-
-        const conversationMap =
-            new Map();
-
-
-        sentSnapshot.forEach(
-            item => {
-
-                conversationMap.set(
-                    item.id,
-                    {
-                        id: item.id,
-                        ...item.data()
-                    }
-                );
-
-            }
-        );
-
-
-        receivedSnapshot.forEach(
-            item => {
-
-                conversationMap.set(
-                    item.id,
-                    {
-                        id: item.id,
-                        ...item.data()
-                    }
-                );
-
-            }
-        );
-
-
-        const conversations =
-            Array.from(
-                conversationMap.values()
             );
 
 
-        if (
-            !conversations.length
-        ) {
+        receivedSnapshot.forEach(item => {
 
-            showEmptyState();
-
-            return;
-
-        }
-
-
-        const rows = [];
-
-
-        for (
-            const conversation
-            of conversations
-        ) {
-
-            const latest =
-                await getLatestMessage(
-                    conversation.id
-                );
-
-
-            if (!latest) {
-                continue;
-            }
-
-
-            const row =
-                await createConversationRow(
-                    conversation,
-                    latest
-                );
-
-
-            if (row) {
-
-                rows.push({
-
-                    row: row,
-
-                    time:
-                        timestampValue(
-                            latest.createdAt
-                        )
-
-                });
-
-            }
-
-        }
-
-
-        rows.sort(
-            (a, b) =>
-                b.time -
-                a.time
-        );
-
-
-        conversationList.innerHTML =
-            "";
-
-
-        if (!rows.length) {
-
-            showEmptyState();
-
-            return;
-
-        }
-
-
-        rows.forEach(
-            item => {
-
-                conversationList.appendChild(
-                    item.row
-                );
-
-            }
-        );
-
-
-        conversationCount.textContent =
-
-            `${rows.length} conversation` +
-
-            (
-                rows.length === 1
-                    ? ""
-                    : "s"
+            conversationMap.set(
+                item.id,
+                {
+                    id: item.id,
+                    ...item.data()
+                }
             );
+
+        });
 
 
     } catch (error) {
 
         console.error(
-            "Kmeet inbox error:",
+            "Inbox received query failed:",
             error
         );
 
 
-        conversationCount.textContent =
-            "Messages unavailable";
+        setStatus(
+            "Inbox permission error while loading received conversations.",
+            true
+        );
 
 
-        let message =
-            "Kmeet could not load your messages.";
-
-
-        if (
-            error &&
-            error.code ===
-            "permission-denied"
-        ) {
-
-            message =
-                "Kmeet does not currently have permission to read your conversations.";
-
-        }
-
-
-        conversationList.innerHTML = `
-
-            <div class="error-state">
-
-                <div class="error-icon">
-                    ⚠️
-                </div>
-
-                <div>
-                    ${escapeHTML(message)}
-                </div>
-
-                <div class="error-details">
-
-                    Error:
-                    ${escapeHTML(
-                        error?.code ||
-                        "unknown"
-                    )}
-
-                    <br>
-
-                    ${escapeHTML(
-                        error?.message ||
-                        "Please try again."
-                    )}
-
-                </div>
-
-            </div>
-
-        `;
-
+        return;
     }
 
+
+    /* =====================================================
+       VALIDATE CONVERSATIONS
+    ===================================================== */
+
+    const conversations =
+        Array.from(
+            conversationMap.values()
+        )
+        .filter(
+            isValidConversation
+        );
+
+
+    /* =====================================================
+       EMPTY
+    ===================================================== */
+
+    if (
+        conversations.length === 0
+    ) {
+
+        setStatus(
+            "No conversations yet."
+        );
+
+
+        renderEmpty();
+
+        return;
+    }
+
+
+    /* =====================================================
+       LOAD MESSAGES
+    ===================================================== */
+
+    const prepared =
+        await Promise.all(
+
+            conversations.map(
+                async conversation => {
+
+                    const latestMessage =
+                        await getLatestMessage(
+                            conversation.id
+                        );
+
+
+                    return {
+                        conversation,
+                        latestMessage
+                    };
+                }
+            )
+        );
+
+
+    /* =====================================================
+       SORT BY LATEST MESSAGE
+    ===================================================== */
+
+    prepared.sort((a, b) => {
+
+        const aTime =
+            a.latestMessage?.createdAt?.seconds ||
+            0;
+
+
+        const bTime =
+            b.latestMessage?.createdAt?.seconds ||
+            0;
+
+
+        return bTime - aTime;
+    });
+
+
+    /* =====================================================
+       CREATE ROWS
+    ===================================================== */
+
+    const rows =
+        await Promise.all(
+
+            prepared.map(item =>
+                createConversationRow(
+                    item.conversation,
+                    item.latestMessage
+                )
+            )
+        );
+
+
+    if (listEl) {
+        listEl.innerHTML = "";
+    }
+
+
+    rows
+        .filter(Boolean)
+        .forEach(row => {
+
+            listEl.appendChild(row);
+
+        });
+
+
+    const visibleCount =
+        rows.filter(Boolean).length;
+
+
+    setStatus(
+
+        visibleCount === 1
+
+            ? "1 conversation"
+
+            : `${visibleCount} conversations`
+
+    );
 }
 
 
-/* =========================================
-   REFRESH
-========================================= */
+/* =========================================================
+   OPTIONAL PRESENCE
+========================================================= */
 
-refreshButton.addEventListener(
-    "click",
-    async () => {
+function setupPresence() {
 
-        refreshButton.disabled =
-            true;
+    try {
 
-        refreshButton.textContent =
-            "Refreshing...";
+        presenceDb =
+            getDatabase();
 
 
-        profileCache.clear();
-
-
-        try {
-
-            await loadInbox();
-
-        } finally {
-
-            refreshButton.disabled =
-                false;
-
-            refreshButton.textContent =
-                "↻ Refresh";
-
+        if (!currentUser) {
+            return;
         }
 
+
+        const userPresenceRef =
+            ref(
+                presenceDb,
+                "status/" +
+                currentUser.uid
+            );
+
+
+        presenceListener =
+            onValue(
+                userPresenceRef,
+                () => {},
+                error => {
+
+                    console.warn(
+                        "Presence unavailable:",
+                        error
+                    );
+
+                }
+            );
+
+
+    } catch (error) {
+
+        console.warn(
+            "Presence setup skipped:",
+            error
+        );
     }
-);
+}
 
 
-/* =========================================
+/* =========================================================
    AUTHENTICATION
-========================================= */
+========================================================= */
 
 onAuthStateChanged(
     auth,
-
     async user => {
 
-        if (
-            !user ||
-            user.isAnonymous
-        ) {
+        /* ================================================
+           NOT LOGGED IN
+        ================================================ */
 
-            window.location.href =
-                "login.html";
+        if (!user) {
+
+            currentUser = null;
+
+
+            setStatus(
+                "Please log in to view your Inbox.",
+                true
+            );
+
+
+            if (listEl) {
+
+                listEl.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🔐
+                        </div>
+
+                        <h3>
+                            Please log in
+                        </h3>
+
+                        <p>
+                            You need an account to
+                            use Inbox.
+                        </p>
+
+                        <br>
+
+                        <a
+                            href="login.html"
+                            style="
+                                color:#ff8fc3;
+                                text-decoration:none;
+                                font-weight:600;
+                            "
+                        >
+                            Log in
+                        </a>
+
+                    </div>
+
+                `;
+            }
+
 
             return;
-
         }
 
 
-        currentUser =
-            user;
+        /* ================================================
+           ANONYMOUS USER
+        ================================================ */
+
+        if (user.isAnonymous) {
+
+            currentUser = null;
+
+
+            setStatus(
+                "Inbox is available to registered members.",
+                true
+            );
+
+
+            if (listEl) {
+
+                listEl.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            💗
+                        </div>
+
+                        <h3>
+                            Registered members only
+                        </h3>
+
+                        <p>
+                            Create an account or
+                            log in to use Inbox.
+                        </p>
+
+                        <br>
+
+                        <a
+                            href="login.html"
+                            style="
+                                color:#ff8fc3;
+                                text-decoration:none;
+                                font-weight:600;
+                            "
+                        >
+                            Log in
+                        </a>
+
+                    </div>
+
+                `;
+            }
+
+
+            return;
+        }
+
+
+        /* ================================================
+           REGISTERED USER
+        ================================================ */
+
+        currentUser = user;
+
+
+        setupPresence();
 
 
         await loadInbox();
 
     }
 );
-
-
-/* =========================================
-   ERROR LOGGING
-========================================= */
-
-window.addEventListener(
-    "error",
-    event => {
-
-        console.error(
-            "Kmeet inbox JavaScript error:",
-            event.error
-        );
-
-    }
-);
-
-
-window.addEventListener(
-    "unhandledrejection",
-    event => {
-
-        console.error(
-            "Kmeet inbox promise error:",
-            event.reason
-        );
-
-    }
-);
-
 </script>
 
 </body>
