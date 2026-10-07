@@ -1,2048 +1,2458 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kmeet - Chat</title>
+
+<link rel="icon"
+      type="image/jpeg"
+      href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+    background: #09070b;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(12, 5, 13, 0.78),
+            rgba(12, 5, 13, 0.88)
+        ),
+        url("kmeet-background.jpg.jpg");
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(255, 54, 132, 0.16),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(150, 30, 100, 0.14),
+            transparent 35%
+        );
 
-    <title>Kmeet - Chat</title>
+    z-index: -1;
+}
 
-    <link
-        rel="icon"
-        type="image/jpeg"
-        href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif"
-    >
+/* =========================================================
+   HEADER
+========================================================= */
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+.chat-header {
+    width: 100%;
+    min-height: 80px;
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+    padding: 14px 28px;
 
-    <style>
+    background: rgba(15, 7, 17, 0.88);
+    border-bottom: 1px solid rgba(255, 105, 170, 0.18);
 
-        /* =========================================================
-           RESET
-        ========================================================= */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-        /* =========================================================
-           BODY
-        ========================================================= */
+    text-decoration: none;
+    color: #fff;
 
-        body {
-            min-height: 100vh;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+}
 
-            font-family: Poppins, sans-serif;
+.logo-link img {
+    width: 44px;
+    height: 44px;
 
-            color: #fff;
+    border-radius: 50%;
+    object-fit: cover;
 
-            background:
-                linear-gradient(
-                    rgba(15, 5, 13, 0.72),
-                    rgba(15, 5, 13, 0.88)
-                ),
-                url("chat.jpg") center / cover fixed no-repeat;
-        }
+    border: 2px solid rgba(255, 105, 170, 0.7);
+}
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        body::before {
-            content: "";
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 
-            position: fixed;
-            inset: 0;
+    padding: 9px 15px;
 
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    rgba(255, 80, 150, 0.10),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 80% 80%,
-                    rgba(255, 40, 120, 0.08),
-                    transparent 30%
-                );
+    border-radius: 22px;
 
-            pointer-events: none;
-        }
+    color: #fff;
+    text-decoration: none;
 
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
 
-        /* =========================================================
-           HEADER
-        ========================================================= */
+    transition: 0.25s ease;
+}
 
-        .header {
-            position: relative;
-            z-index: 5;
+.back-btn:hover {
+    background: rgba(255, 80, 150, 0.2);
+    border-color: rgba(255, 105, 170, 0.45);
+}
 
-            height: 72px;
+/* =========================================================
+   MAIN CHAT
+========================================================= */
 
-            padding: 0 22px;
+.chat-page {
+    width: 100%;
+    min-height: calc(100vh - 80px);
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+    display: flex;
+    justify-content: center;
 
-            background: rgba(20, 8, 18, 0.82);
+    padding: 28px 16px 40px;
+}
 
-            backdrop-filter: blur(18px);
+.chat-shell {
+    width: 100%;
+    max-width: 900px;
 
-            border-bottom:
-                1px solid rgba(255, 255, 255, 0.10);
-        }
+    min-height: 650px;
 
+    display: flex;
+    flex-direction: column;
 
-        .logo {
-            display: flex;
-            align-items: center;
+    background: rgba(17, 8, 19, 0.86);
 
-            gap: 10px;
+    border: 1px solid rgba(255, 100, 165, 0.17);
+    border-radius: 24px;
 
-            color: #fff;
+    box-shadow:
+        0 20px 70px rgba(0,0,0,0.45),
+        inset 0 1px rgba(255,255,255,0.04);
 
-            text-decoration: none;
+    overflow: hidden;
 
-            font-family: "Playfair Display", serif;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
 
-            font-size: 25px;
+/* =========================================================
+   PROFILE BAR
+========================================================= */
 
-            font-weight: 700;
-        }
+.chat-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
+    padding: 18px 22px;
 
-        .logo img {
-            width: 42px;
-            height: 42px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 
-            object-fit: cover;
+    background: rgba(255,255,255,0.025);
+}
 
-            border-radius: 50%;
+.chat-avatar {
+    width: 58px;
+    height: 58px;
 
-            border:
-                2px solid rgba(255, 105, 170, 0.65);
-        }
+    border-radius: 50%;
 
+    object-fit: cover;
 
-        .back-btn {
-            border:
-                1px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 91, 155, 0.65);
 
-            background:
-                rgba(255, 255, 255, 0.07);
+    background: #21121f;
+}
 
-            color: #fff;
+.chat-profile-info {
+    min-width: 0;
+    flex: 1;
+}
 
-            padding: 10px 15px;
+.chat-profile-name {
+    font-family: "Playfair Display", serif;
+    font-size: 1.35rem;
 
-            border-radius: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-            text-decoration: none;
+.chat-status {
+    margin-top: 3px;
 
-            font-size: 13px;
-        }
+    font-size: 0.82rem;
+    color: #bfb1bc;
 
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
 
-        /* =========================================================
-           PAGE
-        ========================================================= */
+.status-dot {
+    width: 8px;
+    height: 8px;
 
-        .page {
-            position: relative;
-            z-index: 2;
+    border-radius: 50%;
 
-            width: min(900px, 94%);
+    background: #777;
+}
 
-            margin: 25px auto;
-        }
+.status-dot.online {
+    background: #42e58c;
+    box-shadow: 0 0 10px rgba(66,229,140,0.7);
+}
 
+/* =========================================================
+   INFO BAR
+========================================================= */
 
-        /* =========================================================
-           CHAT CARD
-        ========================================================= */
+.chat-info {
+    padding: 11px 20px;
 
-        .chat-card {
-            overflow: hidden;
+    font-size: 0.78rem;
 
-            border:
-                1px solid rgba(255, 255, 255, 0.12);
+    color: #cdbfca;
 
-            background:
-                rgba(22, 10, 20, 0.84);
+    background: rgba(255, 70, 140, 0.055);
 
-            backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
 
-            border-radius: 22px;
+    text-align: center;
+}
 
-            box-shadow:
-                0 25px 80px rgba(0, 0, 0, 0.45);
-        }
+/* =========================================================
+   MESSAGES
+========================================================= */
 
+.messages {
+    flex: 1;
 
-        /* =========================================================
-           CHAT TOP
-        ========================================================= */
+    min-height: 390px;
+    max-height: 560px;
 
-        .chat-top {
-            min-height: 90px;
+    overflow-y: auto;
 
-            padding: 15px 20px;
+    padding: 22px;
 
-            display: flex;
-            align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 
-            gap: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 80, 145, 0.45) transparent;
+}
 
-            border-bottom:
-                1px solid rgba(255, 255, 255, 0.09);
-        }
+.messages::-webkit-scrollbar {
+    width: 7px;
+}
 
+.messages::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-        .target-photo {
-            width: 58px;
-            height: 58px;
+.messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 80, 145, 0.4);
+    border-radius: 20px;
+}
 
-            flex: none;
+/* =========================================================
+   MESSAGE BUBBLES
+========================================================= */
 
-            border-radius: 50%;
+.message-row {
+    display: flex;
+    width: 100%;
+}
 
-            object-fit: cover;
+.message-row.mine {
+    justify-content: flex-end;
+}
 
-            border:
-                2px solid rgba(255, 100, 170, 0.65);
+.message-row.theirs {
+    justify-content: flex-start;
+}
 
-            background: #24131f;
-        }
+.message {
+    max-width: min(75%, 560px);
 
+    padding: 11px 15px;
 
-        .target-info {
-            min-width: 0;
+    border-radius: 18px;
 
-            flex: 1;
-        }
+    font-size: 0.92rem;
+    line-height: 1.5;
 
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
 
-        .target-name {
-            font-family: "Playfair Display", serif;
+.message.mine {
+    background: linear-gradient(
+        135deg,
+        #df3e88,
+        #a91f68
+    );
 
-            font-size: 22px;
+    border-bottom-right-radius: 5px;
 
-            white-space: nowrap;
+    box-shadow:
+        0 8px 20px rgba(190, 30, 100, 0.2);
+}
 
-            overflow: hidden;
+.message.theirs {
+    background: rgba(255,255,255,0.085);
 
-            text-overflow: ellipsis;
-        }
+    border: 1px solid rgba(255,255,255,0.08);
 
+    border-bottom-left-radius: 5px;
+}
 
-        .target-status {
-            color: #cbbbc4;
+.message-time {
+    display: block;
 
-            font-size: 12px;
+    margin-top: 4px;
 
-            margin-top: 2px;
-        }
+    font-size: 0.66rem;
 
+    opacity: 0.65;
 
-        /* =========================================================
-           ONLINE / OFFLINE DOT
-        ========================================================= */
+    text-align: right;
+}
 
-        .online-dot,
-        .offline-dot {
-            display: inline-block;
+.empty-chat {
+    flex: 1;
 
-            width: 8px;
-            height: 8px;
+    min-height: 350px;
 
-            border-radius: 50%;
+    display: flex;
+    flex-direction: column;
 
-            margin-right: 5px;
-        }
+    align-items: center;
+    justify-content: center;
 
+    text-align: center;
 
-        .online-dot {
-            background: #46df8b;
+    color: #b9aab6;
 
-            box-shadow:
-                0 0 8px #46df8b;
-        }
+    padding: 30px;
+}
 
+.empty-chat i {
+    font-size: 2.4rem;
 
-        .offline-dot {
-            background: #777;
-        }
+    color: #e65a9c;
 
+    margin-bottom: 15px;
+}
 
-        /* =========================================================
-           CALL BUTTONS
-        ========================================================= */
+.empty-chat h3 {
+    color: #fff;
 
-        .call-actions {
-            display: flex;
+    margin-bottom: 7px;
 
-            gap: 8px;
-        }
+    font-family: "Playfair Display", serif;
+}
 
+/* =========================================================
+   COMPOSER
+========================================================= */
 
-        .call-btn {
-            width: 42px;
-            height: 42px;
+.composer {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
 
-            border:
-                1px solid rgba(255, 255, 255, 0.13);
+    padding: 15px;
 
-            border-radius: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
 
-            background:
-                rgba(255, 255, 255, 0.07);
+    background: rgba(10,5,12,0.72);
+}
 
-            color: #fff;
+.message-input {
+    flex: 1;
 
-            cursor: pointer;
-        }
+    min-height: 48px;
+    max-height: 130px;
 
+    resize: none;
 
-        .call-btn:disabled {
-            opacity: 0.4;
+    padding: 13px 15px;
 
-            cursor: not-allowed;
-        }
+    border-radius: 16px;
 
+    border: 1px solid rgba(255,255,255,0.12);
 
-        /* =========================================================
-           INFO BAR
-        ========================================================= */
+    outline: none;
 
-        .info-bar {
-            padding: 11px 18px;
+    background: rgba(255,255,255,0.055);
 
-            background:
-                rgba(255, 75, 145, 0.075);
+    color: #fff;
 
-            border-bottom:
-                1px solid rgba(255, 255, 255, 0.07);
+    font-family: "Poppins", sans-serif;
+    font-size: 0.92rem;
 
-            color: #e9dce2;
+    transition: 0.2s ease;
+}
 
-            font-size: 12px;
+.message-input::placeholder {
+    color: #978a95;
+}
 
-            text-align: center;
-        }
+.message-input:focus {
+    border-color: rgba(255, 83, 150, 0.55);
 
+    background: rgba(255,255,255,0.075);
+}
 
-        /* =========================================================
-           MESSAGES
-        ========================================================= */
+.send-btn {
+    width: 48px;
+    height: 48px;
 
-        .messages {
-            height: 55vh;
+    flex-shrink: 0;
 
-            min-height: 380px;
+    border: none;
 
-            max-height: 620px;
+    border-radius: 50%;
 
-            padding: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            overflow-y: auto;
-        }
+    color: #fff;
 
+    background: linear-gradient(
+        135deg,
+        #e9438e,
+        #a91f68
+    );
 
-        .empty {
-            height: 100%;
+    cursor: pointer;
 
-            display: flex;
+    font-size: 1rem;
 
-            align-items: center;
+    transition: 0.25s ease;
 
-            justify-content: center;
+    box-shadow:
+        0 8px 22px rgba(190, 35, 105, 0.28);
+}
 
-            text-align: center;
+.send-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
 
-            color: #bcaeb6;
+.send-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
 
-            font-size: 13px;
+/* =========================================================
+   GATE
+========================================================= */
 
-            padding: 30px;
-        }
+.chat-gate {
+    position: fixed;
 
+    inset: 0;
 
-        .message-row {
-            display: flex;
+    z-index: 5000;
 
-            margin: 9px 0;
-        }
+    display: none;
 
+    align-items: center;
+    justify-content: center;
 
-        .message-row.mine {
-            justify-content: flex-end;
-        }
+    padding: 20px;
 
+    background: rgba(5,2,7,0.82);
 
-        .message {
-            max-width: min(72%, 520px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
 
-            padding: 11px 14px;
+.chat-gate.show {
+    display: flex;
+}
 
-            border-radius: 17px;
+.gate-card {
+    width: 100%;
+    max-width: 430px;
 
-            font-size: 14px;
+    padding: 30px 25px;
 
-            line-height: 1.5;
+    border-radius: 24px;
 
-            word-break: break-word;
-        }
+    text-align: center;
 
+    background:
+        linear-gradient(
+            145deg,
+            rgba(45,15,35,0.96),
+            rgba(18,8,20,0.98)
+        );
 
-        .message-row.mine .message {
-            background:
-                linear-gradient(
-                    135deg,
-                    #ec4389,
-                    #b72e70
-                );
+    border: 1px solid rgba(255, 85, 150, 0.25);
 
-            border-bottom-right-radius: 5px;
-        }
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.55);
+}
 
+.gate-icon {
+    width: 66px;
+    height: 66px;
 
-        .message-row.theirs .message {
-            background:
-                rgba(255, 255, 255, 0.095);
+    margin: 0 auto 17px;
 
-            border:
-                1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            border-bottom-left-radius: 5px;
-        }
+    border-radius: 50%;
 
+    color: #ff6da9;
 
-        .message-time {
-            margin-top: 4px;
+    background: rgba(255, 75, 145, 0.1);
 
-            font-size: 9px;
+    border: 1px solid rgba(255, 90, 155, 0.2);
 
-            opacity: 0.65;
-        }
+    font-size: 1.5rem;
+}
 
+.gate-card h2 {
+    font-family: "Playfair Display", serif;
 
-        /* =========================================================
-           COMPOSER
-        ========================================================= */
+    font-size: 1.65rem;
 
-        .composer {
-            position: relative;
+    margin-bottom: 10px;
+}
 
-            display: flex;
+.gate-card p {
+    color: #c6b7c2;
 
-            gap: 8px;
+    font-size: 0.9rem;
 
-            padding: 15px;
+    line-height: 1.6;
 
-            border-top:
-                1px solid rgba(255, 255, 255, 0.09);
+    margin-bottom: 22px;
+}
 
-            background:
-                rgba(10, 5, 10, 0.25);
-        }
+.gate-actions {
+    display: flex;
+    flex-direction: column;
 
+    gap: 10px;
+}
 
-        .composer input {
-            min-width: 0;
+.gate-primary,
+.gate-secondary {
+    width: 100%;
 
-            flex: 1;
+    min-height: 45px;
 
-            border: none;
+    border-radius: 24px;
 
-            outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            border-radius: 14px;
+    text-decoration: none;
 
-            padding: 13px 15px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
 
-            color: #fff;
+    cursor: pointer;
+}
 
-            background:
-                rgba(255, 255, 255, 0.08);
+.gate-primary {
+    color: #fff;
 
-            border:
-                1px solid rgba(255, 255, 255, 0.08);
+    border: none;
 
-            font-family: Poppins, sans-serif;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            #e94590,
+            #a81f68
+        );
+}
 
+.gate-secondary {
+    color: #e8dce5;
 
-        .composer input::placeholder {
-            color: #9e9098;
-        }
+    border: 1px solid rgba(255,255,255,0.12);
 
+    background: rgba(255,255,255,0.05);
+}
 
-        /* =========================================================
-           EMOJI + SEND BUTTONS
-        ========================================================= */
+/* =========================================================
+   LOADING
+========================================================= */
 
-        .emoji-btn,
-        .send-btn {
-            width: 48px;
+.loading {
+    position: fixed;
 
-            border: 0;
+    inset: 0;
 
-            border-radius: 14px;
+    z-index: 6000;
 
-            color: #fff;
+    display: flex;
 
-            cursor: pointer;
+    align-items: center;
+    justify-content: center;
 
-            font-size: 18px;
-        }
+    background: #09070b;
+}
 
+.loading-inner {
+    text-align: center;
+}
 
-        .emoji-btn {
-            background:
-                rgba(255, 255, 255, 0.08);
-        }
+.loading-inner img {
+    width: 65px;
+    height: 65px;
 
+    border-radius: 50%;
 
-        .send-btn {
-            background:
-                linear-gradient(
-                    135deg,
-                    #f14c91,
-                    #b92f70
-                );
-        }
+    object-fit: cover;
 
+    border: 2px solid rgba(255, 85, 150, 0.5);
 
-        .send-btn:disabled {
-            opacity: 0.45;
+    margin-bottom: 15px;
+}
 
-            cursor: not-allowed;
-        }
+.spinner {
+    width: 27px;
+    height: 27px;
 
+    margin: 0 auto 12px;
 
-        /* =========================================================
-           EMOJI PICKER
-        ========================================================= */
+    border-radius: 50%;
 
-        .emoji-picker {
-            display: none;
+    border: 3px solid rgba(255,255,255,0.12);
+    border-top-color: #e94590;
 
-            position: absolute;
+    animation: spin 0.8s linear infinite;
+}
 
-            bottom: 75px;
+.loading-text {
+    color: #b8aab4;
 
-            left: 15px;
+    font-size: 0.82rem;
+}
 
-            width: min(350px, calc(100% - 30px));
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-            padding: 12px;
+/* =========================================================
+   MOBILE
+========================================================= */
 
-            border:
-                1px solid rgba(255, 255, 255, 0.13);
+@media (max-width: 700px) {
 
-            border-radius: 16px;
+    .chat-header {
+        padding: 12px 15px;
+    }
 
-            background:
-                rgba(27, 11, 24, 0.98);
+    .logo-link {
+        font-size: 1.25rem;
+    }
 
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, 0.45);
+    .logo-link img {
+        width: 38px;
+        height: 38px;
+    }
 
-            grid-template-columns:
-                repeat(8, 1fr);
+    .back-btn {
+        padding: 8px 11px;
+        font-size: 0.8rem;
+    }
 
-            gap: 5px;
+    .chat-page {
+        padding: 10px 8px 20px;
+    }
 
-            z-index: 20;
-        }
+    .chat-shell {
+        min-height: calc(100vh - 100px);
+        border-radius: 18px;
+    }
 
+    .chat-profile {
+        padding: 14px;
+    }
 
-        .emoji-picker.show {
-            display: grid;
-        }
+    .chat-avatar {
+        width: 50px;
+        height: 50px;
+    }
 
+    .messages {
+        padding: 15px;
+    }
 
-        .emoji {
-            height: 36px;
+    .message {
+        max-width: 84%;
+    }
 
-            border: 0;
+    .composer {
+        padding: 10px;
+    }
 
-            background: transparent;
+    .gate-card {
+        padding: 25px 20px;
+    }
+}
 
-            border-radius: 8px;
-
-            color: #fff;
-
-            font-size: 21px;
-
-            cursor: pointer;
-        }
-
-
-        .emoji:hover {
-            background:
-                rgba(255, 255, 255, 0.10);
-        }
-
-
-        /* =========================================================
-           CHAT PAYMENT GATE
-        ========================================================= */
-
-        .gate {
-            display: none;
-
-            padding: 28px 22px;
-
-            text-align: center;
-
-            border-top:
-                1px solid rgba(255, 255, 255, 0.09);
-        }
-
-
-        .gate.show {
-            display: block;
-        }
-
-
-        .gate-icon {
-            font-size: 35px;
-
-            color: #f15a9a;
-
-            margin-bottom: 12px;
-        }
-
-
-        .gate h3 {
-            font-family: "Playfair Display", serif;
-
-            font-size: 23px;
-
-            margin-bottom: 7px;
-        }
-
-
-        .gate p {
-            color: #cbbbc4;
-
-            font-size: 13px;
-
-            line-height: 1.6;
-
-            max-width: 570px;
-
-            margin: 0 auto 17px;
-        }
-
-
-        .gate-btn {
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding: 12px 20px;
-
-            border-radius: 13px;
-
-            text-decoration: none;
-
-            color: #fff;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ef4b91,
-                    #b72c6d
-                );
-
-            font-size: 13px;
-
-            font-weight: 600;
-        }
-
-
-        /* =========================================================
-           CALL MODAL
-        ========================================================= */
-
-        .call-modal {
-            display: none;
-
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 100;
-
-            background:
-                rgba(4, 2, 5, 0.86);
-
-            backdrop-filter: blur(14px);
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-        }
-
-
-        .call-modal.show {
-            display: flex;
-        }
-
-
-        .call-box {
-            width: min(720px, 96%);
-
-            border:
-                1px solid rgba(255, 255, 255, 0.13);
-
-            background:
-                rgba(25, 9, 21, 0.97);
-
-            border-radius: 22px;
-
-            padding: 20px;
-
-            box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.55);
-
-            text-align: center;
-        }
-
-
-        .call-title {
-            font-family: "Playfair Display", serif;
-
-            font-size: 25px;
-        }
-
-
-        .call-status {
-            font-size: 13px;
-
-            color: #cbbbc4;
-
-            margin: 8px 0 15px;
-        }
-
-
-        /* =========================================================
-           VIDEO GRID
-        ========================================================= */
-
-        .video-grid {
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 12px;
-        }
-
-
-        .video-grid video {
-            width: 100%;
-
-            height: 300px;
-
-            object-fit: cover;
-
-            border-radius: 16px;
-
-            background: #080609;
-        }
-
-
-        /* =========================================================
-           CALL CONTROLS
-        ========================================================= */
-
-        .call-controls {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 10px;
-
-            margin-top: 15px;
-        }
-
-
-        .control-btn {
-            width: 48px;
-
-            height: 48px;
-
-            border: 0;
-
-            border-radius: 50%;
-
-            background:
-                rgba(255, 255, 255, 0.10);
-
-            color: #fff;
-
-            cursor: pointer;
-        }
-
-
-        .end-btn {
-            background: #c93662;
-        }
-
-
-        .incoming-actions {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 10px;
-
-            margin-top: 18px;
-        }
-
-
-        /* =========================================================
-           MOBILE
-        ========================================================= */
-
-        @media (max-width: 600px) {
-
-            .header {
-                padding: 0 14px;
-            }
-
-
-            .logo {
-                font-size: 21px;
-            }
-
-
-            .logo img {
-                width: 37px;
-                height: 37px;
-            }
-
-
-            .page {
-                width: 96%;
-
-                margin: 14px auto;
-            }
-
-
-            .messages {
-                height: 58vh;
-
-                min-height: 350px;
-
-                padding: 15px;
-            }
-
-
-            .message {
-                max-width: 84%;
-            }
-
-
-            .target-name {
-                font-size: 19px;
-            }
-
-
-            .call-btn {
-                width: 38px;
-
-                height: 38px;
-            }
-
-
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-
-
-            .video-grid video {
-                height: 230px;
-            }
-
-
-            .composer {
-                padding: 11px;
-            }
-        }
-
-    </style>
+</style>
 </head>
-
 
 <body>
 
-    <!-- =========================================================
-         HEADER
-    ========================================================= -->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
-    <header class="header">
+<header class="chat-header">
 
-        <a href="./index.html" class="logo">
+    <a href="index.html" class="logo-link">
+        <img
+            src="kmeet-logo.jfif.jfif"
+            alt="Kmeet"
+        >
+        <span>Kmeet</span>
+    </a>
+
+    <div class="header-actions">
+
+        <a href="discover.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Discover
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     CHAT PAGE
+========================================================= -->
+
+<main class="chat-page">
+
+    <section class="chat-shell">
+
+        <!-- PROFILE -->
+
+        <div class="chat-profile">
 
             <img
-                src="./kmeet-logo.jfif.jfif"
-                alt="Kmeet"
+                id="targetAvatar"
+                class="chat-avatar"
+                src="kmeet-logo.jfif.jfif"
+                alt="Profile"
             >
 
-            <span>Kmeet</span>
-
-        </a>
-
-
-        <a
-            href="./discover.html"
-            class="back-btn"
-        >
-
-            <i class="fa-solid fa-arrow-left"></i>
-
-            Discover
-
-        </a>
-
-    </header>
-
-
-    <!-- =========================================================
-         MAIN CHAT AREA
-    ========================================================= -->
-
-    <main class="page">
-
-        <section class="chat-card">
-
-
-            <!-- =================================================
-                 CHAT HEADER
-            ================================================= -->
-
-            <div class="chat-top">
-
-                <img
-                    id="targetPhoto"
-                    class="target-photo"
-                    src="./kmeet-logo.jfif.jfif"
-                    alt="Profile"
-                >
-
-
-                <div class="target-info">
-
-                    <div
-                        id="targetName"
-                        class="target-name"
-                    >
-                        Loading...
-                    </div>
-
-
-                    <div
-                        id="targetStatus"
-                        class="target-status"
-                    >
-                        Checking status...
-                    </div>
-
-                </div>
-
-
-                <!-- CALL BUTTONS -->
-
-                <div class="call-actions">
-
-                    <button
-                        id="voiceBtn"
-                        class="call-btn"
-                        title="Voice call"
-                        disabled
-                    >
-
-                        <i class="fa-solid fa-phone"></i>
-
-                    </button>
-
-
-                    <button
-                        id="videoBtn"
-                        class="call-btn"
-                        title="Video call"
-                        disabled
-                    >
-
-                        <i class="fa-solid fa-video"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 CHAT INFORMATION BAR
-            ================================================= -->
-
-            <div
-                id="infoBar"
-                class="info-bar"
-            >
-                Checking chat access...
-            </div>
-
-
-            <!-- =================================================
-                 MESSAGES
-            ================================================= -->
-
-            <div
-                id="messages"
-                class="messages"
-            >
-
-                <div class="empty">
-                    Opening conversation...
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 MESSAGE COMPOSER
-            ================================================= -->
-
-            <div
-                id="composer"
-                class="composer"
-            >
-
-                <button
-                    id="emojiBtn"
-                    class="emoji-btn"
-                    type="button"
-                    title="Emoji"
-                >
-                    😊
-                </button>
-
-
-                <input
-                    id="messageInput"
-                    type="text"
-                    maxlength="2000"
-                    autocomplete="off"
-                    placeholder="Write a message..."
-                >
-
-
-                <button
-                    id="sendBtn"
-                    class="send-btn"
-                    type="button"
-                    disabled
-                    title="Send"
-                >
-
-                    <i class="fa-solid fa-paper-plane"></i>
-
-                </button>
-
-
-                <!-- EMOJI PICKER -->
+            <div class="chat-profile-info">
 
                 <div
-                    id="emojiPicker"
-                    class="emoji-picker"
-                ></div>
-
-            </div>
-
-
-            <!-- =================================================
-                 PAYMENT / CHAT GATE
-            ================================================= -->
-
-            <div
-                id="gate"
-                class="gate"
-            >
-
-                <div class="gate-icon">
-
-                    <i class="fa-solid fa-lock"></i>
-
+                    id="targetName"
+                    class="chat-profile-name"
+                >
+                    Loading...
                 </div>
 
+                <div class="chat-status">
 
-                <h3 id="gateTitle">
-                    Chat locked
-                </h3>
+                    <span
+                        id="statusDot"
+                        class="status-dot"
+                    ></span>
 
+                    <span id="targetStatus">
+                        Checking status...
+                    </span>
 
-                <p id="gateText">
-                    Unlock chat to continue.
-                </p>
-
-
-                <a
-                    id="gateButton"
-                    class="gate-btn"
-                    href="./subscription.html"
-                >
-                    Unlock Chat
-                </a>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================================================
-         CALL MODAL
-    ========================================================= -->
-
-    <div
-        id="callModal"
-        class="call-modal"
-    >
-
-        <div class="call-box">
-
-
-            <div
-                id="callTitle"
-                class="call-title"
-            >
-                Kmeet Call
-            </div>
-
-
-            <div
-                id="callStatus"
-                class="call-status"
-            >
-                Preparing call...
-            </div>
-
-
-            <!-- =================================================
-                 INCOMING CALL BUTTONS
-            ================================================= -->
-
-            <div
-                id="incomingActions"
-                class="incoming-actions"
-                style="display:none"
-            >
-
-                <button
-                    id="acceptCallBtn"
-                    class="gate-btn"
-                >
-                    Accept
-                </button>
-
-
-                <button
-                    id="declineCallBtn"
-                    class="gate-btn"
-                >
-                    Decline
-                </button>
-
-            </div>
-
-
-            <!-- =================================================
-                 VIDEO AREA
-            ================================================= -->
-
-            <div
-                id="videoGrid"
-                class="video-grid"
-                style="display:none"
-            >
-
-                <video
-                    id="remoteVideo"
-                    autoplay
-                    playsinline
-                ></video>
-
-
-                <video
-                    id="localVideo"
-                    autoplay
-                    muted
-                    playsinline
-                ></video>
-
-            </div>
-
-
-            <!-- =================================================
-                 CALL CONTROLS
-            ================================================= -->
-
-            <div
-                id="callControls"
-                class="call-controls"
-                style="display:none"
-            >
-
-                <button
-                    id="muteBtn"
-                    class="control-btn"
-                    title="Mute"
-                >
-
-                    <i class="fa-solid fa-microphone"></i>
-
-                </button>
-
-
-                <button
-                    id="cameraBtn"
-                    class="control-btn"
-                    title="Camera"
-                >
-
-                    <i class="fa-solid fa-video"></i>
-
-                </button>
-
-
-                <button
-                    id="endCallBtn"
-                    class="control-btn end-btn"
-                    title="End call"
-                >
-
-                    <i class="fa-solid fa-phone-slash"></i>
-
-                </button>
+                </div>
 
             </div>
 
         </div>
 
+
+        <!-- CHAT INFO -->
+
+        <div
+            id="chatInfo"
+            class="chat-info"
+        >
+            Checking chat access...
+        </div>
+
+
+        <!-- MESSAGES -->
+
+        <div
+            id="messages"
+            class="messages"
+        >
+
+            <div class="empty-chat">
+
+                <i class="fa-regular fa-comments"></i>
+
+                <h3>Start a conversation</h3>
+
+                <p>
+                    Say hello and see where the conversation goes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPOSER -->
+
+        <div
+            id="composer"
+            class="composer"
+            style="display:none;"
+        >
+
+            <textarea
+                id="messageInput"
+                class="message-input"
+                rows="1"
+                maxlength="1000"
+                placeholder="Type your message..."
+            ></textarea>
+
+            <button
+                id="sendBtn"
+                class="send-btn"
+                type="button"
+                disabled
+                aria-label="Send message"
+            >
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     ACCESS GATE
+========================================================= -->
+
+<div
+    id="chatGate"
+    class="chat-gate"
+>
+
+    <div class="gate-card">
+
+        <div class="gate-icon">
+            <i id="gateIcon" class="fa-solid fa-lock"></i>
+        </div>
+
+        <h2 id="gateTitle">
+            Chat access
+        </h2>
+
+        <p id="gateText">
+            Checking your chat access...
+        </p>
+
+        <div class="gate-actions">
+
+            <a
+                id="gatePrimary"
+                class="gate-primary"
+                href="login.html"
+            >
+                Continue
+            </a>
+
+            <button
+                id="gateClose"
+                class="gate-secondary"
+                type="button"
+            >
+                Back
+            </button>
+
+        </div>
+
     </div>
 
-
-    <!-- =========================================================
-         JAVASCRIPT
-    ========================================================= -->
-
-    <script type="module">
-
-        /* =========================================================
-           FIREBASE IMPORTS
-        ========================================================= */
-
-        import {
-            auth,
-            db,
-            onAuthStateChanged,
-            signInAnonymously,
-            doc,
-            getDoc,
-            collection,
-            addDoc,
-            setDoc,
-            query,
-            orderBy,
-            onSnapshot,
-            serverTimestamp,
-
-            database,
-            databaseRef,
-            databaseSet,
-            databaseOnValue,
-            onDisconnect,
-            databaseServerTimestamp
-
-        } from "./firebase-config.js";
+</div>
 
 
-        /* =========================================================
-           CHAT RULES
-        ========================================================= */
+<!-- =========================================================
+     LOADING
+========================================================= -->
 
-        const FREE_OPENING_MESSAGES = [
-            "hi",
-            "hey"
-        ];
+<div
+    id="loading"
+    class="loading"
+>
 
-        const FREE_RECEIVER_REPLIES = 3;
+    <div class="loading-inner">
 
-        const RECEIVER_CONTINUATION_FEE = 11;
+        <img
+            src="kmeet-logo.jfif.jfif"
+            alt="Kmeet"
+        >
 
-        const SENDER_PACK_3_PRICE = 49;
+        <div class="spinner"></div>
 
+        <div class="loading-text">
+            Opening Kmeet chat...
+        </div>
 
-        /* =========================================================
-           EMOJIS
-        ========================================================= */
+    </div>
 
-        const EMOJIS = [
-
-            "😀",
-            "😂",
-            "🤣",
-            "😊",
-            "😍",
-            "🥰",
-            "😘",
-            "😉",
-            "😎",
-            "🤗",
-            "🤩",
-            "🥳",
-            "😇",
-            "🙂",
-            "🙃",
-            "😌",
-            "😏",
-            "😢",
-            "😭",
-            "😅",
-            "😮",
-            "😱",
-            "😡",
-            "🤔",
-            "🙄",
-            "😴",
-            "❤️",
-            "💕",
-            "💖",
-            "💗",
-            "💘",
-            "💋",
-            "🔥",
-            "✨",
-            "🎉",
-            "👍",
-            "👎",
-            "👏",
-            "🙏",
-            "🤝",
-            "👋",
-            "💯",
-            "🌹",
-            "🥂",
-            "☀️",
-            "🌙",
-            "💐",
-            "🫶"
-
-        ];
+</div>
 
 
-        /* =========================================================
-           ELEMENT HELPER
-        ========================================================= */
+<!-- =========================================================
+     FIREBASE
+========================================================= -->
 
-        const $ = id => document.getElementById(id);
+<script type="module">
 
+import {
+    auth,
+    db,
+    rtdb
+} from "./firebase-config.js";
 
-        /* =========================================================
-           DOM ELEMENTS
-        ========================================================= */
+import {
+    onAuthStateChanged,
+    signInAnonymously
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-        const targetPhoto = $("targetPhoto");
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    where,
+    setDoc,
+    updateDoc,
+    addDoc,
+    onSnapshot,
+    orderBy,
+    limit,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-        const targetName = $("targetName");
-
-        const targetStatus = $("targetStatus");
-
-        const infoBar = $("infoBar");
-
-        const messagesEl = $("messages");
-
-        const composer = $("composer");
-
-        const messageInput = $("messageInput");
-
-        const sendBtn = $("sendBtn");
-
-        const emojiBtn = $("emojiBtn");
-
-        const emojiPicker = $("emojiPicker");
-
-        const gate = $("gate");
-
-        const gateTitle = $("gateTitle");
-
-        const gateText = $("gateText");
-
-        const gateButton = $("gateButton");
-
-        const voiceBtn = $("voiceBtn");
-
-        const videoBtn = $("videoBtn");
+import {
+    ref,
+    onValue,
+    onDisconnect,
+    set as rtdbSet,
+    serverTimestamp as rtdbServerTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
-        /* =========================================================
-           STATE
-        ========================================================= */
+/* =========================================================
+   SETTINGS
+========================================================= */
 
-        let currentUser = null;
+const FREE_OPENING_MESSAGES = [
+    "hi",
+    "hey"
+];
 
-        let targetId = null;
+const FREE_RECEIVER_REPLIES = 3;
 
-        let targetProfile = null;
+const RECEIVER_CONTINUATION_FEE = 11;
 
-        let conversationId = null;
+const SENDER_PACK_3_PRICE = 49;
 
-        let conversationData = null;
-
-        let currentMessages = [];
-
-        let unsubscribeMessages = null;
-
-        let unsubscribePresence = null;
-
-        let anonymousSession = false;
-
-        let sending = false;
+const SENDER_PACK_8_PRICE = 100;
 
 
-        /* =========================================================
-           DEMO PROFILE IDS
-        ========================================================= */
+/* =========================================================
+   DOM
+========================================================= */
 
-        const demoIds = new Set(
+const loading = document.getElementById("loading");
 
-            Array.from(
-                { length: 36 },
-                (_, i) =>
-                    `demo-${String(i + 1).padStart(2, "0")}`
-            )
+const targetAvatar = document.getElementById("targetAvatar");
+const targetName = document.getElementById("targetName");
+const targetStatus = document.getElementById("targetStatus");
+const statusDot = document.getElementById("statusDot");
 
-        );
+const chatInfo = document.getElementById("chatInfo");
+
+const messages = document.getElementById("messages");
+
+const composer = document.getElementById("composer");
+const messageInput = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+
+const chatGate = document.getElementById("chatGate");
+const gateIcon = document.getElementById("gateIcon");
+const gateTitle = document.getElementById("gateTitle");
+const gateText = document.getElementById("gateText");
+const gatePrimary = document.getElementById("gatePrimary");
+const gateClose = document.getElementById("gateClose");
 
 
-        /* =========================================================
-           ESCAPE HTML
-        ========================================================= */
+/* =========================================================
+   STATE
+========================================================= */
 
-        function esc(value) {
+let currentUser = null;
 
-            return String(value ?? "")
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;");
+let targetId = null;
+let targetProfile = null;
 
+let conversationId = null;
+let conversationData = null;
+
+let currentMessages = [];
+
+let unsubscribeMessages = null;
+let unsubscribePresence = null;
+
+let anonymousSession = false;
+
+let sending = false;
+
+
+/*
+ * IMPORTANT:
+ *
+ * This flag belongs to the USER ACCOUNT.
+ *
+ * It is deliberately NOT tied only to a conversation.
+ *
+ * A new registered member therefore receives:
+ *
+ *     ONE FREE opening message
+ *
+ * and that opening message must be:
+ *
+ *     hi
+ *     or
+ *     hey
+ *
+ * After it is used, the sender must use a paid chat package.
+ */
+let accountFreeOpeningUsed = false;
+
+
+/* =========================================================
+   TARGET ID
+========================================================= */
+
+const urlParams = new URLSearchParams(window.location.search);
+
+targetId =
+    urlParams.get("userId") ||
+    urlParams.get("user") ||
+    "";
+
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatTime(timestamp) {
+
+    try {
+
+        if (!timestamp) {
+            return "";
         }
 
+        const date =
+            timestamp.toDate
+                ? timestamp.toDate()
+                : new Date(timestamp);
 
-        /* =========================================================
-           NORMALIZE TEXT
-        ========================================================= */
-
-        function norm(value) {
-
-            return String(value || "")
-                .trim()
-                .toLowerCase();
-
+        if (Number.isNaN(date.getTime())) {
+            return "";
         }
 
+        return date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
 
-        /* =========================================================
-           GET TARGET USER FROM URL
-        ========================================================= */
-
-        function targetFromUrl() {
-
-            const params =
-                new URLSearchParams(location.search);
-
-            return (
-                params.get("userId") ||
-                params.get("user") ||
-                params.get("id") ||
-                ""
-            ).trim();
-
-        }
+    } catch {
+        return "";
+    }
+}
 
 
-        /* =========================================================
-           BUILD EMOJI PICKER
-        ========================================================= */
+function normalizeMessage(text) {
 
-        EMOJIS.forEach(emoji => {
+    return String(text || "")
+        .trim()
+        .toLowerCase();
 
-            const button =
-                document.createElement("button");
-
-            button.type = "button";
-
-            button.className = "emoji";
-
-            button.textContent = emoji;
+}
 
 
-            button.onclick = () => {
+function validFreeOpening(text) {
 
-                const start =
-                    messageInput.selectionStart ??
-                    messageInput.value.length;
+    return FREE_OPENING_MESSAGES.includes(
+        normalizeMessage(text)
+    );
 
-                const end =
-                    messageInput.selectionEnd ??
-                    messageInput.value.length;
+}
 
 
-                messageInput.value =
-                    messageInput.value.slice(0, start) +
-                    emoji +
-                    messageInput.value.slice(end);
+/* =========================================================
+   GATE
+========================================================= */
+
+function gateShow(type) {
+
+    chatGate.classList.add("show");
+
+    composer.style.display = "none";
+    sendBtn.disabled = true;
+
+    if (type === "anonymous") {
+
+        gateIcon.className =
+            "fa-solid fa-user-plus";
+
+        gateTitle.textContent =
+            "Create an account to chat";
+
+        gateText.textContent =
+            "You can browse Kmeet profiles as a guest, but messaging requires a registered Kmeet account. Create an account or log in to start chatting.";
+
+        gatePrimary.textContent =
+            "Create Account";
+
+        gatePrimary.href =
+            "signup.html";
+
+    }
+
+    else if (type === "sender") {
+
+        gateIcon.className =
+            "fa-solid fa-comments";
+
+        gateTitle.textContent =
+            "Your free opening message has been used";
+
+        gateText.textContent =
+            `Continue chatting with a paid package. Get 3 chats for KSh ${SENDER_PACK_3_PRICE}, or use the bonus 8-chat package for KSh ${SENDER_PACK_8_PRICE}.`;
+
+        gatePrimary.textContent =
+            "Unlock Chat";
+
+        gatePrimary.href =
+            `subscription.html?userId=${encodeURIComponent(targetId)}&package=3`;
+
+    }
+
+    else if (type === "receiver") {
+
+        gateIcon.className =
+            "fa-solid fa-lock";
+
+        gateTitle.textContent =
+            "Continue the conversation";
+
+        gateText.textContent =
+            `Your ${FREE_RECEIVER_REPLIES} free replies have been used. Continue chatting for KSh ${RECEIVER_CONTINUATION_FEE}.`;
+
+        gatePrimary.textContent =
+            "Continue Chat";
+
+        gatePrimary.href =
+            `subscription.html?userId=${encodeURIComponent(targetId)}&package=receiver`;
+
+    }
+
+    else {
+
+        gateIcon.className =
+            "fa-solid fa-lock";
+
+        gateTitle.textContent =
+            "Chat access";
+
+        gateText.textContent =
+            "Chat access is currently unavailable.";
+
+        gatePrimary.textContent =
+            "Back to Discover";
+
+        gatePrimary.href =
+            "discover.html";
+
+    }
+}
 
 
-                messageInput.focus();
+function gateHide() {
+
+    chatGate.classList.remove("show");
+
+}
 
 
-                messageInput.selectionStart =
-                    messageInput.selectionEnd =
-                        start + emoji.length;
+/* =========================================================
+   GATE CLOSE
+========================================================= */
+
+gateClose.addEventListener("click", () => {
+
+    gateHide();
+
+    if (
+        currentUser &&
+        !anonymousSession
+    ) {
+
+        composer.style.display = "flex";
+        sendBtn.disabled = false;
+
+    }
+
+});
+
+
+/* =========================================================
+   TARGET PROFILE
+========================================================= */
+
+async function loadTargetProfile() {
+
+    if (!targetId) {
+
+        targetName.textContent =
+            "Unknown member";
+
+        targetStatus.textContent =
+            "Profile not found";
+
+        return;
+
+    }
+
+
+    /*
+     * DEMO PROFILE
+     */
+
+    if (targetId.startsWith("demo-")) {
+
+        const demoNumber =
+            targetId.replace("demo-", "");
+
+        targetName.textContent =
+            "Kmeet Member";
+
+        targetStatus.textContent =
+            "Kmeet member";
+
+        statusDot.classList.remove("online");
+
+        targetAvatar.src =
+            "kmeet-logo.jfif.jfif";
+
+        targetProfile = {
+            uid: targetId,
+            displayName: "Kmeet Member",
+            photoURL: "kmeet-logo.jfif.jfif"
+        };
+
+        return;
+    }
+
+
+    /*
+     * REAL FIREBASE MEMBER
+     */
+
+    try {
+
+        const userRef =
+            doc(db, "users", targetId);
+
+        const snap =
+            await getDoc(userRef);
+
+        if (snap.exists()) {
+
+            const data = snap.data();
+
+            targetProfile = {
+                uid: targetId,
+                ...data
+            };
+
+            targetName.textContent =
+                data.displayName ||
+                data.name ||
+                "Kmeet Member";
+
+            const photo =
+                data.photoURL ||
+                data.photoUrl ||
+                data.profilePhoto ||
+                data.photo ||
+                "kmeet-logo.jfif.jfif";
+
+            targetAvatar.src = photo;
+
+            targetAvatar.onerror = () => {
+
+                targetAvatar.src =
+                    "kmeet-logo.jfif.jfif";
 
             };
 
+        }
 
-            emojiPicker.appendChild(button);
+        else {
 
-        });
+            targetName.textContent =
+                "Kmeet Member";
+
+            targetAvatar.src =
+                "kmeet-logo.jfif.jfif";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not load target profile:",
+            error
+        );
+
+        targetName.textContent =
+            "Kmeet Member";
+
+        targetAvatar.src =
+            "kmeet-logo.jfif.jfif";
+
+    }
+
+}
 
 
-        /* =========================================================
-           EMOJI BUTTON
-        ========================================================= */
+/* =========================================================
+   ACCOUNT CHAT FREE ALLOWANCE
+========================================================= */
 
-        emojiBtn.onclick = event => {
+/*
+ * Read the account-level free opening status.
+ *
+ * We look for:
+ *
+ *     chatFreeOpeningUsed
+ *
+ * If it does not exist, the member is treated as NEW and
+ * therefore receives the free opening message.
+ */
 
-            event.stopPropagation();
+async function loadAccountChatAllowance() {
 
-            emojiPicker.classList.toggle("show");
-
-        };
+    accountFreeOpeningUsed = false;
 
 
-        /* =========================================================
-           CLOSE EMOJI PICKER
-        ========================================================= */
+    if (!currentUser) {
+        return;
+    }
 
-        document.onclick = event => {
 
-            if (
-                !emojiPicker.contains(event.target) &&
-                event.target !== emojiBtn
-            ) {
+    if (currentUser.isAnonymous) {
 
-                emojiPicker.classList.remove("show");
+        accountFreeOpeningUsed = true;
 
+        return;
+
+    }
+
+
+    try {
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
+
+        const snap =
+            await getDoc(userRef);
+
+        if (!snap.exists()) {
+
+            /*
+             * No profile document yet.
+             *
+             * Treat as a brand-new registered member.
+             */
+
+            accountFreeOpeningUsed = false;
+
+            return;
+
+        }
+
+
+        const data =
+            snap.data() || {};
+
+
+        accountFreeOpeningUsed =
+            data.chatFreeOpeningUsed === true;
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Could not read account chat allowance:",
+            error
+        );
+
+
+        /*
+         * IMPORTANT:
+         *
+         * If the field cannot be read, we do NOT immediately
+         * send a new member to payment.
+         *
+         * The existing conversation will still protect
+         * previously-used openings.
+         */
+
+        accountFreeOpeningUsed = false;
+
+    }
+
+}
+
+
+/* =========================================================
+   MARK ACCOUNT FREE OPENING USED
+========================================================= */
+
+async function markAccountFreeOpeningUsed() {
+
+    if (
+        !currentUser ||
+        currentUser.isAnonymous
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
+
+
+        await setDoc(
+            userRef,
+            {
+                chatFreeOpeningUsed: true,
+                chatFreeOpeningUsedAt: serverTimestamp()
+            },
+            {
+                merge: true
             }
-
-        };
-
-
-        /* =========================================================
-           LOAD TARGET PROFILE
-        ========================================================= */
-
-        async function loadProfile() {
-
-            try {
-
-                /*
-                 * Demo profiles do not exist as Firebase users.
-                 */
-
-                if (demoIds.has(targetId)) {
-
-                    targetProfile = {
-
-                        name: "Kmeet member",
-
-                        photo: "./kmeet-logo.jfif.jfif",
-
-                        demo: true
-
-                    };
-
-                } else {
-
-                    const snapshot =
-                        await getDoc(
-                            doc(db, "users", targetId)
-                        );
+        );
 
 
-                    const data =
-                        snapshot.exists()
-                            ? snapshot.data()
-                            : {};
+        accountFreeOpeningUsed = true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Could not save free chat allowance:",
+            error
+        );
 
 
-                    targetProfile = {
+        /*
+         * Do not stop the successfully-created message.
+         *
+         * Existing conversation state also records the opening.
+         */
 
-                        name:
-                            data.displayName ||
-                            data.name ||
-                            "Kmeet member",
+    }
 
-                        photo:
-                            data.photoURL ||
-                            data.photo ||
-                            "./kmeet-logo.jfif.jfif",
+}
 
-                        demo: false
 
-                    };
+/* =========================================================
+   CONVERSATION IDS
+========================================================= */
 
-                }
+function conversationIds() {
 
-            } catch (error) {
+    const sortedIds =
+        [
+            currentUser.uid,
+            targetId
+        ]
+        .sort()
+        .join("_");
 
-                console.error(
-                    "Profile loading error:",
-                    error
+
+    return [
+        `kmeet_v2_${sortedIds}`,
+        sortedIds,
+        `conversation_${sortedIds}`
+    ];
+
+}
+
+
+/* =========================================================
+   VALIDATE CONVERSATION
+========================================================= */
+
+function validConversation(data) {
+
+    if (!data) {
+        return false;
+    }
+
+
+    const firstPair =
+        data.initiatorId === currentUser.uid &&
+        data.receiverId === targetId;
+
+
+    const secondPair =
+        data.initiatorId === targetId &&
+        data.receiverId === currentUser.uid;
+
+
+    return firstPair || secondPair;
+
+}
+
+
+/* =========================================================
+   FIND EXISTING CONVERSATION
+========================================================= */
+
+async function findConversation() {
+
+    if (
+        !currentUser ||
+        !targetId
+    ) {
+
+        return null;
+
+    }
+
+
+    /*
+     * FIRST:
+     * Check known conversation document IDs.
+     */
+
+    for (
+        const id of conversationIds()
+    ) {
+
+        try {
+
+            const ref =
+                doc(
+                    db,
+                    "conversations",
+                    id
                 );
 
+            const snap =
+                await getDoc(ref);
 
-                targetProfile = {
+            if (
+                snap.exists() &&
+                validConversation(snap.data())
+            ) {
 
-                    name: "Kmeet member",
-
-                    photo: "./kmeet-logo.jfif.jfif",
-
-                    demo: false
-
+                return {
+                    id: snap.id,
+                    data: snap.data()
                 };
 
             }
 
-
-            targetName.textContent =
-                targetProfile.name;
-
-
-            targetPhoto.src =
-                targetProfile.photo;
-
-
-            targetPhoto.onerror = () => {
-
-                targetPhoto.src =
-                    "./kmeet-logo.jfif.jfif";
-
-            };
-
         }
 
+        catch (error) {
 
-        /* =========================================================
-           SHOW PAYMENT / ACCESS GATE
-        ========================================================= */
-
-        function gateShow(type) {
-
-            gate.classList.add("show");
-
-            composer.style.display = "none";
-
-            sendBtn.disabled = true;
-
-
-            if (type === "anonymous") {
-
-                gateTitle.textContent =
-                    "Create an account to chat";
-
-
-                gateText.textContent =
-                    "Guest browsing is available, but messaging and calls require a registered account or paid access.";
-
-
-                gateButton.textContent =
-                    "Unlock Chat";
-
-
-                gateButton.href =
-                    `./subscription.html?userId=${encodeURIComponent(targetId)}&anonymous=true`;
-
-            }
-
-
-            else if (type === "sender") {
-
-                gateTitle.textContent =
-                    "Your free opening message has been used";
-
-
-                gateText.textContent =
-                    `Continue with 3 chats for KSh ${SENDER_PACK_3_PRICE}.`;
-
-
-                gateButton.textContent =
-                    `Continue — KSh ${SENDER_PACK_3_PRICE}`;
-
-
-                gateButton.href =
-                    `./subscription.html?userId=${encodeURIComponent(targetId)}&package=3`;
-
-            }
-
-
-            else {
-
-                gateTitle.textContent =
-                    "Continue chatting";
-
-
-                gateText.textContent =
-                    `Your 3 free replies are finished. Continue for KSh ${RECEIVER_CONTINUATION_FEE}.`;
-
-
-                gateButton.textContent =
-                    `Continue — KSh ${RECEIVER_CONTINUATION_FEE}`;
-
-
-                gateButton.href =
-                    `./subscription.html?userId=${encodeURIComponent(targetId)}&package=receiver`;
-
-            }
-
-        }
-
-
-        /* =========================================================
-           CHECK SENDER FREE OPENING
-        ========================================================= */
-
-        function senderFree() {
-
-            return (
-                !conversationData ||
-                conversationData.initiatorId !== currentUser.uid ||
-                conversationData.senderFreeOpeningUsed !== true
+            console.warn(
+                "Conversation lookup failed:",
+                id,
+                error
             );
 
         }
 
-
-        /* =========================================================
-           GET RECEIVER FREE REPLIES USED
-        ========================================================= */
-
-        function receiverUsed() {
-
-            if (
-                !conversationData ||
-                conversationData.receiverId !== currentUser.uid
-            ) {
-
-                return 0;
-
-            }
+    }
 
 
-            const number =
-                Number(
-                    conversationData.receiverRepliesUsed
-                );
+    /*
+     * SECOND:
+     * Search by initiator/receiver.
+     */
+
+    try {
+
+        const q1 =
+            query(
+                collection(db, "conversations"),
+                where(
+                    "initiatorId",
+                    "==",
+                    currentUser.uid
+                ),
+                where(
+                    "receiverId",
+                    "==",
+                    targetId
+                ),
+                limit(1)
+            );
 
 
-            return (
-                Number.isFinite(number) &&
-                number >= 0
-            )
-                ? number
-                : 0;
+        const snap1 =
+            await getDocs(q1);
+
+
+        if (!snap1.empty) {
+
+            const found =
+                snap1.docs[0];
+
+            return {
+                id: found.id,
+                data: found.data()
+            };
 
         }
 
+    }
 
-        /* =========================================================
-           UPDATE INFORMATION BAR
-        ========================================================= */
+    catch (error) {
 
-        function updateInfo() {
+        console.warn(
+            "Initiator conversation search failed:",
+            error
+        );
 
-            if (anonymousSession) {
-
-                infoBar.textContent =
-                    "Guest browsing — payment is required to send messages.";
-
-                return;
-
-            }
+    }
 
 
-            if (!conversationData) {
+    try {
 
-                infoBar.textContent =
-                    "Start the conversation with a message.";
-
-                return;
-
-            }
-
-
-            if (
-                conversationData.initiatorId ===
-                currentUser.uid
-            ) {
-
-                infoBar.textContent =
-                    senderFree()
-                        ? "Your opening message is free — say hi or hey ❤️"
-                        : "Your free opening message has been used.";
-
-            }
+        const q2 =
+            query(
+                collection(db, "conversations"),
+                where(
+                    "initiatorId",
+                    "==",
+                    targetId
+                ),
+                where(
+                    "receiverId",
+                    "==",
+                    currentUser.uid
+                ),
+                limit(1)
+            );
 
 
-            else {
+        const snap2 =
+            await getDocs(q2);
 
-                const remaining =
-                    Math.max(
-                        0,
-                        FREE_RECEIVER_REPLIES -
-                        receiverUsed()
+
+        if (!snap2.empty) {
+
+            const found =
+                snap2.docs[0];
+
+            return {
+                id: found.id,
+                data: found.data()
+            };
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Receiver conversation search failed:",
+            error
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   PREPARE CHAT
+========================================================= */
+
+async function prepare() {
+
+    await loadAccountChatAllowance();
+
+
+    const existing =
+        await findConversation();
+
+
+    if (existing) {
+
+        conversationId =
+            existing.id;
+
+        conversationData =
+            existing.data;
+
+        listen();
+
+    }
+
+    else {
+
+        conversationId = null;
+
+        conversationData = null;
+
+        currentMessages = [];
+
+        render();
+
+    }
+
+
+    updateInfo();
+
+}
+
+
+/* =========================================================
+   LISTEN TO MESSAGES
+========================================================= */
+
+function listen() {
+
+    if (!conversationId) {
+        return;
+    }
+
+
+    if (unsubscribeMessages) {
+
+        unsubscribeMessages();
+
+        unsubscribeMessages = null;
+
+    }
+
+
+    const messagesRef =
+        collection(
+            db,
+            "conversations",
+            conversationId,
+            "messages"
+        );
+
+
+    const q =
+        query(
+            messagesRef,
+            orderBy("createdAt", "asc")
+        );
+
+
+    unsubscribeMessages =
+        onSnapshot(
+            q,
+            snapshot => {
+
+                currentMessages =
+                    snapshot.docs.map(
+                        item => ({
+                            id: item.id,
+                            ...item.data()
+                        })
                     );
 
 
-                infoBar.textContent =
-                    remaining
-                        ? `${remaining} free repl${remaining === 1 ? "y" : "ies"} remaining.`
-                        : "Your 3 free replies have been used.";
+                render();
+
+            },
+
+            error => {
+
+                console.error(
+                    "Message listener error:",
+                    error
+                );
+
+                chatInfo.textContent =
+                    "Unable to load messages right now.";
 
             }
+        );
 
-        }
-
-
-        /* =========================================================
-           RENDER MESSAGES
-        ========================================================= */
-
-        function render() {
-
-            messagesEl.innerHTML = "";
+}
 
 
-            if (!currentMessages.length) {
+/* =========================================================
+   RENDER MESSAGES
+========================================================= */
 
-                messagesEl.innerHTML =
-                    '<div class="empty">Start the conversation ❤️</div>';
+function render() {
 
-                return;
+    if (!currentMessages.length) {
 
-            }
+        messages.innerHTML = `
 
+            <div class="empty-chat">
 
-            currentMessages.forEach(message => {
+                <i class="fa-regular fa-comments"></i>
 
-                const row =
-                    document.createElement("div");
+                <h3>Start a conversation</h3>
 
+                <p>
+                    Say hello and see where the conversation goes.
+                </p>
 
-                row.className =
-                    `message-row ${
-                        message.senderId === currentUser.uid
-                            ? "mine"
-                            : "theirs"
-                    }`;
+            </div>
 
+        `;
 
-                const time =
-                    message.createdAt?.toDate
-                        ? message.createdAt
-                              .toDate()
-                              .toLocaleTimeString(
-                                  [],
-                                  {
-                                      hour: "2-digit",
-                                      minute: "2-digit"
-                                  }
-                              )
-                        : "";
+        return;
+
+    }
 
 
-                row.innerHTML = `
+    messages.innerHTML =
+        currentMessages
+            .map(message => {
 
-                    <div class="message">
+                const mine =
+                    message.senderId === currentUser?.uid;
 
-                        <div>
-                            ${esc(message.text)}
-                        </div>
 
-                        <div class="message-time">
-                            ${time}
+                return `
+
+                    <div class="message-row ${mine ? "mine" : "theirs"}">
+
+                        <div class="message ${mine ? "mine" : "theirs"}">
+
+                            ${escapeHtml(message.text)}
+
+                            <span class="message-time">
+                                ${formatTime(message.createdAt)}
+                            </span>
+
                         </div>
 
                     </div>
 
                 `;
 
-
-                messagesEl.appendChild(row);
-
-            });
+            })
+            .join("");
 
 
-            messagesEl.scrollTop =
-                messagesEl.scrollHeight;
+    messages.scrollTop =
+        messages.scrollHeight;
 
-        }
-
-
-        /* =========================================================
-           CONVERSATION IDS
-        ========================================================= */
-
-        function ids() {
-
-            const sortedIds =
-                [
-                    currentUser.uid,
-                    targetId
-                ]
-                    .sort()
-                    .join("_");
+}
 
 
-            return [
+/* =========================================================
+   INFO BAR
+========================================================= */
 
-                `kmeet_v2_${sortedIds}`,
+function updateInfo() {
 
-                sortedIds,
+    if (anonymousSession) {
 
-                `conversation_${sortedIds}`
+        chatInfo.textContent =
+            "Create an account to send messages.";
 
-            ];
+        return;
+
+    }
+
+
+    if (!conversationData) {
+
+        if (!accountFreeOpeningUsed) {
+
+            chatInfo.textContent =
+                'Your first opening message is free. Start with "hi" or "hey".';
 
         }
 
+        else {
 
-        /* =========================================================
-           VALIDATE CONVERSATION
-        ========================================================= */
-
-        function valid(data) {
-
-            return (
-                data &&
-                (
-                    (
-                        data.initiatorId === currentUser.uid &&
-                        data.receiverId === targetId
-                    )
-                    ||
-                    (
-                        data.initiatorId === targetId &&
-                        data.receiverId === currentUser.uid
-                    )
-                )
-            );
+            chatInfo.textContent =
+                "Your free opening message has been used. Paid chat is available.";
 
         }
 
+        return;
 
-        /* =========================================================
-           FIND EXISTING CONVERSATION
-        ========================================================= */
-
-        async function findConversation() {
-
-            for (const id of ids()) {
-
-                try {
-
-                    const snapshot =
-                        await getDoc(
-                            doc(db, "conversations", id)
-                        );
+    }
 
 
-                    if (
-                        snapshot.exists() &&
-                        valid(snapshot.data())
-                    ) {
+    const isInitiator =
+        conversationData.initiatorId ===
+        currentUser.uid;
 
-                        return {
 
-                            id,
+    if (isInitiator) {
 
-                            data: snapshot.data()
+        if (!accountFreeOpeningUsed) {
 
-                        };
+            chatInfo.textContent =
+                'Your free opening message is available. Send "hi" or "hey".';
 
-                    }
+        }
 
-                } catch (error) {
+        else {
 
-                    console.warn(
-                        "Conversation lookup error:",
-                        error
+            const credits =
+                Number(
+                    conversationData.senderCredits || 0
+                );
+
+
+            if (credits > 0) {
+
+                chatInfo.textContent =
+                    `You have ${credits} paid chat credit${credits === 1 ? "" : "s"}.`;
+
+            }
+
+            else {
+
+                chatInfo.textContent =
+                    `Your free opening has been used. Get 3 chats for KSh ${SENDER_PACK_3_PRICE}.`;
+
+            }
+
+        }
+
+        return;
+
+    }
+
+
+    /*
+     * Current user is the receiver.
+     */
+
+    if (
+        conversationData.receiverPaid === true
+    ) {
+
+        chatInfo.textContent =
+            "Paid continuation is active.";
+
+        return;
+
+    }
+
+
+    const replies =
+        Number(
+            conversationData.receiverRepliesUsed || 0
+        );
+
+
+    if (
+        replies < FREE_RECEIVER_REPLIES
+    ) {
+
+        const remaining =
+            FREE_RECEIVER_REPLIES - replies;
+
+        chatInfo.textContent =
+            `${remaining} free repl${remaining === 1 ? "y" : "ies"} remaining.`;
+
+    }
+
+    else {
+
+        chatInfo.textContent =
+            `Your free replies are finished. Continue for KSh ${RECEIVER_CONTINUATION_FEE}.`;
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE CONVERSATION
+========================================================= */
+
+async function createConversation(text) {
+
+    const newConversationRef =
+        doc(
+            db,
+            "conversations",
+            `kmeet_v2_${[
+                currentUser.uid,
+                targetId
+            ].sort().join("_")}`
+        );
+
+
+    const data = {
+
+        initiatorId:
+            currentUser.uid,
+
+        receiverId:
+            targetId,
+
+        senderFreeOpeningUsed:
+            true,
+
+        receiverRepliesUsed:
+            0,
+
+        receiverPaid:
+            false,
+
+        senderCredits:
+            0,
+
+        senderCreditsUsed:
+            0,
+
+        createdAt:
+            serverTimestamp(),
+
+        updatedAt:
+            serverTimestamp()
+
+    };
+
+
+    await setDoc(
+        newConversationRef,
+        data
+    );
+
+
+    const messageRef =
+        collection(
+            db,
+            "conversations",
+            newConversationRef.id,
+            "messages"
+        );
+
+
+    await addDoc(
+        messageRef,
+        {
+            senderId:
+                currentUser.uid,
+
+            receiverId:
+                targetId,
+
+            text:
+                text.trim(),
+
+            createdAt:
+                serverTimestamp()
+        }
+    );
+
+
+    conversationId =
+        newConversationRef.id;
+
+    conversationData =
+        data;
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Only mark the account free opening as used
+     * after the message has successfully been written.
+     */
+
+    await markAccountFreeOpeningUsed();
+
+
+    listen();
+
+    updateInfo();
+
+}
+
+
+/* =========================================================
+   SENDER FREE OPENING
+========================================================= */
+
+function senderFree() {
+
+    /*
+     * The free opening belongs to the account.
+     *
+     * This is the key correction.
+     */
+
+    return (
+        currentUser &&
+        !currentUser.isAnonymous &&
+        !accountFreeOpeningUsed
+    );
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function send() {
+
+    if (sending) {
+        return;
+    }
+
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    const text =
+        messageInput.value.trim();
+
+
+    if (!text) {
+        return;
+    }
+
+
+    /*
+     * ANONYMOUS USERS
+     *
+     * Guests may browse Discover,
+     * but they cannot send chat messages.
+     */
+
+    if (anonymousSession) {
+
+        gateShow("anonymous");
+
+        return;
+
+    }
+
+
+    sending = true;
+
+    sendBtn.disabled = true;
+
+
+    try {
+
+        /*
+         * =====================================================
+         * NEW CONVERSATION
+         * =====================================================
+         */
+
+        if (!conversationData) {
+
+            /*
+             * NEW REGISTERED MEMBER:
+             *
+             * Their first free opening must be hi or hey.
+             */
+
+            if (senderFree()) {
+
+                if (!validFreeOpening(text)) {
+
+                    alert(
+                        'Your free opening message must be "hi" or "hey".'
                     );
+
+                    return;
 
                 }
 
+
+                await createConversation(text);
+
+                messageInput.value = "";
+
+                return;
+
             }
 
 
-            return null;
+            /*
+             * Free opening already used.
+             */
+
+            gateShow("sender");
+
+            return;
 
         }
 
 
-        /* =========================================================
-           LISTEN FOR MESSAGES
-        ========================================================= */
+        /*
+         * =====================================================
+         * EXISTING CONVERSATION
+         * =====================================================
+         */
 
-        function listen() {
+        const isInitiator =
+            conversationData.initiatorId ===
+            currentUser.uid;
 
-            if (unsubscribeMessages) {
 
-                unsubscribeMessages();
+        /*
+         * =====================================================
+         * SENDER
+         * =====================================================
+         */
+
+        if (isInitiator) {
+
+            /*
+             * If the account still has its free opening,
+             * allow it even if an old conversation document
+             * exists.
+             */
+
+            if (senderFree()) {
+
+                if (!validFreeOpening(text)) {
+
+                    alert(
+                        'Your free opening message must be "hi" or "hey".'
+                    );
+
+                    return;
+
+                }
+
+
+                const messageRef =
+                    collection(
+                        db,
+                        "conversations",
+                        conversationId,
+                        "messages"
+                    );
+
+
+                await addDoc(
+                    messageRef,
+                    {
+                        senderId:
+                            currentUser.uid,
+
+                        receiverId:
+                            targetId,
+
+                        text:
+                            text,
+
+                        createdAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "conversations",
+                        conversationId
+                    ),
+                    {
+                        senderFreeOpeningUsed:
+                            true,
+
+                        updatedAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                await markAccountFreeOpeningUsed();
+
+
+                messageInput.value = "";
+
+                return;
 
             }
 
 
-            const messagesRef =
+            /*
+             * Free opening has been used.
+             *
+             * Check paid sender credits.
+             */
+
+            const credits =
+                Number(
+                    conversationData.senderCredits || 0
+                );
+
+
+            const creditsUsed =
+                Number(
+                    conversationData.senderCreditsUsed || 0
+                );
+
+
+            const remainingCredits =
+                Math.max(
+                    0,
+                    credits - creditsUsed
+                );
+
+
+            if (remainingCredits <= 0) {
+
+                gateShow("sender");
+
+                return;
+
+            }
+
+
+            const messageRef =
                 collection(
                     db,
                     "conversations",
@@ -2051,911 +2461,616 @@
                 );
 
 
-            const messagesQuery =
-                query(
-                    messagesRef,
-                    orderBy("createdAt", "asc")
-                );
+            await addDoc(
+                messageRef,
+                {
+                    senderId:
+                        currentUser.uid,
+
+                    receiverId:
+                        targetId,
+
+                    text:
+                        text,
+
+                    createdAt:
+                        serverTimestamp()
+                }
+            );
 
 
-            unsubscribeMessages =
-                onSnapshot(
-                    messagesQuery,
+            await updateDoc(
+                doc(
+                    db,
+                    "conversations",
+                    conversationId
+                ),
+                {
+                    senderCreditsUsed:
+                        creditsUsed + 1,
 
-                    snapshot => {
-
-                        currentMessages =
-                            snapshot.docs.map(
-                                document => ({
-                                    id: document.id,
-                                    ...document.data()
-                                })
-                            );
+                    updatedAt:
+                        serverTimestamp()
+                }
+            );
 
 
-                        render();
+            conversationData.senderCreditsUsed =
+                creditsUsed + 1;
 
-                        updateInfo();
 
-                    },
+            messageInput.value = "";
 
-                    error => {
+            updateInfo();
 
-                        console.error(
-                            "Message listener error:",
-                            error
-                        );
-
-                    }
-                );
+            return;
 
         }
 
 
-        /* =========================================================
-           PREPARE CONVERSATION
-        ========================================================= */
+        /*
+         * =====================================================
+         * RECEIVER
+         * =====================================================
+         */
 
-        async function prepare() {
-
-            const existing =
-                await findConversation();
+        const receiverPaid =
+            conversationData.receiverPaid === true;
 
 
-            if (existing) {
+        const repliesUsed =
+            Number(
+                conversationData.receiverRepliesUsed || 0
+            );
 
-                conversationId =
-                    existing.id;
 
-                conversationData =
-                    existing.data;
+        /*
+         * Paid receiver:
+         * continue normally.
+         */
 
-                listen();
+        if (receiverPaid) {
+
+            const messageRef =
+                collection(
+                    db,
+                    "conversations",
+                    conversationId,
+                    "messages"
+                );
+
+
+            await addDoc(
+                messageRef,
+                {
+                    senderId:
+                        currentUser.uid,
+
+                    receiverId:
+                        targetId,
+
+                    text:
+                        text,
+
+                    createdAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            messageInput.value = "";
+
+            return;
+
+        }
+
+
+        /*
+         * Receiver still has free replies.
+         */
+
+        if (
+            repliesUsed <
+            FREE_RECEIVER_REPLIES
+        ) {
+
+            const messageRef =
+                collection(
+                    db,
+                    "conversations",
+                    conversationId,
+                    "messages"
+                );
+
+
+            await addDoc(
+                messageRef,
+                {
+                    senderId:
+                        currentUser.uid,
+
+                    receiverId:
+                        targetId,
+
+                    text:
+                        text,
+
+                    createdAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            await updateDoc(
+                doc(
+                    db,
+                    "conversations",
+                    conversationId
+                ),
+                {
+                    receiverRepliesUsed:
+                        repliesUsed + 1,
+
+                    updatedAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            conversationData.receiverRepliesUsed =
+                repliesUsed + 1;
+
+
+            messageInput.value = "";
+
+            updateInfo();
+
+            return;
+
+        }
+
+
+        /*
+         * Receiver's three free replies are finished.
+         */
+
+        gateShow("receiver");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Send message error:",
+            error
+        );
+
+
+        alert(
+            "The message could not be sent. Please try again."
+        );
+
+    }
+
+    finally {
+
+        sending = false;
+
+        /*
+         * Do not leave the button disabled for a normal
+         * registered chat session.
+         */
+
+        if (
+            currentUser &&
+            !anonymousSession &&
+            !chatGate.classList.contains("show")
+        ) {
+
+            sendBtn.disabled = false;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+sendBtn.addEventListener(
+    "click",
+    send
+);
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+messageInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            send();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AUTO RESIZE TEXTAREA
+========================================================= */
+
+messageInput.addEventListener(
+    "input",
+    () => {
+
+        messageInput.style.height =
+            "auto";
+
+        messageInput.style.height =
+            Math.min(
+                messageInput.scrollHeight,
+                130
+            ) + "px";
+
+    }
+);
+
+
+/* =========================================================
+   PRESENCE
+========================================================= */
+
+function presence() {
+
+    if (
+        !currentUser ||
+        currentUser.isAnonymous
+    ) {
+
+        return;
+
+    }
+
+
+    if (unsubscribePresence) {
+
+        unsubscribePresence();
+
+        unsubscribePresence = null;
+
+    }
+
+
+    try {
+
+        const presenceRef =
+            ref(
+                rtdb,
+                `presence/${currentUser.uid}`
+            );
+
+
+        const connectedRef =
+            ref(
+                rtdb,
+                ".info/connected"
+            );
+
+
+        unsubscribePresence =
+            onValue(
+                connectedRef,
+                async snapshot => {
+
+                    if (
+                        snapshot.val() !== true
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        await onDisconnect(
+                            presenceRef
+                        ).set({
+                            online: false,
+                            lastSeen:
+                                rtdbServerTimestamp()
+                        });
+
+
+                        await rtdbSet(
+                            presenceRef,
+                            {
+                                online: true,
+                                lastSeen:
+                                    rtdbServerTimestamp()
+                            }
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.warn(
+                            "Presence error:",
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Presence setup failed:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TARGET PRESENCE
+========================================================= */
+
+function targetPresence() {
+
+    if (
+        !targetId ||
+        targetId.startsWith("demo-")
+    ) {
+
+        targetStatus.textContent =
+            "Kmeet member";
+
+        statusDot.classList.remove("online");
+
+        return;
+
+    }
+
+
+    try {
+
+        const targetPresenceRef =
+            ref(
+                rtdb,
+                `presence/${targetId}`
+            );
+
+
+        onValue(
+            targetPresenceRef,
+            snapshot => {
+
+                const data =
+                    snapshot.val();
+
+
+                if (
+                    data &&
+                    data.online === true
+                ) {
+
+                    targetStatus.textContent =
+                        "Online";
+
+                    statusDot.classList.add(
+                        "online"
+                    );
+
+                }
+
+                else {
+
+                    targetStatus.textContent =
+                        "Offline";
+
+                    statusDot.classList.remove(
+                        "online"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Target presence error:",
+            error
+        );
+
+        targetStatus.textContent =
+            "Offline";
+
+    }
+
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        try {
+
+            /*
+             * =================================================
+             * NO AUTH SESSION
+             * =================================================
+             *
+             * We keep anonymous browsing available.
+             *
+             * Anonymous users can view the chat profile,
+             * but cannot send messages.
+             */
+
+            if (!user) {
+
+                const anonymous =
+                    await signInAnonymously(
+                        auth
+                    );
+
+
+                currentUser =
+                    anonymous.user;
+
+                anonymousSession =
+                    true;
 
             }
 
             else {
 
-                conversationId = null;
+                currentUser =
+                    user;
 
-                conversationData = null;
-
-                currentMessages = [];
-
-                render();
+                anonymousSession =
+                    user.isAnonymous;
 
             }
 
 
-            updateInfo();
+            await loadTargetProfile();
 
-        }
-
-
-        /* =========================================================
-           SEND MESSAGE
-        ========================================================= */
-
-        async function send() {
-
-            if (
-                sending ||
-                !currentUser
-            ) {
-
-                return;
-
-            }
+            targetPresence();
 
 
-            const text =
-                messageInput.value.trim();
-
-
-            if (!text) {
-
-                return;
-
-            }
-
+            /*
+             * =================================================
+             * ANONYMOUS
+             * =================================================
+             */
 
             if (anonymousSession) {
 
-                gateShow("anonymous");
+                composer.style.display =
+                    "none";
 
-                return;
+                sendBtn.disabled =
+                    true;
 
-            }
+                chatInfo.textContent =
+                    "Create an account to send messages.";
 
+                loading.style.display =
+                    "none";
 
-            sending = true;
+                /*
+                 * Give the visitor a moment to see
+                 * the profile before displaying the gate.
+                 */
 
-            sendBtn.disabled = true;
-
-
-            try {
-
-                /* =================================================
-                   NEW CONVERSATION
-                ================================================= */
-
-                if (!conversationData) {
-
-                    if (
-                        !FREE_OPENING_MESSAGES.includes(
-                            norm(text)
-                        )
-                    ) {
-
-                        gateShow("sender");
-
-                        return;
-
-                    }
-
-
-                    conversationId =
-                        `kmeet_v2_${
-                            [
-                                currentUser.uid,
-                                targetId
-                            ]
-                                .sort()
-                                .join("_")
-                        }`;
-
-
-                    conversationData = {
-
-                        initiatorId:
-                            currentUser.uid,
-
-                        receiverId:
-                            targetId,
-
-                        senderFreeOpeningUsed:
-                            true,
-
-                        receiverRepliesUsed:
-                            0,
-
-                        receiverPaid:
-                            false
-
-                    };
-
-
-                    await setDoc(
-
-                        doc(
-                            db,
-                            "conversations",
-                            conversationId
-                        ),
-
-                        {
-                            ...conversationData,
-
-                            createdAt:
-                                serverTimestamp(),
-
-                            updatedAt:
-                                serverTimestamp()
-
-                        },
-
-                        {
-                            merge: true
-                        }
-
-                    );
-
-
-                    await addDoc(
-
-                        collection(
-                            db,
-                            "conversations",
-                            conversationId,
-                            "messages"
-                        ),
-
-                        {
-                            senderId:
-                                currentUser.uid,
-
-                            receiverId:
-                                targetId,
-
-                            text,
-
-                            createdAt:
-                                serverTimestamp()
-
-                        }
-
-                    );
-
-
-                    listen();
-
-
-                    messageInput.value = "";
-
-                    return;
-
-                }
-
-
-                /* =================================================
-                   SENDER
-                ================================================= */
-
-                if (
-                    conversationData.initiatorId ===
-                    currentUser.uid
-                ) {
-
-
-                    /* =============================================
-                       FREE OPENING
-                    ============================================= */
-
-                    if (senderFree()) {
-
-                        if (
-                            !FREE_OPENING_MESSAGES.includes(
-                                norm(text)
-                            )
-                        ) {
-
-                            alert(
-                                'Your free opening message must be "hi" or "hey".'
-                            );
-
-                            return;
-
-                        }
-
-
-                        await addDoc(
-
-                            collection(
-                                db,
-                                "conversations",
-                                conversationId,
-                                "messages"
-                            ),
-
-                            {
-
-                                senderId:
-                                    currentUser.uid,
-
-                                receiverId:
-                                    targetId,
-
-                                text,
-
-                                createdAt:
-                                    serverTimestamp()
-
-                            }
-
-                        );
-
-
-                        await setDoc(
-
-                            doc(
-                                db,
-                                "conversations",
-                                conversationId
-                            ),
-
-                            {
-
-                                senderFreeOpeningUsed:
-                                    true,
-
-                                updatedAt:
-                                    serverTimestamp()
-
-                            },
-
-                            {
-                                merge: true
-                            }
-
-                        );
-
-
-                        conversationData = {
-
-                            ...conversationData,
-
-                            senderFreeOpeningUsed:
-                                true
-
-                        };
-
-                    }
-
-
-                    /* =============================================
-                       PAID SENDER
-                    ============================================= */
-
-                    else {
-
-                        const credits =
-                            Number(
-                                conversationData.senderCredits ||
-                                0
-                            );
-
-
-                        if (credits <= 0) {
-
-                            gateShow("sender");
-
-                            return;
-
-                        }
-
-
-                        await addDoc(
-
-                            collection(
-                                db,
-                                "conversations",
-                                conversationId,
-                                "messages"
-                            ),
-
-                            {
-
-                                senderId:
-                                    currentUser.uid,
-
-                                receiverId:
-                                    targetId,
-
-                                text,
-
-                                createdAt:
-                                    serverTimestamp()
-
-                            }
-
-                        );
-
-
-                        await setDoc(
-
-                            doc(
-                                db,
-                                "conversations",
-                                conversationId
-                            ),
-
-                            {
-
-                                senderCreditsUsed:
-                                    Number(
-                                        conversationData.senderCreditsUsed ||
-                                        0
-                                    ) + 1,
-
-                                updatedAt:
-                                    serverTimestamp()
-
-                            },
-
-                            {
-                                merge: true
-                            }
-
-                        );
-
-                    }
-
-                }
-
-
-                /* =================================================
-                   RECEIVER
-                ================================================= */
-
-                else {
-
-                    const used =
-                        receiverUsed();
-
-
-                    if (
-                        conversationData.receiverPaid !== true &&
-                        used >= FREE_RECEIVER_REPLIES
-                    ) {
-
-                        gateShow("receiver");
-
-                        return;
-
-                    }
-
-
-                    await addDoc(
-
-                        collection(
-                            db,
-                            "conversations",
-                            conversationId,
-                            "messages"
-                        ),
-
-                        {
-
-                            senderId:
-                                currentUser.uid,
-
-                            receiverId:
-                                targetId,
-
-                            text,
-
-                            createdAt:
-                                serverTimestamp()
-
-                        }
-
-                    );
-
-
-                    if (
-                        conversationData.receiverPaid !== true
-                    ) {
-
-                        conversationData = {
-
-                            ...conversationData,
-
-                            receiverRepliesUsed:
-                                used + 1
-
-                        };
-
-
-                        await setDoc(
-
-                            doc(
-                                db,
-                                "conversations",
-                                conversationId
-                            ),
-
-                            {
-
-                                receiverRepliesUsed:
-                                    used + 1,
-
-                                updatedAt:
-                                    serverTimestamp()
-
-                            },
-
-                            {
-                                merge: true
-                            }
-
-                        );
-
-                    }
-
-                }
-
-
-                messageInput.value = "";
-
-                updateInfo();
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Message sending error:",
-                    error
-                );
-
-
-                alert(
-                    "The message could not be sent. Please try again."
-                );
-
-            }
-
-            finally {
-
-                sending = false;
-
-
-                if (
-                    !gate.classList.contains("show")
-                ) {
-
-                    sendBtn.disabled = false;
-
-                }
-
-            }
-
-        }
-
-
-        /* =========================================================
-           SEND BUTTON
-        ========================================================= */
-
-        sendBtn.onclick = send;
-
-
-        /* =========================================================
-           ENTER TO SEND
-        ========================================================= */
-
-        messageInput.onkeydown = event => {
-
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                send();
-
-            }
-
-        };
-
-
-        /* =========================================================
-           ONLINE / OFFLINE PRESENCE
-        ========================================================= */
-
-        function presence() {
-
-            if (
-                !currentUser ||
-                currentUser.isAnonymous
-            ) {
-
-                return;
-
-            }
-
-
-            /* =====================================================
-               CURRENT USER PRESENCE
-            ===================================================== */
-
-            const ownPresence =
-                databaseRef(
-                    database,
-                    `presence/${currentUser.uid}`
-                );
-
-
-            databaseSet(
-
-                ownPresence,
-
-                {
-                    online: true,
-
-                    lastSeen:
-                        databaseServerTimestamp()
-                }
-
-            );
-
-
-            onDisconnect(
-                ownPresence
-            ).set({
-
-                online: false,
-
-                lastSeen:
-                    databaseServerTimestamp()
-
-            });
-
-
-            /* =====================================================
-               TARGET USER PRESENCE
-            ===================================================== */
-
-            const otherPresence =
-                databaseRef(
-                    database,
-                    `presence/${targetId}`
-                );
-
-
-            if (unsubscribePresence) {
-
-                unsubscribePresence();
-
-            }
-
-
-            unsubscribePresence =
-                databaseOnValue(
-
-                    otherPresence,
-
-                    snapshot => {
-
-                        const data =
-                            snapshot.val();
-
-
-                        const isOnline =
-                            data?.online === true;
-
-
-                        if (isOnline) {
-
-                            targetStatus.innerHTML =
-                                `
-                                <span class="online-dot"></span>
-                                Online
-                                `;
-
-                        }
-
-                        else {
-
-                            targetStatus.innerHTML =
-                                `
-                                <span class="offline-dot"></span>
-                                Offline
-                                `;
-
-                        }
-
-
-                        /*
-                         * Demo profiles cannot make real calls.
-                         */
-
-                        voiceBtn.disabled =
-                            !!targetProfile?.demo;
-
-
-                        videoBtn.disabled =
-                            !!targetProfile?.demo;
-
-                    }
-
-                );
-
-        }
-
-
-        /* =========================================================
-           CURRENT CALL PLACEHOLDER
-        ========================================================= */
-
-        function callUI(type) {
-
-            alert(
-                `${type} calling interface is ready. Payment entitlement must be enabled before the call connects.`
-            );
-
-        }
-
-
-        /* =========================================================
-           VOICE CALL BUTTON
-        ========================================================= */
-
-        voiceBtn.onclick = () => {
-
-            callUI("Voice");
-
-        };
-
-
-        /* =========================================================
-           VIDEO CALL BUTTON
-        ========================================================= */
-
-        videoBtn.onclick = () => {
-
-            callUI("Video");
-
-        };
-
-
-        /* =========================================================
-           AUTHENTICATION
-        ========================================================= */
-
-        onAuthStateChanged(
-
-            auth,
-
-            async user => {
-
-                try {
-
-                    /*
-                     * If no Firebase session exists,
-                     * create an anonymous session so visitors
-                     * can browse.
-                     */
-
-                    if (!user) {
-
-                        const anonymous =
-                            await signInAnonymously(auth);
-
-
-                        currentUser =
-                            anonymous.user;
-
-
-                        anonymousSession =
-                            true;
-
-                    }
-
-                    else {
-
-                        currentUser =
-                            user;
-
-
-                        anonymousSession =
-                            user.isAnonymous;
-
-                    }
-
-
-                    /* =================================================
-                       TARGET PROFILE
-                    ================================================= */
-
-                    targetId =
-                        targetId ||
-                        targetFromUrl();
-
-
-                    if (
-                        !targetId ||
-                        targetId === currentUser.uid
-                    ) {
-
-                        composer.style.display =
-                            "none";
-
-
-                        infoBar.textContent =
-                            "This conversation is not available.";
-
-
-                        return;
-
-                    }
-
-
-                    /* =================================================
-                       LOAD PROFILE
-                    ================================================= */
-
-                    await loadProfile();
-
-
-                    /* =================================================
-                       ANONYMOUS USER
-                    ================================================= */
-
-                    if (anonymousSession) {
-
+                setTimeout(
+                    () => {
                         gateShow("anonymous");
+                    },
+                    250
+                );
 
-                        return;
-
-                    }
-
-
-                    /* =================================================
-                       PREPARE CHAT
-                    ================================================= */
-
-                    await prepare();
-
-
-                    composer.style.display =
-                        "flex";
-
-
-                    sendBtn.disabled =
-                        false;
-
-
-                    /* =================================================
-                       START PRESENCE
-                    ================================================= */
-
-                    presence();
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "Chat initialization error:",
-                        error
-                    );
-
-
-                    targetName.textContent =
-                        "Kmeet could not open this conversation";
-
-
-                    composer.style.display =
-                        "none";
-
-
-                    infoBar.textContent =
-                        error?.message ||
-                        "Please try again.";
-
-                }
+                return;
 
             }
 
-        );
+
+            /*
+             * =================================================
+             * REGISTERED USER
+             * =================================================
+             */
+
+            await prepare();
 
 
-        /* =========================================================
-           INITIAL TARGET ID
-        ========================================================= */
+            composer.style.display =
+                "flex";
 
-        targetId =
-            targetFromUrl();
+            sendBtn.disabled =
+                false;
 
-
-        /* =========================================================
-           CLEAN UP LISTENERS
-        ========================================================= */
-
-        window.addEventListener(
-            "beforeunload",
-            () => {
-
-                if (unsubscribeMessages) {
-
-                    unsubscribeMessages();
-
-                }
+            presence();
 
 
-                if (unsubscribePresence) {
+            loading.style.display =
+                "none";
 
-                    unsubscribePresence();
 
-                }
+        }
 
-            }
-        );
+        catch (error) {
 
-    </script>
+            console.error(
+                "Chat initialization error:",
+                error
+            );
+
+
+            loading.style.display =
+                "none";
+
+
+            chatInfo.textContent =
+                "Unable to initialize chat. Please refresh and try again.";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLEANUP
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if (unsubscribeMessages) {
+            unsubscribeMessages();
+        }
+
+        if (unsubscribePresence) {
+            unsubscribePresence();
+        }
+
+    }
+);
+
+</script>
 
 </body>
-
 </html>
