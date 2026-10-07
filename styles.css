@@ -29,7 +29,7 @@ body {
    ========================================================= */
 
 .header {
-    position: relative;
+    position: sticky;
     min-height: 100vh;
     width: 100%;
     background-image: url("kmeet-background.jpg.jpg");
