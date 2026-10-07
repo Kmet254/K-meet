@@ -660,3 +660,17 @@ body {
         min-height: 46px;
     }
 }
+ /* =========================================================
+   KMEET - FIXED NAVIGATION & BACKGROUND
+   ========================================================= */
+
+.main-nav {
+    position: sticky !important;
+    top: 0;
+    z-index: 9999;
+}
+
+/* Keep Kmeet background fixed while scrolling */
+.header {
+    background-attachment: fixed;
+}
