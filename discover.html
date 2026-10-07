@@ -2098,11 +2098,16 @@
       });
 
       /*
-       * The 36 demo profiles are permanent. Real Firebase
-       * members are appended after those 36.
+       * Kmeet display order:
+       *
+       * 1. REAL / NEW FIREBASE MEMBERS FIRST
+       * 2. 36 PERMANENT DEMO AVATARS AFTER THEM
+       *
+       * This keeps genuine Kmeet members visible at the top
+       * while the demo profiles continue to keep Discover full.
        */
       const demo = demoProfiles.slice(0, 36);
-      const allProfiles = [...demo, ...cleanReal];
+      const allProfiles = [...cleanReal, ...demo];
 
       if (!allProfiles.length) {
         grid.innerHTML = `
