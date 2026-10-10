@@ -1113,6 +1113,9 @@ let conversationId = null;
 
 let unsubscribeMessages = null;
 
+/* True only after the real conversation document is verified/created. */
+let conversationReady = false;
+
 let authStarted = false;
 
 let targetIsDemo = false;
@@ -2142,126 +2145,129 @@ function renderMessages(items){
    FIREBASE REAL CHAT LISTENER
 ===================================================== */
 
-function startMessages(){
+async function startMessages(){
 
   if(
     !currentUser ||
     currentUser.isAnonymous ||
     targetIsDemo
   ){
-
     return;
-
   }
 
+  conversationId = getConversationId();
+  conversationReady = false;
 
-  conversationId =
-    getConversationId();
+  if(targetId === currentUser.uid){
+    showError("You cannot start a chat with your own Kmeet profile.");
+    return;
+  }
 
+  const conversationRef = doc(
+    db,
+    "conversations",
+    conversationId
+  );
 
-  const ref =
-    collection(
+  try {
+    /*
+      Firestore rules for messages check that the parent
+      conversation document exists and that both participants
+      are recorded on it. Create that parent before attaching
+      the messages listener.
+    */
+    const conversationSnap = await getDoc(conversationRef);
+
+    if(!conversationSnap.exists()){
+      await setDoc(conversationRef, {
+        initiatorId: currentUser.uid,
+        receiverId: targetId,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+    } else {
+      const conversationData = conversationSnap.data() || {};
+      const participantsMatch =
+        (
+          conversationData.initiatorId === currentUser.uid &&
+          conversationData.receiverId === targetId
+        ) ||
+        (
+          conversationData.initiatorId === targetId &&
+          conversationData.receiverId === currentUser.uid
+        );
+
+      if(
+        !participantsMatch ||
+        conversationData.initiatorId === conversationData.receiverId
+      ){
+        showError(
+          "This conversation has inconsistent participant details. Please contact Kmeet support."
+        );
+        return;
+      }
+    }
+
+    conversationReady = true;
+
+    if(unsubscribeMessages){
+      unsubscribeMessages();
+      unsubscribeMessages = null;
+    }
+
+    const messagesRef = collection(
       db,
       "conversations",
       conversationId,
       "messages"
     );
 
-
-  const q =
-    query(
-      ref,
-      orderBy(
-        "createdAt",
-        "asc"
-      )
+    const messagesQuery = query(
+      messagesRef,
+      orderBy("createdAt", "asc")
     );
 
-
-  unsubscribeMessages =
-    onSnapshot(
-
-      q,
-
+    unsubscribeMessages = onSnapshot(
+      messagesQuery,
       snapshot => {
+        const items = snapshot.docs.map(item => item.data());
 
-        const items =
-          snapshot.docs.map(
-            item =>
-              item.data()
-          );
-
-
-        renderMessages(
-          items
-        );
-
+        renderMessages(items);
 
         if(!items.length){
-
           infoBar.textContent =
             "Your opening message is free — say hi or hey ❤️";
-
           return;
-
         }
 
+        const firstSenderId = items[0].senderId;
+        const myReplies = items.filter(
+          item => item.senderId === currentUser.uid
+        ).length;
 
-        const firstSenderId =
-          items[0].senderId;
-
-
-        const myReplies =
-          items.filter(
-            item =>
-              item.senderId ===
-              currentUser.uid
-          ).length;
-
-
-        if(
-          firstSenderId ===
-          currentUser.uid
-        ){
-
+        if(firstSenderId === currentUser.uid){
           infoBar.textContent =
             "Your opening message is free. Further messages use chat credits.";
-
-        }
-
-        else{
-
+        } else {
           infoBar.textContent =
-            `You have ${
-              Math.max(
-                0,
-                FREE_RECEIVER_REPLIES -
-                myReplies
-              )
-            } free replies remaining.`;
-
+            `You have ${Math.max(0, FREE_RECEIVER_REPLIES - myReplies)} free replies remaining.`;
         }
-
       },
-
       error => {
-
-        console.error(
-          "Message listener error:",
-          error
-        );
-
-
+        console.error("Message listener error:", error);
         showError(
-          "The chat interface is open, but messages could not be loaded. Please check your Firebase Firestore rules."
+          "The chat interface is open, but messages could not be loaded. Check the conversation participants and Firestore rules."
         );
-
       }
-
     );
-
+  } catch(error) {
+    conversationReady = false;
+    console.error("Could not prepare the conversation:", error);
+    showError(
+      "Kmeet could not prepare this conversation. Please check Firestore permissions and the conversation participant records."
+    );
+  }
 }
-
 
 
 /* =====================================================
@@ -2384,7 +2390,7 @@ async function initialiseAuth(){
 
         if(!targetIsDemo){
 
-          startMessages();
+          await startMessages();
 
         }
 
@@ -2675,6 +2681,16 @@ composer.addEventListener(
     ================================================ */
 
     if(
+      !currentUser.isAnonymous &&
+      !conversationReady
+    ){
+      showError(
+        "Kmeet is still preparing this conversation. Please wait a moment and try again."
+      );
+      return;
+    }
+
+    if(
       currentUser.isAnonymous &&
       getSenderCredits() <= 0
     ){
@@ -2894,34 +2910,24 @@ composer.addEventListener(
 
     try{
 
+      /*
+        The conversation parent is created/verified before the
+        listener starts. On each message, update only the timestamp.
+        Do not rewrite participant IDs: a receiver's reply must not
+        turn initiatorId and receiverId into the same UID.
+      */
       await setDoc(
-
         doc(
           db,
           "conversations",
           conversationId
         ),
-
         {
-
-          initiatorId:
-            originalSenderId,
-
-          receiverId:
-            targetId,
-
-          updatedAt:
-            serverTimestamp(),
-
-          createdAt:
-            serverTimestamp()
-
+          updatedAt: serverTimestamp()
         },
-
         {
-          merge:true
+          merge: true
         }
-
       );
 
 
