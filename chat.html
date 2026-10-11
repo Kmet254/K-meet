@@ -926,35 +926,22 @@ body::before{
 /* =====================================================
    FIREBASE
 ===================================================== */
-
+  
 import {
-
   auth,
-
   db,
-
   onAuthStateChanged,
-
   signInAnonymously,
-
   doc,
-
   getDoc,
-
   collection,
-
   addDoc,
-
   setDoc,
-
+  updateDoc,
   query,
-
   orderBy,
-
   onSnapshot,
-
   serverTimestamp
-
 } from "./firebase-config.js";
 
 /*
@@ -964,11 +951,8 @@ import {
   and the HTML form performs a normal page reload.
 */
 import {
-  getDocs,
-  updateDoc
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-
 
 /* =====================================================
    URL
@@ -979,11 +963,9 @@ const params =
     window.location.search
   );
 
-
 const targetId =
   params.get("userId") ||
   params.get("user");
-
 
 
 /* =====================================================
@@ -2147,12 +2129,7 @@ function renderMessages(items){
 ===================================================== */
 
 async function startMessages(){
-
-  if(
-    !currentUser ||
-    currentUser.isAnonymous ||
-    targetIsDemo
-  ){
+  if(!currentUser || currentUser.isAnonymous || targetIsDemo){
     return;
   }
 
@@ -2164,27 +2141,21 @@ async function startMessages(){
     return;
   }
 
-  const conversationRef = doc(
-    db,
-    "conversations",
-    conversationId
-  );
+  const conversationRef = doc(db, "conversations", conversationId);
+  let diagnosticStage = "reading conversation document";
 
   try {
-    /*
-      Firestore rules for messages check that the parent
-      conversation document exists and that both participants
-      are recorded on it. Create that parent before attaching
-      the messages listener.
-    */
+    console.log("KMEET DIAGNOSTIC: Starting conversation setup.", {
+      conversationId,
+      signedInUid: currentUser.uid,
+      targetId
+    });
+
     const conversationSnap = await getDoc(conversationRef);
 
-  ```javascript
     if(!conversationSnap.exists()){
-      console.error(
-        "KMEET DIAGNOSTIC: Conversation document does not exist.",
-        conversationId
-      );
+      diagnosticStage = "creating conversation document";
+      console.warn("KMEET DIAGNOSTIC: Conversation document was not found; attempting to create it.", conversationId);
 
       await setDoc(conversationRef, {
         initiatorId: currentUser.uid,
@@ -2193,52 +2164,29 @@ async function startMessages(){
         updatedAt: serverTimestamp()
       });
 
-      console.log(
-        "KMEET DIAGNOSTIC: Conversation created successfully."
-      );
-
+      console.log("KMEET DIAGNOSTIC: Conversation document created.");
     } else {
       const conversationData = conversationSnap.data() || {};
+      console.log("KMEET DIAGNOSTIC: Existing conversation read successfully.", {
+        conversationId,
+        signedInUid: currentUser.uid,
+        targetId,
+        initiatorId: conversationData.initiatorId,
+        receiverId: conversationData.receiverId
+      });
 
-      console.log(
-        "KMEET DIAGNOSTIC: Existing conversation found.",
-        {
-          conversationId,
+      const participantsMatch =
+        (conversationData.initiatorId === currentUser.uid && conversationData.receiverId === targetId) ||
+        (conversationData.initiatorId === targetId && conversationData.receiverId === currentUser.uid);
+
+      if(!participantsMatch || conversationData.initiatorId === conversationData.receiverId){
+        showError("This conversation has inconsistent participant details. Please contact Kmeet support.");
+        console.error("KMEET DIAGNOSTIC: Participant mismatch.", {
           signedInUid: currentUser.uid,
           targetId,
           initiatorId: conversationData.initiatorId,
           receiverId: conversationData.receiverId
-        }
-      );
-
-      const participantsMatch =
-        (
-          conversationData.initiatorId === currentUser.uid &&
-          conversationData.receiverId === targetId
-        ) ||
-        (
-          conversationData.initiatorId === targetId &&
-          conversationData.receiverId === currentUser.uid
-        );
-
-      if(
-        !participantsMatch ||
-        conversationData.initiatorId === conversationData.receiverId
-      ){
-        showError(
-          "This conversation has inconsistent participant details. Please contact Kmeet support."
-        );
-
-        console.error(
-          "KMEET DIAGNOSTIC: Participant mismatch.",
-          {
-            signedInUid: currentUser.uid,
-            targetId,
-            initiatorId: conversationData.initiatorId,
-            receiverId: conversationData.receiverId
-          }
-        );
-
+        });
         return;
       }
     }
@@ -2250,82 +2198,52 @@ async function startMessages(){
       unsubscribeMessages = null;
     }
 
-    const messagesRef = collection(
-      db,
-      "conversations",
-      conversationId,
-      "messages"
-    );
+    const messagesRef = collection(db, "conversations", conversationId, "messages");
+    const messagesQuery = query(messagesRef, orderBy("createdAt", "asc"));
 
-    const messagesQuery = query(
-      messagesRef,
-      orderBy("createdAt", "asc")
-    );
-
-    console.log(
-      "KMEET DIAGNOSTIC: Attaching messages listener.",
-      conversationId
-    );
+    console.log("KMEET DIAGNOSTIC: Attaching messages listener.", conversationId);
 
     unsubscribeMessages = onSnapshot(
       messagesQuery,
       snapshot => {
-        console.log(
-          "KMEET DIAGNOSTIC: Messages loaded.",
-          snapshot.size
-        );
-
+        console.log("KMEET DIAGNOSTIC: Messages loaded.", snapshot.size);
         const items = snapshot.docs.map(item => item.data());
-
         renderMessages(items);
-```
-        // Mark this conversation as read for the signed-in member.
-        // updateDoc is imported directly from the Firebase Firestore SDK below.
+
+        // Record when this signed-in member last opened the conversation.
+        // If Firestore rules reject this optional update, message loading continues.
         if(currentUser && !currentUser.isAnonymous){
           const readField = `lastReadAt_${currentUser.uid}`;
-          updateDoc(
-            doc(db, "conversations", conversationId),
-            { [readField]: serverTimestamp() }
-          ).catch(error => {
-            console.warn("Could not update the conversation read timestamp:", error);
+          updateDoc(conversationRef, { [readField]: serverTimestamp() }).catch(error => {
+            console.warn("KMEET DIAGNOSTIC: Could not update conversation read timestamp.", error);
           });
         }
 
         if(!items.length){
-          infoBar.textContent =
-            "Your opening message is free — say hi or hey ❤️";
+          infoBar.textContent = "Your opening message is free — say hi or hey ❤️";
           return;
         }
 
         const firstSenderId = items[0].senderId;
-        const myReplies = items.filter(
-          item => item.senderId === currentUser.uid
-        ).length;
+        const myReplies = items.filter(item => item.senderId === currentUser.uid).length;
 
         if(firstSenderId === currentUser.uid){
-          infoBar.textContent =
-            "Your opening message is free. Further messages use chat credits.";
+          infoBar.textContent = "Your opening message is free. Further messages use chat credits.";
         } else {
-          infoBar.textContent =
-            `You have ${Math.max(0, FREE_RECEIVER_REPLIES - myReplies)} free replies remaining.`;
+          infoBar.textContent = `You have ${Math.max(0, FREE_RECEIVER_REPLIES - myReplies)} free replies remaining.`;
         }
       },
       error => {
-        console.error("Message listener error:", error);
-        showError(
-          "The chat interface is open, but messages could not be loaded. Check the conversation participants and Firestore rules."
-        );
+        console.error("KMEET DIAGNOSTIC: Message listener failed.", error);
+        showError("The chat interface is open, but messages could not be loaded. Check the conversation participants and Firestore rules.");
       }
     );
   } catch(error) {
     conversationReady = false;
-    console.error("Could not prepare the conversation:", error);
-    showError(
-      "Kmeet could not prepare this conversation. Please check Firestore permissions and the conversation participant records."
-    );
+    console.error(`KMEET DIAGNOSTIC: Failed while ${diagnosticStage}.`, error);
+    showError(`Kmeet could not prepare this conversation while ${diagnosticStage}. Check the browser Console for details.`);
   }
 }
-
 
 /* =====================================================
    FIREBASE AUTHENTICATION
