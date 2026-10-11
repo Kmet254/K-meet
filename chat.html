@@ -926,8 +926,7 @@ body::before{
 /* =====================================================
    FIREBASE
 ===================================================== */
-
-
+  
 import {
   auth,
   db,
@@ -945,9 +944,6 @@ import {
   serverTimestamp
 } from "./firebase-config.js";
 
-
-} from "./firebase-config.js";
-
 /*
   getDocs is imported directly here because the current
   firebase-config.js does not export getDocs. If a module
@@ -958,8 +954,6 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-
-
 /* =====================================================
    URL
 ===================================================== */
@@ -969,11 +963,9 @@ const params =
     window.location.search
   );
 
-
 const targetId =
   params.get("userId") ||
   params.get("user");
-
 
 
 /* =====================================================
