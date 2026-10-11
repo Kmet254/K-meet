@@ -926,22 +926,35 @@ body::before{
 /* =====================================================
    FIREBASE
 ===================================================== */
-  
+
 import {
+
   auth,
+
   db,
+
   onAuthStateChanged,
+
   signInAnonymously,
+
   doc,
+
   getDoc,
+
   collection,
+
   addDoc,
+
   setDoc,
-  updateDoc,
+
   query,
+
   orderBy,
+
   onSnapshot,
+
   serverTimestamp
+
 } from "./firebase-config.js";
 
 /*
@@ -951,8 +964,11 @@ import {
   and the HTML form performs a normal page reload.
 */
 import {
-  getDocs
+  getDocs,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
 
 /* =====================================================
    URL
@@ -963,9 +979,11 @@ const params =
     window.location.search
   );
 
+
 const targetId =
   params.get("userId") ||
   params.get("user");
+
 
 
 /* =====================================================
@@ -2216,6 +2234,18 @@ async function startMessages(){
         const items = snapshot.docs.map(item => item.data());
 
         renderMessages(items);
+
+        // Mark this conversation as read for the signed-in member.
+        // updateDoc is imported directly from the Firebase Firestore SDK below.
+        if(currentUser && !currentUser.isAnonymous){
+          const readField = `lastReadAt_${currentUser.uid}`;
+          updateDoc(
+            doc(db, "conversations", conversationId),
+            { [readField]: serverTimestamp() }
+          ).catch(error => {
+            console.warn("Could not update the conversation read timestamp:", error);
+          });
+        }
 
         if(!items.length){
           infoBar.textContent =
