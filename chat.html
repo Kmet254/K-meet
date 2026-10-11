@@ -2179,15 +2179,38 @@ async function startMessages(){
     */
     const conversationSnap = await getDoc(conversationRef);
 
+  ```javascript
     if(!conversationSnap.exists()){
+      console.error(
+        "KMEET DIAGNOSTIC: Conversation document does not exist.",
+        conversationId
+      );
+
       await setDoc(conversationRef, {
         initiatorId: currentUser.uid,
         receiverId: targetId,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
+
+      console.log(
+        "KMEET DIAGNOSTIC: Conversation created successfully."
+      );
+
     } else {
       const conversationData = conversationSnap.data() || {};
+
+      console.log(
+        "KMEET DIAGNOSTIC: Existing conversation found.",
+        {
+          conversationId,
+          signedInUid: currentUser.uid,
+          targetId,
+          initiatorId: conversationData.initiatorId,
+          receiverId: conversationData.receiverId
+        }
+      );
+
       const participantsMatch =
         (
           conversationData.initiatorId === currentUser.uid &&
@@ -2205,6 +2228,17 @@ async function startMessages(){
         showError(
           "This conversation has inconsistent participant details. Please contact Kmeet support."
         );
+
+        console.error(
+          "KMEET DIAGNOSTIC: Participant mismatch.",
+          {
+            signedInUid: currentUser.uid,
+            targetId,
+            initiatorId: conversationData.initiatorId,
+            receiverId: conversationData.receiverId
+          }
+        );
+
         return;
       }
     }
@@ -2228,13 +2262,23 @@ async function startMessages(){
       orderBy("createdAt", "asc")
     );
 
+    console.log(
+      "KMEET DIAGNOSTIC: Attaching messages listener.",
+      conversationId
+    );
+
     unsubscribeMessages = onSnapshot(
       messagesQuery,
       snapshot => {
+        console.log(
+          "KMEET DIAGNOSTIC: Messages loaded.",
+          snapshot.size
+        );
+
         const items = snapshot.docs.map(item => item.data());
 
         renderMessages(items);
-
+```
         // Mark this conversation as read for the signed-in member.
         // updateDoc is imported directly from the Firebase Firestore SDK below.
         if(currentUser && !currentUser.isAnonymous){
