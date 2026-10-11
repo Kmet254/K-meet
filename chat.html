@@ -2175,11 +2175,41 @@ async function startMessages(){
         receiverId: conversationData.receiverId
       });
 
-      const participantsMatch =
+      let participantsMatch =
         (conversationData.initiatorId === currentUser.uid && conversationData.receiverId === targetId) ||
         (conversationData.initiatorId === targetId && conversationData.receiverId === currentUser.uid);
 
-      if(!participantsMatch || conversationData.initiatorId === conversationData.receiverId){
+      /*
+        Repair only the known corruption pattern: both participant fields
+        contain the currently signed-in UID. This happened in an earlier
+        chat version. The current user is already named in the existing
+        document, so this targeted update does not require opening rules.
+        Any other mismatch is still rejected rather than guessed.
+      */
+      const isKnownSelfParticipantCorruption =
+        conversationData.initiatorId === currentUser.uid &&
+        conversationData.receiverId === currentUser.uid &&
+        targetId !== currentUser.uid;
+
+      if(isKnownSelfParticipantCorruption){
+        diagnosticStage = "repairing duplicated conversation participant IDs";
+        console.warn("KMEET DIAGNOSTIC: Repairing duplicated participant IDs for this conversation.", {
+          conversationId,
+          signedInUid: currentUser.uid,
+          targetId
+        });
+
+        await updateDoc(conversationRef, {
+          initiatorId: currentUser.uid,
+          receiverId: targetId,
+          updatedAt: serverTimestamp()
+        });
+
+        participantsMatch = true;
+        console.log("KMEET DIAGNOSTIC: Participant IDs repaired successfully.");
+      }
+
+      if(!participantsMatch){
         showError("This conversation has inconsistent participant details. Please contact Kmeet support.");
         console.error("KMEET DIAGNOSTIC: Participant mismatch.", {
           signedInUid: currentUser.uid,
