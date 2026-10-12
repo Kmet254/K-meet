@@ -2754,33 +2754,19 @@ composer.addEventListener(
     /* ================================================
        FIRST OPENING MESSAGE
     ================================================ */
+```javascript
+if (
+  !currentUser.isAnonymous &&
+  existingMessages.length === 0
+) {
+  const opening = text.trim().toLowerCase();
 
-    if(
-      !currentUser.isAnonymous &&
-      existingMessages.length === 0
-    ){
-
-      const opening =
-        text.toLowerCase();
-
-
-      if(
-        !FREE_OPENING_MESSAGES.includes(
-          opening
-        )
-      ){
-
-        showGate(
-          "sender"
-        );
-
-        return;
-
-      }
-
-    }
-
-
+  if (!FREE_OPENING_MESSAGES.includes(opening)) {
+    showGate("sender");
+    return;
+  }
+}
+```
 
     /* ================================================
        WHO STARTED THE CONVERSATION?
