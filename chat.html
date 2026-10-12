@@ -2748,7 +2748,7 @@ composer.addEventListener(
       return;
 
     }
-    ```javascript
+   
 console.log("Kmeet payment diagnostic:", {
   userId: currentUser.uid,
   targetId: targetId,
@@ -2759,14 +2759,13 @@ console.log("Kmeet payment diagnostic:", {
     : null,
   openingText: text.trim().toLowerCase()
 });
-```
+
 
 
 
     /* ================================================
        FIRST OPENING MESSAGE
     ================================================ */
-```javascript
 if (
   !currentUser.isAnonymous &&
   existingMessages.length === 0
@@ -2777,8 +2776,6 @@ if (
     showGate("sender");
     return;
   }
-}
-```
 
     /* ================================================
        WHO STARTED THE CONVERSATION?
