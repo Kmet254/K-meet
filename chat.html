@@ -10,7 +10,7 @@
 <title>Kmeet — Chat</title>
 
 <style>
-*{
+*{a
   box-sizing:border-box;
 }
 
@@ -2010,41 +2010,37 @@ function showGate(type){
 
 async function getExistingMessages(){
 
+  async function getExistingMessages(){
   if(!conversationId){
-
-    conversationId =
-      getConversationId();
-
+    conversationId = getConversationId();
   }
 
-
-  const snap =
-    await getDocs(
-
-      query(
-
-        collection(
-          db,
-          "conversations",
-          conversationId,
-          "messages"
-        ),
-
-        orderBy(
-          "createdAt",
-          "asc"
-        )
-
-      )
-
-    );
-
-
-  return snap.docs.map(
-    item =>
-      item.data()
+  const snap = await getDocs(
+    query(
+      collection(db, "conversations", conversationId, "messages"),
+      orderBy("createdAt", "asc")
+    )
   );
 
+  const items = snap.docs.map(item => ({
+    id: item.id,
+    ...item.data()
+  }));
+
+  console.log("KMEET MESSAGE HISTORY CHECK:", {
+    conversationId: conversationId,
+    signedInUid: currentUser?.uid,
+    targetId: targetId,
+    count: items.length,
+    messages: items.map((item, index) => ({
+      number: index + 1,
+      senderId: item.senderId,
+      receiverId: item.receiverId,
+      text: item.text
+    }))
+  });
+
+  return items;
 }
 
 
