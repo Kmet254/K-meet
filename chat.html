@@ -2748,6 +2748,18 @@ composer.addEventListener(
       return;
 
     }
+    ```javascript
+console.log("Kmeet payment diagnostic:", {
+  userId: currentUser.uid,
+  targetId: targetId,
+  anonymous: currentUser.isAnonymous,
+  existingMessageCount: existingMessages.length,
+  firstMessageSender: existingMessages.length
+    ? existingMessages[0].senderId
+    : null,
+  openingText: text.trim().toLowerCase()
+});
+```
 
 
 
