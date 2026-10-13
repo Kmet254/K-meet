@@ -703,6 +703,258 @@
             }
         }
 
+
+        /* =========================================
+           TWO-COLUMN ROMANTIC WELCOME LAYOUT
+        ========================================= */
+
+        .hero-content {
+            justify-content: center;
+            text-align: left;
+            padding: clamp(38px, 5vw, 76px) 5%;
+        }
+
+        .hero-inner {
+            width: 100%;
+            max-width: 1320px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+            align-items: center;
+            gap: clamp(28px, 5vw, 76px);
+        }
+
+        #guestState,
+        #userState {
+            min-width: 0;
+            grid-column: 1;
+        }
+
+        .hero-inner h1 {
+            max-width: 720px;
+            font-size: clamp(2.8rem, 5.1vw, 5.3rem);
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        .hero-tagline {
+            max-width: 560px;
+            margin: 0 0 30px;
+            text-align: left;
+            font-size: clamp(0.96rem, 1.2vw, 1.08rem);
+        }
+
+        .signup-form {
+            max-width: 560px;
+            margin: 0;
+        }
+
+        .login-note {
+            text-align: left;
+        }
+
+        .user-card {
+            max-width: 620px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .romantic-slideshow {
+            grid-column: 2;
+            grid-row: 1;
+            position: relative;
+            width: 100%;
+            height: clamp(340px, 62vh, 610px);
+            min-height: 340px;
+            overflow: hidden;
+            border-radius: 30px;
+            isolation: isolate;
+            background: #210f1a;
+            border: 1px solid rgba(255, 160, 198, 0.35);
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42),
+                        0 0 45px rgba(255, 79, 152, 0.12);
+        }
+
+        .romantic-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .romantic-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .romantic-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(1.025);
+            transition: transform 5s ease;
+        }
+
+        .romantic-slide.active img {
+            transform: scale(1.09);
+        }
+
+        .romantic-slide::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(15, 5, 12, 0.02) 35%,
+                rgba(15, 5, 12, 0.78) 100%
+            );
+        }
+
+        .slide-caption {
+            position: absolute;
+            z-index: 2;
+            left: 26px;
+            right: 26px;
+            bottom: 28px;
+            color: #fff;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.55);
+        }
+
+        .slide-caption .caption-kicker {
+            display: inline-block;
+            margin-bottom: 9px;
+            color: #ffd3e5;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .slide-caption h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1.6rem, 2.7vw, 2.65rem);
+            line-height: 1.12;
+            margin-bottom: 8px;
+        }
+
+        .slide-caption p {
+            max-width: 430px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+
+        .slide-indicators {
+            position: absolute;
+            z-index: 3;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 7px;
+        }
+
+        .slide-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.48);
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+
+        .slide-indicator.active {
+            background: #ff8fbd;
+            transform: scale(1.25);
+        }
+
+        @media (max-width: 800px) {
+            .hero-content {
+                padding: 42px 22px 55px;
+            }
+
+            .hero-inner {
+                max-width: 650px;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 32px;
+            }
+
+            #guestState,
+            #userState {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .romantic-slideshow {
+                grid-column: 1;
+                grid-row: 2;
+                height: clamp(320px, 58vh, 480px);
+                min-height: 320px;
+                border-radius: 24px;
+            }
+
+            .hero-inner h1 {
+                font-size: clamp(2.7rem, 9vw, 4.4rem);
+            }
+
+            .hero-tagline {
+                max-width: 600px;
+            }
+
+            .user-card {
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .hero-content {
+                padding: 32px 16px 42px;
+            }
+
+            .hero-inner {
+                gap: 28px;
+            }
+
+            .hero-inner h1 {
+                font-size: clamp(2.45rem, 12vw, 3.5rem);
+                line-height: 1.02;
+            }
+
+            .hero-tagline {
+                font-size: 0.94rem;
+                line-height: 1.75;
+            }
+
+            .romantic-slideshow {
+                height: 390px;
+                min-height: 0;
+                border-radius: 20px;
+            }
+
+            .slide-caption {
+                left: 19px;
+                right: 19px;
+                bottom: 21px;
+            }
+
+            .slide-caption h2 {
+                font-size: 1.75rem;
+            }
+
+            .slide-caption p {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .romantic-slide,
+            .romantic-slide img,
+            .slide-indicator {
+                transition: none !important;
+            }
+        }
+
     </style>
 </head>
 
@@ -872,6 +1124,69 @@
 
                     </div>
 
+                </div>
+
+
+                <!-- ROMANTIC SLIDESHOW: changes every 2 seconds -->
+                <div class="romantic-slideshow" id="romanticSlideshow" aria-label="Romantic moments">
+                    <div class="romantic-slide active">
+                        <img
+                            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
+                            alt="A couple sharing a romantic moment outdoors"
+                            fetchpriority="high"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">A little magic</span>
+                            <h2>Every love story starts somewhere.</h2>
+                            <p>Meet someone who makes ordinary moments feel unforgettable.</p>
+                        </div>
+                    </div>
+
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85"
+                            alt="A romantic celebration of love"
+                            loading="lazy"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">Choose each other</span>
+                            <h2>Make room for something beautiful.</h2>
+                            <p>Discover genuine people and the possibility of a lasting connection.</p>
+                        </div>
+                    </div>
+
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
+                            alt="A couple enjoying time together"
+                            loading="lazy"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">Little moments</span>
+                            <h2>Let the laughter come naturally.</h2>
+                            <p>Start with a hello. Let shared interests bring you closer.</p>
+                        </div>
+                    </div>
+
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
+                            alt="A beautiful romantic wedding moment"
+                            loading="lazy"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">A future to imagine</span>
+                            <h2>Your next chapter could begin here.</h2>
+                            <p>Come as you are, and meet someone worth getting to know.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide-indicators" aria-hidden="true">
+                        <span class="slide-indicator active"></span>
+                        <span class="slide-indicator"></span>
+                        <span class="slide-indicator"></span>
+                        <span class="slide-indicator"></span>
+                    </div>
                 </div>
 
             </div>
@@ -1559,6 +1874,42 @@
                 );
 
             });
+
+
+        /* =========================================
+           ROMANTIC SLIDESHOW
+           Advances to a new scene every 2 seconds
+        ========================================= */
+
+        const slideshow = document.getElementById("romanticSlideshow");
+
+        if (slideshow) {
+            const slides = Array.from(
+                slideshow.querySelectorAll(".romantic-slide")
+            );
+            const indicators = Array.from(
+                slideshow.querySelectorAll(".slide-indicator")
+            );
+            let activeSlide = 0;
+
+            function showRomanticSlide(index) {
+                slides.forEach((slide, slideIndex) => {
+                    slide.classList.toggle("active", slideIndex === index);
+                });
+
+                indicators.forEach((indicator, indicatorIndex) => {
+                    indicator.classList.toggle("active", indicatorIndex === index);
+                });
+
+                activeSlide = index;
+            }
+
+            if (slides.length > 1) {
+                window.setInterval(() => {
+                    showRomanticSlide((activeSlide + 1) % slides.length);
+                }, 2000);
+            }
+        }
 
     </script>
 
