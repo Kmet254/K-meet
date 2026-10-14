@@ -240,7 +240,7 @@
       margin-right: 7px;
     }
 
-    /* SMOOTH SMALL-TO-BIG REEL SLIDESHOW */
+    /* CARD-FREE IMAGE STAGE */
 
     .story-stage {
       position: relative;
@@ -248,46 +248,20 @@
       min-width: 0;
       width: 100%;
       height: 550px;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-
-    .bloom-light {
-      position: absolute;
-      z-index: -1;
-      top: 40%;
-      left: 50%;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: #ffd2e2;
-      box-shadow:
-        0 0 18px 9px rgba(255, 129, 174, .26),
-        0 0 60px 28px rgba(225, 45, 115, .14);
-      animation: breathingLight 3.5s ease-in-out infinite;
-    }
-
-    @keyframes breathingLight {
-      0%, 100% {
-        opacity: .65;
-        transform: translate(-50%, -50%) scale(.8);
-      }
-      50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.5);
-      }
+      background: transparent;
+      overflow: visible;
     }
 
     .story-image {
       position: absolute;
-      inset: 0;
+      inset: 0 0 64px;
       opacity: 0;
       pointer-events: none;
-      transform: scale(0.6);
+      transform: scale(0.1);
       will-change: transform, opacity;
-      border-radius: 20px;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .story-image img {
@@ -296,48 +270,50 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      border-radius: 20px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     }
 
-    /* Smooth Zoom-In + Fade-Out Sequence */
+    /* PURE IMAGE SHOOT & SCALE TRANSITION */
     .story-image.active {
       z-index: 2;
-      animation: reelZoomIn 6.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: imageShootIn 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .story-image.leaving {
       z-index: 1;
-      animation: reelFadeOut 1.5s ease-out forwards;
+      animation: imageShootOut 1.2s ease-out forwards;
     }
 
-    @keyframes reelZoomIn {
+    @keyframes imageShootIn {
       0% {
         opacity: 0;
-        transform: scale(0.5);
-        filter: blur(10px);
+        transform: scale(0.1) translateY(80px);
+        filter: blur(12px);
       }
-      18% {
+      20% {
         opacity: 1;
         filter: blur(0px);
       }
       80% {
         opacity: 1;
-        transform: scale(1.05);
+        transform: scale(1);
       }
       100% {
         opacity: 0;
-        transform: scale(1.15);
+        transform: scale(1.08) translateY(-20px);
         filter: blur(4px);
       }
     }
 
-    @keyframes reelFadeOut {
+    @keyframes imageShootOut {
       0% {
         opacity: 1;
       }
       100% {
         opacity: 0;
-        transform: scale(1.2);
+        transform: scale(1.1) translateY(-30px);
+        filter: blur(8px);
       }
     }
 
@@ -884,10 +860,8 @@
         </p>
       </div>
 
-      <!-- CONTINUOUS ZOOM SLIDESHOW -->
+      <!-- CARD-FREE SHOOTING IMAGE STAGE -->
       <div class="story-stage" id="storyStage">
-
-        <div class="bloom-light"></div>
 
         <div class="story-image active" data-slide="0">
           <img
@@ -1117,7 +1091,7 @@
         window.setTimeout(() => {
           slides[previous].classList.remove("leaving");
           changing = false;
-        }, 1500);
+        }, 1200);
       }
 
       function startTimer() {
@@ -1127,7 +1101,7 @@
           if (!document.hidden) {
             showSlide((current + 1) % slides.length);
           }
-        }, 6000);
+        }, 5500);
       }
 
       dots.forEach((dot) => {
