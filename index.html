@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -241,8 +240,7 @@
       margin-right: 7px;
     }
 
-    /* FLOWER-BLOOM PHOTO STAGE
-       There is deliberately NO CARD, FRAME OR IMAGE BORDER. */
+    /* FLOWER-BLOOM PHOTO STAGE */
 
     .story-stage {
       position: relative;
@@ -280,14 +278,13 @@
       }
     }
 
-    /* Images fill the stage, but only the organic mask is visible.
-       Feathering creates the outward fade into the page background. */
-
     .story-image {
       position: absolute;
       inset: 0 0 64px;
       opacity: 0;
       pointer-events: none;
+      -webkit-mask-size: 15% 15%;
+      mask-size: 15% 15%;
       -webkit-mask-image: radial-gradient(
         ellipse at 50% 46%,
         #000 0%,
@@ -306,11 +303,9 @@
         rgba(0, 0, 0, .24) 66%,
         transparent 79%
       );
-      -webkit-mask-size: 100% 100%;
-      mask-size: 100% 100%;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
-      transform: scale(.68);
+      transform: scale(.5);
       transform-origin: 50% 46%;
       filter: saturate(.95);
       will-change: transform, opacity, mask-size;
@@ -322,27 +317,7 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      -webkit-mask-image: radial-gradient(
-        ellipse at 50% 46%,
-        #000 0%,
-        #000 25%,
-        rgba(0, 0, 0, .92) 42%,
-        rgba(0, 0, 0, .62) 57%,
-        rgba(0, 0, 0, .18) 74%,
-        transparent 92%
-      );
-      mask-image: radial-gradient(
-        ellipse at 50% 46%,
-        #000 0%,
-        #000 25%,
-        rgba(0, 0, 0, .92) 42%,
-        rgba(0, 0, 0, .62) 57%,
-        rgba(0, 0, 0, .18) 74%,
-        transparent 92%
-      );
     }
-
-    /* Several expanding, overlapping petal shapes create the bloom. */
 
     .story-image::before {
       content: "";
@@ -368,29 +343,25 @@
     @keyframes flowerBloom {
       0% {
         opacity: 0;
-        transform: scale(.16) rotate(-9deg);
-        -webkit-mask-size: 8% 8%;
-        mask-size: 8% 8%;
-        filter: blur(9px) saturate(.75);
+        transform: scale(.4) rotate(-5deg);
+        -webkit-mask-size: 15% 15%;
+        mask-size: 15% 15%;
+        filter: blur(12px) saturate(.7);
       }
 
-      13% {
+      25% {
         opacity: 1;
-        filter: blur(5px) saturate(.85);
+        transform: scale(.65) rotate(-2deg);
+        -webkit-mask-size: 40% 40%;
+        mask-size: 40% 40%;
+        filter: blur(6px) saturate(.85);
       }
 
-      37% {
-        transform: scale(.58) rotate(4deg);
-        -webkit-mask-size: 48% 48%;
-        mask-size: 48% 48%;
-        filter: blur(2px) saturate(.9);
-      }
-
-      65% {
-        transform: scale(.86) rotate(-2deg);
-        -webkit-mask-size: 78% 78%;
-        mask-size: 78% 78%;
-        filter: blur(.7px) saturate(.95);
+      60% {
+        transform: scale(.9) rotate(1deg);
+        -webkit-mask-size: 75% 75%;
+        mask-size: 75% 75%;
+        filter: blur(2px) saturate(.95);
       }
 
       100% {
@@ -410,8 +381,6 @@
         opacity 1.1s ease,
         transform 1.8s ease;
     }
-
-    /* Captions float directly over the background. No caption card. */
 
     .story-caption {
       position: absolute;
@@ -972,8 +941,6 @@
             fetchpriority="high">
         </div>
 
-        <!-- Second photo with flowers removed -->
-
         <div class="story-image" data-slide="1">
           <img
             src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
@@ -1169,7 +1136,6 @@
         slides[current].classList.remove("leaving");
         slides[current].classList.remove("active");
 
-        /* Restart the bloom from its tiny centre. */
         void slides[current].offsetWidth;
         slides[current].classList.add("active");
 
@@ -1347,13 +1313,12 @@
           localStorage.removeItem("userAvatar");
           localStorage.removeItem("userInterests");
         } catch (error) {
-          console.warn("Could not clear local profile cache.", error);
+          console.warn("Could not clear local session data.", error);
         }
 
-        window.location.href = "index.html";
+        window.location.reload();
       } catch (error) {
-        console.error("Kmeet logout failed:", error);
-        alert("We could not log you out. Please try again.");
+        console.error("Error signing out:", error);
         logoutButton.disabled = false;
       }
     });
