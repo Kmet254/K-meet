@@ -1,2534 +1,943 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Kmeet - Profile</title>
 
-<link rel="icon"
-      type="image/jpeg"
-      href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
-
+<link rel="icon" type="image/jpeg" href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: "Poppins", sans-serif;
-    color: #fff;
-
-    background:
-        linear-gradient(
-            rgba(13,8,14,.84),
-            rgba(20,7,17,.95)
-        ),
-        url("img/bg34.jpg")
-        center/cover fixed no-repeat;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            circle at top left,
-            rgba(255,72,151,.15),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            rgba(255,0,102,.12),
-            transparent 35%
-        );
-}
-
-.navbar {
-    position: relative;
-    z-index: 5;
-
-    width: 100%;
-    padding: 18px 6%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background: rgba(10,7,11,.58);
-
-    border-bottom:
-        1px solid rgba(255,255,255,.08);
-
-    backdrop-filter: blur(14px);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    color: white;
-    text-decoration: none;
-
-    font-family: "Playfair Display", serif;
-    font-size: 27px;
-    font-weight: 700;
-}
-
-.logo-heart {
-    color: #ff4f9a;
-}
-
-.nav-links {
-    display: flex;
-    gap: 22px;
-    align-items: center;
-}
-
-.nav-links a {
-    color: rgba(255,255,255,.82);
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.nav-links a:hover {
-    color: #ff76ae;
-}
-
-
-/* =========================================
-   CONTAINER
-========================================= */
-
-.container {
-    position: relative;
-    z-index: 2;
-
-    width: min(850px, 92%);
-    margin: 45px auto 70px;
-}
-
-
-/* =========================================
-   PROFILE CARD
-========================================= */
-
-.profile-card {
-    background: rgba(25,13,23,.80);
-
-    border:
-        1px solid rgba(255,255,255,.10);
-
-    border-radius: 28px;
-
-    padding: 35px;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.45);
-
-    backdrop-filter: blur(18px);
-}
-
-.profile-top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.main-photo {
-    width: 190px;
-    height: 190px;
-
-    border-radius: 50%;
-    overflow: hidden;
-
-    border:
-        3px solid rgba(255,80,150,.75);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,70,145,.22),
-            rgba(255,255,255,.04)
-        );
-
-    box-shadow:
-        0 18px 45px rgba(0,0,0,.45),
-        0 0 30px rgba(255,65,145,.16);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.main-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.initial {
-    font-family: "Playfair Display", serif;
-    font-size: 70px;
-    color: #ff6ca9;
-}
-
-.name {
-    margin-top: 20px;
-
-    font-family: "Playfair Display", serif;
-    font-size: 34px;
-}
-
-.location {
-    margin-top: 5px;
-
-    color: rgba(255,255,255,.62);
-    font-size: 14px;
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-
-    margin-top: 12px;
-
-    color: #9df0c4;
-    font-size: 12px;
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: #55dc93;
-
-    box-shadow:
-        0 0 10px rgba(85,220,147,.7);
-}
-
-
-/* =========================================
-   ACTION BUTTONS
-========================================= */
-
-.actions {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-
-    margin-top: 25px;
-
-    flex-wrap: wrap;
-}
-
-.action {
-    padding: 11px 20px;
-
-    border-radius: 24px;
-
-    text-decoration: none;
-
-    font-size: 13px;
-    font-weight: 600;
-
-    transition:
-        all .2s ease;
-}
-
-.action:hover {
-    transform: translateY(-1px);
-}
-
-.edit {
-    color: #ff9ac3;
-
-    background: rgba(255,67,143,.14);
-
-    border:
-        1px solid rgba(255,89,156,.35);
-}
-
-
-/* =========================================
-   MESSAGES BUTTON
-========================================= */
-
-.inbox {
-    color: #ffd2e4;
-
-    background:
-        rgba(255,67,143,.13);
-
-    border:
-        1px solid rgba(255,89,156,.35);
-
-    box-shadow:
-        0 7px 22px rgba(255,65,143,.08);
-}
-
-.inbox:hover {
-    color: white;
-
-    background:
-        rgba(255,67,143,.22);
-
-    border-color:
-        rgba(255,110,170,.52);
-
-    box-shadow:
-        0 9px 27px rgba(255,65,143,.14);
-}
-
-
-/* =========================================
-   CHAT BUTTON
-========================================= */
-
-.chat {
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff3f8e,
-            #ff6aab
-        );
-
-    box-shadow:
-        0 8px 22px rgba(255,63,142,.16);
-}
-
-.chat:hover {
-    box-shadow:
-        0 10px 28px rgba(255,63,142,.25);
-}
-
-
-/* =========================================
-   DELETE ACCOUNT
-========================================= */
-
-.delete-account {
-    display: none;
-
-    margin-top: 28px;
-    padding-top: 22px;
-
-    border-top:
-        1px solid rgba(255,255,255,.07);
-
-    text-align: center;
-}
-
-.delete-account-button {
-    border:
-        1px solid rgba(255,100,120,.30);
-
-    background:
-        rgba(255,60,90,.07);
-
-    color:
-        rgba(255,160,175,.78);
-
-    padding:
-        9px 18px;
-
-    border-radius:
-        22px;
-
-    font-family:
-        "Poppins",
-        sans-serif;
-
-    font-size:
-        11px;
-
-    font-weight:
-        500;
-
-    cursor:
-        pointer;
-
-    transition:
-        all .2s ease;
-}
-
-.delete-account-button:hover {
-    background:
-        rgba(255,60,90,.14);
-
-    border-color:
-        rgba(255,100,120,.48);
-
-    color:
-        #ffb2bf;
-}
-
-.delete-note {
-    margin-top: 9px;
-
-    color:
-        rgba(255,255,255,.32);
-
-    font-size:
-        10px;
-
-    line-height:
-        1.5;
-}
-
-
-/* =========================================
-   SECTIONS
-========================================= */
-
-.section {
-    margin-top: 35px;
-
-    padding-top: 27px;
-
-    border-top:
-        1px solid rgba(255,255,255,.08);
-}
-
-.section-title {
-    margin: 0 0 15px;
-
-    font-family: "Playfair Display", serif;
-    font-size: 22px;
-}
-
-.bio {
-    color: rgba(255,255,255,.72);
-
-    line-height: 1.7;
-
-    font-size: 14px;
-}
-
-.details {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap: 13px;
-}
-
-.detail {
-    padding: 14px;
-
-    border-radius: 15px;
-
-    background: rgba(255,255,255,.045);
-
-    border:
-        1px solid rgba(255,255,255,.07);
-}
-
-.detail-label {
-    display: block;
-
-    color: rgba(255,255,255,.43);
-
-    font-size: 11px;
-
-    margin-bottom: 4px;
-}
-
-.detail-value {
-    color: rgba(255,255,255,.82);
-
-    font-size: 13px;
-}
-
-.tags {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-}
-
-.tag {
-    padding: 7px 12px;
-
-    border-radius: 20px;
-
-    color: #ff9ac3;
-
-    background:
-        rgba(255,67,143,.12);
-
-    border:
-        1px solid rgba(255,89,156,.25);
-
-    font-size: 11px;
-}
-
-
-/* =========================================
-   PHOTO GALLERY
-========================================= */
-
-.gallery-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-.gallery-count {
-    color: rgba(255,255,255,.42);
-
-    font-size: 12px;
-}
-
-.gallery {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 12px;
-}
-
-.gallery-item {
-    position: relative;
-
-    aspect-ratio: 1 / 1;
-
-    overflow: hidden;
-
-    border-radius: 16px;
-
-    background:
-        rgba(255,255,255,.04);
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    cursor: pointer;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transition:
-        transform .25s ease;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.05);
-}
-
-.gallery-current {
-    position: absolute;
-
-    left: 8px;
-    bottom: 8px;
-
-    padding: 5px 8px;
-
-    border-radius: 12px;
-
-    background:
-        rgba(0,0,0,.65);
-
-    color: #ff9ac3;
-
-    font-size: 9px;
-}
-
-.empty-gallery {
-    padding: 25px;
-
-    text-align: center;
-
-    color: rgba(255,255,255,.4);
-
-    border:
-        1px dashed rgba(255,255,255,.12);
-
-    border-radius: 16px;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
-   LIGHTBOX
-========================================= */
-
-.lightbox {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 100;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 25px;
-
-    background:
-        rgba(0,0,0,.88);
-}
-
-.lightbox.show {
-    display: flex;
-}
-
-.lightbox img {
-    max-width: 92vw;
-    max-height: 88vh;
-
-    object-fit: contain;
-
-    border-radius: 15px;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.65);
-}
-
-.close-lightbox {
-    position: absolute;
-
-    top: 20px;
-    right: 25px;
-
-    width: 42px;
-    height: 42px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid rgba(255,255,255,.15);
-
-    background:
-        rgba(255,255,255,.08);
-
-    color: white;
-
-    font-size: 23px;
-
-    cursor: pointer;
-}
-
-
-/* =========================================
-   LOADING / ERROR
-========================================= */
-
-.loading {
-    text-align: center;
-
-    padding: 80px 20px;
-
-    color: rgba(255,255,255,.6);
-}
-
-.error {
-    text-align: center;
-
-    padding: 60px 20px;
-
-    color: #ff9cab;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media(max-width:650px) {
-
-    .navbar {
-        padding:
-            16px 5%;
-    }
-
-    .logo {
-        font-size: 24px;
-    }
-
-    .nav-links {
-        gap: 13px;
-    }
-
-    .nav-links a {
-        font-size: 11px;
-    }
-
-    .profile-card {
-        padding: 23px 18px;
-    }
-
-    .main-photo {
-        width: 160px;
-        height: 160px;
-    }
-
-    .name {
-        font-size: 29px;
-    }
-
-    .details {
-        grid-template-columns: 1fr;
-    }
-
-    .gallery {
-        grid-template-columns:
-            repeat(3,1fr);
-    }
-
-    .action {
-        padding:
-            10px 15px;
-
-        font-size: 12px;
-    }
-
-}
-
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Poppins,sans-serif;color:#fff;background:linear-gradient(rgba(13,8,14,.84),rgba(20,7,17,.95)),url("img/bg34.jpg") center/cover fixed no-repeat}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at top left,rgba(255,72,151,.15),transparent 35%),radial-gradient(circle at bottom right,rgba(255,0,102,.12),transparent 35%)}
+.navbar{position:sticky;top:0;z-index:50;width:100%;padding:16px 6%;display:flex;align-items:center;justify-content:space-between;gap:18px;background:rgba(10,7,11,.78);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+.logo{display:flex;align-items:center;gap:9px;color:white;text-decoration:none;font-family:"Playfair Display",serif;font-size:27px;font-weight:700;flex-shrink:0}
+.logo-heart{color:#ff4f9a}
+.nav-links{display:flex;gap:22px;align-items:center}
+.nav-links a{color:rgba(255,255,255,.82);text-decoration:none;font-size:14px;white-space:nowrap}
+.nav-links a:hover{color:#ff76ae}
+.message-badge{display:none;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 5px;margin-left:5px;border-radius:12px;background:#ff3f8e;color:#fff;font-size:10px;font-weight:700;line-height:1;vertical-align:middle;box-shadow:0 0 12px rgba(255,63,142,.4)}
+.message-badge.has-unread{display:inline-flex}
+.container{position:relative;z-index:2;width:min(850px,92%);margin:40px auto 70px}
+.profile-card{background:rgba(25,13,23,.80);border:1px solid rgba(255,255,255,.10);border-radius:28px;padding:35px;box-shadow:0 25px 70px rgba(0,0,0,.45);backdrop-filter:blur(18px)}
+.profile-top{display:flex;flex-direction:column;align-items:center;text-align:center}
+.main-photo{width:190px;height:190px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,80,150,.75);background:linear-gradient(135deg,rgba(255,70,145,.22),rgba(255,255,255,.04));box-shadow:0 18px 45px rgba(0,0,0,.45),0 0 30px rgba(255,65,145,.16);display:flex;align-items:center;justify-content:center}
+.main-photo img{width:100%;height:100%;object-fit:cover}
+.initial{font-family:"Playfair Display",serif;font-size:70px;color:#ff6ca9}
+.name{margin-top:20px;font-family:"Playfair Display",serif;font-size:34px}
+.location{margin-top:5px;color:rgba(255,255,255,.62);font-size:14px}
+.status{display:inline-flex;align-items:center;gap:7px;margin-top:12px;color:#9df0c4;font-size:12px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#55dc93;box-shadow:0 0 10px rgba(85,220,147,.7)}
+.actions{display:flex;justify-content:center;gap:12px;margin-top:25px;flex-wrap:wrap}
+.action{padding:11px 20px;border-radius:24px;text-decoration:none;font-size:13px;font-weight:600;transition:all .2s ease;display:inline-flex;align-items:center;justify-content:center}
+.action:hover{transform:translateY(-1px)}
+.edit{color:#ff9ac3;background:rgba(255,67,143,.14);border:1px solid rgba(255,89,156,.35)}
+.inbox{color:#ffd2e4;background:rgba(255,67,143,.13);border:1px solid rgba(255,89,156,.35);box-shadow:0 7px 22px rgba(255,65,143,.08)}
+.inbox:hover{color:white;background:rgba(255,67,143,.22);border-color:rgba(255,110,170,.52)}
+.chat{color:white;background:linear-gradient(135deg,#ff3f8e,#ff6aab);box-shadow:0 8px 22px rgba(255,63,142,.16)}
+.chat:hover{box-shadow:0 10px 28px rgba(255,63,142,.25)}
+.delete-account{display:none;margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.07);text-align:center}
+.delete-account-button{border:1px solid rgba(255,100,120,.30);background:rgba(255,60,90,.07);color:rgba(255,160,175,.78);padding:9px 18px;border-radius:22px;font-family:Poppins,sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s ease}
+.delete-account-button:hover{background:rgba(255,60,90,.14);border-color:rgba(255,100,120,.48);color:#ffb2bf}
+.delete-note{margin-top:9px;color:rgba(255,255,255,.32);font-size:10px;line-height:1.5}
+.section{margin-top:35px;padding-top:27px;border-top:1px solid rgba(255,255,255,.08)}
+.section-title{margin:0 0 15px;font-family:"Playfair Display",serif;font-size:22px}
+.bio{color:rgba(255,255,255,.72);line-height:1.7;font-size:14px}
+.details{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.detail{padding:14px;border-radius:15px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}
+.detail-label{display:block;color:rgba(255,255,255,.43);font-size:11px;margin-bottom:4px}
+.detail-value{color:rgba(255,255,255,.82);font-size:13px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:7px 12px;border-radius:20px;color:#ff9ac3;background:rgba(255,67,143,.12);border:1px solid rgba(255,89,156,.25);font-size:11px}
+.gallery-header{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.gallery-count{color:rgba(255,255,255,.42);font-size:12px}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gallery-item{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);cursor:pointer}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-current{position:absolute;left:8px;bottom:8px;padding:5px 8px;border-radius:12px;background:rgba(0,0,0,.65);color:#ff9ac3;font-size:9px}
+.empty-gallery{padding:25px;text-align:center;color:rgba(255,255,255,.4);border:1px dashed rgba(255,255,255,.12);border-radius:16px;font-size:13px}
+.lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:25px;background:rgba(0,0,0,.88)}
+.lightbox.show{display:flex}
+.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:15px;box-shadow:0 25px 80px rgba(0,0,0,.65)}
+.close-lightbox{position:absolute;top:20px;right:25px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:white;font-size:23px;cursor:pointer}
+.loading,.error{text-align:center;padding:65px 20px;color:rgba(255,255,255,.6)}
+.error{color:#ff9cab}
+@media(max-width:650px){.navbar{padding:14px 5%;gap:12px}.logo{font-size:24px}.nav-links{gap:12px}.nav-links a{font-size:11px}.profile-card{padding:23px 18px}.main-photo{width:160px;height:160px}.name{font-size:29px}.details{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(3,1fr)}.action{padding:10px 14px;font-size:12px}}
+@media(max-width:400px){.logo{font-size:21px}.nav-links{gap:9px}.nav-links a{font-size:10px}.container{width:94%}}
 </style>
-
 </head>
 
 <body>
-
-
 <header class="navbar">
-
-    <a class="logo" href="index.html">
-
-        <span class="logo-heart">
-            ♥
-        </span>
-
-        <span>
-            Kmeet
-        </span>
-
-    </a>
-
-
-    <nav class="nav-links">
-
-        <a href="discover.html">
-            Discover
-        </a>
-
-        <a id="navMessages"
-           href="inbox.html"
-           style="display:none;">
-
-            Messages
-
-        </a>
-
-        <a href="profile.html">
-            Profile
-        </a>
-
-    </nav>
-
+  <a class="logo" href="index.html"><span class="logo-heart">♥</span><span>Kmeet</span></a>
+  <nav class="nav-links">
+    <a href="discover.html">Discover</a>
+    <a id="navMessages" href="inbox.html" style="display:none">Messages<span id="navMessageBadge" class="message-badge">0</span></a>
+    <a href="profile.html">Profile</a>
+  </nav>
 </header>
 
-
 <main class="container">
+  <section id="loading" class="profile-card loading">Loading Kmeet profile...</section>
 
-<section id="loading"
-         class="profile-card loading">
-
-    Loading Kmeet profile...
-
-</section>
-
-
-<section id="profileCard"
-         class="profile-card"
-         style="display:none;">
-
+  <section id="profileCard" class="profile-card" style="display:none">
     <div class="profile-top">
+      <div class="main-photo">
+        <img id="mainPhoto" alt="Profile photo" style="display:none">
+        <span id="initial" class="initial">K</span>
+      </div>
+      <div id="profileName" class="name">Kmeet Member</div>
+      <div id="profileLocation" class="location"></div>
+      <div class="status">
+        <span id="statusDot" class="status-dot"></span>
+        <span id="statusText">Checking status...</span>
+      </div>
 
-        <div class="main-photo">
-
-            <img id="mainPhoto"
-                 alt="Profile photo"
-                 style="display:none;">
-
-            <span id="initial"
-                  class="initial">
-                K
-            </span>
-
-        </div>
-
-
-        <div id="profileName"
-             class="name">
-
-            Kmeet Member
-
-        </div>
-
-
-        <div id="profileLocation"
-             class="location">
-        </div>
-
-
-        <div class="status">
-
-            <span id="statusDot"
-                  class="status-dot">
-            </span>
-
-            <span id="statusText">
-                Checking status...
-            </span>
-
-        </div>
-
-
-        <div class="actions">
-
-            <a id="editButton"
-               class="action edit"
-               href="edit-profile.html">
-
-                ✏️ Edit Profile
-
-            </a>
-
-
-            <a id="inboxButton"
-               class="action inbox"
-               href="inbox.html"
-               style="display:none;">
-
-                💌 Messages
-
-            </a>
-
-
-            <a id="chatButton"
-               class="action chat"
-               href="#"
-               style="display:none;">
-
-                💬 Chat
-
-            </a>
-
-        </div>
-
+      <div class="actions">
+        <a id="editButton" class="action edit" href="edit-profile.html">✏️ Edit Profile</a>
+        <a id="inboxButton" class="action inbox" href="inbox.html" style="display:none">💌 Messages<span id="inboxMessageBadge" class="message-badge">0</span></a>
+        <a id="chatButton" class="action chat" href="#" style="display:none">💬 Chat</a>
+      </div>
     </div>
 
-
-    <div id="deleteAccountArea"
-         class="delete-account">
-
-        <button id="deleteAccountButton"
-                class="delete-account-button"
-                type="button">
-
-            Delete my Kmeet account
-
-        </button>
-
-        <div class="delete-note">
-
-            This permanently removes your Kmeet profile
-            and login account.
-
-        </div>
-
+    <div id="deleteAccountArea" class="delete-account">
+      <button id="deleteAccountButton" class="delete-account-button" type="button">Delete my Kmeet account</button>
+      <div class="delete-note">This permanently removes your Kmeet profile and login account.</div>
     </div>
 
-
     <section class="section">
-
-        <h2 class="section-title">
-            About Me
-        </h2>
-
-        <div id="bio"
-             class="bio">
-        </div>
-
+      <h2 class="section-title">About Me</h2>
+      <div id="bio" class="bio"></div>
     </section>
 
-
     <section class="section">
-
-        <h2 class="section-title">
-            My Details
-        </h2>
-
-        <div class="details">
-
-            <div class="detail">
-
-                <span class="detail-label">
-                    Age
-                </span>
-
-                <span id="age"
-                      class="detail-value">
-                </span>
-
-            </div>
-
-
-            <div class="detail">
-
-                <span class="detail-label">
-                    Gender
-                </span>
-
-                <span id="gender"
-                      class="detail-value">
-                </span>
-
-            </div>
-
-
-            <div class="detail">
-
-                <span class="detail-label">
-                    Location
-                </span>
-
-                <span id="locationDetail"
-                      class="detail-value">
-                </span>
-
-            </div>
-
-        </div>
-
+      <h2 class="section-title">My Details</h2>
+      <div class="details">
+        <div class="detail"><span class="detail-label">Age</span><span id="age" class="detail-value"></span></div>
+        <div class="detail"><span class="detail-label">Gender</span><span id="gender" class="detail-value"></span></div>
+        <div class="detail"><span class="detail-label">Location</span><span id="locationDetail" class="detail-value"></span></div>
+      </div>
     </section>
 
-
     <section class="section">
-
-        <h2 class="section-title">
-            Interests
-        </h2>
-
-        <div id="interests"
-             class="tags">
-        </div>
-
+      <h2 class="section-title">Interests</h2>
+      <div id="interests" class="tags"></div>
     </section>
 
-
     <section class="section">
-
-        <div class="gallery-header">
-
-            <h2 class="section-title">
-                My Photo Gallery
-            </h2>
-
-            <span id="galleryCount"
-                  class="gallery-count">
-
-                0 photos
-
-            </span>
-
-        </div>
-
-        <div id="gallery"
-             class="gallery">
-        </div>
-
+      <div class="gallery-header">
+        <h2 class="section-title">My Photo Gallery</h2>
+        <span id="galleryCount" class="gallery-count">0 photos</span>
+      </div>
+      <div id="gallery" class="gallery"></div>
     </section>
+  </section>
 
-</section>
-
-
-<section id="errorCard"
-         class="profile-card error"
-         style="display:none;">
-</section>
-
+  <section id="errorCard" class="profile-card error" style="display:none"></section>
 </main>
 
-
-<div id="lightbox"
-     class="lightbox">
-
-    <button id="closeLightbox"
-            class="close-lightbox">
-
-        ×
-
-    </button>
-
-    <img id="lightboxImage"
-         alt="Kmeet gallery photo">
-
+<div id="lightbox" class="lightbox">
+  <button id="closeLightbox" class="close-lightbox" type="button" aria-label="Close photo">×</button>
+  <img id="lightboxImage" alt="Kmeet gallery photo">
 </div>
 
-
 <script type="module">
-
 import {
-    auth,
-    db,
-    onAuthStateChanged,
-    doc,
-    getDoc,
-    setDoc,
-    deleteDoc,
-    deleteUser,
-    EmailAuthProvider,
-    reauthenticateWithCredential
+  auth, db, onAuthStateChanged, doc, getDoc, setDoc, deleteDoc,
+  deleteUser, EmailAuthProvider, reauthenticateWithCredential
 } from "./firebase-config.js";
 
+import {getApp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
-    getApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-
-import {
-    getDatabase,
-    ref,
-    onValue,
-    onDisconnect,
-    set,
-    serverTimestamp
+  getDatabase, ref, onValue, onDisconnect, set, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
+import {
+  collection, onSnapshot, query, where, orderBy, limit
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 /* =========================================
-   REALTIME DATABASE
+   ELEMENTS AND FIREBASE
 ========================================= */
 
-const firebaseApp =
-    getApp();
+const realtimeDB = getDatabase(getApp());
 
+const loading = document.getElementById("loading");
+const profileCard = document.getElementById("profileCard");
+const errorCard = document.getElementById("errorCard");
+const mainPhoto = document.getElementById("mainPhoto");
+const initial = document.getElementById("initial");
+const profileName = document.getElementById("profileName");
+const profileLocation = document.getElementById("profileLocation");
+const locationDetail = document.getElementById("locationDetail");
+const age = document.getElementById("age");
+const gender = document.getElementById("gender");
+const bio = document.getElementById("bio");
+const interests = document.getElementById("interests");
+const gallery = document.getElementById("gallery");
+const galleryCount = document.getElementById("galleryCount");
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const closeLightbox = document.getElementById("closeLightbox");
+const editButton = document.getElementById("editButton");
+const inboxButton = document.getElementById("inboxButton");
+const chatButton = document.getElementById("chatButton");
+const navMessages = document.getElementById("navMessages");
+const navMessageBadge = document.getElementById("navMessageBadge");
+const inboxMessageBadge = document.getElementById("inboxMessageBadge");
+const statusText = document.getElementById("statusText");
+const statusDot = document.getElementById("statusDot");
+const deleteAccountArea = document.getElementById("deleteAccountArea");
+const deleteAccountButton = document.getElementById("deleteAccountButton");
 
-const realtimeDB =
-    getDatabase(firebaseApp);
+const urlParams = new URLSearchParams(window.location.search);
+const requestedProfileId = urlParams.get("id");
 
+const ROTATION_TIME = 24 * 60 * 60 * 1000;
+const READS_KEY = "kmeet_message_reads_v1";
 
-let presenceUnsubscribe =
-    null;
-
+let presenceUnsubscribe = null;
 
 /* =========================================
-   PAGE ELEMENTS
+   LIVE UNREAD MESSAGE COUNTER
+   Matches Discover's read-marker approach.
 ========================================= */
 
-const loading =
-    document.getElementById("loading");
+let conversationQueryUnsubscribers = [];
+const messageUnsubscribers = new Map();
+const watchedConversationIds = new Map();
+const latestMessagesByConversation = new Map();
+const conversationQueryResults = {
+  receiver: new Map(),
+  initiator: new Map()
+};
 
-const profileCard =
-    document.getElementById("profileCard");
+let counterUserId = null;
+let counterStarted = false;
 
-const errorCard =
-    document.getElementById("errorCard");
-
-const mainPhoto =
-    document.getElementById("mainPhoto");
-
-const initial =
-    document.getElementById("initial");
-
-const profileName =
-    document.getElementById("profileName");
-
-const profileLocation =
-    document.getElementById("profileLocation");
-
-const locationDetail =
-    document.getElementById("locationDetail");
-
-const age =
-    document.getElementById("age");
-
-const gender =
-    document.getElementById("gender");
-
-const bio =
-    document.getElementById("bio");
-
-const interests =
-    document.getElementById("interests");
-
-const gallery =
-    document.getElementById("gallery");
-
-const galleryCount =
-    document.getElementById("galleryCount");
-
-const lightbox =
-    document.getElementById("lightbox");
-
-const lightboxImage =
-    document.getElementById("lightboxImage");
-
-const closeLightbox =
-    document.getElementById("closeLightbox");
-
-const editButton =
-    document.getElementById("editButton");
-
-const inboxButton =
-    document.getElementById("inboxButton");
-
-const chatButton =
-    document.getElementById("chatButton");
-
-const navMessages =
-    document.getElementById("navMessages");
-
-const statusText =
-    document.getElementById("statusText");
-
-const statusDot =
-    document.getElementById("statusDot");
-
-const deleteAccountArea =
-    document.getElementById(
-        "deleteAccountArea"
-    );
-
-const deleteAccountButton =
-    document.getElementById(
-        "deleteAccountButton"
-    );
-
-
-/* =========================================
-   PROFILE ID
-========================================= */
-
-const urlParams =
-    new URLSearchParams(
-        window.location.search
-    );
-
-
-const requestedProfileId =
-    urlParams.get("id");
-
-
-/* =========================================
-   PHOTO ROTATION
-========================================= */
-
-const ROTATION_TIME =
-    24 * 60 * 60 * 1000;
-
-
-function getPhotoURL(data) {
-
-    return (
-
-        data.photoURL ||
-
-        data.profilePhoto ||
-
-        data.photo ||
-
-        data.avatar ||
-
-        data.profileImage ||
-
-        data.image ||
-
-        ""
-
-    );
-
+function getReads() {
+  try {
+    return JSON.parse(localStorage.getItem(READS_KEY) || "{}");
+  } catch {
+    return {};
+  }
 }
 
-
-function getGallery(
-    data,
-    currentPhoto
-) {
-
-    let photos =
-
-        Array.isArray(
-            data.photoGallery
-        )
-
-            ? [...data.photoGallery]
-
-            : [];
-
-
-    photos = photos.filter(
-
-        photo =>
-
-            typeof photo === "string" &&
-
-            photo.trim() !== ""
-
-    );
-
-
-    photos = [
-        ...new Set(photos)
-    ];
-
-
-    if (
-        currentPhoto &&
-        !photos.includes(currentPhoto)
-    ) {
-
-        photos.unshift(
-            currentPhoto
-        );
-
-    }
-
-
-    return photos;
-
+function saveReads(reads) {
+  try {
+    localStorage.setItem(READS_KEY, JSON.stringify(reads));
+  } catch (error) {
+    console.warn("Could not save message read markers:", error);
+  }
 }
-
 
 function timestampValue(value) {
+  if (!value) return 0;
+  if (typeof value === "number") return value;
 
-    if (!value) return 0;
+  if (typeof value.toMillis === "function") {
+    try { return value.toMillis(); } catch {}
+  }
 
+  if (typeof value.seconds === "number") {
+    return value.seconds * 1000;
+  }
 
-    if (
-        typeof value.toMillis ===
-        "function"
-    ) {
+  if (value instanceof Date) return value.getTime();
 
-        return value.toMillis();
-
-    }
-
-
-    if (value instanceof Date) {
-
-        return value.getTime();
-
-    }
-
-
-    if (
-        typeof value.seconds ===
-        "number"
-    ) {
-
-        return value.seconds * 1000;
-
-    }
-
-
-    const result =
-        new Date(value).getTime();
-
-
-    return Number.isNaN(result)
-        ? 0
-        : result;
-
+  const parsed = new Date(value).getTime();
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function getMessageSenderId(message) {
+  return message.senderId ||
+    message.fromId ||
+    message.sender ||
+    message.uid ||
+    message.senderUid ||
+    message.fromUid ||
+    "";
+}
 
-async function rotatePhotoIfNeeded(
-    uid,
-    data,
-    currentPhoto,
-    photos
-) {
+function setUnreadBadges(count) {
+  const safeCount = Math.max(0, Number(count) || 0);
 
-    if (photos.length < 2) {
+  [navMessageBadge, inboxMessageBadge].forEach(badge => {
+    if (!badge) return;
 
-        return currentPhoto;
+    badge.textContent = safeCount > 99 ? "99+" : String(safeCount);
+    badge.classList.toggle("has-unread", safeCount > 0);
+    badge.setAttribute("aria-label", `${safeCount} unread conversations`);
+  });
+}
 
+function updateUnreadCounter() {
+  const user = auth.currentUser;
+
+  if (!user || user.isAnonymous || user.uid !== counterUserId) {
+    setUnreadBadges(0);
+    return;
+  }
+
+  const reads = getReads();
+  let unread = 0;
+
+  latestMessagesByConversation.forEach(message => {
+    if (!message) return;
+    if (!message.senderId || message.senderId === user.uid) return;
+    if (!message.createdAt) return;
+
+    const lastRead = Number(reads[message.conversationId] || 0);
+
+    if (message.createdAt > lastRead) unread++;
+  });
+
+  setUnreadBadges(unread);
+}
+
+function stopUnreadCounter() {
+  conversationQueryUnsubscribers.forEach(unsubscribe => {
+    try { unsubscribe(); } catch {}
+  });
+  conversationQueryUnsubscribers = [];
+
+  for (const unsubscribe of messageUnsubscribers.values()) {
+    try { unsubscribe(); } catch {}
+  }
+
+  messageUnsubscribers.clear();
+  watchedConversationIds.clear();
+  latestMessagesByConversation.clear();
+  conversationQueryResults.receiver.clear();
+  conversationQueryResults.initiator.clear();
+
+  counterUserId = null;
+  counterStarted = false;
+  setUnreadBadges(0);
+}
+
+function conversationIdFromDocument(conversationDoc) {
+  const data = conversationDoc.data() || {};
+  return data.conversationId || data.id || conversationDoc.id;
+}
+
+function syncConversationListeners() {
+  const merged = new Map([
+    ...conversationQueryResults.receiver,
+    ...conversationQueryResults.initiator
+  ]);
+
+  for (const [documentId, unsubscribe] of [...messageUnsubscribers.entries()]) {
+    if (merged.has(documentId)) continue;
+
+    try { unsubscribe(); } catch {}
+    messageUnsubscribers.delete(documentId);
+
+    const oldId = watchedConversationIds.get(documentId);
+    watchedConversationIds.delete(documentId);
+
+    if (oldId) latestMessagesByConversation.delete(oldId);
+  }
+
+  for (const [documentId, conversationDoc] of merged) {
+    const conversationId = conversationIdFromDocument(conversationDoc);
+
+    if (
+      messageUnsubscribers.has(documentId) &&
+      watchedConversationIds.get(documentId) === conversationId
+    ) {
+      continue;
     }
 
+    if (messageUnsubscribers.has(documentId)) {
+      try { messageUnsubscribers.get(documentId)(); } catch {}
+      messageUnsubscribers.delete(documentId);
 
-    const lastRotation =
-        timestampValue(
-            data.photoRotationAt
-        );
+      const oldId = watchedConversationIds.get(documentId);
+      if (oldId) latestMessagesByConversation.delete(oldId);
+    }
 
+    watchedConversationIds.set(documentId, conversationId);
 
-    if (!lastRotation) {
+    try {
+      const latestMessageQuery = query(
+        collection(db, "conversations", conversationId, "messages"),
+        orderBy("createdAt", "desc"),
+        limit(1)
+      );
 
-        await setDoc(
+      const unsubscribe = onSnapshot(
+        latestMessageQuery,
+        snapshot => {
+          const user = auth.currentUser;
 
-            doc(
-                db,
-                "users",
-                uid
-            ),
+          if (!user || user.isAnonymous || user.uid !== counterUserId) return;
 
-            {
-                photoRotationAt:
-                    new Date(),
+          if (snapshot.empty) {
+            latestMessagesByConversation.delete(conversationId);
+            updateUnreadCounter();
+            return;
+          }
 
-                photoRotationIndex:
-                    Math.max(
-                        0,
-                        photos.indexOf(
-                            currentPhoto
-                        )
-                    )
-            },
+          const messageDoc = snapshot.docs[0];
+          const message = messageDoc.data() || {};
+          const senderId = getMessageSenderId(message);
+          const createdAt = timestampValue(message.createdAt);
 
-            {
-                merge: true
+          if (!senderId) {
+            latestMessagesByConversation.delete(conversationId);
+            updateUnreadCounter();
+            return;
+          }
+
+          if (senderId === user.uid) {
+            if (createdAt) {
+              const reads = getReads();
+              reads[conversationId] = Math.max(
+                Number(reads[conversationId] || 0),
+                createdAt
+              );
+              saveReads(reads);
             }
 
-        );
+            latestMessagesByConversation.delete(conversationId);
+            updateUnreadCounter();
+            return;
+          }
 
+          latestMessagesByConversation.set(conversationId, {
+            conversationId,
+            senderId,
+            createdAt,
+            messageId: messageDoc.id
+          });
 
-        return currentPhoto;
-
-    }
-
-
-    if (
-        Date.now() -
-        lastRotation <
-        ROTATION_TIME
-    ) {
-
-        return currentPhoto;
-
-    }
-
-
-    let currentIndex =
-        photos.indexOf(
-            currentPhoto
-        );
-
-
-    if (currentIndex < 0) {
-
-        currentIndex = 0;
-
-    }
-
-
-    const nextIndex =
-        (
-            currentIndex + 1
-        ) %
-        photos.length;
-
-
-    const nextPhoto =
-        photos[nextIndex];
-
-
-    await setDoc(
-
-        doc(
-            db,
-            "users",
-            uid
-        ),
-
-        {
-            photoURL:
-                nextPhoto,
-
-            photoRotationAt:
-                new Date(),
-
-            photoRotationIndex:
-                nextIndex,
-
-            photoGallery:
-                photos
+          updateUnreadCounter();
         },
-
-        {
-            merge: true
+        error => {
+          console.warn(
+            "Could not listen for unread messages in conversation:",
+            conversationId,
+            error
+          );
         }
+      );
 
+      messageUnsubscribers.set(documentId, unsubscribe);
+    } catch (error) {
+      console.warn("Could not start message listener:", error);
+    }
+  }
+
+  updateUnreadCounter();
+}
+
+function startUnreadCounter(user) {
+  if (!user || user.isAnonymous) {
+    stopUnreadCounter();
+    return;
+  }
+
+  if (counterStarted && counterUserId === user.uid) return;
+
+  stopUnreadCounter();
+
+  counterStarted = true;
+  counterUserId = user.uid;
+
+  function listenToConversations(role, field) {
+    const conversationsQuery = query(
+      collection(db, "conversations"),
+      where(field, "==", user.uid)
     );
 
+    const unsubscribe = onSnapshot(
+      conversationsQuery,
+      snapshot => {
+        conversationQueryResults[role].clear();
 
-    return nextPhoto;
+        snapshot.docs.forEach(conversationDoc => {
+          conversationQueryResults[role].set(
+            conversationDoc.id,
+            conversationDoc
+          );
+        });
 
+        syncConversationListeners();
+      },
+      error => {
+        console.warn(`Could not monitor ${role} conversations:`, error);
+      }
+    );
+
+    conversationQueryUnsubscribers.push(unsubscribe);
+  }
+
+  // A member can be either the receiver or the initiator.
+  listenToConversations("receiver", "receiverId");
+  listenToConversations("initiator", "initiatorId");
 }
 
-
 /* =========================================
-   PHOTO DISPLAY
+   PROFILE PHOTOS AND ROTATION
 ========================================= */
 
-function showPhoto(
-    url,
-    name
-) {
-
-    if (url) {
-
-        mainPhoto.src =
-            url;
-
-        mainPhoto.style.display =
-            "block";
-
-        initial.style.display =
-            "none";
-
-    } else {
-
-        mainPhoto.style.display =
-            "none";
-
-        initial.textContent =
-
-            (
-                name ||
-                "K"
-            )
-            .trim()
-            .charAt(0)
-            .toUpperCase();
-
-        initial.style.display =
-            "block";
-
-    }
-
+function getPhotoURL(data) {
+  return data.photoURL || data.profilePhoto || data.photo ||
+    data.avatar || data.profileImage || data.image || "";
 }
 
+function getGallery(data, currentPhoto) {
+  let photos = Array.isArray(data.photoGallery)
+    ? [...data.photoGallery]
+    : [];
+
+  photos = photos.filter(
+    photo => typeof photo === "string" && photo.trim() !== ""
+  );
+
+  photos = [...new Set(photos)];
+
+  if (currentPhoto && !photos.includes(currentPhoto)) {
+    photos.unshift(currentPhoto);
+  }
+
+  return photos;
+}
+
+async function rotatePhotoIfNeeded(uid, data, currentPhoto, photos) {
+  if (photos.length < 2) return currentPhoto;
+
+  const lastRotation = timestampValue(data.photoRotationAt);
+
+  if (!lastRotation) {
+    await setDoc(doc(db, "users", uid), {
+      photoRotationAt: new Date(),
+      photoRotationIndex: Math.max(0, photos.indexOf(currentPhoto))
+    }, { merge: true });
+
+    return currentPhoto;
+  }
+
+  if (Date.now() - lastRotation < ROTATION_TIME) {
+    return currentPhoto;
+  }
+
+  let currentIndex = photos.indexOf(currentPhoto);
+  if (currentIndex < 0) currentIndex = 0;
+
+  const nextIndex = (currentIndex + 1) % photos.length;
+  const nextPhoto = photos[nextIndex];
+
+  await setDoc(doc(db, "users", uid), {
+    photoURL: nextPhoto,
+    photoRotationAt: new Date(),
+    photoRotationIndex: nextIndex,
+    photoGallery: photos
+  }, { merge: true });
+
+  return nextPhoto;
+}
+
+function showPhoto(url, name) {
+  if (url) {
+    mainPhoto.onerror = () => {
+      mainPhoto.onerror = null;
+      mainPhoto.style.display = "none";
+      initial.textContent = (name || "K").trim().charAt(0).toUpperCase();
+      initial.style.display = "block";
+    };
+
+    mainPhoto.src = url;
+    mainPhoto.style.display = "block";
+    initial.style.display = "none";
+  } else {
+    mainPhoto.removeAttribute("src");
+    mainPhoto.style.display = "none";
+    initial.textContent = (name || "K").trim().charAt(0).toUpperCase();
+    initial.style.display = "block";
+  }
+}
 
 /* =========================================
-   INTERESTS
+   INTERESTS AND GALLERY
 ========================================= */
 
 function showInterests(list) {
+  interests.innerHTML = "";
 
-    interests.innerHTML =
-        "";
+  if (!Array.isArray(list) || !list.length) {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = "Still discovering interests";
+    interests.appendChild(tag);
+    return;
+  }
 
-
-    if (
-        !Array.isArray(list) ||
-        !list.length
-    ) {
-
-        const tag =
-            document.createElement(
-                "span"
-            );
-
-
-        tag.className =
-            "tag";
-
-
-        tag.textContent =
-            "Still discovering interests";
-
-
-        interests.appendChild(
-            tag
-        );
-
-
-        return;
-
-    }
-
-
-    list.forEach(
-        item => {
-
-            const tag =
-                document.createElement(
-                    "span"
-                );
-
-
-            tag.className =
-                "tag";
-
-
-            tag.textContent =
-                item;
-
-
-            interests.appendChild(
-                tag
-            );
-
-        }
-    );
-
+  list.forEach(item => {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = String(item);
+    interests.appendChild(tag);
+  });
 }
 
+function showGallery(photos, currentPhoto, isOwner) {
+  gallery.innerHTML = "";
 
-/* =========================================
-   GALLERY
-========================================= */
+  galleryCount.textContent =
+    `${photos.length} photo${photos.length === 1 ? "" : "s"}`;
 
-function showGallery(
-    photos,
-    currentPhoto,
-    isOwner
-) {
+  if (!photos.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-gallery";
+    empty.textContent = isOwner
+      ? "Your photo gallery is empty. Add photos from Edit Profile."
+      : "No photos have been added yet.";
 
-    gallery.innerHTML =
-        "";
+    gallery.appendChild(empty);
+    return;
+  }
 
+  photos.forEach((photo, index) => {
+    const item = document.createElement("div");
+    item.className = "gallery-item";
 
-    galleryCount.textContent =
+    const image = document.createElement("img");
+    image.src = photo;
+    image.alt = `Gallery photo ${index + 1}`;
+    image.loading = "lazy";
+    image.onerror = () => { item.style.display = "none"; };
 
-        `${photos.length} photo` +
+    item.appendChild(image);
 
-        (
-            photos.length === 1
-                ? ""
-                : "s"
-        );
-
-
-    if (!photos.length) {
-
-        gallery.innerHTML = `
-
-            <div class="empty-gallery">
-
-                ${
-                    isOwner
-                        ? "Your photo gallery is empty.<br>Add photos from Edit Profile."
-                        : "No photos have been added yet."
-                }
-
-            </div>
-
-        `;
-
-
-        return;
-
+    if (isOwner && photo === currentPhoto) {
+      const current = document.createElement("div");
+      current.className = "gallery-current";
+      current.textContent = "Current";
+      item.appendChild(current);
     }
 
+    item.addEventListener("click", () => {
+      lightboxImage.src = photo;
+      lightbox.classList.add("show");
+    });
 
-    photos.forEach(
-        (photo, index) => {
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "gallery-item";
-
-
-            const image =
-                document.createElement(
-                    "img"
-                );
-
-
-            image.src =
-                photo;
-
-
-            image.alt =
-                `Gallery photo ${index + 1}`;
-
-
-            image.loading =
-                "lazy";
-
-
-            image.onerror =
-                () => {
-
-                    item.style.display =
-                        "none";
-
-                };
-
-
-            item.appendChild(
-                image
-            );
-
-
-            if (
-                isOwner &&
-                photo === currentPhoto
-            ) {
-
-                const current =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                current.className =
-                    "gallery-current";
-
-
-                current.textContent =
-                    "Current";
-
-
-                item.appendChild(
-                    current
-                );
-
-            }
-
-
-            item.addEventListener(
-                "click",
-                () => {
-
-                    lightboxImage.src =
-                        photo;
-
-
-                    lightbox.classList.add(
-                        "show"
-                    );
-
-                }
-            );
-
-
-            gallery.appendChild(
-                item
-            );
-
-        }
-    );
-
+    gallery.appendChild(item);
+  });
 }
-
 
 /* =========================================
    REALTIME PRESENCE
 ========================================= */
 
-async function startOwnPresence(
-    user
-) {
+async function startOwnPresence(user) {
+  if (!user || user.isAnonymous) return;
 
-    if (
-        !user ||
-        user.isAnonymous
-    ) {
+  try {
+    const presenceRef = ref(realtimeDB, `status/${user.uid}`);
 
-        return;
+    await onDisconnect(presenceRef).set({
+      state: "offline",
+      lastChanged: serverTimestamp()
+    });
 
-    }
+    await set(presenceRef, {
+      state: "online",
+      lastChanged: serverTimestamp()
+    });
 
-
-    try {
-
-        const presenceRef =
-            ref(
-                realtimeDB,
-                `status/${user.uid}`
-            );
-
-
-        await onDisconnect(
-            presenceRef
-        ).set({
-
-            state:
-                "offline",
-
-            lastChanged:
-                serverTimestamp()
-
-        });
-
-
-        await set(
-            presenceRef,
-            {
-
-                state:
-                    "online",
-
-                lastChanged:
-                    serverTimestamp()
-
-            }
-        );
-
-
-        console.log(
-            "Kmeet presence ONLINE:",
-            user.uid
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Kmeet presence error:",
-            error
-        );
-
-    }
-
+    console.log("Kmeet presence ONLINE:", user.uid);
+  } catch (error) {
+    console.error("Kmeet presence error:", error);
+  }
 }
-
 
 function stopPresenceListener() {
-
-    if (
-        typeof presenceUnsubscribe ===
-        "function"
-    ) {
-
-        presenceUnsubscribe();
-
-        presenceUnsubscribe =
-            null;
-
-    }
-
+  if (typeof presenceUnsubscribe === "function") {
+    presenceUnsubscribe();
+    presenceUnsubscribe = null;
+  }
 }
 
+function watchProfilePresence(profileId) {
+  stopPresenceListener();
 
-function watchProfilePresence(
-    profileId
-) {
+  if (!profileId) {
+    statusText.textContent = "Offline";
+    statusDot.style.background = "#777";
+    statusDot.style.boxShadow = "none";
+    return;
+  }
 
-    stopPresenceListener();
+  const profilePresenceRef = ref(realtimeDB, `status/${profileId}`);
 
+  presenceUnsubscribe = onValue(
+    profilePresenceRef,
+    snapshot => {
+      const presence = snapshot.val();
+      const online = !!presence && presence.state === "online";
 
-    if (!profileId) {
+      statusText.textContent = online ? "Online" : "Offline";
+      statusText.style.color = online
+        ? "#9df0c4"
+        : "rgba(255,255,255,.48)";
 
-        statusText.textContent =
-            "Offline";
-
-
-        statusDot.style.background =
-            "#777";
-
-
-        statusDot.style.boxShadow =
-            "none";
-
-
-        return;
-
+      statusDot.style.background = online ? "#55dc93" : "#777";
+      statusDot.style.boxShadow = online
+        ? "0 0 10px rgba(85,220,147,.7)"
+        : "none";
+    },
+    error => {
+      console.error("Presence listener error:", error);
+      statusText.textContent = "Offline";
+      statusText.style.color = "rgba(255,255,255,.48)";
+      statusDot.style.background = "#777";
+      statusDot.style.boxShadow = "none";
     }
-
-
-    const profilePresenceRef =
-        ref(
-            realtimeDB,
-            `status/${profileId}`
-        );
-
-
-    presenceUnsubscribe =
-        onValue(
-            profilePresenceRef,
-
-            snapshot => {
-
-                const presence =
-                    snapshot.val();
-
-
-                const online =
-                    !!presence &&
-                    presence.state ===
-                    "online";
-
-
-                if (online) {
-
-                    statusText.textContent =
-                        "Online";
-
-
-                    statusText.style.color =
-                        "#9df0c4";
-
-
-                    statusDot.style.background =
-                        "#55dc93";
-
-
-                    statusDot.style.boxShadow =
-                        "0 0 10px rgba(85,220,147,.7)";
-
-                } else {
-
-                    statusText.textContent =
-                        "Offline";
-
-
-                    statusText.style.color =
-                        "rgba(255,255,255,.48)";
-
-
-                    statusDot.style.background =
-                        "#777";
-
-
-                    statusDot.style.boxShadow =
-                        "none";
-
-                }
-
-            },
-
-            error => {
-
-                console.error(
-                    "Presence listener error:",
-                    error
-                );
-
-
-                statusText.textContent =
-                    "Offline";
-
-
-                statusText.style.color =
-                    "rgba(255,255,255,.48)";
-
-
-                statusDot.style.background =
-                    "#777";
-
-
-                statusDot.style.boxShadow =
-                    "none";
-
-            }
-        );
-
+  );
 }
-
 
 /* =========================================
    DELETE ACCOUNT
 ========================================= */
 
 async function deleteMyAccount() {
+  const user = auth.currentUser;
 
-    const user =
-        auth.currentUser;
+  if (!user) {
+    alert("You must be logged in to delete your account.");
+    return;
+  }
 
+  if (user.isAnonymous) {
+    alert("Anonymous accounts cannot use this account deletion option.");
+    return;
+  }
 
-    if (!user) {
+  if (!confirm(
+    "Are you sure you want to permanently delete your Kmeet account?\n\n" +
+    "Your profile will be removed from Discover and your Kmeet login will be deleted.\n\n" +
+    "This action cannot be undone."
+  )) return;
 
-        alert(
-            "You must be logged in to delete your account."
-        );
+  if (!user.email) {
+    alert("This account does not have an email/password login.");
+    return;
+  }
 
-        return;
+  const password = prompt(
+    "For security, enter your current Kmeet password to continue:"
+  );
 
-    }
+  if (password === null) return;
 
+  if (!password.trim()) {
+    alert("Please enter your current password.");
+    return;
+  }
 
-    if (user.isAnonymous) {
+  const originalText = deleteAccountButton.textContent;
+  deleteAccountButton.disabled = true;
+  deleteAccountButton.textContent = "Deleting account...";
 
-        alert(
-            "Anonymous accounts cannot use this account deletion option."
-        );
-
-        return;
-
-    }
-
-
-    const firstConfirmation =
-        confirm(
-
-            "Are you sure you want to permanently delete your Kmeet account?\n\n" +
-
-            "Your profile will be removed from Discover and your Kmeet login will be deleted.\n\n" +
-
-            "This action cannot be undone."
-
-        );
-
-
-    if (!firstConfirmation) {
-
-        return;
-
-    }
-
-
-    if (!user.email) {
-
-        alert(
-            "This account does not have an email/password login."
-        );
-
-        return;
-
-    }
-
-
-    const password =
-        prompt(
-            "For security, enter your current Kmeet password to continue:"
-        );
-
-
-    if (password === null) {
-
-        return;
-
-    }
-
-
-    if (!password.trim()) {
-
-        alert(
-            "Please enter your current password."
-        );
-
-        return;
-
-    }
-
-
-    const originalText =
-        deleteAccountButton.textContent;
-
-
-    deleteAccountButton.disabled =
-        true;
-
-
-    deleteAccountButton.textContent =
-        "Deleting account...";
-
+  try {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
 
     try {
-
-        const credential =
-            EmailAuthProvider.credential(
-                user.email,
-                password
-            );
-
-
-        await reauthenticateWithCredential(
-            user,
-            credential
-        );
-
-
-        try {
-
-            await set(
-
-                ref(
-                    realtimeDB,
-                    `status/${user.uid}`
-                ),
-
-                {
-                    state:
-                        "offline",
-
-                    lastChanged:
-                        serverTimestamp()
-                }
-
-            );
-
-        } catch (
-            presenceError
-        ) {
-
-            console.warn(
-                "Could not update presence:",
-                presenceError
-            );
-
-        }
-
-
-        await deleteDoc(
-
-            doc(
-                db,
-                "users",
-                user.uid
-            )
-
-        );
-
-
-        await deleteUser(
-            user
-        );
-
-
-        alert(
-            "Your Kmeet account has been deleted successfully."
-        );
-
-
-        window.location.href =
-            "index.html";
-
-
-    } catch (error) {
-
-        console.error(
-            "Kmeet account deletion error:",
-            error
-        );
-
-
-        deleteAccountButton.disabled =
-            false;
-
-
-        deleteAccountButton.textContent =
-            originalText;
-
-
-        if (
-            error.code ===
-            "auth/wrong-password"
-        ) {
-
-            alert(
-                "The password you entered is incorrect. Your account was not deleted."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            error.code ===
-            "auth/invalid-credential"
-        ) {
-
-            alert(
-                "The password could not be verified. Your account was not deleted."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            error.code ===
-            "auth/requires-recent-login"
-        ) {
-
-            alert(
-                "Firebase requires a recent login before deleting this account. Please log out, log in again, and try once more."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            error.code ===
-            "auth/too-many-requests"
-        ) {
-
-            alert(
-                "There have been too many attempts. Please wait a little while and try again."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            error.code ===
-            "permission-denied"
-        ) {
-
-            alert(
-                "Kmeet could not remove your profile from the database. Your account was not deleted."
-            );
-
-            return;
-
-        }
-
-
-        alert(
-            "We could not complete the account deletion. Please try again."
-        );
-
+      await set(ref(realtimeDB, `status/${user.uid}`), {
+        state: "offline",
+        lastChanged: serverTimestamp()
+      });
+    } catch (presenceError) {
+      console.warn("Could not update presence:", presenceError);
     }
 
+    await deleteDoc(doc(db, "users", user.uid));
+    await deleteUser(user);
+
+    alert("Your Kmeet account has been deleted successfully.");
+    window.location.href = "index.html";
+  } catch (error) {
+    console.error("Kmeet account deletion error:", error);
+
+    deleteAccountButton.disabled = false;
+    deleteAccountButton.textContent = originalText;
+
+    if (
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/invalid-credential"
+    ) {
+      alert("The password could not be verified. Your account was not deleted.");
+      return;
+    }
+
+    if (error.code === "auth/requires-recent-login") {
+      alert("Firebase requires a recent login. Please log out, log in again, and try once more.");
+      return;
+    }
+
+    if (error.code === "auth/too-many-requests") {
+      alert("There have been too many attempts. Please wait and try again.");
+      return;
+    }
+
+    if (
+      error.code === "permission-denied" ||
+      error.code === "firestore/permission-denied"
+    ) {
+      alert("Kmeet could not remove your profile from the database. Your account was not deleted.");
+      return;
+    }
+
+    alert("We could not complete the account deletion. Please try again.");
+  }
 }
 
-
-deleteAccountButton.addEventListener(
-    "click",
-    deleteMyAccount
-);
-
+deleteAccountButton.addEventListener("click", deleteMyAccount);
 
 /* =========================================
    LOAD PROFILE
 ========================================= */
 
-async function loadProfile(
-    profileId,
-    loggedInUser
-) {
-
-    try {
-
-        const reference =
-            doc(
-                db,
-                "users",
-                profileId
-            );
-
-
-        const snapshot =
-            await getDoc(
-                reference
-            );
-
-
-        if (!snapshot.exists()) {
-
-            throw new Error(
-                "This Kmeet profile could not be found."
-            );
-
-        }
-
-
-        const data =
-            snapshot.data();
-
-
-        const isOwner =
-            !!loggedInUser &&
-            !loggedInUser.isAnonymous &&
-            profileId ===
-                loggedInUser.uid;
-
-
-        let currentPhoto =
-            getPhotoURL(data);
-
-
-        let photos =
-            getGallery(
-                data,
-                currentPhoto
-            );
-
-
-        if (isOwner) {
-
-            currentPhoto =
-                await rotatePhotoIfNeeded(
-
-                    profileId,
-
-                    data,
-
-                    currentPhoto,
-
-                    photos
-
-                );
-
-        }
-
-
-        if (
-            currentPhoto &&
-            !photos.includes(
-                currentPhoto
-            )
-        ) {
-
-            photos.unshift(
-                currentPhoto
-            );
-
-        }
-
-
-        const name =
-
-            data.name ||
-
-            data.username ||
-
-            data.displayName ||
-
-            "Kmeet Member";
-
-
-        profileName.textContent =
-            name;
-
-
-        const location =
-
-            data.location ||
-
-            data.city ||
-
-            "Kenya";
-
-
-        profileLocation.textContent =
-            "📍 " + location;
-
-
-        locationDetail.textContent =
-            location;
-
-
-        age.textContent =
-
-            data.age
-                ? data.age
-                : "Not provided";
-
-
-        gender.textContent =
-
-            data.gender ||
-            "Not provided";
-
-
-        bio.textContent =
-
-            data.bio ||
-
-            data.description ||
-
-            data.about ||
-
-            data.intro ||
-
-            "Connecting hearts naturally.";
-
-
-        showPhoto(
-            currentPhoto,
-            name
-        );
-
-
-        showInterests(
-            data.interests
-        );
-
-
-        showGallery(
-            photos,
-            currentPhoto,
-            isOwner
-        );
-
-
-        /* =========================================
-           OWNER / OTHER PROFILE CONTROLS
-        ========================================= */
-
-        if (isOwner) {
-
-            editButton.style.display =
-                "inline-flex";
-
-
-            inboxButton.style.display =
-                "inline-flex";
-
-
-            navMessages.style.display =
-                "inline-block";
-
-
-            chatButton.style.display =
-                "none";
-
-
-            deleteAccountArea.style.display =
-                "block";
-
-        } else {
-
-            editButton.style.display =
-                "none";
-
-
-            inboxButton.style.display =
-                "none";
-
-
-            navMessages.style.display =
-                "none";
-
-
-            chatButton.href =
-                `chat.html?userId=${encodeURIComponent(profileId)}`;
-
-
-            chatButton.style.display =
-                "inline-flex";
-
-
-            deleteAccountArea.style.display =
-                "none";
-
-        }
-
-
-        watchProfilePresence(
-            profileId
-        );
-
-
-        loading.style.display =
-            "none";
-
-
-        profileCard.style.display =
-            "block";
-
-
-    } catch (error) {
-
-        console.error(
-            "Profile error:",
-            error
-        );
-
-
-        loading.style.display =
-            "none";
-
-
-        profileCard.style.display =
-            "none";
-
-
-        errorCard.style.display =
-            "block";
-
-
-        errorCard.textContent =
-
-            error.message ||
-
-            "We could not load this profile.";
-
+async function loadProfile(profileId, loggedInUser) {
+  try {
+    const snapshot = await getDoc(doc(db, "users", profileId));
+
+    if (!snapshot.exists()) {
+      throw new Error("This Kmeet profile could not be found.");
     }
 
-}
+    const data = snapshot.data();
+    const isOwner = !!loggedInUser &&
+      !loggedInUser.isAnonymous &&
+      profileId === loggedInUser.uid;
 
+    let currentPhoto = getPhotoURL(data);
+    let photos = getGallery(data, currentPhoto);
+
+    if (isOwner) {
+      currentPhoto = await rotatePhotoIfNeeded(
+        profileId, data, currentPhoto, photos
+      );
+    }
+
+    if (currentPhoto && !photos.includes(currentPhoto)) {
+      photos.unshift(currentPhoto);
+    }
+
+    const name = data.name || data.username ||
+      data.displayName || "Kmeet Member";
+
+    profileName.textContent = name;
+
+    const location = data.location || data.city || "Kenya";
+    profileLocation.textContent = "📍 " + location;
+    locationDetail.textContent = location;
+    age.textContent = data.age ? data.age : "Not provided";
+    gender.textContent = data.gender || "Not provided";
+    bio.textContent = data.bio || data.description ||
+      data.about || data.intro || "Connecting hearts naturally.";
+
+    showPhoto(currentPhoto, name);
+    showInterests(data.interests);
+    showGallery(photos, currentPhoto, isOwner);
+
+    if (isOwner) {
+      editButton.style.display = "inline-flex";
+      inboxButton.style.display = "inline-flex";
+      navMessages.style.display = "inline-block";
+      chatButton.style.display = "none";
+      deleteAccountArea.style.display = "block";
+      updateUnreadCounter();
+    } else {
+      editButton.style.display = "none";
+      inboxButton.style.display = "none";
+      navMessages.style.display = "none";
+      chatButton.href = `chat.html?userId=${encodeURIComponent(profileId)}`;
+      chatButton.style.display = "inline-flex";
+      deleteAccountArea.style.display = "none";
+    }
+
+    watchProfilePresence(profileId);
+
+    loading.style.display = "none";
+    profileCard.style.display = "block";
+  } catch (error) {
+    console.error("Profile error:", error);
+
+    loading.style.display = "none";
+    profileCard.style.display = "none";
+    errorCard.style.display = "block";
+    errorCard.textContent = error.message ||
+      "We could not load this profile.";
+  }
+}
 
 /* =========================================
    LIGHTBOX
 ========================================= */
 
-closeLightbox.addEventListener(
-    "click",
-    () => {
+function closePhotoLightbox() {
+  lightbox.classList.remove("show");
+  lightboxImage.removeAttribute("src");
+}
 
-        lightbox.classList.remove(
-            "show"
-        );
+closeLightbox.addEventListener("click", closePhotoLightbox);
 
+lightbox.addEventListener("click", event => {
+  if (event.target === lightbox) closePhotoLightbox();
+});
 
-        lightboxImage.removeAttribute(
-            "src"
-        );
-
-    }
-);
-
-
-lightbox.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            lightbox
-        ) {
-
-            lightbox.classList.remove(
-                "show"
-            );
-
-
-            lightboxImage.removeAttribute(
-                "src"
-            );
-
-        }
-
-    }
-);
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key ===
-            "Escape"
-        ) {
-
-            lightbox.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closePhotoLightbox();
+});
 
 /* =========================================
    AUTHENTICATION
 ========================================= */
 
-onAuthStateChanged(
-    auth,
-
-    async user => {
-
-        try {
-
-            if (
-                user &&
-                !user.isAnonymous
-            ) {
-
-                await startOwnPresence(
-                    user
-                );
-
-            }
-
-
-            if (requestedProfileId) {
-
-                await loadProfile(
-                    requestedProfileId,
-                    user
-                );
-
-                return;
-
-            }
-
-
-            if (
-                !user ||
-                user.isAnonymous
-            ) {
-
-                window.location.href =
-                    "login.html";
-
-                return;
-
-            }
-
-
-            await loadProfile(
-                user.uid,
-                user
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Profile loading error:",
-                error
-            );
-
-        }
-
+onAuthStateChanged(auth, async user => {
+  try {
+    if (user && !user.isAnonymous) {
+      startUnreadCounter(user);
+      await startOwnPresence(user);
+    } else {
+      stopUnreadCounter();
     }
-);
 
+    if (requestedProfileId) {
+      await loadProfile(requestedProfileId, user);
+      return;
+    }
+
+    if (!user || user.isAnonymous) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    await loadProfile(user.uid, user);
+  } catch (error) {
+    console.error("Profile loading error:", error);
+  }
+});
 
 /* =========================================
    CLEANUP
 ========================================= */
 
-window.addEventListener(
-    "beforeunload",
-    () => {
-
-        stopPresenceListener();
-
-    }
-);
-
+window.addEventListener("beforeunload", () => {
+  stopPresenceListener();
+  stopUnreadCounter();
+});
 </script>
-
 </body>
 </html>
