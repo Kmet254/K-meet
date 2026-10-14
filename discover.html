@@ -1118,10 +1118,6 @@ function syncConversationMessageListeners() {
         }
 
         if (senderId === currentKmeetUser.uid) {
-          /*
-           * The logged-in member sent the latest message.
-           * It is not an incoming unread message.
-           */
           if (createdAt) {
             const reads = getReads();
             reads[conversationId] = Math.max(
@@ -1136,113 +1132,48 @@ function syncConversationMessageListeners() {
           return;
         }
 
-        latestMessagesByConversation.set(conversationId,{
+        latestMessagesByConversation.set(conversationId, {
           conversationId,
-          conversationDocumentId:documentId,
           senderId,
-          text:message.text || message.message || message.content || "",
-          createdAt,
-          messageId:latestDoc.id
+          text: message.text || message.message || "",
+          createdAt: createdAt || Date.now()
         });
 
         updateUnreadDisplay();
-      },error => {
-        console.warn(
-          `Could not listen to messages for conversation ${conversationId}:`,
-          error
-        );
       });
 
-      messageUnsubscribers.set(documentId,unsubscribe);
-
+      messageUnsubscribers.set(documentId, unsubscribe);
     } catch (error) {
-      console.warn("Could not start conversation message listener:",error);
+      console.warn("Could not attach message listener:", error);
     }
   }
-
-  updateUnreadDisplay();
 }
 
-function startMessageMonitoring() {
-  stopMessageMonitoring();
-
-  if (!currentKmeetUser || currentKmeetUser.isAnonymous) {
-    updateUnreadDisplay();
-    return;
-  }
-
-  const uid = currentKmeetUser.uid;
-
-  const listenToConversations = (role,field) => {
-    try {
-      const conversationsQuery = query(
-        collection(db,"conversations"),
-        where(field,"==",uid)
-      );
-
-      const unsubscribe = onSnapshot(conversationsQuery,snapshot => {
-        conversationQueryResults[role].clear();
-
-        snapshot.docs.forEach(conversationDoc => {
-          conversationQueryResults[role].set(
-            conversationDoc.id,
-            conversationDoc
-          );
-        });
-
-        syncConversationMessageListeners();
-
-      },error => {
-        console.warn(`Could not listen to ${role} conversations:`,error);
-
-        messagesList.innerHTML =
-          `<div class="message-empty">Messages are temporarily unavailable. Please check your connection and try again 💗</div>`;
-      });
-
-      conversationQueryUnsubscribers.push(unsubscribe);
-
-    } catch (error) {
-      console.warn(`Could not start ${role} conversation listener:`,error);
-    }
-  };
-
-  /*
-   * Listen for conversations where this member is the receiver
-   * and conversations where this member started the chat.
-   */
-  listenToConversations("receiver","receiverId");
-  listenToConversations("initiator","initiatorId");
-}
-
-/* ---------- MESSAGE MENU EVENTS ---------- */
-
-messagesButton.addEventListener("click",() => {
+messagesButton.addEventListener("click", () => {
   messagesPanel.classList.toggle("open");
-
-  if (messagesPanel.classList.contains("open")) {
-    updateUnreadDisplay();
-  }
 });
 
-messagesClose.addEventListener("click",() => {
+messagesClose.addEventListener("click", () => {
   messagesPanel.classList.remove("open");
 });
 
-document.addEventListener("click",event => {
-  if (!event.target.closest(".messages-area")) {
+document.addEventListener("click", (e) => {
+  if (!messagesPanel.contains(e.target) && !messagesButton.contains(e.target)) {
     messagesPanel.classList.remove("open");
   }
 });
 
-/* ---------- AUTHENTICATION ---------- */
+onAuthStateChanged(auth, async (user) => {
+  currentKmeetUser = user;
 
-onAuthStateChanged(auth,async user => {
-  currentKmeetUser = user || null;
+  if (user && !user.isAnonymous) {
+    profileLink.href = "profile.html";
+    profileLink.textContent = "Profile";
+  } else {
+    profileLink.href = "login.html";
+    profileLink.textContent = "Log In";
+  }
 
-  profileLink.href =
-    user && !user.isAnonymous ? "profile.html" : "login.html";
-
-  startMessageMonitoring();
   await renderDiscover();
 });
 </script>
