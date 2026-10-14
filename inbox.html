@@ -824,209 +824,192 @@ body {
 ======================================================= -->
 
 <script type="module">
-
 import {
-
     auth,
     db,
     onAuthStateChanged,
     doc,
     getDoc,
     collection
-
 } from "./firebase-config.js";
 
-
 import {
-
     query,
     where,
-    getDocs
-
+    orderBy,
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+/* =====================================================
+   ELEMENTS AND STATE
+===================================================== */
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const statusEl =
-    document.getElementById(
-        "status"
-    );
-
-
-const listEl =
-    document.getElementById(
-        "conversationList"
-    );
-
-
-/* =========================================================
-   CURRENT USER
-========================================================= */
+const statusEl = document.getElementById("status");
+const listEl = document.getElementById("conversationList");
 
 let currentUser = null;
+let authVersion = 0;
+let renderVersion = 0;
+let queryReady = 0;
+let conversationMap = new Map();
+let latestMessages = new Map();
+let messageErrors = new Set();
+let messageListeners = new Map();
+let inboxListeners = [];
+let profileCache = new Map();
+let inboxStarted = false;
 
+const EMPTY_PHOTO = "kmeet-logo.jfif.jfif";
 
-/* =========================================================
+/* =====================================================
+   BADGE STYLES
+===================================================== */
+
+const badgeStyles = document.createElement("style");
+
+badgeStyles.textContent = `
+.conversation-row.has-unread {
+    background: rgba(255, 92, 154, 0.055);
+}
+.conversation-row.has-unread .conversation-name {
+    color: #ffb0d0;
+}
+.conversation-row.has-unread .conversation-preview {
+    color: #fff0f6;
+    font-weight: 500;
+}
+.inbox-row-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    align-self: stretch;
+    gap: 9px;
+    flex-shrink: 0;
+    min-width: 35px;
+}
+.unread-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 23px;
+    height: 23px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ff72ad, #d82e76);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    box-shadow: 0 3px 12px rgba(255, 92, 154, .30);
+}
+.unread-badge[hidden] {
+    display: none;
+}
+.conversation-row {
+    cursor: pointer;
+}
+`;
+
+document.head.appendChild(badgeStyles);
+
+/* =====================================================
    STATUS
-========================================================= */
+===================================================== */
 
-function setStatus(
-    message,
-    isError = false
-) {
-
-    if (!statusEl) {
-        return;
-    }
-
-    statusEl.textContent =
-        message;
-
-    statusEl.classList.toggle(
-        "error",
-        isError
-    );
+function setStatus(message, isError = false) {
+    statusEl.textContent = message;
+    statusEl.classList.toggle("error", isError);
 }
 
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+/* =====================================================
+   SAFE HTML
+===================================================== */
 
 function escapeHtml(value) {
-
-    return String(
-        value ?? ""
-    )
-
-    .replaceAll(
-        "&",
-        "&amp;"
-    )
-
-    .replaceAll(
-        "<",
-        "&lt;"
-    )
-
-    .replaceAll(
-        ">",
-        "&gt;"
-    )
-
-    .replaceAll(
-        '"',
-        "&quot;"
-    )
-
-    .replaceAll(
-        "'",
-        "&#039;"
-    );
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
+/* =====================================================
+   TIMESTAMP HELPERS
+===================================================== */
 
-/* =========================================================
-   FIND OTHER USER
-========================================================= */
+function timestampMillis(value) {
+    if (!value) return 0;
 
-function getOtherUserId(
-    conversation
-) {
-
-    if (
-        !conversation ||
-        !currentUser
-    ) {
-        return null;
+    if (typeof value.toMillis === "function") {
+        return value.toMillis();
     }
 
-
-    if (
-        conversation.initiatorId ===
-        currentUser.uid
-    ) {
-
-        return (
-            conversation.receiverId ||
-            null
-        );
+    if (typeof value.toDate === "function") {
+        return value.toDate().getTime();
     }
 
-
-    if (
-        conversation.receiverId ===
-        currentUser.uid
-    ) {
-
-        return (
-            conversation.initiatorId ||
-            null
-        );
+    if (typeof value.seconds === "number") {
+        return value.seconds * 1000;
     }
 
+    if (value instanceof Date) {
+        return value.getTime();
+    }
 
-    return null;
+    if (typeof value === "string") {
+        const parsed = Date.parse(value);
+        return Number.isNaN(parsed) ? 0 : parsed;
+    }
+
+    return 0;
 }
 
+function formatTime(timestamp) {
+    const milliseconds = timestampMillis(timestamp);
 
-/* =========================================================
-   VALID CONVERSATION
-========================================================= */
+    if (!milliseconds) return "";
 
-function isValidConversation(
-    conversation
-) {
+    const date = new Date(milliseconds);
+    const now = new Date();
 
-    if (
-        !conversation ||
-        !currentUser
-    ) {
-        return false;
+    const sameDay =
+        date.getFullYear() === now.getFullYear() &&
+        date.getMonth() === now.getMonth() &&
+        date.getDate() === now.getDate();
+
+    if (sameDay) {
+        return date.toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit"
+        });
     }
 
+    return date.toLocaleDateString([], {
+        day: "numeric",
+        month: "short"
+    });
+}
 
-    const initiator =
-        conversation.initiatorId;
+/* =====================================================
+   PARTICIPANTS
+===================================================== */
 
+function isValidConversation(conversation) {
+    if (!conversation || !currentUser) return false;
 
-    const receiver =
-        conversation.receiverId;
-
+    const initiator = conversation.initiatorId;
+    const receiver = conversation.receiverId;
 
     if (
         typeof initiator !== "string" ||
-        typeof receiver !== "string"
-    ) {
-
-        return false;
-    }
-
-
-    if (
+        typeof receiver !== "string" ||
         !initiator ||
-        !receiver
-    ) {
-
-        return false;
-    }
-
-
-    /*
-     * Reject corrupted conversations
-     * where both users are the same.
-     */
-
-    if (
+        !receiver ||
         initiator === receiver
     ) {
-
         return false;
     }
-
 
     return (
         initiator === currentUser.uid ||
@@ -1034,409 +1017,156 @@ function isValidConversation(
     );
 }
 
+function getOtherUserId(conversation) {
+    if (!isValidConversation(conversation)) return null;
 
-/* =========================================================
-   FORMAT TIME
-========================================================= */
-
-function formatTime(
-    timestamp
-) {
-
-    if (!timestamp) {
-        return "";
-    }
-
-
-    let date = null;
-
-
-    if (
-        typeof timestamp.toDate ===
-        "function"
-    ) {
-
-        date =
-            timestamp.toDate();
-
-    }
-
-    else if (
-        timestamp instanceof Date
-    ) {
-
-        date =
-            timestamp;
-    }
-
-    else if (
-        typeof timestamp.seconds ===
-        "number"
-    ) {
-
-        date =
-            new Date(
-                timestamp.seconds *
-                1000
-            );
-    }
-
-
-    if (
-        !date ||
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return "";
-    }
-
-
-    const now =
-        new Date();
-
-
-    const sameDay =
-
-        date.getFullYear() ===
-            now.getFullYear() &&
-
-        date.getMonth() ===
-            now.getMonth() &&
-
-        date.getDate() ===
-            now.getDate();
-
-
-    if (sameDay) {
-
-        return date.toLocaleTimeString(
-            [],
-            {
-                hour: "numeric",
-                minute: "2-digit"
-            }
-        );
-    }
-
-
-    return date.toLocaleDateString(
-        [],
-        {
-            day: "numeric",
-            month: "short"
-        }
-    );
+    return conversation.initiatorId === currentUser.uid
+        ? conversation.receiverId
+        : conversation.initiatorId;
 }
 
+/* =====================================================
+   PROFILE CACHE
+===================================================== */
 
-/* =========================================================
-   GET USER PROFILE
-========================================================= */
+async function getUserProfile(uid) {
+    if (!uid) return null;
 
-async function getUserProfile(
-    uid
-) {
-
-    if (!uid) {
-        return null;
+    if (profileCache.has(uid)) {
+        return profileCache.get(uid);
     }
 
+    const request = (async () => {
+        try {
+            const snapshot = await getDoc(doc(db, "users", uid));
 
-    try {
-
-        const snapshot =
-            await getDoc(
-                doc(
-                    db,
-                    "users",
-                    uid
-                )
-            );
-
-
-        if (!snapshot.exists()) {
+            if (!snapshot.exists()) {
+                return {
+                    uid,
+                    displayName: "Kmeet member",
+                    photoURL: EMPTY_PHOTO
+                };
+            }
 
             return {
-
                 uid,
+                ...snapshot.data()
+            };
+        } catch (error) {
+            console.warn("Could not load inbox profile:", uid, error);
 
-                displayName:
-                    "Kmeet member",
-
-                photoURL:
-                    ""
-
+            return {
+                uid,
+                displayName: "Kmeet member",
+                photoURL: EMPTY_PHOTO
             };
         }
+    })();
 
+    profileCache.set(uid, request);
 
-        return {
-
-            uid,
-
-            ...snapshot.data()
-
-        };
-
-
-    }
-
-    catch (error) {
-
-        console.warn(
-            "Could not load profile:",
-            error
-        );
-
-
-        return {
-
-            uid,
-
-            displayName:
-                "Kmeet member",
-
-            photoURL:
-                ""
-
-        };
-    }
+    return request;
 }
 
+/* =====================================================
+   UNREAD MESSAGE COUNT
+===================================================== */
 
-/* =========================================================
-   GET LATEST MESSAGE
-========================================================= */
+/*
+ A message is unread when:
+ 1. It was sent by another participant.
+ 2. Its createdAt timestamp is later than this member's
+    lastReadAt_UID timestamp.
 
-async function getLatestMessage(
-    conversationId
-) {
+ If no read timestamp exists, incoming messages with
+ valid timestamps are counted as unread.
+*/
 
-    try {
+function getUnreadCount(conversation, items) {
+    if (!currentUser) return 0;
 
-        const messagesRef =
-            collection(
-                db,
-                "conversations",
-                conversationId,
-                "messages"
-            );
+    const readField = `lastReadAt_${currentUser.uid}`;
+    const lastReadMillis = timestampMillis(conversation[readField]);
 
+    return items.filter(message => {
+        if (!message) return false;
 
-        const snapshot =
-            await getDocs(
-                messagesRef
-            );
-
-
-        if (
-            snapshot.empty
-        ) {
-
-            return null;
+        if (message.senderId === currentUser.uid) {
+            return false;
         }
 
+        const sentAt = timestampMillis(message.createdAt);
 
-        const messages =
-            snapshot.docs.map(
-                item => ({
+        // Without a valid timestamp, we cannot reliably
+        // decide whether this message is newer than last read.
+        if (!sentAt) return false;
 
-                    id:
-                        item.id,
-
-                    ...item.data()
-
-                })
-            );
-
-
-        messages.sort(
-            (a, b) => {
-
-                const aSeconds =
-                    a.createdAt
-                        ?.seconds || 0;
-
-
-                const bSeconds =
-                    b.createdAt
-                        ?.seconds || 0;
-
-
-                return (
-                    bSeconds -
-                    aSeconds
-                );
-            }
-        );
-
-
-        return (
-            messages[0] ||
-            null
-        );
-
-
-    }
-
-    catch (error) {
-
-        console.warn(
-            "Could not load messages:",
-            conversationId,
-            error
-        );
-
-
-        return null;
-    }
+        return sentAt > lastReadMillis;
+    }).length;
 }
 
+/* =====================================================
+   LATEST MESSAGE
+===================================================== */
 
-/* =========================================================
-   EMPTY INBOX
-========================================================= */
+function getLatestMessage(items) {
+    if (!items || !items.length) return null;
 
-function renderEmpty() {
+    return [...items].sort((a, b) => {
+        return timestampMillis(b.createdAt) -
+               timestampMillis(a.createdAt);
+    })[0] || null;
+}
 
-    if (!listEl) {
-        return;
-    }
+/* =====================================================
+   EMPTY STATES
+===================================================== */
 
-
+function renderEmpty(title, description, icon = "💌") {
     listEl.innerHTML = `
-
         <div class="empty-state">
-
-            <div class="empty-icon">
-                💌
-            </div>
-
-            <h3>
-                No conversations yet
-            </h3>
-
-            <p>
-                Start a conversation from
-                Discover and it will appear here.
-            </p>
-
+            <div class="empty-icon">${icon}</div>
+            <h3>${escapeHtml(title)}</h3>
+            <p>${escapeHtml(description)}</p>
         </div>
-
     `;
 }
-
-
-/* =========================================================
-   LOGIN REQUIRED
-========================================================= */
 
 function renderLoginRequired() {
-
-    if (!listEl) {
-        return;
-    }
-
-
     listEl.innerHTML = `
-
         <div class="empty-state">
-
-            <div class="empty-icon">
-                🔐
-            </div>
-
-            <h3>
-                Please log in
-            </h3>
-
-            <p>
-                You need a registered Kmeet
-                account to use your Inbox.
-            </p>
-
-            <a
-                href="login.html"
-                class="login-link"
-            >
-                Log in
-            </a>
-
+            <div class="empty-icon">🔐</div>
+            <h3>Please log in</h3>
+            <p>You need a registered Kmeet account to use your Inbox.</p>
+            <a href="login.html" class="login-link">Log in</a>
         </div>
-
     `;
 }
-
-
-/* =========================================================
-   ANONYMOUS USER
-========================================================= */
 
 function renderRegisteredOnly() {
-
-    if (!listEl) {
-        return;
-    }
-
-
     listEl.innerHTML = `
-
         <div class="empty-state">
-
-            <div class="empty-icon">
-                💗
-            </div>
-
-            <h3>
-                Registered members only
-            </h3>
-
-            <p>
-                You can explore Discover as a guest,
-                but you need a registered account
-                to use Inbox.
-            </p>
-
-            <a
-                href="login.html"
-                class="login-link"
-            >
-                Log in
-            </a>
-
+            <div class="empty-icon">💗</div>
+            <h3>Registered members only</h3>
+            <p>You can explore Discover as a guest, but you need a registered account to use Inbox.</p>
+            <a href="login.html" class="login-link">Log in</a>
         </div>
-
     `;
 }
 
+/* =====================================================
+   BUILD A CONVERSATION ROW
+===================================================== */
 
-/* =========================================================
-   CREATE CONVERSATION ROW
-========================================================= */
+async function createConversationRow(conversation, items, version) {
+    const otherUid = getOtherUserId(conversation);
 
-async function createConversationRow(
-    conversation,
-    latestMessage
-) {
+    if (!otherUid) return null;
 
-    const otherUid =
-        getOtherUserId(
-            conversation
-        );
+    const profile = await getUserProfile(otherUid);
 
-
-    if (!otherUid) {
-        return null;
-    }
-
-
-    const profile =
-        await getUserProfile(
-            otherUid
-        );
-
+    // Ignore an outdated asynchronous render.
+    if (version !== renderVersion || !currentUser) return null;
 
     const displayName =
         profile?.displayName ||
@@ -1444,538 +1174,398 @@ async function createConversationRow(
         profile?.username ||
         "Kmeet member";
 
-
     const photo =
         profile?.photoURL ||
+        profile?.photoUrl ||
         profile?.profilePhoto ||
         profile?.photo ||
-        "kmeet-logo.jfif.jfif";
+        profile?.avatar ||
+        profile?.profileImage ||
+        EMPTY_PHOTO;
 
+    const latest = getLatestMessage(items);
+    const unreadCount = getUnreadCount(conversation, items);
 
-    let preview =
-        "No messages yet.";
+    let preview = "No messages yet.";
 
+    if (latest) {
+        const messageText = latest.text || latest.message || "Message";
 
-    if (latestMessage) {
-
-        const messageText =
-            latestMessage.text ||
-            latestMessage.message ||
-            "Message";
-
-
-        if (
-            latestMessage.senderId ===
-            currentUser.uid
-        ) {
-
-            preview =
-                "You: " +
-                messageText;
-
-        }
-
-        else {
-
-            preview =
-                messageText;
-        }
+        preview = latest.senderId === currentUser.uid
+            ? `You: ${messageText}`
+            : messageText;
     }
 
+    const time = latest
+        ? formatTime(latest.createdAt)
+        : formatTime(conversation.updatedAt || conversation.createdAt);
 
-    const time =
-        latestMessage
-            ? formatTime(
-                latestMessage.createdAt
-            )
-            : "";
+    const row = document.createElement("a");
 
+    row.className = "conversation-row";
+    row.href = `chat.html?userId=${encodeURIComponent(otherUid)}`;
 
-    const href =
-        "chat.html?userId=" +
-        encodeURIComponent(
-            otherUid
-        );
-
-
-    const row =
-        document.createElement(
-            "a"
-        );
-
-
-    row.className =
-        "conversation-row";
-
-
-    row.href =
-        href;
-
-
-    row.innerHTML = `
-
-        <img
-            class="conversation-avatar"
-            src="${escapeHtml(photo)}"
-            alt="${escapeHtml(displayName)}"
-            loading="lazy"
-        >
-
-        <div class="conversation-info">
-
-            <div class="conversation-name">
-                ${escapeHtml(displayName)}
-            </div>
-
-            <div class="conversation-preview">
-                ${escapeHtml(preview)}
-            </div>
-
-        </div>
-
-        <div class="conversation-time">
-            ${escapeHtml(time)}
-        </div>
-
-    `;
-
-
-    const image =
-        row.querySelector(
-            ".conversation-avatar"
-        );
-
-
-    if (image) {
-
-        image.addEventListener(
-            "error",
-            () => {
-
-                image.onerror =
-                    null;
-
-                image.src =
-                    "kmeet-logo.jfif.jfif";
-
-            }
-        );
+    if (unreadCount > 0) {
+        row.classList.add("has-unread");
     }
 
+    const avatar = document.createElement("img");
+    avatar.className = "conversation-avatar";
+    avatar.src = photo;
+    avatar.alt = displayName;
+    avatar.loading = "lazy";
 
-    return row;
+    avatar.addEventListener("error", () => {
+        avatar.onerror = null;
+        avatar.src = EMPTY_PHOTO;
+    });
+
+    const info = document.createElement("div");
+    info.className = "conversation-info";
+
+    const name = document.createElement("div");
+    name.className = "conversation-name";
+    name.textContent = displayName;
+
+    const messagePreview = document.createElement("div");
+    messagePreview.className = "conversation-preview";
+    messagePreview.textContent = preview;
+
+    info.append(name, messagePreview);
+
+    const right = document.createElement("div");
+    right.className = "inbox-row-right";
+
+    const timeEl = document.createElement("div");
+    timeEl.className = "conversation-time";
+    timeEl.textContent = time;
+
+    const badge = document.createElement("span");
+    badge.className = "unread-badge";
+    badge.textContent = unreadCount > 9 ? "9+" : String(unreadCount);
+    badge.hidden = unreadCount === 0;
+    badge.setAttribute(
+        "aria-label",
+        `${unreadCount} unread message${unreadCount === 1 ? "" : "s"}`
+    );
+
+    right.append(timeEl, badge);
+    row.append(avatar, info, right);
+
+    return {
+        row,
+        latestTime: timestampMillis(latest?.createdAt) ||
+                    timestampMillis(conversation.updatedAt) ||
+                    timestampMillis(conversation.createdAt),
+        unreadCount
+    };
 }
 
+/* =====================================================
+   RENDER INBOX
+===================================================== */
 
-/* =========================================================
-   LOAD INBOX
-========================================================= */
+async function renderInbox() {
+    if (!currentUser) return;
 
-async function loadInbox() {
+    const version = ++renderVersion;
 
-    if (!currentUser) {
-        return;
-    }
+    const conversations = Array.from(conversationMap.values())
+        .filter(isValidConversation);
 
-
-    setStatus(
-        "Loading your conversations..."
-    );
-
-
-    if (listEl) {
-
-        listEl.innerHTML = `
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    💌
-                </div>
-
-                <h3>
-                    Loading conversations
-                </h3>
-
-                <p>
-                    Please wait...
-                </p>
-
-            </div>
-
-        `;
-    }
-
-
-    const conversationMap =
-        new Map();
-
-
-    /* =====================================================
-       CONVERSATIONS STARTED BY CURRENT USER
-    ===================================================== */
-
-    try {
-
-        const sentQuery =
-            query(
-
-                collection(
-                    db,
-                    "conversations"
-                ),
-
-                where(
-                    "initiatorId",
-                    "==",
-                    currentUser.uid
-                )
-
-            );
-
-
-        const sentSnapshot =
-            await getDocs(
-                sentQuery
-            );
-
-
-        sentSnapshot.forEach(
-            item => {
-
-                conversationMap.set(
-
-                    item.id,
-
-                    {
-
-                        id:
-                            item.id,
-
-                        ...item.data()
-
-                    }
-
-                );
-
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Sent conversation query failed:",
-            error
-        );
-
-
-        setStatus(
-            "Unable to load your conversations.",
-            true
-        );
-
-
-        return;
-    }
-
-
-    /* =====================================================
-       CONVERSATIONS RECEIVED BY CURRENT USER
-    ===================================================== */
-
-    try {
-
-        const receivedQuery =
-            query(
-
-                collection(
-                    db,
-                    "conversations"
-                ),
-
-                where(
-                    "receiverId",
-                    "==",
-                    currentUser.uid
-                )
-
-            );
-
-
-        const receivedSnapshot =
-            await getDocs(
-                receivedQuery
-            );
-
-
-        receivedSnapshot.forEach(
-            item => {
-
-                conversationMap.set(
-
-                    item.id,
-
-                    {
-
-                        id:
-                            item.id,
-
-                        ...item.data()
-
-                    }
-
-                );
-
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Received conversation query failed:",
-            error
-        );
-
-
-        setStatus(
-            "Unable to load received conversations.",
-            true
-        );
-
-
-        return;
-    }
-
-
-    /* =====================================================
-       FILTER VALID CONVERSATIONS
-    ===================================================== */
-
-    const conversations =
-        Array.from(
-            conversationMap.values()
-        )
-        .filter(
-            isValidConversation
-        );
-
-
-    /* =====================================================
-       NO CONVERSATIONS
-    ===================================================== */
-
-    if (
-        conversations.length === 0
-    ) {
-
-        setStatus(
-            "No conversations yet."
-        );
-
-
-        renderEmpty();
-
-        return;
-    }
-
-
-    /* =====================================================
-       LOAD LATEST MESSAGE FOR EACH
-    ===================================================== */
-
-    const prepared =
-        await Promise.all(
-
-            conversations.map(
-                async conversation => {
-
-                    const latestMessage =
-                        await getLatestMessage(
-                            conversation.id
-                        );
-
-
-                    return {
-
-                        conversation,
-
-                        latestMessage
-
-                    };
-
-                }
-            )
-        );
-
-
-    /* =====================================================
-       SORT NEWEST FIRST
-    ===================================================== */
-
-    prepared.sort(
-        (a, b) => {
-
-            const aTime =
-                a.latestMessage
-                    ?.createdAt
-                    ?.seconds || 0;
-
-
-            const bTime =
-                b.latestMessage
-                    ?.createdAt
-                    ?.seconds || 0;
-
-
-            return (
-                bTime -
-                aTime
-            );
-        }
-    );
-
-
-    /* =====================================================
-       CREATE ROWS
-    ===================================================== */
-
-    const rows =
-        await Promise.all(
-
-            prepared.map(
-                item =>
-
-                    createConversationRow(
-
-                        item.conversation,
-
-                        item.latestMessage
-
-                    )
-            )
-        );
-
-
-    if (listEl) {
-
+    if (!conversations.length) {
         listEl.innerHTML = "";
+
+        renderEmpty(
+            "No conversations yet",
+            "Start a conversation from Discover and it will appear here."
+        );
+
+        setStatus("No conversations yet.");
+        return;
     }
 
+    const prepared = await Promise.all(
+        conversations.map(async conversation => {
+            const items = latestMessages.get(conversation.id) || [];
 
-    rows
+            return createConversationRow(conversation, items, version);
+        })
+    );
+
+    if (version !== renderVersion || !currentUser) return;
+
+    const rows = prepared
         .filter(Boolean)
-        .forEach(
-            row => {
+        .sort((a, b) => b.latestTime - a.latestTime);
 
-                if (
-                    listEl &&
-                    row
-                ) {
+    listEl.innerHTML = "";
 
-                    listEl.appendChild(
-                        row
-                    );
-                }
+    let totalUnread = 0;
 
+    rows.forEach(item => {
+        totalUnread += item.unreadCount;
+        listEl.appendChild(item.row);
+    });
+
+    const conversationCount = rows.length;
+
+    let status =
+        `${conversationCount} conversation${conversationCount === 1 ? "" : "s"}`;
+
+    if (totalUnread > 0) {
+        status += ` • ${totalUnread} unread message${totalUnread === 1 ? "" : "s"}`;
+    }
+
+    if (messageErrors.size > 0) {
+        status += " • Some message counts could not be checked";
+        setStatus(status, true);
+    } else {
+        setStatus(status);
+    }
+}
+
+/* =====================================================
+   MESSAGE LISTENERS
+===================================================== */
+
+function stopMessageListener(conversationId) {
+    const unsubscribe = messageListeners.get(conversationId);
+
+    if (unsubscribe) {
+        unsubscribe();
+        messageListeners.delete(conversationId);
+    }
+
+    latestMessages.delete(conversationId);
+    messageErrors.delete(conversationId);
+}
+
+function startMessageListener(conversation) {
+    const conversationId = conversation.id;
+
+    if (messageListeners.has(conversationId)) return;
+
+    const messagesRef = collection(
+        db,
+        "conversations",
+        conversationId,
+        "messages"
+    );
+
+    const messagesQuery = query(
+        messagesRef,
+        orderBy("createdAt", "asc")
+    );
+
+    const unsubscribe = onSnapshot(
+        messagesQuery,
+        snapshot => {
+            if (!currentUser) return;
+
+            latestMessages.set(
+                conversationId,
+                snapshot.docs.map(item => ({
+                    id: item.id,
+                    ...item.data()
+                }))
+            );
+
+            messageErrors.delete(conversationId);
+            renderInbox();
+        },
+        error => {
+            console.error(
+                "Inbox message listener failed:",
+                conversationId,
+                error
+            );
+
+            messageErrors.add(conversationId);
+            latestMessages.set(
+                conversationId,
+                latestMessages.get(conversationId) || []
+            );
+
+            renderInbox();
+        }
+    );
+
+    messageListeners.set(conversationId, unsubscribe);
+}
+
+/* =====================================================
+   RECONCILE ACTIVE CONVERSATIONS
+===================================================== */
+
+function reconcileMessageListeners() {
+    const validIds = new Set(
+        Array.from(conversationMap.values())
+            .filter(isValidConversation)
+            .map(conversation => conversation.id)
+    );
+
+    for (const id of messageListeners.keys()) {
+        if (!validIds.has(id)) {
+            stopMessageListener(id);
+        }
+    }
+
+    for (const conversation of conversationMap.values()) {
+        if (isValidConversation(conversation)) {
+            startMessageListener(conversation);
+        }
+    }
+}
+
+/* =====================================================
+   REAL-TIME CONVERSATION QUERIES
+===================================================== */
+
+function stopInboxListeners() {
+    inboxListeners.forEach(unsubscribe => {
+        try {
+            unsubscribe();
+        } catch (error) {
+            console.warn("Could not stop inbox listener:", error);
+        }
+    });
+
+    inboxListeners = [];
+
+    for (const id of Array.from(messageListeners.keys())) {
+        stopMessageListener(id);
+    }
+
+    conversationMap.clear();
+    latestMessages.clear();
+    messageErrors.clear();
+
+    queryReady = 0;
+    inboxStarted = false;
+}
+
+function handleConversationSnapshot(snapshot) {
+    if (!currentUser) return;
+
+    snapshot.docs.forEach(item => {
+        conversationMap.set(item.id, {
+            id: item.id,
+            ...item.data()
+        });
+    });
+
+    /*
+     * Both queries may return the same conversation. The second
+     * query also refreshes existing records with current data.
+     */
+    reconcileMessageListeners();
+    renderInbox();
+}
+
+function startInbox() {
+    if (!currentUser || inboxStarted) return;
+
+    inboxStarted = true;
+    queryReady = 0;
+    conversationMap.clear();
+
+    setStatus("Loading your conversations...");
+
+    renderEmpty(
+        "Loading conversations",
+        "Please wait while we load your messages."
+    );
+
+    const sentQuery = query(
+        collection(db, "conversations"),
+        where("initiatorId", "==", currentUser.uid)
+    );
+
+    const receivedQuery = query(
+        collection(db, "conversations"),
+        where("receiverId", "==", currentUser.uid)
+    );
+
+    function attach(queryRef, label) {
+        const unsubscribe = onSnapshot(
+            queryRef,
+            snapshot => {
+                if (!currentUser) return;
+
+                queryReady++;
+
+                snapshot.docs.forEach(item => {
+                    conversationMap.set(item.id, {
+                        id: item.id,
+                        ...item.data()
+                    });
+                });
+
+                /*
+                 * Reconcile and render on every snapshot.
+                 * The map deduplicates conversations found by both
+                 * participant queries.
+                 */
+                reconcileMessageListeners();
+                renderInbox();
+            },
+            error => {
+                console.error(
+                    `Inbox ${label} listener failed:`,
+                    error
+                );
+
+                setStatus(
+                    `Unable to load ${label} conversations. Check Firestore permissions.`,
+                    true
+                );
+
+                renderEmpty(
+                    "Inbox could not load",
+                    "Kmeet could not read your conversations. Please check your Firestore rules and try again.",
+                    "⚠️"
+                );
             }
         );
 
-
-    const count =
-        rows.filter(Boolean).length;
-
-
-    setStatus(
-
-        count === 1
-
-            ? "1 conversation"
-
-            : `${count} conversations`
-
-    );
-}
-
-
-/* =========================================================
-   FIREBASE AUTH
-========================================================= */
-
-onAuthStateChanged(
-
-    auth,
-
-    async user => {
-
-
-        /* ================================================
-           LOGGED OUT
-        ================================================ */
-
-        if (!user) {
-
-            currentUser =
-                null;
-
-
-            setStatus(
-                "Please log in to view your Inbox.",
-                true
-            );
-
-
-            renderLoginRequired();
-
-
-            return;
-        }
-
-
-        /* ================================================
-           ANONYMOUS USER
-        ================================================ */
-
-        if (
-            user.isAnonymous
-        ) {
-
-            currentUser =
-                null;
-
-
-            setStatus(
-                "Inbox is available to registered members.",
-                true
-            );
-
-
-            renderRegisteredOnly();
-
-
-            return;
-        }
-
-
-        /* ================================================
-           REGISTERED USER
-        ================================================ */
-
-        currentUser =
-            user;
-
-
-        await loadInbox();
-
+        inboxListeners.push(unsubscribe);
     }
 
-);
+    attach(sentQuery, "started");
+    attach(receivedQuery, "received");
+}
 
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
+
+onAuthStateChanged(auth, async user => {
+    authVersion++;
+    const thisAuthVersion = authVersion;
+
+    stopInboxListeners();
+    currentUser = null;
+    renderVersion++;
+
+    if (!user) {
+        setStatus("Please log in to view your Inbox.", true);
+        renderLoginRequired();
+        return;
+    }
+
+    if (user.isAnonymous) {
+        setStatus("Inbox is available to registered members.", true);
+        renderRegisteredOnly();
+        return;
+    }
+
+    currentUser = user;
+    profileCache.clear();
+
+    if (thisAuthVersion !== authVersion) return;
+
+    startInbox();
+});
 </script>
-
-
-</body>
 </html>
