@@ -798,7 +798,33 @@
         }
 
         .romantic-slide.active img {
-            transform: scale(1.09);
+            transform: scale(1.075);
+        }
+
+        /* The story text enters after the photograph, not all at once. */
+        .slide-caption > * {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        .romantic-slide.active .caption-kicker {
+            animation: captionRise 0.55s 0.18s ease forwards;
+        }
+
+        .romantic-slide.active .slide-caption h2 {
+            animation: captionRise 0.65s 0.42s ease forwards;
+        }
+
+        .romantic-slide.active .slide-caption p {
+            animation: captionRise 0.65s 0.68s ease forwards;
+        }
+
+        .romantic-slide.active .slide-caption .slide-cta {
+            animation: captionRise 0.65s 0.9s ease forwards;
+        }
+
+        @keyframes captionRise {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .romantic-slide::after {
@@ -844,6 +870,29 @@
             color: rgba(255, 255, 255, 0.9);
             font-size: 0.88rem;
             line-height: 1.65;
+            margin-bottom: 0;
+        }
+
+        .slide-caption .slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 16px;
+            padding: 11px 17px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            border-radius: 999px;
+            color: #fff;
+            background: linear-gradient(135deg, #e75b9a, #b82f70);
+            box-shadow: 0 8px 24px rgba(120, 15, 65, 0.28);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .slide-caption .slide-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(120, 15, 65, 0.4);
         }
 
         .slide-indicators {
@@ -945,12 +994,118 @@
             .slide-caption p {
                 font-size: 0.8rem;
             }
+
+            .slide-caption .slide-cta {
+                margin-top: 12px;
+                padding: 10px 14px;
+                font-size: 0.78rem;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .romantic-slide,
             .romantic-slide img,
             .slide-indicator {
+                transition: none !important;
+            }
+        }
+
+        /* =========================================
+           EDGELESS / BACKGROUND-EMERGING SLIDESHOW
+           The photos blend into the hero background instead
+           of sitting inside a visible card.
+        ========================================= */
+        .romantic-slideshow {
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            overflow: visible;
+            isolation: isolate;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .romantic-slide {
+            overflow: visible;
+            border-radius: 0 !important;
+            background: transparent;
+        }
+
+        .romantic-slide img {
+            border-radius: 0 !important;
+            transform: scale(0.91);
+            -webkit-mask-image:
+                linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, #000 10%, #000 88%, transparent 100%);
+            mask-image:
+                linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%),
+                linear-gradient(to bottom, transparent 0%, #000 10%, #000 88%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+            filter: saturate(1.06) contrast(1.02);
+            transition: transform 5.2s cubic-bezier(0.2, 0.65, 0.25, 1), filter 1.2s ease;
+        }
+
+        .romantic-slide.active img {
+            transform: scale(1.035);
+            filter: saturate(1.12) contrast(1.04);
+        }
+
+        .romantic-slide::after {
+            background: linear-gradient(
+                180deg,
+                rgba(12, 7, 10, 0.02) 28%,
+                rgba(12, 7, 10, 0.18) 58%,
+                rgba(12, 7, 10, 0.82) 100%
+            );
+            pointer-events: none;
+        }
+
+        .slide-caption {
+            left: clamp(20px, 4vw, 48px);
+            right: clamp(20px, 4vw, 48px);
+            bottom: clamp(25px, 4vw, 45px);
+            max-width: 590px;
+        }
+
+        .slide-caption h2 {
+            text-wrap: balance;
+            text-shadow: 0 3px 24px rgba(0, 0, 0, 0.72);
+        }
+
+        .slide-caption p {
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .slide-indicators {
+            top: 18px;
+            right: 8px;
+        }
+
+        @media (max-width: 800px) {
+            .romantic-slideshow {
+                overflow: hidden;
+                min-height: 330px;
+            }
+            .romantic-slide img {
+                -webkit-mask-image:
+                    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
+                    linear-gradient(to bottom, transparent 0%, #000 5%, #000 94%, transparent 100%);
+                mask-image:
+                    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
+                    linear-gradient(to bottom, transparent 0%, #000 5%, #000 94%, transparent 100%);
+            }
+            .slide-indicators {
+                right: 14px;
+                top: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .romantic-slide img {
+                transform: none !important;
                 transition: none !important;
             }
         }
@@ -1127,66 +1282,75 @@
                 </div>
 
 
-                
-<!-- ROMANTIC SLIDESHOW: RIGHT SIDE -->
-<div
-    class="romantic-slideshow"
-    id="romanticSlideshow"
-    aria-label="Romantic moments"
->
-    <!-- PHOTO 1: UPLOADED COUPLE/HANDS PHOTO -->
-    <div class="romantic-slide active">
-        <img
-            src="sl4.webp"
-            alt="A tender romantic moment between two people"
-            fetchpriority="high"
-        >
-        <div class="slide-caption">
-            <span class="caption-kicker">A little magic</span>
-            <h2>Every love story starts somewhere.</h2>
-            <p>Meet someone who makes ordinary moments feel unforgettable.</p>
+                <!-- ROMANTIC STORY SLIDESHOW -->
+                <div class="romantic-slideshow" id="romanticSlideshow" aria-label="A story of finding meaningful connection">
+                    <div class="romantic-slide active">
+                        <img
+                            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
+                            alt="A couple sharing a warm, romantic moment outdoors"
+                            fetchpriority="high"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">The feeling</span>
+                            <h2>Somewhere, your story is waiting.</h2>
+                            <p>You deserve a connection that feels genuine, thoughtful, and truly yours.</p>
+                        </div>
+                    </div>
+
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85"
+                            alt="A couple celebrating a meaningful moment together"
+                            loading="lazy"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">The first step</span>
+                            <h2>One hello can open a new door.</h2>
+                            <p>A simple conversation can become the start of something wonderful.</p>
+                        </div>
+                    </div>
+
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
+                            alt="A couple laughing and enjoying time together"
+                            loading="lazy"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">A connection that feels like you</span>
+                            <h2>Be seen for who you really are.</h2>
+                            <p>Discover people who share your interests, values, and dreams. Let something real grow naturally.</p>
+                        </div>
+                    </div>
+
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
+                            alt="A joyful romantic moment celebrating love and possibility"
+                            loading="lazy"
+                        >
+                        <div class="slide-caption">
+                            <span class="caption-kicker">Your story can begin here</span>
+                            <h2>Your story can begin here starts with hello.</h2>
+                            <p>Take the first step today. Someone you would love to know could be waiting on Kmeet.</p>
+                            <a class="slide-cta" href="discover.html">Discover Your Match <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="slide-indicators" aria-hidden="true">
+                        <span class="slide-indicator active"></span>
+                        <span class="slide-indicator"></span>
+                        <span class="slide-indicator"></span>
+                        <span class="slide-indicator"></span>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-    </div>
 
-    <!-- PHOTO 2: UPLOADED ROMANTIC PHOTO COLLAGE -->
-    <div class="romantic-slide">
-        <img
-            src="sl3.jfif"
-            alt="Romantic moments shared by couples"
-            loading="eager"
-        >
-        <div class="slide-caption">
-            <span class="caption-kicker">Choose each other</span>
-            <h2>Make room for something beautiful.</h2>
-            <p>Discover genuine people and the possibility of a lasting connection.</p>
-        </div>
-    </div>
+    </header>
 
-    <!-- PHOTO 3: YOUR PREVIOUSLY SHARED PHOTO NUMBER 2 -->
-    <div class="romantic-slide">
-        <img
-            src="slideshow-photo-3.jpg"
-            alt="A romantic moment representing a meaningful connection"
-            loading="eager"
-        >
-        <div class="slide-caption">
-            <span class="caption-kicker">Little moments</span>
-            <h2>Your next chapter could begin here.</h2>
-            <p>Start with a hello. Let shared interests bring you closer.</p>
-        </div>
-    </div>
-
-    <div class="slide-indicators" aria-hidden="true">
-        <span class="slide-indicator active"></span>
-        <span class="slide-indicator"></span>
-        <span class="slide-indicator"></span>
-    </div>
-</div>
-
-                
-                
-
-  
 
 
     <!-- =========================================
@@ -1869,8 +2033,9 @@
 
 
         /* =========================================
-           ROMANTIC SLIDESHOW
-           Advances to a new scene every 2 seconds
+           ROMANTIC STORY SLIDESHOW
+           Slower pacing gives visitors time to feel
+           and read each part of the story.
         ========================================= */
 
         const slideshow = document.getElementById("romanticSlideshow");
@@ -1899,7 +2064,7 @@
             if (slides.length > 1) {
                 window.setInterval(() => {
                     showRomanticSlide((activeSlide + 1) % slides.length);
-                }, 2000);
+                }, 4800);
             }
         }
 
