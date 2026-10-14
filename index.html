@@ -1,38 +1,25 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d080b">
 
     <title>Kmeet - Find Your Connection</title>
+    <meta name="description" content="Meet genuine people, discover meaningful connections, and let your story begin on Kmeet.">
 
     <base target="_self">
 
-    <!-- KMEET LOGO / FAVICON -->
-    <link
-        rel="icon"
-        type="image/jpeg"
-        href="./kmeet-logo.jfif.jfif"
-    >
+    <link rel="icon" type="image/jpeg" href="./kmeet-logo.jfif.jfif">
 
-    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- FONT AWESOME -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -41,6 +28,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 85px;
         }
 
         body {
@@ -48,6 +36,7 @@
             background: #0d080b;
             color: #fff;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         a {
@@ -55,42 +44,42 @@
             text-decoration: none;
         }
 
-        button,
-        input {
-            font-family: inherit;
+        button, input {
+            font: inherit;
         }
 
-        /* =========================================
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =====================================
            NAVIGATION
-        ========================================= */
+        ===================================== */
 
         .main-nav {
             width: 100%;
             min-height: 74px;
-
+            padding: 12px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 18px;
 
-            padding: 12px 5%;
-
-            background: rgba(17, 9, 13, 0.94);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            /* STICKY NAVIGATION */
             position: sticky;
             top: 0;
             z-index: 1000;
+
+            background: rgba(17, 9, 13, 0.92);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
         .nav-logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 600;
+            flex-shrink: 0;
         }
 
         .nav-logo img {
@@ -98,109 +87,108 @@
             height: 45px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 105, 160, 0.45);
+            border: 2px solid rgba(255,105,160,.55);
         }
 
         .nav-logo span {
             font-family: "Playfair Display", serif;
             font-size: 1.55rem;
+            font-weight: 700;
             color: #ff76ad;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 28px;
+            justify-content: flex-end;
+            gap: 26px;
         }
 
         .nav-links a {
-            font-size: 0.9rem;
+            font-size: .9rem;
             color: #eee;
-            transition: 0.3s ease;
+            transition: color .25s ease, transform .25s ease;
         }
 
         .nav-links a:hover {
             color: #ff76ad;
         }
 
-        .nav-profile-btn {
-            padding: 9px 18px;
-            border-radius: 25px;
-
-            background: linear-gradient(
-                135deg,
-                #ff4f98,
-                #b92770
-            );
-
-            color: #fff !important;
-
-            box-shadow:
-                0 5px 18px rgba(255, 79, 152, 0.22);
+        .nav-links .nav-profile-btn {
+            padding: 10px 19px;
+            border-radius: 30px;
+            background: linear-gradient(135deg,#ff4f98,#b92770);
+            color: white;
+            box-shadow: 0 5px 18px rgba(255,79,152,.22);
         }
 
         .nav-profile-btn:hover {
-            transform: translateY(-1px);
-            box-shadow:
-                0 7px 22px rgba(255, 79, 152, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* =========================================
-           HERO
-        ========================================= */
+        /* =====================================
+           HERO BACKGROUND
+        ===================================== */
 
         .header {
             min-height: 100vh;
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            flex-direction: column;
 
             background:
                 linear-gradient(
-                    rgba(12, 7, 10, 0.58),
-                    rgba(12, 7, 10, 0.72)
+                    rgba(12,7,10,.56),
+                    rgba(12,7,10,.74)
                 ),
-                url("./kmeet-background.jpg.jpg");
+                url("./kmeet-background.jpg.jpg") center/cover no-repeat;
+            background-attachment: scroll;
+        }
 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-
-            display: flex;
-            flex-direction: column;
+        @supports (background-attachment: fixed) {
+            .header {
+                background-attachment: fixed;
+            }
         }
 
         .hero-content {
             flex: 1;
-
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            text-align: center;
-
-            padding: 80px 20px;
+            padding: clamp(36px,5vw,76px) 5%;
         }
 
         .hero-inner {
             width: 100%;
-            max-width: 900px;
+            max-width: 1320px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0,1.02fr) minmax(0,.98fr);
+            align-items: center;
+            gap: clamp(28px,5vw,76px);
+        }
+
+        #guestState, #userState {
+            min-width: 0;
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        #userState {
+            display: none;
         }
 
         .hero-inner h1 {
+            max-width: 720px;
+            margin-bottom: 22px;
             font-family: "Playfair Display", serif;
-
-            font-size: clamp(
-                3rem,
-                7vw,
-                6.5rem
-            );
-
-            line-height: 0.98;
-
-            color: #fff;
-
-            text-shadow:
-                0 4px 30px rgba(0, 0, 0, 0.45);
-
-            margin-bottom: 24px;
+            font-size: clamp(2.8rem,5.1vw,5.3rem);
+            line-height: 1.02;
+            color: white;
+            text-shadow: 0 4px 30px rgba(0,0,0,.45);
         }
 
         .hero-inner h1 span {
@@ -208,83 +196,57 @@
         }
 
         .hero-tagline {
-            font-size: 1.05rem;
+            max-width: 560px;
+            margin: 0 0 30px;
             color: #eee;
-            max-width: 650px;
-            margin: 0 auto 32px;
+            font-size: clamp(.96rem,1.2vw,1.08rem);
             line-height: 1.8;
         }
 
-        /* =========================================
-           SIGNUP
-        ========================================= */
+        /* =====================================
+           SIGNUP FORM
+        ===================================== */
 
         .signup-form {
             width: 100%;
-            max-width: 530px;
-            margin: 0 auto;
-
-            display: flex;
-            gap: 10px;
-
+            max-width: 560px;
+            margin: 0;
             padding: 8px;
-
+            display: flex;
+            align-items: center;
+            gap: 10px;
             border-radius: 40px;
-
-            background: rgba(255, 255, 255, 0.1);
-
-            border: 1px solid rgba(255, 255, 255, 0.14);
-
+            background: rgba(255,255,255,.10);
+            border: 1px solid rgba(255,255,255,.16);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
         }
 
         .signup-form input {
             flex: 1;
-
             min-width: 0;
-
-            border: none;
-            outline: none;
-
-            background: transparent;
-
-            color: #fff;
-
             padding: 14px 18px;
-
-            font-size: 0.95rem;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: white;
+            font-size: .95rem;
         }
 
         .signup-form input::placeholder {
-            color: rgba(255, 255, 255, 0.68);
+            color: rgba(255,255,255,.7);
         }
 
         .signup-form button {
-            border: none;
-            outline: none;
-
-            cursor: pointer;
-
-            padding: 13px 24px;
-
+            padding: 13px 23px;
+            border: 0;
             border-radius: 30px;
-
-            color: #fff;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff579d,
-                    #b7276d
-                );
-
+            background: linear-gradient(135deg,#ff579d,#b7276d);
+            color: white;
             font-weight: 600;
-
-            box-shadow:
-                0 7px 20px rgba(255, 79, 152, 0.22);
-
-            transition: 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform .25s ease;
         }
 
         .signup-form button:hover {
@@ -294,7 +256,7 @@
         .login-note {
             margin-top: 18px;
             color: #ddd;
-            font-size: 0.88rem;
+            font-size: .88rem;
         }
 
         .login-note a {
@@ -302,103 +264,69 @@
             font-weight: 600;
         }
 
-        /* =========================================
-           LOGGED-IN USER STATE
-        ========================================= */
-
-        #userState {
-            display: none;
-        }
+        /* =====================================
+           LOGGED-IN MEMBER CARD
+        ===================================== */
 
         .user-card {
             width: 100%;
             max-width: 620px;
-
-            margin: 0 auto;
-
-            padding: 35px 28px;
-
-            border-radius: 28px;
-
-            background:
-                rgba(20, 10, 16, 0.78);
-
-            border:
-                1px solid rgba(255, 255, 255, 0.1);
-
-            box-shadow:
-                0 25px 70px rgba(0, 0, 0, 0.35);
-
+            padding: 32px 24px;
+            text-align: center;
+            border-radius: 26px;
+            background: rgba(20,10,16,.78);
+            border: 1px solid rgba(255,255,255,.1);
+            box-shadow: 0 25px 70px rgba(0,0,0,.32);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
         }
 
         .home-user-avatar {
-            width: 120px;
-            height: 120px;
-
-            margin: 0 auto 18px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
             display: block;
-
-            border:
-                3px solid rgba(255, 105, 160, 0.75);
-
-            box-shadow:
-                0 0 35px rgba(255, 80, 150, 0.2);
+            width: 112px;
+            height: 112px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,105,160,.75);
+            box-shadow: 0 0 30px rgba(255,80,150,.2);
         }
 
         .user-card h2 {
-            font-family: "Playfair Display", serif;
-
-            font-size: 2.2rem;
-
             margin-bottom: 7px;
+            font-family: "Playfair Display",serif;
+            font-size: 2rem;
+            overflow-wrap: anywhere;
         }
 
         .user-email {
+            margin-bottom: 18px;
             color: #bbb;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            font-size: .9rem;
+            overflow-wrap: anywhere;
         }
 
         .interest-list {
             display: flex;
             flex-wrap: wrap;
-
             justify-content: center;
-
             gap: 8px;
-
-            margin: 15px 0 25px;
+            margin: 15px 0 24px;
         }
 
         .interest-tag {
             padding: 7px 13px;
-
             border-radius: 20px;
-
-            background:
-                rgba(255, 90, 155, 0.12);
-
-            border:
-                1px solid rgba(255, 90, 155, 0.22);
-
+            background: rgba(255,90,155,.12);
+            border: 1px solid rgba(255,90,155,.22);
             color: #ff9ac3;
-
-            font-size: 0.8rem;
+            font-size: .8rem;
         }
 
         .user-actions {
             display: flex;
             flex-wrap: wrap;
-
             justify-content: center;
-
             gap: 10px;
         }
 
@@ -406,56 +334,294 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             gap: 8px;
-
-            padding: 11px 18px;
-
+            padding: 11px 16px;
             border-radius: 25px;
-
-            font-size: 0.86rem;
-
-            transition: 0.3s ease;
-        }
-
-        .user-action.primary {
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff579d,
-                    #b7276d
-                );
-
-            color: #fff;
-        }
-
-        .user-action.secondary {
-            background:
-                rgba(255, 255, 255, 0.07);
-
-            border:
-                1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .user-action.logout {
-            background:
-                rgba(255, 70, 100, 0.08);
-
-            border:
-                1px solid rgba(255, 70, 100, 0.18);
-
-            color: #ff9aac;
-
+            font-size: .85rem;
             cursor: pointer;
+            transition: transform .25s ease;
         }
 
         .user-action:hover {
             transform: translateY(-2px);
         }
 
-        /* =========================================
-           SECTIONS
-        ========================================= */
+        .user-action.primary {
+            background: linear-gradient(135deg,#ff579d,#b7276d);
+            color: white;
+        }
+
+        .user-action.secondary {
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.12);
+            color: white;
+        }
+
+        .user-action.logout {
+            background: rgba(255,70,100,.08);
+            border: 1px solid rgba(255,70,100,.18);
+            color: #ff9aac;
+        }
+
+        /* =====================================
+           ROMANTIC SLIDESHOW
+           No card, no border, no panel.
+        ===================================== */
+
+        .romantic-slideshow {
+            grid-column: 2;
+            grid-row: 1;
+            position: relative;
+            width: 100%;
+            height: clamp(350px,64vh,620px);
+            min-height: 350px;
+            isolation: isolate;
+            overflow: hidden;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .romantic-slide {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .9s ease, visibility .9s ease;
+        }
+
+        .romantic-slide.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .romantic-slide img {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transform: scale(.70);
+            filter: blur(5px) brightness(.72) saturate(1.05);
+
+            -webkit-mask-image: radial-gradient(
+                ellipse at center,
+                #000 38%,
+                rgba(0,0,0,.94) 57%,
+                transparent 100%
+            );
+            mask-image: radial-gradient(
+                ellipse at center,
+                #000 38%,
+                rgba(0,0,0,.94) 57%,
+                transparent 100%
+            );
+
+            transition:
+                transform 2.1s cubic-bezier(.16,.75,.25,1),
+                opacity 1s ease,
+                filter 1.6s ease;
+        }
+
+        .romantic-slide.active img {
+            opacity: 1;
+            transform: scale(1.025);
+            filter: blur(0) brightness(.96) saturate(1.12);
+        }
+
+        /* Soft lighting around each emerging photo */
+        .romantic-slide .photo-glow {
+            position: absolute;
+            z-index: 1;
+            inset: 12%;
+            pointer-events: none;
+            opacity: 0;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255,110,170,.22),
+                transparent 68%
+            );
+            transition: opacity 1.2s ease;
+        }
+
+        .romantic-slide.active .photo-glow {
+            opacity: 1;
+        }
+
+        /* Starburst appears at the beginning of every slide */
+        .romantic-slide::before {
+            content: "✦";
+            position: absolute;
+            z-index: 4;
+            top: 43%;
+            left: 50%;
+            color: #fff7fb;
+            font-size: 2.2rem;
+            line-height: 1;
+            opacity: 0;
+            pointer-events: none;
+            text-shadow:
+                0 0 8px white,
+                0 0 22px #ff75b5,
+                0 0 48px #ff4f98;
+            transform: translate(-50%,-50%) scale(0);
+        }
+
+        .romantic-slide.active::before {
+            animation: kmeetStarBurst 1.2s ease-out both;
+        }
+
+        .romantic-slide::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                rgba(13,8,11,.02) 30%,
+                rgba(13,8,11,.10) 48%,
+                rgba(13,8,11,.84) 100%
+            );
+        }
+
+        @keyframes kmeetStarBurst {
+            0% {
+                opacity: 0;
+                transform: translate(-50%,-50%) scale(0) rotate(0);
+            }
+            22% {
+                opacity: 1;
+                transform: translate(-50%,-50%) scale(1.6) rotate(45deg);
+            }
+            65% {
+                opacity: .65;
+                transform: translate(-50%,-50%) scale(2) rotate(90deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%,-50%) scale(2.7) rotate(135deg);
+            }
+        }
+
+        /* Story captions */
+        .slide-caption {
+            position: absolute;
+            z-index: 3;
+            left: clamp(18px,3.5vw,44px);
+            right: clamp(18px,3.5vw,44px);
+            bottom: clamp(25px,4vw,46px);
+            max-width: 590px;
+            color: white;
+            text-shadow: 0 2px 18px rgba(0,0,0,.7);
+        }
+
+        .slide-caption > * {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .romantic-slide.active .caption-kicker {
+            animation: captionRise .55s .18s ease forwards;
+        }
+
+        .romantic-slide.active .slide-caption h2 {
+            animation: captionRise .65s .4s ease forwards;
+        }
+
+        .romantic-slide.active .slide-caption p {
+            animation: captionRise .65s .62s ease forwards;
+        }
+
+        .romantic-slide.active .slide-cta {
+            animation: captionRise .65s .8s ease forwards;
+        }
+
+        @keyframes captionRise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .caption-kicker {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #ffd3e5;
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .slide-caption h2 {
+            margin-bottom: 10px;
+            font-family: "Playfair Display",serif;
+            font-size: clamp(1.65rem,2.7vw,2.65rem);
+            line-height: 1.13;
+            text-wrap: balance;
+        }
+
+        .slide-caption p {
+            max-width: 440px;
+            color: rgba(255,255,255,.93);
+            font-size: .86rem;
+            line-height: 1.7;
+        }
+
+        .slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 16px;
+            padding: 11px 17px;
+            border: 1px solid rgba(255,255,255,.24);
+            border-radius: 30px;
+            background: linear-gradient(135deg,#e75b9a,#b82f70);
+            color: white;
+            font-size: .82rem;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(120,15,65,.28);
+            transition: transform .25s ease;
+        }
+
+        .slide-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        .slide-indicators {
+            position: absolute;
+            z-index: 5;
+            top: 20px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .slide-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.5);
+            box-shadow: 0 1px 8px rgba(0,0,0,.25);
+            transition: background .25s ease, transform .25s ease;
+        }
+
+        .slide-indicator.active {
+            background: #ff8fbd;
+            transform: scale(1.35);
+        }
+
+        /* =====================================
+           CONNECTION SECTION
+        ===================================== */
 
         .section {
             padding: 90px 5%;
@@ -468,469 +634,134 @@
         }
 
         .section-title h2 {
-            font-family: "Playfair Display", serif;
-            font-size: 2.7rem;
             margin-bottom: 12px;
+            font-family: "Playfair Display",serif;
+            font-size: clamp(2rem,4vw,2.7rem);
         }
 
         .section-title p {
-            color: #aaa;
             max-width: 650px;
             margin: auto;
-            line-height: 1.7;
+            color: #aaa;
+            line-height: 1.8;
         }
 
         .feature-grid {
             max-width: 1100px;
-
             margin: auto;
-
             display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
+            grid-template-columns: repeat(3,minmax(0,1fr));
             gap: 24px;
         }
 
         .feature-card {
             padding: 35px 25px;
-
             text-align: center;
-
             border-radius: 24px;
-
-            background:
-                rgba(255, 255, 255, 0.035);
-
-            border:
-                1px solid rgba(255, 255, 255, 0.08);
-
-            transition: 0.3s ease;
+            background: rgba(255,255,255,.035);
+            border: 1px solid rgba(255,255,255,.08);
+            transition: transform .3s ease, background .3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-
-            background:
-                rgba(255, 255, 255, 0.055);
+            background: rgba(255,255,255,.055);
         }
 
         .feature-icon {
             width: 65px;
             height: 65px;
-
             margin: 0 auto 20px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 50%;
-
-            background:
-                rgba(255, 79, 152, 0.12);
-
+            background: rgba(255,79,152,.12);
             color: #ff70aa;
-
             font-size: 1.45rem;
         }
 
         .feature-card h3 {
-            font-family: "Playfair Display", serif;
-            font-size: 1.5rem;
             margin-bottom: 12px;
+            font-family: "Playfair Display",serif;
+            font-size: 1.5rem;
         }
 
         .feature-card p {
             color: #aaa;
-            font-size: 0.9rem;
-            line-height: 1.7;
+            font-size: .9rem;
+            line-height: 1.8;
         }
 
-        /* =========================================
-           CTA
-        ========================================= */
+        /* =====================================
+           CALL TO ACTION
+        ===================================== */
 
         .cta {
             padding: 85px 5%;
-
             text-align: center;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #160a10,
-                    #270d1b
-                );
+            background: linear-gradient(135deg,#160a10,#270d1b);
         }
 
         .cta h2 {
-            font-family: "Playfair Display", serif;
-            font-size: 2.8rem;
             margin-bottom: 15px;
+            font-family: "Playfair Display",serif;
+            font-size: clamp(2rem,4vw,2.8rem);
         }
 
         .cta p {
-            color: #bbb;
             max-width: 600px;
             margin: 0 auto 28px;
-            line-height: 1.7;
+            color: #bbb;
+            line-height: 1.8;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
             gap: 9px;
-
             padding: 13px 25px;
-
             border-radius: 28px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff579d,
-                    #b7276d
-                );
-
-            color: #fff;
-
+            background: linear-gradient(135deg,#ff579d,#b7276d);
+            color: white;
             font-weight: 600;
-
-            box-shadow:
-                0 8px 25px rgba(255, 79, 152, 0.2);
+            box-shadow: 0 8px 25px rgba(255,79,152,.2);
+            transition: transform .25s ease;
         }
 
-        /* =========================================
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =====================================
            FOOTER
-        ========================================= */
+        ===================================== */
 
         footer {
             padding: 30px 5%;
-
             text-align: center;
-
             background: #0b0609;
-
-            border-top:
-                1px solid rgba(255, 255, 255, 0.06);
-
+            border-top: 1px solid rgba(255,255,255,.06);
             color: #777;
-
-            font-size: 0.82rem;
+            font-size: .82rem;
         }
 
-        /* =========================================
-           RESPONSIVE
-        ========================================= */
+        /* =====================================
+           TABLETS
+        ===================================== */
 
-        @media (max-width: 800px) {
-
-            .main-nav {
-                padding: 10px 4%;
-            }
-
-            .nav-links {
-                gap: 14px;
-            }
-
-            .nav-links a:not(.nav-profile-btn) {
-                display: none;
-            }
-
+        @media (max-width: 900px) {
             .hero-content {
-                padding: 60px 18px;
-            }
-
-            .hero-inner h1 {
-                font-size: clamp(
-                    2.8rem,
-                    12vw,
-                    5rem
-                );
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-                max-width: 500px;
-            }
-        }
-
-        @media (max-width: 550px) {
-
-            .nav-logo span {
-                font-size: 1.3rem;
-            }
-
-            .nav-logo img {
-                width: 40px;
-                height: 40px;
-            }
-
-            .signup-form {
-                flex-direction: column;
-
-                border-radius: 22px;
-
-                padding: 10px;
-            }
-
-            .signup-form input {
-                width: 100%;
-                text-align: center;
-            }
-
-            .signup-form button {
-                width: 100%;
-            }
-
-            .user-card {
-                padding: 28px 18px;
-            }
-
-            .user-card h2 {
-                font-size: 1.8rem;
-            }
-
-            .section {
-                padding: 70px 5%;
-            }
-
-            .section-title h2,
-            .cta h2 {
-                font-size: 2.2rem;
-            }
-        }
-
-
-        /* =========================================
-           TWO-COLUMN ROMANTIC WELCOME LAYOUT
-        ========================================= */
-
-        .hero-content {
-            justify-content: center;
-            text-align: left;
-            padding: clamp(38px, 5vw, 76px) 5%;
-        }
-
-        .hero-inner {
-            width: 100%;
-            max-width: 1320px;
-            display: grid;
-            grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-            align-items: center;
-            gap: clamp(28px, 5vw, 76px);
-        }
-
-        #guestState,
-        #userState {
-            min-width: 0;
-            grid-column: 1;
-        }
-
-        .hero-inner h1 {
-            max-width: 720px;
-            font-size: clamp(2.8rem, 5.1vw, 5.3rem);
-            text-align: left;
-            margin-bottom: 22px;
-        }
-
-        .hero-tagline {
-            max-width: 560px;
-            margin: 0 0 30px;
-            text-align: left;
-            font-size: clamp(0.96rem, 1.2vw, 1.08rem);
-        }
-
-        .signup-form {
-            max-width: 560px;
-            margin: 0;
-        }
-
-        .login-note {
-            text-align: left;
-        }
-
-        .user-card {
-            max-width: 620px;
-            margin: 0;
-            text-align: center;
-        }
-
-        .romantic-slideshow {
-            grid-column: 2;
-            grid-row: 1;
-            position: relative;
-            width: 100%;
-            height: clamp(340px, 62vh, 610px);
-            min-height: 340px;
-            overflow: hidden;
-            border-radius: 30px;
-            isolation: isolate;
-            background: #210f1a;
-            border: 1px solid rgba(255, 160, 198, 0.35);
-            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42),
-                        0 0 45px rgba(255, 79, 152, 0.12);
-        }
-
-        .romantic-slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-
-        .romantic-slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .romantic-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transform: scale(1.025);
-            transition: transform 5s ease;
-        }
-
-        .romantic-slide.active img {
-            transform: scale(1.075);
-        }
-
-        /* The story text enters after the photograph, not all at once. */
-        .slide-caption > * {
-            opacity: 0;
-            transform: translateY(14px);
-        }
-
-        .romantic-slide.active .caption-kicker {
-            animation: captionRise 0.55s 0.18s ease forwards;
-        }
-
-        .romantic-slide.active .slide-caption h2 {
-            animation: captionRise 0.65s 0.42s ease forwards;
-        }
-
-        .romantic-slide.active .slide-caption p {
-            animation: captionRise 0.65s 0.68s ease forwards;
-        }
-
-        .romantic-slide.active .slide-caption .slide-cta {
-            animation: captionRise 0.65s 0.9s ease forwards;
-        }
-
-        @keyframes captionRise {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .romantic-slide::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                180deg,
-                rgba(15, 5, 12, 0.02) 35%,
-                rgba(15, 5, 12, 0.78) 100%
-            );
-        }
-
-        .slide-caption {
-            position: absolute;
-            z-index: 2;
-            left: 26px;
-            right: 26px;
-            bottom: 28px;
-            color: #fff;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.55);
-        }
-
-        .slide-caption .caption-kicker {
-            display: inline-block;
-            margin-bottom: 9px;
-            color: #ffd3e5;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-
-        .slide-caption h2 {
-            font-family: "Playfair Display", serif;
-            font-size: clamp(1.6rem, 2.7vw, 2.65rem);
-            line-height: 1.12;
-            margin-bottom: 8px;
-        }
-
-        .slide-caption p {
-            max-width: 430px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.88rem;
-            line-height: 1.65;
-            margin-bottom: 0;
-        }
-
-        .slide-caption .slide-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            margin-top: 16px;
-            padding: 11px 17px;
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            border-radius: 999px;
-            color: #fff;
-            background: linear-gradient(135deg, #e75b9a, #b82f70);
-            box-shadow: 0 8px 24px rgba(120, 15, 65, 0.28);
-            font-size: 0.82rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .slide-caption .slide-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(120, 15, 65, 0.4);
-        }
-
-        .slide-indicators {
-            position: absolute;
-            z-index: 3;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 7px;
-        }
-
-        .slide-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.48);
-            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
-            transition: background 0.25s ease, transform 0.25s ease;
-        }
-
-        .slide-indicator.active {
-            background: #ff8fbd;
-            transform: scale(1.25);
-        }
-
-        @media (max-width: 800px) {
-            .hero-content {
-                padding: 42px 22px 55px;
+                padding: 42px 5% 55px;
             }
 
             .hero-inner {
-                max-width: 650px;
-                grid-template-columns: minmax(0, 1fr);
-                gap: 32px;
+                max-width: 680px;
+                grid-template-columns: minmax(0,1fr);
+                gap: 30px;
             }
 
-            #guestState,
-            #userState {
+            #guestState, #userState {
                 grid-column: 1;
                 grid-row: 1;
             }
@@ -938,13 +769,12 @@
             .romantic-slideshow {
                 grid-column: 1;
                 grid-row: 2;
-                height: clamp(320px, 58vh, 480px);
-                min-height: 320px;
-                border-radius: 24px;
+                height: clamp(360px,58vh,500px);
+                min-height: 340px;
             }
 
             .hero-inner h1 {
-                font-size: clamp(2.7rem, 9vw, 4.4rem);
+                font-size: clamp(2.7rem,8vw,4.4rem);
             }
 
             .hero-tagline {
@@ -952,246 +782,236 @@
             }
 
             .user-card {
-                margin: 0 auto;
+                margin: auto;
+            }
+
+            .feature-grid {
+                gap: 16px;
             }
         }
 
-        @media (max-width: 550px) {
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 600px) {
+            .main-nav {
+                min-height: 66px;
+                padding: 9px 4%;
+                gap: 10px;
+            }
+
+            .nav-logo {
+                gap: 7px;
+            }
+
+            .nav-logo img {
+                width: 38px;
+                height: 38px;
+            }
+
+            .nav-logo span {
+                font-size: 1.28rem;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: .8rem;
+            }
+
+            .nav-links a:first-child {
+                display: none;
+            }
+
+            .nav-links .nav-profile-btn {
+                padding: 9px 12px;
+                font-size: .73rem;
+            }
+
             .hero-content {
-                padding: 32px 16px 42px;
+                padding: 34px 17px 42px;
             }
 
             .hero-inner {
-                gap: 28px;
+                gap: 27px;
             }
 
             .hero-inner h1 {
-                font-size: clamp(2.45rem, 12vw, 3.5rem);
-                line-height: 1.02;
+                font-size: clamp(2.4rem,11vw,3.5rem);
+                line-height: 1.04;
             }
 
             .hero-tagline {
-                font-size: 0.94rem;
+                font-size: .94rem;
                 line-height: 1.75;
             }
 
+            .signup-form {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+                padding: 10px;
+                border-radius: 22px;
+            }
+
+            .signup-form input {
+                width: 100%;
+                padding: 13px 10px;
+                text-align: center;
+            }
+
+            .signup-form button {
+                width: 100%;
+            }
+
             .romantic-slideshow {
-                height: 390px;
+                height: 410px;
                 min-height: 0;
-                border-radius: 20px;
+            }
+
+            .romantic-slide img {
+                -webkit-mask-image: radial-gradient(
+                    ellipse at center,
+                    #000 48%,
+                    rgba(0,0,0,.95) 72%,
+                    transparent 100%
+                );
+                mask-image: radial-gradient(
+                    ellipse at center,
+                    #000 48%,
+                    rgba(0,0,0,.95) 72%,
+                    transparent 100%
+                );
             }
 
             .slide-caption {
                 left: 19px;
                 right: 19px;
-                bottom: 21px;
+                bottom: 23px;
             }
 
             .slide-caption h2 {
-                font-size: 1.75rem;
+                font-size: 1.8rem;
             }
 
             .slide-caption p {
-                font-size: 0.8rem;
+                font-size: .81rem;
             }
 
-            .slide-caption .slide-cta {
+            .slide-cta {
                 margin-top: 12px;
                 padding: 10px 14px;
-                font-size: 0.78rem;
+                font-size: .78rem;
             }
-        }
 
-        @media (prefers-reduced-motion: reduce) {
-            .romantic-slide,
-            .romantic-slide img,
-            .slide-indicator {
-                transition: none !important;
-            }
-        }
-
-        /* =========================================
-           EDGELESS / BACKGROUND-EMERGING SLIDESHOW
-           The photos blend into the hero background instead
-           of sitting inside a visible card.
-        ========================================= */
-        .romantic-slideshow {
-            border: 0 !important;
-            border-radius: 0 !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            overflow: visible;
-            isolation: isolate;
-            border: 0 !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-        }
-
-        .romantic-slide {
-            overflow: visible;
-            border-radius: 0 !important;
-            background: transparent;
-        }
-
-        .romantic-slide img {
-            border-radius: 0 !important;
-            transform: scale(0.91);
-            -webkit-mask-image:
-                linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%),
-                linear-gradient(to bottom, transparent 0%, #000 10%, #000 88%, transparent 100%);
-            mask-image:
-                linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%),
-                linear-gradient(to bottom, transparent 0%, #000 10%, #000 88%, transparent 100%);
-            -webkit-mask-composite: source-in;
-            mask-composite: intersect;
-            filter: saturate(1.06) contrast(1.02);
-            transition: transform 5.2s cubic-bezier(0.2, 0.65, 0.25, 1), filter 1.2s ease;
-        }
-
-        .romantic-slide.active img {
-            transform: scale(1.035);
-            filter: saturate(1.12) contrast(1.04);
-        }
-
-        .romantic-slide::after {
-            background: linear-gradient(
-                180deg,
-                rgba(12, 7, 10, 0.02) 28%,
-                rgba(12, 7, 10, 0.18) 58%,
-                rgba(12, 7, 10, 0.82) 100%
-            );
-            pointer-events: none;
-        }
-
-        .slide-caption {
-            left: clamp(20px, 4vw, 48px);
-            right: clamp(20px, 4vw, 48px);
-            bottom: clamp(25px, 4vw, 45px);
-            max-width: 590px;
-        }
-
-        .slide-caption h2 {
-            text-wrap: balance;
-            text-shadow: 0 3px 24px rgba(0, 0, 0, 0.72);
-        }
-
-        .slide-caption p {
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
-        }
-
-        .slide-indicators {
-            top: 18px;
-            right: 8px;
-        }
-
-        @media (max-width: 800px) {
-            .romantic-slideshow {
-                overflow: hidden;
-                min-height: 330px;
-            }
-            .romantic-slide img {
-                -webkit-mask-image:
-                    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
-                    linear-gradient(to bottom, transparent 0%, #000 5%, #000 94%, transparent 100%);
-                mask-image:
-                    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%),
-                    linear-gradient(to bottom, transparent 0%, #000 5%, #000 94%, transparent 100%);
-            }
             .slide-indicators {
-                right: 14px;
                 top: 14px;
+                right: 10px;
+            }
+
+            .user-card {
+                padding: 27px 16px;
+            }
+
+            .user-card h2 {
+                font-size: 1.8rem;
+            }
+
+            .user-actions {
+                flex-direction: column;
+            }
+
+            .user-action {
+                width: 100%;
+            }
+
+            .section {
+                padding: 68px 5%;
+            }
+
+            .feature-grid {
+                grid-template-columns: minmax(0,1fr);
+                max-width: 460px;
+            }
+
+            .feature-card {
+                padding: 30px 22px;
+            }
+
+            .cta {
+                padding: 70px 6%;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+
             .romantic-slide img {
                 transform: none !important;
-                transition: none !important;
+                filter: none !important;
             }
         }
-
     </style>
 </head>
 
-
 <body>
-
-    <!-- =========================================
-         HERO / HEADER
-    ========================================= -->
 
     <header class="header">
 
-        <!-- NAVIGATION -->
         <nav class="main-nav">
-
-            <a href="index.html" class="nav-logo">
-
-                <img
-                    src="./kmeet-logo.jfif.jfif"
-                    alt="Kmeet Logo"
-                >
-
+            <a href="index.html" class="nav-logo" aria-label="Kmeet Home">
+                <img src="./kmeet-logo.jfif.jfif" alt="Kmeet Logo">
                 <span>Kmeet</span>
-
             </a>
 
-
             <div class="nav-links">
-
                 <a href="#signup">
                     <i class="fa-solid fa-heart"></i>
                     Interested
                 </a>
 
-                <a href="discover.html">
-                    Discover
-                </a>
+                <a href="discover.html">Discover</a>
 
-                <a
-                    href="login.html"
-                    id="navProfileLink"
-                    class="nav-profile-btn"
-                >
+                <a href="login.html" id="navProfileLink" class="nav-profile-btn">
                     LOG IN
                 </a>
-
             </div>
-
         </nav>
 
-
-        <!-- HERO CONTENT -->
         <div class="hero-content">
-
             <div class="hero-inner">
 
-
-                <!-- GUEST STATE -->
+                <!-- GUEST HOMEPAGE -->
                 <div id="guestState">
-
                     <h1>
                         KMEET YOUR<br>
                         <span>HEARTS TRUE</span><br>
                         ECHO
                     </h1>
 
-
                     <p class="hero-tagline">
                         Meet genuine people, discover meaningful
                         connections, and let your story begin.
                     </p>
 
-
-                    <form
-                        class="signup-form"
-                        id="signupForm"
-                    >
-
+                    <form class="signup-form" id="signupForm">
                         <input
                             type="email"
                             id="signupEmail"
                             placeholder="Enter your email"
+                            autocomplete="email"
+                            aria-label="Your email address"
                             required
                         >
 
@@ -1199,97 +1019,64 @@
                             Get Started
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
-
                     </form>
-
 
                     <p class="login-note">
                         Already have an account?
-                        <a href="login.html">
-                            Log in
-                        </a>
+                        <a href="login.html">Log in</a>
                     </p>
-
                 </div>
 
-
-
-                <!-- LOGGED-IN STATE -->
+                <!-- LOGGED-IN HOMEPAGE -->
                 <div id="userState">
-
                     <div class="user-card">
-
                         <img
                             id="homeUserAvatar"
                             class="home-user-avatar"
-                            src=""
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80"
                             alt="Your profile photo"
                         >
 
+                        <h2 id="homeUserName">Kmeet Member</h2>
 
-                        <h2 id="homeUserName">
-                            Kmeet Member
-                        </h2>
-
-
-                        <p
-                            id="homeUserEmail"
-                            class="user-email"
-                        >
+                        <p id="homeUserEmail" class="user-email">
                             Loading...
                         </p>
 
-
-                        <div
-                            id="homeInterests"
-                            class="interest-list"
-                        ></div>
-
+                        <div id="homeInterests" class="interest-list"></div>
 
                         <div class="user-actions">
-
-                            <a
-                                href="discover.html"
-                                class="user-action primary"
-                            >
+                            <a href="discover.html" class="user-action primary">
                                 <i class="fa-solid fa-users"></i>
                                 Discover People
                             </a>
 
-
-                            <a
-                                href="profile.html"
-                                class="user-action secondary"
-                            >
+                            <a href="profile.html" class="user-action secondary">
                                 <i class="fa-solid fa-user"></i>
                                 View Full Profile
                             </a>
 
-
-                            <button
-                                type="button"
-                                id="logoutBtn"
-                                class="user-action logout"
-                            >
+                            <button type="button" id="logoutBtn" class="user-action logout">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 Logout
                             </button>
-
                         </div>
-
                     </div>
-
                 </div>
 
-
-                <!-- ROMANTIC STORY SLIDESHOW -->
-                <div class="romantic-slideshow" id="romanticSlideshow" aria-label="A story of finding meaningful connection">
+                <!-- FIVE-PART ROMANTIC STORY -->
+                <div
+                    class="romantic-slideshow"
+                    id="romanticSlideshow"
+                    aria-label="A story of finding meaningful connection"
+                >
                     <div class="romantic-slide active">
                         <img
                             src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
-                            alt="A couple sharing a warm, romantic moment outdoors"
+                            alt="A couple sharing a warm romantic moment"
                             fetchpriority="high"
                         >
+                        <div class="photo-glow"></div>
                         <div class="slide-caption">
                             <span class="caption-kicker">The feeling</span>
                             <h2>Somewhere, your story is waiting.</h2>
@@ -1303,6 +1090,7 @@
                             alt="A couple celebrating a meaningful moment together"
                             loading="lazy"
                         >
+                        <div class="photo-glow"></div>
                         <div class="slide-caption">
                             <span class="caption-kicker">The first step</span>
                             <h2>One hello can open a new door.</h2>
@@ -1316,6 +1104,7 @@
                             alt="A couple laughing and enjoying time together"
                             loading="lazy"
                         >
+                        <div class="photo-glow"></div>
                         <div class="slide-caption">
                             <span class="caption-kicker">A connection that feels like you</span>
                             <h2>Be seen for who you really are.</h2>
@@ -1326,14 +1115,40 @@
                     <div class="romantic-slide">
                         <img
                             src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
-                            alt="A joyful romantic moment celebrating love and possibility"
+                            alt="A joyful romantic moment celebrating love"
                             loading="lazy"
                         >
+                        <div class="photo-glow"></div>
                         <div class="slide-caption">
-                            <span class="caption-kicker">Your story can begin here</span>
-                            <h2>Your story can begin here starts with hello.</h2>
-                            <p>Take the first step today. Someone you would love to know could be waiting on Kmeet.</p>
-                            <a class="slide-cta" href="discover.html">Discover Your Match <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            <span class="caption-kicker">Your story starts here</span>
+                            <h2>Every great story begins with hello.</h2>
+                            <p>Someone you would love to know could be waiting on Kmeet.</p>
+                            <a class="slide-cta" href="discover.html">
+                                Discover Your Match
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Additional story slide.
+                         Replace this photo URL with the exact
+                         third preview image when its image file
+                         or direct URL is available. -->
+                    <div class="romantic-slide">
+                        <img
+                            src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1200&q=85"
+                            alt="People sharing a happy moment together"
+                            loading="lazy"
+                        >
+                        <div class="photo-glow"></div>
+                        <div class="slide-caption">
+                            <span class="caption-kicker">A beautiful beginning</span>
+                            <h2>Let your hearts find their way.</h2>
+                            <p>Every meaningful connection begins with a moment. Discover yours on Kmeet.</p>
+                            <a class="slide-cta" href="discover.html">
+                                Find Your Connection
+                                <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -1342,155 +1157,83 @@
                         <span class="slide-indicator"></span>
                         <span class="slide-indicator"></span>
                         <span class="slide-indicator"></span>
+                        <span class="slide-indicator"></span>
                     </div>
                 </div>
 
             </div>
-
         </div>
-
     </header>
 
-
-
-    <!-- =========================================
-         CONNECTION SECTION
-    ========================================= -->
-
+    <!-- CONNECTION SECTION -->
     <section class="section">
-
         <div class="section-title">
-
-            <h2>
-                Connection Made Simple
-            </h2>
-
+            <h2>Connection Made Simple</h2>
             <p>
                 Kmeet makes it easier to discover people,
                 build genuine connections, and start
                 conversations that matter.
             </p>
-
         </div>
 
-
         <div class="feature-grid">
-
-
             <div class="feature-card">
-
                 <div class="feature-icon">
                     <i class="fa-solid fa-users"></i>
                 </div>
-
-                <h3>
-                    Discover
-                </h3>
-
+                <h3>Discover</h3>
                 <p>
                     Explore people from different places
                     and discover someone who shares your
                     interests.
                 </p>
-
             </div>
 
-
-
             <div class="feature-card">
-
                 <div class="feature-icon">
                     <i class="fa-solid fa-heart"></i>
                 </div>
-
-                <h3>
-                    Connect
-                </h3>
-
+                <h3>Connect</h3>
                 <p>
                     Find meaningful connections based on
                     interests, personality and what makes
                     you unique.
                 </p>
-
             </div>
 
-
-
             <div class="feature-card">
-
                 <div class="feature-icon">
                     <i class="fa-solid fa-comments"></i>
                 </div>
-
-                <h3>
-                    Chat
-                </h3>
-
+                <h3>Chat</h3>
                 <p>
                     Start conversations and get to know
                     someone beyond their profile.
                 </p>
-
             </div>
-
-
         </div>
-
     </section>
 
-
-
-    <!-- =========================================
-         CTA
-    ========================================= -->
-
-    <section
-        class="cta"
-        id="signup"
-    >
-
-        <h2>
-            Ready to Meet Someone?
-        </h2>
-
+    <!-- CALL TO ACTION -->
+    <section class="cta" id="signup">
+        <h2>Ready to Meet Someone?</h2>
         <p>
             Your next meaningful connection could be
             closer than you think.
         </p>
 
-        <a
-            href="signup.html"
-            class="cta-button"
-        >
+        <a href="signup.html" class="cta-button">
             Join Kmeet
             <i class="fa-solid fa-heart"></i>
         </a>
-
     </section>
 
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================= -->
-
     <footer>
-
-        <p>
-            © 2026 Kmeet. Find your connection.
-        </p>
-
+        <p>© 2026 Kmeet. Find your connection.</p>
     </footer>
 
-
-
-    <!-- =========================================
-         FIREBASE / PAGE LOGIC
-    ========================================= -->
-
+    <!-- FIREBASE AND HOMEPAGE LOGIC -->
     <script type="module">
-
         import {
             auth,
             db,
@@ -1500,543 +1243,192 @@
             getDoc
         } from "./firebase-config.js";
 
-
-        /* =========================================
-           DOM ELEMENTS
-        ========================================= */
-
-        const guestState =
-            document.getElementById("guestState");
-
-        const userState =
-            document.getElementById("userState");
-
-        const homeUserAvatar =
-            document.getElementById("homeUserAvatar");
-
-        const homeUserName =
-            document.getElementById("homeUserName");
-
-        const homeUserEmail =
-            document.getElementById("homeUserEmail");
-
-        const homeInterests =
-            document.getElementById("homeInterests");
-
-        const logoutBtn =
-            document.getElementById("logoutBtn");
-
-        const navProfileLink =
-            document.getElementById("navProfileLink");
-
-        const signupForm =
-            document.getElementById("signupForm");
-
-        const signupEmail =
-            document.getElementById("signupEmail");
-
-
-        /* =========================================
-           DEFAULT AVATAR
-        ========================================= */
+        const guestState = document.getElementById("guestState");
+        const userState = document.getElementById("userState");
+        const homeUserAvatar = document.getElementById("homeUserAvatar");
+        const homeUserName = document.getElementById("homeUserName");
+        const homeUserEmail = document.getElementById("homeUserEmail");
+        const homeInterests = document.getElementById("homeInterests");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const navProfileLink = document.getElementById("navProfileLink");
+        const signupForm = document.getElementById("signupForm");
+        const signupEmail = document.getElementById("signupEmail");
 
         const DEFAULT_AVATAR =
             "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80";
 
-
-        /* =========================================
-           SAFE TEXT HELPER
-        ========================================= */
-
         function safeText(value) {
-
-            if (
-                value === null ||
-                value === undefined
-            ) {
-                return "";
-            }
-
+            if (value === null || value === undefined) return "";
             return String(value).trim();
-
         }
 
-
-        /* =========================================
-           NORMALIZE INTERESTS
-        ========================================= */
-
         function normalizeInterests(interests) {
-
             if (Array.isArray(interests)) {
-
-                return interests
-                    .map(item => safeText(item))
-                    .filter(Boolean);
-
+                return interests.map(safeText).filter(Boolean);
             }
 
             if (typeof interests === "string") {
-
-                return interests
-                    .split(/[,|]/)
-                    .map(item => item.trim())
-                    .filter(Boolean);
-
+                return interests.split(/[,|]/).map(item => item.trim()).filter(Boolean);
             }
 
             return [];
-
         }
 
-
-        /* =========================================
-           SHOW INTERESTS
-        ========================================= */
-
         function renderInterests(interests) {
+            homeInterests.replaceChildren();
 
-            homeInterests.innerHTML = "";
-
-            const cleanInterests =
-                normalizeInterests(interests);
+            const cleanInterests = normalizeInterests(interests);
 
             if (!cleanInterests.length) {
-
-                homeInterests.innerHTML = `
-                    <span class="interest-tag">
-                        New to Kmeet
-                    </span>
-                `;
-
+                const tag = document.createElement("span");
+                tag.className = "interest-tag";
+                tag.textContent = "New to Kmeet";
+                homeInterests.appendChild(tag);
                 return;
             }
 
-
-            cleanInterests
-                .slice(0, 4)
-                .forEach(interest => {
-
-                    const tag =
-                        document.createElement("span");
-
-                    tag.className =
-                        "interest-tag";
-
-                    tag.textContent =
-                        interest;
-
-                    homeInterests.appendChild(tag);
-
-                });
-
+            cleanInterests.slice(0, 4).forEach(interest => {
+                const tag = document.createElement("span");
+                tag.className = "interest-tag";
+                tag.textContent = interest;
+                homeInterests.appendChild(tag);
+            });
         }
-
-
-        /* =========================================
-           SHOW GUEST
-        ========================================= */
 
         function showGuest() {
+            guestState.style.display = "block";
+            userState.style.display = "none";
 
-            guestState.style.display =
-                "block";
+            navProfileLink.href = "login.html";
+            navProfileLink.textContent = "LOG IN";
 
-            userState.style.display =
-                "none";
-
-            navProfileLink.href =
-                "login.html";
-
-            navProfileLink.innerHTML =
-                "LOG IN";
-
-            homeUserAvatar.src =
-                DEFAULT_AVATAR;
-
-            homeUserName.textContent =
-                "Kmeet Member";
-
-            homeUserEmail.textContent =
-                "";
-
-            homeInterests.innerHTML =
-                "";
-
+            homeUserAvatar.src = DEFAULT_AVATAR;
+            homeUserName.textContent = "Kmeet Member";
+            homeUserEmail.textContent = "";
+            homeInterests.replaceChildren();
         }
 
-
-        /* =========================================
-           SHOW LOGGED-IN USER
-           FIRESTORE IS THE SOURCE OF TRUTH
-        ========================================= */
-
         async function showLoggedInUser(user) {
+            guestState.style.display = "none";
+            userState.style.display = "block";
 
-            guestState.style.display =
-                "none";
+            navProfileLink.href = "profile.html";
+            navProfileLink.textContent = "MY PROFILE";
 
-            userState.style.display =
-                "block";
-
-            navProfileLink.href =
-                "profile.html";
-
-            navProfileLink.innerHTML =
-                "MY PROFILE";
-
-
-            /* -----------------------------------------
-               SAFE AUTH FALLBACKS
-            ----------------------------------------- */
-
-            const authName =
-                safeText(user.displayName);
-
-            const authEmail =
-                safeText(user.email);
-
-            const emailName =
-                authEmail
-                    ? authEmail.split("@")[0]
-                    : "";
-
+            const authName = safeText(user.displayName);
+            const authEmail = safeText(user.email);
+            const emailName = authEmail ? authEmail.split("@")[0] : "";
 
             let profileData = {};
 
-
-            /* -----------------------------------------
-               READ THE SAME FIRESTORE PROFILE USED
-               BY profile.html
-            ----------------------------------------- */
-
             try {
-
-                const userRef =
-                    doc(
-                        db,
-                        "users",
-                        user.uid
-                    );
-
-                const userSnap =
-                    await getDoc(userRef);
-
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
 
                 if (userSnap.exists()) {
-
-                    profileData =
-                        userSnap.data() || {};
-
+                    profileData = userSnap.data() || {};
                 }
-
             } catch (error) {
-
-                console.error(
-                    "Could not load Firestore profile:",
-                    error
-                );
-
+                console.error("Could not load Firestore profile:", error);
             }
 
-
-            /* -----------------------------------------
-               NAME
-            ----------------------------------------- */
-
             const profileName =
-                safeText(
-                    profileData.name
-                ) ||
-                safeText(
-                    profileData.username
-                ) ||
-                safeText(
-                    profileData.displayName
-                ) ||
+                safeText(profileData.name) ||
+                safeText(profileData.username) ||
+                safeText(profileData.displayName) ||
                 authName ||
                 emailName ||
                 "Kmeet Member";
 
-
-            /* -----------------------------------------
-               PROFILE PHOTO
-               SAME FIELD PRIORITY AS PROFILE PAGE
-            ----------------------------------------- */
-
             const profilePhoto =
-                safeText(
-                    profileData.photoURL
-                ) ||
-                safeText(
-                    profileData.profilePhoto
-                ) ||
-                safeText(
-                    profileData.photo
-                ) ||
-                safeText(
-                    profileData.avatar
-                ) ||
-                safeText(
-                    profileData.profileImage
-                ) ||
-                safeText(
-                    profileData.image
-                ) ||
-                authPhoto(user) ||
+                safeText(profileData.photoURL) ||
+                safeText(profileData.profilePhoto) ||
+                safeText(profileData.photo) ||
+                safeText(profileData.avatar) ||
+                safeText(profileData.profileImage) ||
+                safeText(profileData.image) ||
+                safeText(user.photoURL) ||
                 DEFAULT_AVATAR;
 
-
-            /* -----------------------------------------
-               INTERESTS
-            ----------------------------------------- */
-
-            let interests =
-                normalizeInterests(
-                    profileData.interests
-                );
-
-
-            /*
-             * Only use old localStorage as a
-             * temporary fallback when Firestore
-             * contains no interests at all.
-             *
-             * Firestore remains the primary source.
-             */
+            let interests = normalizeInterests(profileData.interests);
 
             if (!interests.length) {
-
                 try {
-
-                    const storedInterests =
-                        localStorage.getItem(
-                            "userInterests"
-                        );
-
-                    interests =
-                        normalizeInterests(
-                            storedInterests
-                        );
-
-                } catch (error) {
-
-                    console.warn(
-                        "Could not read stored interests:",
-                        error
+                    interests = normalizeInterests(
+                        localStorage.getItem("userInterests")
                     );
-
+                } catch (error) {
+                    console.warn("Could not read stored interests:", error);
                 }
-
             }
 
+            homeUserName.textContent = profileName;
+            homeUserEmail.textContent = authEmail || "Kmeet Member";
+            homeUserAvatar.src = profilePhoto;
 
-            /* -----------------------------------------
-               DISPLAY DATA
-            ----------------------------------------- */
+            homeUserAvatar.onerror = function () {
+                this.onerror = null;
+                this.src = DEFAULT_AVATAR;
+            };
 
-            homeUserName.textContent =
-                profileName;
-
-            homeUserEmail.textContent =
-                authEmail ||
-                "Kmeet Member";
-
-            homeUserAvatar.src =
-                profilePhoto;
-
-            homeUserAvatar.onerror =
-                function () {
-
-                    this.onerror = null;
-
-                    this.src =
-                        DEFAULT_AVATAR;
-
-                };
-
-
-            renderInterests(
-                interests
-            );
-
+            renderInterests(interests);
         }
 
-
-        /* =========================================
-           AUTH PHOTO FALLBACK
-        ========================================= */
-
-        function authPhoto(user) {
-
-            return safeText(
-                user.photoURL
-            );
-
-        }
-
-
-        /* =========================================
-           AUTH STATE
-        ========================================= */
-
-        onAuthStateChanged(
-            auth,
-            async (user) => {
-
-                if (
-                    user &&
-                    !user.isAnonymous
-                ) {
-
-                    await showLoggedInUser(
-                        user
-                    );
-
-                } else {
-
-                    showGuest();
-
-                }
-
+        onAuthStateChanged(auth, async user => {
+            if (user && !user.isAnonymous) {
+                await showLoggedInUser(user);
+            } else {
+                showGuest();
             }
-        );
+        });
 
+        logoutBtn.addEventListener("click", async () => {
+            logoutBtn.disabled = true;
 
-        /* =========================================
-           LOGOUT
-        ========================================= */
+            try {
+                await signOut(auth);
 
-        logoutBtn.addEventListener(
-            "click",
-            async () => {
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userAvatar");
+                localStorage.removeItem("userInterests");
 
-                try {
-
-                    await signOut(auth);
-
-                    /*
-                     * Do NOT delete the Firestore
-                     * profile here.
-                     *
-                     * Logging out should only end
-                     * the session.
-                     */
-
-                    localStorage.removeItem(
-                        "userEmail"
-                    );
-
-                    localStorage.removeItem(
-                        "userAvatar"
-                    );
-
-                    localStorage.removeItem(
-                        "userInterests"
-                    );
-
-                    window.location.href =
-                        "index.html";
-
-                } catch (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
-
-                    alert(
-                        "Unable to log out. Please try again."
-                    );
-
-                }
-
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Unable to log out. Please try again.");
+                logoutBtn.disabled = false;
             }
-        );
+        });
 
+        signupForm.addEventListener("submit", event => {
+            event.preventDefault();
 
-        /* =========================================
-           SIGNUP FORM
-        ========================================= */
+            const email = signupEmail.value.trim();
 
-        signupForm.addEventListener(
-            "submit",
-            (event) => {
+            if (!email) return;
 
-                event.preventDefault();
-
-
-                const email =
-                    signupEmail.value.trim();
-
-
-                if (!email) {
-                    return;
-                }
-
-
-                /*
-                 * Keep this only as the email
-                 * handoff to the existing signup
-                 * flow.
-                 *
-                 * It is NOT used as the Home
-                 * profile source anymore.
-                 */
-
-                localStorage.setItem(
-                    "userEmail",
-                    email
-                );
-
-
-                window.location.href =
-                    "interests.html";
-
+            try {
+                localStorage.setItem("userEmail", email);
+            } catch (error) {
+                console.warn("Could not save signup email:", error);
             }
-        );
 
+            window.location.href = "interests.html";
+        });
 
-        /* =========================================
-           INTERESTED BUTTON
-        ========================================= */
-
-        document
-            .querySelectorAll(
-                'a[href="#signup"]'
-            )
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        setTimeout(
-                            () => {
-
-                                if (
-                                    signupEmail
-                                ) {
-
-                                    signupEmail.focus();
-
-                                }
-
-                            },
-                            350
-                        );
-
-                    }
-                );
-
+        document.querySelectorAll('a[href="#signup"]').forEach(link => {
+            link.addEventListener("click", () => {
+                window.setTimeout(() => {
+                    if (signupEmail) signupEmail.focus();
+                }, 350);
             });
+        });
 
-
-        /* =========================================
+        /* =====================================
            ROMANTIC STORY SLIDESHOW
-           Slower pacing gives visitors time to feel
-           and read each part of the story.
-        ========================================= */
+           Five slides, automatically synchronized
+           indicators, captions and starbursts.
+        ===================================== */
 
         const slideshow = document.getElementById("romanticSlideshow");
 
@@ -2044,32 +1436,59 @@
             const slides = Array.from(
                 slideshow.querySelectorAll(".romantic-slide")
             );
+
             const indicators = Array.from(
                 slideshow.querySelectorAll(".slide-indicator")
             );
+
             let activeSlide = 0;
+            let slideshowTimer = null;
 
             function showRomanticSlide(index) {
+                activeSlide = (index + slides.length) % slides.length;
+
                 slides.forEach((slide, slideIndex) => {
-                    slide.classList.toggle("active", slideIndex === index);
+                    slide.classList.toggle(
+                        "active",
+                        slideIndex === activeSlide
+                    );
                 });
 
                 indicators.forEach((indicator, indicatorIndex) => {
-                    indicator.classList.toggle("active", indicatorIndex === index);
+                    indicator.classList.toggle(
+                        "active",
+                        indicatorIndex === activeSlide
+                    );
                 });
-
-                activeSlide = index;
             }
 
-            if (slides.length > 1) {
-                window.setInterval(() => {
-                    showRomanticSlide((activeSlide + 1) % slides.length);
-                }, 4800);
+            function startSlideshow() {
+                if (slideshowTimer) {
+                    window.clearInterval(slideshowTimer);
+                }
+
+                if (slides.length > 1) {
+                    slideshowTimer = window.setInterval(() => {
+                        showRomanticSlide(activeSlide + 1);
+                    }, 4800);
+                }
             }
+
+            showRomanticSlide(0);
+            startSlideshow();
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    if (slideshowTimer) {
+                        window.clearInterval(slideshowTimer);
+                        slideshowTimer = null;
+                    }
+                } else {
+                    startSlideshow();
+                }
+            });
         }
-
     </script>
-
 </body>
-
 </html>
+```
