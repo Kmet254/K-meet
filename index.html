@@ -240,7 +240,7 @@
       margin-right: 7px;
     }
 
-    /* FLOWER-BLOOM PHOTO STAGE */
+    /* SMOOTH SMALL-TO-BIG REEL SLIDESHOW */
 
     .story-stage {
       position: relative;
@@ -248,7 +248,8 @@
       min-width: 0;
       width: 100%;
       height: 550px;
-      overflow: visible;
+      overflow: hidden;
+      border-radius: 20px;
     }
 
     .bloom-light {
@@ -280,35 +281,13 @@
 
     .story-image {
       position: absolute;
-      inset: 0 0 64px;
+      inset: 0;
       opacity: 0;
       pointer-events: none;
-      -webkit-mask-size: 15% 15%;
-      mask-size: 15% 15%;
-      -webkit-mask-image: radial-gradient(
-        ellipse at 50% 46%,
-        #000 0%,
-        #000 33%,
-        rgba(0, 0, 0, .94) 42%,
-        rgba(0, 0, 0, .66) 53%,
-        rgba(0, 0, 0, .24) 66%,
-        transparent 79%
-      );
-      mask-image: radial-gradient(
-        ellipse at 50% 46%,
-        #000 0%,
-        #000 33%,
-        rgba(0, 0, 0, .94) 42%,
-        rgba(0, 0, 0, .66) 53%,
-        rgba(0, 0, 0, .24) 66%,
-        transparent 79%
-      );
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      transform: scale(.5);
-      transform-origin: 50% 46%;
-      filter: saturate(.95);
-      will-change: transform, opacity, mask-size;
+      transform: scale(0.6);
+      will-change: transform, opacity;
+      border-radius: 20px;
+      overflow: hidden;
     }
 
     .story-image img {
@@ -317,69 +296,49 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
+      border-radius: 20px;
     }
 
-    .story-image::before {
-      content: "";
-      position: absolute;
-      z-index: 2;
-      inset: -8%;
-      pointer-events: none;
-      opacity: .18;
-      background:
-        radial-gradient(ellipse at 50% 20%, rgba(255, 164, 199, .25), transparent 34%),
-        radial-gradient(ellipse at 80% 47%, rgba(255, 164, 199, .16), transparent 31%),
-        radial-gradient(ellipse at 50% 76%, rgba(255, 164, 199, .17), transparent 33%),
-        radial-gradient(ellipse at 20% 47%, rgba(255, 164, 199, .14), transparent 30%);
-      filter: blur(17px);
-    }
-
+    /* Smooth Zoom-In + Fade-Out Sequence */
     .story-image.active {
       z-index: 2;
-      opacity: 1;
-      animation: flowerBloom 2.8s cubic-bezier(.16, .72, .2, 1) both;
-    }
-
-    @keyframes flowerBloom {
-      0% {
-        opacity: 0;
-        transform: scale(.4) rotate(-5deg);
-        -webkit-mask-size: 15% 15%;
-        mask-size: 15% 15%;
-        filter: blur(12px) saturate(.7);
-      }
-
-      25% {
-        opacity: 1;
-        transform: scale(.65) rotate(-2deg);
-        -webkit-mask-size: 40% 40%;
-        mask-size: 40% 40%;
-        filter: blur(6px) saturate(.85);
-      }
-
-      60% {
-        transform: scale(.9) rotate(1deg);
-        -webkit-mask-size: 75% 75%;
-        mask-size: 75% 75%;
-        filter: blur(2px) saturate(.95);
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
-        filter: blur(0) saturate(1);
-      }
+      animation: reelZoomIn 6.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
     .story-image.leaving {
       z-index: 1;
-      opacity: 0;
-      transform: scale(1.12);
-      transition:
-        opacity 1.1s ease,
-        transform 1.8s ease;
+      animation: reelFadeOut 1.5s ease-out forwards;
+    }
+
+    @keyframes reelZoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+        filter: blur(10px);
+      }
+      18% {
+        opacity: 1;
+        filter: blur(0px);
+      }
+      80% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.15);
+        filter: blur(4px);
+      }
+    }
+
+    @keyframes reelFadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.2);
+      }
     }
 
     .story-caption {
@@ -776,10 +735,6 @@
         margin-top: 10px;
       }
 
-      .story-image {
-        inset: 0 0 58px;
-      }
-
       .story-caption {
         bottom: 77px;
         left: 5%;
@@ -929,7 +884,7 @@
         </p>
       </div>
 
-      <!-- CARD-FREE BLOOMING SLIDESHOW -->
+      <!-- CONTINUOUS ZOOM SLIDESHOW -->
       <div class="story-stage" id="storyStage">
 
         <div class="bloom-light"></div>
@@ -1162,7 +1117,7 @@
         window.setTimeout(() => {
           slides[previous].classList.remove("leaving");
           changing = false;
-        }, 2900);
+        }, 1500);
       }
 
       function startTimer() {
@@ -1172,7 +1127,7 @@
           if (!document.hidden) {
             showSlide((current + 1) % slides.length);
           }
-        }, 6500);
+        }, 6000);
       }
 
       dots.forEach((dot) => {
