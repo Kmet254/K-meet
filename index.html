@@ -2,1493 +2,1390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0d080b">
-
-    <title>Kmeet - Find Your Connection</title>
-    <meta name="description" content="Meet genuine people, discover meaningful connections, and let your story begin on Kmeet.">
-
-    <base target="_self">
-
-    <link rel="icon" type="image/jpeg" href="./kmeet-logo.jfif.jfif">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 85px;
-        }
-
-        body {
-            font-family: "Poppins", sans-serif;
-            background: #0d080b;
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button, input {
-            font: inherit;
-        }
-
-        button, a {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* =====================================
-           NAVIGATION
-        ===================================== */
-
-        .main-nav {
-            width: 100%;
-            min-height: 74px;
-            padding: 12px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-
-            background: rgba(17, 9, 13, 0.92);
-            border-bottom: 1px solid rgba(255,255,255,.08);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        .nav-logo img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255,105,160,.55);
-        }
-
-        .nav-logo span {
-            font-family: "Playfair Display", serif;
-            font-size: 1.55rem;
-            font-weight: 700;
-            color: #ff76ad;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 26px;
-        }
-
-        .nav-links a {
-            font-size: .9rem;
-            color: #eee;
-            transition: color .25s ease, transform .25s ease;
-        }
-
-        .nav-links a:hover {
-            color: #ff76ad;
-        }
-
-        .nav-links .nav-profile-btn {
-            padding: 10px 19px;
-            border-radius: 30px;
-            background: linear-gradient(135deg,#ff4f98,#b92770);
-            color: white;
-            box-shadow: 0 5px 18px rgba(255,79,152,.22);
-        }
-
-        .nav-profile-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* =====================================
-           HERO BACKGROUND
-        ===================================== */
-
-        .header {
-            min-height: 100vh;
-            position: relative;
-            isolation: isolate;
-            display: flex;
-            flex-direction: column;
-
-            background:
-                linear-gradient(
-                    rgba(12,7,10,.56),
-                    rgba(12,7,10,.74)
-                ),
-                url("./kmeet-background.jpg.jpg") center/cover no-repeat;
-            background-attachment: scroll;
-        }
-
-        @supports (background-attachment: fixed) {
-            .header {
-                background-attachment: fixed;
-            }
-        }
-
-        .hero-content {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: clamp(36px,5vw,76px) 5%;
-        }
-
-        .hero-inner {
-            width: 100%;
-            max-width: 1320px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: minmax(0,1.02fr) minmax(0,.98fr);
-            align-items: center;
-            gap: clamp(28px,5vw,76px);
-        }
-
-        #guestState, #userState {
-            min-width: 0;
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        #userState {
-            display: none;
-        }
-
-        .hero-inner h1 {
-            max-width: 720px;
-            margin-bottom: 22px;
-            font-family: "Playfair Display", serif;
-            font-size: clamp(2.8rem,5.1vw,5.3rem);
-            line-height: 1.02;
-            color: white;
-            text-shadow: 0 4px 30px rgba(0,0,0,.45);
-        }
-
-        .hero-inner h1 span {
-            color: #ff6da8;
-        }
-
-        .hero-tagline {
-            max-width: 560px;
-            margin: 0 0 30px;
-            color: #eee;
-            font-size: clamp(.96rem,1.2vw,1.08rem);
-            line-height: 1.8;
-        }
-
-        /* =====================================
-           SIGNUP FORM
-        ===================================== */
-
-        .signup-form {
-            width: 100%;
-            max-width: 560px;
-            margin: 0;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-radius: 40px;
-            background: rgba(255,255,255,.10);
-            border: 1px solid rgba(255,255,255,.16);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .signup-form input {
-            flex: 1;
-            min-width: 0;
-            padding: 14px 18px;
-            border: 0;
-            outline: 0;
-            background: transparent;
-            color: white;
-            font-size: .95rem;
-        }
-
-        .signup-form input::placeholder {
-            color: rgba(255,255,255,.7);
-        }
-
-        .signup-form button {
-            padding: 13px 23px;
-            border: 0;
-            border-radius: 30px;
-            background: linear-gradient(135deg,#ff579d,#b7276d);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: transform .25s ease;
-        }
-
-        .signup-form button:hover {
-            transform: translateY(-2px);
-        }
-
-        .login-note {
-            margin-top: 18px;
-            color: #ddd;
-            font-size: .88rem;
-        }
-
-        .login-note a {
-            color: #ff75ad;
-            font-weight: 600;
-        }
-
-        /* =====================================
-           LOGGED-IN MEMBER CARD
-        ===================================== */
-
-        .user-card {
-            width: 100%;
-            max-width: 620px;
-            padding: 32px 24px;
-            text-align: center;
-            border-radius: 26px;
-            background: rgba(20,10,16,.78);
-            border: 1px solid rgba(255,255,255,.1);
-            box-shadow: 0 25px 70px rgba(0,0,0,.32);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-
-        .home-user-avatar {
-            display: block;
-            width: 112px;
-            height: 112px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255,105,160,.75);
-            box-shadow: 0 0 30px rgba(255,80,150,.2);
-        }
-
-        .user-card h2 {
-            margin-bottom: 7px;
-            font-family: "Playfair Display",serif;
-            font-size: 2rem;
-            overflow-wrap: anywhere;
-        }
-
-        .user-email {
-            margin-bottom: 18px;
-            color: #bbb;
-            font-size: .9rem;
-            overflow-wrap: anywhere;
-        }
-
-        .interest-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin: 15px 0 24px;
-        }
-
-        .interest-tag {
-            padding: 7px 13px;
-            border-radius: 20px;
-            background: rgba(255,90,155,.12);
-            border: 1px solid rgba(255,90,155,.22);
-            color: #ff9ac3;
-            font-size: .8rem;
-        }
-
-        .user-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .user-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 11px 16px;
-            border-radius: 25px;
-            font-size: .85rem;
-            cursor: pointer;
-            transition: transform .25s ease;
-        }
-
-        .user-action:hover {
-            transform: translateY(-2px);
-        }
-
-        .user-action.primary {
-            background: linear-gradient(135deg,#ff579d,#b7276d);
-            color: white;
-        }
-
-        .user-action.secondary {
-            background: rgba(255,255,255,.07);
-            border: 1px solid rgba(255,255,255,.12);
-            color: white;
-        }
-
-        .user-action.logout {
-            background: rgba(255,70,100,.08);
-            border: 1px solid rgba(255,70,100,.18);
-            color: #ff9aac;
-        }
-
-        /* =====================================
-           ROMANTIC SLIDESHOW
-           No card, no border, no panel.
-        ===================================== */
-
-        .romantic-slideshow {
-            grid-column: 2;
-            grid-row: 1;
-            position: relative;
-            width: 100%;
-            height: clamp(350px,64vh,620px);
-            min-height: 350px;
-            isolation: isolate;
-            overflow: hidden;
-            background: transparent;
-            border: 0;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        .romantic-slide {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity .9s ease, visibility .9s ease;
-        }
-
-        .romantic-slide.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        .romantic-slide img {
-            position: absolute;
-            inset: 0;
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            opacity: 0;
-            transform: scale(.70);
-            filter: blur(5px) brightness(.72) saturate(1.05);
-
-            -webkit-mask-image: radial-gradient(
-                ellipse at center,
-                #000 38%,
-                rgba(0,0,0,.94) 57%,
-                transparent 100%
-            );
-            mask-image: radial-gradient(
-                ellipse at center,
-                #000 38%,
-                rgba(0,0,0,.94) 57%,
-                transparent 100%
-            );
-
-            transition:
-                transform 2.1s cubic-bezier(.16,.75,.25,1),
-                opacity 1s ease,
-                filter 1.6s ease;
-        }
-
-        .romantic-slide.active img {
-            opacity: 1;
-            transform: scale(1.025);
-            filter: blur(0) brightness(.96) saturate(1.12);
-        }
-
-        /* Soft lighting around each emerging photo */
-        .romantic-slide .photo-glow {
-            position: absolute;
-            z-index: 1;
-            inset: 12%;
-            pointer-events: none;
-            opacity: 0;
-            background: radial-gradient(
-                ellipse at center,
-                rgba(255,110,170,.22),
-                transparent 68%
-            );
-            transition: opacity 1.2s ease;
-        }
-
-        .romantic-slide.active .photo-glow {
-            opacity: 1;
-        }
-
-        /* Starburst appears at the beginning of every slide */
-        .romantic-slide::before {
-            content: "✦";
-            position: absolute;
-            z-index: 4;
-            top: 43%;
-            left: 50%;
-            color: #fff7fb;
-            font-size: 2.2rem;
-            line-height: 1;
-            opacity: 0;
-            pointer-events: none;
-            text-shadow:
-                0 0 8px white,
-                0 0 22px #ff75b5,
-                0 0 48px #ff4f98;
-            transform: translate(-50%,-50%) scale(0);
-        }
-
-        .romantic-slide.active::before {
-            animation: kmeetStarBurst 1.2s ease-out both;
-        }
-
-        .romantic-slide::after {
-            content: "";
-            position: absolute;
-            z-index: 1;
-            inset: 0;
-            pointer-events: none;
-            background: linear-gradient(
-                to bottom,
-                rgba(13,8,11,.02) 30%,
-                rgba(13,8,11,.10) 48%,
-                rgba(13,8,11,.84) 100%
-            );
-        }
-
-        @keyframes kmeetStarBurst {
-            0% {
-                opacity: 0;
-                transform: translate(-50%,-50%) scale(0) rotate(0);
-            }
-            22% {
-                opacity: 1;
-                transform: translate(-50%,-50%) scale(1.6) rotate(45deg);
-            }
-            65% {
-                opacity: .65;
-                transform: translate(-50%,-50%) scale(2) rotate(90deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%,-50%) scale(2.7) rotate(135deg);
-            }
-        }
-
-        /* Story captions */
-        .slide-caption {
-            position: absolute;
-            z-index: 3;
-            left: clamp(18px,3.5vw,44px);
-            right: clamp(18px,3.5vw,44px);
-            bottom: clamp(25px,4vw,46px);
-            max-width: 590px;
-            color: white;
-            text-shadow: 0 2px 18px rgba(0,0,0,.7);
-        }
-
-        .slide-caption > * {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        .romantic-slide.active .caption-kicker {
-            animation: captionRise .55s .18s ease forwards;
-        }
-
-        .romantic-slide.active .slide-caption h2 {
-            animation: captionRise .65s .4s ease forwards;
-        }
-
-        .romantic-slide.active .slide-caption p {
-            animation: captionRise .65s .62s ease forwards;
-        }
-
-        .romantic-slide.active .slide-cta {
-            animation: captionRise .65s .8s ease forwards;
-        }
-
-        @keyframes captionRise {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .caption-kicker {
-            display: inline-block;
-            margin-bottom: 10px;
-            color: #ffd3e5;
-            font-size: .7rem;
-            font-weight: 600;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-        }
-
-        .slide-caption h2 {
-            margin-bottom: 10px;
-            font-family: "Playfair Display",serif;
-            font-size: clamp(1.65rem,2.7vw,2.65rem);
-            line-height: 1.13;
-            text-wrap: balance;
-        }
-
-        .slide-caption p {
-            max-width: 440px;
-            color: rgba(255,255,255,.93);
-            font-size: .86rem;
-            line-height: 1.7;
-        }
-
-        .slide-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            margin-top: 16px;
-            padding: 11px 17px;
-            border: 1px solid rgba(255,255,255,.24);
-            border-radius: 30px;
-            background: linear-gradient(135deg,#e75b9a,#b82f70);
-            color: white;
-            font-size: .82rem;
-            font-weight: 600;
-            box-shadow: 0 8px 24px rgba(120,15,65,.28);
-            transition: transform .25s ease;
-        }
-
-        .slide-cta:hover {
-            transform: translateY(-2px);
-        }
-
-        .slide-indicators {
-            position: absolute;
-            z-index: 5;
-            top: 20px;
-            right: 12px;
-            display: flex;
-            gap: 8px;
-        }
-
-        .slide-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,.5);
-            box-shadow: 0 1px 8px rgba(0,0,0,.25);
-            transition: background .25s ease, transform .25s ease;
-        }
-
-        .slide-indicator.active {
-            background: #ff8fbd;
-            transform: scale(1.35);
-        }
-
-        /* =====================================
-           CONNECTION SECTION
-        ===================================== */
-
-        .section {
-            padding: 90px 5%;
-            background: #10090d;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            margin-bottom: 12px;
-            font-family: "Playfair Display",serif;
-            font-size: clamp(2rem,4vw,2.7rem);
-        }
-
-        .section-title p {
-            max-width: 650px;
-            margin: auto;
-            color: #aaa;
-            line-height: 1.8;
-        }
-
-        .feature-grid {
-            max-width: 1100px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(3,minmax(0,1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            padding: 35px 25px;
-            text-align: center;
-            border-radius: 24px;
-            background: rgba(255,255,255,.035);
-            border: 1px solid rgba(255,255,255,.08);
-            transition: transform .3s ease, background .3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,.055);
-        }
-
-        .feature-icon {
-            width: 65px;
-            height: 65px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(255,79,152,.12);
-            color: #ff70aa;
-            font-size: 1.45rem;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 12px;
-            font-family: "Playfair Display",serif;
-            font-size: 1.5rem;
-        }
-
-        .feature-card p {
-            color: #aaa;
-            font-size: .9rem;
-            line-height: 1.8;
-        }
-
-        /* =====================================
-           CALL TO ACTION
-        ===================================== */
-
-        .cta {
-            padding: 85px 5%;
-            text-align: center;
-            background: linear-gradient(135deg,#160a10,#270d1b);
-        }
-
-        .cta h2 {
-            margin-bottom: 15px;
-            font-family: "Playfair Display",serif;
-            font-size: clamp(2rem,4vw,2.8rem);
-        }
-
-        .cta p {
-            max-width: 600px;
-            margin: 0 auto 28px;
-            color: #bbb;
-            line-height: 1.8;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 13px 25px;
-            border-radius: 28px;
-            background: linear-gradient(135deg,#ff579d,#b7276d);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 8px 25px rgba(255,79,152,.2);
-            transition: transform .25s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* =====================================
-           FOOTER
-        ===================================== */
-
-        footer {
-            padding: 30px 5%;
-            text-align: center;
-            background: #0b0609;
-            border-top: 1px solid rgba(255,255,255,.06);
-            color: #777;
-            font-size: .82rem;
-        }
-
-        /* =====================================
-           TABLETS
-        ===================================== */
-
-        @media (max-width: 900px) {
-            .hero-content {
-                padding: 42px 5% 55px;
-            }
-
-            .hero-inner {
-                max-width: 680px;
-                grid-template-columns: minmax(0,1fr);
-                gap: 30px;
-            }
-
-            #guestState, #userState {
-                grid-column: 1;
-                grid-row: 1;
-            }
-
-            .romantic-slideshow {
-                grid-column: 1;
-                grid-row: 2;
-                height: clamp(360px,58vh,500px);
-                min-height: 340px;
-            }
-
-            .hero-inner h1 {
-                font-size: clamp(2.7rem,8vw,4.4rem);
-            }
-
-            .hero-tagline {
-                max-width: 600px;
-            }
-
-            .user-card {
-                margin: auto;
-            }
-
-            .feature-grid {
-                gap: 16px;
-            }
-        }
-
-        /* =====================================
-           MOBILE
-        ===================================== */
-
-        @media (max-width: 600px) {
-            .main-nav {
-                min-height: 66px;
-                padding: 9px 4%;
-                gap: 10px;
-            }
-
-            .nav-logo {
-                gap: 7px;
-            }
-
-            .nav-logo img {
-                width: 38px;
-                height: 38px;
-            }
-
-            .nav-logo span {
-                font-size: 1.28rem;
-            }
-
-            .nav-links {
-                gap: 12px;
-            }
-
-            .nav-links a {
-                font-size: .8rem;
-            }
-
-            .nav-links a:first-child {
-                display: none;
-            }
-
-            .nav-links .nav-profile-btn {
-                padding: 9px 12px;
-                font-size: .73rem;
-            }
-
-            .hero-content {
-                padding: 34px 17px 42px;
-            }
-
-            .hero-inner {
-                gap: 27px;
-            }
-
-            .hero-inner h1 {
-                font-size: clamp(2.4rem,11vw,3.5rem);
-                line-height: 1.04;
-            }
-
-            .hero-tagline {
-                font-size: .94rem;
-                line-height: 1.75;
-            }
-
-            .signup-form {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 4px;
-                padding: 10px;
-                border-radius: 22px;
-            }
-
-            .signup-form input {
-                width: 100%;
-                padding: 13px 10px;
-                text-align: center;
-            }
-
-            .signup-form button {
-                width: 100%;
-            }
-
-            .romantic-slideshow {
-                height: 410px;
-                min-height: 0;
-            }
-
-            .romantic-slide img {
-                -webkit-mask-image: radial-gradient(
-                    ellipse at center,
-                    #000 48%,
-                    rgba(0,0,0,.95) 72%,
-                    transparent 100%
-                );
-                mask-image: radial-gradient(
-                    ellipse at center,
-                    #000 48%,
-                    rgba(0,0,0,.95) 72%,
-                    transparent 100%
-                );
-            }
-
-            .slide-caption {
-                left: 19px;
-                right: 19px;
-                bottom: 23px;
-            }
-
-            .slide-caption h2 {
-                font-size: 1.8rem;
-            }
-
-            .slide-caption p {
-                font-size: .81rem;
-            }
-
-            .slide-cta {
-                margin-top: 12px;
-                padding: 10px 14px;
-                font-size: .78rem;
-            }
-
-            .slide-indicators {
-                top: 14px;
-                right: 10px;
-            }
-
-            .user-card {
-                padding: 27px 16px;
-            }
-
-            .user-card h2 {
-                font-size: 1.8rem;
-            }
-
-            .user-actions {
-                flex-direction: column;
-            }
-
-            .user-action {
-                width: 100%;
-            }
-
-            .section {
-                padding: 68px 5%;
-            }
-
-            .feature-grid {
-                grid-template-columns: minmax(0,1fr);
-                max-width: 460px;
-            }
-
-            .feature-card {
-                padding: 30px 22px;
-            }
-
-            .cta {
-                padding: 70px 6%;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            *, *::before, *::after {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-            }
-
-            .romantic-slide img {
-                transform: none !important;
-                filter: none !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100711">
+
+  <title>Kmeet - Find Your Connection</title>
+
+  <link rel="icon" type="image/jpeg"
+        href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --pink: #ff6b9a;
+      --pink-light: #ffb0ca;
+      --pink-deep: #e93d79;
+      --background: #100711;
+      --text: #fff7fb;
+      --muted: #d3bdcd;
+      --glass: rgba(255, 255, 255, 0.07);
+      --line: rgba(255, 255, 255, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--background)
+        url("kmeet-background.jpg.jpg") center / cover fixed no-repeat;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 15% 30%, rgba(132, 22, 75, .24), transparent 48%),
+        linear-gradient(135deg, rgba(13, 5, 16, .91), rgba(25, 7, 21, .83));
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* STICKY NAVIGATION */
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(16, 7, 17, .84);
+      border-bottom: 1px solid rgba(255, 255, 255, .09);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      width: min(1240px, 92%);
+      min-height: 76px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0;
+    }
+
+    .brand img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, .24);
+      box-shadow: 0 0 20px rgba(255, 107, 154, .19);
+    }
+
+    .brand-name {
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      color: #fff;
+    }
+
+    .brand-name span {
+      color: var(--pink);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 27px;
+    }
+
+    .nav-links > a {
+      color: #f5e7ef;
+      font-size: 13px;
+      transition: color .25s ease;
+    }
+
+    .nav-links > a:hover {
+      color: var(--pink-light);
+    }
+
+    .nav-links .nav-cta {
+      padding: 11px 19px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 6px 22px rgba(233, 61, 121, .18);
+    }
+
+    .nav-links .nav-cta:hover {
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* HERO: ORIGINAL TWO-SIDED FEEL */
+
+    .hero {
+      width: min(1240px, 92%);
+      min-height: 660px;
+      margin: 0 auto;
+      padding: 55px 0 65px;
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 5;
+      max-width: 540px;
+      padding: 25px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 23px;
+      color: var(--pink-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow i {
+      font-size: 12px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(43px, 5.1vw, 72px);
+      line-height: 1.08;
+      font-weight: 600;
+      letter-spacing: -.9px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--pink);
+      text-shadow: 0 0 36px rgba(255, 107, 154, .13);
+    }
+
+    .hero-description {
+      max-width: 440px;
+      margin: 24px 0 28px;
+      color: #e1cfdc;
+      font-size: 14px;
+      line-height: 1.95;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .button {
+      min-height: 47px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border: 1px solid transparent;
+      border-radius: 28px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #ff7ba5, #e63b79);
+      box-shadow: 0 8px 28px rgba(233, 61, 121, .24);
+    }
+
+    .button-outline {
+      border-color: rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, .035);
+      color: #fff2f8;
+    }
+
+    .button-outline:hover {
+      border-color: rgba(255, 130, 173, .65);
+    }
+
+    .hero-note {
+      margin-top: 24px;
+      color: #bba8b8;
+      font-size: 11px;
+    }
+
+    .hero-note i {
+      margin-right: 7px;
+      color: var(--pink);
+    }
+
+    /* APERTURE SLIDESHOW
+       No visible rectangular card.
+       Each image is revealed through an expanding circular opening. */
+
+    .story-stage {
+      position: relative;
+      isolation: isolate;
+      min-width: 0;
+      width: 100%;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    .story-glow {
+      position: absolute;
+      width: 65%;
+      height: 65%;
+      border-radius: 50%;
+      background: rgba(238, 65, 128, .12);
+      filter: blur(75px);
+      pointer-events: none;
+    }
+
+    .story-image {
+      position: absolute;
+      inset: 5px 0 62px;
+      overflow: hidden;
+      clip-path: circle(0% at 50% 48%);
+      opacity: 0;
+      transform: scale(.91);
+      will-change: clip-path, transform, opacity;
+      pointer-events: none;
+    }
+
+    .story-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(.96);
+      transform: scale(1.02);
+    }
+
+    .story-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(0deg, rgba(15, 5, 14, .8), transparent 47%),
+        linear-gradient(90deg, rgba(15, 5, 14, .12), transparent 40%);
+      pointer-events: none;
+    }
+
+    .story-image.active {
+      z-index: 2;
+      opacity: 1;
+      animation: apertureOpen 2s cubic-bezier(.2, .75, .2, 1) both;
+    }
+
+    .story-image.leaving {
+      z-index: 1;
+      opacity: 0;
+      clip-path: circle(150% at 50% 48%);
+      transform: scale(1.025);
+      transition: opacity .35s ease;
+    }
+
+    @keyframes apertureOpen {
+      0% {
+        clip-path: circle(0% at 50% 48%);
+        opacity: .35;
+        transform: scale(.91);
+      }
+      18% {
+        opacity: 1;
+      }
+      100% {
+        clip-path: circle(150% at 50% 48%);
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Tiny glimmer at the start of the opening */
+
+    .story-spark {
+      position: absolute;
+      z-index: 8;
+      top: 45%;
+      left: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #fff8fc;
+      box-shadow:
+        0 0 9px 4px rgba(255, 184, 211, .9),
+        0 0 32px 15px rgba(255, 91, 150, .35);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .story-spark.play {
+      animation: sparkAppear 1.25s ease-out both;
+    }
+
+    @keyframes sparkAppear {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.15);
+      }
+      12% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+      40% {
+        opacity: .8;
+        transform: translate(-50%, -50%) scale(.7);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.1);
+      }
+    }
+
+    /* Caption appears after the image starts opening */
+
+    .story-caption {
+      position: absolute;
+      z-index: 5;
+      left: 5%;
+      right: 5%;
+      bottom: 83px;
+      opacity: 0;
+      transform: translateY(13px);
+      transition: opacity .7s ease, transform .7s ease;
+      pointer-events: none;
+    }
+
+    .story-caption.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .caption-kicker {
+      margin-bottom: 7px;
+      color: #ffb3cd;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .story-caption h2 {
+      margin: 0 0 7px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(22px, 2.5vw, 33px);
+      font-weight: 600;
+      line-height: 1.2;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, .35);
+    }
+
+    .story-caption p {
+      max-width: 400px;
+      margin: 0;
+      color: #f3e3ec;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .story-controls {
+      position: absolute;
+      z-index: 10;
+      right: 3px;
+      bottom: 18px;
+      left: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .story-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .story-dot {
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .34);
+      cursor: pointer;
+      transition: width .3s ease, background .3s ease;
+    }
+
+    .story-dot.active {
+      width: 24px;
+      border-radius: 8px;
+      background: var(--pink);
+    }
+
+    .story-counter {
+      color: #d8c2d2;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* SIGNUP HANDOFF */
+
+    .signup-strip {
+      width: min(720px, 92%);
+      margin: 0 auto 75px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .045);
+      backdrop-filter: blur(12px);
+      text-align: center;
+    }
+
+    .signup-strip h2 {
+      margin: 0 0 8px;
+      font-family: "Playfair Display", serif;
+      font-size: 25px;
+    }
+
+    .signup-strip p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .signup-form {
+      display: flex;
+      max-width: 490px;
+      margin: auto;
+      gap: 10px;
+    }
+
+    .signup-form input {
+      min-width: 0;
+      flex: 1;
+      padding: 13px 16px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 25px;
+      outline: none;
+      background: rgba(0, 0, 0, .2);
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .signup-form input:focus {
+      border-color: var(--pink);
+    }
+
+    .signup-form input::placeholder {
+      color: #bba8b8;
+    }
+
+    /* LOWER PAGE SECTIONS */
+
+    .section {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+      padding: 40px 0 85px;
+    }
+
+    .section-heading {
+      max-width: 620px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .section-heading .eyebrow {
+      margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 14px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 43px);
+      line-height: 1.2;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 19px;
+    }
+
+    .feature {
+      padding: 27px 23px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .045);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 107, 154, .4);
+    }
+
+    .feature-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 19px;
+      border-radius: 14px;
+      color: var(--pink-light);
+      background: rgba(255, 107, 154, .12);
+      font-size: 17px;
+    }
+
+    .feature h3 {
+      margin: 0 0 10px;
+      font-family: "Playfair Display", serif;
+      font-size: 21px;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .final-cta {
+      width: min(1050px, 92%);
+      margin: 0 auto 85px;
+      padding: 48px 25px;
+      border-top: 1px solid rgba(255, 255, 255, .1);
+      border-bottom: 1px solid rgba(255, 255, 255, .1);
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      margin: 0 0 13px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 44px);
+    }
+
+    .final-cta p {
+      margin: 0 auto 24px;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    footer {
+      padding: 27px 4%;
+      border-top: 1px solid rgba(255, 255, 255, .09);
+      background: rgba(8, 3, 9, .45);
+      text-align: center;
+      color: #bca8b8;
+      font-size: 11px;
+    }
+
+    footer .footer-brand {
+      margin-bottom: 8px;
+      font-family: "Playfair Display", serif;
+      color: #fff;
+      font-size: 22px;
+    }
+
+    footer .footer-brand span {
+      color: var(--pink);
+    }
+
+    /* ACCOUNT STATUS */
+
+    .account-status {
+      display: none;
+      width: min(500px, 92%);
+      margin: 0 auto 45px;
+      padding: 17px;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, .055);
+    }
+
+    .account-status.visible {
+      display: flex;
+    }
+
+    .account-status img {
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--pink);
+    }
+
+    .account-details {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .account-details strong {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+    }
+
+    .account-details span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .account-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .account-actions a,
+    .account-actions button {
+      padding: 8px 11px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 18px;
+      background: transparent;
+      color: white;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .account-actions a:hover,
+    .account-actions button:hover {
+      border-color: var(--pink);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        min-height: auto;
+        grid-template-columns: .9fr 1.1fr;
+        gap: 10px;
+        padding-top: 42px;
+      }
+
+      .story-stage {
+        height: 460px;
+      }
+
+      .hero h1 {
+        font-size: clamp(39px, 5.5vw, 57px);
+      }
+
+      .nav-links {
+        gap: 17px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      html {
+        scroll-padding-top: 72px;
+      }
+
+      .nav {
+        width: 94%;
+        min-height: 67px;
+        gap: 10px;
+      }
+
+      .brand {
+        gap: 7px;
+      }
+
+      .brand img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .brand-name {
+        font-size: 23px;
+      }
+
+      .nav-links {
+        gap: 13px;
+      }
+
+      .nav-links > a {
+        font-size: 11px;
+      }
+
+      .nav-links .nav-cta {
+        padding: 9px 12px;
+      }
+
+      .hero {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 44px 0 38px;
+      }
+
+      .hero-copy {
+        padding: 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(43px, 10vw, 61px);
+      }
+
+      .hero-description {
+        margin: 18px 0 22px;
+        font-size: 13px;
+      }
+
+      .hero-note {
+        margin-top: 17px;
+      }
+
+      .story-stage {
+        width: 100%;
+        height: min(115vw, 470px);
+        min-height: 330px;
+        margin-top: 15px;
+      }
+
+      .story-image {
+        inset: 0 0 57px;
+      }
+
+      .story-caption {
+        bottom: 77px;
+        left: 5%;
+        right: 5%;
+      }
+
+      .story-caption h2 {
+        font-size: 26px;
+      }
+
+      .story-controls {
+        bottom: 13px;
+      }
+
+      .signup-strip {
+        padding: 22px 17px;
+        margin-bottom: 50px;
+      }
+
+      .signup-form {
+        flex-direction: column;
+      }
+
+      .signup-form .button {
+        width: 100%;
+      }
+
+      .section {
+        padding: 25px 0 60px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .feature {
+        padding: 22px;
+      }
+
+      .final-cta {
+        margin-bottom: 55px;
+        padding: 35px 10px;
+      }
+
+      .account-status {
+        flex-wrap: wrap;
+      }
+
+      .account-actions {
+        width: 100%;
+        padding-left: 67px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .nav-links {
+        gap: 9px;
+      }
+
+      .nav-links > a {
+        font-size: 10px;
+      }
+
+      .nav-links .nav-cta {
+        padding: 8px 10px;
+      }
+
+      .brand-name {
+        font-size: 21px;
+      }
+
+      .brand img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .hero-actions .button {
+        padding: 11px 15px;
+        font-size: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <header class="header">
+  <!-- NAVIGATION -->
+  <header class="header">
+    <nav class="nav">
+      <a class="brand" href="index.html" aria-label="Kmeet home">
+        <img src="kmeet-logo.jfif.jfif" alt="Kmeet logo">
+        <span class="brand-name">K<span>meet</span></span>
+      </a>
 
-        <nav class="main-nav">
-            <a href="index.html" class="nav-logo" aria-label="Kmeet Home">
-                <img src="./kmeet-logo.jfif.jfif" alt="Kmeet Logo">
-                <span>Kmeet</span>
-            </a>
+      <div class="nav-links">
+        <a href="#interested">Interested</a>
+        <a href="discover.html">Discover</a>
+        <a class="nav-cta" id="navAccountLink" href="login.html">Log In</a>
+      </div>
+    </nav>
+  </header>
 
-            <div class="nav-links">
-                <a href="#signup">
-                    <i class="fa-solid fa-heart"></i>
-                    Interested
-                </a>
+  <main>
 
-                <a href="discover.html">Discover</a>
+    <!-- HERO -->
+    <section class="hero">
 
-                <a href="login.html" id="navProfileLink" class="nav-profile-btn">
-                    LOG IN
-                </a>
-            </div>
-        </nav>
-
-        <div class="hero-content">
-            <div class="hero-inner">
-
-                <!-- GUEST HOMEPAGE -->
-                <div id="guestState">
-                    <h1>
-                        KMEET YOUR<br>
-                        <span>HEARTS TRUE</span><br>
-                        ECHO
-                    </h1>
-
-                    <p class="hero-tagline">
-                        Meet genuine people, discover meaningful
-                        connections, and let your story begin.
-                    </p>
-
-                    <form class="signup-form" id="signupForm">
-                        <input
-                            type="email"
-                            id="signupEmail"
-                            placeholder="Enter your email"
-                            autocomplete="email"
-                            aria-label="Your email address"
-                            required
-                        >
-
-                        <button type="submit">
-                            Get Started
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
-
-                    <p class="login-note">
-                        Already have an account?
-                        <a href="login.html">Log in</a>
-                    </p>
-                </div>
-
-                <!-- LOGGED-IN HOMEPAGE -->
-                <div id="userState">
-                    <div class="user-card">
-                        <img
-                            id="homeUserAvatar"
-                            class="home-user-avatar"
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80"
-                            alt="Your profile photo"
-                        >
-
-                        <h2 id="homeUserName">Kmeet Member</h2>
-
-                        <p id="homeUserEmail" class="user-email">
-                            Loading...
-                        </p>
-
-                        <div id="homeInterests" class="interest-list"></div>
-
-                        <div class="user-actions">
-                            <a href="discover.html" class="user-action primary">
-                                <i class="fa-solid fa-users"></i>
-                                Discover People
-                            </a>
-
-                            <a href="profile.html" class="user-action secondary">
-                                <i class="fa-solid fa-user"></i>
-                                View Full Profile
-                            </a>
-
-                            <button type="button" id="logoutBtn" class="user-action logout">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                                Logout
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FIVE-PART ROMANTIC STORY -->
-                <div
-                    class="romantic-slideshow"
-                    id="romanticSlideshow"
-                    aria-label="A story of finding meaningful connection"
-                >
-                    <div class="romantic-slide active">
-                        <img
-                            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
-                            alt="A couple sharing a warm romantic moment"
-                            fetchpriority="high"
-                        >
-                        <div class="photo-glow"></div>
-                        <div class="slide-caption">
-                            <span class="caption-kicker">The feeling</span>
-                            <h2>Somewhere, your story is waiting.</h2>
-                            <p>You deserve a connection that feels genuine, thoughtful, and truly yours.</p>
-                        </div>
-                    </div>
-
-                    <div class="romantic-slide">
-                        <img
-                            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85"
-                            alt="A couple celebrating a meaningful moment together"
-                            loading="lazy"
-                        >
-                        <div class="photo-glow"></div>
-                        <div class="slide-caption">
-                            <span class="caption-kicker">The first step</span>
-                            <h2>One hello can open a new door.</h2>
-                            <p>A simple conversation can become the start of something wonderful.</p>
-                        </div>
-                    </div>
-
-                    <div class="romantic-slide">
-                        <img
-                            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
-                            alt="A couple laughing and enjoying time together"
-                            loading="lazy"
-                        >
-                        <div class="photo-glow"></div>
-                        <div class="slide-caption">
-                            <span class="caption-kicker">A connection that feels like you</span>
-                            <h2>Be seen for who you really are.</h2>
-                            <p>Discover people who share your interests, values, and dreams. Let something real grow naturally.</p>
-                        </div>
-                    </div>
-
-                    <div class="romantic-slide">
-                        <img
-                            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
-                            alt="A joyful romantic moment celebrating love"
-                            loading="lazy"
-                        >
-                        <div class="photo-glow"></div>
-                        <div class="slide-caption">
-                            <span class="caption-kicker">Your story starts here</span>
-                            <h2>Every great story begins with hello.</h2>
-                            <p>Someone you would love to know could be waiting on Kmeet.</p>
-                            <a class="slide-cta" href="discover.html">
-                                Discover Your Match
-                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Additional story slide.
-                         Replace this photo URL with the exact
-                         third preview image when its image file
-                         or direct URL is available. -->
-                    <div class="romantic-slide">
-                        <img
-                            src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1200&q=85"
-                            alt="People sharing a happy moment together"
-                            loading="lazy"
-                        >
-                        <div class="photo-glow"></div>
-                        <div class="slide-caption">
-                            <span class="caption-kicker">A beautiful beginning</span>
-                            <h2>Let your hearts find their way.</h2>
-                            <p>Every meaningful connection begins with a moment. Discover yours on Kmeet.</p>
-                            <a class="slide-cta" href="discover.html">
-                                Find Your Connection
-                                <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="slide-indicators" aria-hidden="true">
-                        <span class="slide-indicator active"></span>
-                        <span class="slide-indicator"></span>
-                        <span class="slide-indicator"></span>
-                        <span class="slide-indicator"></span>
-                        <span class="slide-indicator"></span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </header>
-
-    <!-- CONNECTION SECTION -->
-    <section class="section">
-        <div class="section-title">
-            <h2>Connection Made Simple</h2>
-            <p>
-                Kmeet makes it easier to discover people,
-                build genuine connections, and start
-                conversations that matter.
-            </p>
+      <div class="hero-copy">
+        <div class="eyebrow">
+          <i class="fa-solid fa-heart"></i>
+          YOUR NEXT CHAPTER STARTS HERE
         </div>
 
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <h3>Discover</h3>
-                <p>
-                    Explore people from different places
-                    and discover someone who shares your
-                    interests.
-                </p>
-            </div>
+        <h1>
+          KMEET YOUR
+          <span>HEART'S TRUE</span>
+          ECHO
+        </h1>
 
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-                <h3>Connect</h3>
-                <p>
-                    Find meaningful connections based on
-                    interests, personality and what makes
-                    you unique.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fa-solid fa-comments"></i>
-                </div>
-                <h3>Chat</h3>
-                <p>
-                    Start conversations and get to know
-                    someone beyond their profile.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CALL TO ACTION -->
-    <section class="cta" id="signup">
-        <h2>Ready to Meet Someone?</h2>
-        <p>
-            Your next meaningful connection could be
-            closer than you think.
+        <p class="hero-description">
+          Somewhere between a smile and a conversation, a beautiful
+          connection can begin. Meet people, share your story, and
+          discover the possibility of something meaningful.
         </p>
 
-        <a href="signup.html" class="cta-button">
-            Join Kmeet
-            <i class="fa-solid fa-heart"></i>
-        </a>
+        <div class="hero-actions">
+          <a class="button button-primary" href="discover.html">
+            Meet Someone
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+          <a class="button button-outline" href="#interested">
+            <i class="fa-regular fa-heart"></i>
+            Find Your Connection
+          </a>
+        </div>
+
+        <p class="hero-note">
+          <i class="fa-solid fa-sparkles"></i>
+          Every beautiful story begins with a hello.
+        </p>
+      </div>
+
+      <!-- Images emerge from a small circular opening -->
+      <div class="story-stage" id="storyStage" aria-label="Romantic Kmeet slideshow">
+
+        <div class="story-glow"></div>
+        <div class="story-spark" id="storySpark"></div>
+
+        <div class="story-image active" data-slide="0">
+          <img
+            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
+            alt="A couple sharing a tender romantic moment"
+            fetchpriority="high">
+        </div>
+
+        <!-- The former second photo with flowers has been removed. -->
+
+        <div class="story-image" data-slide="1">
+          <img
+            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
+            alt="A couple enjoying a loving moment together"
+            loading="lazy">
+        </div>
+
+        <div class="story-image" data-slide="2">
+          <img
+            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
+            alt="A romantic wedding celebration"
+            loading="lazy">
+        </div>
+
+        <div class="story-caption visible" id="storyCaption">
+          <div class="caption-kicker">A LITTLE MAGIC</div>
+          <h2 id="storyTitle">Where two hearts meet</h2>
+          <p id="storyDescription">
+            Sometimes, the beginning of everything is one beautiful moment.
+          </p>
+        </div>
+
+        <div class="story-controls">
+          <div class="story-progress" id="storyDots" aria-label="Choose slideshow image">
+            <button class="story-dot active" type="button" aria-label="Show image 1" data-dot="0"></button>
+            <button class="story-dot" type="button" aria-label="Show image 2" data-dot="1"></button>
+            <button class="story-dot" type="button" aria-label="Show image 3" data-dot="2"></button>
+          </div>
+
+          <span class="story-counter" id="storyCounter">01 / 03</span>
+        </div>
+
+      </div>
     </section>
 
-    <footer>
-        <p>© 2026 Kmeet. Find your connection.</p>
-    </footer>
+    <!-- SIGNUP -->
+    <section class="signup-strip" id="interested">
+      <h2>Your story could start today</h2>
+      <p>
+        Take the first step. Tell us where to reach you and continue
+        creating your Kmeet account.
+      </p>
 
-    <!-- FIREBASE AND HOMEPAGE LOGIC -->
-    <script type="module">
-        import {
-            auth,
-            db,
-            onAuthStateChanged,
-            signOut,
-            doc,
-            getDoc
-        } from "./firebase-config.js";
+      <form class="signup-form" id="homepageSignup">
+        <input
+          type="email"
+          id="signupEmail"
+          name="email"
+          placeholder="Enter your email address"
+          autocomplete="email"
+          required>
 
-        const guestState = document.getElementById("guestState");
-        const userState = document.getElementById("userState");
-        const homeUserAvatar = document.getElementById("homeUserAvatar");
-        const homeUserName = document.getElementById("homeUserName");
-        const homeUserEmail = document.getElementById("homeUserEmail");
-        const homeInterests = document.getElementById("homeInterests");
-        const logoutBtn = document.getElementById("logoutBtn");
-        const navProfileLink = document.getElementById("navProfileLink");
-        const signupForm = document.getElementById("signupForm");
-        const signupEmail = document.getElementById("signupEmail");
+        <button class="button button-primary" type="submit">
+          Get Started
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+    </section>
 
-        const DEFAULT_AVATAR =
-            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80";
+    <!-- SIGNED-IN ACCOUNT PREVIEW -->
+    <section class="account-status" id="accountStatus" aria-live="polite">
+      <img id="accountAvatar" src="kmeet-logo.jfif.jfif" alt="Your profile photo">
 
-        function safeText(value) {
-            if (value === null || value === undefined) return "";
-            return String(value).trim();
+      <div class="account-details">
+        <strong id="accountName">Welcome to Kmeet</strong>
+        <span id="accountMessage">Your next chapter awaits.</span>
+      </div>
+
+      <div class="account-actions">
+        <a id="profileLink" href="profile.html">My Profile</a>
+        <button id="logoutButton" type="button">Log Out</button>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="how-it-works">
+      <div class="section-heading">
+        <div class="eyebrow">
+          <i class="fa-solid fa-heart"></i>
+          CONNECTION MADE SIMPLE
+        </div>
+
+        <h2>More than a passing hello</h2>
+
+        <p>
+          Get to know people at your own pace. A good connection is
+          built through curiosity, honest conversation, and shared moments.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <div class="feature-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h3>Discover People</h3>
+          <p>
+            Explore profiles, learn about people's interests, and find
+            someone whose story makes you curious.
+          </p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">
+            <i class="fa-regular fa-comments"></i>
+          </div>
+          <h3>Start a Conversation</h3>
+          <p>
+            A simple hello can open the door to laughter, friendship,
+            and the possibility of a deeper connection.
+          </p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">
+            <i class="fa-solid fa-heart"></i>
+          </div>
+          <h3>Make It Meaningful</h3>
+          <p>
+            Share your interests and discover the little things that
+            make two people feel understood.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- FINAL CALL TO ACTION -->
+    <section class="final-cta">
+      <h2>Ready to meet someone?</h2>
+      <p>
+        Your next favourite conversation could be just one hello away.
+        Come discover who's waiting to meet you.
+      </p>
+
+      <a href="discover.html" class="button button-primary">
+        Explore Kmeet
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-brand">K<span>meet</span></div>
+    <p>Making room for meaningful connections.</p>
+    <p>&copy; <span id="currentYear"></span> Kmeet. All rights reserved.</p>
+  </footer>
+
+  <!-- HOMEPAGE SLIDESHOW -->
+  <script>
+    (() => {
+      const slides = Array.from(document.querySelectorAll(".story-image"));
+      const dots = Array.from(document.querySelectorAll(".story-dot"));
+      const title = document.getElementById("storyTitle");
+      const description = document.getElementById("storyDescription");
+      const caption = document.getElementById("storyCaption");
+      const counter = document.getElementById("storyCounter");
+      const spark = document.getElementById("storySpark");
+
+      if (!slides.length) return;
+
+      const stories = [
+        {
+          kicker: "A LITTLE MAGIC",
+          title: "Where two hearts meet",
+          description:
+            "Sometimes, the beginning of everything is one beautiful moment."
+        },
+        {
+          kicker: "THE JOY OF CONNECTION",
+          title: "A smile that says it all",
+          description:
+            "Discover the warmth of a conversation that feels natural and true."
+        },
+        {
+          kicker: "YOUR NEXT CHAPTER",
+          title: "Love is worth discovering",
+          description:
+            "Every great love story begins somewhere. Yours could begin here."
         }
+      ];
 
-        function normalizeInterests(interests) {
-            if (Array.isArray(interests)) {
-                return interests.map(safeText).filter(Boolean);
-            }
+      let current = 0;
+      let timer = null;
+      let isChanging = false;
 
-            if (typeof interests === "string") {
-                return interests.split(/[,|]/).map(item => item.trim()).filter(Boolean);
-            }
+      function showSlide(index) {
+        if (isChanging || index === current) return;
+        isChanging = true;
 
-            return [];
-        }
+        const previous = current;
+        current = (index + slides.length) % slides.length;
 
-        function renderInterests(interests) {
-            homeInterests.replaceChildren();
+        caption.classList.remove("visible");
 
-            const cleanInterests = normalizeInterests(interests);
+        slides[previous].classList.remove("active");
+        slides[previous].classList.add("leaving");
 
-            if (!cleanInterests.length) {
-                const tag = document.createElement("span");
-                tag.className = "interest-tag";
-                tag.textContent = "New to Kmeet";
-                homeInterests.appendChild(tag);
-                return;
-            }
+        slides[current].classList.remove("leaving");
+        slides[current].classList.remove("active");
 
-            cleanInterests.slice(0, 4).forEach(interest => {
-                const tag = document.createElement("span");
-                tag.className = "interest-tag";
-                tag.textContent = interest;
-                homeInterests.appendChild(tag);
-            });
-        }
+        /* Restart the aperture animation cleanly. */
+        void slides[current].offsetWidth;
 
-        function showGuest() {
-            guestState.style.display = "block";
-            userState.style.display = "none";
+        slides[current].classList.add("active");
 
-            navProfileLink.href = "login.html";
-            navProfileLink.textContent = "LOG IN";
-
-            homeUserAvatar.src = DEFAULT_AVATAR;
-            homeUserName.textContent = "Kmeet Member";
-            homeUserEmail.textContent = "";
-            homeInterests.replaceChildren();
-        }
-
-        async function showLoggedInUser(user) {
-            guestState.style.display = "none";
-            userState.style.display = "block";
-
-            navProfileLink.href = "profile.html";
-            navProfileLink.textContent = "MY PROFILE";
-
-            const authName = safeText(user.displayName);
-            const authEmail = safeText(user.email);
-            const emailName = authEmail ? authEmail.split("@")[0] : "";
-
-            let profileData = {};
-
-            try {
-                const userRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(userRef);
-
-                if (userSnap.exists()) {
-                    profileData = userSnap.data() || {};
-                }
-            } catch (error) {
-                console.error("Could not load Firestore profile:", error);
-            }
-
-            const profileName =
-                safeText(profileData.name) ||
-                safeText(profileData.username) ||
-                safeText(profileData.displayName) ||
-                authName ||
-                emailName ||
-                "Kmeet Member";
-
-            const profilePhoto =
-                safeText(profileData.photoURL) ||
-                safeText(profileData.profilePhoto) ||
-                safeText(profileData.photo) ||
-                safeText(profileData.avatar) ||
-                safeText(profileData.profileImage) ||
-                safeText(profileData.image) ||
-                safeText(user.photoURL) ||
-                DEFAULT_AVATAR;
-
-            let interests = normalizeInterests(profileData.interests);
-
-            if (!interests.length) {
-                try {
-                    interests = normalizeInterests(
-                        localStorage.getItem("userInterests")
-                    );
-                } catch (error) {
-                    console.warn("Could not read stored interests:", error);
-                }
-            }
-
-            homeUserName.textContent = profileName;
-            homeUserEmail.textContent = authEmail || "Kmeet Member";
-            homeUserAvatar.src = profilePhoto;
-
-            homeUserAvatar.onerror = function () {
-                this.onerror = null;
-                this.src = DEFAULT_AVATAR;
-            };
-
-            renderInterests(interests);
-        }
-
-        onAuthStateChanged(auth, async user => {
-            if (user && !user.isAnonymous) {
-                await showLoggedInUser(user);
-            } else {
-                showGuest();
-            }
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("active", dotIndex === current);
+          dot.setAttribute("aria-pressed", String(dotIndex === current));
         });
 
-        logoutBtn.addEventListener("click", async () => {
-            logoutBtn.disabled = true;
+        const story = stories[current];
 
-            try {
-                await signOut(auth);
+        counter.textContent =
+          String(current + 1).padStart(2, "0") +
+          " / " +
+          String(slides.length).padStart(2, "0");
 
-                localStorage.removeItem("userEmail");
-                localStorage.removeItem("userAvatar");
-                localStorage.removeItem("userInterests");
+        title.textContent = story.title;
+        description.textContent = story.description;
 
-                window.location.href = "index.html";
-            } catch (error) {
-                console.error("Logout error:", error);
-                alert("Unable to log out. Please try again.");
-                logoutBtn.disabled = false;
-            }
+        spark.classList.remove("play");
+        void spark.offsetWidth;
+        spark.classList.add("play");
+
+        window.setTimeout(() => {
+          caption.classList.add("visible");
+        }, 650);
+
+        window.setTimeout(() => {
+          slides[previous].classList.remove("leaving");
+          isChanging = false;
+        }, 2050);
+      }
+
+      function startTimer() {
+        if (timer) window.clearInterval(timer);
+
+        timer = window.setInterval(() => {
+          if (!document.hidden) {
+            showSlide((current + 1) % slides.length);
+          }
+        }, 2000);
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const index = Number(dot.dataset.dot);
+
+          if (index !== current && !isChanging) {
+            showSlide(index);
+            startTimer();
+          }
         });
+      });
 
-        signupForm.addEventListener("submit", event => {
-            event.preventDefault();
-
-            const email = signupEmail.value.trim();
-
-            if (!email) return;
-
-            try {
-                localStorage.setItem("userEmail", email);
-            } catch (error) {
-                console.warn("Could not save signup email:", error);
-            }
-
-            window.location.href = "interests.html";
-        });
-
-        document.querySelectorAll('a[href="#signup"]').forEach(link => {
-            link.addEventListener("click", () => {
-                window.setTimeout(() => {
-                    if (signupEmail) signupEmail.focus();
-                }, 350);
-            });
-        });
-
-        /* =====================================
-           ROMANTIC STORY SLIDESHOW
-           Five slides, automatically synchronized
-           indicators, captions and starbursts.
-        ===================================== */
-
-        const slideshow = document.getElementById("romanticSlideshow");
-
-        if (slideshow) {
-            const slides = Array.from(
-                slideshow.querySelectorAll(".romantic-slide")
-            );
-
-            const indicators = Array.from(
-                slideshow.querySelectorAll(".slide-indicator")
-            );
-
-            let activeSlide = 0;
-            let slideshowTimer = null;
-
-            function showRomanticSlide(index) {
-                activeSlide = (index + slides.length) % slides.length;
-
-                slides.forEach((slide, slideIndex) => {
-                    slide.classList.toggle(
-                        "active",
-                        slideIndex === activeSlide
-                    );
-                });
-
-                indicators.forEach((indicator, indicatorIndex) => {
-                    indicator.classList.toggle(
-                        "active",
-                        indicatorIndex === activeSlide
-                    );
-                });
-            }
-
-            function startSlideshow() {
-                if (slideshowTimer) {
-                    window.clearInterval(slideshowTimer);
-                }
-
-                if (slides.length > 1) {
-                    slideshowTimer = window.setInterval(() => {
-                        showRomanticSlide(activeSlide + 1);
-                    }, 4800);
-                }
-            }
-
-            showRomanticSlide(0);
-            startSlideshow();
-
-            document.addEventListener("visibilitychange", () => {
-                if (document.hidden) {
-                    if (slideshowTimer) {
-                        window.clearInterval(slideshowTimer);
-                        slideshowTimer = null;
-                    }
-                } else {
-                    startSlideshow();
-                }
-            });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          if (timer) window.clearInterval(timer);
+          timer = null;
+        } else {
+          startTimer();
         }
-    </script>
+      });
+
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+      startTimer();
+    })();
+  </script>
+
+  <!-- SIGNUP HANDOFF -->
+  <script>
+    document.getElementById("homepageSignup").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById("signupEmail").value.trim();
+
+      if (!email) return;
+
+      try {
+        localStorage.setItem("userEmail", email);
+      } catch (error) {
+        console.warn("Could not save signup email locally.", error);
+      }
+
+      window.location.href = "interests.html";
+    });
+  </script>
+
+  <!-- FIREBASE PROFILE / LOGIN STATE -->
+  <script type="module">
+    import {
+      auth,
+      db,
+      onAuthStateChanged,
+      signOut,
+      doc,
+      getDoc
+    } from "./firebase-config.js";
+
+    const navAccountLink = document.getElementById("navAccountLink");
+    const accountStatus = document.getElementById("accountStatus");
+    const accountAvatar = document.getElementById("accountAvatar");
+    const accountName = document.getElementById("accountName");
+    const accountMessage = document.getElementById("accountMessage");
+    const logoutButton = document.getElementById("logoutButton");
+
+    const DEFAULT_AVATAR = "kmeet-logo.jfif.jfif";
+
+    function firstText(...values) {
+      return values.find(value =>
+        typeof value === "string" && value.trim().length > 0
+      )?.trim() || "";
+    }
+
+    function showGuestState() {
+      navAccountLink.href = "login.html";
+      navAccountLink.textContent = "Log In";
+      accountStatus.classList.remove("visible");
+    }
+
+    async function loadAccount(user) {
+      if (!user || user.isAnonymous) {
+        showGuestState();
+        return;
+      }
+
+      let profile = {};
+
+      try {
+        const profileRef = doc(db, "users", user.uid);
+        const profileSnap = await getDoc(profileRef);
+
+        if (profileSnap.exists()) {
+          profile = profileSnap.data() || {};
+        }
+      } catch (error) {
+        console.error("Could not load Kmeet profile:", error);
+      }
+
+      const displayName = firstText(
+        profile.displayName,
+        profile.name,
+        profile.username,
+        user.displayName,
+        user.email?.split("@")[0],
+        "Kmeet Member"
+      );
+
+      const photo = firstText(
+        profile.photoURL,
+        profile.profilePhoto,
+        profile.photo,
+        profile.avatar,
+        profile.profileImage,
+        profile.image,
+        user.photoURL,
+        DEFAULT_AVATAR
+      );
+
+      navAccountLink.href = "profile.html";
+      navAccountLink.textContent = "My Profile";
+
+      accountName.textContent = "Welcome, " + displayName;
+      accountMessage.textContent = "Your Kmeet profile is ready.";
+      accountAvatar.src = photo;
+      accountAvatar.onerror = () => {
+        accountAvatar.onerror = null;
+        accountAvatar.src = DEFAULT_AVATAR;
+      };
+
+      accountStatus.classList.add("visible");
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      loadAccount(user);
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+
+      try {
+        await signOut(auth);
+
+        try {
+          localStorage.removeItem("userEmail");
+          localStorage.removeItem("userAvatar");
+          localStorage.removeItem("userInterests");
+        } catch (error) {
+          console.warn("Could not clear local profile cache.", error);
+        }
+
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error("Kmeet logout failed:", error);
+        alert("We could not log you out. Please try again.");
+        logoutButton.disabled = false;
+      }
+    });
+  </script>
+
 </body>
 </html>
-```
