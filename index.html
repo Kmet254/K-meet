@@ -4,20 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#100711">
-
   <title>Kmeet - Find Your Connection</title>
 
-  <link rel="icon" type="image/jpeg"
-        href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
-
+  <link rel="icon" type="image/jpeg" href="https://kmet254.github.io/K-meet/kmeet-logo.jfif.jfif">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
     :root {
@@ -29,9 +22,7 @@
       --muted: #d3bdcd;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
@@ -58,17 +49,10 @@
         linear-gradient(130deg, rgba(13, 5, 16, .91), rgba(22, 6, 20, .84));
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
 
-    button, input {
-      font: inherit;
-    }
-
-    /* NAVIGATION */
-
+    /* STICKY NAVIGATION */
     .header {
       position: sticky;
       top: 0;
@@ -110,10 +94,7 @@
       font-weight: 700;
     }
 
-    .brand-name span,
-    .footer-brand span {
-      color: var(--pink);
-    }
+    .brand-name span, .footer-brand span { color: var(--pink); }
 
     .nav-links {
       display: flex;
@@ -127,9 +108,7 @@
       transition: color .2s ease;
     }
 
-    .nav-links a:hover {
-      color: var(--pink-light);
-    }
+    .nav-links a:hover { color: var(--pink-light); }
 
     .nav-links .nav-cta {
       padding: 11px 19px;
@@ -139,7 +118,6 @@
     }
 
     /* HERO */
-
     .hero {
       width: min(1240px, 92%);
       min-height: 660px;
@@ -179,10 +157,7 @@
       letter-spacing: -.8px;
     }
 
-    .hero h1 span {
-      display: block;
-      color: var(--pink);
-    }
+    .hero h1 span { display: block; color: var(--pink); }
 
     .hero-description {
       max-width: 440px;
@@ -192,11 +167,7 @@
       line-height: 1.95;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
     .button {
       min-height: 46px;
@@ -213,9 +184,7 @@
       transition: transform .25s ease, box-shadow .25s ease;
     }
 
-    .button:hover {
-      transform: translateY(-2px);
-    }
+    .button:hover { transform: translateY(-2px); }
 
     .button-primary {
       color: #fff;
@@ -229,19 +198,10 @@
       background: rgba(255, 255, 255, .035);
     }
 
-    .hero-note {
-      margin-top: 23px;
-      color: #bba8b8;
-      font-size: 11px;
-    }
+    .hero-note { margin-top: 23px; color: #bba8b8; font-size: 11px; }
+    .hero-note i { color: var(--pink); margin-right: 7px; }
 
-    .hero-note i {
-      color: var(--pink);
-      margin-right: 7px;
-    }
-
-    /* CARD-FREE IMAGE STAGE */
-
+    /* CARD-FREE, BACKGROUND-BLENDED STORY SLIDESHOW */
     .story-stage {
       position: relative;
       isolation: isolate;
@@ -257,11 +217,10 @@
       inset: 0 0 64px;
       opacity: 0;
       pointer-events: none;
-      transform: scale(0.1);
-      will-change: transform, opacity;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      transform: scale(.04) translate(18%, 15%);
+      filter: blur(12px) brightness(1.8);
+      transform-origin: center;
+      will-change: transform, opacity, filter;
     }
 
     .story-image img {
@@ -270,51 +229,55 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      border-radius: 0;
+      box-shadow: none;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 82%, transparent 100%);
     }
 
-    /* PURE IMAGE SHOOT & SCALE TRANSITION */
     .story-image.active {
       z-index: 2;
-      animation: imageShootIn 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: shootingStarIn 5.5s cubic-bezier(.16, 1, .3, 1) forwards;
     }
 
     .story-image.leaving {
       z-index: 1;
-      animation: imageShootOut 1.2s ease-out forwards;
+      animation: shootingStarOut .65s ease-in forwards;
     }
 
-    @keyframes imageShootIn {
+    @keyframes shootingStarIn {
       0% {
         opacity: 0;
-        transform: scale(0.1) translateY(80px);
-        filter: blur(12px);
+        transform: scale(.04) translate(18%, 15%);
+        filter: blur(12px) brightness(1.8);
       }
-      20% {
+      12% {
         opacity: 1;
-        filter: blur(0px);
+        filter: blur(2px) brightness(1.25);
       }
-      80% {
+      28% {
+        transform: scale(.55) translate(2%, 1%);
+        filter: blur(0) brightness(1.05);
+      }
+      65% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translate(0, 0);
+        filter: blur(0) brightness(1);
+      }
+      88% {
+        opacity: 1;
+        transform: scale(1.035);
       }
       100% {
         opacity: 0;
-        transform: scale(1.08) translateY(-20px);
-        filter: blur(4px);
+        transform: scale(1.08) translateY(-1%);
+        filter: blur(3px) brightness(1);
       }
     }
 
-    @keyframes imageShootOut {
-      0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.1) translateY(-30px);
-        filter: blur(8px);
-      }
+    @keyframes shootingStarOut {
+      from { opacity: 1; transform: scale(1); filter: blur(0); }
+      to { opacity: 0; transform: scale(.96); filter: blur(5px); }
     }
 
     .story-caption {
@@ -325,15 +288,12 @@
       bottom: 78px;
       opacity: 0;
       transform: translateY(15px);
-      transition: opacity 1.1s ease, transform 1.1s ease;
+      transition: opacity .65s ease, transform .65s ease;
       pointer-events: none;
-      text-shadow: 0 2px 20px rgba(16, 7, 17, .95);
+      text-shadow: 0 2px 20px rgba(16, 7, 17, .98);
     }
 
-    .story-caption.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .story-caption.visible { opacity: 1; transform: translateY(0); }
 
     .caption-kicker {
       margin-bottom: 8px;
@@ -371,11 +331,7 @@
       justify-content: space-between;
     }
 
-    .story-progress {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .story-progress { display: flex; align-items: center; gap: 8px; }
 
     .story-dot {
       width: 7px;
@@ -394,14 +350,9 @@
       background: var(--pink);
     }
 
-    .story-counter {
-      color: #e5d0de;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
+    .story-counter { color: #e5d0de; font-size: 11px; letter-spacing: 1px; }
 
     /* EMAIL SIGNUP */
-
     .signup-strip {
       width: min(720px, 92%);
       margin: 0 auto 70px;
@@ -426,12 +377,7 @@
       line-height: 1.8;
     }
 
-    .signup-form {
-      display: flex;
-      max-width: 490px;
-      margin: auto;
-      gap: 10px;
-    }
+    .signup-form { display: flex; max-width: 490px; margin: auto; gap: 10px; }
 
     .signup-form input {
       min-width: 0;
@@ -445,31 +391,18 @@
       font-size: 12px;
     }
 
-    .signup-form input:focus {
-      border-color: var(--pink);
-    }
-
-    .signup-form input::placeholder {
-      color: #bba8b8;
-    }
+    .signup-form input:focus { border-color: var(--pink); }
+    .signup-form input::placeholder { color: #bba8b8; }
 
     /* CONNECTION FEATURES */
-
     .section {
       width: min(1120px, 92%);
       margin: auto;
       padding: 35px 0 80px;
     }
 
-    .section-heading {
-      max-width: 620px;
-      margin: 0 auto 38px;
-      text-align: center;
-    }
-
-    .section-heading .eyebrow {
-      margin-bottom: 12px;
-    }
+    .section-heading { max-width: 620px; margin: 0 auto 38px; text-align: center; }
+    .section-heading .eyebrow { margin-bottom: 12px; }
 
     .section-heading h2 {
       margin: 0 0 14px;
@@ -478,12 +411,7 @@
       line-height: 1.2;
     }
 
-    .section-heading p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.9;
-    }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
     .feature-grid {
       display: grid;
@@ -499,10 +427,7 @@
       transition: transform .25s ease, border-color .25s ease;
     }
 
-    .feature:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 107, 154, .4);
-    }
+    .feature:hover { transform: translateY(-4px); border-color: rgba(255, 107, 154, .4); }
 
     .feature-icon {
       width: 43px;
@@ -515,18 +440,8 @@
       background: rgba(255, 107, 154, .12);
     }
 
-    .feature h3 {
-      margin: 0 0 10px;
-      font-family: "Playfair Display", serif;
-      font-size: 21px;
-    }
-
-    .feature p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-    }
+    .feature h3 { margin: 0 0 10px; font-family: "Playfair Display", serif; font-size: 21px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
 
     .final-cta {
       width: min(1050px, 92%);
@@ -560,15 +475,9 @@
       font-size: 11px;
     }
 
-    .footer-brand {
-      margin-bottom: 8px;
-      font-family: "Playfair Display", serif;
-      color: #fff;
-      font-size: 22px;
-    }
+    .footer-brand { margin-bottom: 8px; font-family: "Playfair Display", serif; color: #fff; font-size: 22px; }
 
     /* ACCOUNT STATUS */
-
     .account-status {
       display: none;
       width: min(500px, 92%);
@@ -581,9 +490,7 @@
       background: rgba(255, 255, 255, .055);
     }
 
-    .account-status.visible {
-      display: flex;
-    }
+    .account-status.visible { display: flex; }
 
     .account-status img {
       width: 54px;
@@ -594,30 +501,13 @@
       border: 2px solid var(--pink);
     }
 
-    .account-details {
-      flex: 1;
-      min-width: 0;
-    }
+    .account-details { flex: 1; min-width: 0; }
+    .account-details strong { display: block; overflow-wrap: anywhere; font-size: 13px; }
+    .account-details span { color: var(--muted); font-size: 11px; }
 
-    .account-details strong {
-      display: block;
-      overflow-wrap: anywhere;
-      font-size: 13px;
-    }
+    .account-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 
-    .account-details span {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .account-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .account-actions a,
-    .account-actions button {
+    .account-actions a, .account-actions button {
       padding: 8px 11px;
       border: 1px solid rgba(255, 255, 255, .15);
       border-radius: 18px;
@@ -628,56 +518,20 @@
     }
 
     @media (max-width: 900px) {
-      .hero {
-        min-height: 600px;
-        grid-template-columns: .9fr 1.1fr;
-        gap: 8px;
-      }
-
-      .story-stage {
-        height: 475px;
-      }
-
-      .hero h1 {
-        font-size: clamp(39px, 5.5vw, 57px);
-      }
-
-      .nav-links {
-        gap: 17px;
-      }
+      .hero { min-height: 600px; grid-template-columns: .9fr 1.1fr; gap: 8px; }
+      .story-stage { height: 475px; }
+      .hero h1 { font-size: clamp(39px, 5.5vw, 57px); }
+      .nav-links { gap: 17px; }
     }
 
     @media (max-width: 680px) {
-      html {
-        scroll-padding-top: 72px;
-      }
-
-      .nav {
-        width: 94%;
-        min-height: 67px;
-        gap: 10px;
-      }
-
-      .brand img {
-        width: 36px;
-        height: 36px;
-      }
-
-      .brand-name {
-        font-size: 23px;
-      }
-
-      .nav-links {
-        gap: 12px;
-      }
-
-      .nav-links a {
-        font-size: 11px;
-      }
-
-      .nav-links .nav-cta {
-        padding: 9px 12px;
-      }
+      html { scroll-padding-top: 72px; }
+      .nav { width: 94%; min-height: 67px; gap: 10px; }
+      .brand img { width: 36px; height: 36px; }
+      .brand-name { font-size: 23px; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 11px; }
+      .nav-links .nav-cta { padding: 9px 12px; }
 
       .hero {
         width: 90%;
@@ -688,22 +542,10 @@
         padding: 40px 0 35px;
       }
 
-      .hero-copy {
-        padding: 0;
-      }
-
-      .hero h1 {
-        font-size: clamp(43px, 10vw, 61px);
-      }
-
-      .hero-description {
-        margin: 18px 0 22px;
-        font-size: 13px;
-      }
-
-      .hero-note {
-        margin-top: 17px;
-      }
+      .hero-copy { padding: 0; }
+      .hero h1 { font-size: clamp(43px, 10vw, 61px); }
+      .hero-description { margin: 18px 0 22px; font-size: 13px; }
+      .hero-note { margin-top: 17px; }
 
       .story-stage {
         height: min(115vw, 470px);
@@ -711,89 +553,31 @@
         margin-top: 10px;
       }
 
-      .story-caption {
-        bottom: 77px;
-        left: 5%;
-        right: 5%;
-      }
+      .story-caption { bottom: 77px; left: 5%; right: 5%; }
+      .story-caption h2 { font-size: 27px; }
+      .story-controls { bottom: 14px; }
 
-      .story-caption h2 {
-        font-size: 27px;
-      }
-
-      .story-controls {
-        bottom: 14px;
-      }
-
-      .signup-strip {
-        padding: 22px 17px;
-        margin-bottom: 50px;
-      }
-
-      .signup-form {
-        flex-direction: column;
-      }
-
-      .signup-form .button {
-        width: 100%;
-      }
-
-      .section {
-        padding: 25px 0 60px;
-      }
-
-      .feature-grid {
-        grid-template-columns: 1fr;
-        gap: 13px;
-      }
-
-      .feature {
-        padding: 22px;
-      }
-
-      .final-cta {
-        margin-bottom: 55px;
-        padding: 35px 10px;
-      }
-
-      .account-status {
-        flex-wrap: wrap;
-      }
-
-      .account-actions {
-        width: 100%;
-        padding-left: 67px;
-      }
+      .signup-strip { padding: 22px 17px; margin-bottom: 50px; }
+      .signup-form { flex-direction: column; }
+      .signup-form .button { width: 100%; }
+      .section { padding: 25px 0 60px; }
+      .feature-grid { grid-template-columns: 1fr; gap: 13px; }
+      .feature { padding: 22px; }
+      .final-cta { margin-bottom: 55px; padding: 35px 10px; }
+      .account-status { flex-wrap: wrap; }
+      .account-actions { width: 100%; padding-left: 67px; }
     }
 
     @media (max-width: 390px) {
-      .nav-links {
-        gap: 9px;
-      }
-
-      .nav-links a {
-        font-size: 10px;
-      }
-
-      .brand-name {
-        font-size: 21px;
-      }
-
-      .brand img {
-        width: 32px;
-        height: 32px;
-      }
-
-      .hero-actions .button {
-        padding: 11px 15px;
-        font-size: 12px;
-      }
+      .nav-links { gap: 9px; }
+      .nav-links a { font-size: 10px; }
+      .brand-name { font-size: 21px; }
+      .brand img { width: 32px; height: 32px; }
+      .hero-actions .button { padding: 11px 15px; font-size: 12px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         scroll-behavior: auto !important;
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
@@ -804,14 +588,12 @@
 </head>
 
 <body>
-
   <header class="header">
     <nav class="nav">
       <a class="brand" href="index.html" aria-label="Kmeet home">
         <img src="kmeet-logo.jfif.jfif" alt="Kmeet logo">
         <span class="brand-name">K<span>meet</span></span>
       </a>
-
       <div class="nav-links">
         <a href="#interested">Interested</a>
         <a href="discover.html">Discover</a>
@@ -821,124 +603,69 @@
   </header>
 
   <main>
-
     <section class="hero">
-
       <div class="hero-copy">
-        <div class="eyebrow">
-          <i class="fa-solid fa-heart"></i>
-          YOUR NEXT CHAPTER STARTS HERE
-        </div>
-
-        <h1>
-          KMEET YOUR
-          <span>HEART'S TRUE</span>
-          ECHO
-        </h1>
-
+        <div class="eyebrow"><i class="fa-solid fa-heart"></i> YOUR NEXT CHAPTER STARTS HERE</div>
+        <h1>KMEET YOUR <span>HEART'S TRUE</span> ECHO</h1>
         <p class="hero-description">
           Somewhere between a smile and a conversation, a beautiful
           connection can begin. Meet people, share your story, and
           discover the possibility of something meaningful.
         </p>
-
         <div class="hero-actions">
-          <a class="button button-primary" href="discover.html">
-            Meet Someone
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-
-          <a class="button button-outline" href="#interested">
-            <i class="fa-regular fa-heart"></i>
-            Find Your Connection
-          </a>
+          <a class="button button-primary" href="discover.html">Meet Someone <i class="fa-solid fa-arrow-right"></i></a>
+          <a class="button button-outline" href="#interested"><i class="fa-regular fa-heart"></i> Find Your Connection</a>
         </div>
-
-        <p class="hero-note">
-          <i class="fa-solid fa-sparkles"></i>
-          Every beautiful story begins with a hello.
-        </p>
+        <p class="hero-note"><i class="fa-solid fa-sparkles"></i> Every beautiful story begins with a hello.</p>
       </div>
 
-      <!-- CARD-FREE SHOOTING IMAGE STAGE -->
+      <!-- Three existing romantic photos; the chair-with-flowers photo is intentionally excluded. -->
       <div class="story-stage" id="storyStage">
-
         <div class="story-image active" data-slide="0">
-          <img
-            src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
-            alt="A couple sharing a tender romantic moment"
-            fetchpriority="high">
+          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
+               alt="A couple sharing a tender romantic moment" fetchpriority="high">
         </div>
-
         <div class="story-image" data-slide="1">
-          <img
-            src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
-            alt="A couple enjoying a loving moment"
-            loading="lazy">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85"
+               alt="A couple enjoying a loving moment" loading="lazy">
         </div>
-
         <div class="story-image" data-slide="2">
-          <img
-            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
-            alt="A romantic wedding celebration"
-            loading="lazy">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
+               alt="A romantic wedding celebration" loading="lazy">
         </div>
 
         <div class="story-caption visible" id="storyCaption">
           <div class="caption-kicker" id="storyKicker">A LITTLE MAGIC</div>
           <h2 id="storyTitle">Where two hearts meet</h2>
-          <p id="storyDescription">
-            Sometimes, the beginning of everything is one beautiful moment.
-          </p>
+          <p id="storyDescription">Sometimes, the beginning of everything is one beautiful moment.</p>
         </div>
 
         <div class="story-controls">
           <div class="story-progress" id="storyDots">
-            <button class="story-dot active" type="button"
-                    aria-label="Show image 1" data-dot="0"></button>
-            <button class="story-dot" type="button"
-                    aria-label="Show image 2" data-dot="1"></button>
-            <button class="story-dot" type="button"
-                    aria-label="Show image 3" data-dot="2"></button>
+            <button class="story-dot active" type="button" aria-label="Show image 1" aria-pressed="true" data-dot="0"></button>
+            <button class="story-dot" type="button" aria-label="Show image 2" aria-pressed="false" data-dot="1"></button>
+            <button class="story-dot" type="button" aria-label="Show image 3" aria-pressed="false" data-dot="2"></button>
           </div>
-
           <span class="story-counter" id="storyCounter">01 / 03</span>
         </div>
-
       </div>
     </section>
 
     <section class="signup-strip" id="interested">
       <h2>Your story could start today</h2>
-      <p>
-        Take the first step. Tell us where to reach you and continue
-        creating your Kmeet account.
-      </p>
-
+      <p>Take the first step. Tell us where to reach you and continue creating your Kmeet account.</p>
       <form class="signup-form" id="homepageSignup">
-        <input
-          type="email"
-          id="signupEmail"
-          name="email"
-          placeholder="Enter your email address"
-          autocomplete="email"
-          required>
-
-        <button class="button button-primary" type="submit">
-          Get Started
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
+        <input type="email" id="signupEmail" name="email" placeholder="Enter your email address" autocomplete="email" required>
+        <button class="button button-primary" type="submit">Get Started <i class="fa-solid fa-arrow-right"></i></button>
       </form>
     </section>
 
     <section class="account-status" id="accountStatus" aria-live="polite">
       <img id="accountAvatar" src="kmeet-logo.jfif.jfif" alt="Your profile photo">
-
       <div class="account-details">
         <strong id="accountName">Welcome to Kmeet</strong>
         <span id="accountMessage">Your next chapter awaits.</span>
       </div>
-
       <div class="account-actions">
         <a id="profileLink" href="profile.html">My Profile</a>
         <button id="logoutButton" type="button">Log Out</button>
@@ -947,62 +674,34 @@
 
     <section class="section" id="how-it-works">
       <div class="section-heading">
-        <div class="eyebrow">
-          <i class="fa-solid fa-heart"></i>
-          CONNECTION MADE SIMPLE
-        </div>
-
+        <div class="eyebrow"><i class="fa-solid fa-heart"></i> CONNECTION MADE SIMPLE</div>
         <h2>More than a passing hello</h2>
-
-        <p>
-          Get to know people at your own pace. A good connection is
-          built through curiosity, honest conversation, and shared moments.
-        </p>
+        <p>Get to know people at your own pace. A good connection is built through curiosity, honest conversation, and shared moments.</p>
       </div>
-
       <div class="feature-grid">
         <article class="feature">
           <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
           <h3>Discover People</h3>
-          <p>
-            Explore profiles, learn about people's interests, and find
-            someone whose story makes you curious.
-          </p>
+          <p>Explore profiles, learn about people's interests, and find someone whose story makes you curious.</p>
         </article>
-
         <article class="feature">
           <div class="feature-icon"><i class="fa-regular fa-comments"></i></div>
           <h3>Start a Conversation</h3>
-          <p>
-            A simple hello can open the door to laughter, friendship,
-            and the possibility of a deeper connection.
-          </p>
+          <p>A simple hello can open the door to laughter, friendship, and the possibility of a deeper connection.</p>
         </article>
-
         <article class="feature">
           <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
           <h3>Make It Meaningful</h3>
-          <p>
-            Share your interests and discover the little things that
-            make two people feel understood.
-          </p>
+          <p>Share your interests and discover the little things that make two people feel understood.</p>
         </article>
       </div>
     </section>
 
     <section class="final-cta">
       <h2>Ready to meet someone?</h2>
-      <p>
-        Your next favourite conversation could be just one hello away.
-        Come discover who's waiting to meet you.
-      </p>
-
-      <a href="discover.html" class="button button-primary">
-        Explore Kmeet
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
+      <p>Your next favourite conversation could be just one hello away. Come discover who's waiting to meet you.</p>
+      <a href="discover.html" class="button button-primary">Explore Kmeet <i class="fa-solid fa-arrow-right"></i></a>
     </section>
-
   </main>
 
   <footer>
@@ -1015,7 +714,6 @@
     (() => {
       const slides = [...document.querySelectorAll(".story-image")];
       const dots = [...document.querySelectorAll(".story-dot")];
-
       const kicker = document.getElementById("storyKicker");
       const title = document.getElementById("storyTitle");
       const description = document.getElementById("storyDescription");
@@ -1028,43 +726,41 @@
         {
           kicker: "A LITTLE MAGIC",
           title: "Where two hearts meet",
-          description:
-            "Sometimes, the beginning of everything is one beautiful moment."
+          description: "Sometimes, the beginning of everything is one beautiful moment."
         },
         {
           kicker: "THE JOY OF CONNECTION",
           title: "A smile that says it all",
-          description:
-            "Discover the warmth of a conversation that feels natural and true."
+          description: "Discover the warmth of a conversation that feels natural and true."
         },
         {
           kicker: "YOUR NEXT CHAPTER",
           title: "Love is worth discovering",
-          description:
-            "Every great love story begins somewhere. Yours could begin here."
+          description: "Every great love story begins somewhere. Yours could begin here."
         }
       ];
 
       let current = 0;
       let timer = null;
       let changing = false;
+      let captionTimer = null;
+      let cleanupTimer = null;
 
       function showSlide(nextIndex) {
         if (changing || nextIndex === current) return;
-
         changing = true;
+
+        window.clearTimeout(captionTimer);
+        window.clearTimeout(cleanupTimer);
 
         const previous = current;
         current = (nextIndex + slides.length) % slides.length;
 
         caption.classList.remove("visible");
-
         slides[previous].classList.remove("active");
         slides[previous].classList.add("leaving");
 
-        slides[current].classList.remove("leaving");
-        slides[current].classList.remove("active");
-
+        slides[current].classList.remove("leaving", "active");
         void slides[current].offsetWidth;
         slides[current].classList.add("active");
 
@@ -1073,41 +769,32 @@
           dot.setAttribute("aria-pressed", String(index === current));
         });
 
-        const story = stories[current];
-
+        const story = stories[current % stories.length];
         kicker.textContent = story.kicker;
         title.textContent = story.title;
         description.textContent = story.description;
-
         counter.textContent =
-          String(current + 1).padStart(2, "0") +
-          " / " +
+          String(current + 1).padStart(2, "0") + " / " +
           String(slides.length).padStart(2, "0");
 
-        window.setTimeout(() => {
-          caption.classList.add("visible");
-        }, 850);
+        captionTimer = window.setTimeout(() => caption.classList.add("visible"), 500);
 
-        window.setTimeout(() => {
+        cleanupTimer = window.setTimeout(() => {
           slides[previous].classList.remove("leaving");
           changing = false;
-        }, 1200);
+        }, 700);
       }
 
       function startTimer() {
-        if (timer) clearInterval(timer);
-
-        timer = setInterval(() => {
-          if (!document.hidden) {
-            showSlide((current + 1) % slides.length);
-          }
-        }, 5500);
+        if (timer) window.clearInterval(timer);
+        timer = window.setInterval(() => {
+          if (!document.hidden && !changing) showSlide((current + 1) % slides.length);
+        }, 5600);
       }
 
-      dots.forEach((dot) => {
+      dots.forEach(dot => {
         dot.addEventListener("click", () => {
           const index = Number(dot.dataset.dot);
-
           if (index !== current && !changing) {
             showSlide(index);
             startTimer();
@@ -1117,24 +804,21 @@
 
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
-          clearInterval(timer);
+          window.clearInterval(timer);
           timer = null;
         } else {
           startTimer();
         }
       });
 
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
-
+      document.getElementById("currentYear").textContent = new Date().getFullYear();
       startTimer();
     })();
   </script>
 
   <script>
-    document.getElementById("homepageSignup").addEventListener("submit", (event) => {
+    document.getElementById("homepageSignup").addEventListener("submit", event => {
       event.preventDefault();
-
       const email = document.getElementById("signupEmail").value.trim();
       if (!email) return;
 
@@ -1164,13 +848,10 @@
     const accountName = document.getElementById("accountName");
     const accountMessage = document.getElementById("accountMessage");
     const logoutButton = document.getElementById("logoutButton");
-
     const DEFAULT_AVATAR = "kmeet-logo.jfif.jfif";
 
     function firstText(...values) {
-      return values.find(value =>
-        typeof value === "string" && value.trim()
-      )?.trim() || "";
+      return values.find(value => typeof value === "string" && value.trim())?.trim() || "";
     }
 
     function showGuestState() {
@@ -1186,7 +867,6 @@
       }
 
       let profile = {};
-
       try {
         const snapshot = await getDoc(doc(db, "users", user.uid));
         if (snapshot.exists()) profile = snapshot.data() || {};
@@ -1195,37 +875,25 @@
       }
 
       const name = firstText(
-        profile.displayName,
-        profile.name,
-        profile.username,
-        user.displayName,
-        user.email?.split("@")[0],
-        "Kmeet Member"
+        profile.displayName, profile.name, profile.username,
+        user.displayName, user.email?.split("@")[0], "Kmeet Member"
       );
 
       const photo = firstText(
-        profile.photoURL,
-        profile.profilePhoto,
-        profile.photo,
-        profile.avatar,
-        profile.profileImage,
-        profile.image,
-        user.photoURL,
-        DEFAULT_AVATAR
+        profile.photoURL, profile.profilePhoto, profile.photo,
+        profile.avatar, profile.profileImage, profile.image,
+        user.photoURL, DEFAULT_AVATAR
       );
 
       navAccountLink.href = "profile.html";
       navAccountLink.textContent = "My Profile";
-
       accountName.textContent = "Welcome, " + name;
       accountMessage.textContent = "Your Kmeet profile is ready.";
       accountAvatar.src = photo;
-
       accountAvatar.onerror = () => {
         accountAvatar.onerror = null;
         accountAvatar.src = DEFAULT_AVATAR;
       };
-
       accountStatus.classList.add("visible");
     }
 
@@ -1233,10 +901,8 @@
 
     logoutButton.addEventListener("click", async () => {
       logoutButton.disabled = true;
-
       try {
         await signOut(auth);
-
         try {
           localStorage.removeItem("userEmail");
           localStorage.removeItem("userAvatar");
@@ -1244,7 +910,6 @@
         } catch (error) {
           console.warn("Could not clear local session data.", error);
         }
-
         window.location.reload();
       } catch (error) {
         console.error("Error signing out:", error);
@@ -1252,6 +917,5 @@
       }
     });
   </script>
-
 </body>
 </html>
