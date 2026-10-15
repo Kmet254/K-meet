@@ -25,14 +25,28 @@ a{text-decoration:none;color:inherit}
 .page-head{text-align:center;padding:38px 20px 25px}.page-head h1{font-family:'Playfair Display',serif;font-size:38px;margin:0 0 8px}.page-head p{margin:0;color:#c8b7c4;font-size:14px}.member-count{display:inline-flex;margin-top:15px;padding:7px 14px;border-radius:30px;background:rgba(255,79,145,.10);border:1px solid rgba(255,79,145,.18);font-size:12px;color:#f5d9e7}
 .discover-grid{width:min(1400px,calc(100% - 50px));margin:0 auto 45px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
 .profile-card{overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:0 14px 38px rgba(0,0,0,.28);backdrop-filter:blur(12px);transition:transform .22s,box-shadow .22s}.profile-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(0,0,0,.38)}
-.photo-wrap{height:310px;position:relative;overflow:hidden;background:#21131f}.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}.photo-overlay{position:absolute;inset:auto 0 0;padding:38px 15px 13px;background:linear-gradient(transparent,rgba(0,0,0,.84))}.name-line{display:flex;align-items:center;gap:8px}.name-line h3{margin:0;font-size:18px;font-weight:600}.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.35)}.status-online{background:#41e68c;box-shadow:0 0 9px rgba(65,230,140,.55)}.status-offline{background:#817681}.location{font-size:11px;color:#dfd1db;margin-top:3px}.profile-content{padding:15px}.profile-description{font-size:12px;line-height:1.6;color:#cbbbc7;min-height:58px;margin-bottom:10px}.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#e4d6e0}
-.profile-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:14px}
-.profile-actions button,.profile-actions a{min-width:0;padding:10px 5px;font-size:10px}
-.view-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15)!important;color:#fff}
-.view-btn:hover{background:rgba(255,79,145,.18);border-color:rgba(255,79,145,.45)!important}.profile-actions button,.profile-actions a{border:0;border-radius:12px;padding:10px 7px;font-family:Poppins,sans-serif;font-size:11px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}.like-btn{background:rgba(255,79,145,.12);border:1px solid rgba(255,79,145,.3)!important;color:#ff9ac0}.like-btn:hover,.like-btn.liked{background:#ff4f91;color:#fff}.chat-btn{background:linear-gradient(135deg,#ff4f91,#d93679);color:#fff}.chat-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.profile-actions button:disabled{opacity:.55;cursor:not-allowed}.activity-bar{margin:0 auto 45px;width:min(1400px,calc(100% - 50px));padding:15px 18px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:15px}.activity-copy{font-size:12px;color:#cdbec9}.activity-copy strong{display:block;color:#fff;margin-bottom:3px}.likes-link{font-size:12px;color:#ff88b4;white-space:nowrap}.loading-state,.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:#bfaebc}
+.photo-wrap{height:310px;position:relative;overflow:hidden;background:#21131f}.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}.photo-overlay{position:absolute;inset:auto 0 0;padding:38px 15px 13px;background:linear-gradient(transparent,rgba(0,0,0,.84))}.name-line{display:flex;align-items:center;gap:8px}.name-line h3{margin:0;font-size:18px;font-weight:600}.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.35)}.status-online{background:#41e68c;box-shadow:0 0 9px rgba(65,230,140,.55)}.status-offline{background:#817681}.location{font-size:11px;color:#dfd1db;margin-top:3px}.profile-content{padding:15px}.profile-description{font-size:12px;line-height:1.6;color:#cbbbc7;min-height:58px;margin-bottom:10px}.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#e4d6e0}.profile-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.profile-actions button,.profile-actions a{border:0;border-radius:12px;padding:10px 7px;font-family:Poppins,sans-serif;font-size:11px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}.like-btn{background:rgba(255,79,145,.12);border:1px solid rgba(255,79,145,.3)!important;color:#ff9ac0}.like-btn:hover,.like-btn.liked{background:#ff4f91;color:#fff}.chat-btn{background:linear-gradient(135deg,#ff4f91,#d93679);color:#fff}.chat-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.profile-actions button:disabled{opacity:.55;cursor:not-allowed}.activity-bar{margin:0 auto 45px;width:min(1400px,calc(100% - 50px));padding:15px 18px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:15px}.activity-copy{font-size:12px;color:#cdbec9}.activity-copy strong{display:block;color:#fff;margin-bottom:3px}.likes-link{font-size:12px;color:#ff88b4;white-space:nowrap}.loading-state,.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:#bfaebc}
 @media(max-width:1100px){.discover-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:720px){.navbar{padding:0 18px;gap:15px}.nav-link:not(:last-of-type){display:none}.messages-panel{right:-65px}.page-head{padding-top:30px}.page-head h1{font-size:31px}.discover-grid{width:calc(100% - 28px);grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.photo-wrap{height:300px}.activity-bar{width:calc(100% - 28px);align-items:flex-start;flex-direction:column}.likes-link{align-self:flex-end}}
 @media(max-width:430px){.discover-grid{grid-template-columns:1fr}.photo-wrap{height:330px}.navbar{min-height:70px}.page-head h1{font-size:28px}}
+
+.gallery-count{position:absolute;right:12px;top:12px;z-index:5;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;background:rgba(20,8,18,.78);color:#fff;font:600 11px Poppins,sans-serif;backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 5px 20px #0005}
+.gallery-count:hover{background:rgba(255,79,145,.92);transform:translateY(-1px)}
+.photo-wrap{position:relative}
+.gallery-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,2,7,.86);backdrop-filter:blur(12px)}
+.gallery-modal.open{display:flex}
+.gallery-dialog{width:min(900px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:22px;background:linear-gradient(145deg,rgba(43,18,39,.98),rgba(15,8,19,.98));box-shadow:0 25px 90px #0009}
+.gallery-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.gallery-heading h2{font-family:"Playfair Display",serif;font-size:clamp(22px,4vw,32px);margin:0;color:#fff;flex:1}
+.gallery-heading p{font-size:12px;color:#d9b9ca;margin:5px 0 0}
+.gallery-close{width:40px;height:40px;border:1px solid #ffffff25;border-radius:50%;background:#ffffff10;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
+.gallery-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gallery-photos figure{margin:0;min-width:0;overflow:hidden;border-radius:16px;border:1px solid #ffffff18;background:#170d19}
+.gallery-photos img{display:block;width:100%;height:clamp(180px,32vw,330px);object-fit:cover}
+.gallery-photos figcaption{padding:10px 12px;color:#f5dce8;font-size:12px}
+.gallery-note{margin:15px 0 0;color:#cbb6c5;font-size:11px;text-align:center}
+@media(max-width:560px){.gallery-dialog{padding:15px;border-radius:18px}.gallery-photos{grid-template-columns:1fr}.gallery-photos img{height:310px}.gallery-photos figure:not(:first-child){display:none}.gallery-photos.show-all figure{display:block}.gallery-photos.show-all{grid-template-columns:1fr}.gallery-count{padding:7px 10px}}
+
 </style>
 </head>
 <body>
@@ -65,6 +79,15 @@ a{text-decoration:none;color:inherit}
     <a class="likes-link" href="likes.html">♥ My Likes</a>
   </section>
 </main>
+
+
+<div class="gallery-modal" id="galleryModal" aria-hidden="true">
+  <section class="gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
+    <div class="gallery-heading"><div><h2 id="galleryTitle">A little more about them 💗</h2><p id="gallerySubtitle">Three profile photos</p></div><button class="gallery-close" id="galleryClose" type="button" aria-label="Close gallery">&times;</button></div>
+    <div class="gallery-photos" id="galleryPhotos"></div>
+    <p class="gallery-note">Real connections begin with kindness, respect, and a hello. 💕</p>
+  </section>
+</div>
 
 <script type="module">
 import {
@@ -137,7 +160,13 @@ const demoProfiles=[
 ["William",32,"Nakuru",true,"Respectful, focused and hoping to meet someone genuine.",["Fitness","Travel","Business"]]
 ];
 
-const demoProfilesFull=demoProfiles.map((p,i)=>({id:`demo-${String(i+1).padStart(2,"0")}`,name:p[0],age:p[1],location:p[2],online:p[3],description:p[4],tags:p[5],photo:backupPhotos[i]}));
+const demoProfilesFull=demoProfiles.map((p,i)=>{
+  const isFemale=String(p[0]).trim().toLowerCase().split(/\\s+/)[0]!=="" && ["amara","zuri","imani","wambui","aisha","neema","nyambura","malaika","shani","njeri","zawadi","faith","joy","linda","sarah","grace","naomi","aaliyah","wanja","miriam","bella","nadia","leila","esther","diana","melissa","vivian","cynthia","lilian","rose","angel","ella","mary","janet","peris","tracy"].includes(String(p[0]).trim().toLowerCase().split(/\\s+/)[0]);
+  const gender=isFemale?"women":"men";
+  const extra1=1+((i*7+13)%97), extra2=1+((i*11+29)%97);
+  const galleryPhotos=[backupPhotos[i],`https://randomuser.me/api/portraits/${gender}/${extra1}.jpg`,`https://randomuser.me/api/portraits/${gender}/${extra2}.jpg`];
+  return {id:`demo-${String(i+1).padStart(2,"0")}`,name:p[0],age:p[1],location:p[2],online:p[3],description:p[4],tags:p[5],photo:backupPhotos[i],galleryPhotos};
+});
 
 function escapeHtml(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));}
 function safePhoto(url,fallback){return url||fallback||backupPhotos[0];}
@@ -155,13 +184,13 @@ function renderCard(profile,isDemo=false){
   return `<article class="profile-card" data-profile-id="${escapeHtml(profile.id)}">
     <div class="photo-wrap">
       <img src="${escapeHtml(photo)}" alt="${escapeHtml(profile.name)}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'">
+      <button class="gallery-count" type="button" data-gallery-id="${escapeHtml(profile.id)}" aria-label="View ${escapeHtml(profile.name)}'s photo gallery">📸 3 Photos</button>
       <div class="photo-overlay"><div class="name-line"><h3>${escapeHtml(profile.name)}${profile.age?`, ${escapeHtml(profile.age)}`:""}</h3><span class="status-dot ${profile.online?"status-online":"status-offline"}" title="${profile.online?"Online":"Offline"}"></span></div><div class="location">📍 ${escapeHtml(profile.location||"Kenya")}</div></div>
     </div>
     <div class="profile-content">
       <div class="profile-description">${escapeHtml(profile.description||"Open to a genuine connection and a good conversation. 💕")}</div>
       <div class="tags">${tags}</div>
-            <div class="profile-actions">
-        <a class="view-btn" href="view-profile.html?userId=${encodeURIComponent(profile.id)}">👤 View</a>
+      <div class="profile-actions">
         <button class="like-btn ${liked?"liked":""}" data-like-id="${escapeHtml(profile.id)}" type="button">${liked?"💗 Liked":"❤️ Like"}</button>
         <a class="chat-btn" href="${chatUrl}">💬 Chat</a>
       </div>
@@ -174,7 +203,9 @@ function getRealPhoto(data){return data.photoURL||data.photoUrl||data.avatar||da
 function normaliseRealUser(id,data){
   const name=getRealName(data); const photo=getRealPhoto(data);
   if(!name&&!photo)return null;
-  return {id,name:name||"Kmeet Member",age:data.age||data.years||"",location:data.location||data.city||data.town||"Kenya",description:data.bio||data.about||data.description||"Looking to meet someone genuine. 💕",tags:Array.isArray(data.interests)?data.interests:(Array.isArray(data.tags)?data.tags:typeof data.interests==="string"?data.interests.split(",").map(x=>x.trim()).filter(Boolean):[]),photo,online:!!data.online||data.status==="online"};
+  const suppliedGallery=Array.isArray(data.galleryPhotos)?data.galleryPhotos:Array.isArray(data.photos)?data.photos:Array.isArray(data.photoGallery)?data.photoGallery:[];
+  const galleryPhotos=[photo,...suppliedGallery].filter((url,i,all)=>typeof url==="string"&&url.trim()&&all.indexOf(url)===i).slice(0,3);
+  return {id,name:name||"Kmeet Member",age:data.age||data.years||"",location:data.location||data.city||data.town||"Kenya",description:data.bio||data.about||data.description||"Looking to meet someone genuine. 💕",tags:Array.isArray(data.interests)?data.interests:(Array.isArray(data.tags)?data.tags:typeof data.interests==="string"?data.interests.split(",").map(x=>x.trim()).filter(Boolean):[]),photo, galleryPhotos, online:!!data.online||data.status==="online"};
 }
 
 async function getPresence(id){
@@ -200,12 +231,39 @@ async function renderDiscover(){
   grid.innerHTML=`<div class="loading-state">Loading people to discover… 💗</div>`;
   const real=await loadRealProfiles();
   const demos=demoProfilesFull.map((p,i)=>({...p,backupIndex:i}));
+  window.__kmeetRealProfiles=real;
   grid.innerHTML=[...real,...demos].map(p=>renderCard(p,!p.id||String(p.id).startsWith("demo-"))).join("");
   memberCount.textContent=`${real.length+36} people to discover`;
   attachCardEvents();
 }
 
+function openProfileGallery(profileId){
+  const modal=document.getElementById("galleryModal");
+  const photosBox=document.getElementById("galleryPhotos");
+  const title=document.getElementById("galleryTitle");
+  const subtitle=document.getElementById("gallerySubtitle");
+  if(!modal||!photosBox)return;
+  const demo=demoProfilesFull.find(p=>p.id===profileId);
+  const real=(window.__kmeetRealProfiles||[]).find(p=>p.id===profileId);
+  const profile=demo||real;
+  if(!profile)return;
+  const photos=(profile.galleryPhotos&&profile.galleryPhotos.length?profile.galleryPhotos:[profile.photo]).filter(Boolean).slice(0,3);
+  title.textContent=`${profile.name||"Kmeet Member"}'s photos 💗`;
+  subtitle.textContent=photos.length===3?"Three profile photos":"Profile photos";
+  photosBox.classList.toggle("show-all",window.innerWidth<=560);
+  photosBox.innerHTML=photos.map((url,index)=>`<figure><img src="${escapeHtml(url)}" alt="${escapeHtml(profile.name||"Kmeet member")} photo ${index+1}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'"><figcaption>${["A lovely first impression ✨","A little more personality 💕","Another moment to discover 🌷"][index]||"A photo to discover 💗"}</figcaption></figure>`).join("");
+  modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+}
+function closeProfileGallery(){
+  const modal=document.getElementById("galleryModal");if(!modal)return;
+  modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";
+}
+document.getElementById("galleryClose")?.addEventListener("click",closeProfileGallery);
+document.getElementById("galleryModal")?.addEventListener("click",event=>{if(event.target.id==="galleryModal")closeProfileGallery()});
+document.addEventListener("keydown",event=>{if(event.key==="Escape")closeProfileGallery()});
+
 function attachCardEvents(){
+  document.querySelectorAll("[data-gallery-id]").forEach(button=>button.addEventListener("click",()=>openProfileGallery(button.dataset.galleryId)));
   document.querySelectorAll("[data-like-id]").forEach(button=>button.addEventListener("click",async()=>{
     const id=button.dataset.likeId; const key=`kmeet_like_${id}`; const liked=localStorage.getItem(key)==="1";
     if(liked){localStorage.removeItem(key);button.classList.remove("liked");button.textContent="❤️ Like";return}
