@@ -584,7 +584,283 @@
         transition-duration: .01ms !important;
       }
     }
+    
+/* =========================================
+   KMEET — FLOATING STAR STORY SLIDESHOW
+   Compact photos, romantic glow, no large card
+========================================= */
+
+#storyStage {
+  position: relative !important;
+  width: 100% !important;
+  height: 350px !important;
+  min-height: 350px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  isolation: isolate;
+}
+
+#storyStage .story-image {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  opacity: 0;
+  visibility: hidden;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+#storyStage .story-image.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+#storyStage .story-image.leaving {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+#storyStage .story-image img {
+  position: absolute !important;
+  top: 8px !important;
+  left: 50% !important;
+  display: block !important;
+  width: min(230px, 66%) !important;
+  height: 245px !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.32),
+    0 0 24px rgba(255, 105, 170, 0.2) !important;
+  opacity: 0;
+  transform: translate(-50%, 18px) scale(0.22) rotate(-6deg);
+  filter: blur(6px) brightness(1.25);
+  animation: none;
+}
+
+#storyStage .story-image.active img {
+  animation: kmeetStarPhoto 4.5s ease-in-out both;
+}
+
+@keyframes kmeetStarPhoto {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 18px) scale(0.22) rotate(-6deg);
+    filter: blur(6px) brightness(1.3);
+  }
+  14% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1.04) rotate(1deg);
+    filter: blur(0) brightness(1.05);
+  }
+  24%, 75% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1) rotate(0);
+    filter: blur(0) brightness(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -12px) scale(0.82) rotate(3deg);
+    filter: blur(4px) brightness(1.2);
+  }
+}
+
+/* Small sparkling star */
+#storyStage .story-image::before {
+  content: "✦";
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  z-index: 4;
+  color: #ffd4e7;
+  font-size: 25px;
+  line-height: 1;
+  text-shadow:
+    0 0 10px #ff65a8,
+    0 0 24px #ff65a8;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#storyStage .story-image.active::before {
+  animation: kmeetSpark 1.2s ease-out both;
+}
+
+@keyframes kmeetSpark {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 35px) scale(0.2);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(65px, 0) scale(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(95px, -18px) scale(0.45);
+  }
+}
+
+/* Captions beneath the floating photo */
+#storyStage .story-caption {
+  position: absolute !important;
+  top: 263px !important;
+  bottom: auto !important;
+  left: 8px !important;
+  right: 8px !important;
+  z-index: 5;
+  width: auto !important;
+  max-width: 340px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  text-align: center !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    visibility 0.4s ease;
+}
+
+#storyStage .story-caption.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#storyStage .caption-kicker {
+  margin-bottom: 5px !important;
+  color: #ffb5d3 !important;
+  font-size: 0.64rem !important;
+  letter-spacing: 0.12em;
+}
+
+#storyStage .story-caption h2 {
+  margin: 0 0 5px !important;
+  color: #fff !important;
+  font-size: clamp(1.05rem, 2vw, 1.35rem) !important;
+  line-height: 1.2 !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+}
+
+#storyStage .story-caption p {
+  max-width: 300px !important;
+  margin: 0 auto !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.73rem !important;
+  line-height: 1.45 !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Seven small navigation dots and image counter */
+#storyStage .story-controls {
+  position: absolute !important;
+  top: 326px !important;
+  bottom: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 6;
+  display: flex !important;
+  align-items: center;
+  justify-content: center !important;
+  gap: 10px;
+}
+
+#storyStage .story-progress {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+#storyStage .story-dot {
+  width: 6px !important;
+  height: 6px !important;
+  min-width: 6px !important;
+  min-height: 6px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  cursor: pointer;
+}
+
+#storyStage .story-dot.active {
+  background: #ff85b8 !important;
+  box-shadow: 0 0 9px rgba(255, 105, 170, 0.8);
+}
+
+#storyStage .story-counter {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.65rem !important;
+}
+
+/* Mobile: smaller photo and compact spacing */
+@media (max-width: 800px) {
+  #storyStage {
+    height: 320px !important;
+    min-height: 320px !important;
+  }
+
+  #storyStage .story-image img {
+    top: 4px !important;
+    width: min(195px, 62%) !important;
+    height: 210px !important;
+  }
+
+  #storyStage .story-caption {
+    top: 226px !important;
+    left: 5px !important;
+    right: 5px !important;
+  }
+
+  #storyStage .story-caption h2 {
+    font-size: 1.05rem !important;
+  }
+
+  #storyStage .story-caption p {
+    font-size: 0.68rem !important;
+  }
+
+  #storyStage .story-controls {
+    top: 298px !important;
+  }
+}
+
+/* Respect reduced-motion accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  #storyStage .story-image.active img,
+  #storyStage .story-image.active::before {
+    animation: none !important;
+  }
+
+  #storyStage .story-image.active img {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    filter: none;
+  }
+}
+
   </style>
+
 </head>
 
 <body>
@@ -620,35 +896,63 @@
       </div>
 
       <!-- Three existing romantic photos; the chair-with-flowers photo is intentionally excluded. -->
-      <div class="story-stage" id="storyStage">
-        <div class="story-image active" data-slide="0">
-          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85"
-               alt="A couple sharing a tender romantic moment" fetchpriority="high">
-        </div>
-        <div class="story-image" data-slide="1">
-          <img src="kmeet-background.jpg.jpg"
-               alt="Kmeet romantic background scene" loading="lazy">
-        </div>
-        <div class="story-image" data-slide="2">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85"
-               alt="A romantic wedding celebration" loading="lazy">
-        </div>
+      
+<div class="story-stage" id="storyStage">
 
-        <div class="story-caption visible" id="storyCaption">
-          <div class="caption-kicker" id="storyKicker">A LITTLE MAGIC</div>
-          <h2 id="storyTitle">Where two hearts meet</h2>
-          <p id="storyDescription">Sometimes, the beginning of everything is one beautiful moment.</p>
-        </div>
+  <div class="story-image active" data-slide="0">
+    <img src="ss1.jfif" alt="A beautiful beginning" fetchpriority="high">
+  </div>
 
-        <div class="story-controls">
-          <div class="story-progress" id="storyDots">
-            <button class="story-dot active" type="button" aria-label="Show image 1" aria-pressed="true" data-dot="0"></button>
-            <button class="story-dot" type="button" aria-label="Show image 2" aria-pressed="false" data-dot="1"></button>
-            <button class="story-dot" type="button" aria-label="Show image 3" aria-pressed="false" data-dot="2"></button>
-          </div>
-          <span class="story-counter" id="storyCounter">01 / 03</span>
-        </div>
-      </div>
+  <div class="story-image" data-slide="1">
+    <img src="ss2.jfif" alt="A romantic connection" loading="lazy">
+  </div>
+
+  <div class="story-image" data-slide="2">
+    <img src="ss3.jfif" alt="Discovering a meaningful connection" loading="lazy">
+  </div>
+
+  <div class="story-image" data-slide="3">
+    <img src="ss4.jfif" alt="A beautiful shared moment" loading="lazy">
+  </div>
+
+  <div class="story-image" data-slide="4">
+    <img src="ss5.jfif" alt="A romantic memory" loading="lazy">
+  </div>
+
+  <div class="story-image" data-slide="5">
+    <img src="ss6.jfif" alt="A moment filled with love" loading="lazy">
+  </div>
+
+  <div class="story-image" data-slide="6">
+    <img src="ss7.jfif" alt="A new romantic chapter" loading="lazy">
+  </div>
+
+  <div class="story-caption visible" id="storyCaption">
+    <div class="caption-kicker" id="storyKicker">A LITTLE MAGIC</div>
+    <h2 id="storyTitle">Where two hearts meet</h2>
+    <p id="storyDescription">Sometimes, the beginning of everything is one beautiful moment.</p>
+  </div>
+
+  <div class="story-controls">
+    <div class="story-progress" id="storyDots">
+      <button class="story-dot active" type="button"
+        aria-label="Show image 1" aria-pressed="true" data-dot="0"></button>
+      <button class="story-dot" type="button"
+        aria-label="Show image 2" aria-pressed="false" data-dot="1"></button>
+      <button class="story-dot" type="button"
+        aria-label="Show image 3" aria-pressed="false" data-dot="2"></button>
+      <button class="story-dot" type="button"
+        aria-label="Show image 4" aria-pressed="false" data-dot="3"></button>
+      <button class="story-dot" type="button"
+        aria-label="Show image 5" aria-pressed="false" data-dot="4"></button>
+      <button class="story-dot" type="button"
+        aria-label="Show image 6" aria-pressed="false" data-dot="5"></button>
+      <button class="story-dot" type="button"
+        aria-label="Show image 7" aria-pressed="false" data-dot="6"></button>
+    </div>
+    <span class="story-counter" id="storyCounter">01 / 07</span>
+  </div>
+
     </section>
 
     <section class="signup-strip" id="interested">
@@ -711,109 +1015,143 @@
   </footer>
 
   <script>
-    (() => {
-      const slides = [...document.querySelectorAll(".story-image")];
-      const dots = [...document.querySelectorAll(".story-dot")];
-      const kicker = document.getElementById("storyKicker");
-      const title = document.getElementById("storyTitle");
-      const description = document.getElementById("storyDescription");
-      const caption = document.getElementById("storyCaption");
-      const counter = document.getElementById("storyCounter");
+  
+(() => {
+  const slides = [...document.querySelectorAll(".story-image")];
+  const dots = [...document.querySelectorAll(".story-dot")];
+  const kicker = document.getElementById("storyKicker");
+  const title = document.getElementById("storyTitle");
+  const description = document.getElementById("storyDescription");
+  const caption = document.getElementById("storyCaption");
+  const counter = document.getElementById("storyCounter");
 
-      if (!slides.length) return;
+  if (!slides.length || !kicker || !title || !description || !caption || !counter) return;
 
-      const stories = [
-        {
-          kicker: "A LITTLE MAGIC",
-          title: "Where two hearts meet",
-          description: "Sometimes, the beginning of everything is one beautiful moment."
-        },
-        {
-          kicker: "THE JOY OF CONNECTION",
-          title: "A world for meaningful connections",
-          description: "Let your Kmeet journey begin against a romantic backdrop."
-        },
-        {
-          kicker: "YOUR NEXT CHAPTER",
-          title: "Love is worth discovering",
-          description: "Every great love story begins somewhere. Yours could begin here."
-        }
-      ];
+  const stories = [
+    {
+      kicker: "A LITTLE MAGIC",
+      title: "Where two hearts meet",
+      description: "Sometimes, the beginning of everything is one beautiful moment."
+    },
+    {
+      kicker: "THE JOY OF CONNECTION",
+      title: "One hello can change everything",
+      description: "Meet someone who makes ordinary moments feel special."
+    },
+    {
+      kicker: "DISCOVER SOMETHING REAL",
+      title: "Be yourself. Feel the connection.",
+      description: "Let shared interests bring two hearts closer."
+    },
+    {
+      kicker: "LITTLE MOMENTS MATTER",
+      title: "Make room for happiness",
+      description: "Beautiful relationships grow one moment at a time."
+    },
+    {
+      kicker: "SOMETHING MEANINGFUL",
+      title: "Let your hearts find their rhythm",
+      description: "Discover someone who shares your dreams."
+    },
+    {
+      kicker: "LOVE IS IN THE DETAILS",
+      title: "Make every moment count",
+      description: "Your next beautiful memory could start today."
+    },
+    {
+      kicker: "YOUR NEXT CHAPTER",
+      title: "Someone wonderful could be waiting",
+      description: "Take the first step and discover Kmeet."
+    }
+  ];
 
-      let current = 0;
-      let timer = null;
-      let changing = false;
-      let captionTimer = null;
-      let cleanupTimer = null;
+  let current = 0;
+  let timer = null;
+  let changing = false;
+  let captionTimer = null;
+  let cleanupTimer = null;
 
-      function showSlide(nextIndex) {
-        if (changing || nextIndex === current) return;
-        changing = true;
+  function showSlide(nextIndex) {
+    if (changing || nextIndex === current) return;
 
-        window.clearTimeout(captionTimer);
-        window.clearTimeout(cleanupTimer);
+    changing = true;
+    window.clearTimeout(captionTimer);
+    window.clearTimeout(cleanupTimer);
 
-        const previous = current;
-        current = (nextIndex + slides.length) % slides.length;
+    const previous = current;
+    current = (nextIndex + slides.length) % slides.length;
 
-        caption.classList.remove("visible");
-        slides[previous].classList.remove("active");
-        slides[previous].classList.add("leaving");
+    caption.classList.remove("visible");
+    slides[previous].classList.remove("active");
+    slides[previous].classList.add("leaving");
 
-        slides[current].classList.remove("leaving", "active");
-        void slides[current].offsetWidth;
-        slides[current].classList.add("active");
+    slides[current].classList.remove("leaving", "active");
+    void slides[current].offsetWidth;
+    slides[current].classList.add("active");
 
-        dots.forEach((dot, index) => {
-          dot.classList.toggle("active", index === current);
-          dot.setAttribute("aria-pressed", String(index === current));
-        });
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === current);
+      dot.setAttribute("aria-pressed", String(index === current));
+    });
 
-        const story = stories[current % stories.length];
-        kicker.textContent = story.kicker;
-        title.textContent = story.title;
-        description.textContent = story.description;
-        counter.textContent =
-          String(current + 1).padStart(2, "0") + " / " +
-          String(slides.length).padStart(2, "0");
+    const story = stories[current % stories.length];
+    kicker.textContent = story.kicker;
+    title.textContent = story.title;
+    description.textContent = story.description;
 
-        captionTimer = window.setTimeout(() => caption.classList.add("visible"), 500);
+    counter.textContent =
+      String(current + 1).padStart(2, "0") + " / " +
+      String(slides.length).padStart(2, "0");
 
-        cleanupTimer = window.setTimeout(() => {
-          slides[previous].classList.remove("leaving");
-          changing = false;
-        }, 700);
+    captionTimer = window.setTimeout(() => {
+      caption.classList.add("visible");
+    }, 450);
+
+    cleanupTimer = window.setTimeout(() => {
+      slides[previous].classList.remove("leaving");
+      changing = false;
+    }, 700);
+  }
+
+  function startTimer() {
+    if (timer) window.clearInterval(timer);
+
+    timer = window.setInterval(() => {
+      if (!document.hidden && !changing) {
+        showSlide((current + 1) % slides.length);
       }
+    }, 4500);
+  }
 
-      function startTimer() {
-        if (timer) window.clearInterval(timer);
-        timer = window.setInterval(() => {
-          if (!document.hidden && !changing) showSlide((current + 1) % slides.length);
-        }, 5600);
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      const index = Number(dot.dataset.dot);
+
+      if (index >= 0 && index < slides.length &&
+          index !== current && !changing) {
+        showSlide(index);
+        startTimer();
       }
+    });
+  });
 
-      dots.forEach(dot => {
-        dot.addEventListener("click", () => {
-          const index = Number(dot.dataset.dot);
-          if (index !== current && !changing) {
-            showSlide(index);
-            startTimer();
-          }
-        });
-      });
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-          window.clearInterval(timer);
-          timer = null;
-        } else {
-          startTimer();
-        }
-      });
-
-      document.getElementById("currentYear").textContent = new Date().getFullYear();
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      window.clearInterval(timer);
+      timer = null;
+    } else {
       startTimer();
-    })();
+    }
+  });
+
+  const yearElement = document.getElementById("currentYear");
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
+
+  startTimer();
+})();
+    
   </script>
 
   <script>
