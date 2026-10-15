@@ -10,7 +10,7 @@
 <title>Kmeet — Chat</title>
 
 <style>
-*{a
+*{
   box-sizing:border-box;
 }
 
@@ -735,12 +735,15 @@ body::before{
   </a>
 
 
-  <a
-    class="back-btn"
-    href="discover.html"
-  >
-    ← Back
-  </a>
+    
+<a
+  class="back-btn"
+  href="inbox.html"
+  id="chatBackButton"
+>
+  ← Back to Chats
+</a>
+
 
 </header>
 
@@ -965,7 +968,62 @@ const params =
 
 const targetId =
   params.get("userId") ||
-  params.get("user");
+  params.get("user"); 
+  
+/* =====================================================
+   SMART CHAT BACK NAVIGATION
+===================================================== */
+
+document.addEventListener("click", function(event) {
+  const link = event.target.closest(
+    "#chatBackButton, #gateButtons a[data-chat-back]"
+  );
+
+  if (!link) return;
+
+  event.preventDefault();
+
+  const fallbackPage = "inbox.html";
+  const referrer = document.referrer;
+
+  try {
+    if (referrer) {
+      const previousPage = new URL(referrer);
+      const currentPage = new URL(window.location.href);
+
+      const sameWebsite =
+        previousPage.origin === currentPage.origin;
+
+      const previousPath =
+        previousPage.pathname.toLowerCase();
+
+      const currentPath =
+        currentPage.pathname.toLowerCase();
+
+      const previousWasChat =
+        previousPath.endsWith("/chat.html") ||
+        previousPath.endsWith("/payment.html");
+
+      if (
+        sameWebsite &&
+        previousPath !== currentPath &&
+        !previousWasChat &&
+        window.history.length > 1
+      ) {
+        window.history.back();
+        return;
+      }
+    }
+  } catch (error) {
+    console.warn(
+      "Kmeet could not determine the previous page.",
+      error
+    );
+  }
+
+  window.location.href = fallbackPage;
+});
+
 
 
 /* =====================================================
@@ -1895,12 +1953,15 @@ function showGate(type){
       </a>
 
 
-      <a
-        class="pay-btn secondary-btn"
-        href="discover.html"
-      >
-        Back to Discover
-      </a>
+       
+<a
+  class="pay-btn secondary-btn"
+  href="inbox.html"
+  data-chat-back
+>
+  Back to Chats
+</a>
+
 
     `;
 
@@ -1946,12 +2007,14 @@ function showGate(type){
       </a>
 
 
-      <a
-        class="pay-btn secondary-btn"
-        href="discover.html"
-      >
-        Back to Discover
-      </a>
+        
+<a
+  class="pay-btn secondary-btn"
+  href="inbox.html"
+  data-chat-back
+>
+  Back to Chats
+</a>
 
     `;
 
@@ -1989,12 +2052,14 @@ function showGate(type){
       </a>
 
 
-      <a
-        class="pay-btn secondary-btn"
-        href="discover.html"
-      >
-        Back to Discover
-      </a>
+<a
+  class="pay-btn secondary-btn"
+  href="inbox.html"
+  data-chat-back
+>
+  Back to Chats
+</a>
+
 
     `;
 
