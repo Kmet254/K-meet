@@ -25,7 +25,7 @@ a{text-decoration:none;color:inherit}
 .page-head{text-align:center;padding:38px 20px 25px}.page-head h1{font-family:'Playfair Display',serif;font-size:38px;margin:0 0 8px}.page-head p{margin:0;color:#c8b7c4;font-size:14px}.member-count{display:inline-flex;margin-top:15px;padding:7px 14px;border-radius:30px;background:rgba(255,79,145,.10);border:1px solid rgba(255,79,145,.18);font-size:12px;color:#f5d9e7}
 .discover-grid{width:min(1400px,calc(100% - 50px));margin:0 auto 45px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
 .profile-card{overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:0 14px 38px rgba(0,0,0,.28);backdrop-filter:blur(12px);transition:transform .22s,box-shadow .22s}.profile-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(0,0,0,.38)}
-.photo-wrap{height:310px;position:relative;overflow:hidden;background:#21131f}.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}.photo-overlay{position:absolute;inset:auto 0 0;padding:38px 15px 13px;background:linear-gradient(transparent,rgba(0,0,0,.84))}.name-line{display:flex;align-items:center;gap:8px}.name-line h3{margin:0;font-size:18px;font-weight:600}.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.35)}.status-online{background:#41e68c;box-shadow:0 0 9px rgba(65,230,140,.55)}.status-offline{background:#817681}.location{font-size:11px;color:#dfd1db;margin-top:3px}.profile-content{padding:15px}.profile-description{font-size:12px;line-height:1.6;color:#cbbbc7;min-height:58px;margin-bottom:10px}.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#e4d6e0}.profile-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.profile-actions button,.profile-actions a{border:0;border-radius:12px;padding:10px 7px;font-family:Poppins,sans-serif;font-size:11px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}.like-btn{background:rgba(255,79,145,.12);border:1px solid rgba(255,79,145,.3)!important;color:#ff9ac0}.like-btn:hover,.like-btn.liked{background:#ff4f91;color:#fff}.chat-btn{background:linear-gradient(135deg,#ff4f91,#d93679);color:#fff}.chat-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.profile-actions button:disabled{opacity:.55;cursor:not-allowed}.activity-bar{margin:0 auto 45px;width:min(1400px,calc(100% - 50px));padding:15px 18px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:15px}.activity-copy{font-size:12px;color:#cdbec9}.activity-copy strong{display:block;color:#fff;margin-bottom:3px}.likes-link{font-size:12px;color:#ff88b4;white-space:nowrap}.loading-state,.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:#bfaebc}
+.photo-wrap{height:310px;position:relative;overflow:hidden;background:#21131f}.photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;image-rendering:auto}.photo-overlay{position:absolute;inset:auto 0 0;padding:38px 15px 13px;background:linear-gradient(transparent,rgba(0,0,0,.84))}.name-line{display:flex;align-items:center;gap:8px}.name-line h3{margin:0;font-size:18px;font-weight:600}.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.35)}.status-online{background:#41e68c;box-shadow:0 0 9px rgba(65,230,140,.55)}.status-offline{background:#817681}.location{font-size:11px;color:#dfd1db;margin-top:3px}.profile-content{padding:15px}.profile-description{font-size:12px;line-height:1.6;color:#cbbbc7;min-height:58px;margin-bottom:10px}.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#e4d6e0}.profile-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.profile-actions button,.profile-actions a{border:0;border-radius:12px;padding:10px 7px;font-family:Poppins,sans-serif;font-size:11px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}.like-btn{background:rgba(255,79,145,.12);border:1px solid rgba(255,79,145,.3)!important;color:#ff9ac0}.like-btn:hover,.like-btn.liked{background:#ff4f91;color:#fff}.chat-btn{background:linear-gradient(135deg,#ff4f91,#d93679);color:#fff}.chat-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.profile-actions button:disabled{opacity:.55;cursor:not-allowed}.activity-bar{margin:0 auto 45px;width:min(1400px,calc(100% - 50px));padding:15px 18px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:15px}.activity-copy{font-size:12px;color:#cdbec9}.activity-copy strong{display:block;color:#fff;margin-bottom:3px}.likes-link{font-size:12px;color:#ff88b4;white-space:nowrap}.loading-state,.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:#bfaebc}
 @media(max-width:1100px){.discover-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:720px){.navbar{padding:0 18px;gap:15px}.nav-link:not(:last-of-type){display:none}.messages-panel{right:-65px}.page-head{padding-top:30px}.page-head h1{font-size:31px}.discover-grid{width:calc(100% - 28px);grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.photo-wrap{height:300px}.activity-bar{width:calc(100% - 28px);align-items:flex-start;flex-direction:column}.likes-link{align-self:flex-end}}
 @media(max-width:430px){.discover-grid{grid-template-columns:1fr}.photo-wrap{height:330px}.navbar{min-height:70px}.page-head h1{font-size:28px}}
@@ -46,11 +46,6 @@ a{text-decoration:none;color:inherit}
 .gallery-photos figcaption{padding:10px 12px;color:#f5dce8;font-size:12px}
 .gallery-note{margin:15px 0 0;color:#cbb6c5;font-size:11px;text-align:center}
 @media(max-width:560px){.gallery-dialog{padding:15px;border-radius:18px}.gallery-photos{grid-template-columns:1fr}.gallery-photos img{height:310px}.gallery-photos figure:not(:first-child){display:none}.gallery-photos.show-all figure{display:block}.gallery-photos.show-all{grid-template-columns:1fr}.gallery-count{padding:7px 10px}}
-
-
-.view-profile-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.17)!important;color:#fff}.view-profile-btn:hover{background:rgba(255,79,145,.2);border-color:rgba(255,79,145,.55)!important}.profile-actions{grid-template-columns:repeat(3,minmax(0,1fr))}.profile-actions button,.profile-actions a{padding:10px 5px;font-size:10px}
-.profile-detail-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,2,7,.88);backdrop-filter:blur(12px)}.profile-detail-modal.open{display:flex}.profile-detail-dialog{width:min(760px,100%);max-height:91vh;overflow:auto;border:1px solid rgba(255,255,255,.15);border-radius:24px;background:linear-gradient(145deg,rgba(43,18,39,.99),rgba(15,8,19,.99));box-shadow:0 25px 90px #0009}.profile-detail-top{display:grid;grid-template-columns:minmax(180px, .85fr) 1.15fr;gap:22px;padding:22px}.profile-detail-photo{width:100%;height:330px;object-fit:cover;border-radius:17px;background:#21131f}.profile-detail-copy{min-width:0}.profile-detail-title{font:700 clamp(24px,4vw,34px) 'Playfair Display',serif;margin:4px 0 5px}.profile-detail-location{font-size:12px;color:#ff9ac0;margin-bottom:15px}.profile-detail-bio{font-size:13px;line-height:1.85;color:#e2d2dd;white-space:pre-line}.profile-detail-label{font-size:11px;text-transform:uppercase;letter-spacing:1.3px;color:#ff9ac0;margin:18px 0 9px}.profile-detail-tags{display:flex;flex-wrap:wrap;gap:7px}.profile-detail-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.profile-detail-actions a,.profile-detail-actions button{border-radius:12px;padding:11px 15px;border:1px solid #ffffff20;background:#ffffff0d;color:#fff;font:600 12px Poppins,sans-serif;cursor:pointer}.profile-detail-actions .detail-chat{background:linear-gradient(135deg,#ff4f91,#d93679);border:0}.profile-detail-gallery{padding:0 22px 22px}.profile-detail-gallery h3{font:600 20px 'Playfair Display',serif;margin:0 0 12px}.profile-detail-gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.profile-detail-gallery-grid img{width:100%;height:180px;object-fit:cover;border-radius:13px;background:#21131f}.profile-detail-gallery-note{font-size:11px;color:#bfaebc;margin:10px 0 0}.profile-detail-heading{display:flex;align-items:center;justify-content:flex-end;padding:14px 16px 0}.profile-detail-heading .gallery-close{flex-shrink:0}
-@media(max-width:560px){.profile-detail-top{grid-template-columns:1fr;padding:16px;gap:15px}.profile-detail-photo{height:300px}.profile-detail-gallery{padding:0 16px 18px}.profile-detail-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-detail-gallery-grid img{height:160px}.profile-actions{grid-template-columns:1fr}.profile-actions button,.profile-actions a{font-size:11px}}
 
 </style>
 </head>
@@ -94,26 +89,6 @@ a{text-decoration:none;color:inherit}
   </section>
 </div>
 
-
-<div class="profile-detail-modal" id="profileDetailModal" aria-hidden="true">
-  <section class="profile-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="profileDetailName">
-    <div class="profile-detail-heading"><button class="gallery-close" id="profileDetailClose" type="button" aria-label="Close profile">&times;</button></div>
-    <div class="profile-detail-top">
-      <img class="profile-detail-photo" id="profileDetailPhoto" src="" alt="Member profile photo">
-      <div class="profile-detail-copy">
-        <h2 class="profile-detail-title" id="profileDetailName">A Kmeet member</h2>
-        <div class="profile-detail-location" id="profileDetailLocation"></div>
-        <div class="profile-detail-label">A little about me</div>
-        <div class="profile-detail-bio" id="profileDetailBio"></div>
-        <div class="profile-detail-label">Things I love</div>
-        <div class="profile-detail-tags" id="profileDetailTags"></div>
-        <div class="profile-detail-actions" id="profileDetailActions"></div>
-      </div>
-    </div>
-    <div class="profile-detail-gallery"><h3>Photo gallery 💗</h3><div class="profile-detail-gallery-grid" id="profileDetailGallery"></div><p class="profile-detail-gallery-note" id="profileDetailGalleryNote">Photos shown are the ones available for this profile.</p></div>
-  </section>
-</div>
-
 <script type="module">
 import {
   auth, db, onAuthStateChanged, collection, onSnapshot, doc, getDoc, setDoc,
@@ -143,55 +118,55 @@ const messageProfileCache=new Map();
 let messageRenderToken=0;
 
 const backupPhotos=[
-"https://randomuser.me/api/portraits/women/44.jpg","https://randomuser.me/api/portraits/men/32.jpg","https://randomuser.me/api/portraits/women/65.jpg","https://randomuser.me/api/portraits/men/46.jpg","https://randomuser.me/api/portraits/women/32.jpg","https://randomuser.me/api/portraits/men/52.jpg","https://randomuser.me/api/portraits/women/68.jpg","https://randomuser.me/api/portraits/men/75.jpg","https://randomuser.me/api/portraits/women/50.jpg","https://randomuser.me/api/portraits/men/22.jpg","https://randomuser.me/api/portraits/women/21.jpg","https://randomuser.me/api/portraits/men/41.jpg","https://randomuser.me/api/portraits/women/12.jpg","https://randomuser.me/api/portraits/men/61.jpg","https://randomuser.me/api/portraits/women/49.jpg","https://randomuser.me/api/portraits/men/19.jpg","https://randomuser.me/api/portraits/women/36.jpg","https://randomuser.me/api/portraits/men/29.jpg","https://randomuser.me/api/portraits/women/57.jpg","https://randomuser.me/api/portraits/men/37.jpg","https://randomuser.me/api/portraits/women/63.jpg","https://randomuser.me/api/portraits/men/11.jpg","https://randomuser.me/api/portraits/women/75.jpg","https://randomuser.me/api/portraits/men/64.jpg","https://randomuser.me/api/portraits/women/23.jpg","https://randomuser.me/api/portraits/men/70.jpg","https://randomuser.me/api/portraits/women/41.jpg","https://randomuser.me/api/portraits/men/35.jpg","https://randomuser.me/api/portraits/women/45.jpg","https://randomuser.me/api/portraits/men/55.jpg","https://randomuser.me/api/portraits/women/58.jpg","https://randomuser.me/api/portraits/men/43.jpg","https://randomuser.me/api/portraits/women/38.jpg","https://randomuser.me/api/portraits/men/48.jpg","https://randomuser.me/api/portraits/women/55.jpg","https://randomuser.me/api/portraits/women/76.jpg"
+"https://randomuser.me/api/portraits/women/44.jpg","https://randomuser.me/api/portraits/men/32.jpg","https://randomuser.me/api/portraits/women/65.jpg","https://randomuser.me/api/portraits/men/46.jpg","https://randomuser.me/api/portraits/women/32.jpg","https://randomuser.me/api/portraits/men/52.jpg","https://randomuser.me/api/portraits/women/68.jpg","https://randomuser.me/api/portraits/men/75.jpg","https://randomuser.me/api/portraits/women/50.jpg","https://randomuser.me/api/portraits/men/22.jpg","https://randomuser.me/api/portraits/women/21.jpg","https://randomuser.me/api/portraits/men/41.jpg","https://randomuser.me/api/portraits/women/12.jpg","https://randomuser.me/api/portraits/men/61.jpg","https://randomuser.me/api/portraits/women/49.jpg","https://randomuser.me/api/portraits/men/19.jpg","https://randomuser.me/api/portraits/women/36.jpg","https://randomuser.me/api/portraits/men/29.jpg","https://randomuser.me/api/portraits/women/57.jpg","https://randomuser.me/api/portraits/men/37.jpg","https://randomuser.me/api/portraits/women/63.jpg","https://randomuser.me/api/portraits/men/11.jpg","https://randomuser.me/api/portraits/women/75.jpg","https://randomuser.me/api/portraits/men/64.jpg","https://randomuser.me/api/portraits/women/23.jpg","https://randomuser.me/api/portraits/men/70.jpg","https://randomuser.me/api/portraits/women/41.jpg","https://randomuser.me/api/portraits/men/35.jpg","https://randomuser.me/api/portraits/women/45.jpg","https://randomuser.me/api/portraits/men/55.jpg","https://randomuser.me/api/portraits/women/58.jpg","https://randomuser.me/api/portraits/men/43.jpg","https://randomuser.me/api/portraits/women/38.jpg","https://randomuser.me/api/portraits/men/48.jpg","https://randomuser.me/api/portraits/women/55.jpg","https://randomuser.me/api/portraits/men/76.jpg"
 ];
 
 const demoProfiles=[
-["Amara",27,"Nairobi",true,"A warm-hearted romantic who enjoys meaningful conversations, soulful music and finding little reasons to smile. I believe the best connection feels like friendship with a little magic. 💗",["Music","Travel","Coffee"]],
-["Brian",30,"Mombasa",true,"Easygoing and driven, but I never take life too seriously. I enjoy spontaneous road trips, trying new food and making someone special laugh. Looking for honesty and a teammate in life. ✨",["Fitness","Travel","Food"]],
-["Nia",25,"Kisumu",false,"A gentle soul with a curious mind and a soft spot for golden sunsets. I love thoughtful people, cosy movie nights and conversations that make time disappear. 🌅",["Books","Nature","Movies"]],
-["Daniel",29,"Nakuru",true,"Positive, caring and always up for a weekend adventure. I appreciate honesty, family, good food and someone who can laugh at the little things. Hoping to build something genuine. 💕",["Sports","Travel","Cooking"]],
-["Zuri",28,"Nairobi",false,"Creative at heart, playful by nature and happiest around people who are kind. I love expressing myself through art and style, and I am here for a connection that feels effortless and real. 🌷",["Art","Fashion","Music"]],
-["Kevin",31,"Eldoret",true,"Ambitious and focused on becoming my best self, while making room for romance and laughter. A good conversation, a new destination and a supportive partner make life richer. 🌍",["Business","Fitness","Travel"]],
-["Aisha",26,"Mombasa",true,"Give me a peaceful beach walk, a beautiful sunset and a conversation that runs past sunset. I value kindness, affection and someone who is ready to enjoy the small moments with me. 🌊",["Beach","Music","Food"]],
-["Michael",33,"Nairobi",false,"Calm, dependable and intentional about relationships. I enjoy learning new things, staying active and sharing plans with someone who values trust, respect and steady love. 🤍",["Business","Reading","Fitness"]],
-["Wanjiku",29,"Kiambu",true,"Warm, thoughtful and happiest when surrounded by nature or sharing a delicious meal. I believe love grows through patience, laughter and showing up for each other. 🌿",["Nature","Food","Travel"]],
-["Eric",28,"Thika",false,"A down-to-earth guy who enjoys movie nights, football and spontaneous plans. I appreciate a woman with a kind heart and a sense of humour, and I am ready to see where a real connection leads. 😊",["Movies","Football","Travel"]],
-["Leah",30,"Nairobi",true,"Independent, cheerful and full of curiosity. I enjoy keeping active, discovering a good book and meeting people who are sincere. I would love a relationship built on friendship and mutual encouragement. 💞",["Fitness","Books","Coffee"]],
-["Samuel",32,"Kakamega",true,"Hardworking and family-minded, with a soft spot for long talks and music that brings back memories. I value loyalty, warmth and a partner who wants to build a peaceful, loving home. 🎶",["Family","Sports","Music"]],
-["Faith",24,"Nairobi",false,"Young at heart, full of positive energy and always ready to try something new. I love dancing, travelling and making memories with people who bring out the best in me. 💃",["Dance","Fashion","Travel"]],
-["James",35,"Mombasa",true,"Laid-back, optimistic and happiest near the ocean. I enjoy cooking something tasty, exploring new places and sharing easy laughter with someone who is genuine and affectionate. 🌴",["Beach","Business","Cooking"]],
-["Maya",27,"Nairobi",true,"Art, books and thoughtful conversations are my kind of happiness. I am drawn to people who are authentic, emotionally kind and comfortable being themselves. Let us create something beautiful together. 🎨",["Art","Books","Travel"]],
-["Alex",30,"Kisumu",false,"Friendly and adventurous, with a love for music, travel and the freedom of being outdoors. I am looking for someone who enjoys exploring life and can turn an ordinary day into a great memory. 🚗",["Fishing","Music","Travel"]],
-["Ivy",26,"Nakuru",true,"Quietly confident, observant and always noticing the beauty in everyday life. I enjoy photography, nature and slow coffee dates with someone who appreciates sincerity and a little romance. ☕",["Nature","Photography","Coffee"]],
-["David",34,"Nairobi",false,"Dedicated during the day and playful when the work is done. I enjoy good films, great food and a woman who can hold a conversation. If you value respect and laughter, let us say hello. 😉",["Business","Movies","Food"]],
-["Sharon",28,"Mombasa",true,"A bright spirit who values honesty, kindness and meaningful effort. I love the coast, dancing and sharing good food. Hoping to meet someone who is ready for a caring, happy partnership. 💗",["Beach","Dance","Food"]],
-["Chris",31,"Nairobi",true,"I believe the strongest relationships begin with friendship, trust and plenty of laughter. I enjoy staying fit, listening to music and travelling when I can. Looking for someone to grow and dream with. 🫶",["Fitness","Music","Travel"]],
-["Esther",25,"Eldoret",false,"A gentle soul with big dreams and a laugh that comes easily. I enjoy music, quiet moments outdoors and people who are thoughtful. I hope to meet someone who feels like peace and excitement at once. 🌼",["Books","Nature","Music"]],
-["Anthony",29,"Nakuru",true,"My next adventure is usually already on my mind. I love sports, photography and exploring somewhere new. It would be lovely to meet someone curious, kind and ready to make memories together. 📸",["Travel","Sports","Photography"]],
-["Linda",32,"Nairobi",true,"Family, faith, friendship and heartfelt conversations mean a lot to me. I love cooking for people I care about and sharing a good book. Looking for a respectful partner with a kind and honest heart. 🏡",["Family","Cooking","Books"]],
-["Joseph",36,"Kisumu",false,"Mature, respectful and intentional about finding a lasting connection. I enjoy fishing, travel and conversations with depth. I value loyalty and would love to build a relationship where both people feel appreciated. 🌅",["Business","Fishing","Travel"]],
-["Cynthia",27,"Kiambu",true,"Fun-loving and happiest around good people, great food and music. I enjoy fashion and finding reasons to celebrate life. I am looking for a genuine connection with plenty of affection and laughter. 💃",["Fashion","Food","Music"]],
-["Mark",33,"Nairobi",false,"Ambitious with a playful sense of humour and a genuine appreciation for good company. I love football, travel and working toward big goals. Hoping to meet someone who supports my dreams and shares her own. ⚽",["Business","Football","Travel"]],
-["Mercy",29,"Mombasa",true,"An ocean lover with a bright personality and a big heart. Beach days, dancing and a good book help me recharge. I would love to meet someone caring who believes love should feel safe and joyful. 🌊",["Beach","Dance","Books"]],
-["Peter",30,"Nairobi",true,"Friendly, curious and always learning something new. I enjoy technology, fitness and a great film, but the best part of any day is a real conversation with someone who makes me smile. 💬",["Technology","Fitness","Movies"]],
-["Joy",26,"Nakuru",false,"I find joy in simple moments, shared laughter and discovering new places. Food and music make almost any day better. Looking for someone kind who wants to enjoy life while building something meaningful. 🌸",["Travel","Food","Music"]],
-["George",34,"Mombasa",true,"Easygoing and sociable, with a special love for the sea and a good meal shared with friends. I appreciate honesty, warmth and a partner who can enjoy both adventure and a quiet evening. 🌴",["Beach","Sports","Food"]],
-["Ruth",28,"Nairobi",true,"Caring, ambitious and ready for a partner in adventure. I love books, travel and keeping active. I admire people who are thoughtful and confident, and I hope to build a relationship full of teamwork and tenderness. 💕",["Books","Travel","Fitness"]],
-["Martin",31,"Eldoret",false,"Honest, humorous and happiest when good music and good company come together. I enjoy sports and meaningful goals, and I am here to meet someone who values trust, fun and a lasting bond. 🎵",["Sports","Music","Business"]],
-["Angela",30,"Nairobi",true,"Confident but kind, with a soft spot for romantic gestures and memorable coffee dates. I enjoy fashion and travel, and I am looking for a sincere person who knows that love is built through everyday care. 🌹",["Fashion","Travel","Coffee"]],
-["Patrick",29,"Kisumu",true,"I love the outdoors, good food and people who can make me laugh until my cheeks hurt. Music adds joy to my days, and I am hoping to meet someone genuine, affectionate and ready to explore life together. 🌿",["Nature","Food","Music"]],
-["Stella",27,"Nairobi",false,"Cheerful, creative and always finding inspiration in colour, music and movement. I value people who are open-minded and kind, and I would love a connection filled with encouragement, laughter and romance. 🎨",["Art","Dance","Fashion"]],
-["William",32,"Nakuru",true,"Respectful, focused and grounded, with a playful side once I feel comfortable. I enjoy fitness, travel and building toward meaningful goals. Looking for a genuine partner who values honesty, affection and shared growth. ✨",["Fitness","Travel","Business"]]
+["Amara",27,"Nairobi",true,"I love meaningful conversations, good music and discovering new places.",["Music","Travel","Coffee"]],
+["Brian",30,"Mombasa",true,"Easygoing, ambitious and always ready for a good laugh.",["Fitness","Travel","Food"]],
+["Nia",25,"Kisumu",false,"Kind heart, curious mind and a soft spot for sunsets.",["Books","Nature","Movies"]],
+["Daniel",29,"Nakuru",true,"Positive energy, honest conversations and weekend adventures.",["Sports","Travel","Cooking"]],
+["Zuri",28,"Nairobi",false,"Creative soul looking for someone genuine and fun.",["Art","Fashion","Music"]],
+["Kevin",31,"Eldoret",true,"Focused on growth but never too busy for great company.",["Business","Fitness","Travel"]],
+["Aisha",26,"Mombasa",true,"Beach walks, laughter and conversations that last for hours.",["Beach","Music","Food"]],
+["Michael",33,"Nairobi",false,"Calm, dependable and interested in building something real.",["Business","Reading","Fitness"]],
+["Wanjiku",29,"Kiambu",true,"Warm personality with a love for nature and good food.",["Nature","Food","Travel"]],
+["Eric",28,"Thika",false,"Simple guy who enjoys good friends and spontaneous plans.",["Movies","Football","Travel"]],
+["Leah",30,"Nairobi",true,"Independent, cheerful and looking for a genuine connection.",["Fitness","Books","Coffee"]],
+["Samuel",32,"Kakamega",true,"Family oriented, hardworking and a big fan of long talks.",["Family","Sports","Music"]],
+["Faith",24,"Nairobi",false,"Young at heart, positive and always looking for new experiences.",["Dance","Fashion","Travel"]],
+["James",35,"Mombasa",true,"Laid-back and optimistic with a passion for the ocean.",["Beach","Business","Cooking"]],
+["Maya",27,"Nairobi",true,"I enjoy art, good conversations and people who are authentic.",["Art","Books","Travel"]],
+["Alex",30,"Kisumu",false,"Adventurous, friendly and ready to meet someone special.",["Fishing","Music","Travel"]],
+["Ivy",26,"Nakuru",true,"Quietly confident with a love for beautiful places.",["Nature","Photography","Coffee"]],
+["David",34,"Nairobi",false,"Professional by day, playful by evening. Let's talk.",["Business","Movies","Food"]],
+["Sharon",28,"Mombasa",true,"A positive person who values honesty and kindness.",["Beach","Dance","Food"]],
+["Chris",31,"Nairobi",true,"I believe the best relationships start with friendship.",["Fitness","Music","Travel"]],
+["Esther",25,"Eldoret",false,"Gentle soul, big dreams and a love for laughter.",["Books","Nature","Music"]],
+["Anthony",29,"Nakuru",true,"Always planning the next adventure and looking for company.",["Travel","Sports","Photography"]],
+["Linda",32,"Nairobi",true,"Family, faith, friendship and meaningful conversations matter to me.",["Family","Cooking","Books"]],
+["Joseph",36,"Kisumu",false,"Mature, respectful and looking for a lasting connection.",["Business","Fishing","Travel"]],
+["Cynthia",27,"Kiambu",true,"Fun-loving and happiest when surrounded by good people.",["Fashion","Food","Music"]],
+["Mark",33,"Nairobi",false,"Ambitious, humorous and always open to meeting someone new.",["Business","Football","Travel"]],
+["Mercy",29,"Mombasa",true,"Ocean lover with a bright personality and a big heart.",["Beach","Dance","Books"]],
+["Peter",30,"Nairobi",true,"Friendly, curious and ready for a genuine conversation.",["Technology","Fitness","Movies"]],
+["Joy",26,"Nakuru",false,"I enjoy simple moments, laughter and discovering new places.",["Travel","Food","Music"]],
+["George",34,"Mombasa",true,"Easygoing, social and always happiest near the sea.",["Beach","Sports","Food"]],
+["Ruth",28,"Nairobi",true,"Caring, ambitious and looking for a partner in adventure.",["Books","Travel","Fitness"]],
+["Martin",31,"Eldoret",false,"Honest, humorous and interested in a meaningful connection.",["Sports","Music","Business"]],
+["Angela",30,"Nairobi",true,"Confident, kind and looking for someone with a good heart.",["Fashion","Travel","Coffee"]],
+["Patrick",29,"Kisumu",true,"Love nature, good food and people who can make me laugh.",["Nature","Food","Music"]],
+["Stella",27,"Nairobi",false,"A cheerful personality with a passion for creativity.",["Art","Dance","Fashion"]],
+["William",32,"Nakuru",true,"Respectful, focused and hoping to meet someone genuine.",["Fitness","Travel","Business"]]
 ];
 
-const demoProfilesFull=demoProfiles.map((p,i)=>{
-  const isFemale=String(p[0]).trim().toLowerCase().split(/\\s+/)[0]!=="" && ["amara","zuri","imani","wambui","aisha","neema","nyambura","malaika","shani","njeri","zawadi","faith","joy","linda","sarah","grace","naomi","aaliyah","wanja","miriam","bella","nadia","leila","esther","diana","melissa","vivian","cynthia","lilian","rose","angel","ella","mary","janet","peris","tracy"].includes(String(p[0]).trim().toLowerCase().split(/\\s+/)[0]);
-  const gender=isFemale?"women":"men";
-  // Demo profiles show only their assigned portrait. Add extra gallery photos only when the images are verified for that same profile.
-  const galleryPhotos=[backupPhotos[i]];
-  return {id:`demo-${String(i+1).padStart(2,"0")}`,name:p[0],age:p[1],location:p[2],online:p[3],description:p[4],tags:p[5],photo:backupPhotos[i],galleryPhotos};
-});
+// Demo profiles use one assigned portrait each. Do not fill galleries with random portraits
+// because that can make one profile appear to show three different people.
+const demoProfilesFull=demoProfiles.map((p,i)=>({
+  id:`demo-${String(i+1).padStart(2,"0")}`,
+  name:p[0],age:p[1],location:p[2],online:p[3],description:p[4],tags:p[5],
+  photo:backupPhotos[i],galleryPhotos:[backupPhotos[i]]
+}));
 
 function escapeHtml(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));}
 function safePhoto(url,fallback){return url||fallback||backupPhotos[0];}
@@ -204,12 +179,13 @@ function getTimestampValue(value){if(!value)return 0;if(typeof value==="number")
 function renderCard(profile,isDemo=false){
   const liked=localStorage.getItem(`kmeet_like_${profile.id}`)==="1";
   const photo=safePhoto(profile.photo,isDemo?backupPhotos[profile.backupIndex||0]:avatarFallbackData(profile.name));
+  const galleryCount=Math.max(1,(profile.galleryPhotos||[profile.photo]).filter(Boolean).length);
   const tags=(profile.tags||[]).slice(0,5).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("");
   const chatUrl=`chat.html?userId=${encodeURIComponent(profile.id)}`;
   return `<article class="profile-card" data-profile-id="${escapeHtml(profile.id)}">
     <div class="photo-wrap">
       <img src="${escapeHtml(photo)}" alt="${escapeHtml(profile.name)}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'">
-      <button class="gallery-count" type="button" data-gallery-id="${escapeHtml(profile.id)}" aria-label="View ${escapeHtml(profile.name)}'s photo gallery">📸 ${Math.max(1,(profile.galleryPhotos||[profile.photo]).filter(Boolean).length)} Photo${Math.max(1,(profile.galleryPhotos||[profile.photo]).filter(Boolean).length)===1?"":"s"}</button>
+      <button class="gallery-count" type="button" data-gallery-id="${escapeHtml(profile.id)}" aria-label="View ${escapeHtml(profile.name)}'s photo gallery">📸 ${galleryCount} ${galleryCount===1?"Photo":"Photos"}</button>
       <div class="photo-overlay"><div class="name-line"><h3>${escapeHtml(profile.name)}${profile.age?`, ${escapeHtml(profile.age)}`:""}</h3><span class="status-dot ${profile.online?"status-online":"status-offline"}" title="${profile.online?"Online":"Offline"}"></span></div><div class="location">📍 ${escapeHtml(profile.location||"Kenya")}</div></div>
     </div>
     <div class="profile-content">
@@ -217,7 +193,6 @@ function renderCard(profile,isDemo=false){
       <div class="tags">${tags}</div>
       <div class="profile-actions">
         <button class="like-btn ${liked?"liked":""}" data-like-id="${escapeHtml(profile.id)}" type="button">${liked?"💗 Liked":"❤️ Like"}</button>
-        <button class="view-profile-btn" type="button" data-view-profile-id="${escapeHtml(profile.id)}">👤 View Profile</button>
         <a class="chat-btn" href="${chatUrl}">💬 Chat</a>
       </div>
     </div>
@@ -275,9 +250,9 @@ function openProfileGallery(profileId){
   if(!profile)return;
   const photos=(profile.galleryPhotos&&profile.galleryPhotos.length?profile.galleryPhotos:[profile.photo]).filter(Boolean).slice(0,3);
   title.textContent=`${profile.name||"Kmeet Member"}'s photos 💗`;
-  subtitle.textContent=photos.length===3?"Three profile photos":"Profile photos";
+  subtitle.textContent=photos.length===1?"1 photo available":`${photos.length} photos available`;
   photosBox.classList.toggle("show-all",window.innerWidth<=560);
-  photosBox.innerHTML=photos.map((url,index)=>`<figure><img src="${escapeHtml(url)}" alt="${escapeHtml(profile.name||"Kmeet member")} photo ${index+1}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'"><figcaption>${["A lovely first impression ✨","A little more personality 💕","Another moment to discover 🌷"][index]||"A photo to discover 💗"}</figcaption></figure>`).join("");
+  photosBox.innerHTML=photos.map((url,index)=>`<figure><img src="${escapeHtml(url)}" alt="${escapeHtml(profile.name||"Kmeet member")} photo ${index+1}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'"><figcaption>${photos.length===1?"Profile photo ✨":["A lovely first impression ✨","A little more personality 💕","Another moment to discover 🌷"][index]||"A photo to discover 💗"}</figcaption></figure>`).join("");
   modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
 }
 function closeProfileGallery(){
@@ -286,38 +261,9 @@ function closeProfileGallery(){
 }
 document.getElementById("galleryClose")?.addEventListener("click",closeProfileGallery);
 document.getElementById("galleryModal")?.addEventListener("click",event=>{if(event.target.id==="galleryModal")closeProfileGallery()});
-document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeProfileGallery();closeProfileDetails()}});
-
-
-function openProfileDetails(profileId){
-  const demo=demoProfilesFull.find(p=>p.id===profileId);
-  const real=(window.__kmeetRealProfiles||[]).find(p=>p.id===profileId);
-  const profile=demo||real;
-  if(!profile)return;
-  const modal=document.getElementById("profileDetailModal");
-  const photo=safePhoto(profile.photo,avatarFallbackData(profile.name));
-  const gallery=(profile.galleryPhotos&&profile.galleryPhotos.length?profile.galleryPhotos:[profile.photo]).filter((url,i,all)=>typeof url==="string"&&url.trim()&&all.indexOf(url)===i).slice(0,3);
-  document.getElementById("profileDetailPhoto").src=photo;
-  document.getElementById("profileDetailPhoto").alt=`${profile.name||"Kmeet member"} profile photo`;
-  document.getElementById("profileDetailName").textContent=`${profile.name||"Kmeet Member"}${profile.age?`, ${profile.age}`:""}`;
-  document.getElementById("profileDetailLocation").textContent=`📍 ${profile.location||"Kenya"} · ${profile.online?"Online now":"Available to connect"}`;
-  document.getElementById("profileDetailBio").textContent=profile.description||"I am here to meet someone genuine, share good conversations and see where a beautiful connection can lead. 💗";
-  const tags=document.getElementById("profileDetailTags");
-  tags.innerHTML=(profile.tags||[]).map(tag=>`<span class="tag">${escapeHtml(tag)}</span>`).join("")||'<span class="tag">Meaningful connections</span><span class="tag">Good conversations</span>';
-  const chatUrl=`chat.html?userId=${encodeURIComponent(profile.id)}`;
-  document.getElementById("profileDetailActions").innerHTML=`<a class="detail-chat" href="${chatUrl}">💬 Say hello</a><button type="button" id="detailGalleryButton">📸 View photos</button>`;
-  document.getElementById("detailGalleryButton").addEventListener("click",()=>{closeProfileDetails();openProfileGallery(profileId)});
-  const galleryBox=document.getElementById("profileDetailGallery");
-  galleryBox.innerHTML=gallery.map((url,index)=>`<img src="${escapeHtml(url)}" alt="${escapeHtml(profile.name||"Member")} photo ${index+1}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'">`).join("");
-  document.getElementById("profileDetailGalleryNote").textContent=gallery.length===1?"This demo profile currently has one verified portrait. More photos can be added when the matching images are confirmed.":`${gallery.length} photo${gallery.length===1?"":"s"} available for this profile.`;
-  modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
-}
-function closeProfileDetails(){const modal=document.getElementById("profileDetailModal");if(!modal)return;modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";}
-document.getElementById("profileDetailClose")?.addEventListener("click",closeProfileDetails);
-document.getElementById("profileDetailModal")?.addEventListener("click",event=>{if(event.target.id==="profileDetailModal")closeProfileDetails()});
+document.addEventListener("keydown",event=>{if(event.key==="Escape")closeProfileGallery()});
 
 function attachCardEvents(){
-  document.querySelectorAll("[data-view-profile-id]").forEach(button=>button.addEventListener("click",()=>openProfileDetails(button.dataset.viewProfileId)));
   document.querySelectorAll("[data-gallery-id]").forEach(button=>button.addEventListener("click",()=>openProfileGallery(button.dataset.galleryId)));
   document.querySelectorAll("[data-like-id]").forEach(button=>button.addEventListener("click",async()=>{
     const id=button.dataset.likeId; const key=`kmeet_like_${id}`; const liked=localStorage.getItem(key)==="1";
