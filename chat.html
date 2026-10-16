@@ -2522,7 +2522,8 @@ async function initialiseAuth(){
         currentUser =
           user;
 
-
+          startChatPresence(user);
+        
         conversationId =
           getConversationId();
 
