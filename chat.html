@@ -1189,7 +1189,121 @@ let conversationReady = false;
 let authStarted = false;
 
 let targetIsDemo = false;
+let unsubscribeTargetPresence = null;
+let unsubscribeConnectionState = null;
+let chatPresenceConnectionRef = null;
 
+function showPersonStatus(label, online = false) {
+  personStatus.replaceChildren();
+
+  const dot = document.createElement("span");
+  dot.className = "presence-dot " + (online ? "online" : "offline");
+  dot.setAttribute("aria-hidden", "true");
+
+  const text = document.createElement("span");
+  text.textContent = label;
+
+  personStatus.append(dot, text);
+}
+
+function watchTargetPresence() {
+  if (unsubscribeTargetPresence) {
+    unsubscribeTargetPresence();
+    unsubscribeTargetPresence = null;
+  }
+
+  if (!targetId || targetIsDemo) {
+    showPersonStatus("Demo profile", false);
+    return;
+  }
+
+  showPersonStatus("Checking status…", false);
+
+  const targetStatusRef = databaseRef(database, "status/" + targetId);
+
+  unsubscribeTargetPresence = databaseOnValue(
+    targetStatusRef,
+    snapshot => {
+      const data = snapshot.val();
+
+      if (!data) {
+        showPersonStatus("Offline", false);
+        return;
+      }
+
+      const connections = data.connections;
+      const hasConnections =
+        connections &&
+        typeof connections === "object" &&
+        Object.keys(connections).length > 0;
+
+      // Prefer active connections when the member uses
+      // the connections-based presence system.
+      const usesConnectionPresence =
+        Object.prototype.hasOwnProperty.call(data, "last_changed");
+
+      const isOnline = usesConnectionPresence
+        ? Boolean(hasConnections)
+        : Boolean(
+            data.state === "online" ||
+            data.online === true ||
+            data.isOnline === true
+          );
+
+      showPersonStatus(isOnline ? "Online" : "Offline", isOnline);
+    },
+    error => {
+      console.warn("Kmeet could not read live presence:", error);
+      showPersonStatus("Status unavailable", false);
+    }
+  );
+}
+
+async function startChatPresence(user) {
+  if (!user || user.isAnonymous) return;
+
+  if (unsubscribeConnectionState) {
+    unsubscribeConnectionState();
+    unsubscribeConnectionState = null;
+  }
+
+  const connectedRef = databaseRef(database, ".info/connected");
+
+  unsubscribeConnectionState = databaseOnValue(
+    connectedRef,
+    async snapshot => {
+      if (snapshot.val() !== true) return;
+
+      try {
+        const connectionId =
+          "chat_" +
+          Date.now() +
+          "_" +
+          Math.random().toString(36).slice(2, 10);
+
+        chatPresenceConnectionRef = databaseRef(
+          database,
+          "status/" + user.uid + "/connections/" + connectionId
+        );
+
+        await onDisconnect(chatPresenceConnectionRef).remove();
+        await databaseSet(chatPresenceConnectionRef, true);
+
+        await databaseSet(
+          databaseRef(database, "status/" + user.uid + "/state"),
+          "online"
+        );
+
+        await databaseSet(
+          databaseRef(database, "status/" + user.uid + "/last_changed"),
+          databaseServerTimestamp()
+        );
+      } catch (error) {
+        console.warn("Kmeet could not publish chat presence:", error);
+      }
+    }
+  );
+}
 
 /*
   Demo messages are stored locally.
@@ -1801,8 +1915,7 @@ async function loadTargetProfile(){
       demo.name;
 
 
-    personStatus.textContent =
-      "Kmeet connection";
+    showPersonStatus("Demo profile", false);
 
 
     avatarFallback.textContent =
@@ -1879,7 +1992,7 @@ async function loadTargetProfile(){
 
   personName.textContent =
     name;
-
+  watchTargetPresence();
 
   avatarFallback.textContent =
     name
