@@ -258,12 +258,34 @@ body::before{
 }
 
 .status{
+.status{
   margin-top:3px;
-
   font-size:13px;
+  color:rgba(255,255,255,.75);
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-height:18px;
+}
 
-  color:
-    rgba(255,255,255,.72);
+.presence-dot{
+  width:9px;
+  height:9px;
+  display:inline-block;
+  flex:0 0 9px;
+  border-radius:50%;
+  background:#a1a1aa;
+  box-shadow:0 0 0 3px rgba(161,161,170,.12);
+}
+
+.presence-dot.online{
+  background:#22c55e;
+  box-shadow:0 0 0 3px rgba(34,197,94,.15);
+}
+
+.presence-dot.offline{
+  background:#a1a1aa;
+}
 }
 
 
@@ -933,6 +955,13 @@ body::before{
 import {
   auth,
   db,
+  database,
+  databaseRef,
+  databaseOnValue,
+  onDisconnect,
+  databaseSet,
+  databaseRemove,
+  databaseServerTimestamp,
   onAuthStateChanged,
   signInAnonymously,
   doc,
