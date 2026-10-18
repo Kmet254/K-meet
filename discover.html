@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kmeet - Discover</title>
 <link rel="icon" type="image/jpeg" href="./kmeet-logo.jfif.jfif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,44 +10,73 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
-:root{--pink:#ff4f91;--pink2:#ff7caf;--deep:#120914;--card:rgba(34,15,31,.82);--line:rgba(255,255,255,.12);--muted:#c9b9c5}
+:root{--pink:#ff4f91;--pink2:#ff7caf;--line:rgba(255,255,255,.12);--muted:#c9b9c5;--card:rgba(34,15,31,.86)}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 10%,rgba(255,79,145,.16),transparent 30%),radial-gradient(circle at 85% 20%,rgba(160,52,120,.14),transparent 32%),linear-gradient(135deg,#0b0710,#190b18 48%,#0c0710);color:#fff;font-family:Poppins,sans-serif}
 a{text-decoration:none;color:inherit}
-.navbar{min-height:78px;padding:0 50px;display:flex;align-items:center;gap:26px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(12,6,14,.78);backdrop-filter:blur(16px);position:sticky;top:0;z-index:100}
-.logo-link{display:flex;align-items:center;margin-right:auto}.logo-link img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);box-shadow:0 0 18px rgba(255,79,145,.25)}
-.nav-link{font-size:14px;font-weight:500;color:#eadce6;transition:.2s}.nav-link:hover{color:#fff}.nav-link.active{color:#ff82b0}
+button{font-family:inherit}
+.navbar{min-height:78px;padding:0 40px;display:flex;align-items:center;gap:25px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(12,6,14,.88);backdrop-filter:blur(16px);position:sticky;top:0;z-index:1000}
+.logo-link{display:flex;align-items:center;margin-right:auto}.logo-link img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #ffffff33;box-shadow:0 0 18px #ff4f9140}
+.nav-link{font-size:13px;font-weight:500;color:#eadce6;transition:.2s;white-space:nowrap}.nav-link:hover,.nav-link.active{color:#ff82b0}
 .messages-area{position:relative;display:flex;align-items:center}
-.messages-button{width:42px;height:42px;border:1px solid rgba(255,255,255,.13);border-radius:50%;background:rgba(255,255,255,.06);color:#fff;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;transition:.2s}.messages-button:hover{background:rgba(255,79,145,.16);transform:translateY(-1px)}
-.message-badge{position:absolute;right:-3px;top:-4px;min-width:19px;height:19px;padding:0 5px;border-radius:20px;background:#ff3f7f;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #150b16;box-shadow:0 3px 12px rgba(255,63,127,.35)}.message-badge.hidden{display:none}
-.messages-panel{display:none;position:absolute;right:0;top:53px;width:330px;max-width:calc(100vw - 28px);background:rgba(25,11,23,.98);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;z-index:300}.messages-panel.open{display:block}.messages-panel-head{height:54px;padding:0 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.09)}.messages-panel-head strong{font-family:'Playfair Display',serif;font-size:18px}.messages-close{border:0;background:none;color:#cdbdca;font-size:25px;cursor:pointer}.messages-list{max-height:390px;overflow:auto}.message-empty{padding:24px 18px;color:#bfaebc;text-align:center;font-size:13px}.message-person{display:flex;gap:11px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;transition:.2s}.message-person:hover{background:rgba(255,79,145,.08)}.message-person img{width:45px;height:45px;border-radius:50%;object-fit:cover;flex:none;border:1px solid rgba(255,255,255,.14)}.message-person-main{min-width:0;flex:1}.message-person-top{display:flex;align-items:center;gap:7px}.message-person-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.message-new{font-size:9px;background:#ff4f91;border-radius:20px;padding:2px 6px}.message-person-text{font-size:11px;color:#bcaeba;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
-.page-head{text-align:center;padding:38px 20px 25px}.page-head h1{font-family:'Playfair Display',serif;font-size:38px;margin:0 0 8px}.page-head p{margin:0;color:#c8b7c4;font-size:14px}.member-count{display:inline-flex;margin-top:15px;padding:7px 14px;border-radius:30px;background:rgba(255,79,145,.10);border:1px solid rgba(255,79,145,.18);font-size:12px;color:#f5d9e7}
+.messages-button{width:42px;height:42px;border:1px solid #ffffff22;border-radius:50%;background:#ffffff0c;color:#fff;font-size:19px;cursor:pointer;position:relative}
+.message-badge{position:absolute;right:-3px;top:-4px;min-width:19px;height:19px;padding:0 5px;border-radius:20px;background:#ff3f7f;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #150b16}
+.message-badge.hidden{display:none}
+.messages-panel{display:none;position:absolute;right:0;top:53px;width:330px;max-width:calc(100vw - 28px);background:#190b17;border:1px solid #ffffff20;border-radius:18px;box-shadow:0 20px 60px #0009;overflow:hidden;z-index:2000}
+.messages-panel.open{display:block}.messages-panel-head{height:54px;padding:0 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}
+.messages-panel-head strong{font-family:"Playfair Display",serif;font-size:18px}.messages-close{border:0;background:none;color:#cdbdca;font-size:25px;cursor:pointer}
+.messages-list{max-height:390px;overflow:auto}.message-empty{padding:24px 18px;color:#bfaebc;text-align:center;font-size:13px}
+.page-head{text-align:center;padding:38px 20px 25px}.page-head h1{font-family:"Playfair Display",serif;font-size:38px;margin:0 0 8px}.page-head p{margin:0;color:#c8b7c4;font-size:14px}
+.member-count{display:inline-flex;margin-top:15px;padding:7px 14px;border-radius:30px;background:#ff4f911a;border:1px solid #ff4f9130;font-size:12px;color:#f5d9e7}
 .discover-grid{width:min(1400px,calc(100% - 50px));margin:0 auto 45px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
-.profile-card{overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:0 14px 38px rgba(0,0,0,.28);backdrop-filter:blur(12px);transition:transform .22s,box-shadow .22s}.profile-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(0,0,0,.38)}
-.photo-wrap{height:310px;position:relative;overflow:hidden;background:#21131f}.photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;image-rendering:-webkit-optimize-contrast}.photo-overlay{position:absolute;inset:auto 0 0;padding:38px 15px 13px;background:linear-gradient(transparent,rgba(0,0,0,.84))}.name-line{display:flex;align-items:center;gap:8px}.name-line h3{margin:0;font-size:18px;font-weight:600}.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.35)}.status-online{background:#41e68c;box-shadow:0 0 9px rgba(65,230,140,.55)}.status-offline{background:#817681}.location{font-size:11px;color:#dfd1db;margin-top:3px}.profile-content{padding:15px}.profile-description{font-size:12px;line-height:1.6;color:#cbbbc7;min-height:58px;margin-bottom:10px}.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:28px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);color:#e4d6e0}.profile-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.view-profile-btn{grid-column:1/-1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16)!important;color:#ffe3ee}.view-profile-btn:hover{background:rgba(255,79,145,.16);border-color:rgba(255,79,145,.42)!important}.profile-actions button,.profile-actions a{border:0;border-radius:12px;padding:10px 7px;font-family:Poppins,sans-serif;font-size:11px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}.like-btn{background:rgba(255,79,145,.12);border:1px solid rgba(255,79,145,.3)!important;color:#ff9ac0}.like-btn:hover,.like-btn.liked{background:#ff4f91;color:#fff}.chat-btn{background:linear-gradient(135deg,#ff4f91,#d93679);color:#fff}.chat-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.profile-actions button:disabled{opacity:.55;cursor:not-allowed}.activity-bar{margin:0 auto 45px;width:min(1400px,calc(100% - 50px));padding:15px 18px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:15px}.activity-copy{font-size:12px;color:#cdbec9}.activity-copy strong{display:block;color:#fff;margin-bottom:3px}.likes-link{font-size:12px;color:#ff88b4;white-space:nowrap}.loading-state,.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:#bfaebc}
-@media(max-width:1100px){.discover-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:720px){.navbar{padding:0 18px;gap:15px}.nav-link:not(:last-of-type){display:none}.messages-panel{right:-65px}.page-head{padding-top:30px}.page-head h1{font-size:31px}.discover-grid{width:calc(100% - 28px);grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.photo-wrap{height:300px}.activity-bar{width:calc(100% - 28px);align-items:flex-start;flex-direction:column}.likes-link{align-self:flex-end}}
-@media(max-width:430px){.discover-grid{grid-template-columns:1fr}.photo-wrap{height:330px}.navbar{min-height:70px}.page-head h1{font-size:28px}}
-
-.gallery-count{position:absolute;right:12px;top:12px;z-index:5;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 12px;background:rgba(20,8,18,.78);color:#fff;font:600 11px Poppins,sans-serif;backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 5px 20px #0005}
-.gallery-count:hover{background:rgba(255,79,145,.92);transform:translateY(-1px)}
-.photo-wrap{position:relative}
-.gallery-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(5,2,7,.86);backdrop-filter:blur(12px)}
-.gallery-modal.open{display:flex}
-.gallery-dialog{width:min(900px,100%);max-height:90vh;overflow:auto;border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:22px;background:linear-gradient(145deg,rgba(43,18,39,.98),rgba(15,8,19,.98));box-shadow:0 25px 90px #0009}
-.gallery-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.gallery-heading h2{font-family:"Playfair Display",serif;font-size:clamp(22px,4vw,32px);margin:0;color:#fff;flex:1}
-.gallery-heading p{font-size:12px;color:#d9b9ca;margin:5px 0 0}.profile-detail-bio{font-size:13px;line-height:1.85;color:#ead9e4;margin:0 0 18px;padding:15px 16px;border:1px solid #ffffff12;border-radius:15px;background:#ffffff08}.profile-detail-meta{font-size:11px;color:#d7b7c9;margin:-6px 0 15px}
-.gallery-close{width:40px;height:40px;border:1px solid #ffffff25;border-radius:50%;background:#ffffff10;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
-.gallery-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.gallery-photos figure{margin:0;min-width:0;overflow:hidden;border-radius:16px;border:1px solid #ffffff18;background:#170d19}
-.gallery-photos img{display:block;width:100%;height:clamp(180px,32vw,330px);object-fit:cover}
+.profile-card{overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:0 14px 38px #0005;backdrop-filter:blur(12px);transition:transform .22s,box-shadow .22s;min-width:0}
+.profile-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px #0007}
+.photo-wrap{height:310px;position:relative;overflow:hidden;background:#21131f}
+.photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;transition:transform .45s}
+.profile-card:hover .photo-wrap img{transform:scale(1.035)}
+.photo-overlay{position:absolute;inset:auto 0 0;padding:48px 15px 13px;background:linear-gradient(transparent,#000d)}
+.name-line{display:flex;align-items:center;gap:8px}.name-line h3{margin:0;font-size:18px;font-weight:600}
+.status-dot{width:9px;height:9px;border-radius:50%;display:inline-block;border:1px solid #ffffff66;flex-shrink:0}
+.status-online{background:#41e68c;box-shadow:0 0 9px #41e68c88}.status-offline{background:#817681}
+.location{font-size:11px;color:#dfd1db;margin-top:3px}
+.gallery-count{position:absolute;right:10px;top:10px;z-index:5;border:1px solid #ffffff40;border-radius:999px;padding:7px 10px;background:#140812d9;color:#fff;font-size:10px;cursor:pointer;backdrop-filter:blur(10px)}
+.gallery-count:hover{background:#ff4f91}
+.profile-content{padding:15px}.profile-description{font-size:12px;line-height:1.75;color:#cbbbc7;min-height:84px;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;min-height:25px}.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#ffffff0c;border:1px solid #ffffff17;color:#e4d6e0}
+.profile-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.profile-actions button,.profile-actions a{display:flex;align-items:center;justify-content:center;gap:5px;min-height:39px;border-radius:11px;padding:9px 5px;font-size:10px;font-weight:600;text-align:center;cursor:pointer;transition:.2s}
+.like-btn{background:#ff4f911c;border:1px solid #ff4f9155;color:#ff9ac0}.like-btn:hover,.like-btn.liked{background:#ff4f91;color:#fff}
+.chat-btn{background:linear-gradient(135deg,#ff4f91,#d93679);color:#fff;border:0}.chat-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.view-btn{grid-column:1/-1;background:#ffffff0b;border:1px solid #ffffff22;color:#f8e6f0}
+.view-btn:hover{background:#ffffff17;border-color:#ff82b0;color:#ffb6d1}
+.activity-bar{margin:0 auto 45px;width:min(1400px,calc(100% - 50px));padding:15px 18px;border-radius:17px;background:#ffffff0b;border:1px solid #ffffff14;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.activity-copy{font-size:12px;color:#cdbec9}.activity-copy strong{display:block;color:#fff;margin-bottom:3px}.likes-link{font-size:12px;color:#ff88b4;white-space:nowrap}
+.loading-state,.empty-state{grid-column:1/-1;text-align:center;padding:50px 20px;color:#bfaebc}
+.modal{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;background:#050207e8;backdrop-filter:blur(12px)}
+.modal.open{display:flex}.modal-dialog{width:min(760px,100%);max-height:90vh;overflow:auto;border:1px solid #ffffff22;border-radius:23px;padding:22px;background:linear-gradient(145deg,#2b1227,#0f0813);box-shadow:0 25px 90px #000b}
+.modal-heading{display:flex;align-items:center;gap:12px;margin-bottom:18px}.modal-heading h2{font-family:"Playfair Display",serif;font-size:clamp(23px,4vw,32px);margin:0;flex:1}
+.modal-close{width:40px;height:40px;border:1px solid #ffffff25;border-radius:50%;background:#ffffff10;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
+.profile-detail{display:grid;grid-template-columns:minmax(180px, .8fr) 1.2fr;gap:22px;align-items:start}
+.detail-photo{width:100%;height:330px;object-fit:cover;object-position:center 25%;border-radius:16px;border:1px solid #ffffff20;background:#21131f}
+.detail-location{color:#ff9ac0;font-size:12px;margin:8px 0}
+.detail-bio{color:#e0cedb;font-size:13px;line-height:1.9;white-space:pre-line}
+.detail-tags{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}
+.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
+.detail-actions a,.detail-actions button{padding:11px 16px;border-radius:12px;font-size:12px;font-weight:600;border:1px solid #ffffff25;cursor:pointer}
+.detail-chat{background:linear-gradient(135deg,#ff4f91,#d93679);color:white}.detail-gallery{background:#ffffff0c;color:#fff}
+.gallery-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.gallery-photos figure{margin:0;min-width:0;overflow:hidden;border-radius:15px;border:1px solid #ffffff18;background:#170d19}
+.gallery-photos img{display:block;width:100%;height:280px;object-fit:cover}
 .gallery-photos figcaption{padding:10px 12px;color:#f5dce8;font-size:12px}
-.gallery-note{margin:15px 0 0;color:#cbb6c5;font-size:11px;text-align:center}
-@media(max-width:560px){.gallery-dialog{padding:15px;border-radius:18px}.gallery-photos{grid-template-columns:1fr}.gallery-photos img{height:310px}.gallery-photos figure:not(:first-child){display:none}.gallery-photos.show-all figure{display:block}.gallery-photos.show-all{grid-template-columns:1fr}.gallery-count{padding:7px 10px}}
+.modal-note{margin:15px 0 0;color:#cbb6c5;font-size:11px;text-align:center}
+@media(max-width:1100px){.discover-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.navbar{padding:0 18px;gap:15px}.nav-link.hide-mobile{display:none}.messages-panel{right:-60px}.page-head{padding-top:30px}.page-head h1{font-size:31px}.discover-grid{width:calc(100% - 28px);grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.photo-wrap{height:300px}.activity-bar{width:calc(100% - 28px);align-items:flex-start;flex-direction:column}.likes-link{align-self:flex-end}.profile-detail{grid-template-columns:1fr 1fr;gap:14px}.detail-photo{height:270px}}
+@media(max-width:500px){.discover-grid{grid-template-columns:1fr}.photo-wrap{height:350px}.navbar{min-height:70px}.page-head h1{font-size:28px}.profile-description{min-height:0}.profile-detail{grid-template-columns:1fr}.detail-photo{height:330px}.modal-dialog{padding:15px;border-radius:18px}.gallery-photos{grid-template-columns:1fr}.gallery-photos img{height:310px}}
 </style>
 </head>
+
 <body>
 <nav class="navbar">
   <a class="logo-link" href="index.html" aria-label="Kmeet Home"><img src="./kmeet-logo.jfif.jfif" alt="Kmeet"></a>
@@ -56,383 +85,243 @@ a{text-decoration:none;color:inherit}
     <button id="messagesButton" class="messages-button" type="button" aria-label="Messages" title="Messages">💬<span id="messageBadge" class="message-badge hidden">0</span></button>
     <div id="messagesPanel" class="messages-panel">
       <div class="messages-panel-head"><strong>Messages</strong><button id="messagesClose" class="messages-close" type="button" aria-label="Close">×</button></div>
-      <div id="messagesList" class="messages-list"><div class="message-empty">Your messages will appear here 💗</div></div>
+      <div id="messagesList" class="messages-list"><div class="message-empty">Sign in to check your conversations 💗</div></div>
     </div>
   </div>
-  <a id="profileLink" class="nav-link" href="login.html">Profile</a>
-  <a class="nav-link" href="index.html">Home</a>
+  <a id="profileLink" class="nav-link" href="profile.html">Profile</a>
+  <a class="nav-link hide-mobile" href="index.html">Home</a>
 </nav>
 
 <header class="page-head">
   <h1>Discover Your Connection 💕</h1>
-  <p>Meet interesting people and find someone special on Kmeet.</p>
-  <div id="memberCount" class="member-count">36 people to discover</div>
+  <p>Meet interesting people across Kenya on Kmeet.</p>
+  <div id="memberCount" class="member-count">Loading members…</div>
 </header>
 
 <main>
   <section id="discoverGrid" class="discover-grid">
-    <div class="loading-state">Loading people to discover… 💗</div>
+    <div class="loading-state">Finding beautiful connections… 💗</div>
   </section>
   <section class="activity-bar">
-    <div class="activity-copy"><strong>❤️ Find your first connection</strong>Like a profile you are interested in. Your likes are saved for this session.</div>
+    <div class="activity-copy"><strong>❤️ Find your first connection</strong>Like a profile you're interested in, view their details, or start a conversation.</div>
     <a class="likes-link" href="likes.html">♥ My Likes</a>
   </section>
 </main>
 
-<div class="gallery-modal" id="galleryModal" aria-hidden="true">
-  <section class="gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
-    <div class="gallery-heading"><div><h2 id="galleryTitle">A little more about them 💗</h2><p id="gallerySubtitle">Three profile photos</p></div><button class="gallery-close" id="galleryClose" type="button" aria-label="Close gallery">&times;</button></div>
-    <p class="profile-detail-bio" id="profileDetailBio"></p><p class="profile-detail-meta" id="profileDetailMeta"></p><div class="gallery-photos" id="galleryPhotos"></div>
-    <p class="gallery-note">Real connections begin with kindness, respect, and a hello. 💕</p>
+<div class="modal" id="profileModal" aria-hidden="true">
+  <section class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <div class="modal-heading"><h2 id="detailTitle">Meet this member 💗</h2><button class="modal-close" id="profileClose" type="button" aria-label="Close">&times;</button></div>
+    <div id="profileDetail"></div>
+  </section>
+</div>
+
+<div class="modal" id="galleryModal" aria-hidden="true">
+  <section class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
+    <div class="modal-heading"><h2 id="galleryTitle">Photo gallery 💗</h2><button class="modal-close" id="galleryClose" type="button" aria-label="Close gallery">&times;</button></div>
+    <div class="gallery-photos" id="galleryPhotos"></div>
+    <p class="modal-note">Real connections begin with kindness, respect, and a hello. 💕</p>
   </section>
 </div>
 
 <script type="module">
-import {
-  auth, db, onAuthStateChanged, collection, onSnapshot, doc, getDoc, setDoc,
-  serverTimestamp, query, orderBy,
-  database, databaseRef, databaseOnValue
-} from "./firebase-config.js";
-import {
-  getDocs, where, limit
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {auth,db,onAuthStateChanged,collection,doc,setDoc,serverTimestamp} from "./firebase-config.js";
+import {getDocs} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const grid=document.getElementById("discoverGrid");
 const memberCount=document.getElementById("memberCount");
-const profileLink=document.getElementById("profileLink");
 const messagesButton=document.getElementById("messagesButton");
-const messageBadge=document.getElementById("messageBadge");
 const messagesPanel=document.getElementById("messagesPanel");
-const messagesClose=document.getElementById("messagesClose");
 const messagesList=document.getElementById("messagesList");
 let currentKmeetUser=null;
-const READS_KEY="kmeet_message_reads_v1";
-let conversationQueryUnsubscribers=[];
-const messageUnsubscribers=new Map();
-const watchedConversationIds=new Map();
-const latestMessagesByConversation=new Map();
-const conversationQueryResults={receiver:new Map(),initiator:new Map()};
-const messageProfileCache=new Map();
-let messageRenderToken=0;
+let activeProfiles=[];
 
-// High-definition clarity portraits from Unsplash (1000px width, sharp focus)
-const backupPhotos=[
-"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1000&q=85",
-"https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?auto=format&fit=crop&w=1000&q=85"
+const demoData=[
+["Amara",27,"Nairobi",true,"I appreciate meaningful conversations, thoughtful gestures and people who are comfortable being themselves. I enjoy discovering new coffee spots, listening to music on a quiet evening and taking spontaneous weekend trips. I hope to meet someone kind, emotionally mature and ready to build a connection that grows naturally.",["Music","Travel","Coffee"],"women",44],
+["Brian",30,"Mombasa",true,"Easygoing, ambitious and always ready for a good laugh. I enjoy keeping active, exploring the Coast and trying restaurants I have never visited. I value honesty, consistency and a partner who can talk openly about both the little things and the big dreams.",["Fitness","Travel","Food"],"men",32],
+["Fatuma",25,"Mombasa",false,"A proud Coast girl who finds happiness in family gatherings, Swahili culture and peaceful walks beside the ocean. I love a thoughtful conversation more than grand promises. I would like to meet a respectful, patient person who appreciates kindness and family.",["Culture","Family","Ocean"],"women",68],
+["Daniel",29,"Nakuru",true,"Positive energy, honest communication and weekend adventures are my kind of life. I enjoy football, cooking something new and travelling when time allows. I believe a strong relationship should feel like friendship too: supportive, playful, respectful and safe.",["Sports","Travel","Cooking"],"men",46],
+["Zuri",28,"Nairobi",false,"Creative at heart, with a soft spot for art, fashion and music that tells a story. I like visiting galleries, taking long walks and making ordinary days feel special. I am drawn to people who are genuine, curious and comfortable expressing who they are.",["Art","Fashion","Music"],"women",47],
+["Aarav",31,"Nairobi",true,"A tech entrepreneur who enjoys building ideas and spending time outdoors when the laptop closes. Hiking, good food and thoughtful discussions keep me inspired. I value independence, loyalty and a relationship where both people encourage each other's goals.",["Technology","Business","Hiking"],"men",75],
+["Aisha",26,"Malindi",true,"Ocean lover, music fan and someone who can turn a simple evening into a memorable one. I enjoy beach walks, local food and learning about people with different experiences. I am looking for a warm-hearted person who values respect, laughter and genuine effort.",["Beach","Music","Food"],"women",12],
+["Michael",33,"Nairobi",false,"Calm, dependable and interested in building something meaningful rather than rushing into appearances. I enjoy reading, keeping fit and sharing a good meal with friends. I appreciate a partner who communicates honestly, keeps their word and can laugh at life's surprises.",["Business","Reading","Fitness"],"men",15],
+["Wanjiku",29,"Kiambu",true,"Warm personality, nature lover and enthusiastic home cook. My ideal weekend could be a quiet garden walk, a road trip or trying a recipe with someone special. I appreciate emotional maturity, humour and people who make others feel seen and respected.",["Nature","Food","Travel"],"women",25],
+["Hassan",28,"Mombasa",false,"Inspired by the charm of Old Town, the Coast's history and the stories people carry. Photography and sports keep me busy, but I always make time for family and friends. I hope to meet someone open-minded who enjoys discovering new places and sharing honest conversations.",["Coast","Photography","Sports"],"men",51],
+["Chloe",27,"Naivasha",true,"I care deeply about wildlife, conservation and spending time in the natural world. A day outdoors can reset almost anything. I enjoy photography, travelling around Kenya and conversations that go beyond small talk. Kindness and curiosity matter a lot to me.",["Wildlife","Nature","Travel"],"women",33],
+["Samuel",32,"Kakamega",true,"Family-oriented, hardworking and a big fan of conversations that go on longer than expected. I enjoy music, sports and simple evenings with good company. I believe trust is built through actions, and I hope to meet someone who values commitment, laughter and mutual support.",["Family","Sports","Music"],"men",22],
+["Faith",24,"Nairobi",false,"Cheerful, energetic and always looking for a new experience. I enjoy dancing, fashion, exploring the city and learning something new whenever I can. I admire people who are kind to everyone, know what they want and still make room for fun.",["Dance","Fashion","Travel"],"women",49],
+["Tariq",34,"Lamu",true,"Living on the Coast has given me a deep appreciation for the ocean, culture and a slower pace of life. I work in hospitality and love sharing the best of Lamu with visitors. I value sincerity, patience and someone who enjoys both adventure and peaceful moments.",["Lamu","Ocean","Culture"],"men",64],
+["Priya",26,"Nairobi",true,"An architect who enjoys beautiful spaces, discovering new restaurants and planning trips that include a little adventure. Creativity influences how I see the world, but kindness is what makes a person stand out to me. I hope to meet someone supportive, curious and sincere.",["Architecture","Food","Travel"],"women",56],
+["Alex",30,"Kisumu",false,"Adventurous, friendly and happiest when there is a plan to explore somewhere new. I enjoy fishing, live music and spending quality time with people who matter. I am looking for a real connection built on friendship, mutual respect and the willingness to grow together.",["Fishing","Music","Travel"],"men",29],
+["Ivy",26,"Nakuru",true,"Quietly confident, observant and fond of beautiful places and little details. Photography, coffee and nature walks help me recharge. I appreciate thoughtful messages, a good sense of humour and people who can be both ambitious and gentle.",["Nature","Photography","Coffee"],"women",18],
+["Oliver",35,"Nanyuki",false,"I work around tourism and conservation, and I never get tired of Kenya's landscapes. Mountain trails and outdoor adventures are favourites, though I also appreciate a relaxed evening and a good book. I value honesty, warmth and a partner who enjoys life's journey.",["Safari","Outdoors","Conservation"],"men",71],
+["Sharon",28,"Mombasa",true,"A positive person who believes small acts of care make a big difference. I enjoy dancing, beach sunsets, good food and spending time with people who bring out the best in each other. I would love to meet someone respectful, affectionate and ready for a genuine bond.",["Beach","Dance","Food"],"women",21],
+["Chris",31,"Nairobi",true,"I believe the best relationships begin with friendship, shared laughter and honest communication. Fitness and music keep me balanced, while travelling gives me new perspectives. I am looking for someone who is kind, dependable and excited to create memories together.",["Fitness","Music","Travel"],"men",80],
+["Aminah",24,"Garissa",false,"A teacher with big aspirations and a love for poetry, books and meaningful conversations. I value patience, family and people who treat others with consideration. I hope to meet someone who supports personal growth and understands that a strong connection takes time.",["Poetry","Teaching","Books"],"women",65],
+["Anthony",29,"Nakuru",true,"Always planning the next adventure, whether that means a road trip, a new sport or a spontaneous day out. I enjoy photography and discovering places away from the usual crowds. I am drawn to positive people who communicate clearly and do what they say.",["Travel","Sports","Photography"],"men",37],
+["Linda",32,"Nairobi",true,"Family, friendship and meaningful conversations are important parts of my life. I love cooking for people, reading when I get a quiet moment and sharing experiences that help us grow. I am hoping to meet someone thoughtful, steady and ready to build trust together.",["Family","Cooking","Books"],"women",39],
+["Joseph",36,"Kisumu",false,"Mature, respectful and looking for a lasting connection. I enjoy business, fishing and travelling to see new parts of the country. I believe a healthy partnership needs honesty, patience, shared effort and the ability to talk through difficult moments with care.",["Business","Fishing","Travel"],"men",11],
+["Cynthia",27,"Kiambu",true,"Fun-loving and happiest when surrounded by good people. Fashion, food and music are favourite ways to express myself, and I never say no to a chance to explore somewhere new. I appreciate confidence without arrogance and someone who can make me laugh.",["Fashion","Food","Music"],"women",52],
+["Mark",33,"Nairobi",false,"Ambitious, humorous and always open to meeting someone new. I enjoy football, travelling and conversations about goals, ideas and everyday life. I value a partner who is honest, affectionate and independent, and who wants a relationship that feels like a team.",["Business","Football","Travel"],"men",55],
+["Mercy",29,"Mombasa",true,"An ocean lover with a bright personality and a big heart. I enjoy dancing, reading and the relaxed feeling of an evening by the sea. I admire people who are considerate, emotionally available and willing to put real effort into getting to know one another.",["Beach","Dance","Books"],"women",57],
+["Peter",30,"Nairobi",true,"Friendly, curious and ready for a genuine conversation. Technology and fitness keep me busy, but I always make space for movies, good food and quality time. I hope to find someone who is authentic, supportive and interested in creating a meaningful future together.",["Technology","Fitness","Movies"],"men",41],
+["Joy",26,"Nakuru",false,"I enjoy simple moments, laughter and discovering new places without needing everything to be perfectly planned. Music and food make almost any day better. I would like to meet someone who communicates with care, enjoys a little adventure and values a peaceful partnership.",["Travel","Food","Music"],"women",61],
+["George",34,"Mombasa",true,"Easygoing, social and happiest near the sea. I enjoy sports, good food and meeting people who have interesting stories to share. I believe attraction matters, but respect, reliability and a willingness to understand each other are what make a connection last.",["Beach","Sports","Food"],"men",62],
+["Ruth",28,"Nairobi",true,"Caring, ambitious and looking for a partner in adventure. Books, travel and fitness help me keep a healthy balance in life. I value kindness, emotional honesty and someone who can celebrate the good times while still showing up when life gets difficult.",["Books","Travel","Fitness"],"women",72],
+["Martin",31,"Eldoret",false,"Honest, humorous and interested in a meaningful connection. I enjoy sports, music and learning new things through the people I meet. I am hoping to find someone who values trust, has a kind heart and believes that love is shown in everyday actions.",["Sports","Music","Business"],"men",34],
+["Angela",30,"Nairobi",true,"Confident, kind and looking for someone with a good heart. I enjoy fashion, coffee dates and travelling to places that offer a fresh perspective. I admire people who listen carefully, respect boundaries and are serious about building a connection at a healthy pace.",["Fashion","Travel","Coffee"],"women",26],
+["Patrick",29,"Kisumu",true,"I love nature, good food and people who can make me laugh. A relaxed weekend, a new place to explore or a great conversation can make my day. I am looking for a genuine partner who is kind, dependable and ready to get to know each other honestly.",["Nature","Food","Music"],"men",59],
+["Stella",27,"Nairobi",false,"A cheerful personality with a passion for creativity, dance and style. I enjoy meeting people, discovering music and finding inspiration in ordinary moments. I am drawn to someone who is respectful, playful and able to talk openly about what matters.",["Art","Dance","Fashion"],"women",36],
+["William",32,"Nakuru",true,"Respectful, focused and hoping to meet someone genuine. I enjoy fitness, travelling and working toward goals while remembering to appreciate the present. I value loyalty, open communication and a partner who wants to encourage each other's dreams.",["Fitness","Travel","Business"],"men",77]
 ];
 
-const demoProfiles=[
-["Amara",27,"Nairobi",true,"I love meaningful conversations, good music and discovering new places.",["Music","Travel","Coffee"]],
-["Brian",30,"Mombasa",true,"Easygoing, ambitious and always ready for a good laugh.",["Fitness","Travel","Food"]],
-["Nia",25,"Kisumu",false,"Kind heart, curious mind and a soft spot for sunsets.",["Books","Nature","Movies"]],
-["Daniel",29,"Nakuru",true,"Positive energy, honest conversations and weekend adventures.",["Sports","Travel","Cooking"]],
-["Zuri",28,"Nairobi",false,"Creative soul looking for someone genuine and fun.",["Art","Fashion","Music"]],
-["Kevin",31,"Eldoret",true,"Focused on growth but never too busy for great company.",["Business","Fitness","Travel"]],
-["Aisha",26,"Mombasa",true,"Beach walks, laughter and conversations that last for hours.",["Beach","Music","Food"]],
-["Michael",33,"Nairobi",false,"Calm, dependable and interested in building something real.",["Business","Reading","Fitness"]],
-["Wanjiku",29,"Kiambu",true,"Warm personality with a love for nature and good food.",["Nature","Food","Travel"]],
-["Eric",28,"Thika",false,"Simple guy who enjoys good friends and spontaneous plans.",["Movies","Football","Travel"]],
-["Leah",30,"Nairobi",true,"Independent, cheerful and looking for a genuine connection.",["Fitness","Books","Coffee"]],
-["Samuel",32,"Kakamega",true,"Family oriented, hardworking and a big fan of long talks.",["Family","Sports","Music"]],
-["Faith",24,"Nairobi",false,"Young at heart, positive and always looking for new experiences.",["Dance","Fashion","Travel"]],
-["James",35,"Mombasa",true,"Laid-back and optimistic with a passion for the ocean.",["Beach","Business","Cooking"]],
-["Maya",27,"Nairobi",true,"I enjoy art, good conversations and people who are authentic.",["Art","Books","Travel"]],
-["Alex",30,"Kisumu",false,"Adventurous, friendly and ready to meet someone special.",["Fishing","Music","Travel"]],
-["Ivy",26,"Nakuru",true,"Quietly confident with a love for beautiful places.",["Nature","Photography","Coffee"]],
-["David",34,"Nairobi",false,"Professional by day, playful by evening. Let's talk.",["Business","Movies","Food"]],
-["Sharon",28,"Mombasa",true,"A positive person who values honesty and kindness.",["Beach","Dance","Food"]],
-["Chris",31,"Nairobi",true,"I believe the best relationships start with friendship.",["Fitness","Music","Travel"]],
-["Esther",25,"Eldoret",false,"Gentle soul, big dreams and a love for laughter.",["Books","Nature","Music"]],
-["Anthony",29,"Nakuru",true,"Always planning the next adventure and looking for company.",["Travel","Sports","Photography"]],
-["Linda",32,"Nairobi",true,"Family, faith, friendship and meaningful conversations matter to me.",["Family","Cooking","Books"]],
-["Joseph",36,"Kisumu",false,"Mature, respectful and looking for a lasting connection.",["Business","Fishing","Travel"]],
-["Cynthia",27,"Kiambu",true,"Fun-loving and happiest when surrounded by good people.",["Fashion","Food","Music"]],
-["Mark",33,"Nairobi",false,"Ambitious, humorous and always open to meeting someone new.",["Business","Football","Travel"]],
-["Mercy",29,"Mombasa",true,"Ocean lover with a bright personality and a big heart.",["Beach","Dance","Books"]],
-["Peter",30,"Nairobi",true,"Friendly, curious and ready for a genuine conversation.",["Technology","Fitness","Movies"]],
-["Joy",26,"Nakuru",false,"I enjoy simple moments, laughter and discovering new places.",["Travel","Food","Music"]],
-["George",34,"Mombasa",true,"Easygoing, social and always happiest near the sea.",["Beach","Sports","Food"]],
-["Ruth",28,"Nairobi",true,"Caring, ambitious and looking for a partner in adventure.",["Books","Travel","Fitness"]],
-["Martin",31,"Eldoret",false,"Honest, humorous and interested in a meaningful connection.",["Sports","Music","Business"]],
-["Angela",30,"Nairobi",true,"Confident, kind and looking for someone with a good heart.",["Fashion","Travel","Coffee"]],
-["Patrick",29,"Kisumu",true,"Love nature, good food and people who can make me laugh.",["Nature","Food","Music"]],
-["Stella",27,"Nairobi",false,"A cheerful personality with a passion for creativity.",["Art","Dance","Fashion"]],
-["William",32,"Nakuru",true,"Respectful, focused and hoping to meet someone genuine.",["Fitness","Travel","Business"]]
-];
+const demoProfiles=demoData.map((d,i)=>({
+ id:"demo-"+String(i+1).padStart(2,"0"),
+ name:d[0],age:d[1],location:d[2],online:d[3],description:d[4],tags:d[5],
+ photo:`https://randomuser.me/api/portraits/${d[6]}/${d[7]}.jpg`,
+ galleryPhotos:[`https://randomuser.me/api/portraits/${d[6]}/${d[7]}.jpg`],
+ isDemo:true
+}));
 
-const demoProfilesFull=demoProfiles.map((p,i)=>{
-  const photo=backupPhotos[i] || avatarFallbackData(p[0]);
-  const interests=(p[5]||[]).slice(0,2).map(x=>x.toLowerCase());
-  const extra=interests.length===2
-    ? `Outside my usual routine, I enjoy ${interests[0]} and ${interests[1]}. I appreciate honest communication, a warm sense of humour, and someone who is thoughtful and consistent.`
-    : `I appreciate honest communication, a warm sense of humour, and someone who is thoughtful and consistent.`;
-  return {id:`demo-${String(i+1).padStart(2,"0")}`,name:p[0],age:p[1],location:p[2],online:p[3],description:`${p[4]} ${extra}`,tags:p[5],photo,galleryPhotos:[photo]};
-});
-
-function escapeHtml(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));}
-function safePhoto(url,fallback){return url||fallback||backupPhotos[0];}
-function initials(name){return String(name||"K").trim().split(/\s+/).map(x=>x[0]).slice(0,2).join("").toUpperCase()||"K";}
-function avatarFallbackData(name){const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700"><rect width="100%" height="100%" fill="#291426"/><text x="50%" y="54%" text-anchor="middle" font-family="Arial" font-size="190" fill="#ff78aa">${escapeHtml(initials(name))}</text></svg>`;return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);}
-function getReads(){try{return JSON.parse(localStorage.getItem(READS_KEY)||"{}")}catch{return{}}}
-function saveReads(reads){try{localStorage.setItem(READS_KEY,JSON.stringify(reads))}catch{}}
-function getTimestampValue(value){if(!value)return 0;if(typeof value==="number")return value;if(typeof value.toMillis==="function"){try{return value.toMillis()}catch{}}if(value.seconds)return Number(value.seconds)*1000;const parsed=new Date(value).getTime();return Number.isFinite(parsed)?parsed:0;}
-
-function renderCard(profile,isDemo=false){
-  const liked=localStorage.getItem(`kmeet_like_${profile.id}`)==="1";
-  const photo=safePhoto(profile.photo,isDemo?backupPhotos[profile.backupIndex||0]:avatarFallbackData(profile.name));
-  const tags=(profile.tags||[]).slice(0,5).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("");
-  const chatUrl=`chat.html?userId=${encodeURIComponent(profile.id)}`;
-  return `<article class="profile-card" data-profile-id="${escapeHtml(profile.id)}">
-    <div class="photo-wrap">
-      <img src="${escapeHtml(photo)}" alt="${escapeHtml(profile.name)}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'">
-      <button class="gallery-count" type="button" data-gallery-id="${escapeHtml(profile.id)}" aria-label="View ${escapeHtml(profile.name)}'s photos">📸 ${(profile.galleryPhotos||[profile.photo]).filter(Boolean).length} ${(profile.galleryPhotos||[profile.photo]).filter(Boolean).length===1?"Photo":"Photos"}</button>
-      <div class="photo-overlay"><div class="name-line"><h3>${escapeHtml(profile.name)}${profile.age?`, ${escapeHtml(profile.age)}`:""}</h3><span class="status-dot ${profile.online?"status-online":"status-offline"}" title="${profile.online?"Online":"Offline"}"></span></div><div class="location">📍 ${escapeHtml(profile.location||"Kenya")}</div></div>
-    </div>
-    <div class="profile-content">
-      <div class="profile-description">${escapeHtml(profile.description||"Open to a genuine connection and a good conversation. 💕")}</div>
-      <div class="tags">${tags}</div>
-      <div class="profile-actions">
-        <button class="like-btn ${liked?"liked":""}" data-like-id="${escapeHtml(profile.id)}" type="button">${liked?"💗 Liked":"❤️ Like"}</button>
-        <a class="chat-btn" href="${chatUrl}">💬 Chat</a>
-        <button class="view-profile-btn" data-view-profile-id="${escapeHtml(profile.id)}" type="button">♡ View Profile</button>
-      </div>
-    </div>
-  </article>`;
+function escapeHtml(value){
+ return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 }
+function fallbackAvatar(name){
+ const initials=String(name||"K").trim().split(/\s+/).map(x=>x[0]).slice(0,2).join("").toUpperCase()||"K";
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#43213b"/><stop offset="1" stop-color="#120914"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><circle cx="350" cy="270" r="110" fill="#ff4f91" opacity=".25"/><text x="50%" y="56%" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="150" fill="#ff7caf">${initials}</text></svg>`;
+ return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg);
+}
+function getName(d){return d.displayName||d.name||d.username||d.fullName||""}
+function getPhoto(d){return d.photoURL||d.photoUrl||d.avatar||d.profilePhoto||d.profileImage||d.image||""}
 
-function getRealName(data){return data.displayName||data.name||data.username||data.fullName||""}
-function getRealPhoto(data){return data.photoURL||data.photoUrl||data.avatar||data.profilePhoto||data.profileImage||data.image||""}
 function normaliseRealUser(id,data){
-  const name=getRealName(data); const photo=getRealPhoto(data);
-  if(!name&&!photo)return null;
-  const suppliedGallery=Array.isArray(data.galleryPhotos)?data.galleryPhotos:Array.isArray(data.photos)?data.photos:Array.isArray(data.photoGallery)?data.photoGallery:[];
-  const galleryPhotos=[photo,...suppliedGallery].filter((url,i,all)=>typeof url==="string"&&url.trim()&&all.indexOf(url)===i).slice(0,3);
-  return {id,name:name||"Kmeet Member",age:data.age||data.years||"",location:data.location||data.city||data.town||"Kenya",description:data.bio||data.about||data.description||"Looking to meet someone genuine. 💕",tags:Array.isArray(data.interests)?data.interests:(Array.isArray(data.tags)?data.tags:typeof data.interests==="string"?data.interests.split(",").map(x=>x.trim()).filter(Boolean):[]),photo, galleryPhotos, online:!!data.online||data.status==="online"};
+ const name=getName(data)||"Kmeet Member";
+ const photo=getPhoto(data)||fallbackAvatar(name);
+ const source=Array.isArray(data.galleryPhotos)?data.galleryPhotos:Array.isArray(data.photos)?data.photos:Array.isArray(data.photoGallery)?data.photoGallery:[];
+ const galleryPhotos=[photo,...source].filter((url,i,all)=>typeof url==="string"&&url.trim()&&all.indexOf(url)===i).slice(0,8);
+ const interests=Array.isArray(data.interests)?data.interests:Array.isArray(data.tags)?data.tags:typeof data.interests==="string"?data.interests.split(",").map(x=>x.trim()).filter(Boolean):[];
+ return {
+  id,name,age:data.age||data.years||"",location:data.location||data.city||data.town||"Kenya",
+  description:data.bio||data.about||data.description||"Looking to meet someone genuine. Send a friendly hello and start a conversation.",
+  tags:interests,photo,galleryPhotos,online:!!data.online||data.status==="online",isDemo:false
+ };
 }
-
-async function getPresence(id){
-  if(!database||!id||/[.#$\[\]]/.test(id))return false;
-  return new Promise(resolve=>{
-    let finished=false;
-    let timeoutId=null;
-    const finish=value=>{
-      if(finished)return;
-      finished=true;
-      if(timeoutId!==null)clearTimeout(timeoutId);
-      resolve(!!value);
-    };
-    timeoutId=setTimeout(()=>finish(false),900);
-    try{
-      const r=databaseRef(database,`status/${id}`);
-      databaseOnValue(r,s=>{
-        const v=s.val();
-        const connections=v&&v.connections&&typeof v.connections==="object"?Object.values(v.connections).some(Boolean):false;
-        finish(!!(connections||(v&&v.state==="online")));
-      },error=>{
-        console.warn("Presence lookup unavailable:",error);
-        finish(false);
-      },{onlyOnce:true});
-    }catch(error){
-      console.warn("Presence lookup unavailable:",error);
-      finish(false);
-    }
-  });
-}
-
 async function loadRealProfiles(){
-  try{
-    const snap=await getDocs(collection(db,"users"));
-    const result=snap.docs
-      .filter(item=>!(currentKmeetUser&&item.id===currentKmeetUser.uid))
-      .map(item=>normaliseRealUser(item.id,item.data()||{}))
-      .filter(Boolean);
-    await Promise.all(result.map(async profile=>{profile.online=await getPresence(profile.id)}));
-    return result;
-  }catch(error){
-    console.warn("Could not load Kmeet members:",error);
-    return [];
+ const result=[];
+ if(!db)return result;
+ try{
+  const snap=await getDocs(collection(db,"users"));
+  for(const item of snap.docs){
+   if(currentKmeetUser&&item.id===currentKmeetUser.uid)continue;
+   const profile=normaliseRealUser(item.id,item.data()||{});
+   if(profile.id&&profile.name)result.push(profile);
   }
+ }catch(error){console.warn("Could not load Kmeet members:",error)}
+ return result;
+}
+function cardHtml(p){
+ const liked=localStorage.getItem("kmeet_like_"+p.id)==="1";
+ const photo=p.photo||fallbackAvatar(p.name);
+ const photoCount=(p.galleryPhotos||[]).filter(Boolean).length||1;
+ const tags=(p.tags||[]).slice(0,5).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("");
+ return `<article class="profile-card" data-profile-id="${escapeHtml(p.id)}">
+ <div class="photo-wrap">
+ <img src="${escapeHtml(photo)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackAvatar(p.name)}'">
+ <button class="gallery-count" type="button" data-gallery-id="${escapeHtml(p.id)}">📸 ${photoCount} Photo${photoCount===1?"":"s"}</button>
+ <div class="photo-overlay"><div class="name-line"><h3>${escapeHtml(p.name)}${p.age?`, ${escapeHtml(p.age)}`:""}</h3><span class="status-dot ${p.online?"status-online":"status-offline"}" title="${p.online?"Online":"Offline"}"></span></div><div class="location">📍 ${escapeHtml(p.location||"Kenya")}</div></div>
+ </div>
+ <div class="profile-content">
+ <div class="profile-description">${escapeHtml(p.description)}</div>
+ <div class="tags">${tags}</div>
+ <div class="profile-actions">
+ <button class="like-btn ${liked?"liked":""}" data-like-id="${escapeHtml(p.id)}" type="button">${liked?"💗 Liked":"❤️ Like"}</button>
+ <a class="chat-btn" href="chat.html?userId=${encodeURIComponent(p.id)}">💬 Chat</a>
+ <button class="view-btn" data-view-id="${escapeHtml(p.id)}" type="button"><i class="fa-regular fa-user"></i> View Profile</button>
+ </div></div></article>`;
+}
+function renderProfiles(profiles){
+ activeProfiles=profiles;
+ grid.innerHTML=profiles.length?profiles.map(cardHtml).join(""):'<div class="empty-state">No profiles are available right now. Please check again soon. 💗</div>';
+ memberCount.textContent=`${profiles.length} people to discover`;
+ attachCardEvents();
+}
+async function initDiscover(){
+ grid.innerHTML='<div class="loading-state">Finding beautiful connections… 💗</div>';
+ const real=await loadRealProfiles();
+ // Registered profiles always appear first; demo profiles follow them.
+ renderProfiles([...real,...demoProfiles]);
 }
 
-let discoverRenderToken=0;
-async function renderDiscover(){
-  const renderToken=++discoverRenderToken;
-  const demos=demoProfilesFull.map((p,i)=>({...p,backupIndex:i}));
-
-  window.__kmeetRealProfiles=[];
-  grid.innerHTML=demos.map(p=>renderCard(p,true)).join("");
-  memberCount.textContent="36 people to discover";
-  attachCardEvents();
-
-  const real=await loadRealProfiles();
-  if(renderToken!==discoverRenderToken)return;
-  window.__kmeetRealProfiles=real;
-  grid.innerHTML=[...real,...demos].map(p=>renderCard(p,String(p.id).startsWith("demo-"))).join("");
-  memberCount.textContent=`${real.length+36} people to discover`;
-  attachCardEvents();
+function openProfile(profileId){
+ const p=activeProfiles.find(x=>x.id===profileId);
+ if(!p)return;
+ const modal=document.getElementById("profileModal");
+ const tags=(p.tags||[]).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("");
+ document.getElementById("detailTitle").textContent=`Meet ${p.name} 💗`;
+ document.getElementById("profileDetail").innerHTML=`
+ <div class="profile-detail">
+ <div><img class="detail-photo" src="${escapeHtml(p.photo||fallbackAvatar(p.name))}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src='${fallbackAvatar(p.name)}'">
+ <div class="detail-location">📍 ${escapeHtml(p.location||"Kenya")} · ${p.online?"🟢 Online":"⚪ Offline"}</div></div>
+ <div><div class="detail-bio">${escapeHtml(p.description)}</div><div class="detail-tags">${tags}</div>
+ <div class="detail-actions"><a class="detail-chat" href="chat.html?userId=${encodeURIComponent(p.id)}">💬 Start a Chat</a><button class="detail-gallery" type="button" id="detailGalleryButton">📸 View Photos</button></div></div>
+ </div>`;
+ document.getElementById("detailGalleryButton").addEventListener("click",()=>{closeModal("profileModal");openGallery(profileId)});
+ modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
 }
-
-function openProfileGallery(profileId){
-  const modal=document.getElementById("galleryModal");
-  const photosBox=document.getElementById("galleryPhotos");
-  const title=document.getElementById("galleryTitle");
-  const subtitle=document.getElementById("gallerySubtitle");
-  const bioBox=document.getElementById("profileDetailBio");
-  const metaBox=document.getElementById("profileDetailMeta");
-  if(!modal||!photosBox)return;
-  const demo=demoProfilesFull.find(p=>p.id===profileId);
-  const real=(window.__kmeetRealProfiles||[]).find(p=>p.id===profileId);
-  const profile=demo||real;
-  if(!profile)return;
-  const photos=(profile.galleryPhotos&&profile.galleryPhotos.length?profile.galleryPhotos:[profile.photo]).filter(Boolean).slice(0,3);
-  title.textContent=`Meet ${profile.name||"Kmeet Member"} 💗`;
-  subtitle.textContent=`${profile.age?profile.age+" years · ":""}${profile.location||"Kenya"}`;
-  if(bioBox)bioBox.textContent=profile.description||"Looking to meet someone genuine and build a connection through kindness, respect and honest conversation.";
-  if(metaBox){const tags=(profile.tags||[]).slice(0,5);metaBox.textContent=tags.length?`Interests: ${tags.join(" · ")}`:"Open to a genuine connection";}
-  photosBox.classList.toggle("show-all",window.innerWidth<=560);
-  photosBox.innerHTML=photos.map((url,index)=>`<figure><img src="${escapeHtml(url)}" alt="${escapeHtml(profile.name||"Kmeet member")} photo ${index+1}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallbackData(profile.name)}'"><figcaption>${["A lovely first impression ✨","A little more personality 💕","Another moment to discover 🌷"][index]||"A photo to discover 💗"}</figcaption></figure>`).join("");
-  modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+function openGallery(profileId){
+ const p=activeProfiles.find(x=>x.id===profileId);
+ if(!p)return;
+ const photos=(p.galleryPhotos||[]).filter(Boolean);
+ const finalPhotos=photos.length?photos:[p.photo||fallbackAvatar(p.name)];
+ document.getElementById("galleryTitle").textContent=`${p.name}'s Photos 💗`;
+ document.getElementById("galleryPhotos").innerHTML=finalPhotos.map((url,i)=>`<figure><img src="${escapeHtml(url)}" alt="${escapeHtml(p.name)} photo ${i+1}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackAvatar(p.name)}'"><figcaption>${i===0?"Profile photo":"Additional member photo"}</figcaption></figure>`).join("");
+ const modal=document.getElementById("galleryModal");
+ modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
 }
-
-function closeProfileGallery(){
-  const modal=document.getElementById("galleryModal");if(!modal)return;
-  modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";
+function closeModal(id){
+ const modal=document.getElementById(id);
+ if(!modal)return;
+ modal.classList.remove("open");modal.setAttribute("aria-hidden","true");
+ if(!document.querySelector(".modal.open"))document.body.style.overflow="";
 }
-document.getElementById("galleryClose")?.addEventListener("click",closeProfileGallery);
-document.getElementById("galleryModal")?.addEventListener("click",event=>{if(event.target.id==="galleryModal")closeProfileGallery()});
-document.addEventListener("keydown",event=>{if(event.key==="Escape")closeProfileGallery()});
+document.getElementById("profileClose").addEventListener("click",()=>closeModal("profileModal"));
+document.getElementById("galleryClose").addEventListener("click",()=>closeModal("galleryModal"));
+document.querySelectorAll(".modal").forEach(modal=>modal.addEventListener("click",e=>{if(e.target===modal)closeModal(modal.id)}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal("profileModal");closeModal("galleryModal")}});
 
 function attachCardEvents(){
-  document.querySelectorAll("[data-gallery-id]").forEach(button=>button.addEventListener("click",()=>openProfileGallery(button.dataset.galleryId)));
-  document.querySelectorAll("[data-view-profile-id]").forEach(button=>button.addEventListener("click",()=>openProfileGallery(button.dataset.viewProfileId)));
-  document.querySelectorAll("[data-like-id]").forEach(button=>button.addEventListener("click",async()=>{
-    const id=button.dataset.likeId; const key=`kmeet_like_${id}`; const liked=localStorage.getItem(key)==="1";
-    if(liked){localStorage.removeItem(key);button.classList.remove("liked");button.textContent="❤️ Like";return}
-    localStorage.setItem(key,"1");button.classList.add("liked");button.textContent="💗 Liked";
-    if(currentKmeetUser&&!currentKmeetUser.isAnonymous&&!String(id).startsWith("demo-")){
-      try{await setDoc(doc(db,"users",id,"likesReceived",currentKmeetUser.uid),{fromUid:currentKmeetUser.uid,createdAt:serverTimestamp()},{merge:true})}catch(error){console.warn("Like could not be synced:",error)}
-    }
-  }));
-}
-
-function getMessageSenderId(message){
-  return message.senderId||message.fromId||message.sender||message.uid||message.senderUid||message.fromUid||"";
-}
-
-function getConversationIdFromDocument(conversationDoc){
-  const data=conversationDoc.data()||{};
-  return data.conversationId||data.id||conversationDoc.id;
-}
-
-async function getMessagePersonProfile(userId){
-  if(messageProfileCache.has(userId))return messageProfileCache.get(userId);
-  try{
-    const snapshot=await getDoc(doc(db,"users",userId));
-    const profile=snapshot.exists()?(snapshot.data()||{}):{};
-    messageProfileCache.set(userId,profile);
-    return profile;
-  }catch(error){
-    console.warn("Could not load message profile:",error);
-    return {};
+ document.querySelectorAll("[data-view-id]").forEach(button=>button.addEventListener("click",()=>openProfile(button.dataset.viewId)));
+ document.querySelectorAll("[data-gallery-id]").forEach(button=>button.addEventListener("click",()=>openGallery(button.dataset.galleryId)));
+ document.querySelectorAll("[data-like-id]").forEach(button=>button.addEventListener("click",async()=>{
+  const id=button.dataset.likeId;
+  const key="kmeet_like_"+id;
+  const liked=localStorage.getItem(key)==="1";
+  if(liked){localStorage.removeItem(key);button.classList.remove("liked");button.textContent="❤️ Like";return}
+  localStorage.setItem(key,"1");button.classList.add("liked");button.textContent="💗 Liked";
+  if(currentKmeetUser&&!currentKmeetUser.isAnonymous&&!id.startsWith("demo-")){
+   try{await setDoc(doc(db,"users",id,"likesReceived",currentKmeetUser.uid),{fromUid:currentKmeetUser.uid,createdAt:serverTimestamp()},{merge:true})}
+   catch(error){console.warn("Like could not be synced:",error)}
   }
+ }));
 }
 
-function setMessageBadge(count){
-  const safeCount=Math.max(0,Number(count)||0);
-  messageBadge.textContent=safeCount>99?"99+":String(safeCount);
-  messageBadge.classList.toggle("hidden",safeCount===0);
-  messagesButton.setAttribute("aria-label",safeCount?`Messages, ${safeCount} unread conversation${safeCount===1?"":"s"}`:"Messages");
-  messagesButton.title=safeCount?`${safeCount} unread conversation${safeCount===1?"":"s"}`:"Messages";
-}
+messagesButton.addEventListener("click",()=>{
+ messagesPanel.classList.toggle("open");
+ if(messagesPanel.classList.contains("open")&&!currentKmeetUser){
+  messagesList.innerHTML='<div class="message-empty">Please log in to view your conversations 💗</div>';
+ }
+});
+document.getElementById("messagesClose").addEventListener("click",()=>messagesPanel.classList.remove("open"));
+document.addEventListener("click",e=>{
+ if(!e.target.closest(".messages-area"))messagesPanel.classList.remove("open");
+});
 
-async function renderMessageList(incomingItems,unreadItems){
-  const token=++messageRenderToken;
-  const all=[...incomingItems].sort((a,b)=>b.createdAt-a.createdAt).slice(0,30);
-  if(!all.length){
-    messagesList.innerHTML=`<div class="message-empty">No messages yet. Start a conversation 💗</div>`;
-    return;
-  }
-  const unreadKeys=new Set(unreadItems.map(item=>item.conversationId));
-  const rows = await Promise.all(all.map(async item => {
-    const profile = await getMessagePersonProfile(item.otherUserId);
-    const name = getRealName(profile) || "Kmeet Member";
-    const photo = safePhoto(getRealPhoto(profile), avatarFallbackData(name));
-    const isUnread = unreadKeys.has(item.conversationId);
-    const text = item.text || "Sent an attachment or message";
-    return `<div class="message-person" data-chat-url="chat.html?userId=${encodeURIComponent(item.otherUserId)}">
-      <img src="${escapeHtml(photo)}" alt="${escapeHtml(name)}" onerror="this.onerror=null;this.src='${avatarFallbackData(name)}'">
-      <div class="message-person-main">
-        <div class="message-person-top">
-          <span class="message-person-name">${escapeHtml(name)}</span>
-          ${isUnread ? '<span class="message-new">New</span>' : ''}
-        </div>
-        <div class="message-person-text">${escapeHtml(text)}</div>
-      </div>
-    </div>`;
-  }));
-  if (token !== messageRenderToken) return;
-  messagesList.innerHTML = rows.join("");
-  messagesList.querySelectorAll(".message-person").forEach(el => {
-    el.addEventListener("click", () => {
-      const url = el.dataset.chatUrl;
-      if (url) window.location.href = url;
-    });
-  });
-}
-
-function processMessagesUpdate(){
-  const reads = getReads();
-  const incoming = [];
-  const unread = [];
-  for (const [convId, message] of latestMessagesByConversation.entries()) {
-    if (!message) continue;
-    const otherUserId = message.otherUserId;
-    if (!otherUserId) continue;
-    const createdAt = getTimestampValue(message.createdAt || message.timestamp);
-    incoming.push({ conversationId: convId, otherUserId, text: message.text || message.content || "", createdAt });
-    const lastRead = Number(reads[convId] || 0);
-    const isSender = currentKmeetUser && getMessageSenderId(message) === currentKmeetUser.uid;
-    if (!isSender && createdAt > lastRead) {
-      unread.push({ conversationId: convId, createdAt });
-    }
-  }
-  setMessageBadge(unread.length);
-  renderMessageList(incoming, unread);
-}
-
-function watchConversationMessages(conversationId, otherUserId){
-  if (watchedConversationIds.has(
+onAuthStateChanged(auth,async user=>{
+ currentKmeetUser=user||null;
+ const profileLink=document.getElementById("profileLink");
+ if(user&&!user.isAnonymous)profileLink.href="profile.html";
+ else profileLink.href="login.html";
+ await initDiscover();
+});
+</script>
+</body>
+</html>
