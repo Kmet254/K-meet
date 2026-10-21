@@ -444,60 +444,96 @@ async function loadProfiles(){
 }
 
 function renderProfiles(){
- const visible=getVisibleProfiles();
- profileList.innerHTML=visible.map(profile=>{
-  const photos=Array.isArray(profile.galleryPhotos)?profile.galleryPhotos:[];
-  const photo=profile.photo||profile.photoURL||photos[0]||"";
-  const interests=Array.isArray(profile.interests)?profile.interests:Array.isArray(profile.tags)?profile.tags:[];
-  const title=profile.name||profile.displayName||"Unnamed profile";
-  
-const id = profile.builtin
-  ? (profile.builtinName || profile.name || profile.displayName || "")
-  : (profile.id || "");
+ const visible = getVisibleProfiles();
 
-  const badge=profile.builtin?'<span class="pill">BUILT-IN DEMO</span>':'<span class="pill">EXTRA DEMO</span>';
-  const resetButton=profile.builtin&&profile.savedId?`<button type="button" data-reset-override="${escapeHtml(profile.savedId)}">Reset</button>`:"";
-  const deleteButton=!profile.builtin?`<button type="button" data-delete="${escapeHtml(profile.id)}">Delete</button>`:"";
+ profileList.innerHTML = visible.map(profile => {
+  const photos = Array.isArray(profile.galleryPhotos) ? profile.galleryPhotos : [];
+  const photo = profile.photo || profile.photoURL || photos[0] || "";
+  const interests = Array.isArray(profile.interests)
+    ? profile.interests
+    : Array.isArray(profile.tags) ? profile.tags : [];
 
-  return `<article class="profile-row">
-   <img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.opacity='.25'">
-   <div class="profile-info">
-    <strong>${escapeHtml(title)}${profile.age?`, ${escapeHtml(profile.age)}`:""}</strong>
-    <small>${escapeHtml(profile.location||"Kenya")} · ${photos.length||(photo?1:0)} photo(s)<br>${escapeHtml(interests.join(", "))}</small>
-    ${badge}
-    <div class="row-actions">
-     
-     <button type="button" data-edit="${escapeHtml(id)}" data-builtin="${profile.builtin ? "1" : "0"}">Edit</button>
-     ${resetButton}${deleteButton}
+  const title = profile.name || profile.displayName || "Unnamed profile";
+
+  // Built-in profiles must use the original name from BUILTINS.
+  const builtinName = profile.builtinName || profile.name || profile.displayName || "";
+  const id = profile.builtin ? builtinName : (profile.id || "");
+
+  const badge = profile.builtin
+    ? '<span class="pill">BUILT-IN DEMO</span>'
+    : '<span class="pill">EXTRA DEMO</span>';
+
+  const resetButton = profile.builtin && profile.savedId
+    ? `<button type="button" data-reset-override="${escapeHtml(profile.savedId)}">Reset</button>`
+    : "";
+
+  const deleteButton = !profile.builtin
+    ? `<button type="button" data-delete="${escapeHtml(profile.id)}">Delete</button>`
+    : "";
+
+  return `
+   <article class="profile-row">
+    <img src="${escapeHtml(photo)}" alt="" loading="lazy"
+         onerror="this.style.opacity='.25'">
+    <div class="profile-info">
+     <strong>${escapeHtml(title)}${profile.age ? `, ${escapeHtml(profile.age)}` : ""}</strong>
+     <small>
+      ${escapeHtml(profile.location || "Kenya")} · ${photos.length || (photo ? 1 : 0)} photo(s)<br>
+      ${escapeHtml(interests.join(", "))}
+     </small>
+     ${badge}
+     <div class="row-actions">
+      <button type="button"
+        data-edit="${escapeHtml(id)}"
+        data-builtin="${profile.builtin ? "1" : "0"}">Edit</button>
+      ${resetButton}
+      ${deleteButton}
+     </div>
     </div>
-   </div>
-  </article>`;
+   </article>`;
  }).join("");
 
- /* Event delegation: keeps Edit, Reset and Delete working after each render. */
+ // Handle clicks on profile buttons.
+ profileList.onclick = async function(event){
+  const button = event.target.closest("button");
+  if (!button || !profileList.contains(button)) return;
 
- /* Event delegation: keeps Edit, Reset and Delete working after each render. */
- profileList.onclick = async function(event) {
-   const button = event.target.closest("button");
-   if (!button || !profileList.contains(button)) return;
-
+  try {
    if (button.hasAttribute("data-edit")) {
-     const key = button.dataset.edit;
-     const isBuiltin = button.dataset.builtin === "1";
-     editProfile(key, isBuiltin);
+    const key = button.dataset.edit;
+    const isBuiltin = button.dataset.builtin === "1";
+
+    if (!key) {
+     showStatus(profilesStatus,
+       "This Edit button has no profile name. Reload the page and try again.",
+       "error");
      return;
+    }
+
+    editProfile(key, isBuiltin);
+
+    if (!$("name").value) {
+     showStatus(formStatus,
+       `Could not load profile "${key}". Please try again.`,
+       "error");
+    }
+    return;
    }
 
    if (button.hasAttribute("data-delete")) {
-     await removeExtra(button.dataset.delete);
-     return;
+    await removeExtra(button.dataset.delete);
+    return;
    }
 
    if (button.hasAttribute("data-reset-override")) {
-     await resetOverride(button.dataset.resetOverride);
+    await resetOverride(button.dataset.resetOverride);
    }
+  } catch(error) {
+   showStatus(profilesStatus, `Action failed: ${error.message}`, "error");
+  }
  };
 }
+
 
 function editProfile(key,isBuiltin){
  let profile;
