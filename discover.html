@@ -300,21 +300,144 @@ async function loadRealProfiles(){
   }
 }
 
-let discoverRenderToken=0;
-async function renderDiscover(){
-  const renderToken=++discoverRenderToken;
-  const demos=demoProfilesFull.map((p,i)=>({...p,backupIndex:i}));
 
-  // Keep the loading message visible until Firebase has loaded, so registered
-  // members always appear first and demo profiles follow them.
-  window.__kmeetRealProfiles=[];
-  grid.innerHTML='<div class="loading-state">Loading people to discover… 💗</div>';
+let discoverRenderToken = 0;
 
-  const real=await loadRealProfiles();
-  if(renderToken!==discoverRenderToken)return;
-  window.__kmeetRealProfiles=real;
-  grid.innerHTML=[...real,...demos].map(p=>renderCard(p,String(p.id).startsWith("demo-"))).join("");
+function normaliseDemoProfile(id, data, fallback = null) {
+  const name = data.displayName || data.name || data.username || (fallback && fallback.name) || "Kmeet Member";
+  const rawPhotos = Array.isArray(data.galleryPhotos)
+    ? data.galleryPhotos
+    : Array.isArray(data.photos)
+      ? data.photos
+      : Array.isArray(data.photoGallery)
+        ? data.photoGallery
+        : [];
+
+  const primaryPhoto =
+    data.photoURL ||
+    data.photoUrl ||
+    data.photo ||
+    data.profilePhoto ||
+    data.profileImage ||
+    data.image ||
+    rawPhotos[0] ||
+    (fallback && fallback.photo) ||
+    "";
+
+  const galleryPhotos = [
+    primaryPhoto,
+    ...rawPhotos
+  ].filter((url, index, all) =>
+    typeof url === "string" &&
+    /^https?:\/\//i.test(url) &&
+    all.indexOf(url) === index
+  ).slice(0, 3);
+
+  const interests = Array.isArray(data.interests)
+    ? data.interests
+    : Array.isArray(data.tags)
+      ? data.tags
+      : typeof data.interests === "string"
+        ? data.interests.split(",").map(x => x.trim()).filter(Boolean)
+        : fallback?.tags || [];
+
+  return {
+    ...(fallback || {}),
+    id,
+    name,
+    age: data.age ?? fallback?.age ?? "",
+    location: data.location || data.city || fallback?.location || "Kenya",
+    online: false,
+    description: data.bio || data.description || data.about || fallback?.description || "Open to a genuine connection. 💕",
+    tags: interests,
+    photo: galleryPhotos[0] || primaryPhoto || fallback?.photo || "",
+    galleryPhotos: galleryPhotos.length
+      ? galleryPhotos
+      : (fallback?.galleryPhotos || [fallback?.photo].filter(Boolean))
+  };
+}
+
+async function loadAdminDemoProfiles() {
+  try {
+    const snapshot = await getDocs(collection(db, "demoProfiles"));
+
+    return snapshot.docs.map(item => ({
+      id: item.id,
+      data: item.data() || {}
+    }));
+  } catch (error) {
+    console.warn("Could not load admin-managed demo profiles:", error);
+    return [];
+  }
+}
+
+async function renderDiscover() {
+  const renderToken = ++discoverRenderToken;
+
+  window.__kmeetRealProfiles = [];
+  grid.innerHTML =
+    '<div class="loading-state">Loading people to discover… 💗</div>';
+
+  const [real, savedDemos] = await Promise.all([
+    loadRealProfiles(),
+    loadAdminDemoProfiles()
+  ]);
+
+  if (renderToken !== discoverRenderToken) return;
+
+  window.__kmeetRealProfiles = real;
+
+  // Start with the existing built-in profiles so the current design
+  // and existing demo identities remain in place.
+  const demos = demoProfilesFull.map((profile, index) => ({
+    ...profile,
+    backupIndex: index
+  }));
+
+  // A saved admin profile with the same name updates the built-in
+  // profile rather than creating a duplicate.
+  const extraDemos = [];
+
+  for (const saved of savedDemos) {
+    const data = saved.data;
+    const savedName = String(
+      data.displayName || data.name || ""
+    ).trim().toLowerCase();
+
+    if (!savedName) continue;
+
+    const existingIndex = demos.findIndex(profile =>
+      String(profile.name || "").trim().toLowerCase() === savedName
+    );
+
+    if (existingIndex !== -1) {
+      const existing = demos[existingIndex];
+
+      demos[existingIndex] = normaliseDemoProfile(
+        existing.id,
+        data,
+        existing
+      );
+    } else {
+      extraDemos.push(
+        normaliseDemoProfile(`demo-${saved.id}`, data)
+      );
+    }
+  }
+
+  // Registered members first, followed by the updated built-in
+  // demos and then any additional profiles created by the admin.
+  grid.innerHTML = [
+    ...real,
+    ...demos,
+    ...extraDemos
+  ].map(profile =>
+    renderCard(profile, String(profile.id).startsWith("demo-"))
+  ).join("");
+
   attachCardEvents();
+}
+
 }
 
 function openProfileGallery(profileId){
