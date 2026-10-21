@@ -450,7 +450,11 @@ function renderProfiles(){
   const photo=profile.photo||profile.photoURL||photos[0]||"";
   const interests=Array.isArray(profile.interests)?profile.interests:Array.isArray(profile.tags)?profile.tags:[];
   const title=profile.name||profile.displayName||"Unnamed profile";
-  const id=profile.builtin?profile.builtinName:profile.id;
+  
+const id = profile.builtin
+  ? (profile.builtinName || profile.name || profile.displayName || "")
+  : (profile.id || "");
+
   const badge=profile.builtin?'<span class="pill">BUILT-IN DEMO</span>':'<span class="pill">EXTRA DEMO</span>';
   const resetButton=profile.builtin&&profile.savedId?`<button type="button" data-reset-override="${escapeHtml(profile.savedId)}">Reset</button>`:"";
   const deleteButton=!profile.builtin?`<button type="button" data-delete="${escapeHtml(profile.id)}">Delete</button>`:"";
@@ -462,7 +466,8 @@ function renderProfiles(){
     <small>${escapeHtml(profile.location||"Kenya")} · ${photos.length||(photo?1:0)} photo(s)<br>${escapeHtml(interests.join(", "))}</small>
     ${badge}
     <div class="row-actions">
-     <button type="button" data-edit="${escapeHtml(id)}" data-builtin="${profile.builtin?"1":"0"}">Edit</button>
+     
+     <button type="button" data-edit="${escapeHtml(id)}" data-builtin="${profile.builtin ? "1" : "0"}">Edit</button>
      ${resetButton}${deleteButton}
     </div>
    </div>
