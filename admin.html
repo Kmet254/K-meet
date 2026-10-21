@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,31 +8,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{--pink:#ff4f91;--muted:#cbb9c8;--line:#ffffff20}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 5%,#ff4f912b,transparent 30%),linear-gradient(135deg,#0b0710,#190b18 48%,#0c0710);color:#fff;font-family:Poppins,sans-serif}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ min-height:100vh;
+ background:
+  radial-gradient(circle at 12% 5%,#ff4f912b,transparent 30%),
+  linear-gradient(135deg,#0b0710b8,#190b18a6 48%,#0c0710b8),
+  url("./kmeet-background.jpg.jpg") center center / cover fixed no-repeat;
+ color:#fff;
+ font-family:Poppins,sans-serif
+}
 a{color:#ff9dc2;text-decoration:none}
 .nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:15px;padding:13px clamp(16px,4vw,48px);background:#0c060ee8;border-bottom:1px solid #ffffff13;backdrop-filter:blur(16px)}
-.nav img{width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid #ffffff30}.nav strong{font-family:'Playfair Display',serif;font-size:22px}.spacer{flex:1}
+.nav img{width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid #ffffff30}
+.nav strong{font-family:'Playfair Display',serif;font-size:22px}
+.spacer{flex:1}
 main{width:min(1100px,calc(100% - 28px));margin:28px auto 55px}
-h1,h2{font-family:'Playfair Display',serif}h1{font-size:clamp(28px,4vw,40px);margin:0 0 8px}h2{font-size:25px;margin:0 0 16px}
+h1,h2{font-family:'Playfair Display',serif}
+h1{font-size:clamp(28px,4vw,40px);margin:0 0 8px}
+h2{font-size:25px;margin:0 0 16px}
 .lead{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 20px}
 .panel{background:#220f1fd1;border:1px solid var(--line);border-radius:22px;padding:clamp(16px,3vw,26px);box-shadow:0 14px 38px #0004;margin-bottom:22px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:7px}
+.full{grid-column:1/-1}
 label{font-size:12px;color:#f0dce8;font-weight:600}
 input,textarea{width:100%;font:13px Poppins,sans-serif;color:#fff;background:#ffffff0e;border:1px solid #ffffff20;border-radius:12px;padding:12px 13px;outline:none}
-input:focus,textarea:focus{border-color:var(--pink)}textarea{min-height:95px;resize:vertical}
-input[type=file]{padding:10px}input[type=file]::file-selector-button{border:0;border-radius:8px;padding:8px 10px;margin-right:10px;background:var(--pink);color:#fff;font:600 11px Poppins,sans-serif}
+input:focus,textarea:focus{border-color:var(--pink)}
+textarea{min-height:95px;resize:vertical}
+input[type=file]{padding:10px}
+input[type=file]::file-selector-button{border:0;border-radius:8px;padding:8px 10px;margin-right:10px;background:var(--pink);color:#fff;font:600 11px Poppins,sans-serif}
 .help{font-size:11px;color:#bca9b9;line-height:1.6}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 button{border:1px solid #ffffff20;border-radius:12px;padding:10px 13px;font:600 12px Poppins,sans-serif;cursor:pointer;color:#fff;background:#ffffff0d}
 button.primary{background:linear-gradient(135deg,#ff4f91,#d93679);border-color:transparent}
 button:disabled{opacity:.55;cursor:wait}
 .status{display:none;padding:12px 14px;border-radius:12px;font-size:12px;line-height:1.6;margin:0 0 16px;white-space:pre-wrap;overflow-wrap:anywhere}
-.status.show{display:block}.status.error{background:#ff3f7f16;border:1px solid #ff3f7f55;color:#ffc0d7}.status.ok{background:#36d99413;border:1px solid #36d99455;color:#c6ffe3}.status.info{background:#ffffff09;border:1px solid #ffffff20;color:#e9dce7}
-#loginPanel{max-width:520px;margin:35px auto}#adminPanel{display:none}
+.status.show{display:block}
+.status.error{background:#ff3f7f16;border:1px solid #ff3f7f55;color:#ffc0d7}
+.status.ok{background:#36d99413;border:1px solid #36d99455;color:#c6ffe3}
+.status.info{background:#ffffff09;border:1px solid #ffffff20;color:#e9dce7}
+#loginPanel{max-width:520px;margin:35px auto}
+#adminPanel{display:none}
 .photo-previews{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
 .photo-item{position:relative;width:95px;height:115px;border:1px solid #ffffff25;border-radius:12px;overflow:hidden;background:#160b16}
 .photo-item img{width:100%;height:100%;object-fit:cover;display:block}
@@ -41,19 +62,31 @@ button:disabled{opacity:.55;cursor:wait}
 .profile-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .profile-row{display:flex;gap:12px;align-items:center;min-width:0;padding:12px;border:1px solid #ffffff13;background:#ffffff06;border-radius:15px}
 .profile-row img{width:70px;height:82px;object-fit:cover;border-radius:10px;background:#241321;flex:none}
-.profile-info{min-width:0;flex:1}.profile-info strong{display:block;font-size:13px;overflow-wrap:anywhere}.profile-info small{display:block;color:#bca9b9;font-size:10px;margin-top:4px;line-height:1.6}
-.row-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.row-actions button{padding:6px 9px;font-size:10px}
+.profile-info{min-width:0;flex:1}
+.profile-info strong{display:block;font-size:13px;overflow-wrap:anywhere}
+.profile-info small{display:block;color:#bca9b9;font-size:10px;margin-top:4px;line-height:1.6}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.row-actions button{padding:6px 9px;font-size:10px}
 .pill{display:inline-block;font-size:9px;padding:3px 7px;border-radius:20px;background:#ff4f9120;color:#ffb6d1;margin-top:5px}
 .empty{padding:20px;text-align:center;color:#bca9b9;font-size:12px}
-@media(max-width:650px){.grid,.profile-list{grid-template-columns:1fr}.nav strong{font-size:19px}.nav{gap:10px}.profile-row img{width:64px;height:76px}}
+@media(max-width:650px){
+ .grid,.profile-list{grid-template-columns:1fr}
+ .nav strong{font-size:19px}
+ .nav{gap:10px}
+ .profile-row img{width:64px;height:76px}
+ body{background-attachment:scroll}
+}
 </style>
 </head>
+
 <body>
 <nav class="nav">
 <a href="index.html" aria-label="Kmeet home"><img src="./kmeet-logo.jfif.jfif" alt="Kmeet logo"></a>
-<strong>Kmeet Admin</strong><span class="spacer"></span>
+<strong>Kmeet Admin</strong>
+<span class="spacer"></span>
 <a href="discover.html">Open Discover ↗</a>
 </nav>
+
 <main>
 <h1>Demo Profile Studio 💗</h1>
 <p class="lead">Edit the original 23 profiles, manage extra demo profiles, and upload up to three photos for each profile. Registered members remain separate.</p>
@@ -64,9 +97,17 @@ button:disabled{opacity:.55;cursor:wait}
 <p class="lead">Sign in with your authorised Kmeet admin account.</p>
 <div id="loginStatus" class="status" role="status" aria-live="polite"></div>
 <form id="loginForm">
-<div class="field"><label for="email">Admin email</label><input id="email" type="email" autocomplete="username" required placeholder="Enter admin email"></div>
-<div class="field" style="margin-top:13px"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Enter password"></div>
-<div class="actions"><button class="primary" id="loginButton" type="submit">Sign in securely</button></div>
+<div class="field">
+<label for="email">Admin email</label>
+<input id="email" type="email" autocomplete="username" required placeholder="Enter admin email">
+</div>
+<div class="field" style="margin-top:13px">
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password" required placeholder="Enter password">
+</div>
+<div class="actions">
+<button class="primary" id="loginButton" type="submit">Sign in securely</button>
+</div>
 </form>
 </section>
 
@@ -75,13 +116,29 @@ button:disabled{opacity:.55;cursor:wait}
 <h2 id="formTitle">Add a demo profile</h2>
 <p class="lead" id="formDescription">Choose an existing profile below to edit it, or add a new demo profile.</p>
 <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+
 <form id="profileForm">
 <div class="grid">
-<div class="field"><label for="name">Display name *</label><input id="name" maxlength="40" required placeholder="e.g. Amara"></div>
-<div class="field"><label for="age">Age (18+)</label><input id="age" type="number" min="18" max="100" placeholder="e.g. 27"></div>
-<div class="field"><label for="location">Location *</label><input id="location" maxlength="80" required placeholder="e.g. Mombasa"></div>
-<div class="field"><label for="interests">Interests</label><input id="interests" maxlength="300" placeholder="Music, Travel, Coffee"></div>
-<div class="field full"><label for="bio">Bio *</label><textarea id="bio" maxlength="600" required placeholder="Write a warm, respectful introduction..."></textarea></div>
+<div class="field">
+<label for="name">Display name *</label>
+<input id="name" maxlength="40" required placeholder="e.g. Amara">
+</div>
+<div class="field">
+<label for="age">Age (18+)</label>
+<input id="age" type="number" min="18" max="100" placeholder="e.g. 27">
+</div>
+<div class="field">
+<label for="location">Location *</label>
+<input id="location" maxlength="80" required placeholder="e.g. Mombasa">
+</div>
+<div class="field">
+<label for="interests">Interests</label>
+<input id="interests" maxlength="300" placeholder="Music, Travel, Coffee">
+</div>
+<div class="field full">
+<label for="bio">Bio *</label>
+<textarea id="bio" maxlength="600" required placeholder="Write a warm, respectful introduction..."></textarea>
+</div>
 <div class="field full">
 <label for="photoFiles">Upload profile photos (up to 3)</label>
 <input id="photoFiles" type="file" accept="image/*" multiple>
@@ -134,7 +191,6 @@ let editingId=null;
 let editingBuiltinName=null;
 let currentPhotos=[];
 let profilesCache=[];
-let builtinProfiles=[];
 let isAuthorised=false;
 
 /* These defaults match the first 23 built-in profiles in discover.html. */
@@ -164,10 +220,20 @@ const BUILTINS=[
 ["Saida",29,"Mombasa","Warm-hearted, loves traditional Swahili cooking, family values, and seaside breezes.",["Swahili","Cooking","Family"],"https://randomuser.me/api/portraits/women/32.jpg"]
 ];
 
-function showStatus(el,message,type="info"){el.textContent=message;el.className=`status show ${type}`}
-function clearStatus(el){el.textContent="";el.className="status"}
-function escapeHtml(value){return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]))}
-function slug(name){return String(name).toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
+function showStatus(el,message,type="info"){
+ el.textContent=message;
+ el.className=`status show ${type}`;
+}
+function clearStatus(el){
+ el.textContent="";
+ el.className="status";
+}
+function escapeHtml(value){
+ return String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+}
+function slug(name){
+ return String(name).toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+}
 function cleanPhotoList(values){
  const seen=new Set();
  return values.map(v=>String(v||"").trim()).filter(v=>/^https:\/\/\S+$/i.test(v)&&!seen.has(v)&&seen.add(v)).slice(0,MAX_PHOTOS);
@@ -198,29 +264,46 @@ function renderPhotoPreviews(){
  const photos=getPhotoListFromForm();
  photoPreviews.innerHTML=photos.map((url,i)=>`<div class="photo-item"><img src="${escapeHtml(url)}" alt="Photo ${i+1}"><button type="button" data-remove-photo="${i}" aria-label="Remove photo">×</button></div>`).join("");
  photoPreviews.querySelectorAll("[data-remove-photo]").forEach(button=>button.addEventListener("click",()=>{
-  const list=getPhotoListFromForm();list.splice(Number(button.dataset.removePhoto),1);currentPhotos=list;photoUrls.value="";renderPhotoPreviews();
+  const list=getPhotoListFromForm();
+  list.splice(Number(button.dataset.removePhoto),1);
+  currentPhotos=list;
+  photoUrls.value="";
+  renderPhotoPreviews();
  }));
 }
 function resetForm(){
- editingId=null;editingBuiltinName=null;currentPhotos=[];profileForm.reset();
+ editingId=null;
+ editingBuiltinName=null;
+ currentPhotos=[];
+ profileForm.reset();
  $("formTitle").textContent="Add a demo profile";
  $("formDescription").textContent="Choose an existing profile below to edit it, or add a new demo profile.";
- $("saveButton").textContent="Save demo profile";photoPreviews.innerHTML="";
+ $("saveButton").textContent="Save demo profile";
+ photoPreviews.innerHTML="";
  clearStatus(formStatus);
 }
 async function uploadToCloudinary(file){
  const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
- const data=new FormData();data.append("file",file);data.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);data.append("folder","kmeet/demo-profiles");
- const response=await fetch(endpoint,{method:"POST",body:data});const result=await response.json();
+ const data=new FormData();
+ data.append("file",file);
+ data.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+ data.append("folder","kmeet/demo-profiles");
+ const response=await fetch(endpoint,{method:"POST",body:data});
+ const result=await response.json();
  if(!response.ok||!result.secure_url)throw new Error(result.error?.message||`Cloudinary upload failed (${response.status}).`);
  return result.secure_url;
 }
+
 photoFiles.addEventListener("change",async()=>{
- const selected=Array.from(photoFiles.files||[]);if(!selected.length)return;
- const existing=getPhotoListFromForm(),remaining=Math.max(0,MAX_PHOTOS-existing.length),files=selected.slice(0,remaining);
+ const selected=Array.from(photoFiles.files||[]);
+ if(!selected.length)return;
+ const existing=getPhotoListFromForm();
+ const remaining=Math.max(0,MAX_PHOTOS-existing.length);
+ const files=selected.slice(0,remaining);
  if(selected.length>remaining)showStatus(formStatus,`Maximum ${MAX_PHOTOS} photos per profile. ${files.length} file(s) will be uploaded.`,"info");
  if(!files.length){photoFiles.value="";return}
- photoFiles.disabled=true;$("saveButton").disabled=true;
+ photoFiles.disabled=true;
+ $("saveButton").disabled=true;
  showStatus(formStatus,`Uploading ${files.length} photo(s)… Keep this page open.`,"info");
  try{
   const uploaded=[];
@@ -230,52 +313,102 @@ photoFiles.addEventListener("change",async()=>{
    showStatus(formStatus,`Uploading photo ${i+1} of ${files.length}…`,"info");
    uploaded.push(await uploadToCloudinary(files[i]));
   }
-  currentPhotos=cleanPhotoList([...existing,...uploaded]);photoUrls.value="";renderPhotoPreviews();
+  currentPhotos=cleanPhotoList([...existing,...uploaded]);
+  photoUrls.value="";
+  renderPhotoPreviews();
   showStatus(formStatus,`Uploaded ${uploaded.length} photo(s). Save the profile to keep your changes.`,"ok");
- }catch(error){showStatus(formStatus,`Upload failed: ${error.message}\nCheck the Cloudinary cloud name and that the upload preset is unsigned.`,"error")}
- finally{photoFiles.disabled=false;$("saveButton").disabled=false;photoFiles.value=""}
+ }catch(error){
+  showStatus(formStatus,`Upload failed: ${error.message}\nCheck the Cloudinary cloud name and that the upload preset is unsigned.`,"error");
+ }finally{
+  photoFiles.disabled=false;
+  $("saveButton").disabled=false;
+  photoFiles.value="";
+ }
 });
 photoUrls.addEventListener("input",renderPhotoPreviews);
 
 loginForm.addEventListener("submit",async event=>{
- event.preventDefault();clearStatus(loginStatus);$("loginButton").disabled=true;
+ event.preventDefault();
+ clearStatus(loginStatus);
+ $("loginButton").disabled=true;
  try{
   const credential=await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
-  if(credential.user.uid!==ADMIN_UID){await signOut(auth);throw new Error("This account is not authorised as the Kmeet admin.");}
+  if(credential.user.uid!==ADMIN_UID){
+   await signOut(auth);
+   throw new Error("This account is not authorised as the Kmeet admin.");
+  }
   showStatus(loginStatus,"Admin signed in successfully.","ok");
- }catch(error){showStatus(loginStatus,error.message||"Sign-in failed. Check your email and password.","error")}
- finally{$("loginButton").disabled=false}
+ }catch(error){
+  showStatus(loginStatus,error.message||"Sign-in failed. Check your email and password.","error");
+ }finally{
+  $("loginButton").disabled=false;
+ }
 });
 
 onAuthStateChanged(auth,async user=>{
- if(!user){isAuthorised=false;loginPanel.style.display="block";adminPanel.style.display="none";return}
- if(user.uid!==ADMIN_UID||user.isAnonymous){
-  isAuthorised=false;adminPanel.style.display="none";loginPanel.style.display="block";
-  showStatus(loginStatus,"This signed-in account is not the authorised Kmeet admin.","error");
-  try{await signOut(auth)}catch(_){}return;
+ if(!user){
+  isAuthorised=false;
+  loginPanel.style.display="block";
+  adminPanel.style.display="none";
+  return;
  }
- isAuthorised=true;loginPanel.style.display="none";adminPanel.style.display="block";
+ if(user.uid!==ADMIN_UID||user.isAnonymous){
+  isAuthorised=false;
+  adminPanel.style.display="none";
+  loginPanel.style.display="block";
+  showStatus(loginStatus,"This signed-in account is not the authorised Kmeet admin.","error");
+  try{await signOut(auth)}catch(_){}
+  return;
+ }
+ isAuthorised=true;
+ loginPanel.style.display="none";
+ adminPanel.style.display="block";
  showStatus(globalStatus,"Admin access verified. All 23 built-in demos are available below.","ok");
  await loadProfiles();
 });
 
 profileForm.addEventListener("submit",async event=>{
  event.preventDefault();
- if(!isAuthorised||auth.currentUser?.uid!==ADMIN_UID){showStatus(formStatus,"Please sign in with the authorised admin account first.","error");return}
- const name=$("name").value.trim(),location=$("location").value.trim(),bio=$("bio").value.trim();
- const ageText=$("age").value.trim(),age=ageText?Number(ageText):null;
+ if(!isAuthorised||auth.currentUser?.uid!==ADMIN_UID){
+  showStatus(formStatus,"Please sign in with the authorised admin account first.","error");
+  return;
+ }
+ const name=$("name").value.trim();
+ const location=$("location").value.trim();
+ const bio=$("bio").value.trim();
+ const ageText=$("age").value.trim();
+ const age=ageText?Number(ageText):null;
  const interests=$("interests").value.split(",").map(x=>x.trim()).filter(Boolean).slice(0,12);
  const galleryPhotos=getPhotoListFromForm();
- if(!name||!location||!bio){showStatus(formStatus,"Please fill in name, location and bio.","error");return}
- if(ageText&&(!Number.isInteger(age)||age<18||age>100)){showStatus(formStatus,"Age must be between 18 and 100.","error");return}
- if(!galleryPhotos.length){showStatus(formStatus,"Add at least one photo URL or upload a photo before saving.","error");return}
- const payload={name,displayName:name,age,location,bio,description:bio,interests,tags:interests,photo:galleryPhotos[0],photoURL:galleryPhotos[0],galleryPhotos,online:false,updatedAt:serverTimestamp()};
+
+ if(!name||!location||!bio){
+  showStatus(formStatus,"Please fill in name, location and bio.","error");
+  return;
+ }
+ if(ageText&&(!Number.isInteger(age)||age<18||age>100)){
+  showStatus(formStatus,"Age must be between 18 and 100.","error");
+  return;
+ }
+ if(!galleryPhotos.length){
+  showStatus(formStatus,"Add at least one photo URL or upload a photo before saving.","error");
+  return;
+ }
+
+ const payload={
+  name,displayName:name,age,location,bio,description:bio,
+  interests,tags:interests,photo:galleryPhotos[0],photoURL:galleryPhotos[0],
+  galleryPhotos,online:false,updatedAt:serverTimestamp()
+ };
  $("saveButton").disabled=true;
  showStatus(formStatus,editingBuiltinName?`Updating ${editingBuiltinName}…`:editingId?"Updating demo profile…":"Saving demo profile…","info");
+
  try{
   if(editingBuiltinName){
    const targetId=editingId||`builtin-${slug(editingBuiltinName)}`;
-   await setDoc(doc(db,"demoProfiles",targetId),{...payload,createdAt:profilesCache.find(p=>p.id===targetId)?.createdAt||serverTimestamp()},{merge:true});
+   await setDoc(doc(db,"demoProfiles",targetId),{
+    ...payload,
+    createdAt:profilesCache.find(p=>p.id===targetId)?.createdAt||serverTimestamp()
+   },{merge:true});
    showStatus(formStatus,`${editingBuiltinName} updated. Refresh Discover to see the changes.`,"ok");
   }else if(editingId){
    await setDoc(doc(db,"demoProfiles",editingId),payload,{merge:true});
@@ -285,10 +418,15 @@ profileForm.addEventListener("submit",async event=>{
    const created=await addDoc(collection(db,"demoProfiles"),payload);
    showStatus(formStatus,`New demo profile saved (ID: ${created.id}). Refresh Discover to see it.`,"ok");
   }
-  resetForm();await loadProfiles();
- }catch(error){showStatus(formStatus,`Could not save profile: ${error.message}\nCheck your Firestore rules and admin permissions.`,"error")}
- finally{$("saveButton").disabled=false}
+  resetForm();
+  await loadProfiles();
+ }catch(error){
+  showStatus(formStatus,`Could not save profile: ${error.message}\nCheck your Firestore rules and admin permissions.`,"error");
+ }finally{
+  $("saveButton").disabled=false;
+ }
 });
+
 $("resetButton").addEventListener("click",resetForm);
 
 async function loadProfiles(){
@@ -304,6 +442,7 @@ async function loadProfiles(){
   showStatus(profilesStatus,`Could not load profiles: ${error.message}`,"error");
  }
 }
+
 function renderProfiles(){
  const visible=getVisibleProfiles();
  profileList.innerHTML=visible.map(profile=>{
@@ -315,83 +454,113 @@ function renderProfiles(){
   const badge=profile.builtin?'<span class="pill">BUILT-IN DEMO</span>':'<span class="pill">EXTRA DEMO</span>';
   const resetButton=profile.builtin&&profile.savedId?`<button type="button" data-reset-override="${escapeHtml(profile.savedId)}">Reset</button>`:"";
   const deleteButton=!profile.builtin?`<button type="button" data-delete="${escapeHtml(profile.id)}">Delete</button>`:"";
+
   return `<article class="profile-row">
    <img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.opacity='.25'">
-   <div class="profile-info"><strong>${escapeHtml(title)}${profile.age?`, ${escapeHtml(profile.age)}`:""}</strong>
-   <small>${escapeHtml(profile.location||"Kenya")} · ${photos.length|| (photo?1:0)} photo(s)<br>${escapeHtml(interests.join(", "))}</small>${badge}
-   <div class="row-actions"><button type="button" data-edit="${escapeHtml(id)}" data-builtin="${profile.builtin?"1":"0"}">Edit</button>${resetButton}${deleteButton}</div>
-   </div></article>`;
+   <div class="profile-info">
+    <strong>${escapeHtml(title)}${profile.age?`, ${escapeHtml(profile.age)}`:""}</strong>
+    <small>${escapeHtml(profile.location||"Kenya")} · ${photos.length||(photo?1:0)} photo(s)<br>${escapeHtml(interests.join(", "))}</small>
+    ${badge}
+    <div class="row-actions">
+     <button type="button" data-edit="${escapeHtml(id)}" data-builtin="${profile.builtin?"1":"0"}">Edit</button>
+     ${resetButton}${deleteButton}
+    </div>
+   </div>
+  </article>`;
  }).join("");
- 
- profileList.onclick = async function(event) {
-  const button = event.target.closest("button");
-  if (!button || !profileList.contains(button)) return;
 
-  if (button.hasAttribute("data-edit")) {
-   const isBuiltin = button.dataset.builtin === "1";
-   editProfile(button.dataset.edit, isBuiltin);
+ /* Event delegation: keeps Edit, Reset and Delete working after each render. */
+ profileList.onclick=async function(event){
+  const button=event.target.closest("button");
+  if(!button||!profileList.contains(button))return;
+
+  if(button.hasAttribute("data-edit")){
+   const isBuiltin=button.dataset.builtin==="1";
+   editProfile(button.dataset.edit,isBuiltin);
    return;
   }
 
-  if (button.hasAttribute("data-delete")) {
+  if(button.hasAttribute("data-delete")){
    await removeExtra(button.dataset.delete);
    return;
   }
 
-  if (button.hasAttribute("data-reset-override")) {
+  if(button.hasAttribute("data-reset-override")){
    await resetOverride(button.dataset.resetOverride);
   }
- };
+}; 
+} /* IMPORTANT: closes renderProfiles(). This was missing. */
 
 function editProfile(key,isBuiltin){
  let profile;
+
  if(isBuiltin){
-  const row=BUILTINS.find(item=>item[0]===key);if(!row)return;
-  const base=normaliseBuiltin(row),saved=findOverride(row[0]);
+  const row=BUILTINS.find(item=>item[0]===key);
+  if(!row)return;
+  const base=normaliseBuiltin(row);
+  const saved=findOverride(row[0]);
   profile=saved?{...base,...saved}:base;
-  editingBuiltinName=row[0];editingId=saved?.id||null;
+  editingBuiltinName=row[0];
+  editingId=saved?.id||null;
  }else{
-  profile=profilesCache.find(item=>item.id===key);if(!profile)return;
-  editingId=profile.id;editingBuiltinName=null;
+  profile=profilesCache.find(item=>item.id===key);
+  if(!profile)return;
+  editingId=profile.id;
+  editingBuiltinName=null;
  }
+
  $("formTitle").textContent=`Edit ${profile.name||profile.displayName||"demo profile"}`;
  $("formDescription").textContent=isBuiltin?"Your edits will override this built-in demo in Discover.":"Edit the saved extra demo profile.";
  $("saveButton").textContent="Save changes";
  $("name").value=profile.name||profile.displayName||"";
  $("age").value=profile.age??"";
  $("location").value=profile.location||"";
+
  const interests=Array.isArray(profile.interests)?profile.interests:Array.isArray(profile.tags)?profile.tags:[];
  $("interests").value=interests.join(", ");
  $("bio").value=profile.bio||profile.description||"";
  currentPhotos=cleanPhotoList(Array.isArray(profile.galleryPhotos)?profile.galleryPhotos:[profile.photo||profile.photoURL||""]);
- photoUrls.value="";photoFiles.value="";renderPhotoPreviews();clearStatus(formStatus);
+ photoUrls.value="";
+ photoFiles.value="";
+ renderPhotoPreviews();
+ clearStatus(formStatus);
  $("formTitle").scrollIntoView({behavior:"smooth",block:"start"});
 }
+
 async function resetOverride(id){
  if(!isAuthorised||auth.currentUser?.uid!==ADMIN_UID)return;
  const profile=profilesCache.find(p=>p.id===id);
  if(!profile)return;
  const name=profile.name||profile.displayName||"this demo";
+
  if(!confirm(`Reset "${name}" to its original built-in details and photo? Your saved override will be deleted.`))return;
+
  try{
   await deleteDoc(doc(db,"demoProfiles",id));
   if(editingId===id)resetForm();
   showStatus(profilesStatus,`${name} restored to its original built-in profile.`,"ok");
   await loadProfiles();
- }catch(error){showStatus(profilesStatus,`Could not reset profile: ${error.message}`,"error")}
+ }catch(error){
+  showStatus(profilesStatus,`Could not reset profile: ${error.message}`,"error");
+ }
 }
+
 async function removeExtra(id){
  if(!isAuthorised||auth.currentUser?.uid!==ADMIN_UID)return;
  const profile=profilesCache.find(p=>p.id===id);
  if(!profile)return;
  const name=profile.name||profile.displayName||"this profile";
+
  if(!confirm(`Delete extra demo "${name}"? This cannot be undone.`))return;
+
  try{
   await deleteDoc(doc(db,"demoProfiles",id));
   if(editingId===id)resetForm();
   showStatus(profilesStatus,`"${name}" deleted from Firestore.`,"ok");
   await loadProfiles();
- }catch(error){showStatus(profilesStatus,`Could not delete profile: ${error.message}`,"error")}
+ }catch(error){
+  showStatus(profilesStatus,`Could not delete profile: ${error.message}`,"error");
+ }
 }
 </script>
 </body>
