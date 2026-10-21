@@ -1,1 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kmeet Admin - Demo Profiles</title>
+<link rel="icon" type="image/jpeg" href="./kmeet-logo.jfif.jfif">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>
+:root{--pink:#ff4f91;--pink2:#ff7caf;--line:rgba(255,255,255,.13);--muted:#cbb9c8}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 5%,rgba(255,79,145,.17),transparent 30%),radial-gradient(circle at 90% 20%,rgba(160,52,120,.14),transparent 32%),linear-gradient(135deg,#0b0710,#190b18 48%,#0c0710);color:#fff;font-family:Poppins,sans-serif}
+a{color:#ff9dc2;text-decoration:none}
+.nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:15px;padding:13px clamp(16px,4vw,48px);background:rgba(12,6,14,.88);border-bottom:1px solid #ffffff13;backdrop-filter:blur(16px)}
+.nav img{width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid #ffffff30}.nav strong{font-family:'Playfair Display',serif;font-size:22px}.nav .spacer{flex:1}
+main{width:min(1100px,calc(100% - 28px));margin:28px auto 55px}
+h1,h2,h3{font-family:'Playfair Display',serif}
+h1{font-size:clamp(28px,4vw,40px);margin:0 0 8px}h2{font-size:25px;margin:0 0 16px}
+.lead{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 24px}
+.panel{background:rgba(34,15,31,.82);border:1px solid var(--line);border-radius:22px;padding:clamp(16px,3vw,26px);box-shadow:0 14px 38px #0004;margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:12px;color:#f0dce8;font-weight:600}
+input,textarea{width:100%;font:13px Poppins,sans-serif;color:#fff;background:rgba(255,255,255,.055);border:1px solid #ffffff20;border-radius:12px;padding:12px 13px;outline:none}
+input:focus,textarea:focus{border-color:#ff4f91;box-shadow:0 0 0 3px #ff4f911a}
+textarea{min-height:100px;resize:vertical}
+input[type=file]{padding:10px}input[type=file]::file-selector-button{border:0;border-radius:8px;padding:8px 10px;margin-right:10px;background:#ff4f91;color:#fff;font:600 11px Poppins,sans-serif}
+.help{font-size:11px;color:#bca9b9;line-height:1.6}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+button{border:1px solid #ffffff20;border-radius:12px;padding:11px 15px;font:600 12px Poppins,sans-serif;cursor:pointer;color:#fff;background:#ffffff0d}
+button.primary{background:linear-gradient(135deg,#ff4f91,#d93679);border-color:transparent}
+button:hover{filter:brightness(1.1)}button:disabled{opacity:.55;cursor:wait}
+.status{display:none;padding:12px 14px;border-radius:12px;font-size:12px;line-height:1.6;margin:0 0 16px;white-space:pre-wrap}
+.status.show{display:block}.status.error{background:#ff3f7f16;border:1px solid #ff3f7f55;color:#ffc0d7}.status.ok{background:#36d99413;border:1px solid #36d99455;color:#c6ffe3}.status.info{background:#ffffff09;border:1px solid #ffffff20;color:#e9dce7}
+#loginPanel{max-width:520px;margin:35px auto}#adminPanel{display:none}
+.photo-previews{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.photo-item{position:relative;width:95px;height:115px;border:1px solid #ffffff25;border-radius:12px;overflow:hidden;background:#160b16}
+.photo-item img{width:100%;height:100%;object-fit:cover;display:block}.photo-item button{position:absolute;top:4px;right:4px;padding:3px 7px;border-radius:50%;background:#160b16dd}
+.profile-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.profile-row{display:flex;gap:12px;align-items:center;min-width:0;padding:12px;border:1px solid #ffffff13;background:#ffffff06;border-radius:15px}
+.profile-row img{width:70px;height:82px;object-fit:cover;border-radius:10px;background:#241321;flex:none}
+.profile-info{min-width:0;flex:1}.profile-info strong{display:block;font-size:13px;overflow-wrap:anywhere}.profile-info small{display:block;color:#bca9b9;font-size:10px;margin-top:4px;line-height:1.5}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.row-actions button{padding:6px 9px;font-size:10px}
+.empty{padding:20px;text-align:center;color:#bca9b9;font-size:12px}
+@media(max-width:650px){.grid,.profile-list{grid-template-columns:1fr}.nav strong{font-size:19px}.nav{gap:10px}.profile-row img{width:64px;height:76px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" aria-label="Kmeet home"><img src="./kmeet-logo.jfif.jfif" alt="Kmeet logo"></a>
+  <strong>Kmeet Admin</strong>
+  <span class="spacer"></span>
+  <a href="discover.html">Open Discover ↗</a>
+</nav>
+<main>
+  <h1>Demo Profile Studio 💗</h1>
+  <p class="lead">Create and manage the demo profiles used by Kmeet. This is a separate admin page; it does not change your Discover design.</p>
+  <div id="globalStatus" class="status" role="status" aria-live="polite"></div>
+
+  <section id="loginPanel" class="panel">
+    <h2>Admin sign in</h2>
+    <p class="lead">Sign in with the Kmeet admin account you registered. Only the account authorised in your Firestore rules can manage demo profiles.</p>
+    <div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+    <form id="loginForm">
+      <div class="field"><label for="email">Admin email</label><input id="email" type="email" autocomplete="username" required placeholder="Enter admin email"></div>
+      <div class="field" style="margin-top:13px"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Enter password"></div>
+      <div class="actions"><button class="primary" id="loginButton" type="submit">Sign in securely</button></div>
+    </form>
+  </section>
+
+  <div id="adminPanel">
+    <section class="panel">
+      <h2 id="formTitle">Add a demo profile</h2>
+      <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+      <form id="profileForm">
+        <div class="grid">
+          <div class="field"><label for="name">Display name *</label><input id="name" maxlength="40" required placeholder="e.g. Amara"></div>
+          <div class="field"><label for="age">Age</label><input id="age" type="number" min="18" max="100" placeholder="e.g. 27"></div>
+          <div class="field"><label for="location">Location *</label><input id="location" maxlength="80" required placeholder="e.g. Mombasa"></div>
+          <div class="field"><label for="interests">Interests</label><input id="interests" maxlength="300" placeholder="Music, Travel, Coffee"></div>
+          <div class="field full"><label for="bio">Bio *</label><textarea id="bio" maxlength="600" required placeholder="Write a warm, respectful introduction..."></textarea></div>
+          <div class="field full">
+            <label for="photoFiles">Upload profile photos (up to 3)</label>
+            <input id="photoFiles" type="file" accept="image/*" multiple>
+            <div class="help">Select up to three clear photos of the same person. Uploads go to your Cloudinary account. Images already saved on the profile will remain unless you remove them below.</div>
+            <div id="photoPreviews" class="photo-previews"></div>
+          </div>
+          <div class="field full">
+            <label for="photoUrls">Photo URLs (optional)</label>
+            <textarea id="photoUrls" placeholder="One image URL per line. Uploaded Cloudinary photos will be added here automatically."></textarea>
+            <div class="help">You can paste existing image URLs, one per line. Up to three unique photos are saved per profile.</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="saveButton" type="submit">Save demo profile</button>
+          <button id="resetButton" type="button">Clear form</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Saved demo profiles</h2>
+      <p class="lead">Edit a profile to update its bio, interests or photos. Deleting here removes the Firestore demo profile, not the existing built-in profiles in Discover.</p>
+      <div id="profilesStatus" class="status" role="status" aria-live="polite"></div>
+      <div id="profileList" class="profile-list"><div class="empty">Loading saved profiles…</div></div>
+    </section>
+  </div>
+</main>
+
+<script type="module">
+import {
+  auth, db, onAuthStateChanged, signInWithEmailAndPassword, signOut,
+  collection, addDoc, doc, setDoc, deleteDoc, serverTimestamp
+} from "./firebase-config.js";
+import { getDocs } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const ADMIN_UID = "xXegllavfWfdoeAyhyQ7yrula8u2";
+const CLOUDINARY_CLOUD_NAME = "whnrdsfq";
+const CLOUDINARY_UPLOAD_PRESET = "kmeet-admin-photos";
+const MAX_PHOTOS = 3;
+
+const $ = id => document.getElementById(id);
+const loginPanel = $("loginPanel");
+const adminPanel = $("adminPanel");
+const globalStatus = $("globalStatus");
+const loginStatus = $("loginStatus");
+const formStatus = $("formStatus");
+const profilesStatus = $("profilesStatus");
+const profileList = $("profileList");
+const profileForm = $("profileForm");
+const loginForm = $("loginForm");
+const photoFiles = $("photoFiles");
+const photoUrls = $("photoUrls");
+const photoPreviews = $("photoPreviews");
+let editingId = null;
+let currentPhotos = [];
+let profilesCache = [];
+let isAuthorised = false;
+
+function showStatus(el, message, type="info") {
+  el.textContent = message;
+  el.className = `status show ${type}`;
+}
+function clearStatus(el) {
+  el.textContent = "";
+  el.className = "status";
+}
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>'"]/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;"
+  }[c]));
+}
+function cleanPhotoList(values) {
+  const seen = new Set();
+  return values.map(v => String(v || "").trim())
+    .filter(v => /^https:\/\/\S+$/i.test(v) && !seen.has(v) && seen.add(v))
+    .slice(0, MAX_PHOTOS);
+}
+function getPhotoListFromForm() {
+  const urls = photoUrls.value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  return cleanPhotoList([...currentPhotos, ...urls]);
+}
+function renderPhotoPreviews() {
+  const photos = getPhotoListFromForm();
+  photoPreviews.innerHTML = photos.map((url, i) => `
+    <div class="photo-item">
+      <img src="${escapeHtml(url)}" alt="Profile photo ${i+1}" onerror="this.alt='Image preview unavailable'">
+      <button type="button" data-remove-photo="${i}" aria-label="Remove photo">×</button>
+    </div>`).join("");
+  photoPreviews.querySelectorAll("[data-remove-photo]").forEach(button => {
+    button.addEventListener("click", () => {
+      const removeIndex = Number(button.dataset.removePhoto);
+      const combined = getPhotoListFromForm();
+      combined.splice(removeIndex, 1);
+      currentPhotos = combined;
+      photoUrls.value = "";
+      renderPhotoPreviews();
+    });
+  });
+}
+function resetForm() {
+  editingId = null;
+  profileForm.reset();
+  currentPhotos = [];
+  $("formTitle").textContent = "Add a demo profile";
+  $("saveButton").textContent = "Save demo profile";
+  photoPreviews.innerHTML = "";
+  clearStatus(formStatus);
+}
+async function uploadToCloudinary(file) {
+  const endpoint = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  data.append("folder", "kmeet/demo-profiles");
+  const response = await fetch(endpoint, { method: "POST", body: data });
+  const result = await response.json();
+  if (!response.ok || !result.secure_url) {
+    throw new Error(result.error?.message || `Cloudinary upload failed (${response.status}).`);
+  }
+  return result.secure_url;
+}
+photoFiles.addEventListener("change", async () => {
+  const selected = Array.from(photoFiles.files || []);
+  if (!selected.length) return;
+  const existing = getPhotoListFromForm();
+  const remaining = Math.max(0, MAX_PHOTOS - existing.length);
+  const files = selected.slice(0, remaining);
+  if (selected.length > remaining) {
+    showStatus(formStatus, `Only ${MAX_PHOTOS} photos can be saved per profile. ${files.length} selected file(s) will be uploaded.`, "info");
+  }
+  if (!files.length) {
+    photoFiles.value = "";
+    return;
+  }
+  photoFiles.disabled = true;
+  $("saveButton").disabled = true;
+  showStatus(formStatus, `Uploading ${files.length} photo(s) to Cloudinary… Please keep this page open.`, "info");
+  try {
+    const uploaded = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.startsWith("image/")) continue;
+      if (file.size > 10 * 1024 * 1024) throw new Error(`${file.name} is over 10 MB. Choose a smaller image.`);
+      showStatus(formStatus, `Uploading photo ${i+1} of ${files.length}…`, "info");
+      uploaded.push(await uploadToCloudinary(file));
+    }
+    currentPhotos = cleanPhotoList([...existing, ...uploaded]);
+    photoUrls.value = "";
+    renderPhotoPreviews();
+    showStatus(formStatus, `Uploaded ${uploaded.length} photo(s). Remember to save the profile.`, "ok");
+  } catch (error) {
+    showStatus(formStatus, `Photo upload failed: ${error.message}\nCheck your Cloudinary cloud name, preset name, and that the preset is unsigned.`, "error");
+  } finally {
+    photoFiles.disabled = false;
+    $("saveButton").disabled = false;
+    photoFiles.value = "";
+  }
+});
+photoUrls.addEventListener("input", renderPhotoPreviews);
+
+loginForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  clearStatus(loginStatus);
+  $("loginButton").disabled = true;
+  try {
+    const credential = await signInWithEmailAndPassword(auth, $("email").value.trim(), $("password").value);
+    if (credential.user.uid !== ADMIN_UID) {
+      await signOut(auth);
+      throw new Error("This account is not authorised as the Kmeet admin. Please sign in with the admin account configured in Firestore rules.");
+    }
+    showStatus(loginStatus, "Admin signed in successfully.", "ok");
+  } catch (error) {
+    showStatus(loginStatus, error.message || "Sign-in failed. Check your email and password.", "error");
+  } finally {
+    $("loginButton").disabled = false;
+  }
+});
+
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    isAuthorised = false;
+    loginPanel.style.display = "block";
+    adminPanel.style.display = "none";
+    return;
+  }
+  if (user.uid !== ADMIN_UID || user.isAnonymous) {
+    isAuthorised = false;
+    adminPanel.style.display = "none";
+    loginPanel.style.display = "block";
+    showStatus(loginStatus, "This signed-in account is not the authorised Kmeet admin.", "error");
+    try { await signOut(auth); } catch (_) {}
+    return;
+  }
+  isAuthorised = true;
+  loginPanel.style.display = "none";
+  adminPanel.style.display = "block";
+  showStatus(globalStatus, "Admin access verified. You can manage demo profiles below.", "ok");
+  await loadProfiles();
+});
+
+profileForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!isAuthorised || auth.currentUser?.uid !== ADMIN_UID) {
+    showStatus(formStatus, "Please sign in with the authorised admin account first.", "error");
+    return;
+  }
+  const name = $("name").value.trim();
+  const location = $("location").value.trim();
+  const bio = $("bio").value.trim();
+  const ageValue = $("age").value.trim();
+  const age = ageValue ? Number(ageValue) : null;
+  const interests = $("interests").value.split(",").map(x => x.trim()).filter(Boolean).slice(0, 12);
+  const galleryPhotos = getPhotoListFromForm();
+  if (!name || !location || !bio) {
+    showStatus(formStatus, "Please fill in name, location and bio.", "error");
+    return;
+  }
+  if (ageValue && (!Number.isInteger(age) || age < 18 || age > 100)) {
+    showStatus(formStatus, "Age must be between 18 and 100.", "error");
+    return;
+  }
+  if (!galleryPhotos.length) {
+    showStatus(formStatus, "Add at least one photo URL or upload a photo before saving.", "error");
+    return;
+  }
+  const payload = {
+    name, displayName: name, age, location, bio, description: bio,
+    interests, tags: interests,
+    photo: galleryPhotos[0], photoURL: galleryPhotos[0],
+    galleryPhotos,
+    online: false,
+    updatedAt: serverTimestamp()
+  };
+  $("saveButton").disabled = true;
+  showStatus(formStatus, editingId ? "Updating demo profile…" : "Saving demo profile…", "info");
+  try {
+    if (editingId) {
+      await setDoc(doc(db, "demoProfiles", editingId), payload, { merge: true });
+      showStatus(formStatus, "Demo profile updated successfully.", "ok");
+    } else {
+      payload.createdAt = serverTimestamp();
+      const created = await addDoc(collection(db, "demoProfiles"), payload);
+      showStatus(formStatus, `Demo profile saved successfully (ID: ${created.id}).`, "ok");
+    }
+    resetForm();
+    await loadProfiles();
+  } catch (error) {
+    showStatus(formStatus, `Could not save profile: ${error.message}\nCheck that your Firestore rules were published and this account is the authorised admin.`, "error");
+  } finally {
+    $("saveButton").disabled = false;
+  }
+});
+
+$("resetButton").addEventListener("click", resetForm);
+
+async function loadProfiles() {
+  if (!isAuthorised) return;
+  profileList.innerHTML = '<div class="empty">Loading saved profiles…</div>';
+  try {
+    const snapshot = await getDocs(collection(db, "demoProfiles"));
+    profilesCache = snapshot.docs.map(item => ({ id: item.id, ...item.data() }))
+      .sort((a,b) => String(a.name || "").localeCompare(String(b.name || "")));
+    renderProfiles();
+    showStatus(profilesStatus, `${profilesCache.length} saved demo profile(s).`, "ok");
+  } catch (error) {
+    profileList.innerHTML = '<div class="empty">Could not load profiles.</div>';
+    showStatus(profilesStatus, `Could not load profiles: ${error.message}`, "error");
+  }
+}
+function renderProfiles() {
+  if (!profilesCache.length) {
+    profileList.innerHTML = '<div class="empty">No profiles saved yet. Use the form above to add your first one.</div>';
+    return;
+  }
+  profileList.innerHTML = profilesCache.map(profile => {
+    const photos = Array.isArray(profile.galleryPhotos) ? profile.galleryPhotos : [];
+    const photo = profile.photo || profile.photoURL || photos[0] || "";
+    const interestText = Array.isArray(profile.interests) ? profile.interests.join(", ") : "";
+    return `<article class="profile-row">
+      <img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.opacity='.25'">
+      <div class="profile-info">
+        <strong>${escapeHtml(profile.name || profile.displayName || "Unnamed profile")}${profile.age ? `, ${escapeHtml(profile.age)}` : ""}</strong>
+        <small>${escapeHtml(profile.location || "Kenya")} · ${photos.length || (photo ? 1 : 0)} photo(s)<br>${escapeHtml(interestText)}</small>
+        <div class="row-actions"><button type="button" data-edit="${escapeHtml(profile.id)}">Edit</button><button type="button" data-delete="${escapeHtml(profile.id)}">Delete</button></div>
+      </div>
+    </article>`;
+  }).join("");
+  profileList.querySelectorAll("[data-edit]").forEach(button => button.addEventListener("click", () => editProfile(button.dataset.edit)));
+  profileList.querySelectorAll("[data-delete]").forEach(button => button.addEventListener("click", () => removeProfile(button.dataset.delete)));
+}
+function editProfile(id) {
+  const profile = profilesCache.find(item => item.id === id);
+  if (!profile) return;
+  editingId = id;
+  $("formTitle").textContent = "Edit demo profile";
+  $("saveButton").textContent = "Update demo profile";
+  $("name").value = profile.name || profile.displayName || "";
+  $("age").value = profile.age ?? "";
+  $("location").value = profile.location || "";
+  const interests = Array.isArray(profile.interests) ? profile.interests : Array.isArray(profile.tags) ? profile.tags : [];
+  $("interests").value = interests.join(", ");
+  $("bio").value = profile.bio || profile.description || "";
+  currentPhotos = cleanPhotoList(Array.isArray(profile.galleryPhotos) ? profile.galleryPhotos : [profile.photo || profile.photoURL || ""]);
+  photoUrls.value = "";
+  photoFiles.value = "";
+  renderPhotoPreviews();
+  clearStatus(formStatus);
+  $("formTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+async function removeProfile(id) {
+  if (!isAuthorised || auth.currentUser?.uid !== ADMIN_UID) return;
+  const profile = profilesCache.find(item => item.id === id);
+  const name = profile?.name || "this profile";
+  if (!confirm(`Delete "${name}" from the demoProfiles collection? This cannot be undone.`)) return;
+  try {
+    await deleteDoc(doc(db, "demoProfiles", id));
+    if (editingId === id) resetForm();
+    showStatus(profilesStatus, `"${name}" deleted from Firestore.`, "ok");
+    await loadProfiles();
+  } catch (error) {
+    showStatus(profilesStatus, `Could not delete profile: ${error.message}`, "error");
+  }
+}
+</script>
+</body>
+</html>
 
