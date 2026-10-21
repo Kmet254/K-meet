@@ -470,37 +470,30 @@ function renderProfiles(){
  }).join("");
 
  /* Event delegation: keeps Edit, Reset and Delete working after each render. */
-profileList.onclick = async function(event) {
-  const button = event.target.closest("button");
-  if (!button || !profileList.contains(button)) return;
 
-  try {
-    if (button.hasAttribute("data-edit")) {
-      const key = button.dataset.edit;
-      const isBuiltin = button.dataset.builtin === "1";
+ /* Event delegation: keeps Edit, Reset and Delete working after each render. */
+ profileList.onclick = async function(event) {
+   const button = event.target.closest("button");
+   if (!button || !profileList.contains(button)) return;
 
-      editProfile(key, isBuiltin);
+   if (button.hasAttribute("data-edit")) {
+     const key = button.dataset.edit;
+     const isBuiltin = button.dataset.builtin === "1";
+     editProfile(key, isBuiltin);
+     return;
+   }
 
-      if (!$("name").value) {
-        showStatus(formStatus, "Could not find this profile. Please refresh and try again.", "error");
-      }
-      return;
-    }
+   if (button.hasAttribute("data-delete")) {
+     await removeExtra(button.dataset.delete);
+     return;
+   }
 
-    if (button.hasAttribute("data-delete")) {
-      await removeExtra(button.dataset.delete);
-      return;
-    }
+   if (button.hasAttribute("data-reset-override")) {
+     await resetOverride(button.dataset.resetOverride);
+   }
+ };
+}
 
-    if (button.hasAttribute("data-reset-override")) {
-      await resetOverride(button.dataset.resetOverride);
-    }
-  } catch (error) {
-    showStatus(formStatus, "Edit failed: " + error.message, "error");
-  }
-};
- 
- }
 function editProfile(key,isBuiltin){
  let profile;
 
