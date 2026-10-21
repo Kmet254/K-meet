@@ -322,13 +322,27 @@ function renderProfiles(){
    <div class="row-actions"><button type="button" data-edit="${escapeHtml(id)}" data-builtin="${profile.builtin?"1":"0"}">Edit</button>${resetButton}${deleteButton}</div>
    </div></article>`;
  }).join("");
- profileList.querySelectorAll("[data-edit]").forEach(button=>button.addEventListener("click",()=>{
-  const isBuiltin=button.dataset.builtin==="1";
-  editProfile(button.dataset.edit,isBuiltin);
- }));
- profileList.querySelectorAll("[data-delete]").forEach(button=>button.addEventListener("click",()=>removeExtra(button.dataset.delete)));
- profileList.querySelectorAll("[data-reset-override]").forEach(button=>button.addEventListener("click",()=>resetOverride(button.dataset.resetOverride)));
-}
+ 
+ profileList.onclick = async function(event) {
+  const button = event.target.closest("button");
+  if (!button || !profileList.contains(button)) return;
+
+  if (button.hasAttribute("data-edit")) {
+   const isBuiltin = button.dataset.builtin === "1";
+   editProfile(button.dataset.edit, isBuiltin);
+   return;
+  }
+
+  if (button.hasAttribute("data-delete")) {
+   await removeExtra(button.dataset.delete);
+   return;
+  }
+
+  if (button.hasAttribute("data-reset-override")) {
+   await resetOverride(button.dataset.resetOverride);
+  }
+ };
+
 function editProfile(key,isBuiltin){
  let profile;
  if(isBuiltin){
