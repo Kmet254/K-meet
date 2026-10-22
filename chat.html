@@ -2719,181 +2719,61 @@ composer.addEventListener(
        DEMO PROFILE
     ================================================ */
 
-    if(targetIsDemo){
+    
+    /* ================================================
+       DEMO PROFILE — FREE HI/HEY, THEN PAYMENT
+    ================================================ */
 
-      /*
-        Anonymous visitors still need
-        paid chat credits.
-      */
+    if (targetIsDemo) {
 
-      if(
-        currentUser.isAnonymous &&
-        getSenderCredits() <= 0
-      ){
+      // Always load the latest saved conversation.
+      demoMessages = getDemoMessages();
 
-        showGate(
-          "anonymous"
-        );
+      // The only free opening messages are "hi" and "hey".
+      const openingMessage = text.toLowerCase().trim();
+      const hasSentOpening = demoMessages.length > 0;
 
+      if (!hasSentOpening) {
+
+        if (!FREE_OPENING_MESSAGES.includes(openingMessage)) {
+          infoBar.textContent =
+            'Your first free message must be "hi" or "hey" ❤️';
+
+          showError(
+            'Please send "hi" or "hey" as your free opening message.'
+          );
+
+          return;
+        }
+
+      } else {
+
+        // After the opening message, require the payment gate.
+        showGate("sender");
         return;
 
       }
 
+      // Save the permitted free opening message.
+      demoMessages.push({
+        text: text,
+        createdAt: new Date().toISOString()
+      });
 
-      /*
-        If an anonymous user has paid
-        credits, consume one credit.
-      */
+      saveDemoMessages(demoMessages);
 
-      let anonymousCreditUsed =
-        false;
+      // Render the saved conversation.
+      demoMessages = getDemoMessages();
+      renderDemoMessages(demoMessages);
 
-      let creditsBefore =
-        0;
-
-
-      if(
-        currentUser.isAnonymous
-      ){
-
-        creditsBefore =
-          getSenderCredits();
-
-
-        if(
-          creditsBefore <= 0
-        ){
-
-          showGate(
-            "anonymous"
-          );
-
-          return;
-
-        }
-
-
-        setSenderCredits(
-          creditsBefore - 1
-        );
-
-
-        anonymousCreditUsed =
-          true;
-
-      }
-
-
-      /*
-        CREATE THE MESSAGE FIRST.
-
-        It appears immediately in the
-        chat window as the user's own
-        message.
-      */
-
-      /*
-        Always start from the latest saved demo conversation.
-        This prevents an older in-memory array from overwriting a
-        message that was already stored in localStorage.
-      */
-
-      demoMessages =
-        getDemoMessages();
-
-
-      const newMessage = {
-
-        text:text,
-
-        createdAt:
-          new Date().toISOString()
-
-      };
-
-
-      demoMessages.push(
-        newMessage
-      );
-
-
-      /*
-        Save BEFORE clearing the
-        composer.
-
-        This prevents the message
-        from disappearing.
-      */
-
-      saveDemoMessages(
-        demoMessages
-      );
-
-
-      /*
-        Read the saved list back before rendering.
-        This guarantees that what appears on screen is exactly what
-        was persisted.
-      */
-
-      demoMessages =
-        getDemoMessages();
-
-
-      renderDemoMessages(
-        demoMessages
-      );
-
-
-      /*
-        Clear the composer.
-      */
-
-      messageInput.value =
-        "";
-
+      messageInput.value = "";
       messageInput.focus();
 
-
-      /*
-        Natural confirmation.
-        No fake reply.
-      */
-
-      if(
-        currentUser.isAnonymous
-      ){
-
-        const remaining =
-          getSenderCredits();
-
-
-        infoBar.textContent =
-          `Your message has been sent ❤️ ${
-            remaining > 0
-              ? `• ${remaining} chat credit${
-                  remaining === 1
-                    ? ""
-                    : "s"
-                } remaining`
-              : ""
-          }`;
-
-      }
-
-      else{
-
-        infoBar.textContent =
-          "Your message has been sent ❤️";
-
-      }
-
+      infoBar.textContent =
+        'Your free opening message has been sent ❤️ Pay to continue chatting.';
 
       return;
-
     }
-
-
 
     /* ================================================
        REAL MEMBER CHAT
