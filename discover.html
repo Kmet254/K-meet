@@ -50,19 +50,51 @@ a{text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
+
 <nav class="navbar">
-  <a class="logo-link" href="index.html" aria-label="Kmeet Home"><img src="./kmeet-logo.jfif.jfif" alt="Kmeet"></a>
+  <a class="logo-link" href="index.html" aria-label="Kmeet Home">
+    <img src="./kmeet-logo.jfif.jfif" alt="Kmeet">
+  </a>
+
   <a class="nav-link active" href="discover.html">Discover</a>
+
+  <a id="adminReturnLink" class="nav-link"
+     href="admin.html" style="display:none;">
+    ← Back to Admin
+  </a>
+
   <div class="messages-area">
-    <button id="messagesButton" class="messages-button" type="button" aria-label="Messages" title="Messages">💬<span id="messageBadge" class="message-badge hidden">0</span></button>
+    <button id="messagesButton" class="messages-button"
+      type="button" aria-label="Messages" title="Messages">
+      💬<span id="messageBadge" class="message-badge hidden">0</span>
+    </button>
+
     <div id="messagesPanel" class="messages-panel">
-      <div class="messages-panel-head"><strong>Messages</strong><button id="messagesClose" class="messages-close" type="button" aria-label="Close">×</button></div>
-      <div id="messagesList" class="messages-list"><div class="message-empty">Your messages will appear here 💗</div></div>
+      <div class="messages-panel-head">
+        <strong>Messages</strong>
+        <button id="messagesClose" class="messages-close"
+          type="button" aria-label="Close">×</button>
+      </div>
+      <div id="messagesList" class="messages-list">
+        <div class="message-empty">Your messages will appear here 💗</div>
+      </div>
     </div>
   </div>
+
   <a id="profileLink" class="nav-link" href="login.html">Profile</a>
   <a class="nav-link" href="index.html">Home</a>
 </nav>
+
+<script>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const adminLink = document.getElementById("adminReturnLink");
+
+    if (params.get("from") === "admin" && adminLink) {
+      adminLink.style.display = "inline-flex";
+    }
+  })();
+</script>
 
 <header class="page-head">
   <h1>Discover Your Connection 💕</h1>
