@@ -1342,8 +1342,7 @@
 
 
         try {
-   
-const credential = await signInWithEmailAndPassword(
+   const credential = await signInWithEmailAndPassword(
   auth,
   email,
   password
@@ -1365,26 +1364,6 @@ showSuccess(
 setTimeout(() => {
   window.location.href = destination;
 }, 500);
-
-          );
-
-
-          showSuccess(
-            "Login successful. Opening your profile..."
-          );
-
-
-          /*
-           * Give Firebase a moment to finish updating
-           * the authentication state before moving on.
-           */
-
-          setTimeout(() => {
-
-            window.location.href =
-              "profile.html";
-
-          }, 500);
 
 
         } catch (error) {
