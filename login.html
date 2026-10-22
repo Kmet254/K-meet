@@ -1342,11 +1342,30 @@
 
 
         try {
+   
+const credential = await signInWithEmailAndPassword(
+  auth,
+  email,
+  password
+);
 
-          await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
+const ADMIN_UID = "xXegllavfWfdoeAyhyQ7yrula8u2";
+
+const destination =
+  credential.user.uid === ADMIN_UID
+    ? "admin.html"
+    : "profile.html";
+
+showSuccess(
+  destination === "admin.html"
+    ? "Admin login successful. Opening Admin Studio..."
+    : "Login successful. Opening your profile..."
+);
+
+setTimeout(() => {
+  window.location.href = destination;
+}, 500);
+
           );
 
 
