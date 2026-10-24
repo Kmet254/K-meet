@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 :root{--pink:#ff4f91;--muted:#cbb9c8;--line:#ffffff20}
 *{box-sizing:border-box}
@@ -44,6 +44,86 @@ textarea{min-height:95px;resize:vertical}
 input[type=file]{padding:10px}
 input[type=file]::file-selector-button{border:0;border-radius:8px;padding:8px 10px;margin-right:10px;background:var(--pink);color:#fff;font:600 11px Poppins,sans-serif}
 .help{font-size:11px;color:#bca9b9;line-height:1.6}
+ 
+/* Selectable interest tiles — matching interests.html */
+.interests-heading{
+  display:block;
+  margin-bottom:9px;
+  color:#f0dce8;
+  font-size:12px;
+  font-weight:600;
+}
+.interests-grid-admin{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.interest-tile-admin{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-height:62px;
+  padding:10px 12px;
+  border:1px solid #ffffff20;
+  border-radius:14px;
+  background:#ffffff08;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.interest-tile-admin:hover{
+  border-color:#ff4f9180;
+  transform:translateY(-1px);
+}
+.interest-tile-admin input{
+  position:absolute;
+  opacity:0;
+  width:1px;
+  height:1px;
+  pointer-events:none;
+}
+.interest-tile-admin .interest-icon-admin{
+  width:40px;
+  height:40px;
+  flex:0 0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  color:#ff9abd;
+  background:#ff8db71a;
+  border:1px solid #ff8db72a;
+  font-size:17px;
+}
+.interest-tile-admin .interest-name-admin{
+  flex:1;
+  font-size:12px;
+  font-weight:600;
+  color:#f8eaf1;
+}
+.interest-tile-admin .interest-check-admin{
+  color:transparent;
+  font-size:12px;
+}
+.interest-tile-admin.selected{
+  border-color:#ff4f91b0;
+  background:#ff4f9120;
+  box-shadow:0 5px 18px #ff4f9110;
+}
+.interest-tile-admin.selected .interest-icon-admin{
+  color:#fff;
+  background:linear-gradient(135deg,#ff4f91,#d93679);
+}
+.interest-tile-admin.selected .interest-check-admin{
+  color:#ff9abd;
+}
+.interest-tile-admin:focus-within{
+  outline:2px solid #ff9abd;
+  outline-offset:2px;
+}
+@media(max-width:420px){
+  .interests-grid-admin{grid-template-columns:1fr}
+}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 button{border:1px solid #ffffff20;border-radius:12px;padding:10px 13px;font:600 12px Poppins,sans-serif;cursor:pointer;color:#fff;background:#ffffff0d}
 button.primary{background:linear-gradient(135deg,#ff4f91,#d93679);border-color:transparent}
@@ -134,9 +214,10 @@ button:disabled{opacity:.55;cursor:wait}
 <label for="location">Location *</label>
 <input id="location" maxlength="80" required placeholder="e.g. Mombasa">
 </div>
-<div class="field">
-<label for="interests">Interests</label>
-<input id="interests" maxlength="300" placeholder="Music, Travel, Coffee">
+<div class="field full">
+  <span class="interests-heading">Interests</span>
+  <p class="help">Select the interests that fit this profile. You can select more than one.</p>
+  <div id="adminInterestsGrid" class="interests-grid-admin"></div>
 </div>
 <div class="field full">
 <label for="bio">Bio *</label>
@@ -189,6 +270,73 @@ const formStatus=$("formStatus"),profilesStatus=$("profilesStatus");
 const profileList=$("profileList"),profileForm=$("profileForm");
 const loginForm=$("loginForm"),photoFiles=$("photoFiles");
 const photoUrls=$("photoUrls"),photoPreviews=$("photoPreviews");
+
+const INTEREST_OPTIONS = [
+  ["Music", "fa-music"],
+  ["Sports", "fa-futbol"],
+  ["Gaming", "fa-gamepad"],
+  ["Cooking", "fa-utensils"],
+  ["Travel", "fa-plane"],
+  ["Art & Design", "fa-palette"],
+  ["Tech & Coding", "fa-code"],
+  ["Fitness", "fa-dumbbell"],
+  ["Movies", "fa-film"],
+  ["Reading", "fa-book-open"]
+];
+
+function renderAdminInterests(selectedValues = []) {
+  const grid = $("adminInterestsGrid");
+  const selected = [...new Set(
+    (Array.isArray(selectedValues) ? selectedValues : [])
+      .map(value => String(value).trim())
+      .filter(Boolean)
+  )];
+
+  // Keep older interests such as Coffee, Beach and Business
+  // available when editing existing demo profiles.
+  const options = [...INTEREST_OPTIONS];
+
+  selected.forEach(value => {
+    if (!options.some(option => option[0] === value)) {
+      options.push([value, "fa-heart"]);
+    }
+  });
+
+  grid.innerHTML = options.map(([name, icon]) => {
+    const checked = selected.includes(name);
+
+    return `
+      <label class="interest-tile-admin ${checked ? "selected" : ""}">
+        <input type="checkbox"
+          name="adminInterest"
+          value="${escapeHtml(name)}"
+          ${checked ? "checked" : ""}>
+        <span class="interest-icon-admin">
+          <i class="fa-solid ${escapeHtml(icon)}"></i>
+        </span>
+        <span class="interest-name-admin">${escapeHtml(name)}</span>
+        <span class="interest-check-admin">
+          <i class="fa-solid fa-check"></i>
+        </span>
+      </label>
+    `;
+  }).join("");
+
+  grid.querySelectorAll('input[name="adminInterest"]').forEach(input => {
+    input.addEventListener("change", () => {
+      input.closest(".interest-tile-admin")
+        .classList.toggle("selected", input.checked);
+    });
+  });
+}
+
+function getSelectedAdminInterests() {
+  return Array.from(
+    document.querySelectorAll(
+      '#adminInterestsGrid input[name="adminInterest"]:checked'
+    )
+  ).map(input => input.value);
+}
 
 let editingId=null;
 let editingBuiltinName=null;
@@ -279,6 +427,7 @@ function resetForm(){
  editingBuiltinName=null;
  currentPhotos=[];
  profileForm.reset();
+ renderAdminInterests([]);
  $("formTitle").textContent="Add a demo profile";
  $("formDescription").textContent="Choose an existing profile below to edit it, or add a new demo profile.";
  $("saveButton").textContent="Save demo profile";
@@ -381,7 +530,7 @@ profileForm.addEventListener("submit",async event=>{
  const bio=$("bio").value.trim();
  const ageText=$("age").value.trim();
  const age=ageText?Number(ageText):null;
- const interests=$("interests").value.split(",").map(x=>x.trim()).filter(Boolean).slice(0,12);
+ const interests=getSelectedAdminInterests();
  const galleryPhotos=getPhotoListFromForm();
 
  if(!name||!location||!bio){
@@ -563,8 +712,11 @@ function editProfile(key,isBuiltin){
  $("age").value=profile.age??"";
  $("location").value=profile.location||"";
 
- const interests=Array.isArray(profile.interests)?profile.interests:Array.isArray(profile.tags)?profile.tags:[];
- $("interests").value=interests.join(", ");
+ profileForm.isArray(profile.interests)
+  ? profile.interests
+  : Array.isArray(profile.tags) ? profile.tags : [];
+
+renderAdminInterests(interests);
  $("bio").value=profile.bio||profile.description||"";
  currentPhotos=cleanPhotoList(Array.isArray(profile.galleryPhotos)?profile.galleryPhotos:[profile.photo||profile.photoURL||""]);
  photoUrls.value="";
